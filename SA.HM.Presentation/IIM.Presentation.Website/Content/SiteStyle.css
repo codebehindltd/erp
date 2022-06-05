@@ -1,0 +1,1504 @@
+﻿body {
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/bg1.jpg") repeat scroll 0 0;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+.panel-title-Custom
+{
+    background-color: #E3EAEB !important;
+    color: darkcyan !important;
+}
+.LogInPageDataGrid {
+    background-image: url(/Images/LogInPageDataGrid.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
+.LoginBackgroundInnboard {
+    background-image: url(/Images/backgroudinnboard.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
+.LoginBackgroundAcc {
+    background-image: url(/Images/backgroundacc.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
+.LoginBackgroundHR {
+    background-image: url(/Images/backgroundhr.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
+.LoginBackgroundCafe {
+    background-image: url(/Images/backgroundcafe.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
+
+#DocDiv > img {
+    height: 90%;
+    width: 100%;
+}
+
+#SigDiv > img {
+    height: 90%;
+    width: 100%;
+}
+
+.TouchNumericItemImageDiv {
+    height: 65px;
+    width: 125px;
+}
+
+.DataGridYScroll {
+    height: 250px;
+    overflow-y: scroll;
+    text-align: left;
+}
+
+.site-logo {
+    margin-left: 0px;
+    padding: 9px 20px;
+}
+
+.InnBoardIcon {
+    background-repeat: no-repeat;
+    height: 22px;
+}
+
+span.control-label {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    max-width: 100%;
+}
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.content-wrapper {
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/bgnoise.png") repeat scroll 0 0;
+    background-clip: content-box;
+}
+
+.contents-height {
+    height: 100vh;
+}
+
+.contents-padding {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.pagination {
+    margin: 0;
+}
+
+.input-group-addon {
+    padding: 4px 12px;
+}
+
+
+ul.ui-autocomplete {
+    z-index: 17000;
+    max-height: 300px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    /* add padding to account for vertical scrollbar */
+    padding-right: 20px;
+}
+
+.ui-datepicker {
+    z-index: 9999 !important;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/header.jpg") repeat-x scroll 50% 50%;
+    border: 1px solid #fcefa1;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+}
+
+.ui-dialog .ui-dialog-title {
+    color: #ffffff;
+}
+
+.col-width-100 {
+    width: 100%;
+    padding-left: 30px;
+}
+
+fieldset {
+    border: 1px groove #ddd !important;
+    margin: 0 0 1.5em !important;
+    padding: 0 0.6em 0.6em !important;
+}
+
+    fieldset::after, fieldset::before {
+        clear: both;
+    }
+
+legend {
+    font-size: 1em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width: auto;
+    padding: 0 5px;
+    border-bottom: none;
+    margin-bottom: 0px;
+}
+
+.no-bottom-margin {
+    margin-bottom: 0;
+}
+
+table thead, tfoot {
+    background-color: #7a919f;
+    color: #fff;
+    font-weight: bold;
+}
+
+table tfoot {
+    border-top: 2px solid #ddd;
+}
+
+table tbody tr:nth-child(odd) td {
+    /*background-color: #fff;*/
+}
+
+table tbody tr:nth-child(even) td {
+    /*background-color: #f0f3f4;*/
+}
+
+#RetaurantTableTop, #RetaurantTableTopCustomer {
+    margin-bottom: 5px;
+}
+
+    #RetaurantTableTop td, #RetaurantTableTopCustomer td {
+        border-top: none;
+        padding: 5px;
+    }
+
+#PosControlRight input {
+    margin-bottom: 3px;
+}
+
+.PosDivider > hr {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border-color: #D6D2D2;
+}
+
+
+
+@media (min-width: 768px) {
+    .col-padding-rigth-none {
+        padding-right: 15px;
+    }
+
+    .col-padding-left-none {
+        padding-left: 15px;
+    }
+
+    .col-padding-none {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .col-content-21 {
+        width: 100%;
+    }
+
+    .col-content-79 {
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-padding-rigth-none {
+        padding-right: 15px;
+    }
+
+    .col-padding-left-none {
+        padding-left: 15px;
+    }
+
+    .col-padding-none {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .col-content-21 {
+        width: 21%;
+    }
+
+    .col-content-79 {
+        width: 79%;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .col-padding-rigth-none {
+        padding-right: 0;
+    }
+
+    .col-padding-left-none {
+        padding-left: 0;
+    }
+
+    .col-padding-none {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .col-content-21 {
+        width: 21%;
+    }
+
+    .col-content-79 {
+        width: 79%;
+    }
+}
+
+.row.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.no-gutter-column {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.no-gutter > [class*='col-'] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.gutter-5px > [class*='col-'] {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.page-header {
+    margin: 0 0 8px;
+    padding-bottom: 0;
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/header.jpg") repeat scroll 0 0 padding-box;
+    height: 43px;
+    display: block;
+}
+
+.navbar-default {
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/header.jpg") repeat scroll 0 0 padding-box;
+}
+
+    .navbar-default .navbar-nav > li > a {
+        color: #fff;
+        border-left: 1px solid rgb(51, 90, 133);
+    }
+
+.navbar {
+    border: 1px solid transparent;
+    margin-bottom: 0px;
+    min-height: 41px;
+}
+
+.navbar-nav > li > a {
+    padding-bottom: 9px;
+    padding-top: 9px;
+}
+
+.navbar-brand {
+    height: 41px;
+}
+
+.navbar .navbar-brand i[class^="icon-"] {
+    color: #fff;
+    margin-right: 0.75em;
+}
+
+.breadcrumb {
+    background: #eee none repeat scroll 0 0;
+    border-bottom: 1px solid #aaa;
+    border-left: 1px solid #fff;
+    border-radius: 0;
+    border-top: 1px solid #fafafa;
+    box-shadow: none;
+    margin-bottom: 1em;
+    padding: 16px 15px;
+}
+
+.footer {
+    color: #666;
+    font-size: 0.85em;
+    height: 60px;
+    position: relative;
+}
+
+    .footer hr {
+        border-bottom: 1px solid #fff;
+        border-top: 1px solid #ddd;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+.footer-padding {
+    padding-top: 8px;
+}
+
+.required-field::after {
+    color: #d00;
+    content: "*"; /*position: absolute;*/
+    margin-left: 3px;
+    top: 10px;
+}
+
+.form-control {
+    font-size: 12px;
+    height: 25px;
+    padding: 3px 5px;
+}
+
+.form-group {
+    margin-bottom: 5px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin: 7px 0 0;
+}
+
+/*
+    Drop Down Menu
+*/
+.navbar-nav > li > .dropdown-menu {
+    border-radius: 6px;
+    margin-top: 2px;
+}
+
+    .navbar-nav > li > .dropdown-menu::after {
+        border-bottom: 6px solid #ffffff;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        content: "";
+        display: inline-block;
+        left: 10px;
+        position: absolute;
+        top: -6px;
+    }
+
+    .navbar-nav > li > .dropdown-menu::after, .navbar-nav > li > .dropdown-menu::after {
+        left: auto;
+        right: 13px;
+    }
+
+.dropdown-menu {
+    font-size: 12px;
+}
+
+    .dropdown-menu > li > a {
+        background-color: #fff;
+    }
+
+    .dropdown-menu > li:hover {
+        background-color: #f5f5f5;
+    }
+
+#NavigationPanel .col-xs-12 .col-sm-3 .col-md-3 {
+    width: 21%;
+}
+
+/*
+    Custom Container Size
+*/
+
+.col-xs-custom-1, .col-sm-custom-1, .col-md-custom-1, .col-lg-custom-1, .col-xs-custom-2, .col-sm-custom-2, .col-md-custom-2, .col-lg-custom-2, .col-xs-custom-3, .col-sm-custom-3, .col-md-custom-3, .col-lg-custom-3, .col-xs-custom-4, .col-sm-custom-4, .col-md-custom-4, .col-lg-custom-4, .col-xs-custom-5, .col-sm-custom-5, .col-md-custom-5, .col-lg-custom-5, .col-xs-custom-6, .col-sm-custom-6, .col-md-custom-6, .col-lg-custom-6, .col-xs-custom-7, .col-sm-custom-7, .col-md-custom-7, .col-lg-custom-7, .col-xs-custom-8, .col-sm-custom-8, .col-md-custom-8, .col-lg-custom-8, .col-xs-custom-9, .col-sm-custom-9, .col-md-custom-9, .col-lg-custom-9, .col-xs-custom-10, .col-sm-custom-10, .col-md-custom-10, .col-lg-custom-10, .col-xs-custom-11, .col-sm-custom-11, .col-md-custom-11, .col-lg-custom-11, .col-xs-custom-12, .col-sm-custom-12, .col-md-custom-12, .col-lg-custom-12 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-xs-custom-1, .col-xs-custom-2, .col-xs-custom-3, .col-xs-custom-4, .col-xs-custom-5, .col-xs-custom-6, .col-xs-custom-7, .col-xs-custom-8, .col-xs-custom-9, .col-xs-custom-10, .col-xs-custom-11, .col-xs-custom-12 {
+    float: left;
+}
+
+.col-xs-custom-3 {
+    width: 21%;
+}
+
+.col-xs-custom-9 {
+    width: 79%;
+}
+
+.col-xs-custom-12 {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .col-sm-custom-1, .col-sm-custom-2, .col-sm-custom-3, .col-sm-custom-4, .col-sm-custom-5, .col-sm-custom-6, .col-sm-custom-7, .col-sm-custom-8, .col-sm-custom-9, .col-sm-custom-10, .col-sm-custom-11, .col-sm-custom-12 {
+        float: left;
+    }
+
+    .col-sm-custom-3 {
+        width: 21%;
+    }
+
+    .col-sm-custom-9 {
+        width: 79%;
+    }
+
+    .col-sm-custom-12 {
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-custom-1, .col-md-custom-2, .col-md-custom-3, .col-md-custom-4, .col-md-custom-5, .col-md-custom-6, .col-md-custom-7, .col-md-custom-8, .col-md-custom-9, .col-md-custom-10, .col-md-custom-11, .col-md-custom-12 {
+        float: left;
+    }
+
+    .col-md-custom-3 {
+        width: 21%;
+    }
+
+    .col-md-custom-9 {
+        width: 79%;
+    }
+
+    .col-md-custom-12 {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-custom-1, .col-lg-custom-2, .col-lg-custom-3, .col-lg-custom-4, .col-lg-custom-5, .col-lg-custom-6, .col-lg-custom-7, .col-lg-custom-8, .col-lg-custom-9, .col-lg-custom-10, .col-lg-custom-11, .col-lg-custom-12 {
+        float: left;
+    }
+
+    .col-lg-custom-3 {
+        width: 21%;
+    }
+
+    .col-lg-custom-9 {
+        width: 79%;
+    }
+
+    .col-lg-custom-12 {
+        width: 100%;
+    }
+}
+
+/* Tab Menue Customization */
+
+#myTabs, #myTabsPopUp {
+    padding: 0px;
+    background: none;
+    border-width: 0px;
+}
+
+    #myTabs .ui-tabs-nav, #myTabsPopUp .ui-tabs-nav {
+        padding-left: 0px;
+        background: transparent;
+        border-width: 0px 0px 0px 0px;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        border-radius: 0px;
+        border-color: #c5c5c5;
+    }
+
+    #myTabs .ui-tabs-anchor, #myTabsPopUp .ui-tabs-anchor {
+        padding: 0.8em 1.2em;
+    }
+
+    #myTabs .ui-tabs-nav li, #myTabsPopUp .ui-tabs-nav li{
+        margin: 1px 0.2em 0 8px;
+    }
+
+        #myTabs .ui-tabs-nav li:not(:first-child), #myTabsPopUp .ui-tabs-nav li:not(:first-child) {
+            margin: 1px 0.2em 0 2px;
+        }
+
+    #myTabs .ui-tabs-panel , #myTabsPopUp .ui-tabs-panel {
+        border-width: 1px 1px 1px 1px;
+        border-radius: 4px;
+        background: #fff none repeat scroll 0 0;
+        border-color: #c5c5c5;
+        padding: 1em;
+    }
+
+    #myTabs li.ui-tabs-active, #myTabsPopUp li.ui-tabs-active {
+        margin-bottom: -1px;
+        padding-bottom: 1px;
+    }
+
+        #myTabs li.ui-tabs-active:not(:first-child), #myTabsPopUp li.ui-tabs-active:not(:first-child) {
+            margin-bottom: -1px;
+            padding-bottom: 1px;
+        }
+
+    #myTabs .ui-state-default, #myTabsPopUp .ui-state-default{
+        background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/header.jpg") repeat-x scroll 50% 50%;
+        color: #fff;
+    }
+
+        #myTabs .ui-state-default a, #myTabsPopUp .ui-state-default a {
+            color: #fff;
+            font-weight: bold;
+        }
+
+    #myTabs .ui-state-active, #myTabsPopUp .ui-state-active{
+        background: #fff none repeat scroll 0 0;
+        color: #004276;
+    }
+
+        #myTabs .ui-state-active a, #myTabsPopUp .ui-state-active a {
+            color: #004276;
+        }
+
+/*Jquery UI Customization*/
+.ui-widget-header {
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/header.jpg") repeat-x scroll 50% 50%;
+}
+
+/*
+    Bootstrap Customization
+*/
+.panel {
+    margin-bottom: 10px;
+    padding: 2px;
+}
+
+.btn-primary {
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/header.jpg") repeat-x scroll 50% 50%;
+}
+
+.panel-default > .panel-heading {
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/header.jpg") repeat-x scroll 50% 50%;
+    color: #fff;
+}
+
+.restaurant-wrapper {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+.ui-dialog .ui-dialog-content {
+    padding: .5em 0.5em;
+}
+
+/*
+    Bootstrap Tab Customization
+*/
+
+.nav-tabs > li {
+    margin-bottom: -2px;
+    margin-left: 10px;
+}
+
+    .nav-tabs > li:not(:first-child) {
+        margin-bottom: -2px;
+        margin-left: 2px;
+    }
+
+    .nav-tabs > li > a {
+        border: 1px solid;
+        border-width: 1px 1px 0;
+        border-color: #c5c5c5;
+    }
+
+        .nav-tabs > li > a:hover {
+            border-color: #c5c5c5;
+        }
+
+.tab-content > .tab-pane {
+    border: 1px solid;
+    border-color: #c5c5c5;
+    border-radius: 4px;
+    padding: 10px;
+    background: #fff none repeat scroll 0 0;
+}
+
+.nav-tabs {
+    border-bottom: none;
+}
+
+.btnBackPreviousPage {
+    height: 40px;
+}
+
+.aspBoxText {
+    font-weight: bold;
+}
+
+.aspBoxAlign {
+    padding-top: 5px;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    text-align: center;
+    z-index: 1234;
+    overflow: auto;
+    width: 100px;
+    height: 102px;
+}
+
+.samewidthbutton {
+    width: 85px;
+}
+
+/*copy from HMStyle.css*/
+.totalAmout {
+    margin-left: 10px;
+    font-size: small;
+    color: Black;
+    height: 20px;
+    font-weight: bold;
+}
+
+.FloorRoomManagementDiv {
+    width: 33%;
+    background-color: #07BA28;
+    color: White;
+    text-align: center;
+}
+
+.RoomReservedDiv {
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px; /*background-image: url("/StyleSheet/images/OutOfOrder.jpg");*/
+    background-color: Blue;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.RoomPossibleVacantDiv {
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #F9966B;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.RoomOutOfOrderDiv {
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: Red;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.RoomOutOfServiceDiv {
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #AC1515;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.RoomOccupaiedDiv {
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #D63CC4;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.RoomTodaysCheckInDiv {
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #FFBF00;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.RoomLongStayingDiv {
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #B45F04;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.RoomVacantDirtyDiv {
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: Gray;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.RoomVacantDiv {
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #07BA28;
+    margin: 2px;
+    cursor: pointer;
+    text-align: center;
+    color: White;
+    font-weight: bold;
+}
+
+.RoomNumberDiv {
+    border: 0px solid #000;
+    float: left;
+    width: 73px;
+    height: 20px;
+    text-align: center;
+    margin: 17px 1px 1px -1px;
+    color: Black;
+}
+
+.RoomNumberWhiteTextDiv {
+    border: 0px solid #000;
+    float: left;
+    width: 73px;
+    height: 20px;
+    text-align: center;
+    margin: 17px 1px 1px -1px;
+    color: White;
+}
+
+.FloorRoomAllocationBGImage {
+    background-image: url("/Images/GraphPaper.jpg");
+    background-repeat: repeat-y repeat-x;
+}
+
+.RestaurantTableAvailableDiv {
+    background-color: #07BA28;
+    color: White;
+    text-align: center;
+}
+
+.RestaurantTableBookedDiv {
+    background-color: #D63CC4;
+    color: White;
+    text-align: center;
+}
+
+.RestaurantTableReservedDiv {
+    background-color: #ED0731;
+    color: White;
+    text-align: center;
+}
+
+.RestaurantItemDiv {
+    border: 1px solid red;
+    float: left;
+    width: 124px;
+    height: 90px;
+    margin: 2px;
+}
+
+.RestaurantItemImage {
+    width: 122px;
+    height: 88px;
+}
+
+.TableNumberDiv {
+    border: 0px solid #000;
+    float: left;
+    width: 73px;
+    height: 20px;
+    text-align: center;
+    margin: 17px 1px 1px -1px;
+    color: White;
+    font-weight: bold;
+}
+
+.draggable {
+    border: 1px solid black;
+    float: left;
+    margin: 2px;
+    position: absolute;
+    cursor: move;
+}
+
+.NotDraggable {
+    border: 1px solid #CCCCCC;
+    float: left;
+    margin: 2px;
+    position: absolute;
+}
+
+.legend {
+    width: 25px;
+    height: 20px;
+    float: left;
+    margin-right: 5px;
+    color: white;
+    text-align: center;
+    padding: 2px;
+    font-size: 10px;
+}
+
+.legendText {
+    width: 113px;
+    color: Black;
+    margin: 5px;
+    float: left;
+    font-weight: bold;
+}
+
+.DivRestaurantItemContainer {
+    /*margin: 2px;*/
+    height: 140px;
+    float: left;
+    padding-left: 4px;
+    width: 130px;
+}
+
+.ItemNameDiv {
+    border: 0px solid #000;
+    float: left; /*width: 135px;*/
+    width: 110px;
+    height: 20px;
+    text-align: center;
+    margin: 8px 1px 1px 5px;
+}
+
+.ItemImageSize {
+    height: 88px;
+    width: 122px;
+}
+
+.DivRoomContainer {
+    margin: 2px;
+    height: 125px; /*height: 105px;*/
+    width: 79px;
+    float: left;
+}
+
+.InHouse {
+    /*background-color: #4C787E;*/
+    background-color: #D63CC4;
+    color: White;
+    /*text-align: center;*/
+}
+.InHouseForCalender
+{
+    /*background-color: #D63CC4;*/
+    color: White;
+    /*text-align: center;*/
+}
+
+.CheckedOut {
+    background-color: #99C68E;
+    color: White;
+    /*text-align: center;*/
+}
+
+.Reservation {
+    /*background-color: #4E8975;*/
+    background-color: #0000FF;
+    color: White;
+    /*text-align: center;*/
+}
+
+.ReservationSettled {
+    /*background-color: #4E8975;*/
+    background-color: Gray;
+    color: White;
+    /*text-align: center;*/
+}
+
+.OutOfOrder {
+    background-color: Red;
+    color: White;
+    text-align: center;
+}
+
+.OutOfService {
+    background-color: #AC1515;
+    color: White;
+    /*text-align: center;*/
+}
+
+.ReservationSettled {
+    /*background-color: #4E8975;*/
+    background-color: Gray;
+    color: White;
+    text-align: center;
+}
+
+.InnBoardIcon {
+    background-repeat: no-repeat; /*height: 22px;*/
+}
+
+.image {
+    width: 200px;
+    height: 200px;
+}
+
+.right {
+    text-align: right;
+    padding-right: 20px;
+}
+
+.form-inline .form-control {
+    display: inherit;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.form-inline .form-group {
+    display: inherit;
+    margin-bottom: 5px;
+    vertical-align: middle;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+    background-color: Black;
+}
+
+/*end of copy from HMStyle.css*/
+/*bootstrap css overwrite*/
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+    margin-left: 0px;
+}
+
+.form-horizontal .checkbox-inline {
+    padding-top: 0px;
+}
+
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+    position: relative;
+}
+
+.label-align {
+    text-align: right;
+}
+/*table
+{
+    width: 100%;
+}*/
+/*end of bootstrap css overwrite*/
+
+#TouchKeypad {
+    height: 440px;
+    width: 410px;
+}
+
+#TouchKeypadResultDiv1 {
+    padding-left: 11px;
+}
+
+.TouchKeypadResult {
+    width: 368px;
+    height: 150px;
+    font-size: 50px;
+    text-align: right;
+    font-weight: bold;
+    color: Black;
+}
+
+/*Keyboard Touch Screen Number Pad CSS*/
+#KeyBoardContainer .ui-keyboard {
+    padding: .3em;
+    position: static;
+    left: 300;
+    top: 0;
+    z-index: 16000;
+}
+
+    #KeyBoardContainer .ui-keyboard div {
+        font-size: 25px;
+    }
+
+#KeyBoardContainer .ui-keyboard-button {
+    height: 50px;
+    min-width: 94px;
+    margin: .15em;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 2em;
+    -moz-user-focus: ignore;
+}
+
+#KeyBoardContainer .ui-keyboard-dec {
+    font-weight: 900;
+}
+
+#KeyBoardContainer .ui-keyboard-bksp {
+    font-weight: 900;
+}
+
+#KeyBoardContainer .ui-state-disabled {
+    border: 1px solid #cccccc;
+}
+
+#KeyBoardContainerQuantityChange .ui-keyboard {
+    padding: .3em;
+    position: static;
+    left: 300;
+    top: 0;
+    z-index: 16000;
+}
+
+    #KeyBoardContainerQuantityChange .ui-keyboard div {
+        font-size: 25px;
+    }
+
+#KeyBoardContainerQuantityChange .ui-keyboard-button {
+    height: 50px;
+    min-width: 115px;
+    margin: .15em;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 2em;
+    -moz-user-focus: ignore;
+}
+
+#KeyBoardContainerQuantityChange .ui-keyboard-dec {
+    font-weight: 900;
+}
+
+#KeyBoardContainerQuantityChange .ui-keyboard-bksp {
+    font-weight: 900;
+}
+
+#KeyBoardContainerQuantityChange .ui-state-disabled {
+    border: 1px solid #cccccc;
+}
+
+#KeyBoardContainerPaxChange .ui-keyboard {
+    padding: .3em;
+    position: static;
+    left: 300;
+    top: 0;
+    z-index: 16000;
+}
+
+    #KeyBoardContainerPaxChange .ui-keyboard div {
+        font-size: 25px;
+    }
+
+#KeyBoardContainerPaxChange .ui-keyboard-button {
+    height: 50px;
+    min-width: 115px;
+    margin: .15em;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 2em;
+    -moz-user-focus: ignore;
+}
+
+#KeyBoardContainerPaxChange .ui-keyboard-dec {
+    font-weight: 900;
+}
+
+#KeyBoardContainerPaxChange .ui-keyboard-bksp {
+    font-weight: 900;
+}
+
+#KeyBoardContainerPaxChange .ui-state-disabled {
+    border: 1px solid #cccccc;
+}
+
+.ui-keyboard-input-current {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#TouchKeypadForPax1 .ui-state-default {
+    border: 1px solid #ccc;
+    font-weight: bold;
+    color: #1c94c4;
+    background: #f6f6f6 url("/Images/keyboardbackground.png") 50% 50% repeat-x;
+}
+
+.carousel-control {
+    width: 5%;
+}
+
+#KeyBoardVarificationContainer .ui-keyboard {
+    padding: .3em;
+    position: static;
+    left: 300;
+    top: 0;
+    z-index: 16000;
+}
+
+    #KeyBoardVarificationContainer .ui-keyboard div {
+        font-size: 20px;
+    }
+
+#KeyBoardVarificationContainer .ui-keyboard-button {
+    height: 50px;
+    min-width: 50px;
+    margin: .15em;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 2em;
+    -moz-user-focus: ignore;
+}
+
+#KeyBoardVarificationContainer .ui-keyboard-dec {
+    font-weight: 100;
+}
+
+#KeyBoardVarificationContainer .ui-keyboard-bksp {
+    font-weight: 100;
+}
+
+#KeyBoardVarificationContainer .ui-state-disabled {
+    border: 1px solid #cccccc;
+}
+
+#txtUserPassword_keyboard .ui-keyboard-button {
+    height: 50px;
+    min-width: 120px;
+    margin: .15em;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 2em;
+    -moz-user-focus: ignore;
+}
+
+
+/*.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active
+{
+    border: 1px solid #d8dcdf;
+    font-weight: bold;
+    color: white;
+    background: url(/StyleSheet/css/images/header.jpg) 50% 50% repeat-x;
+}*/
+.ui-accordion .ui-accordion-content {
+    padding: 5px;
+}
+
+
+/* Tree Customization CSS */
+
+.MenuItemTouchTree a {
+    display: block;
+    width: 98%;
+    color: #fff;
+}
+
+    .MenuItemTouchTree a:link, a:visited {
+        font-weight: bold;
+        display: block;
+    }
+
+    .MenuItemTouchTree a:hover, a:visited {
+        color: #D7E2E9;
+        font-weight: bold;
+        background-color: #244559;
+        display: block;
+    }
+
+.rootNodeTouch {
+    clear: both;
+    font-size: 13px;
+    width: 98%;
+    padding: 5px;
+    background-color: #577990;
+    border-radius: 4px;
+}
+
+.parentNodeTouch {
+    height: 20px;
+}
+
+.treeNodeTouch {
+    background-color: #577990;
+    width: 98%;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.leafNodeTouch {
+    padding: 4px;
+    background-color: #577990;
+    /*width: 95%;*/
+    border-radius: 4px;
+}
+
+.hoverNodeTouch {
+    font-weight: bolder;
+    width: 98%;
+    border-radius: 4px;
+}
+
+.selectNodeTouch {
+    background-color: #5297C3; /*0D629C 5784B5 0A3E60*/
+    width: 98%;
+    border-radius: 4px;
+}
+
+.navbar .nav > li > span {
+    float: none;
+    padding: 10px 5px;
+    text-decoration: none;
+}
+
+#DocDiv > img {
+    height: 100%;
+    width: 100%;
+}
+
+#SigDiv > img {
+    height: 100%;
+    width: 100%;
+}
+
+
+#RoomStatusJustified .thumbnail {
+    background-color: #1B2F3D;
+    margin-bottom:0px;
+    color: #fff;
+    height: 90px;
+}
+
+    #RoomStatusJustified .thumbnail > span {
+        font-size: x-large;
+    }
+
+    #RoomStatusJustified .thumbnail .caption {
+        /*background-color: #154360;*/
+        color: #fff;
+        padding: 5px;
+        height: 45px;
+        border-radius: 4px;
+    }
+
+/* Page Slide */
+
+#StatisticsDivContainer {
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/bgnoise.png") repeat scroll 0 0;
+    width: 250px;
+    border: 1px double #274459;
+    border-radius: 2px;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    display: none;
+    z-index: 1000;
+}
+
+    #StatisticsDivContainer .closebtn {
+        top: 0px;
+        left: 10px;
+        font-size: 13px;
+        border: 1px solid;
+        border-radius: 4px;
+        padding: 3px;
+        display: block;
+        color: #fff;
+        text-decoration: none;
+        background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/box-head-active.jpg") repeat scroll 0 0;
+    }
+
+.StatisticsQuantity {
+    font-size: 25px;
+    /*margin-top: 5px;*/
+    /*margin-bottom: 5px;*/
+    color: #fc4902;
+}
+
+.StatisticsItem {
+    background-color: #f2f2f2;
+    border: 1px solid black;
+}
+
+#discountTable .table{
+    margin-bottom: 0px;
+}
+
+#discountTable tbody > tr > td{
+    border:none;
+}
+
+/*
+    Hide Class
+*/
+.HideTag {
+    display:none;
+}
+/*
+    DataTable related custom css
+*/
+.mycheckbox input[type="checkbox"] {
+    margin-right: 10px;
+    padding-top: 5px;
+}
+
+table.dataTable thead {
+    color: White;
+    background-color: #44545E;
+    font-weight: bold;
+}
+
+    table.dataTable thead th,
+    table.dataTable thead td {
+        border-bottom: 1px solid #ddd;
+    }
+
+table.dataTable.no-footer, .dataTables_wrapper.no-footer .dataTables_scrollBody {
+    border-bottom: 1px solid #ddd;
+}
+
+table.dataTable td.dataTables_empty {
+    text-align: left;
+    background-color: #E3EAEB !important;
+}
+.ContentDiv {
+    width: 500px;
+    height: 300px;
+}
+.tooltip_title {
+    width: 100%;
+}
+.title_label {
+
+}
+.title_data {
+
+}
+.body_label {
+
+}
+.body_data {
+
+}
+.footer_label {
+
+}
+.footer_data {
+
+}
+.tooltip_body {
+    width: 100%;
+}
+.tooltip_footer {
+    width: 100%;
+}
+.ContentDiv {
+    width: 510px;
+    height: 110px;
+    max-width: 410px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.ContentDivPresent {
+    height: 110px;
+    max-width: 510px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.ContentTable {
+    width: 400px;
+    max-width: 300px;
+    margin: 0px;
+    padding: 0px;
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+.modal_label {
+    width: 55px;
+    height: 25px;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.modal_data {
+    width: 220px;
+    height: 25px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.ModalTitle {
+    background-color: #55b567;
+    height: 25px;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 5px;
+    text-align: left;
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background: rgba(0, 0, 0, 0) url(/StyleSheet/css/images/header.jpg) repeat-x scroll 50% 50%;
+}
+
+.highlight {
+    padding: 0px;
+    margin: 0px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(50, 50, 50, 0.2), 0 6px 20px 0 rgba(100, 100, 100, 0.19);
+}
+
+.ui-tooltip {
+    border: none;
+    padding: 0;
+    opacity: 1;
+}
+
+.ui-tooltip-content {
+    position: relative;
+}
+
+    .ui-tooltip-content::after {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        display: block;
+        width: 0;
+    }
+
+.bottom_tooltip .ui-tooltip-content::after {
+    top: -10px;
+    left: 140px;
+    border-color: #fff transparent;
+    border-width: 0 10px 10px;
+}

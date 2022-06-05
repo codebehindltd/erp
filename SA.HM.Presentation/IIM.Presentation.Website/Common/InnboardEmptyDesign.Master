@@ -1,0 +1,149 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="InnboardEmptyDesign.master.cs" Inherits="HotelManagement.Presentation.Website.Common.InnboardEmptyDesign" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    
+    <link href="/Content/bootstrap.css" type="text/css" rel="stylesheet" />
+    <link href="/StyleSheet/lib/font-awesome/css/font-awesome.css" type="text/css" rel="stylesheet" />
+    <link href="/StyleSheet/css/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+    <link href="/StyleSheet/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/css/select2.css" rel="stylesheet" type="text/css" />
+    <link href="/Scripts/uploadify.css" rel="stylesheet" type="text/css" />
+    <link href="/StyleSheet/css/toastr.css" rel="stylesheet" type="text/css" />
+    <link href="/JSLibrary/JqueryTouchKeyBoard/css/keyboard.css" rel="Stylesheet" type="text/css" />
+    <link href="/StyleSheet/menucss/menuStyle.css" rel="stylesheet" type="text/css" />
+    <script src="/Scripts/jquery-3.1.0.js" type="text/javascript"></script>
+
+    <script src="/Scripts/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/StyleSheet/js/jquery.flexslider.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery-ui.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.ui.timepicker.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.uploadify-3.1.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.uploadify-3.1.min.js" type="text/javascript"></script>
+    <script src="/JSLibrary/JqueryTouchKeyBoard/js/jquery.keyboard.js" type="text/javascript"></script>
+    <script src="/Scripts/underscore.js" type="text/javascript"></script>
+    <script src="/Scripts/toastr.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery-sortable.js" type="text/javascript"></script>
+    <script src="/Scripts/Highcharts-4.2.1/js/highcharts.js" type="text/javascript"></script>
+    <script src="/Scripts/js.cookie.js" type="text/javascript"></script>
+    <script src="/Scripts/select2.js"></script>
+    <link href="/Scripts/JqueryAlert/jquery-confirm.min.css" rel="stylesheet" />
+    <script src="/Scripts/JqueryAlert/jquery-confirm.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Content/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/dataTables.bootstrap.min.css" />    
+    <script type="text/javascript" src="/Scripts/datatables.min.js"></script>
+    <script src="../../JSLibrary/TableHeadFixer/tableHeadFixer.js"></script>
+    <script src="/Scripts/moment.js"></script>
+    <script src="/Scripts/json.date-extensions.js"></script>
+    <script src="/Scripts/HMCommonScript.js" type="text/javascript"></script>
+    <script src="/Scripts/HMCommonScriptNew.js" type="text/javascript"></script>
+    <link href="/Content/SiteStyle.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/Scripts/subjx.js"></script>
+    <link rel="stylesheet" href="/Content/subjx.css" />
+
+    <script type="text/javascript">
+        var innBoarDateFormat = "", innBoardTimeFormat = "", is12HourFormat = true;
+        var innBoardOldMneuEnable = "";
+        var DayOpenDate = "";
+
+        innBoarDateFormat = '<%=innBoardDateFormat%>';
+        innBoardTimeFormat = '<%=innBoardTimeFormat%>';
+        innBoardOldMneuEnable = '<%=isOldMenuEnable%>';
+        DayOpenDate = '<%=dayOpenDate%>';
+        var UserInfoFromDB = null;
+        if (innBoardTimeFormat != "") {
+            var m = innBoardTimeFormat.substring(0, 2);
+
+            if (m == "HH") {
+                is12HourFormat = false;
+            }
+            else {
+                is12HourFormat = true;
+            }
+        }
+        $(document).ready(function () {
+
+            
+            if ($("#hfUserInfoObj").val() !== "") {
+                UserInfoFromDB = JSON.parse($("#hfUserInfoObj").val());
+                $("#hfUserInfoObj").val("");
+            }
+
+            $(document).on('keypress', function (e) {
+
+                var code = (e.keyCode ? e.keyCode : e.which);
+                var currentClassName = "", idName = "";
+                
+
+                if (typeof $(e.target).attr('class') != 'undefined') {
+                    currentClassName = $(e.target).attr('class').split(' ')[0];
+                }
+
+                if (typeof $(e.target).attr('id') != 'undefined') {
+                    idName = $(e.target).attr('id');
+                }
+
+                if (code == 13 && document.getElementById(idName).tagName != "TEXTAREA") {
+
+                    if (currentClassName != "TransactionalButton" ) {
+                        e.preventDefault();
+
+                        if (idName == "txtRoomSearchGlobal") {
+                            RoomSearchAndShowGlobal();
+                        }
+                        var focusable = $(':focusable');
+                        var index = focusable.index(e.target) + 1;
+                        //var inputs = $(this).closest('form').find(':focusable');
+                        //inputs.eq(inputs.index(this) + 1).focus();
+                        if (index >= focusable.length) index = 0;
+                        focusable.eq(index).focus();
+                    }
+                    else {
+                        return true;
+                    }
+                    return false;
+                }
+
+            });
+
+            let file = document.getElementById("frmPrint");
+            let fileName = file != null ? file.getAttribute("src") : '';
+
+            if (fileName) {
+
+                var iFrameControl = document.getElementById("frmPrint");
+                if (CommonHelper.BrowserType().chrome)
+                    iFrameControl.contentWindow.print();
+                else (CommonHelper.BrowserType().mozilla)
+                {
+                    let currentUrl = window.location.href;
+                    currentUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+                    currentUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+                    currentUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+                    fileName = fileName.substring(fileName.indexOf('/') + 1, fileName.length);
+                    fileName = fileName.substring(fileName.indexOf('/'), fileName.length);
+                    fileName = currentUrl + fileName;
+                    print_pdf(fileName);
+                }
+            }
+        });
+    </script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body style="background: white;">
+    <form id="form1" runat="server" class="panel panel-body">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
+        
+        <asp:HiddenField ID="InnboardMessageHiddenField" runat="server" Value="" ClientIDMode="Static" />
+        <asp:HiddenField ID="hfUserInfoObj" runat="server" Value="" ClientIDMode="Static" />
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>

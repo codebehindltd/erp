@@ -1,0 +1,624 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2896DED6-9814-4216-A9FB-D0FC8C450CC1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InnboardDomain</RootNamespace>
+    <AssemblyName>InnboardDomain</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\CommonServiceLocator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unity.Abstractions, Version=3.3.1.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Configuration, Version=5.2.5.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.8.11.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.Container.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Interception, Version=5.5.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.Interception.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Interception.Configuration, Version=5.1.7.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.Interception.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.RegistrationByConvention, Version=2.1.9.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.RegistrationByConvention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.ServiceLocation, Version=2.1.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cryptography.cs" />
+    <Compile Include="Interfaces\IBanquetReservation.cs" />
+    <Compile Include="Interfaces\IBanquetReservationClassificationDiscount.cs" />
+    <Compile Include="Interfaces\IBanquetReservationDetail.cs" />
+    <Compile Include="Interfaces\ICommonCostCenter.cs" />
+    <Compile Include="Interfaces\IGenericRepository.cs" />
+    <Compile Include="Interfaces\IGLLedgerDetails.cs" />
+    <Compile Include="Interfaces\IGLLedgerMaster.cs" />
+    <Compile Include="Interfaces\IGLVoucherApprovedInfo.cs" />
+    <Compile Include="Interfaces\IHotelCompanyPaymentLedger.cs" />
+    <Compile Include="Interfaces\IHotelGuestBillApproved.cs" />
+    <Compile Include="Interfaces\IHotelGuestBillPayment.cs" />
+    <Compile Include="Interfaces\IHotelGuestCompany.cs" />
+    <Compile Include="Interfaces\IHotelGuestDayLetCheckOut.cs" />
+    <Compile Include="Interfaces\IHotelGuestExtraServiceBillApproved.cs" />
+    <Compile Include="Interfaces\IHotelGuestHouseCheckOut.cs" />
+    <Compile Include="Interfaces\IHotelGuestInformation.cs" />
+    <Compile Include="Interfaces\IHotelGuestInformationOnline.cs" />
+    <Compile Include="Interfaces\IHotelGuestRegistration.cs" />
+    <Compile Include="Interfaces\IHotelGuestServiceBill.cs" />
+    <Compile Include="Interfaces\IHotelRegistrationAireportPickupDrop.cs" />
+    <Compile Include="Interfaces\IHotelRoomNumber.cs" />
+    <Compile Include="Interfaces\IHotelRoomRegistration.cs" />
+    <Compile Include="Interfaces\IHotelRoomReservation.cs" />
+    <Compile Include="Interfaces\IHotelRoomReservationDetailOnline.cs" />
+    <Compile Include="Interfaces\IHotelRoomReservationOnline.cs" />
+    <Compile Include="Interfaces\IHotelRoomType.cs" />
+    <Compile Include="Interfaces\IInvCategory.cs" />
+    <Compile Include="Interfaces\IInvCategoryCostcenterMapping.cs" />
+    <Compile Include="Interfaces\IInvCogsAccountVsItemCategoryMappping.cs" />
+    <Compile Include="Interfaces\IInvInventoryAccountVsItemCategoryMappping.cs" />
+    <Compile Include="Interfaces\IInvItem.cs" />
+    <Compile Include="Interfaces\IInvItemClassification.cs" />
+    <Compile Include="Interfaces\IInvItemClassificationCostCenterMapping.cs" />
+    <Compile Include="Interfaces\IInvItemCostCenterMapping.cs" />
+    <Compile Include="Interfaces\IInvLocation.cs" />
+    <Compile Include="Interfaces\IInvLocationCostcenterMapping.cs" />
+    <Compile Include="Interfaces\IInvUnitConversion.cs" />
+    <Compile Include="Interfaces\IInvUnitHead.cs" />
+    <Compile Include="Interfaces\IRestaurantBill.cs" />
+    <Compile Include="Interfaces\IRestaurantBillClassificationDiscount.cs" />
+    <Compile Include="Interfaces\IRestaurantBillDetail.cs" />
+    <Compile Include="Interfaces\IRestaurantKotBillDetail.cs" />
+    <Compile Include="Interfaces\IRestaurantKotBillMaster.cs" />
+    <Compile Include="Interfaces\IRestaurantKotSpecialRemarksDetail.cs" />
+    <Compile Include="Interfaces\IRestaurantRecipeDetail.cs" />
+    <Compile Include="Models\BanquetBillPayment.cs" />
+    <Compile Include="Models\BanquetInformation.cs" />
+    <Compile Include="Models\BanquetOccessionType.cs" />
+    <Compile Include="Models\BanquetRefference.cs" />
+    <Compile Include="Models\BanquetRequisites.cs" />
+    <Compile Include="Models\BanquetReservation.cs" />
+    <Compile Include="Models\BanquetReservationBillPayment.cs" />
+    <Compile Include="Models\BanquetReservationClassificationDiscount.cs" />
+    <Compile Include="Models\BanquetReservationDetail.cs" />
+    <Compile Include="Models\BanquetResettlementLog.cs" />
+    <Compile Include="Models\BanquetSeatingPlan.cs" />
+    <Compile Include="Models\BanquetSync.cs" />
+    <Compile Include="Models\CgsMonthlyTransaction.cs" />
+    <Compile Include="Models\CgsTransactionHead.cs" />
+    <Compile Include="Models\CommonBank.cs" />
+    <Compile Include="Models\CommonBusinessPromotion.cs" />
+    <Compile Include="Models\CommonBusinessPromotionDetail.cs" />
+    <Compile Include="Models\CommonCheckedByApprovedBy.cs" />
+    <Compile Include="Models\CommonCity.cs" />
+    <Compile Include="Models\CommonCompanyBank.cs" />
+    <Compile Include="Models\CommonCompanyProfile.cs" />
+    <Compile Include="Models\CommonCostCenter.cs" />
+    <Compile Include="Models\CommonCountries.cs" />
+    <Compile Include="Models\CommonCurrency.cs" />
+    <Compile Include="Models\CommonCurrencyConversion.cs" />
+    <Compile Include="Models\CommonCurrencyTransaction.cs" />
+    <Compile Include="Models\CommonCustomFieldData.cs" />
+    <Compile Include="Models\CommonDeleteLedgerLog.cs" />
+    <Compile Include="Models\CommonDocuments.cs" />
+    <Compile Include="Models\CommonFormWiseFieldSetup.cs" />
+    <Compile Include="Models\CommonIndustry.cs" />
+    <Compile Include="Models\CommonLocation.cs" />
+    <Compile Include="Models\CommonMessage.cs" />
+    <Compile Include="Models\CommonMessageDetails.cs" />
+    <Compile Include="Models\CommonModuleName.cs" />
+    <Compile Include="Models\CommonModuleType.cs" />
+    <Compile Include="Models\CommonPaymentMode.cs" />
+    <Compile Include="Models\CommonPrinterInfo.cs" />
+    <Compile Include="Models\CommonProfession.cs" />
+    <Compile Include="Models\CommonReportConfigDetails.cs" />
+    <Compile Include="Models\CommonReportConfigMaster.cs" />
+    <Compile Include="Models\CommonSetup.cs" />
+    <Compile Include="Models\DashboardItem.cs" />
+    <Compile Include="Models\DashboardManagement.cs" />
+    <Compile Include="Models\DealImpFeedback.cs" />
+    <Compile Include="Models\DiscountConfigSetup.cs" />
+    <Compile Include="Models\DiscountDetail.cs" />
+    <Compile Include="Models\DiscountMaster.cs" />
+    <Compile Include="Models\GatePass.cs" />
+    <Compile Include="Models\GatePassDetails.cs" />
+    <Compile Include="Models\GLAccountConfiguration.cs" />
+    <Compile Include="Models\GLAccountsMapping.cs" />
+    <Compile Include="Models\GLAccountTypeSetup.cs" />
+    <Compile Include="Models\GLBudget.cs" />
+    <Compile Include="Models\GLBudgetDetails.cs" />
+    <Compile Include="Models\GLCashFlowGroupHead.cs" />
+    <Compile Include="Models\GLCashFlowHead.cs" />
+    <Compile Include="Models\GLCashFlowSetup.cs" />
+    <Compile Include="Models\GLCommonSetup.cs" />
+    <Compile Include="Models\GLCompany.cs" />
+    <Compile Include="Models\GLDealMaster.cs" />
+    <Compile Include="Models\GLDonor.cs" />
+    <Compile Include="Models\GLFiscalYear.cs" />
+    <Compile Include="Models\GLFiscalYearClosingDetails.cs" />
+    <Compile Include="Models\GLFiscalYearClosingMaster.cs" />
+    <Compile Include="Models\GLFixedAssets.cs" />
+    <Compile Include="Models\GLGeneralLedger.cs" />
+    <Compile Include="Models\GLLedger.cs" />
+    <Compile Include="Models\GLLedgerDetails.cs" />
+    <Compile Include="Models\GLLedgerMaster.cs" />
+    <Compile Include="Models\GLNodeMatrix.cs" />
+    <Compile Include="Models\GLNotesConfiguration.cs" />
+    <Compile Include="Models\GLProfitLossGroupHead.cs" />
+    <Compile Include="Models\GLProfitLossHead.cs" />
+    <Compile Include="Models\GLProfitLossSetup.cs" />
+    <Compile Include="Models\GLProject.cs" />
+    <Compile Include="Models\GLReportConfiguration.cs" />
+    <Compile Include="Models\GLReportConfigurationDetail.cs" />
+    <Compile Include="Models\GLRuleBreak.cs" />
+    <Compile Include="Models\GLVoucherApprovedInfo.cs" />
+    <Compile Include="Models\HotelAirlineInformation.cs" />
+    <Compile Include="Models\HotelCompanyBillGeneration.cs" />
+    <Compile Include="Models\HotelCompanyBillGenerationDetails.cs" />
+    <Compile Include="Models\HotelCompanyContactDetails.cs" />
+    <Compile Include="Models\HotelCompanyPayment.cs" />
+    <Compile Include="Models\HotelCompanyPaymentDetails.cs" />
+    <Compile Include="Models\HotelCompanyPaymentLedger.cs" />
+    <Compile Include="Models\HotelCompanyPaymentLedgerClosingDetails.cs" />
+    <Compile Include="Models\HotelCompanyPaymentLedgerClosingMaster.cs" />
+    <Compile Include="Models\HotelCompanyWiseDiscountPolicy.cs" />
+    <Compile Include="Models\HotelComplementaryItem.cs" />
+    <Compile Include="Models\HotelCurrencyConversion.cs" />
+    <Compile Include="Models\HotelDailyRoomCondition.cs" />
+    <Compile Include="Models\HotelDayClose.cs" />
+    <Compile Include="Models\HotelDayProcessing.cs" />
+    <Compile Include="Models\HotelEmpTaskAssignment.cs" />
+    <Compile Include="Models\HotelFloor.cs" />
+    <Compile Include="Models\HotelFloorBlock.cs" />
+    <Compile Include="Models\HotelFloorManagement.cs" />
+    <Compile Include="Models\HotelGuestBillApproved.cs" />
+    <Compile Include="Models\HotelGuestBillPayment.cs" />
+    <Compile Include="Models\HotelGuestBirthdayNotification.cs" />
+    <Compile Include="Models\HotelGuestCompany.cs" />
+    <Compile Include="Models\HotelGuestDayLetCheckOut.cs" />
+    <Compile Include="Models\HotelGuestDocuments.cs" />
+    <Compile Include="Models\HotelGuestExtraServiceBillApproved.cs" />
+    <Compile Include="Models\HotelGuestHouseCheckOut.cs" />
+    <Compile Include="Utility\CommonHelper.cs" />
+    <Compile Include="ViewModel\HotelGuestExtraServiceBillApprovedView.cs" />
+    <Compile Include="Models\HotelGuestInformation.cs" />
+    <Compile Include="Models\HotelGuestInformationOnline.cs" />
+    <Compile Include="Models\HotelGuestPreference.cs" />
+    <Compile Include="Models\HotelGuestPreferenceMapping.cs" />
+    <Compile Include="Models\HotelGuestReference.cs" />
+    <Compile Include="Models\HotelGuestRegistration.cs" />
+    <Compile Include="Models\HotelGuestReservation.cs" />
+    <Compile Include="Models\HotelGuestReservationOnline.cs" />
+    <Compile Include="Models\HotelGuestRoomShiftInfo.cs" />
+    <Compile Include="Models\HotelGuestServiceBill.cs" />
+    <Compile Include="Models\HotelGuestServiceBillApproved.cs" />
+    <Compile Include="Models\HotelGuestServiceInfo.cs" />
+    <Compile Include="Models\HotelHKRoomStatus.cs" />
+    <Compile Include="Models\HotelLinkedRoomDetails.cs" />
+    <Compile Include="Models\HotelLinkedRoomMaster.cs" />
+    <Compile Include="Models\HotelManagerReportInfo.cs" />
+    <Compile Include="Models\HotelMarketSegmentWiseSalesSummary.cs" />
+    <Compile Include="Models\HotelMonthToDateInfo.cs" />
+    <Compile Include="Models\HotelOnlineRoomReservation.cs" />
+    <Compile Include="Models\HotelOnlineRoomReservationDetail.cs" />
+    <Compile Include="Models\HotelPaymentSummary.cs" />
+    <Compile Include="Models\HotelRegistrationAireportPickupDrop.cs" />
+    <Compile Include="Models\HotelRegistrationComplementaryItem.cs" />
+    <Compile Include="Models\HotelRegistrationServiceInfo.cs" />
+    <Compile Include="Models\HotelReservationAireportPickupDrop.cs" />
+    <Compile Include="Models\HotelReservationBillPayment.cs" />
+    <Compile Include="Models\HotelReservationComplementaryItem.cs" />
+    <Compile Include="Models\HotelReservationNoShowProcess.cs" />
+    <Compile Include="Models\HotelReservationServiceInfo.cs" />
+    <Compile Include="Models\HotelRoomCondition.cs" />
+    <Compile Include="Models\HotelRoomDiscrepancy.cs" />
+    <Compile Include="Models\HotelRoomFeatures.cs" />
+    <Compile Include="Models\HotelRoomFeaturesInfo.cs" />
+    <Compile Include="Models\HotelRoomInventory.cs" />
+    <Compile Include="Models\HotelRoomInventoryDetails.cs" />
+    <Compile Include="Models\HotelRoomLogFile.cs" />
+    <Compile Include="Models\HotelRoomNumber.cs" />
+    <Compile Include="Models\HotelRoomOwner.cs" />
+    <Compile Include="Models\HotelRoomOwnerDetail.cs" />
+    <Compile Include="Models\HotelRoomRegistration.cs" />
+    <Compile Include="Models\HotelRoomRegistrationDetail.cs" />
+    <Compile Include="Models\HotelRoomReservation.cs" />
+    <Compile Include="Models\HotelRoomReservationDetail.cs" />
+    <Compile Include="Models\HotelRoomReservationDetailOnline.cs" />
+    <Compile Include="Models\HotelRoomReservationOnline.cs" />
+    <Compile Include="Models\HotelRoomReservationSummary.cs" />
+    <Compile Include="Models\HotelRoomStatus.cs" />
+    <Compile Include="Models\HotelRoomStatusPossiblePath.cs" />
+    <Compile Include="Models\HotelRoomStatusPossiblePathHead.cs" />
+    <Compile Include="Models\HotelRoomStopChargePosting.cs" />
+    <Compile Include="Models\HotelRoomType.cs" />
+    <Compile Include="Models\HotelSalesSummary.cs" />
+    <Compile Include="Models\HotelSegmentHead.cs" />
+    <Compile Include="Models\HotelSegmentRateChart.cs" />
+    <Compile Include="Models\HotelServiceBillTransfered.cs" />
+    <Compile Include="Models\HotelStock.cs" />
+    <Compile Include="Models\HotelTaskAssignmentRoomWise.cs" />
+    <Compile Include="Models\HotelTaskAssignmentToEmployee.cs" />
+    <Compile Include="Models\InvCategory.cs" />
+    <Compile Include="Models\InvCategoryCostCenterMapping.cs" />
+    <Compile Include="Models\InvCogsAccountVsItemCategoryMappping.cs" />
+    <Compile Include="Models\InvCogsClosing.cs" />
+    <Compile Include="Models\InvCostCenterNDineTimeWiseItemTransaction.cs" />
+    <Compile Include="Models\InvDefaultClassificationConfiguration.cs" />
+    <Compile Include="Models\InvDineTimeWiseItemTransaction.cs" />
+    <Compile Include="Models\InvDineTimeWiseItemTransactionDetails.cs" />
+    <Compile Include="Models\InvDineTimeWisePaymentDetails.cs" />
+    <Compile Include="Models\InvInventoryAccountVsItemCategoryMappping.cs" />
+    <Compile Include="Models\InvItem.cs" />
+    <Compile Include="Models\InvItemClassification.cs" />
+    <Compile Include="Models\InvItemClassificationCostCenterMapping.cs" />
+    <Compile Include="Models\InvItemCostCenterMapping.cs" />
+    <Compile Include="Models\InvItemDetails.cs" />
+    <Compile Include="Models\InvItemSpecialRemarks.cs" />
+    <Compile Include="Models\InvItemStockAdjustment.cs" />
+    <Compile Include="Models\InvItemStockAdjustmentDetails.cs" />
+    <Compile Include="Models\InvItemStockInformation.cs" />
+    <Compile Include="Models\InvItemStockSerialInformation.cs" />
+    <Compile Include="Models\InvItemStockVariance.cs" />
+    <Compile Include="Models\InvItemStockVarianceDetails.cs" />
+    <Compile Include="Models\InvItemSupplierMapping.cs" />
+    <Compile Include="Models\InvItemTransaction.cs" />
+    <Compile Include="Models\InvItemTransactionDetails.cs" />
+    <Compile Include="Models\InvItemTransactionHistory.cs" />
+    <Compile Include="Models\InvItemTransactionLog.cs" />
+    <Compile Include="Models\InvItemTransactionLogSummary.cs" />
+    <Compile Include="Models\InvItemTransactionPaymentDetails.cs" />
+    <Compile Include="Models\InvItemTransactionSerialHistory.cs" />
+    <Compile Include="Models\InvLocation.cs" />
+    <Compile Include="Models\InvLocationCostCenterMapping.cs" />
+    <Compile Include="Models\InvManufacturer.cs" />
+    <Compile Include="Models\InvRecipeDeductionDetails.cs" />
+    <Compile Include="Models\InvServiceBandwidth.cs" />
+    <Compile Include="Models\InvServicePackage.cs" />
+    <Compile Include="Models\InvServicePriceMatrix.cs" />
+    <Compile Include="Models\InvTransactionMode.cs" />
+    <Compile Include="Models\InvUnitConversion.cs" />
+    <Compile Include="Models\InvUnitHead.cs" />
+    <Compile Include="Models\InvUserGroupCostCenterMapping.cs" />
+    <Compile Include="Models\LCInformation.cs" />
+    <Compile Include="Models\LCInformationDetail.cs" />
+    <Compile Include="Models\LCOverHeadExpense.cs" />
+    <Compile Include="Models\LCOverHeadName.cs" />
+    <Compile Include="Models\LCPayment.cs" />
+    <Compile Include="Models\LCPaymentLedger.cs" />
+    <Compile Include="Models\MemberPaymentConfiguration.cs" />
+    <Compile Include="Models\MembershipPointDetails.cs" />
+    <Compile Include="Models\MemMemberBasics.cs" />
+    <Compile Include="Models\MemMemberFamilyMember.cs" />
+    <Compile Include="Models\MemMemberReference.cs" />
+    <Compile Include="Models\MemMemberType.cs" />
+    <Compile Include="Models\MenuGroupNLinkIcon.cs" />
+    <Compile Include="Models\PayrollAllowanceDeductionHead.cs" />
+    <Compile Include="Models\PayrollApplicantResult.cs" />
+    <Compile Include="Models\PayrollAppraisalEvalutionBy.cs" />
+    <Compile Include="Models\PayrollAppraisalEvalutionRatingFactorDetails.cs" />
+    <Compile Include="Models\PayrollAppraisalMarksIndicator.cs" />
+    <Compile Include="Models\PayrollAppraisalRatingFactor.cs" />
+    <Compile Include="Models\PayrollAppraisalRatingScale.cs" />
+    <Compile Include="Models\PayrollAttendanceDevice.cs" />
+    <Compile Include="Models\PayrollAttendanceEventHead.cs" />
+    <Compile Include="Models\PayrollBenefitHead.cs" />
+    <Compile Include="Models\PayrollBestEmployeeNomination.cs" />
+    <Compile Include="Models\PayrollBestEmployeeNominationDetails.cs" />
+    <Compile Include="Models\PayrollBonusSetting.cs" />
+    <Compile Include="Models\PayrollDepartment.cs" />
+    <Compile Include="Models\PayrollDesignation.cs" />
+    <Compile Include="Models\PayrollDisciplinaryAction.cs" />
+    <Compile Include="Models\PayrollDisciplinaryActionReason.cs" />
+    <Compile Include="Models\PayrollDisciplinaryActionType.cs" />
+    <Compile Include="Models\PayrollDonor.cs" />
+    <Compile Include="Models\PayrollEducationLevel.cs" />
+    <Compile Include="Models\PayrollEmpAdvanceTaken.cs" />
+    <Compile Include="Models\PayrollEmpAllowanceDeduction.cs" />
+    <Compile Include="Models\PayrollEmpAppraisalEvalution.cs" />
+    <Compile Include="Models\PayrollEmpAttendance.cs" />
+    <Compile Include="Models\PayrollEmpAttendanceLogSuprima.cs" />
+    <Compile Include="Models\PayrollEmpBankInfo.cs" />
+    <Compile Include="Models\PayrollEmpBenefit.cs" />
+    <Compile Include="Models\PayrollEmpCareerInfo.cs" />
+    <Compile Include="Models\PayrollEmpCareerTraining.cs" />
+    <Compile Include="Models\PayrollEmpDependent.cs" />
+    <Compile Include="Models\PayrollEmpDistrict.cs" />
+    <Compile Include="Models\PayrollEmpDivision.cs" />
+    <Compile Include="Models\PayrollEmpEducation.cs" />
+    <Compile Include="Models\PayrollEmpExperience.cs" />
+    <Compile Include="Models\PayrollEmpGrade.cs" />
+    <Compile Include="Models\PayrollEmpGratuity.cs" />
+    <Compile Include="Models\PayrollEmpIncrement.cs" />
+    <Compile Include="Models\PayrollEmpLanguage.cs" />
+    <Compile Include="Models\PayrollEmpLastMonthBenifitsPayment.cs" />
+    <Compile Include="Models\PayrollEmpLeaveInformation.cs" />
+    <Compile Include="Models\PayrollEmpLoan.cs" />
+    <Compile Include="Models\PayrollEmployee.cs" />
+    <Compile Include="Models\PayrollEmployeeBillGeneration.cs" />
+    <Compile Include="Models\PayrollEmployeeBillGenerationDetails.cs" />
+    <Compile Include="Models\PayrollEmployeePayment.cs" />
+    <Compile Include="Models\PayrollEmployeePaymentDetails.cs" />
+    <Compile Include="Models\PayrollEmployeePaymentLedger.cs" />
+    <Compile Include="Models\PayrollEmployeePaymentLedgerClosingDetails.cs" />
+    <Compile Include="Models\PayrollEmployeePaymentLedgerClosingMaster.cs" />
+    <Compile Include="Models\PayrollEmployeeStatus.cs" />
+    <Compile Include="Models\PayrollEmpNomineeInfo.cs" />
+    <Compile Include="Models\PayrollEmpOverTime.cs" />
+    <Compile Include="Models\PayrollEmpOverTimeSetup.cs" />
+    <Compile Include="Models\PayrollEmpPayScale.cs" />
+    <Compile Include="Models\PayrollEmpPF.cs" />
+    <Compile Include="Models\PayrollEmpPromotion.cs" />
+    <Compile Include="Models\PayrollEmpReference.cs" />
+    <Compile Include="Models\PayrollEmpRoster.cs" />
+    <Compile Include="Models\PayrollEmpSalaryProcess.cs" />
+    <Compile Include="Models\PayrollEmpSalaryProcessDetail.cs" />
+    <Compile Include="Models\PayrollEmpSalaryProcessDetailTemp.cs" />
+    <Compile Include="Models\PayrollEmpSalaryProcessTemp.cs" />
+    <Compile Include="Models\PayrollEmpStatusHistory.cs" />
+    <Compile Include="Models\PayrollEmpTax.cs" />
+    <Compile Include="Models\PayrollEmpTaxDeduction.cs" />
+    <Compile Include="Models\PayrollEmpTaxDeductionSetting.cs" />
+    <Compile Include="Models\PayrollEmpTermination.cs" />
+    <Compile Include="Models\PayrollEmpThana.cs" />
+    <Compile Include="Models\PayrollEmpTimeSlab.cs" />
+    <Compile Include="Models\PayrollEmpTimeSlabRoster.cs" />
+    <Compile Include="Models\PayrollEmpTraining.cs" />
+    <Compile Include="Models\PayrollEmpTrainingDetail.cs" />
+    <Compile Include="Models\PayrollEmpTrainingOrganizer.cs" />
+    <Compile Include="Models\PayrollEmpTrainingType.cs" />
+    <Compile Include="Models\PayrollEmpTransfer.cs" />
+    <Compile Include="Models\PayrollEmpType.cs" />
+    <Compile Include="Models\PayrollEmpWorkStation.cs" />
+    <Compile Include="Models\PayrollEmpYearlyLeave.cs" />
+    <Compile Include="Models\PayrollGratutitySettings.cs" />
+    <Compile Include="Models\PayrollHoliday.cs" />
+    <Compile Include="Models\PayrollInterviewType.cs" />
+    <Compile Include="Models\PayrollJobCircular.cs" />
+    <Compile Include="Models\PayrollJobCircularApplicantMapping.cs" />
+    <Compile Include="Models\PayrollLeaveBalanceClosing.cs" />
+    <Compile Include="Models\PayrollLeaveType.cs" />
+    <Compile Include="Models\PayrollLoanCollection.cs" />
+    <Compile Include="Models\PayrollLoanHoldup.cs" />
+    <Compile Include="Models\PayrollLoanSetting.cs" />
+    <Compile Include="Models\PayrollPFSetting.cs" />
+    <Compile Include="Models\PayrollRosterHead.cs" />
+    <Compile Include="Models\PayrollSalaryFormula.cs" />
+    <Compile Include="Models\PayrollSalaryHead.cs" />
+    <Compile Include="Models\PayrollServiceChargeConfiguration.cs" />
+    <Compile Include="Models\PayrollServiceChargeConfigurationDetails.cs" />
+    <Compile Include="Models\PayrollServiceChargeDistribution.cs" />
+    <Compile Include="Models\PayrollServiceChargeDistributionDetails.cs" />
+    <Compile Include="Models\PayrollStaffingBudget.cs" />
+    <Compile Include="Models\PayrollStaffingBudgetDetails.cs" />
+    <Compile Include="Models\PayrollStaffRequisition.cs" />
+    <Compile Include="Models\PayrollStaffRequisitionDetails.cs" />
+    <Compile Include="Models\PayrollTaxSetting.cs" />
+    <Compile Include="Models\PayrollTimeSlabHead.cs" />
+    <Compile Include="Models\PayrollWorkingDay.cs" />
+    <Compile Include="Models\PMFinishedProduct.cs" />
+    <Compile Include="Models\PMFinishedProductDetails.cs" />
+    <Compile Include="Models\PMMemberPaymentLedger.cs" />
+    <Compile Include="Models\PMMemberPaymentLedgerClosingDetails.cs" />
+    <Compile Include="Models\PMMemberPaymentLedgerClosingMaster.cs" />
+    <Compile Include="Models\PMProductOut.cs" />
+    <Compile Include="Models\PMProductOutDetails.cs" />
+    <Compile Include="Models\PMProductOutSerialInfo.cs" />
+    <Compile Include="Models\PMProductReceived.cs" />
+    <Compile Include="Models\PMProductReceivedBillPayment.cs" />
+    <Compile Include="Models\PMProductReceivedDetails.cs" />
+    <Compile Include="Models\PMProductReturn.cs" />
+    <Compile Include="Models\PMProductReturnDetails.cs" />
+    <Compile Include="Models\PMProductReturnSerial.cs" />
+    <Compile Include="Models\PMProductSerialInfo.cs" />
+    <Compile Include="Models\PMPurchaseOrder.cs" />
+    <Compile Include="Models\PMPurchaseOrderDetails.cs" />
+    <Compile Include="Models\PMRequisition.cs" />
+    <Compile Include="Models\PMRequisitionDetails.cs" />
+    <Compile Include="Models\PMSales.cs" />
+    <Compile Include="Models\PMSalesBillingInfo.cs" />
+    <Compile Include="Models\PMSalesBillPayment.cs" />
+    <Compile Include="Models\PMSalesDetail.cs" />
+    <Compile Include="Models\PMSalesInvoice.cs" />
+    <Compile Include="Models\PMSalesSiteInfo.cs" />
+    <Compile Include="Models\PMSalesTechnicalInfo.cs" />
+    <Compile Include="Models\PMSupplier.cs" />
+    <Compile Include="Models\PMSupplierPayment.cs" />
+    <Compile Include="Models\PMSupplierPaymentDetails.cs" />
+    <Compile Include="Models\PMSupplierPaymentLedger.cs" />
+    <Compile Include="Models\PMSupplierPaymentLedgerClosingDetails.cs" />
+    <Compile Include="Models\PMSupplierPaymentLedgerClosingMaster.cs" />
+    <Compile Include="Models\PMSupplierProductReturn.cs" />
+    <Compile Include="Models\PMSupplierProductReturnDetails.cs" />
+    <Compile Include="Models\PMSupplierProductReturnSerial.cs" />
+    <Compile Include="Models\PPumpMachineTest.cs" />
+    <Compile Include="Models\PRPOUserPermission.cs" />
+    <Compile Include="Models\ReceipeModifierType.cs" />
+    <Compile Include="Models\RegistrationSync.cs" />
+    <Compile Include="Models\Response.cs" />
+    <Compile Include="Models\RestaurantBearer.cs" />
+    <Compile Include="Models\RestaurantBill.cs" />
+    <Compile Include="Models\RestaurantBillClassificationDiscount.cs" />
+    <Compile Include="Models\RestaurantBillDetail.cs" />
+    <Compile Include="Models\RestaurantBillPayment.cs" />
+    <Compile Include="Models\RestaurantBillSync.cs" />
+    <Compile Include="Models\RestaurantBuffet.cs" />
+    <Compile Include="Models\RestaurantBuffetCostCenterMapping.cs" />
+    <Compile Include="Models\RestaurantBuffetDetail.cs" />
+    <Compile Include="Models\RestaurantCombo.cs" />
+    <Compile Include="Models\RestaurantComboCostCenterMapping.cs" />
+    <Compile Include="Models\RestaurantComboDetail.cs" />
+    <Compile Include="Models\RestaurantCostCenterTableMapping.cs" />
+    <Compile Include="Models\RestaurantDailySalesStatementConfiguration.cs" />
+    <Compile Include="Models\RestaurantEmpKotBillDetail.cs" />
+    <Compile Include="Models\RestaurantKitchen.cs" />
+    <Compile Include="Models\RestaurantKitchenCostCenterMapping.cs" />
+    <Compile Include="Models\RestaurantKotBillDetail.cs" />
+    <Compile Include="Models\RestaurantKotBillMaster.cs" />
+    <Compile Include="Models\RestaurantKotPendingList.cs" />
+    <Compile Include="Models\RestaurantKotRecipeDetail.cs" />
+    <Compile Include="Models\RestaurantKotSpecialRemarksDetail.cs" />
+    <Compile Include="Models\RestaurantRecipeDetail.cs" />
+    <Compile Include="Models\RestaurantReservation.cs" />
+    <Compile Include="Models\RestaurantReservationItemDetail.cs" />
+    <Compile Include="Models\RestaurantReservationTableDetail.cs" />
+    <Compile Include="Models\RestaurantResettlementLog.cs" />
+    <Compile Include="Models\RestaurantSalesReturnItem.cs" />
+    <Compile Include="Models\RestaurantSync.cs" />
+    <Compile Include="Models\RestaurantTable.cs" />
+    <Compile Include="Models\RestaurantTableManagement.cs" />
+    <Compile Include="Models\RestaurantTableReservationDetail.cs" />
+    <Compile Include="Models\RestaurantTableStatus.cs" />
+    <Compile Include="Models\RestaurantToken.cs" />
+    <Compile Include="Models\SalesBandwidthInfo.cs" />
+    <Compile Include="Models\SalesContractDetails.cs" />
+    <Compile Include="Models\SalesCustomer.cs" />
+    <Compile Include="Models\SalesService.cs" />
+    <Compile Include="Models\SalesServiceBundle.cs" />
+    <Compile Include="Models\SalesServiceBundleDetails.cs" />
+    <Compile Include="Models\SecurityActivityLogs.cs" />
+    <Compile Include="Models\SecurityLogError.cs" />
+    <Compile Include="Models\SecurityLogFile.cs" />
+    <Compile Include="Models\SecurityMenuGroup.cs" />
+    <Compile Include="Models\SecurityMenuLinks.cs" />
+    <Compile Include="Models\SecurityMenuWiseLinks.cs" />
+    <Compile Include="Models\SecurityObjectPermission.cs" />
+    <Compile Include="Models\SecurityObjectTab.cs" />
+    <Compile Include="Models\SecurityUserCostCenterMapping.cs" />
+    <Compile Include="Models\SecurityUserGroup.cs" />
+    <Compile Include="Models\SecurityUserGroupCostCenterMapping.cs" />
+    <Compile Include="Models\SecurityUserInformation.cs" />
+    <Compile Include="Models\ServiceBillSync.cs" />
+    <Compile Include="Models\SMAccountManager.cs" />
+    <Compile Include="Models\SMBillingPeriod.cs" />
+    <Compile Include="Models\SMCompanySalesCall.cs" />
+    <Compile Include="Models\SMCompanySalesCallDetail.cs" />
+    <Compile Include="Models\SMCompanySignupStatus.cs" />
+    <Compile Include="Models\SMCompanySite.cs" />
+    <Compile Include="Models\SMCompanyTypeInformation.cs" />
+    <Compile Include="Models\SMContactInformation.cs" />
+    <Compile Include="Models\SMContactTransfer.cs" />
+    <Compile Include="Models\SMContractPeriod.cs" />
+    <Compile Include="Models\SMCurrentVendor.cs" />
+    <Compile Include="Models\SMDeal.cs" />
+    <Compile Include="Models\SMDealProbabilityStageInformation.cs" />
+    <Compile Include="Models\SMDealStage.cs" />
+    <Compile Include="Models\SMDealWiseContactMap.cs" />
+    <Compile Include="Models\SMIndustry.cs" />
+    <Compile Include="Models\SMItemOrServiceDelivery.cs" />
+    <Compile Include="Models\SMLifeCycleStage.cs" />
+    <Compile Include="Models\SMLogKeeping.cs" />
+    <Compile Include="Models\SMOwnershipInformation.cs" />
+    <Compile Include="Models\SMQuotation.cs" />
+    <Compile Include="Models\SMQuotationDetails.cs" />
+    <Compile Include="Models\SMSalesCallEntry.cs" />
+    <Compile Include="Models\SMSalesCallParticipant.cs" />
+    <Compile Include="Models\SMSalesItemSerialTransfer.cs" />
+    <Compile Include="Models\SMSalesOrder.cs" />
+    <Compile Include="Models\SMSalesOrderDetails.cs" />
+    <Compile Include="Models\SMSalesTransfer.cs" />
+    <Compile Include="Models\SMSalesTransferDetails.cs" />
+    <Compile Include="Models\SMSegmentInformation.cs" />
+    <Compile Include="Models\SMServiceType.cs" />
+    <Compile Include="Models\SMSiteSurveyEngineer.cs" />
+    <Compile Include="Models\SMSiteSurveyFeedback.cs" />
+    <Compile Include="Models\SMSiteSurveyFeedbackDetails.cs" />
+    <Compile Include="Models\SMSiteSurveyNote.cs" />
+    <Compile Include="Models\SMSourceInformation.cs" />
+    <Compile Include="Models\SMTask.cs" />
+    <Compile Include="Models\sysdiagrams.cs" />
+    <Compile Include="Models\UserDashboardItemMapping.cs" />
+    <Compile Include="Models\viewChkFromLdg.cs" />
+    <Compile Include="Models\viewComEmployeeInfo.cs" />
+    <Compile Include="Models\viewCommonVoucher.cs" />
+    <Compile Include="Models\ViewLedgerDetailAmountSum.cs" />
+    <Compile Include="Utility\Constants.cs" />
+    <Compile Include="ViewModel\BanquetBillDataSync.cs" />
+    <Compile Include="ViewModel\GuestInformationBO.cs" />
+    <Compile Include="ViewModel\HotelRegistrationAireportPickupDropView.cs" />
+    <Compile Include="ViewModel\HotelRoomReservationOnlineView.cs" />
+    <Compile Include="ViewModel\RegistrationDataSync.cs" />
+    <Compile Include="ViewModel\ReservationDetailBO.cs" />
+    <Compile Include="ViewModel\RestaurantDataSync.cs" />
+    <Compile Include="ViewModel\ReturnInfo.cs" />
+    <Compile Include="ViewModel\RoomNumberBO.cs" />
+    <Compile Include="ViewModel\RoomReservationBO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\ServiceBillDataSync.cs" />
+    <Compile Include="ViewModel\SetUpData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

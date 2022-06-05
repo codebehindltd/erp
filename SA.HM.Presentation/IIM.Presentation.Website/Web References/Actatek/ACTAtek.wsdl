@@ -1,0 +1,3493 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WSDL:definitions xmlns:ns="http://www.hectrix.com/ACTAtek.xsd" xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/" xmlns:tns="http://www.hectrix.com/ACTAtek.service" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/" xmlns="http://schemas.xmlsoap.org/wsdl/" name="ACTAtek" targetNamespace="http://www.hectrix.com/ACTAtek.service" xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/">
+  <WSDL:types>
+    <documentation>
+    </documentation>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.hectrix.com/ACTAtek.xsd">
+      <xsd:simpleType name="eventType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="UNKNOWN" />
+          <xsd:enumeration value="IN" />
+          <xsd:enumeration value="OUT" />
+          <xsd:enumeration value="F1" />
+          <xsd:enumeration value="F2" />
+          <xsd:enumeration value="F3" />
+          <xsd:enumeration value="F4" />
+          <xsd:enumeration value="F5" />
+          <xsd:enumeration value="F6" />
+          <xsd:enumeration value="F7" />
+          <xsd:enumeration value="F8" />
+          <xsd:enumeration value="F9" />
+          <xsd:enumeration value="F10" />
+          <xsd:enumeration value="ID-UNKNOWN" />
+          <xsd:enumeration value="REJECTED" />
+          <xsd:enumeration value="ID-RESERVED" />
+          <xsd:enumeration value="RESET-ALL" />
+          <xsd:enumeration value="RESET-ACC" />
+          <xsd:enumeration value="RESET-DEVICE" />
+          <xsd:enumeration value="RESET-PASSWORD" />
+          <xsd:enumeration value="RESET-DEFAULT" />
+          <xsd:enumeration value="SYSTEM-LOGIN" />
+          <xsd:enumeration value="ADMIN-LOGIN" />
+          <xsd:enumeration value="USER-LOGIN" />
+          <xsd:enumeration value="NETWORK-CHANGE" />
+          <xsd:enumeration value="PATCHED" />
+          <xsd:enumeration value="BACKUP-DB" />
+          <xsd:enumeration value="RESTORE-DB" />
+          <xsd:enumeration value="SYSTEM-RSVD" />
+          <xsd:enumeration value="ENROLL-USER" />
+          <xsd:enumeration value="REMOTE-DOOR-OPEN" />
+          <xsd:enumeration value="REMOVE-USER" />
+          <xsd:enumeration value="SUSPEND-USER" />
+          <xsd:enumeration value="EDIT-EVENT" />
+          <xsd:enumeration value="RESET-ADMIN-PW" />
+          <xsd:enumeration value="ADMIN-RSVDIT" />
+          <xsd:enumeration value="F11" />
+          <xsd:enumeration value="F12" />
+          <xsd:enumeration value="F13" />
+          <xsd:enumeration value="F14" />
+          <xsd:enumeration value="F15" />
+          <xsd:enumeration value="F16" />
+          <xsd:enumeration value="F17" />
+          <xsd:enumeration value="F18" />
+          <xsd:enumeration value="F19" />
+          <xsd:enumeration value="F20" />
+          <xsd:enumeration value="F21" />
+          <xsd:enumeration value="F22" />
+          <xsd:enumeration value="F23" />
+          <xsd:enumeration value="F24" />
+          <xsd:enumeration value="F25" />
+          <xsd:enumeration value="F26" />
+          <xsd:enumeration value="F27" />
+          <xsd:enumeration value="F28" />
+          <xsd:enumeration value="F29" />
+          <xsd:enumeration value="F30" />
+          <xsd:enumeration value="F31" />
+          <xsd:enumeration value="F32" />
+          <xsd:enumeration value="F33" />
+          <xsd:enumeration value="F34" />
+          <xsd:enumeration value="F35" />
+          <xsd:enumeration value="F36" />
+          <xsd:enumeration value="F37" />
+          <xsd:enumeration value="F38" />
+          <xsd:enumeration value="F39" />
+          <xsd:enumeration value="F40" />
+          <xsd:enumeration value="SCHEDULE-DOOR-OPEN" />
+          <xsd:enumeration value="SCHEDULE-DOOR-CLOSE" />
+          <xsd:enumeration value="SCHEDULE-BELL-ON" />
+          <xsd:enumeration value="DOOR-IS-OPENED" />
+          <xsd:enumeration value="DOOR-IS-CLOSED" />
+          <xsd:enumeration value="CASE-IS-OPENED" />
+          <xsd:enumeration value="CASE-IS-CLOSED" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="AdminLevel">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="PERSONALUSER" />
+          <xsd:enumeration value="NETWORKADMIN" />
+          <xsd:enumeration value="USERADMIN" />
+          <xsd:enumeration value="SUPERADMIN" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="FingerprintSecurityLevel">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="LOWEST" />
+          <xsd:enumeration value="LOW" />
+          <xsd:enumeration value="NORMAL" />
+          <xsd:enumeration value="HIGH" />
+          <xsd:enumeration value="HIGHEST" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="Weekday">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="SUNDAY" />
+          <xsd:enumeration value="MONDAY" />
+          <xsd:enumeration value="TUESDAY" />
+          <xsd:enumeration value="WEDNESDAY" />
+          <xsd:enumeration value="THURSDAY" />
+          <xsd:enumeration value="FRIDAY" />
+          <xsd:enumeration value="SATURDAY" />
+          <xsd:enumeration value="HOLIDAY" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="triggerType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="UNKNOWN" />
+          <xsd:enumeration value="IN" />
+          <xsd:enumeration value="OUT" />
+          <xsd:enumeration value="F1" />
+          <xsd:enumeration value="F2" />
+          <xsd:enumeration value="F3" />
+          <xsd:enumeration value="F4" />
+          <xsd:enumeration value="F5" />
+          <xsd:enumeration value="F6" />
+          <xsd:enumeration value="F7" />
+          <xsd:enumeration value="F8" />
+          <xsd:enumeration value="F9" />
+          <xsd:enumeration value="F10" />
+          <xsd:enumeration value="ID-UNKNOWN" />
+          <xsd:enumeration value="REJECTED" />
+          <xsd:enumeration value="ID-RESERVED" />
+          <xsd:enumeration value="RESET-ALL" />
+          <xsd:enumeration value="RESET-ACC" />
+          <xsd:enumeration value="RESET-DEVICE" />
+          <xsd:enumeration value="RESET-PASSWORD" />
+          <xsd:enumeration value="RESET-DEFAULT" />
+          <xsd:enumeration value="SYSTEM-LOGIN" />
+          <xsd:enumeration value="ADMIN-LOGIN" />
+          <xsd:enumeration value="USER-LOGIN" />
+          <xsd:enumeration value="NETWORK-CHANGE" />
+          <xsd:enumeration value="PATCHED" />
+          <xsd:enumeration value="BACKUP-DB" />
+          <xsd:enumeration value="RESTORE-DB" />
+          <xsd:enumeration value="SYSTEM-RSVD" />
+          <xsd:enumeration value="ENROLL-USER" />
+          <xsd:enumeration value="REMOTE-DOOR-OPEN" />
+          <xsd:enumeration value="REMOVE-USER" />
+          <xsd:enumeration value="SUSPEND-USER" />
+          <xsd:enumeration value="EDIT-EVENT" />
+          <xsd:enumeration value="RESET-ADMIN-PW" />
+          <xsd:enumeration value="ADMIN-RSVDIT" />
+          <xsd:enumeration value="F11" />
+          <xsd:enumeration value="F12" />
+          <xsd:enumeration value="F13" />
+          <xsd:enumeration value="F14" />
+          <xsd:enumeration value="F15" />
+          <xsd:enumeration value="F16" />
+          <xsd:enumeration value="F17" />
+          <xsd:enumeration value="F18" />
+          <xsd:enumeration value="F19" />
+          <xsd:enumeration value="F20" />
+          <xsd:enumeration value="F21" />
+          <xsd:enumeration value="F22" />
+          <xsd:enumeration value="F23" />
+          <xsd:enumeration value="F24" />
+          <xsd:enumeration value="F25" />
+          <xsd:enumeration value="F26" />
+          <xsd:enumeration value="F27" />
+          <xsd:enumeration value="F28" />
+          <xsd:enumeration value="F29" />
+          <xsd:enumeration value="F30" />
+          <xsd:enumeration value="F31" />
+          <xsd:enumeration value="F32" />
+          <xsd:enumeration value="F33" />
+          <xsd:enumeration value="F34" />
+          <xsd:enumeration value="F35" />
+          <xsd:enumeration value="F36" />
+          <xsd:enumeration value="F37" />
+          <xsd:enumeration value="F38" />
+          <xsd:enumeration value="F39" />
+          <xsd:enumeration value="F40" />
+          <xsd:enumeration value="SCHEDULE-DOOR-OPEN" />
+          <xsd:enumeration value="SCHEDULE-DOOR-CLOSE" />
+          <xsd:enumeration value="SCHEDULE-BELL-ON" />
+          <xsd:enumeration value="DOOR-IS-OPENED" />
+          <xsd:enumeration value="DOOR-IS-CLOSED" />
+          <xsd:enumeration value="CASE-IS-OPENED" />
+          <xsd:enumeration value="CASE-IS-CLOSED" />
+          <xsd:enumeration value="TRIGGEREND" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="RelayID">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="ONE" />
+          <xsd:enumeration value="TWO" />
+          <xsd:enumeration value="ALL" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="AutoInOutOption">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="DISABLE" />
+          <xsd:enumeration value="ENABLE" />
+          <xsd:enumeration value="SPECIAL" />
+          <xsd:enumeration value="REJECTREPEATEDLOGIN" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="RelayOption">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="RELAY-DISABLE" />
+          <xsd:enumeration value="ACCESS-GRANTED" />
+          <xsd:enumeration value="ACCESS-DENIED" />
+          <xsd:enumeration value="DOORBELL" />
+          <xsd:enumeration value="BELLSCHEDULE" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="Agent">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="port" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ip" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="registrationTime" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="lastUpdate" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="lastCheck" type="xsd:dateTime" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="lastCheckStatus" type="xsd:boolean" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="active" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="link" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AgentArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="agents" nillable="true" type="ns:Agent" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Log">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="logID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="timestamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="trigger" type="ns:eventType" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="terminalSN" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="LogArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="log" nillable="true" type="ns:Log" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Status">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="active" type="xsd:boolean" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="autoMatch" type="xsd:boolean" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="smartCard" type="xsd:boolean" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="fingerprint" type="xsd:boolean" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:boolean" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Department">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="departmentID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="departmentName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="departmentDescription" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="DepartmentArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="department" nillable="true" type="ns:Department" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Timespec">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="weekday" type="ns:Weekday" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="timePattern" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AccessRight">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="accessID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="terminalSN" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="quickAccess" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="timeSpec" type="ns:Timespec" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Group">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="groupID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="groupName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="departmentID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="accessRight" type="ns:AccessRight" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GroupArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="group" nillable="true" type="ns:Group" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Fingerprint">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="image" nillable="true" type="xsd:base64Binary" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="FingerprintArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="fingerprint" nillable="true" type="ns:Fingerprint" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="User">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="lastName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="firstName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="otherName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="adminLevel" type="ns:AdminLevel" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="usePassword" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="password" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="groupID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="departmentID" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="fingerprintSecurityLevel" type="ns:FingerprintSecurityLevel" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="status" type="ns:Status" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="fingerprints" nillable="true" type="ns:FingerprintArray" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="cardsn" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="fpgroupid" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="UserArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="user" nillable="true" type="ns:User" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Trigger">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="triggerType" type="ns:triggerType" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="triggerName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="timeSpec" type="ns:Timespec" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TriggerArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="trigger" nillable="true" type="ns:Trigger" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="getLogsCriteria">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="from" nillable="true" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="to" nillable="true" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="employeeName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="employeeID" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="departmentID" nillable="true" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="trigger" nillable="true" type="ns:eventType" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="terminalSN" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="getUsersCriteria">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="partialUserID" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="lastName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="firstName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="otherName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="departmentID" nillable="true" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="getGroupsCriteria">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="groupID" nillable="true" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="departmentID" nillable="true" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="getTriggersCriteria">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="triggerType" nillable="true" type="ns:triggerType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TerminalStatus">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="modelNumber" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="serialNumber" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="firmwareVersion" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="FAMVersion" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="description" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="registeredUsers" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="maximumUsers" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="automatchUsers" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="maximumAutomatchUsers" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="currentStatus" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TerminalStatus2">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="modelNumber" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="serialNumber" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="firmwareVersion" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="FAMVersion" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="description" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="registeredUsers" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="maximumUsers" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="automatchUsers" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="maximumAutomatchUsers" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="currentStatus" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="ActatekBoardID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="DBversion" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Flashleft" type="xsd:long" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="DBfilesize" type="xsd:long" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Terminal">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="terminalID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="terminalType" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="terminalName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="terminalSN" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="terminalIP" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TerminalArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="terminal" nillable="true" type="ns:Terminal" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="LogDetail">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="logID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="userName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="departmentName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="timestamp" type="xsd:dateTime" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="trigger" type="ns:eventType" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="terminalSN" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="terminalName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="jpegPhoto" nillable="true" type="xsd:base64Binary" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="remark" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="accessMethod" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="LogDetailArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="logDetail" nillable="true" type="ns:LogDetail" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="userID">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="UserIDArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="userID" nillable="true" type="ns:userID" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="JobCodeSettings">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="jobcode" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="jobcodeName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="enable" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="JobCodeSettingsArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="jobcodesettings" nillable="true" type="ns:JobCodeSettings" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="JobCode">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="JobCodeID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="JobCodeDescription" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="enable" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="jobCode" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="JobCodeArray">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="jobcodes" nillable="true" type="ns:JobCode" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="getJobCodeCriteria">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="jobcodeID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="jobcodeDescription" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="enable" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="jobcode" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="sessionID" type="xsd:long" />
+      <xsd:element name="status" type="xsd:string" />
+      <xsd:element name="agents" type="ns:AgentArray" />
+      <xsd:element name="updatedAgent" type="ns:Agent" />
+      <xsd:element name="logs" type="ns:LogArray" />
+      <xsd:element name="userID" type="xsd:string" />
+      <xsd:element name="users" type="ns:UserArray" />
+      <xsd:element name="user" type="ns:User" />
+      <xsd:element name="message" type="xsd:string" />
+      <xsd:element name="departmentID" type="xsd:int" />
+      <xsd:element name="departments" type="ns:DepartmentArray" />
+      <xsd:element name="groupID" type="xsd:int" />
+      <xsd:element name="groups" type="ns:GroupArray" />
+      <xsd:element name="triggers" type="ns:TriggerArray" />
+      <xsd:element name="version" type="xsd:string" />
+      <xsd:element name="terminalStatus" type="ns:TerminalStatus" />
+      <xsd:element name="terminalList" type="ns:TerminalArray" />
+      <xsd:element name="nopConstant" type="xsd:string" />
+      <xsd:element name="jpegPhoto" type="xsd:base64Binary" />
+      <xsd:element name="fingerprint" type="ns:Fingerprint" />
+      <xsd:element name="fpSecurityLevel" type="ns:FingerprintSecurityLevel" />
+      <xsd:element name="sec" type="xsd:int" />
+      <xsd:element name="auto-in-out-option" type="ns:AutoInOutOption" />
+      <xsd:element name="enable" type="xsd:boolean" />
+      <xsd:element name="relayOpt" type="ns:RelayOption" />
+      <xsd:element name="serveraddr" type="xsd:string" />
+      <xsd:element name="systemData" type="xsd:base64Binary" />
+      <xsd:element name="login">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="username" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="password" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="loginResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" ref="ns:sessionID" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="logout">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="logoutResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getRegisteredAgents">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getRegisteredAgentsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:agents" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="pollLog">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="agent" nillable="true" type="ns:Agent" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="pollLogResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:updatedAgent" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getLogs">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="getLogsCriteria" nillable="true" type="ns:getLogsCriteria" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getLogsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:logs" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addLog">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="timestamp" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="employeeID" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="event" type="ns:eventType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="terminalSN" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addLogResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="user" nillable="true" type="ns:User" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:userID" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUsers">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="getUsersCriteria" nillable="true" type="ns:getUsersCriteria" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUsersResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:users" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="user" nillable="true" type="ns:User" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getMyself">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getMyselfResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:user" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateMyself">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="user" nillable="true" type="ns:User" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateMyselfResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="activateUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="activateUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deactivateUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deactivateUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUserMessage">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUserMessageResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:message" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateUserMessage">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateUserMessageResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteUserMessage">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteUserMessageResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addDepartment">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="department" nillable="true" type="ns:Department" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addDepartmentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" ref="ns:departmentID" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateDepartment">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="departmentID" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="department" nillable="true" type="ns:Department" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateDepartmentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getDepartments">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="departmentID" nillable="true" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getDepartmentsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:departments" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteDepartment">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="departmentID" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteDepartmentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addGroup">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="group" nillable="true" type="ns:Group" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addGroupResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" ref="ns:groupID" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getGroups">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="getGroupsCriteria" nillable="true" type="ns:getGroupsCriteria" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getGroupsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:groups" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateGroup">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="groupID" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="group" nillable="true" type="ns:Group" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateGroupResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteGroup">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="groupID" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteGroupResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTriggers">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="getTriggersCriteria" nillable="true" type="ns:getTriggersCriteria" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTriggersResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:triggers" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateTrigger">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="trigger" nillable="true" type="ns:Trigger" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateTriggerResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="clearTrigger">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="triggerType" type="ns:triggerType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="clearTriggerResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="openDoor">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="doorID" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="openDoorResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="openRelay">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="relayID" type="ns:RelayID" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="openRelayResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="closeRelay">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="relayID" type="ns:RelayID" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="closeRelayResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="registerAgent">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="ip" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="port" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="agentVersion" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="magic" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="registrationID" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="initSync" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="registerAgentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="unregisterAgent">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="ip" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="port" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="unregisterAgentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getAPIVersion">
+        <xsd:complexType>
+          <xsd:sequence />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getAPIVersionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:version" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTerminalStatus">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTerminalStatusResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:terminalStatus" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTerminalList">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTerminalListResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:terminalList" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="nop">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="nopResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:nopConstant" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getLogPhoto">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="terminalSN" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="timestamp" type="xsd:dateTime" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getLogPhotoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:jpegPhoto" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="registerFPUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="userID" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="registerFPUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:fingerprint" />
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getFullLogs">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="getLogsCriteria" nillable="true" type="ns:getLogsCriteria" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="limit" nillable="true" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getFullLogsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="detailLogs" nillable="true" type="ns:LogDetailArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="resetLog">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="resetLogResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getFpSecurityLevel">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getFpSecurityLevelResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" ref="ns:fpSecurityLevel" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setFpSecurityLevel">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" ref="ns:fpSecurityLevel" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setFpSecurityLevelResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getRelayDelay">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="relayID" type="ns:RelayID" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getRelayDelayResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" ref="ns:sec" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setRelayDelay">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="relayID" type="ns:RelayID" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="sec" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setRelayDelayResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getAutoInOut">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getAutoInOutResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" ref="ns:auto-in-out-option" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setAutoInOut">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" ref="ns:auto-in-out-option" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setAutoInOutResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getLogUnauthorizedEvent">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getLogUnauthorizedEventResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" ref="ns:enable" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setLogUnauthorizedEvent">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" ref="ns:enable" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setLogUnauthorizedEventResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setRelayOption">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="relayID" type="ns:RelayID" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="relayOpt" type="ns:RelayOption" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setRelayOptionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getRelayOption">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="relayID" type="ns:RelayID" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getRelayOptionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:relayOpt" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setSNTP">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" ref="ns:enable" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setSNTPResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getSNTP">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getSNTPResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:enable" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setSNTPServer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:serveraddr" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setSNTPServerResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getSNTPServer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getSNTPServerResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:serveraddr" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTerminalDateTime">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTerminalDateTimeResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="terminalDate" nillable="true" type="xsd:dateTime" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setTerminalDateTime">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="terminalDate" type="xsd:dateTime" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setTerminalDateTimeResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTimeZone">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTimeZoneResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="timezone" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setTimeZone">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="timezone" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="setTimeZoneResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getCaptureFingerprint">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getCaptureFingerprintResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:jpegPhoto" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="initCaptureFP">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="initCaptureFPResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:jpegPhoto" />
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="lock">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="deviceNodeDbId" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="lockResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="unlock">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="deviceNodeDbId" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="unlockResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="systemBackup">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="systemBackupResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:systemData" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="systemRestore">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" ref="ns:systemData" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="systemRestoreResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUsersDb">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUsersDbResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteLogs">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="daysToKeep" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteLogsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoteBackupStart">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoteBackupStartResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="filesize" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetChunk">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="filename" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="chunkoffset" type="xsd:int" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="chunksize" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetChunkResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="systemData" nillable="true" type="xsd:base64Binary" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoteBackupEnd">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoteBackupEndResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoteRestoreCheck">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoteRestoreCheckResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="termstatus" nillable="true" type="ns:TerminalStatus2" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoteRestoreStart">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoteRestoreStartResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SendChunk">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="filename" nillable="true" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="chunkoffset" type="xsd:int" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="systemData" type="xsd:base64Binary" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SendChunkResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoteRestoreEnd">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="dbsize" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="othersize" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RemoteRestoreEndResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CancelRestore">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CancelRestoreResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:status" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addUsers">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="users" nillable="true" type="ns:UserArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addUsersResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="uids" nillable="true" type="ns:UserIDArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateUsers">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="uids" nillable="true" type="ns:UserIDArray" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="users" nillable="true" type="ns:UserArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateUsersResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="status" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getJobCodeSettings">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getJobCodeSettingsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobcodesettings" nillable="true" type="ns:JobCodeSettingsArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateJobCodeSettings">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobcodesettings" nillable="true" type="ns:JobCodeSettingsArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateJobCodeSettingsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="status" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addJobCodes">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobcodes" nillable="true" type="ns:JobCodeArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addJobCodesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="status" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateJobCodes">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobcodes" nillable="true" type="ns:JobCodeArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateJobCodesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="status" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteJobCodes">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobcodes" nillable="true" type="ns:JobCodeArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteJobCodesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="status" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getJobCodes">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="getJobCodeCriteria" nillable="true" type="ns:getJobCodeCriteria" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getJobCodesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobcodes" nillable="true" type="ns:JobCodeArray" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUserCount">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUserCountResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="user-count" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUserBatch">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="sessionID" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="offset" type="xsd:int" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="limit" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUserBatchResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="ns:users" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </WSDL:types>
+  <WSDL:message name="loginRequest">
+    <WSDL:part name="parameters" element="ns:login" />
+  </WSDL:message>
+  <WSDL:message name="loginResponse">
+    <WSDL:part name="parameters" element="ns:loginResponse" />
+  </WSDL:message>
+  <WSDL:message name="logoutRequest">
+    <WSDL:part name="parameters" element="ns:logout" />
+  </WSDL:message>
+  <WSDL:message name="logoutResponse">
+    <WSDL:part name="parameters" element="ns:logoutResponse" />
+  </WSDL:message>
+  <WSDL:message name="getRegisteredAgentsRequest">
+    <WSDL:part name="parameters" element="ns:getRegisteredAgents" />
+  </WSDL:message>
+  <WSDL:message name="getRegisteredAgentsResponse">
+    <WSDL:part name="parameters" element="ns:getRegisteredAgentsResponse" />
+  </WSDL:message>
+  <WSDL:message name="pollLogRequest">
+    <WSDL:part name="parameters" element="ns:pollLog" />
+  </WSDL:message>
+  <WSDL:message name="pollLogResponse">
+    <WSDL:part name="parameters" element="ns:pollLogResponse" />
+  </WSDL:message>
+  <WSDL:message name="getLogsRequest">
+    <WSDL:part name="parameters" element="ns:getLogs" />
+  </WSDL:message>
+  <WSDL:message name="getLogsResponse">
+    <WSDL:part name="parameters" element="ns:getLogsResponse" />
+  </WSDL:message>
+  <WSDL:message name="addLogRequest">
+    <WSDL:part name="parameters" element="ns:addLog" />
+  </WSDL:message>
+  <WSDL:message name="addLogResponse">
+    <WSDL:part name="parameters" element="ns:addLogResponse" />
+  </WSDL:message>
+  <WSDL:message name="addUserRequest">
+    <WSDL:part name="parameters" element="ns:addUser" />
+  </WSDL:message>
+  <WSDL:message name="addUserResponse">
+    <WSDL:part name="parameters" element="ns:addUserResponse" />
+  </WSDL:message>
+  <WSDL:message name="getUsersRequest">
+    <WSDL:part name="parameters" element="ns:getUsers" />
+  </WSDL:message>
+  <WSDL:message name="getUsersResponse">
+    <WSDL:part name="parameters" element="ns:getUsersResponse" />
+  </WSDL:message>
+  <WSDL:message name="updateUserRequest">
+    <WSDL:part name="parameters" element="ns:updateUser" />
+  </WSDL:message>
+  <WSDL:message name="updateUserResponse">
+    <WSDL:part name="parameters" element="ns:updateUserResponse" />
+  </WSDL:message>
+  <WSDL:message name="deleteUserRequest">
+    <WSDL:part name="parameters" element="ns:deleteUser" />
+  </WSDL:message>
+  <WSDL:message name="deleteUserResponse">
+    <WSDL:part name="parameters" element="ns:deleteUserResponse" />
+  </WSDL:message>
+  <WSDL:message name="getMyselfRequest">
+    <WSDL:part name="parameters" element="ns:getMyself" />
+  </WSDL:message>
+  <WSDL:message name="getMyselfResponse">
+    <WSDL:part name="parameters" element="ns:getMyselfResponse" />
+  </WSDL:message>
+  <WSDL:message name="updateMyselfRequest">
+    <WSDL:part name="parameters" element="ns:updateMyself" />
+  </WSDL:message>
+  <WSDL:message name="updateMyselfResponse">
+    <WSDL:part name="parameters" element="ns:updateMyselfResponse" />
+  </WSDL:message>
+  <WSDL:message name="activateUserRequest">
+    <WSDL:part name="parameters" element="ns:activateUser" />
+  </WSDL:message>
+  <WSDL:message name="activateUserResponse">
+    <WSDL:part name="parameters" element="ns:activateUserResponse" />
+  </WSDL:message>
+  <WSDL:message name="deactivateUserRequest">
+    <WSDL:part name="parameters" element="ns:deactivateUser" />
+  </WSDL:message>
+  <WSDL:message name="deactivateUserResponse">
+    <WSDL:part name="parameters" element="ns:deactivateUserResponse" />
+  </WSDL:message>
+  <WSDL:message name="getUserMessageRequest">
+    <WSDL:part name="parameters" element="ns:getUserMessage" />
+  </WSDL:message>
+  <WSDL:message name="getUserMessageResponse">
+    <WSDL:part name="parameters" element="ns:getUserMessageResponse" />
+  </WSDL:message>
+  <WSDL:message name="updateUserMessageRequest">
+    <WSDL:part name="parameters" element="ns:updateUserMessage" />
+  </WSDL:message>
+  <WSDL:message name="updateUserMessageResponse">
+    <WSDL:part name="parameters" element="ns:updateUserMessageResponse" />
+  </WSDL:message>
+  <WSDL:message name="deleteUserMessageRequest">
+    <WSDL:part name="parameters" element="ns:deleteUserMessage" />
+  </WSDL:message>
+  <WSDL:message name="deleteUserMessageResponse">
+    <WSDL:part name="parameters" element="ns:deleteUserMessageResponse" />
+  </WSDL:message>
+  <WSDL:message name="addDepartmentRequest">
+    <WSDL:part name="parameters" element="ns:addDepartment" />
+  </WSDL:message>
+  <WSDL:message name="addDepartmentResponse">
+    <WSDL:part name="parameters" element="ns:addDepartmentResponse" />
+  </WSDL:message>
+  <WSDL:message name="updateDepartmentRequest">
+    <WSDL:part name="parameters" element="ns:updateDepartment" />
+  </WSDL:message>
+  <WSDL:message name="updateDepartmentResponse">
+    <WSDL:part name="parameters" element="ns:updateDepartmentResponse" />
+  </WSDL:message>
+  <WSDL:message name="getDepartmentsRequest">
+    <WSDL:part name="parameters" element="ns:getDepartments" />
+  </WSDL:message>
+  <WSDL:message name="getDepartmentsResponse">
+    <WSDL:part name="parameters" element="ns:getDepartmentsResponse" />
+  </WSDL:message>
+  <WSDL:message name="deleteDepartmentRequest">
+    <WSDL:part name="parameters" element="ns:deleteDepartment" />
+  </WSDL:message>
+  <WSDL:message name="deleteDepartmentResponse">
+    <WSDL:part name="parameters" element="ns:deleteDepartmentResponse" />
+  </WSDL:message>
+  <WSDL:message name="addGroupRequest">
+    <WSDL:part name="parameters" element="ns:addGroup" />
+  </WSDL:message>
+  <WSDL:message name="addGroupResponse">
+    <WSDL:part name="parameters" element="ns:addGroupResponse" />
+  </WSDL:message>
+  <WSDL:message name="getGroupsRequest">
+    <WSDL:part name="parameters" element="ns:getGroups" />
+  </WSDL:message>
+  <WSDL:message name="getGroupsResponse">
+    <WSDL:part name="parameters" element="ns:getGroupsResponse" />
+  </WSDL:message>
+  <WSDL:message name="updateGroupRequest">
+    <WSDL:part name="parameters" element="ns:updateGroup" />
+  </WSDL:message>
+  <WSDL:message name="updateGroupResponse">
+    <WSDL:part name="parameters" element="ns:updateGroupResponse" />
+  </WSDL:message>
+  <WSDL:message name="deleteGroupRequest">
+    <WSDL:part name="parameters" element="ns:deleteGroup" />
+  </WSDL:message>
+  <WSDL:message name="deleteGroupResponse">
+    <WSDL:part name="parameters" element="ns:deleteGroupResponse" />
+  </WSDL:message>
+  <WSDL:message name="getTriggersRequest">
+    <WSDL:part name="parameters" element="ns:getTriggers" />
+  </WSDL:message>
+  <WSDL:message name="getTriggersResponse">
+    <WSDL:part name="parameters" element="ns:getTriggersResponse" />
+  </WSDL:message>
+  <WSDL:message name="updateTriggerRequest">
+    <WSDL:part name="parameters" element="ns:updateTrigger" />
+  </WSDL:message>
+  <WSDL:message name="updateTriggerResponse">
+    <WSDL:part name="parameters" element="ns:updateTriggerResponse" />
+  </WSDL:message>
+  <WSDL:message name="clearTriggerRequest">
+    <WSDL:part name="parameters" element="ns:clearTrigger" />
+  </WSDL:message>
+  <WSDL:message name="clearTriggerResponse">
+    <WSDL:part name="parameters" element="ns:clearTriggerResponse" />
+  </WSDL:message>
+  <WSDL:message name="openDoorRequest">
+    <WSDL:part name="parameters" element="ns:openDoor" />
+  </WSDL:message>
+  <WSDL:message name="openDoorResponse">
+    <WSDL:part name="parameters" element="ns:openDoorResponse" />
+  </WSDL:message>
+  <WSDL:message name="openRelayRequest">
+    <WSDL:part name="parameters" element="ns:openRelay" />
+  </WSDL:message>
+  <WSDL:message name="openRelayResponse">
+    <WSDL:part name="parameters" element="ns:openRelayResponse" />
+  </WSDL:message>
+  <WSDL:message name="closeRelayRequest">
+    <WSDL:part name="parameters" element="ns:closeRelay" />
+  </WSDL:message>
+  <WSDL:message name="closeRelayResponse">
+    <WSDL:part name="parameters" element="ns:closeRelayResponse" />
+  </WSDL:message>
+  <WSDL:message name="registerAgentRequest">
+    <WSDL:part name="parameters" element="ns:registerAgent" />
+  </WSDL:message>
+  <WSDL:message name="registerAgentResponse">
+    <WSDL:part name="parameters" element="ns:registerAgentResponse" />
+  </WSDL:message>
+  <WSDL:message name="unregisterAgentRequest">
+    <WSDL:part name="parameters" element="ns:unregisterAgent" />
+  </WSDL:message>
+  <WSDL:message name="unregisterAgentResponse">
+    <WSDL:part name="parameters" element="ns:unregisterAgentResponse" />
+  </WSDL:message>
+  <WSDL:message name="getAPIVersionRequest">
+    <WSDL:part name="parameters" element="ns:getAPIVersion" />
+  </WSDL:message>
+  <WSDL:message name="getAPIVersionResponse">
+    <WSDL:part name="parameters" element="ns:getAPIVersionResponse" />
+  </WSDL:message>
+  <WSDL:message name="getTerminalStatusRequest">
+    <WSDL:part name="parameters" element="ns:getTerminalStatus" />
+  </WSDL:message>
+  <WSDL:message name="getTerminalStatusResponse">
+    <WSDL:part name="parameters" element="ns:getTerminalStatusResponse" />
+  </WSDL:message>
+  <WSDL:message name="getTerminalListRequest">
+    <WSDL:part name="parameters" element="ns:getTerminalList" />
+  </WSDL:message>
+  <WSDL:message name="getTerminalListResponse">
+    <WSDL:part name="parameters" element="ns:getTerminalListResponse" />
+  </WSDL:message>
+  <WSDL:message name="nopRequest">
+    <WSDL:part name="parameters" element="ns:nop" />
+  </WSDL:message>
+  <WSDL:message name="nopResponse">
+    <WSDL:part name="parameters" element="ns:nopResponse" />
+  </WSDL:message>
+  <WSDL:message name="getLogPhotoRequest">
+    <WSDL:part name="parameters" element="ns:getLogPhoto" />
+  </WSDL:message>
+  <WSDL:message name="getLogPhotoResponse">
+    <WSDL:part name="parameters" element="ns:getLogPhotoResponse" />
+  </WSDL:message>
+  <WSDL:message name="registerFPUser">
+    <WSDL:part name="parameters" element="ns:registerFPUser" />
+  </WSDL:message>
+  <WSDL:message name="registerFPUserResponse">
+    <WSDL:part name="parameters" element="ns:registerFPUserResponse" />
+  </WSDL:message>
+  <WSDL:message name="getFullLogsRequest">
+    <WSDL:part name="parameters" element="ns:getFullLogs" />
+  </WSDL:message>
+  <WSDL:message name="getFullLogsResponse">
+    <WSDL:part name="parameters" element="ns:getFullLogsResponse" />
+  </WSDL:message>
+  <WSDL:message name="resetLogRequest">
+    <WSDL:part name="parameters" element="ns:resetLog" />
+  </WSDL:message>
+  <WSDL:message name="resetLogResponse">
+    <WSDL:part name="parameters" element="ns:resetLogResponse" />
+  </WSDL:message>
+  <WSDL:message name="getFpSecurityLevelRequest">
+    <WSDL:part name="parameters" element="ns:getFpSecurityLevel" />
+  </WSDL:message>
+  <WSDL:message name="getFpSecurityLevelResponse">
+    <WSDL:part name="parameters" element="ns:getFpSecurityLevelResponse" />
+  </WSDL:message>
+  <WSDL:message name="setFpSecurityLevelRequest">
+    <WSDL:part name="parameters" element="ns:setFpSecurityLevel" />
+  </WSDL:message>
+  <WSDL:message name="setFpSecurityLevelResponse">
+    <WSDL:part name="parameters" element="ns:setFpSecurityLevelResponse" />
+  </WSDL:message>
+  <WSDL:message name="getRelayDelayRequest">
+    <WSDL:part name="parameters" element="ns:getRelayDelay" />
+  </WSDL:message>
+  <WSDL:message name="getRelayDelayResponse">
+    <WSDL:part name="parameters" element="ns:getRelayDelayResponse" />
+  </WSDL:message>
+  <WSDL:message name="setRelayDelayRequest">
+    <WSDL:part name="parameters" element="ns:setRelayDelay" />
+  </WSDL:message>
+  <WSDL:message name="setRelayDelayResponse">
+    <WSDL:part name="parameters" element="ns:setRelayDelayResponse" />
+  </WSDL:message>
+  <WSDL:message name="getAutoInOutRequest">
+    <WSDL:part name="parameters" element="ns:getAutoInOut" />
+  </WSDL:message>
+  <WSDL:message name="getAutoInOutResponse">
+    <WSDL:part name="parameters" element="ns:getAutoInOutResponse" />
+  </WSDL:message>
+  <WSDL:message name="setAutoInOutRequest">
+    <WSDL:part name="parameters" element="ns:setAutoInOut" />
+  </WSDL:message>
+  <WSDL:message name="setAutoInOutResponse">
+    <WSDL:part name="parameters" element="ns:setAutoInOutResponse" />
+  </WSDL:message>
+  <WSDL:message name="getLogUnauthorizedEventRequest">
+    <WSDL:part name="parameters" element="ns:getLogUnauthorizedEvent" />
+  </WSDL:message>
+  <WSDL:message name="getLogUnauthorizedEventResponse">
+    <WSDL:part name="parameters" element="ns:getLogUnauthorizedEventResponse" />
+  </WSDL:message>
+  <WSDL:message name="setLogUnauthorizedEventRequest">
+    <WSDL:part name="parameters" element="ns:setLogUnauthorizedEvent" />
+  </WSDL:message>
+  <WSDL:message name="setLogUnauthorizedEventResponse">
+    <WSDL:part name="parameters" element="ns:setLogUnauthorizedEventResponse" />
+  </WSDL:message>
+  <WSDL:message name="setRelayOptionRequest">
+    <WSDL:part name="parameters" element="ns:setRelayOption" />
+  </WSDL:message>
+  <WSDL:message name="setRelayOptionResponse">
+    <WSDL:part name="parameters" element="ns:setRelayOptionResponse" />
+  </WSDL:message>
+  <WSDL:message name="getRelayOptionRequest">
+    <WSDL:part name="parameters" element="ns:getRelayOption" />
+  </WSDL:message>
+  <WSDL:message name="getRelayOptionResponse">
+    <WSDL:part name="parameters" element="ns:getRelayOptionResponse" />
+  </WSDL:message>
+  <WSDL:message name="setSNTPRequest">
+    <WSDL:part name="parameters" element="ns:setSNTP" />
+  </WSDL:message>
+  <WSDL:message name="setSNTPResponse">
+    <WSDL:part name="parameters" element="ns:setSNTPResponse" />
+  </WSDL:message>
+  <WSDL:message name="getSNTPRequest">
+    <WSDL:part name="parameters" element="ns:getSNTP" />
+  </WSDL:message>
+  <WSDL:message name="getSNTPResponse">
+    <WSDL:part name="parameters" element="ns:getSNTPResponse" />
+  </WSDL:message>
+  <WSDL:message name="setSNTPServerRequest">
+    <WSDL:part name="parameters" element="ns:setSNTPServer" />
+  </WSDL:message>
+  <WSDL:message name="setSNTPServerResponse">
+    <WSDL:part name="parameters" element="ns:setSNTPServerResponse" />
+  </WSDL:message>
+  <WSDL:message name="getSNTPServerRequest">
+    <WSDL:part name="parameters" element="ns:getSNTPServer" />
+  </WSDL:message>
+  <WSDL:message name="getSNTPServerResponse">
+    <WSDL:part name="parameters" element="ns:getSNTPServerResponse" />
+  </WSDL:message>
+  <WSDL:message name="getTerminalDateTimeRequest">
+    <WSDL:part name="parameters" element="ns:getTerminalDateTime" />
+  </WSDL:message>
+  <WSDL:message name="getTerminalDateTimeResponse">
+    <WSDL:part name="parameters" element="ns:getTerminalDateTimeResponse" />
+  </WSDL:message>
+  <WSDL:message name="setTerminalDateTimeRequest">
+    <WSDL:part name="parameters" element="ns:setTerminalDateTime" />
+  </WSDL:message>
+  <WSDL:message name="setTerminalDateTimeResponse">
+    <WSDL:part name="parameters" element="ns:setTerminalDateTimeResponse" />
+  </WSDL:message>
+  <WSDL:message name="getTimeZoneRequest">
+    <WSDL:part name="parameters" element="ns:getTimeZone" />
+  </WSDL:message>
+  <WSDL:message name="getTimeZoneResponse">
+    <WSDL:part name="parameters" element="ns:getTimeZoneResponse" />
+  </WSDL:message>
+  <WSDL:message name="setTimeZoneRequest">
+    <WSDL:part name="parameters" element="ns:setTimeZone" />
+  </WSDL:message>
+  <WSDL:message name="setTimeZoneResponse">
+    <WSDL:part name="parameters" element="ns:setTimeZoneResponse" />
+  </WSDL:message>
+  <WSDL:message name="getCaptureFingerprintRequest">
+    <WSDL:part name="parameters" element="ns:getCaptureFingerprint" />
+  </WSDL:message>
+  <WSDL:message name="getCaptureFingerprintResponse">
+    <WSDL:part name="parameters" element="ns:getCaptureFingerprintResponse" />
+  </WSDL:message>
+  <WSDL:message name="initCaptureFP">
+    <WSDL:part name="parameters" element="ns:initCaptureFP" />
+  </WSDL:message>
+  <WSDL:message name="initCaptureFPResponse">
+    <WSDL:part name="parameters" element="ns:initCaptureFPResponse" />
+  </WSDL:message>
+  <WSDL:message name="lockRequest">
+    <WSDL:part name="parameters" element="ns:lock" />
+  </WSDL:message>
+  <WSDL:message name="lockResponse">
+    <WSDL:part name="parameters" element="ns:lockResponse" />
+  </WSDL:message>
+  <WSDL:message name="unlockRequest">
+    <WSDL:part name="parameters" element="ns:unlock" />
+  </WSDL:message>
+  <WSDL:message name="unlockResponse">
+    <WSDL:part name="parameters" element="ns:unlockResponse" />
+  </WSDL:message>
+  <WSDL:message name="systemBackupRequest">
+    <WSDL:part name="parameters" element="ns:systemBackup" />
+  </WSDL:message>
+  <WSDL:message name="systemBackupResponse">
+    <WSDL:part name="parameters" element="ns:systemBackupResponse" />
+  </WSDL:message>
+  <WSDL:message name="systemRestoreRequest">
+    <WSDL:part name="parameters" element="ns:systemRestore" />
+  </WSDL:message>
+  <WSDL:message name="systemRestoreResponse">
+    <WSDL:part name="parameters" element="ns:systemRestoreResponse" />
+  </WSDL:message>
+  <WSDL:message name="getUsersDbRequest">
+    <WSDL:part name="parameters" element="ns:getUsersDb" />
+  </WSDL:message>
+  <WSDL:message name="getUsersDbResponse">
+    <WSDL:part name="parameters" element="ns:getUsersDbResponse" />
+  </WSDL:message>
+  <WSDL:message name="deleteLogsRequest">
+    <WSDL:part name="parameters" element="ns:deleteLogs" />
+  </WSDL:message>
+  <WSDL:message name="deleteLogsResponse">
+    <WSDL:part name="parameters" element="ns:deleteLogsResponse" />
+  </WSDL:message>
+  <WSDL:message name="RemoteBackupStartRequest">
+    <WSDL:part name="parameters" element="ns:RemoteBackupStart" />
+  </WSDL:message>
+  <WSDL:message name="RemoteBackupStartResponse">
+    <WSDL:part name="parameters" element="ns:RemoteBackupStartResponse" />
+  </WSDL:message>
+  <WSDL:message name="GetChunkRequest">
+    <WSDL:part name="parameters" element="ns:GetChunk" />
+  </WSDL:message>
+  <WSDL:message name="GetChunkResponse">
+    <WSDL:part name="parameters" element="ns:GetChunkResponse" />
+  </WSDL:message>
+  <WSDL:message name="RemoteBackupEndRequest">
+    <WSDL:part name="parameters" element="ns:RemoteBackupEnd" />
+  </WSDL:message>
+  <WSDL:message name="RemoteBackupEndResponse">
+    <WSDL:part name="parameters" element="ns:RemoteBackupEndResponse" />
+  </WSDL:message>
+  <WSDL:message name="RemoteRestoreCheckRequest">
+    <WSDL:part name="parameters" element="ns:RemoteRestoreCheck" />
+  </WSDL:message>
+  <WSDL:message name="RemoteRestoreCheckResponse">
+    <WSDL:part name="parameters" element="ns:RemoteRestoreCheckResponse" />
+  </WSDL:message>
+  <WSDL:message name="RemoteRestoreStartRequest">
+    <WSDL:part name="parameters" element="ns:RemoteRestoreStart" />
+  </WSDL:message>
+  <WSDL:message name="RemoteRestoreStartResponse">
+    <WSDL:part name="parameters" element="ns:RemoteRestoreStartResponse" />
+  </WSDL:message>
+  <WSDL:message name="SendChunkRequest">
+    <WSDL:part name="parameters" element="ns:SendChunk" />
+  </WSDL:message>
+  <WSDL:message name="SendChunkResponse">
+    <WSDL:part name="parameters" element="ns:SendChunkResponse" />
+  </WSDL:message>
+  <WSDL:message name="RemoteRestoreEndRequest">
+    <WSDL:part name="parameters" element="ns:RemoteRestoreEnd" />
+  </WSDL:message>
+  <WSDL:message name="RemoteRestoreEndResponse">
+    <WSDL:part name="parameters" element="ns:RemoteRestoreEndResponse" />
+  </WSDL:message>
+  <WSDL:message name="CancelRestoreRequest">
+    <WSDL:part name="parameters" element="ns:CancelRestore" />
+  </WSDL:message>
+  <WSDL:message name="CancelRestoreResponse">
+    <WSDL:part name="parameters" element="ns:CancelRestoreResponse" />
+  </WSDL:message>
+  <WSDL:message name="addUsersRequest">
+    <WSDL:part name="parameters" element="ns:addUsers" />
+  </WSDL:message>
+  <WSDL:message name="addUsersResponse">
+    <WSDL:part name="parameters" element="ns:addUsersResponse" />
+  </WSDL:message>
+  <WSDL:message name="updateUsersRequest">
+    <WSDL:part name="parameters" element="ns:updateUsers" />
+  </WSDL:message>
+  <WSDL:message name="updateUsersResponse">
+    <WSDL:part name="parameters" element="ns:updateUsersResponse" />
+  </WSDL:message>
+  <WSDL:message name="getJobCodeSettingsRequest">
+    <WSDL:part name="parameters" element="ns:getJobCodeSettings" />
+  </WSDL:message>
+  <WSDL:message name="getJobCodeSettingsResponse">
+    <WSDL:part name="parameters" element="ns:getJobCodeSettingsResponse" />
+  </WSDL:message>
+  <WSDL:message name="updateJobCodeSettingsRequest">
+    <WSDL:part name="parameters" element="ns:updateJobCodeSettings" />
+  </WSDL:message>
+  <WSDL:message name="updateJobCodeSettingsResponse">
+    <WSDL:part name="parameters" element="ns:updateJobCodeSettingsResponse" />
+  </WSDL:message>
+  <WSDL:message name="addJobCodesRequest">
+    <WSDL:part name="parameters" element="ns:addJobCodes" />
+  </WSDL:message>
+  <WSDL:message name="addJobCodesResponse">
+    <WSDL:part name="parameters" element="ns:addJobCodesResponse" />
+  </WSDL:message>
+  <WSDL:message name="updateJobCodesRequest">
+    <WSDL:part name="parameters" element="ns:updateJobCodes" />
+  </WSDL:message>
+  <WSDL:message name="updateJobCodesResponse">
+    <WSDL:part name="parameters" element="ns:updateJobCodesResponse" />
+  </WSDL:message>
+  <WSDL:message name="deleteJobCodesRequest">
+    <WSDL:part name="parameters" element="ns:deleteJobCodes" />
+  </WSDL:message>
+  <WSDL:message name="deleteJobCodesResponse">
+    <WSDL:part name="parameters" element="ns:deleteJobCodesResponse" />
+  </WSDL:message>
+  <WSDL:message name="getJobCodesRequest">
+    <WSDL:part name="parameters" element="ns:getJobCodes" />
+  </WSDL:message>
+  <WSDL:message name="getJobCodesResponse">
+    <WSDL:part name="parameters" element="ns:getJobCodesResponse" />
+  </WSDL:message>
+  <WSDL:message name="getUserCountRequest">
+    <WSDL:part name="parameters" element="ns:getUserCount" />
+  </WSDL:message>
+  <WSDL:message name="getUserCountResponse">
+    <WSDL:part name="parameters" element="ns:getUserCountResponse" />
+  </WSDL:message>
+  <WSDL:message name="getUserBatchRequest">
+    <WSDL:part name="parameters" element="ns:getUserBatch" />
+  </WSDL:message>
+  <WSDL:message name="getUserBatchResponse">
+    <WSDL:part name="parameters" element="ns:getUserBatchResponse" />
+  </WSDL:message>
+  <WSDL:portType name="ACTAtekPortType">
+    <WSDL:operation name="login">
+      <documentation>Return sessionID for subsequent calls</documentation>
+      <WSDL:input message="tns:loginRequest" />
+      <WSDL:output message="tns:loginResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="logout">
+      <documentation>Invalidate the given sessionID</documentation>
+      <WSDL:input message="tns:logoutRequest" />
+      <WSDL:output message="tns:logoutResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getRegisteredAgents">
+      <documentation>Get Agent List</documentation>
+      <WSDL:input message="tns:getRegisteredAgentsRequest" />
+      <WSDL:output message="tns:getRegisteredAgentsResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="pollLog">
+      <documentation>Actively Send Log to Agent, return agent status when done</documentation>
+      <WSDL:input message="tns:pollLogRequest" />
+      <WSDL:output message="tns:pollLogResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getLogs">
+      <documentation>Service definition of function ns__getLogs</documentation>
+      <WSDL:input message="tns:getLogsRequest" />
+      <WSDL:output message="tns:getLogsResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="addLog">
+      <documentation>Add a Log Entry</documentation>
+      <WSDL:input message="tns:addLogRequest" />
+      <WSDL:output message="tns:addLogResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="addUser">
+      <documentation>Add a User</documentation>
+      <WSDL:input message="tns:addUserRequest" />
+      <WSDL:output message="tns:addUserResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getUsers">
+      <documentation>Find Users</documentation>
+      <WSDL:input message="tns:getUsersRequest" />
+      <WSDL:output message="tns:getUsersResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="updateUser">
+      <documentation>Change User Information</documentation>
+      <WSDL:input message="tns:updateUserRequest" />
+      <WSDL:output message="tns:updateUserResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="deleteUser">
+      <documentation>Delete a given User</documentation>
+      <WSDL:input message="tns:deleteUserRequest" />
+      <WSDL:output message="tns:deleteUserResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getMyself">
+      <documentation>Get current login User</documentation>
+      <WSDL:input message="tns:getMyselfRequest" />
+      <WSDL:output message="tns:getMyselfResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="updateMyself">
+      <documentation>Update own information</documentation>
+      <WSDL:input message="tns:updateMyselfRequest" />
+      <WSDL:output message="tns:updateMyselfResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="activateUser">
+      <documentation>Activate a User</documentation>
+      <WSDL:input message="tns:activateUserRequest" />
+      <WSDL:output message="tns:activateUserResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="deactivateUser">
+      <documentation>Deactivate a User</documentation>
+      <WSDL:input message="tns:deactivateUserRequest" />
+      <WSDL:output message="tns:deactivateUserResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getUserMessage">
+      <documentation>Get User Message</documentation>
+      <WSDL:input message="tns:getUserMessageRequest" />
+      <WSDL:output message="tns:getUserMessageResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="updateUserMessage">
+      <documentation>Change User Message</documentation>
+      <WSDL:input message="tns:updateUserMessageRequest" />
+      <WSDL:output message="tns:updateUserMessageResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="deleteUserMessage">
+      <documentation>Delete User Message</documentation>
+      <WSDL:input message="tns:deleteUserMessageRequest" />
+      <WSDL:output message="tns:deleteUserMessageResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="addDepartment">
+      <documentation>Add a Department</documentation>
+      <WSDL:input message="tns:addDepartmentRequest" />
+      <WSDL:output message="tns:addDepartmentResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="updateDepartment">
+      <documentation>Change Department Information</documentation>
+      <WSDL:input message="tns:updateDepartmentRequest" />
+      <WSDL:output message="tns:updateDepartmentResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getDepartments">
+      <documentation>Get Departments by ID</documentation>
+      <WSDL:input message="tns:getDepartmentsRequest" />
+      <WSDL:output message="tns:getDepartmentsResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="deleteDepartment">
+      <documentation>Delete Department</documentation>
+      <WSDL:input message="tns:deleteDepartmentRequest" />
+      <WSDL:output message="tns:deleteDepartmentResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="addGroup">
+      <documentation>Add an Access Group</documentation>
+      <WSDL:input message="tns:addGroupRequest" />
+      <WSDL:output message="tns:addGroupResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getGroups">
+      <documentation>Service definition of function ns__getGroups</documentation>
+      <WSDL:input message="tns:getGroupsRequest" />
+      <WSDL:output message="tns:getGroupsResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="updateGroup">
+      <documentation>Change Group Information</documentation>
+      <WSDL:input message="tns:updateGroupRequest" />
+      <WSDL:output message="tns:updateGroupResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="deleteGroup">
+      <documentation>Delete a given Group</documentation>
+      <WSDL:input message="tns:deleteGroupRequest" />
+      <WSDL:output message="tns:deleteGroupResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getTriggers">
+      <documentation>Get Trigger by Type</documentation>
+      <WSDL:input message="tns:getTriggersRequest" />
+      <WSDL:output message="tns:getTriggersResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="updateTrigger">
+      <documentation>Change Trigger Details </documentation>
+      <WSDL:input message="tns:updateTriggerRequest" />
+      <WSDL:output message="tns:updateTriggerResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="clearTrigger">
+      <documentation>Clear All Trigger Time</documentation>
+      <WSDL:input message="tns:clearTriggerRequest" />
+      <WSDL:output message="tns:clearTriggerResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="openDoor">
+      <documentation>Open the Door Now</documentation>
+      <WSDL:input message="tns:openDoorRequest" />
+      <WSDL:output message="tns:openDoorResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="openRelay">
+      <documentation>Open the Relay</documentation>
+      <WSDL:input message="tns:openRelayRequest" />
+      <WSDL:output message="tns:openRelayResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="closeRelay">
+      <documentation>Close the Relay</documentation>
+      <WSDL:input message="tns:closeRelayRequest" />
+      <WSDL:output message="tns:closeRelayResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="registerAgent">
+      <documentation>Register an Agent (IP/PORT)</documentation>
+      <WSDL:input message="tns:registerAgentRequest" />
+      <WSDL:output message="tns:registerAgentResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="unregisterAgent">
+      <documentation>Delete Agent (IP/PORT)</documentation>
+      <WSDL:input message="tns:unregisterAgentRequest" />
+      <WSDL:output message="tns:unregisterAgentResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getAPIVersion">
+      <documentation>Get API Version Number</documentation>
+      <WSDL:input message="tns:getAPIVersionRequest" />
+      <WSDL:output message="tns:getAPIVersionResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getTerminalStatus">
+      <documentation>Get Terminal Status</documentation>
+      <WSDL:input message="tns:getTerminalStatusRequest" />
+      <WSDL:output message="tns:getTerminalStatusResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getTerminalList">
+      <documentation>Service definition of function ns__getTerminalList</documentation>
+      <WSDL:input message="tns:getTerminalListRequest" />
+      <WSDL:output message="tns:getTerminalListResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="nop">
+      <documentation>Check if the session still valid and update timestamp of sessionID</documentation>
+      <WSDL:input message="tns:nopRequest" />
+      <WSDL:output message="tns:nopResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getLogPhoto">
+      <documentation>Get Photo of the related log parameter</documentation>
+      <WSDL:input message="tns:getLogPhotoRequest" />
+      <WSDL:output message="tns:getLogPhotoResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="registerFPUser">
+      <documentation>Immediately Register a Fingerprint User using ACTAtek</documentation>
+      <WSDL:input message="tns:registerFPUser" />
+      <WSDL:output message="tns:registerFPUserResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getFullLogs">
+      <documentation>Service definition of function ns__getFullLogs</documentation>
+      <WSDL:input message="tns:getFullLogsRequest" />
+      <WSDL:output message="tns:getFullLogsResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="resetLog">
+      <documentation>Service definition of function ns__resetLog</documentation>
+      <WSDL:input message="tns:resetLogRequest" />
+      <WSDL:output message="tns:resetLogResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getFpSecurityLevel">
+      <documentation>Service definition of function ns__getFpSecurityLevel</documentation>
+      <WSDL:input message="tns:getFpSecurityLevelRequest" />
+      <WSDL:output message="tns:getFpSecurityLevelResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="setFpSecurityLevel">
+      <documentation>Service definition of function ns__setFpSecurityLevel</documentation>
+      <WSDL:input message="tns:setFpSecurityLevelRequest" />
+      <WSDL:output message="tns:setFpSecurityLevelResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getRelayDelay">
+      <documentation>Service definition of function ns__getRelayDelay</documentation>
+      <WSDL:input message="tns:getRelayDelayRequest" />
+      <WSDL:output message="tns:getRelayDelayResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="setRelayDelay">
+      <documentation>Service definition of function ns__setRelayDelay</documentation>
+      <WSDL:input message="tns:setRelayDelayRequest" />
+      <WSDL:output message="tns:setRelayDelayResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getAutoInOut">
+      <documentation>Service definition of function ns__getAutoInOut</documentation>
+      <WSDL:input message="tns:getAutoInOutRequest" />
+      <WSDL:output message="tns:getAutoInOutResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="setAutoInOut">
+      <documentation>Service definition of function ns__setAutoInOut</documentation>
+      <WSDL:input message="tns:setAutoInOutRequest" />
+      <WSDL:output message="tns:setAutoInOutResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getLogUnauthorizedEvent">
+      <documentation>Service definition of function ns__getLogUnauthorizedEvent</documentation>
+      <WSDL:input message="tns:getLogUnauthorizedEventRequest" />
+      <WSDL:output message="tns:getLogUnauthorizedEventResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="setLogUnauthorizedEvent">
+      <documentation>Service definition of function ns__setLogUnauthorizedEvent</documentation>
+      <WSDL:input message="tns:setLogUnauthorizedEventRequest" />
+      <WSDL:output message="tns:setLogUnauthorizedEventResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="setRelayOption">
+      <documentation>Service definition of function ns__setRelayOption</documentation>
+      <WSDL:input message="tns:setRelayOptionRequest" />
+      <WSDL:output message="tns:setRelayOptionResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getRelayOption">
+      <documentation>Service definition of function ns__getRelayOption</documentation>
+      <WSDL:input message="tns:getRelayOptionRequest" />
+      <WSDL:output message="tns:getRelayOptionResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="setSNTP">
+      <documentation>Service definition of function ns__setSNTP</documentation>
+      <WSDL:input message="tns:setSNTPRequest" />
+      <WSDL:output message="tns:setSNTPResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getSNTP">
+      <documentation>Service definition of function ns__getSNTP</documentation>
+      <WSDL:input message="tns:getSNTPRequest" />
+      <WSDL:output message="tns:getSNTPResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="setSNTPServer">
+      <documentation>Service definition of function ns__setSNTPServer</documentation>
+      <WSDL:input message="tns:setSNTPServerRequest" />
+      <WSDL:output message="tns:setSNTPServerResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getSNTPServer">
+      <documentation>Service definition of function ns__getSNTPServer</documentation>
+      <WSDL:input message="tns:getSNTPServerRequest" />
+      <WSDL:output message="tns:getSNTPServerResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getTerminalDateTime">
+      <documentation>Service definition of function ns__getTerminalDateTime</documentation>
+      <WSDL:input message="tns:getTerminalDateTimeRequest" />
+      <WSDL:output message="tns:getTerminalDateTimeResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="setTerminalDateTime">
+      <documentation>Service definition of function ns__setTerminalDateTime</documentation>
+      <WSDL:input message="tns:setTerminalDateTimeRequest" />
+      <WSDL:output message="tns:setTerminalDateTimeResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getTimeZone">
+      <documentation>Service definition of function ns__getTimeZone</documentation>
+      <WSDL:input message="tns:getTimeZoneRequest" />
+      <WSDL:output message="tns:getTimeZoneResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="setTimeZone">
+      <documentation>Service definition of function ns__setTimeZone</documentation>
+      <WSDL:input message="tns:setTimeZoneRequest" />
+      <WSDL:output message="tns:setTimeZoneResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getCaptureFingerprint">
+      <documentation>Service definition of function ns__getCaptureFingerprint</documentation>
+      <WSDL:input message="tns:getCaptureFingerprintRequest" />
+      <WSDL:output message="tns:getCaptureFingerprintResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="initCaptureFP">
+      <documentation>Service definition of function ns__initCaptureFP</documentation>
+      <WSDL:input message="tns:initCaptureFP" />
+      <WSDL:output message="tns:initCaptureFPResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="lock">
+      <documentation>Service definition of function ns__lock</documentation>
+      <WSDL:input message="tns:lockRequest" />
+      <WSDL:output message="tns:lockResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="unlock">
+      <documentation>Service definition of function ns__unlock</documentation>
+      <WSDL:input message="tns:unlockRequest" />
+      <WSDL:output message="tns:unlockResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="systemBackup">
+      <documentation>Service definition of function ns__systemBackup</documentation>
+      <WSDL:input message="tns:systemBackupRequest" />
+      <WSDL:output message="tns:systemBackupResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="systemRestore">
+      <documentation>Service definition of function ns__systemRestore</documentation>
+      <WSDL:input message="tns:systemRestoreRequest" />
+      <WSDL:output message="tns:systemRestoreResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getUsersDb">
+      <documentation>Service definition of function ns__getUsersDb</documentation>
+      <WSDL:input message="tns:getUsersDbRequest" />
+      <WSDL:output message="tns:getUsersDbResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="deleteLogs">
+      <documentation>Service definition of function ns__deleteLogs</documentation>
+      <WSDL:input message="tns:deleteLogsRequest" />
+      <WSDL:output message="tns:deleteLogsResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="RemoteBackupStart">
+      <documentation>Service definition of function ns__RemoteBackupStart</documentation>
+      <WSDL:input message="tns:RemoteBackupStartRequest" />
+      <WSDL:output message="tns:RemoteBackupStartResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="GetChunk">
+      <documentation>Service definition of function ns__GetChunk</documentation>
+      <WSDL:input message="tns:GetChunkRequest" />
+      <WSDL:output message="tns:GetChunkResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="RemoteBackupEnd">
+      <documentation>Service definition of function ns__RemoteBackupEnd</documentation>
+      <WSDL:input message="tns:RemoteBackupEndRequest" />
+      <WSDL:output message="tns:RemoteBackupEndResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="RemoteRestoreCheck">
+      <documentation>Service definition of function ns__RemoteRestoreCheck</documentation>
+      <WSDL:input message="tns:RemoteRestoreCheckRequest" />
+      <WSDL:output message="tns:RemoteRestoreCheckResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="RemoteRestoreStart">
+      <documentation>Service definition of function ns__RemoteRestoreStart</documentation>
+      <WSDL:input message="tns:RemoteRestoreStartRequest" />
+      <WSDL:output message="tns:RemoteRestoreStartResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="SendChunk">
+      <documentation>Service definition of function ns__SendChunk</documentation>
+      <WSDL:input message="tns:SendChunkRequest" />
+      <WSDL:output message="tns:SendChunkResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="RemoteRestoreEnd">
+      <documentation>Service definition of function ns__RemoteRestoreEnd</documentation>
+      <WSDL:input message="tns:RemoteRestoreEndRequest" />
+      <WSDL:output message="tns:RemoteRestoreEndResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="CancelRestore">
+      <documentation>Service definition of function ns__CancelRestore</documentation>
+      <WSDL:input message="tns:CancelRestoreRequest" />
+      <WSDL:output message="tns:CancelRestoreResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="addUsers">
+      <documentation>Service definition of function ns__addUsers</documentation>
+      <WSDL:input message="tns:addUsersRequest" />
+      <WSDL:output message="tns:addUsersResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="updateUsers">
+      <documentation>Service definition of function ns__updateUsers</documentation>
+      <WSDL:input message="tns:updateUsersRequest" />
+      <WSDL:output message="tns:updateUsersResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getJobCodeSettings">
+      <documentation>Service definition of function ns__getJobCodeSettings</documentation>
+      <WSDL:input message="tns:getJobCodeSettingsRequest" />
+      <WSDL:output message="tns:getJobCodeSettingsResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="updateJobCodeSettings">
+      <documentation>Service definition of function ns__updateJobCodeSettings</documentation>
+      <WSDL:input message="tns:updateJobCodeSettingsRequest" />
+      <WSDL:output message="tns:updateJobCodeSettingsResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="addJobCodes">
+      <documentation>Service definition of function ns__addJobCodes</documentation>
+      <WSDL:input message="tns:addJobCodesRequest" />
+      <WSDL:output message="tns:addJobCodesResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="updateJobCodes">
+      <documentation>Service definition of function ns__updateJobCodes</documentation>
+      <WSDL:input message="tns:updateJobCodesRequest" />
+      <WSDL:output message="tns:updateJobCodesResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="deleteJobCodes">
+      <documentation>Service definition of function ns__deleteJobCodes</documentation>
+      <WSDL:input message="tns:deleteJobCodesRequest" />
+      <WSDL:output message="tns:deleteJobCodesResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getJobCodes">
+      <documentation>Service definition of function ns__getJobCodes</documentation>
+      <WSDL:input message="tns:getJobCodesRequest" />
+      <WSDL:output message="tns:getJobCodesResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getUserCount">
+      <documentation>Service definition of function ns__getUserCount</documentation>
+      <WSDL:input message="tns:getUserCountRequest" />
+      <WSDL:output message="tns:getUserCountResponse" />
+    </WSDL:operation>
+    <WSDL:operation name="getUserBatch">
+      <documentation>Service definition of function ns__getUserBatch</documentation>
+      <WSDL:input message="tns:getUserBatchRequest" />
+      <WSDL:output message="tns:getUserBatchResponse" />
+    </WSDL:operation>
+  </WSDL:portType>
+  <WSDL:binding name="ACTAtek" type="tns:ACTAtekPortType">
+    <SOAP:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <WSDL:operation name="login">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="logout">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getRegisteredAgents">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="pollLog">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getLogs">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="addLog">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="addUser">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getUsers">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="updateUser">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="deleteUser">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getMyself">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="updateMyself">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="activateUser">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="deactivateUser">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getUserMessage">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="updateUserMessage">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="deleteUserMessage">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="addDepartment">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="updateDepartment">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getDepartments">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="deleteDepartment">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="addGroup">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getGroups">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="updateGroup">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="deleteGroup">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getTriggers">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="updateTrigger">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="clearTrigger">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="openDoor">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="openRelay">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="closeRelay">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="registerAgent">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="unregisterAgent">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getAPIVersion">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getTerminalStatus">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getTerminalList">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="nop">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getLogPhoto">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="registerFPUser">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getFullLogs">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="resetLog">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getFpSecurityLevel">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="setFpSecurityLevel">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getRelayDelay">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="setRelayDelay">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getAutoInOut">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="setAutoInOut">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getLogUnauthorizedEvent">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="setLogUnauthorizedEvent">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="setRelayOption">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getRelayOption">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="setSNTP">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getSNTP">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="setSNTPServer">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getSNTPServer">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getTerminalDateTime">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="setTerminalDateTime">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getTimeZone">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="setTimeZone">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getCaptureFingerprint">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="initCaptureFP">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="lock">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="unlock">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="systemBackup">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="systemRestore">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getUsersDb">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="deleteLogs">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="RemoteBackupStart">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="GetChunk">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="RemoteBackupEnd">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="RemoteRestoreCheck">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="RemoteRestoreStart">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="SendChunk">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="RemoteRestoreEnd">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="CancelRestore">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="addUsers">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="updateUsers">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getJobCodeSettings">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="updateJobCodeSettings">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="addJobCodes">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="updateJobCodes">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="deleteJobCodes">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getJobCodes">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getUserCount">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+    <WSDL:operation name="getUserBatch">
+      <SOAP:operation soapAction="" />
+      <WSDL:input>
+        <SOAP:body use="literal" />
+      </WSDL:input>
+      <WSDL:output>
+        <SOAP:body use="literal" />
+      </WSDL:output>
+    </WSDL:operation>
+  </WSDL:binding>
+  <WSDL:service name="ACTAtek">
+    <documentation>WebService API for ACTAtek</documentation>
+    <WSDL:port name="ACTAtek" binding="tns:ACTAtek">
+      <SOAP:address location="http://www.hectrix.com/ACTAtek.wsdl" />
+    </WSDL:port>
+  </WSDL:service>
+</WSDL:definitions>

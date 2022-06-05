@@ -1,0 +1,1050 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{279DB164-D051-45BE-9F2E-F187866C13AC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HotelManagement.Entity</RootNamespace>
+    <AssemblyName>HotelManagement.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlRenderer, Version=1.5.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlRenderer.Core.1.5.0.5\lib\net40-client\HtmlRenderer.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.13.1\lib\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Banquet\BanquetBillPaymentBO.cs" />
+    <Compile Include="Banquet\BanquetClientRevenueReportBO.cs" />
+    <Compile Include="Banquet\BanquetInformationBO.cs" />
+    <Compile Include="Banquet\BanquetRefferenceBO.cs" />
+    <Compile Include="Banquet\BanquetRequisitesBO.cs" />
+    <Compile Include="Banquet\BanquetOccessionTypeBO.cs" />
+    <Compile Include="Banquet\BanquetReservation.cs" />
+    <Compile Include="Banquet\BanquetReservationBillGenerateReportBO.cs" />
+    <Compile Include="Banquet\BanquetReservationBillPaymentBO.cs" />
+    <Compile Include="Banquet\BanquetReservationBO.cs" />
+    <Compile Include="Banquet\BanquetReservationClassificationDiscountBO.cs" />
+    <Compile Include="Banquet\BanquetReservationDetailBO.cs" />
+    <Compile Include="Banquet\BanquetReservationForCalendarViewBO.cs" />
+    <Compile Include="Banquet\BanquetReservationReportViewBO.cs" />
+    <Compile Include="Banquet\BanquetSeatingPlanBO.cs" />
+    <Compile Include="Banquet\BanquetSalesInfoReportViewBO.cs" />
+    <Compile Include="Banquet\InvItemViewBO.cs" />
+    <Compile Include="Banquet\BanquetBillReSettlementLogReportBO.cs" />
+    <Compile Include="Banquet\SalesTransactionReportViewBO.cs" />
+    <Compile Include="CostofGoodsSold\CgsMonthlyTransactionBO.cs" />
+    <Compile Include="CostofGoodsSold\CgsTransactionHeadBO.cs" />
+    <Compile Include="DocumentManagement\DMDocumentBO.cs" />
+    <Compile Include="DocumentManagement\DMDocumentViewBO.cs" />
+    <Compile Include="DocumentManagement\DocumentsForDocManagementBO.cs" />
+    <Compile Include="FixedAsset\FADepreciationViewBO.cs" />
+    <Compile Include="FixedAsset\FADepreciationBO.cs" />
+    <Compile Include="FixedAsset\FADepreciationDetailsBO.cs" />
+    <Compile Include="GeneralLedger\BalanceSheetStatementInfoForReportBO.cs" />
+    <Compile Include="GeneralLedger\BudgetStatementReportDTO.cs" />
+    <Compile Include="GeneralLedger\CashFlowStatReportViewBO.cs" />
+    <Compile Include="GeneralLedger\CashNBankBookStatementInfoForReportBO.cs" />
+    <Compile Include="GeneralLedger\ChequeListStatReportViewBO.cs" />
+    <Compile Include="GeneralLedger\FixedAssetsReportViewBO.cs" />
+    <Compile Include="GeneralLedger\GLBalanceSheetHeadBO.cs" />
+    <Compile Include="GeneralLedger\GLBudgetDetailsReportBO.cs" />
+    <Compile Include="GeneralLedger\GLBudgetVwBO.cs" />
+    <Compile Include="GeneralLedger\GLBudgetDetailsBO.cs" />
+    <Compile Include="GeneralLedger\GLCommonSetupBO.cs" />
+    <Compile Include="GeneralLedger\GLAccountConfigurationBO.cs" />
+    <Compile Include="GeneralLedger\GLAccountTypeSetupBO.cs" />
+    <Compile Include="GeneralLedger\GLCashFlowHeadBO.cs" />
+    <Compile Include="GeneralLedger\GLBudgetBO.cs" />
+    <Compile Include="GeneralLedger\GLFiscalYearProjectMappingBO.cs" />
+    <Compile Include="GeneralLedger\GLFiscalYearViewBO.cs" />
+    <Compile Include="GeneralLedger\InvOpeningBalance.cs" />
+    <Compile Include="GeneralLedger\GLOpeningBalance.cs" />
+    <Compile Include="GeneralLedger\InvOpeningBalanceDetail.cs" />
+    <Compile Include="GeneralLedger\GLOpeningBalanceDetail.cs" />
+    <Compile Include="GeneralLedger\GLOpeningBalanceTransactionNodeAutoComplete.cs" />
+    <Compile Include="GeneralLedger\GLOpeningBalanceView.cs" />
+    <Compile Include="GeneralLedger\GLProjectWiseCostCenterMappingBO.cs" />
+    <Compile Include="GeneralLedger\GLRevenueDetailsBO.cs" />
+    <Compile Include="GeneralLedger\GLRevenueBO.cs" />
+    <Compile Include="GeneralLedger\GLLedgerDetailsBO.cs" />
+    <Compile Include="GeneralLedger\GLLedgerDetailsVwBO.cs" />
+    <Compile Include="GeneralLedger\GLVoucherApprovalVwBO.cs" />
+    <Compile Include="GeneralLedger\GLVoucherVwBO.cs" />
+    <Compile Include="GeneralLedger\GLLedgerMasterVwBO.cs" />
+    <Compile Include="GeneralLedger\GLLedgerMasterBO.cs" />
+    <Compile Include="GeneralLedger\GLDonorBO.cs" />
+    <Compile Include="GeneralLedger\GLCompanyBO.cs" />
+    <Compile Include="GeneralLedger\GLConfigurableBalanceSheetBO.cs" />
+    <Compile Include="GeneralLedger\GLFiscalYearBO.cs" />
+    <Compile Include="GeneralLedger\GLFixedAssetsBO.cs" />
+    <Compile Include="GeneralLedger\GLJournalRegisterInfoForReportBO.cs" />
+    <Compile Include="GeneralLedger\GLLedgerBO.cs" />
+    <Compile Include="GeneralLedger\GLDealMasterBO.cs" />
+    <Compile Include="GeneralLedger\GLMasterBO.cs" />
+    <Compile Include="GeneralLedger\GLNotesConfigurationBO.cs" />
+    <Compile Include="GeneralLedger\GLProfitLossHeadBO.cs" />
+    <Compile Include="GeneralLedger\GLProjectBO.cs" />
+    <Compile Include="GeneralLedger\GLReportDynamicallyForReportBO.cs" />
+    <Compile Include="GeneralLedger\GLVoucherApprovedInfoBO.cs" />
+    <Compile Include="GeneralLedger\GroupLedgerDetailsBO.cs" />
+    <Compile Include="GeneralLedger\LedgerBookReportBO.cs" />
+    <Compile Include="GeneralLedger\OpeningBalanceAccountList.cs" />
+    <Compile Include="GeneralLedger\OpeningBalanceAccounts.cs" />
+    <Compile Include="GeneralLedger\NodeMatrixSearchBO.cs" />
+    <Compile Include="GeneralLedger\NodeMatrixBO.cs" />
+    <Compile Include="GeneralLedger\NotesBreakDownReportViewBO.cs" />
+    <Compile Include="GeneralLedger\ProfitNLossReportViewBO.cs" />
+    <Compile Include="GeneralLedger\ReceiptNPaymentStatementViewBO.cs" />
+    <Compile Include="GeneralLedger\ReceiptNPaymentStatementBO.cs" />
+    <Compile Include="GeneralLedger\ReceivablePayableReportViewBO.cs" />
+    <Compile Include="GeneralLedger\ReceiveNPaymentInfoForReportBO.cs" />
+    <Compile Include="GeneralLedger\SessionNotesBreakDownBO.cs" />
+    <Compile Include="GeneralLedger\ProjectStageBO.cs" />
+    <Compile Include="GeneralLedger\SupplierCompanyBalanceTransferBO.cs" />
+    <Compile Include="GeneralLedger\TrialBalanceReportViewBO.cs" />
+    <Compile Include="HMCommon\ActivityLogDetailsBO.cs" />
+    <Compile Include="HMCommon\ActivityLogReportViewBO.cs" />
+    <Compile Include="HMCommon\ActivityTypeEnum.cs" />
+    <Compile Include="HMCommon\ActivityLogsBO.cs" />
+    <Compile Include="HMCommon\AutoSearch.cs" />
+    <Compile Include="HMCommon\AutoSearchBO.cs" />
+    <Compile Include="HMCommon\BaseEntity.cs" />
+    <Compile Include="HMCommon\CommonCheckByApproveByUserBO.cs" />
+    <Compile Include="HMCommon\CommonDropDownBO.cs" />
+    <Compile Include="HMCommon\CommonPaymentInstructionBO.cs" />
+    <Compile Include="HMCommon\CustomNoticeBO.cs" />
+    <Compile Include="HMCommon\CustomNoticeEmpMapBO.cs" />
+    <Compile Include="HMCommon\DiscountDetailBO.cs" />
+    <Compile Include="HMCommon\DiscountMasterBO.cs" />
+    <Compile Include="HMCommon\DiscountConfigSetupBO.cs" />
+    <Compile Include="HMCommon\EmailView.cs" />
+    <Compile Include="HMCommon\FormWiseFieldSetupBO.cs" />
+    <Compile Include="HMCommon\GetApprovalConfigurationForReportViewBO.cs" />
+    <Compile Include="HMCommon\GetDiscountDetailsBO.cs" />
+    <Compile Include="HMCommon\GetUserInformationForReportViewBO.cs" />
+    <Compile Include="HMCommon\GetUserPermissionForReportViewBO.cs" />
+    <Compile Include="HMCommon\PermissionViewBO.cs" />
+    <Compile Include="HMCommon\RateChartDetail.cs" />
+    <Compile Include="HMCommon\RateChartDiscountDetail.cs" />
+    <Compile Include="HMCommon\RateChartDiscountDetailView.cs" />
+    <Compile Include="HMCommon\RateChartMaster.cs" />
+    <Compile Include="HMCommon\RateChartMasterEditView.cs" />
+    <Compile Include="HMCommon\ReportConfigDetailsEditBO.cs" />
+    <Compile Include="HMCommon\ReportConfigMasterBO.cs" />
+    <Compile Include="HMCommon\ReportConfigDetailsBO.cs" />
+    <Compile Include="HMCommon\BankBO.cs" />
+    <Compile Include="HMCommon\BusinessPromotionBO.cs" />
+    <Compile Include="HMCommon\CommonMessageBO.cs" />
+    <Compile Include="HMCommon\CommonMessageDetailsBO.cs" />
+    <Compile Include="HMCommon\CompanyBankBO.cs" />
+    <Compile Include="HMCommon\CompanyBO.cs" />
+    <Compile Include="HMCommon\CommonProfessionBO.cs" />
+    <Compile Include="HMCommon\BusinessPromotionDetailBO.cs" />
+    <Compile Include="HMCommon\CommonPaymentModeBO.cs" />
+    <Compile Include="HMCommon\DashboardItemBO.cs" />
+    <Compile Include="HMCommon\DashboardManagementBO.cs" />
+    <Compile Include="HMCommon\GridData.cs" />
+    <Compile Include="HMCommon\CommonCurrencyBO.cs" />
+    <Compile Include="HMCommon\CommonCurrencyTransactionBO.cs" />
+    <Compile Include="HMCommon\MenuGroupNLinkIconBO.cs" />
+    <Compile Include="HMCommon\MonthYearBO.cs" />
+    <Compile Include="HMCommon\PaymentModeBO.cs" />
+    <Compile Include="HMCommon\PermissionBO.cs" />
+    <Compile Include="HMCommon\RoomStatisticsInfoBO.cs" />
+    <Compile Include="HMCommon\ExtensionMethod.cs" />
+    <Compile Include="HMCommon\SmsView.cs" />
+    <Compile Include="HotelManagement\SMGLCompanyAndGuestCompanyMappingBO.cs" />
+    <Compile Include="Inventory\AbcAnalysisBO.cs" />
+    <Compile Include="Inventory\InvItemAttributeBO.cs" />
+    <Compile Include="Inventory\InvItemAttributeViewBO.cs" />
+    <Compile Include="Inventory\XYZAnalysisBO.cs" />
+    <Compile Include="SalesAndMarketing\AccountManagerSalesTargetBO.cs" />
+    <Compile Include="SalesAndMarketing\AccountManagerSalesTargetDetailsBO.cs" />
+    <Compile Include="SalesAndMarketing\AccountManagerSalesTargetVwBO.cs" />
+    <Compile Include="SalesAndMarketing\CallToActionBO.cs" />
+    <Compile Include="SalesAndMarketing\CallToActionDetailBO.cs" />
+    <Compile Include="SalesAndMarketing\CallToActionDetailViewBO.cs" />
+    <Compile Include="SalesAndMarketing\CallToActionParticipantBO.cs" />
+    <Compile Include="SalesAndMarketing\CallToActionReminderBO.cs" />
+    <Compile Include="SalesAndMarketing\CallToActionViewBO.cs" />
+    <Compile Include="SalesAndMarketing\ContactTitleBO.cs" />
+    <Compile Include="SDC\SDCInvoiceInformationBO.cs" />
+    <Compile Include="SupportAndTicket\BillClaimedNTotalBillClaimedBO.cs" />
+    <Compile Include="SupportAndTicket\CaseNameAndCountNumberBO.cs" />
+    <Compile Include="SupportAndTicket\CityNCompanyNameAndCountNumberBO.cs" />
+    <Compile Include="SupportAndTicket\ItemCategoryAndCountNumberBO.cs" />
+    <Compile Include="SupportAndTicket\STCaseDetailHistoryBO.cs" />
+    <Compile Include="SupportAndTicket\SupportCategoryAndCountNumberBO.cs" />
+    <Compile Include="SupportAndTicket\SupportNTicketViewBO.cs" />
+    <Compile Include="SupportAndTicket\SupportTypeAndCountNumberBO.cs" />
+    <Compile Include="SupportAndTicket\WarrantyAndCountNumberBO.cs" />
+    <Compile Include="TaskManagement\SMTaskFeedbackBO.cs" />
+    <Compile Include="UserInformation\SecurityUserAdminAuthorizationBO.cs" />
+    <Compile Include="HMCommon\SMSViewBO.cs" />
+    <Compile Include="HMCommon\TemplateEmailBO.cs" />
+    <Compile Include="HMCommon\TemplateEmailDetails.cs" />
+    <Compile Include="HMCommon\TemplateInformationBO.cs" />
+    <Compile Include="HMCommon\TemplateInformationDetailBO.cs" />
+    <Compile Include="HMCommon\TemporaryReplaceBO.cs" />
+    <Compile Include="HMCommon\TermsNConditionsMasterBO.cs" />
+    <Compile Include="HMCommon\UpdatedMandatoryFieldBO.cs" />
+    <Compile Include="HMCommon\UserDashboardItemMappingBO.cs" />
+    <Compile Include="HotelManagement\AdvReseservationForecastViewBO.cs" />
+    <Compile Include="HotelManagement\BirthdayNotificationBO.cs" />
+    <Compile Include="HotelManagement\BirthdayNotificationViewBO.cs" />
+    <Compile Include="HotelManagement\ComplementeryGuestInfoBO.cs" />
+    <Compile Include="HotelManagement\ContributionAnalysisBO.cs" />
+    <Compile Include="HotelManagement\DailyOccupiedRoomListVwBO.cs" />
+    <Compile Include="HotelManagement\AirlineBO.cs" />
+    <Compile Include="HotelManagement\CompanyBillGenerationDetailsBO.cs" />
+    <Compile Include="HotelManagement\CompanyBillGenerateViewBO.cs" />
+    <Compile Include="HotelManagement\CompanyPaymentDetailsViewBO.cs" />
+    <Compile Include="HotelManagement\CompanyPaymentLedgerReportVwBo.cs" />
+    <Compile Include="HotelManagement\CompanyBillGenerationBO.cs" />
+    <Compile Include="HotelManagement\DtDMtDYtDMarketSegmentReportViewBO.cs" />
+    <Compile Include="HotelManagement\GuestExtraServiceBillApprovedBO.cs" />
+    <Compile Include="HotelManagement\BillInfoViewBO.cs" />
+    <Compile Include="HotelManagement\CompanyPaymentLedgerVwBo.cs" />
+    <Compile Include="HotelManagement\CompanyWiseDiscountPolicyBO.cs" />
+    <Compile Include="HotelManagement\ComplimentaryGuestReportViewBO.cs" />
+    <Compile Include="HotelManagement\GuestPreferenceMappingBO.cs" />
+    <Compile Include="HotelManagement\GuestRebateViewBO.cs" />
+    <Compile Include="HotelManagement\GuestRegistrationMappingBO.cs" />
+    <Compile Include="HotelManagement\GuestReservationMappingBO.cs" />
+    <Compile Include="HotelManagement\FloorBlockBO.cs" />
+    <Compile Include="HotelManagement\HotelCompanyPaymentLedger.cs" />
+    <Compile Include="HotelManagement\HotelCompanyPaymentLedgerBO.cs" />
+    <Compile Include="HotelManagement\HotelGuestBillApproved.cs" />
+    <Compile Include="HotelManagement\HotelGuestBillPaymentBO.cs" />
+    <Compile Include="HotelManagement\HotelGuestDayLetCheckOut.cs" />
+    <Compile Include="HotelManagement\HotelGuestHouseCheckOutBO.cs" />
+    <Compile Include="HotelManagement\HotelGuestInformation.cs" />
+    <Compile Include="HotelManagement\HotelGuestServiceBillBO.cs" />
+    <Compile Include="HotelManagement\HotelLinkedRoomDetailsBO.cs" />
+    <Compile Include="HotelManagement\HotelLinkedRoomMasterBO.cs" />
+    <Compile Include="HotelManagement\HotelRegistrationAireportPickupDropBO.cs" />
+    <Compile Include="HotelManagement\HotelRegistrationAireportPickupDropViewBO.cs" />
+    <Compile Include="HotelManagement\HotelRoomRegistration.cs" />
+    <Compile Include="HotelManagement\HotelRoomReservationSummary.cs" />
+    <Compile Include="HotelManagement\MonthWiseMarketSegmentReportViewBO.cs" />
+    <Compile Include="HotelManagement\PaxInReportViewBO.cs" />
+    <Compile Include="HotelManagement\RegistrationCardInfoBO.cs" />
+    <Compile Include="HotelManagement\CorporateGuestInfoByDateRangeBO.cs" />
+    <Compile Include="HotelManagement\CurrencyTransactionBO.cs" />
+    <Compile Include="HotelManagement\DailyStatisticalReportViewBO.cs" />
+    <Compile Include="HotelManagement\DiscountVsActualSaleReportViewBO.cs" />
+    <Compile Include="HotelManagement\GenerateGuestBillReportBO.cs" />
+    <Compile Include="HotelManagement\GuestAirportPickUpDropReportViewBO.cs" />
+    <Compile Include="HotelManagement\GuestBillInfoDetailsBO.cs" />
+    <Compile Include="HotelManagement\GuestBillPaymentInvoiceReportViewBO.cs" />
+    <Compile Include="HotelManagement\GuestBirthdayReportViewBO.cs" />
+    <Compile Include="HotelManagement\GuestCheckOutViewBO.cs" />
+    <Compile Include="HotelManagement\GuestHouseInfoForReportBO.cs" />
+    <Compile Include="HotelManagement\GuestInformationViewBO.cs" />
+    <Compile Include="HotelManagement\GuestPaidServiceNRegInfoViewBO.cs" />
+    <Compile Include="HotelManagement\GuestPaymentReportViewBO.cs" />
+    <Compile Include="HotelManagement\GuestPreferenceBO.cs" />
+    <Compile Include="HotelManagement\GuestRefReportViewBO.cs" />
+    <Compile Include="HotelManagement\GuestsCountryReportViewBO.cs" />
+    <Compile Include="HotelManagement\GuestSourceReportViewBO.cs" />
+    <Compile Include="HotelManagement\GuestStayedNightBO.cs" />
+    <Compile Include="HotelManagement\HMPaidServiceBO.cs" />
+    <Compile Include="HotelManagement\HotelGuestCompanyBO.cs" />
+    <Compile Include="HotelManagement\HotelGuestHouseServiceBillBO.cs" />
+    <Compile Include="HotelManagement\HotelGuestServiceInfoBO.cs" />
+    <Compile Include="HotelManagement\HotelRegistrationPaidServiceBO.cs" />
+    <Compile Include="HotelManagement\HotelReservationAireportPickupDropBO.cs" />
+    <Compile Include="HotelManagement\HouseKeepingReportViewBO.cs" />
+    <Compile Include="HotelManagement\HRPaidServiceViewBO.cs" />
+    <Compile Include="HotelManagement\LateChkOutReportViewBO.cs" />
+    <Compile Include="HotelManagement\MTDInfoBO.cs" />
+    <Compile Include="HotelManagement\NightAuditReportViewBO.cs" />
+    <Compile Include="HotelManagement\PaidServiceViewBO.cs" />
+    <Compile Include="HotelManagement\PromotionalGuestInfoByDateRangeReportBO.cs" />
+    <Compile Include="HotelManagement\RegistrationServiceInfoBO.cs" />
+    <Compile Include="HotelManagement\ReservationBillTransactionReportBO.cs" />
+    <Compile Include="HotelManagement\ReservationRoomDetailsBO.cs" />
+    <Compile Include="HotelManagement\ReturnedGuestReportViewBO.cs" />
+    <Compile Include="HotelManagement\RoomBlocksReportBO.cs" />
+    <Compile Include="HotelManagement\RoomFeaturesBO.cs" />
+    <Compile Include="HotelManagement\RoomFeaturesInfoBO.cs" />
+    <Compile Include="HotelManagement\RoomLogFileBO.cs" />
+    <Compile Include="HotelManagement\RoomNumberInfoByRoomStatusReportBO.cs" />
+    <Compile Include="HotelManagement\RoomOccupancyReportViewBO.cs" />
+    <Compile Include="HotelManagement\RoomOccupyReportViewBO.cs" />
+    <Compile Include="HotelManagement\RoomReservationBillBO.cs" />
+    <Compile Include="HotelManagement\RoomReservationBillGenerateReportBO.cs" />
+    <Compile Include="HotelManagement\RoomReservationInfoByDateRangeReportBO.cs" />
+    <Compile Include="HotelManagement\RoomReservationInfoReportBO.cs" />
+    <Compile Include="HotelManagement\RoomSalesBCReportViewBO.cs" />
+    <Compile Include="HotelManagement\RoomSalesRevReportViewBO.cs" />
+    <Compile Include="HotelManagement\RoomShiftReportViewBO.cs" />
+    <Compile Include="HotelManagement\RoomStatusPossiblePathBO.cs" />
+    <Compile Include="HotelManagement\RoomStatusPossiblePathHeadBO.cs" />
+    <Compile Include="HotelManagement\RoomStatusPossiblePathViewBO.cs" />
+    <Compile Include="HotelManagement\RoomStopChargePostingDetailsBO.cs" />
+    <Compile Include="HotelManagement\RoomAssignDuplicationCheckVwBO.cs" />
+    <Compile Include="HotelManagement\ManagerReportBO.cs" />
+    <Compile Include="HotelManagement\SalesAuditReportViewBO.cs" />
+    <Compile Include="HotelManagement\SalesTransactionReportViewBO.cs" />
+    <Compile Include="HotelManagement\SBReportViewBO.cs" />
+    <Compile Include="HotelManagement\SearchDetailsInfoBO.cs" />
+    <Compile Include="HotelManagement\ServiceBillTransferReportViewBO.cs" />
+    <Compile Include="HotelManagement\ServiceSalesInfoReportViewBO.cs" />
+    <Compile Include="HotelManagement\CompanyBillGenerationViewBO.cs" />
+    <Compile Include="HotelManagement\CompanyPaymentBO.cs" />
+    <Compile Include="HotelManagement\CompanyPaymentDetailsBO.cs" />
+    <Compile Include="HotelManagement\CompanyPaymentViewBO.cs" />
+    <Compile Include="HotelManagement\SettlementDetailsReportViewBO.cs" />
+    <Compile Include="HotelManagement\SettlementSummaryBO.cs" />
+    <Compile Include="HotelManagement\VIPGuestReportViewBO.cs" />
+    <Compile Include="HotelManagement\WalkInGuestReportBO.cs" />
+    <Compile Include="HouseKeeping\HKRoomStatusBO.cs" />
+    <Compile Include="HouseKeeping\HKRoomStatusViewBO.cs" />
+    <Compile Include="HouseKeeping\HotelDailyRoomConditionBO.cs" />
+    <Compile Include="HouseKeeping\HotelEmpTaskAssignmentBO.cs" />
+    <Compile Include="HouseKeeping\HotelRepairNMaintenanceBO.cs" />
+    <Compile Include="HouseKeeping\HotelRoomConditionBO.cs" />
+    <Compile Include="HouseKeeping\HotelRoomDiscrepancyBO.cs" />
+    <Compile Include="HouseKeeping\HotelTaskAssignmentWiseEmployeeBO.cs" />
+    <Compile Include="HouseKeeping\HotelTaskAssignmentWiseRoomBO.cs" />
+    <Compile Include="HouseKeeping\LostFoundBO.cs" />
+    <Compile Include="HouseKeeping\TaskAssignmentRoomWiseBO.cs" />
+    <Compile Include="HouseKeeping\TaskAssignmentToEmployeeBO.cs" />
+    <Compile Include="HouseKeeping\TaskWiseEmployeeVWBO.cs" />
+    <Compile Include="Inventory\ConsolidatedMenuItemSalesDetailBO.cs" />
+    <Compile Include="Inventory\CogsAccountVsItemCategoryMapppingBO.cs" />
+    <Compile Include="Inventory\InventoryCategoryWiseUsageNCostAnalysisBO.cs" />
+    <Compile Include="Inventory\DatewisePurchaseCompareViewBO.cs" />
+    <Compile Include="Inventory\HotelRoomInventoryBO.cs" />
+    <Compile Include="Inventory\HotelRoomInventoryDetailsBO.cs" />
+    <Compile Include="Inventory\InvItemClassificationBO.cs" />
+    <Compile Include="Inventory\InvItemConsumptionAdjustmentViewBO.cs" />
+    <Compile Include="Inventory\InvItemStockAdjustmentSerialInfoBO.cs" />
+    <Compile Include="Inventory\InvServiceFrequency.cs" />
+    <Compile Include="Inventory\InvItemViewForBarcodeBO.cs" />
+    <Compile Include="Inventory\InvServicePackage.cs" />
+    <Compile Include="Inventory\ItemConsumptionInformationReportBO.cs" />
+    <Compile Include="Inventory\ItemConsumptionReportBO.cs" />
+    <Compile Include="Inventory\ItemTransactionDetailsReportBO.cs" />
+    <Compile Include="Inventory\ItemTransactionSummaryReportBO.cs" />
+    <Compile Include="Inventory\InvItemTransactionLog.cs" />
+    <Compile Include="Inventory\InvItemStockInformationBO.cs" />
+    <Compile Include="Inventory\InvItemSuppierMappingBO.cs" />
+    <Compile Include="Inventory\InvItemTransactionBO.cs" />
+    <Compile Include="Inventory\InvLocationCostCenterMappingBO.cs" />
+    <Compile Include="Inventory\DailyConsolidatedRevenueCenterSalesDetailViewBO.cs" />
+    <Compile Include="Inventory\DailyConsolidatedRevenueCostCenterWiseNetSalesDetailsBO.cs" />
+    <Compile Include="Inventory\DailyConsolidatedRevenueCostCenterWiseSalesDetailsBO.cs" />
+    <Compile Include="Inventory\DailyConsolidatedRevenueSalesPaymentDetailsBO.cs" />
+    <Compile Include="Inventory\InventoryCOSDetailViewBO.cs" />
+    <Compile Include="Inventory\InventoryItemUsageAnalysisBO.cs" />
+    <Compile Include="Inventory\InventoryItemUsageViewBO.cs" />
+    <Compile Include="Inventory\InventoryStockVarianceViewBO.cs" />
+    <Compile Include="Inventory\InventoryVarianceInfoViewBO.cs" />
+    <Compile Include="Inventory\InvItemStockVarianceBO.cs" />
+    <Compile Include="Inventory\InvItemStockVarianceDetailsBO.cs" />
+    <Compile Include="Inventory\InvTransactionModeBO.cs" />
+    <Compile Include="Inventory\ItemAdjustmentDetailsByItemAccessFrequencyBO.cs" />
+    <Compile Include="Inventory\ItemAdjustmentViewBO.cs" />
+    <Compile Include="Inventory\ItemClassificationBO.cs" />
+    <Compile Include="Inventory\ItemStockAdjustmentBO.cs" />
+    <Compile Include="Inventory\ItemStockAdjustmentDetailsBO.cs" />
+    <Compile Include="Inventory\ItemVarianceViewBO.cs" />
+    <Compile Include="Inventory\PMProductOutViewForDashBoardBO.cs" />
+    <Compile Include="Inventory\ReceiveOrderReturnViewBO.cs" />
+    <Compile Include="Inventory\OutReturnViewBO.cs" />
+    <Compile Include="Inventory\PMProductOutDetailsBO.cs" />
+    <Compile Include="Inventory\PMSupplierProductReturnSerialBO.cs" />
+    <Compile Include="Inventory\PMSupplierProductReturnDetailsBO.cs" />
+    <Compile Include="Inventory\PMProductReturnSerialBO.cs" />
+    <Compile Include="Inventory\PMProductReceivedBillPaymentBO.cs" />
+    <Compile Include="Inventory\PMProductReceivedReportBO.cs" />
+    <Compile Include="Inventory\PMProductOutSerialInfoBO.cs" />
+    <Compile Include="Inventory\RestaurantRecipeDetailsViewForDynamicChangeBO.cs" />
+    <Compile Include="Inventory\ReturnOutConsumptionItemViewBO.cs" />
+    <Compile Include="Inventory\PMProductReturnDetailsBO.cs" />
+    <Compile Include="Inventory\PMProductViewBO.cs" />
+    <Compile Include="Inventory\ProductOutFroRoomViewBO.cs" />
+    <Compile Include="Inventory\ProductOutViewBO.cs" />
+    <Compile Include="Inventory\InvLocationBO.cs" />
+    <Compile Include="Inventory\InvCategoryCostCenterMappingBO.cs" />
+    <Compile Include="Inventory\InvItemClassificationCostCenterMappingBO.cs" />
+    <Compile Include="Inventory\InvItemInformationReportBO.cs" />
+    <Compile Include="Inventory\InvItemAutoSearchBO.cs" />
+    <Compile Include="Inventory\InvUnitConversionRateBO.cs" />
+    <Compile Include="Inventory\ItemWiseStockReportViewBO.cs" />
+    <Compile Include="Inventory\PMProductReceivedDetailsBO.cs" />
+    <Compile Include="Inventory\PMProductReceivedReportViewBO.cs" />
+    <Compile Include="Inventory\OutOrderViewBO.cs" />
+    <Compile Include="Inventory\ReceiveOrderViewBO.cs" />
+    <Compile Include="Inventory\ReceivedViewBO.cs" />
+    <Compile Include="Inventory\RecipeReportBO.cs" />
+    <Compile Include="Inventory\RestaurantRecipeDetailBO.cs" />
+    <Compile Include="Inventory\RoomInvInfoReportViewBO.cs" />
+    <Compile Include="Inventory\InvUnitHeadBO.cs" />
+    <Compile Include="Inventory\ServiceBandwidthBO.cs" />
+    <Compile Include="Inventory\ServicePriceMatrixBO.cs" />
+    <Compile Include="LCManagement\CNFTransactionBO.cs" />
+    <Compile Include="LCManagement\LCCnfInfoBO.cs" />
+    <Compile Include="LCManagement\LCInformationBO.cs" />
+    <Compile Include="LCManagement\LCInformationDetailBO.cs" />
+    <Compile Include="LCManagement\LCInformationViewBO.cs" />
+    <Compile Include="LCManagement\LCPaymentBO.cs" />
+    <Compile Include="LCManagement\OverHeadExpenseBO.cs" />
+    <Compile Include="LCManagement\OverHeadNameBO.cs" />
+    <Compile Include="LCManagement\LCReportViewBO.cs" />
+    <Compile Include="Maintenance\GatePassBO.cs" />
+    <Compile Include="Maintenance\GatePassItemBO.cs" />
+    <Compile Include="Maintenance\GatePassViewBO.cs" />
+    <Compile Include="Maintenance\GatePassViewForCheckOrApproveBO.cs" />
+    <Compile Include="Maintenance\SupplierNCompanyInfoForGatePassInvoiceBO.cs" />
+    <Compile Include="Membership\MemberViewBO.cs" />
+    <Compile Include="Membership\MemberBillGenerationViewBO.cs" />
+    <Compile Include="Membership\MemberBillGenerationBO.cs" />
+    <Compile Include="Membership\MemberBillGenerationDetailsBO.cs" />
+    <Compile Include="Membership\MemberPaymentBO.cs" />
+    <Compile Include="Membership\MemberPaymentDetailsBO.cs" />
+    <Compile Include="Membership\MemberPaymentConfigurationBO.cs" />
+    <Compile Include="Membership\MemberPaymentLedgerVwBo.cs" />
+    <Compile Include="Membership\MemberPaymentViewBO.cs" />
+    <Compile Include="Membership\MembershipPointDetailsBO.cs" />
+    <Compile Include="Membership\MemMemberBasicsBO.cs" />
+    <Compile Include="Membership\MemMemberFamilyMemberBO.cs" />
+    <Compile Include="Membership\MemMemberReferenceBO.cs" />
+    <Compile Include="Membership\MemMemberTypeBO.cs" />
+    <Compile Include="Membership\OnlineMemberBO.cs" />
+    <Compile Include="Membership\OnlineMemberEducationBO.cs" />
+    <Compile Include="Membership\OnlineMemberFamilyBO.cs" />
+    <Compile Include="Membership\PMMemberPaymentLedgerBO.cs" />
+    <Compile Include="Payroll\ApplicantNInterviewDetailsBO.cs" />
+    <Compile Include="Payroll\AppraisalEvaluationDetailsReportViewBO.cs" />
+    <Compile Include="Payroll\AppraisalEvaluationDetailsViewBO.cs" />
+    <Compile Include="Payroll\AppraisalEvaluationReportViewBO.cs" />
+    <Compile Include="Payroll\AppraisalEvaluationViewBO.cs" />
+    <Compile Include="Payroll\AppraisalEvalutionByBO.cs" />
+    <Compile Include="Payroll\AppraisalEvalutionRatingFactorDetailsBO.cs" />
+    <Compile Include="Payroll\AppraisalMarksIndicatorBO.cs" />
+    <Compile Include="Payroll\AppraisalRatingFactorBO.cs" />
+    <Compile Include="Payroll\AppraisalRatingScaleBO.cs" />
+    <Compile Include="Payroll\AttendanceAndLeaveApprovalBO.cs" />
+    <Compile Include="Payroll\AttendanceAndLeaveApprovalViewBO.cs" />
+    <Compile Include="Payroll\CashRequisitionBO.cs" />
+    <Compile Include="Payroll\EmployeePaymentLedgerReportVwBo.cs" />
+    <Compile Include="Payroll\EmployeePaymentViewBO.cs" />
+    <Compile Include="Payroll\EmployeePaymentBO.cs" />
+    <Compile Include="Payroll\EmployeePaymentDetailsBO.cs" />
+    <Compile Include="Payroll\EmployeePaymentDetailsViewBO.cs" />
+    <Compile Include="Payroll\EmployeePaymentLedgerVwBO.cs" />
+    <Compile Include="Payroll\EmployeeBillGenerateViewBO.cs" />
+    <Compile Include="Payroll\EmployeeBillGenerationBO.cs" />
+    <Compile Include="Payroll\EmployeeBillGenerationDetailsBO.cs" />
+    <Compile Include="Payroll\EmployeeBillGenerationViewBO.cs" />
+    <Compile Include="Payroll\EmployeeViewBO.cs" />
+    <Compile Include="Payroll\EmpTerminationBO.cs" />
+    <Compile Include="Payroll\EmployeeStatusBO.cs" />
+    <Compile Include="Payroll\EmployeePaymentLedgerBO.cs" />
+    <Compile Include="Payroll\Global.cs" />
+    <Compile Include="Payroll\LogDetailActatec.cs" />
+    <Compile Include="Payroll\PayrollEmpAttendanceLogKjTech.cs" />
+    <Compile Include="Payroll\PayrollEmployeeBalanceTransferBO.cs" />
+    <Compile Include="Payroll\PayrollEmployeePaymentLedgerBO.cs" />
+    <Compile Include="Payroll\PayrollEmpStatusHistoryBO.cs" />
+    <Compile Include="Payroll\PayrollLeaveDeductionPolicyDetailBO.cs" />
+    <Compile Include="Payroll\PayrollLeaveDeductionPolicyMasterBO.cs" />
+    <Compile Include="Payroll\PayrollStaffingBudgetByDepartmentIdBO.cs" />
+    <Compile Include="Payroll\PayrollStaffingBudgetViewBO.cs" />
+    <Compile Include="Payroll\SalaryTypeBO.cs" />
+    <Compile Include="Payroll\BankSalaryAdviceBO.cs" />
+    <Compile Include="Payroll\BenefitHeadBO.cs" />
+    <Compile Include="Payroll\BestEmployeeNominationBO.cs" />
+    <Compile Include="Payroll\BestEmployeeNominationDetailsBO.cs" />
+    <Compile Include="Payroll\BestEmployeeNominationViewBO.cs" />
+    <Compile Include="Payroll\AttendanceDeviceBO.cs" />
+    <Compile Include="Payroll\CostCenterWiseReconcilationSummaryViewBO.cs" />
+    <Compile Include="Payroll\DailyEmpStatusViewBO.cs" />
+    <Compile Include="Payroll\DisciplinaryActionBO.cs" />
+    <Compile Include="Payroll\DisciplinaryActionReasonBO.cs" />
+    <Compile Include="Payroll\DisciplinaryActionReportViewBO.cs" />
+    <Compile Include="Payroll\DisciplinaryActionTypeBO.cs" />
+    <Compile Include="Payroll\EmloyeeGratuityBO.cs" />
+    <Compile Include="Payroll\EmpAdvanceTakenBO.cs" />
+    <Compile Include="Payroll\EmpAppraisalEvalutionBO.cs" />
+    <Compile Include="Payroll\EmpBankInfoBO.cs" />
+    <Compile Include="Payroll\EmpBonusBO.cs" />
+    <Compile Include="Payroll\EmpCareerInfoBO.cs" />
+    <Compile Include="Payroll\EmpCareerTrainingBO.cs" />
+    <Compile Include="Payroll\EmpDistrictBO.cs" />
+    <Compile Include="Payroll\EmpDivisionBO.cs" />
+    <Compile Include="Payroll\EmpEducationLevelBO.cs" />
+    <Compile Include="Payroll\EmpGratuityBO.cs" />
+    <Compile Include="Payroll\EmpLanguageBO.cs" />
+    <Compile Include="Payroll\EmpListForReportViewBO.cs" />
+    <Compile Include="Payroll\EmpLoanBO.cs" />
+    <Compile Include="Payroll\EmpLoanCollectionDetails.cs" />
+    <Compile Include="Payroll\EmployeeAdvanceTakenBO.cs" />
+    <Compile Include="Payroll\EmployeeAppraisalEvalutionBO.cs" />
+    <Compile Include="Payroll\EmployeeForEvalutionBO.cs" />
+    <Compile Include="Payroll\EmployeeLastSalaryPayBO.cs" />
+    <Compile Include="Payroll\EmployeeLoanBO.cs" />
+    <Compile Include="Payroll\EmployeePayslipBO.cs" />
+    <Compile Include="Payroll\EmployeeProvidentFundBO.cs" />
+    <Compile Include="Payroll\EmployeeTaxBO.cs" />
+    <Compile Include="Payroll\EmployeeTaxDeductionSettingBO.cs" />
+    <Compile Include="Payroll\EmpMonthlyAttendanceViewBO.cs" />
+    <Compile Include="Payroll\EmpNomineeBO.cs" />
+    <Compile Include="Payroll\EmpPayslipReportViewBO.cs" />
+    <Compile Include="Payroll\EmpPFBO.cs" />
+    <Compile Include="Payroll\EmpPromotionBO.cs" />
+    <Compile Include="Payroll\EmpReconsilationBankViewBO.cs" />
+    <Compile Include="Payroll\EmpReconsilationViewBO.cs" />
+    <Compile Include="Payroll\EmpReferenceBO.cs" />
+    <Compile Include="Payroll\EmpRoasterReportViewBO.cs" />
+    <Compile Include="Payroll\EmpTaxBO.cs" />
+    <Compile Include="Payroll\EmpTaxDeductionBO.cs" />
+    <Compile Include="Payroll\EmpTaxDeductionSettingBO.cs" />
+    <Compile Include="Payroll\EmpThanaBO.cs" />
+    <Compile Include="Payroll\EmpTrainingBO.cs" />
+    <Compile Include="Payroll\EmpTrainingDetailBO.cs" />
+    <Compile Include="Payroll\EmpTrainingDetailViewBO.cs" />
+    <Compile Include="Payroll\EmpTrainingOrganizerBO.cs" />
+    <Compile Include="Payroll\EmpTransferBO.cs" />
+    <Compile Include="Payroll\EmpTransferReportViewBO.cs" />
+    <Compile Include="Payroll\EmpTypeWiseEmpNoViewBO.cs" />
+    <Compile Include="Payroll\EmpWorkStationBO.cs" />
+    <Compile Include="Payroll\GratuityEligibleEmpListViewBO.cs" />
+    <Compile Include="Payroll\GratuityMonthlyBalanceViewBO.cs" />
+    <Compile Include="Payroll\GratutitySettingsBO.cs" />
+    <Compile Include="Payroll\InterviewTypeBO.cs" />
+    <Compile Include="Payroll\LastMonthSalaryEmployeeBenifitsBO.cs" />
+    <Compile Include="Payroll\LeaveBalanceApproveViewBO.cs" />
+    <Compile Include="Payroll\LeaveBalanceClosingBO.cs" />
+    <Compile Include="Payroll\LeaveBalanceClosingViewBO.cs" />
+    <Compile Include="Payroll\LeaveClosingInfoBO.cs" />
+    <Compile Include="Payroll\LeaveTakenNBalanceBO.cs" />
+    <Compile Include="Payroll\LoanApplicationViewBO.cs" />
+    <Compile Include="Payroll\LoanCollectionBO.cs" />
+    <Compile Include="Payroll\LoanHoldupBO.cs" />
+    <Compile Include="Payroll\LoanNHoldUpViewBO.cs" />
+    <Compile Include="Payroll\LoanSettingBO.cs" />
+    <Compile Include="Payroll\OvertimeAnalysisBO.cs" />
+    <Compile Include="Payroll\OvertimeHourOfEmployeeeBO.cs" />
+    <Compile Include="Payroll\PayrollApplicantResultBO.cs" />
+    <Compile Include="Payroll\PayrollApprovedInfo.cs" />
+    <Compile Include="Payroll\PayrollDisciplinaryActionBO.cs" />
+    <Compile Include="Payroll\PayrollDisciplinaryActionReasonBO.cs" />
+    <Compile Include="Payroll\PayrollDisciplinaryActionTypeBO.cs" />
+    <Compile Include="Payroll\PayrollDonorBO.cs" />
+    <Compile Include="Payroll\PayrollEmpBenefitBO.cs" />
+    <Compile Include="Payroll\PayrollEmpLastMonthBenifitsPaymentBO.cs" />
+    <Compile Include="Payroll\PayrollEmpTrainingTypeBO.cs" />
+    <Compile Include="Payroll\PayrollInterviewTypeBO.cs" />
+    <Compile Include="Payroll\PayrollJobCircularApplicantMappingBO.cs" />
+    <Compile Include="Payroll\PayrollJobCircularBO.cs" />
+    <Compile Include="Payroll\PayrollStaffingBudgeDetailsBO.cs" />
+    <Compile Include="Payroll\PayrollStaffingBudgetBO.cs" />
+    <Compile Include="Payroll\PayrollStaffRequisitionBO.cs" />
+    <Compile Include="Payroll\PayrollStaffRequisitionDetailsBO.cs" />
+    <Compile Include="Payroll\PFLoanCollectionViewBO.cs" />
+    <Compile Include="Payroll\PFMemberReportViewBO.cs" />
+    <Compile Include="Payroll\PFMonthlyStaffListViewBO.cs" />
+    <Compile Include="Payroll\PFMonthlyTotalAmountViewBO.cs" />
+    <Compile Include="Payroll\PFProductCalculationViewBO.cs" />
+    <Compile Include="Payroll\PFReportViewBO.cs" />
+    <Compile Include="Payroll\PFSettingBO.cs" />
+    <Compile Include="Payroll\PFStatementReportViewBO.cs" />
+    <Compile Include="Payroll\PFSummaryReportViewBO.cs" />
+    <Compile Include="Payroll\ProvidentFundSettingBO.cs" />
+    <Compile Include="Payroll\ServiceChargeConfigurationBO.cs" />
+    <Compile Include="Payroll\ServiceChargeConfigurationDetailsBO.cs" />
+    <Compile Include="Payroll\ServiceChargeDistributionBO.cs" />
+    <Compile Include="Payroll\ServiceChargeDistributionDetailsBO.cs" />
+    <Compile Include="Payroll\ServiceChargeDistributionDetailsViewBO.cs" />
+    <Compile Include="Payroll\SetupSearchBO.cs" />
+    <Compile Include="Payroll\TaxSettingBO.cs" />
+    <Compile Include="Inventory\InvItemSpecialRemarksBO.cs" />
+    <Compile Include="PurchaseManagment\PMPurchaseOrderTermsNConditionBO.cs" />
+    <Compile Include="PurchaseManagment\RFQuotationBO.cs" />
+    <Compile Include="PurchaseManagment\RFQuotationFeedbackBO.cs" />
+    <Compile Include="PurchaseManagment\RFQuotationItemBO.cs" />
+    <Compile Include="PurchaseManagment\RFQuotationItemDetailBO.cs" />
+    <Compile Include="PurchaseManagment\RFQuotationItemDetailsFeedbackBO.cs" />
+    <Compile Include="PurchaseManagment\RFQuotationItemsFeedbackBO.cs" />
+    <Compile Include="PurchaseManagment\RFQuotationSupplierBO.cs" />
+    <Compile Include="PurchaseManagment\SerialDuplicateBO.cs" />
+    <Compile Include="PurchaseManagment\FinishedProductBO.cs" />
+    <Compile Include="PurchaseManagment\FinishedProductDetailsBO.cs" />
+    <Compile Include="PurchaseManagment\FinishedProductViewBO.cs" />
+    <Compile Include="PurchaseManagment\PMPurchaseOrderInfoReportBO.cs" />
+    <Compile Include="PurchaseManagment\PMRequisitionViewBO.cs" />
+    <Compile Include="PurchaseManagment\RequisitionItemForPurchaseBO.cs" />
+    <Compile Include="PurchaseManagment\PMRequisitionDetailsBO.cs" />
+    <Compile Include="PurchaseManagment\PMRequisitionReportViewBO.cs" />
+    <Compile Include="PurchaseManagment\IssueForBO.cs" />
+    <Compile Include="PurchaseManagment\PrPoUserPermissionBO.cs" />
+    <Compile Include="PurchaseManagment\SupplierPaymentViewBO.cs" />
+    <Compile Include="PurchaseManagment\SupplierPaymentBO.cs" />
+    <Compile Include="PurchaseManagment\SupplierPaymentDetailsBO.cs" />
+    <Compile Include="PurchaseManagment\SupplierPaymentLedgerVwBO.cs" />
+    <Compile Include="PurchaseManagment\PMSupplierPaymentLedgerBO.cs" />
+    <Compile Include="PurchaseManagment\PMSupplierProductReturnBO.cs" />
+    <Compile Include="PurchaseManagment\ProductReturnInformationBO.cs" />
+    <Compile Include="PurchaseManagment\PurchaseInformationBO.cs" />
+    <Compile Include="PurchaseManagment\PurchaseOrderDetailsForInvoiceBO.cs" />
+    <Compile Include="PurchaseManagment\PurchaseOrderViewBO.cs" />
+    <Compile Include="PurchaseManagment\RequisitionViewBO.cs" />
+    <Compile Include="PurchaseManagment\SupplierNCompanyInfoForPurchaseInvoiceBO.cs" />
+    <Compile Include="Restaurant\BillDetailsBO.cs" />
+    <Compile Include="Restaurant\ItemSalesPopularityInfoBO.cs" />
+    <Compile Include="Restaurant\RestaurantBill.cs" />
+    <Compile Include="Restaurant\RestaurantBillClassificationDiscount.cs" />
+    <Compile Include="Restaurant\RestaurantBillDistribution.cs" />
+    <Compile Include="Restaurant\RestaurantBillForReturnToStoreView.cs" />
+    <Compile Include="Restaurant\RestaurantBillReSettlementLogReportBO.cs" />
+    <Compile Include="Restaurant\RestaurantDailySalesStatementConfigurationBO.cs" />
+    <Compile Include="Restaurant\DailySalesStatementBO.cs" />
+    <Compile Include="Restaurant\DailySalesStatementViewBO.cs" />
+    <Compile Include="Restaurant\EmpKotBillDetailBO.cs" />
+    <Compile Include="Restaurant\KotBillMasterViewBO.cs" />
+    <Compile Include="Restaurant\KotWiseVatNSChargeNDiscountNComplementaryBO.cs" />
+    <Compile Include="Restaurant\MachineTestBO.cs" />
+    <Compile Include="Restaurant\RestaurantBillPaymentResume.cs" />
+    <Compile Include="Restaurant\RestaurantBillReportBO.cs" />
+    <Compile Include="Restaurant\RestaurantKitchenBO.cs" />
+    <Compile Include="HMCommon\DayBO.cs" />
+    <Compile Include="HMCommon\DayCloseBO.cs" />
+    <Compile Include="HMCommon\CostCentreTabBO.cs" />
+    <Compile Include="HMCommon\CountriesBO.cs" />
+    <Compile Include="HMCommon\CustomFieldBO.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HMCommon\DocumentsBO.cs" />
+    <Compile Include="HMCommon\EmpBasicHeadSetupBO.cs" />
+    <Compile Include="HMCommon\EntityTypeEnum.cs" />
+    <Compile Include="HMCommon\GridPaging.cs" />
+    <Compile Include="HMCommon\GridViewDataNPaging.cs" />
+    <Compile Include="HMCommon\HMCommonSetupBO.cs" />
+    <Compile Include="HMCommon\CommonCurrencyConversionBO.cs" />
+    <Compile Include="HMCommon\ModuleNameBO.cs" />
+    <Compile Include="HMCommon\CommonNodeMatrixBO.cs" />
+    <Compile Include="HMCommon\ProjectModuleEnum.cs" />
+    <Compile Include="HotelManagement\GuestBillPaymentBO.cs" />
+    <Compile Include="HotelManagement\EmpTimeSlabRosterBO.cs" />
+    <Compile Include="HotelManagement\GuestBillSplitBO.cs" />
+    <Compile Include="HotelManagement\GuestDocumentsBO.cs" />
+    <Compile Include="HotelManagement\GuestLedgerTranscriptReportBO.cs" />
+    <Compile Include="HotelManagement\GuestReferenceBO.cs" />
+    <Compile Include="HotelManagement\GuestServiceBillApprovedBO.cs" />
+    <Compile Include="HotelManagement\GuestServiceBillPaymentDetailsViewBO.cs" />
+    <Compile Include="HotelManagement\HMComplementaryItemBO.cs" />
+    <Compile Include="HotelManagement\HMDayCloseBO.cs" />
+    <Compile Include="HotelManagement\HotelGuestDayLetCheckOutBO.cs" />
+    <Compile Include="HotelManagement\InhouseGuestLedgerBO.cs" />
+    <Compile Include="HotelManagement\RegistrationComplementaryItemBO.cs" />
+    <Compile Include="HotelManagement\RegistrationGridViewModel.cs" />
+    <Compile Include="HotelManagement\ReservationComplementaryItemBO.cs" />
+    <Compile Include="HotelManagement\RoomAvailableStatusBO.cs" />
+    <Compile Include="HotelManagement\RoomCalenderBO.cs" />
+    <Compile Include="HotelManagement\RoomReservationDetailsForMailBO.cs" />
+    <Compile Include="HotelManagement\SalesAuditReportBO.cs" />
+    <Compile Include="Inventory\InvItemCostCenterMappingBO.cs" />
+    <Compile Include="Inventory\PMProductOutBO.cs" />
+    <Compile Include="Inventory\PMProductReceivedBO.cs" />
+    <Compile Include="Inventory\PMProductReturnBO.cs" />
+    <Compile Include="Inventory\PMProductSerialInfoBO.cs" />
+    <Compile Include="HMCommon\EmpOverTimeSetupBO.cs" />
+    <Compile Include="HMCommon\SalaryMonthStartDateBO.cs" />
+    <Compile Include="HotelManagement\AvailableGuestListBO.cs" />
+    <Compile Include="HotelManagement\HMFloorBO.cs" />
+    <Compile Include="HotelManagement\HMFloorManagementBO.cs" />
+    <Compile Include="HotelManagement\OwnerDetailBO.cs" />
+    <Compile Include="HotelManagement\ReservationBillPaymentBO.cs" />
+    <Compile Include="HotelManagement\GHServiceBillBO.cs" />
+    <Compile Include="HotelManagement\GuestCompanyBO.cs" />
+    <Compile Include="HotelManagement\GuestHouseCheckOutBO.cs" />
+    <Compile Include="HotelManagement\GuestHouseCheckOutDetailBO.cs" />
+    <Compile Include="HotelManagement\GuestHouseServiceBO.cs" />
+    <Compile Include="HotelManagement\PaymentSummaryBO.cs" />
+    <Compile Include="HotelManagement\GuestInformationBO.cs" />
+    <Compile Include="HotelManagement\ReservationDetailBO.cs" />
+    <Compile Include="HotelManagement\RoomAlocationBO.cs" />
+    <Compile Include="HotelManagement\RoomOwnerBO.cs" />
+    <Compile Include="HotelManagement\RoomRegistrationBO.cs" />
+    <Compile Include="HotelManagement\RoomReservationBO.cs" />
+    <Compile Include="HotelManagement\RoomStatusBO.cs" />
+    <Compile Include="HotelManagement\RoomStatusInfoSummaryBO.cs" />
+    <Compile Include="HotelManagement\SearchGuestBO.cs" />
+    <Compile Include="Payroll\AllowanceDeductionHeadBO.cs" />
+    <Compile Include="Payroll\DepartmentBO.cs" />
+    <Compile Include="Payroll\DesignationBO.cs" />
+    <Compile Include="Payroll\EmpAllowanceDeductionBO.cs" />
+    <Compile Include="Payroll\EmpAttendanceBO.cs" />
+    <Compile Include="Payroll\EmpAttendanceReportBO.cs" />
+    <Compile Include="Payroll\EmpTypeBO.cs" />
+    <Compile Include="Payroll\EmpDependentBO.cs" />
+    <Compile Include="Payroll\EmpEducationBO.cs" />
+    <Compile Include="Payroll\EmpExperienceBO.cs" />
+    <Compile Include="Payroll\EmpGradeBO.cs" />
+    <Compile Include="Payroll\EmpIncrementBO.cs" />
+    <Compile Include="Payroll\EmployeeBO.cs" />
+    <Compile Include="Payroll\EmployeeYearlyLeaveBO.cs" />
+    <Compile Include="Payroll\EmpOverTimeBO.cs" />
+    <Compile Include="Payroll\EmpPayScaleBO.cs" />
+    <Compile Include="Payroll\EmpRosterBO.cs" />
+    <Compile Include="Payroll\EmpSalaryProcessBO.cs" />
+    <Compile Include="Payroll\EmpSalaryProcessDetailBO.cs" />
+    <Compile Include="Payroll\EmpTimeSlabBO.cs" />
+    <Compile Include="Payroll\HolidayBO.cs" />
+    <Compile Include="Payroll\LeaveInformationBO.cs" />
+    <Compile Include="Payroll\LeaveTypeBO.cs" />
+    <Compile Include="Payroll\PayrollHolidayBO.cs" />
+    <Compile Include="Payroll\PayrollWorkingDayBO.cs" />
+    <Compile Include="Payroll\RosterHeadBO.cs" />
+    <Compile Include="Payroll\SalaryFormulaBO.cs" />
+    <Compile Include="Payroll\SalaryHeadBO.cs" />
+    <Compile Include="Payroll\SalaryProcessMonthBO.cs" />
+    <Compile Include="Payroll\SalarySheetBO.cs" />
+    <Compile Include="Payroll\TimeSlabHeadBO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HotelManagement\RoomNumberBO.cs" />
+    <Compile Include="HotelManagement\RoomTypeBO.cs" />
+    <Compile Include="Inventory\InvItemBO.cs" />
+    <Compile Include="Inventory\InvCategoryBO.cs" />
+    <Compile Include="PurchaseManagment\PMPurchaseOrderBO.cs" />
+    <Compile Include="PurchaseManagment\PMPurchaseOrderDetailsBO.cs" />
+    <Compile Include="PurchaseManagment\PMRequisitionBO.cs" />
+    <Compile Include="PurchaseManagment\PMSupplierBO.cs" />
+    <Compile Include="PurchaseManagment\ProductCategoryBO.cs" />
+    <Compile Include="Inventory\InvItemDetailsBO.cs" />
+    <Compile Include="Restaurant\RestaurantBillPaymentBO.cs" />
+    <Compile Include="Restaurant\RestaurantBuffetCostCenterMappingBO.cs" />
+    <Compile Include="Restaurant\RestaurantBuffetDetailBO.cs" />
+    <Compile Include="Restaurant\RestaurantBuffetItemBO.cs" />
+    <Compile Include="Restaurant\KotBillDetailBO.cs" />
+    <Compile Include="Restaurant\KotBillMasterBO.cs" />
+    <Compile Include="Restaurant\RestaurantBillDetailBO.cs" />
+    <Compile Include="Restaurant\RestaurantComboCostCenterMappingBO.cs" />
+    <Compile Include="Restaurant\RestaurantKitchenCostCenterMappingBO.cs" />
+    <Compile Include="Restaurant\RestaurantKotBillDetail.cs" />
+    <Compile Include="Restaurant\RestaurantKotSpecialRemarksDetailBO.cs" />
+    <Compile Include="Restaurant\RestaurantReservationBO.cs" />
+    <Compile Include="Restaurant\RestaurantReservationItemDetailBO.cs" />
+    <Compile Include="Restaurant\RestaurantReservationTableDetailBO.cs" />
+    <Compile Include="Restaurant\RestaurantSalesReturnItemBO.cs" />
+    <Compile Include="Restaurant\RestaurantSalesReturnItemViewBO.cs" />
+    <Compile Include="Restaurant\RestaurantTokenBO.cs" />
+    <Compile Include="Restaurant\RestaurantTableBO.cs" />
+    <Compile Include="Restaurant\RestaurantTableReservationBO.cs" />
+    <Compile Include="Restaurant\RestaurantTableReservationDetailBO.cs" />
+    <Compile Include="Restaurant\RestaurantTableStatusBO.cs" />
+    <Compile Include="Restaurant\RestaurantBillBO.cs" />
+    <Compile Include="Restaurant\SalesInfoReportViewBO.cs" />
+    <Compile Include="Restaurant\SalesTransactionReportViewBO.cs" />
+    <Compile Include="Restaurant\SpecialRemarksDetailsViewBO.cs" />
+    <Compile Include="Restaurant\TableManagementBO.cs" />
+    <Compile Include="Restaurant\RestaurantBearerBO.cs" />
+    <Compile Include="Restaurant\RestaurantComboItemBO.cs" />
+    <Compile Include="Restaurant\RestaurantItemBO.cs" />
+    <Compile Include="Restaurant\RestaurantItemCategoryBO.cs" />
+    <Compile Include="HMCommon\PrinterInfoBO.cs" />
+    <Compile Include="Inventory\InvManufacturerBO.cs" />
+    <Compile Include="Restaurant\TableReservationForCalendarViewBO.cs" />
+    <Compile Include="RetailPOS\BillingViewDetailsBO.cs" />
+    <Compile Include="RetailPOS\RetailPosBillReturnBO.cs" />
+    <Compile Include="RetailPOS\RetailPosSalesPaymentBO.cs" />
+    <Compile Include="RetailPOS\RetailPosSalesReturnItemBO.cs" />
+    <Compile Include="RetailPOS\RetailPosBillWithSalesReturnBO.cs" />
+    <Compile Include="SalesAndMarketing\AccountManagerBO.cs" />
+    <Compile Include="SalesAndMarketing\ContactInformationBO.cs" />
+    <Compile Include="SalesAndMarketing\DealImpFeedbackBO.cs" />
+    <Compile Include="SalesAndMarketing\DealStageWiseCompanyStatusBO.cs" />
+    <Compile Include="SalesAndMarketing\DynamicReportBO.cs" />
+    <Compile Include="SalesAndMarketing\SMContactDetailsTitleBO.cs" />
+    <Compile Include="SalesAndMarketing\SMContactInformationViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SMContactTransfer.cs" />
+    <Compile Include="SalesAndMarketing\SMCostAnalysisView.cs" />
+    <Compile Include="SalesAndMarketing\SMDealProbabilityStageInformationBO.cs" />
+    <Compile Include="SalesAndMarketing\SMDealView.cs" />
+    <Compile Include="SalesAndMarketing\SMCompanyTypeInformationBO.cs" />
+    <Compile Include="SalesAndMarketing\SMLifeCycleStageBO.cs" />
+    <Compile Include="SalesAndMarketing\HotelCompanyContactDetailsBO.cs" />
+    <Compile Include="SalesAndMarketing\HotelCompanyContactDetailsView.cs" />
+    <Compile Include="SalesAndMarketing\QuationWiseSalesListBO.cs" />
+    <Compile Include="SalesAndMarketing\QuotationAndSalesTransferDetailsViewBO.cs" />
+    <Compile Include="SalesAndMarketing\QuotationViewDetailsBO.cs" />
+    <Compile Include="SalesAndMarketing\SalesCallEntryView.cs" />
+    <Compile Include="SalesAndMarketing\SalesCallParticipantBO.cs" />
+    <Compile Include="SalesAndMarketing\SalesNQuotationViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SalesQuotationEditBO.cs" />
+    <Compile Include="SalesAndMarketing\ItemOrServiceDeliveryBO.cs" />
+    <Compile Include="SalesAndMarketing\ContractPeriodBO.cs" />
+    <Compile Include="SalesAndMarketing\SMCompanySignupStatus.cs" />
+    <Compile Include="SalesAndMarketing\SMDeal.cs" />
+    <Compile Include="SalesAndMarketing\SMCompanySiteBO.cs" />
+    <Compile Include="SalesAndMarketing\SMDealWiseContactMap.cs" />
+    <Compile Include="SalesAndMarketing\SMLogKeepingBO.cs" />
+    <Compile Include="SalesAndMarketing\SMOwnershipInformationBO.cs" />
+    <Compile Include="SalesAndMarketing\SMQuotationDetailsViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SMQuotationDiscountDetails.cs" />
+    <Compile Include="SalesAndMarketing\SMQuotationDiscountDetailsView.cs" />
+    <Compile Include="SalesAndMarketing\SMQuotationReportViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SMQuotationViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SMQuotationDetailsBO.cs" />
+    <Compile Include="SalesAndMarketing\SMQuotationBO.cs" />
+    <Compile Include="SalesAndMarketing\SMCurrentVendorBO.cs" />
+    <Compile Include="SalesAndMarketing\SMBillingPeriodBO.cs" />
+    <Compile Include="SalesAndMarketing\ServiceTypeBO.cs" />
+    <Compile Include="SalesAndMarketing\CityBO.cs" />
+    <Compile Include="SalesAndMarketing\CompanyWiseGuestInfoViewBO.cs" />
+    <Compile Include="SalesAndMarketing\IndustryBO.cs" />
+    <Compile Include="SalesAndMarketing\LocationBO.cs" />
+    <Compile Include="SalesAndMarketing\SalesCallViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SalesNMarketingScheduleViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SalesPersonViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SalesCallEntryBO.cs" />
+    <Compile Include="SalesAndMarketing\SMQuotationWiseSalesBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSalesItemSerialTransferBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSalesOrderBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSalesTransferBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSalesTransferDetailsBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSalesTransferDetailsInvoiceViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSalesTransferReportViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSalesTransferViewBo.cs" />
+    <Compile Include="SalesAndMarketing\SMDealStage.cs" />
+    <Compile Include="SalesAndMarketing\SMSegmentInformationBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSiteSurveyEngineerBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSiteSurveyFeedbackBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSiteSurveyFeedbackDetailsBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSiteSurveyFeedbackViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSiteSurveyNoteBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSiteSurveyNoteViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SMSourceInformationBO.cs" />
+    <Compile Include="SalesAndMarketing\SMStage.cs" />
+    <Compile Include="SalesAndMarketing\SMCostAnalysis.cs" />
+    <Compile Include="SalesAndMarketing\SMCostAnalysisDetail.cs" />
+    <Compile Include="SalesAndMarketing\StateBO.cs" />
+    <Compile Include="SalesManagment\SMContactDetailsBO.cs" />
+    <Compile Include="SupportAndTicket\STSupportBO.cs" />
+    <Compile Include="SupportAndTicket\STSupportDetailsBO.cs" />
+    <Compile Include="SupportAndTicket\STSupportNCaseSetupInfoBO.cs" />
+    <Compile Include="SupportAndTicket\STSupportPriceMatrixSetupBO.cs" />
+    <Compile Include="Synchronization\HotelGuestCompany.cs" />
+    <Compile Include="TaskManagement\SMTaskAssignment.cs" />
+    <Compile Include="TaskManagement\SMTaskAssignmentView.cs" />
+    <Compile Include="SalesAndMarketing\SummaryGuestInfoViewBO.cs" />
+    <Compile Include="SalesManagment\BillReceiveVeiwBO.cs" />
+    <Compile Include="SalesManagment\DateWiseSalesReportViewBO.cs" />
+    <Compile Include="SalesManagment\PMSalesBillingInfoBO.cs" />
+    <Compile Include="SalesManagment\PMSalesInvoiceViewBO.cs" />
+    <Compile Include="SalesManagment\PMSalesSiteInfoBO.cs" />
+    <Compile Include="SalesManagment\PMSalesTechnicalInfoBO.cs" />
+    <Compile Include="SalesManagment\SalesBandwidthInfoBO.cs" />
+    <Compile Include="SalesManagment\ItemViewBO.cs" />
+    <Compile Include="SalesManagment\PMSalesBillPaymentBO.cs" />
+    <Compile Include="SalesManagment\PMSalesBillPreviewBO.cs" />
+    <Compile Include="SalesManagment\PMSalesBO.cs" />
+    <Compile Include="SalesManagment\PMSalesDetailBO.cs" />
+    <Compile Include="SalesManagment\PMSalesInvoiceBO.cs" />
+    <Compile Include="SalesManagment\SalesContractDetailsBO.cs" />
+    <Compile Include="SalesManagment\SalesCustomerBO.cs" />
+    <Compile Include="SalesManagment\SalesReturnReportViewBO.cs" />
+    <Compile Include="SalesAndMarketing\CompanySiteBO.cs" />
+    <Compile Include="SalesManagment\SalesServiceBO.cs" />
+    <Compile Include="SalesManagment\SalesServiceBundleBO.cs" />
+    <Compile Include="SalesManagment\SalesServiceBundleDetailsBO.cs" />
+    <Compile Include="SalesManagment\SalesServiceViewBO.cs" />
+    <Compile Include="SalesAndMarketing\SMCompanySalesCallBO.cs" />
+    <Compile Include="SalesAndMarketing\SMCompanySalesCallDetailBO.cs" />
+    <Compile Include="Security\CommonModuleNameBO.cs" />
+    <Compile Include="Security\MenuGroupBO.cs" />
+    <Compile Include="Security\MenuLinksBO.cs" />
+    <Compile Include="Security\MenuWiseLinksBO.cs" />
+    <Compile Include="Security\MenuWiseLinkViewBO.cs" />
+    <Compile Include="Synchronization\BanquetBillDataSyncViewBO.cs" />
+    <Compile Include="Synchronization\BanquetDataSyncBO.cs" />
+    <Compile Include="Synchronization\CommonCostCenter.cs" />
+    <Compile Include="Synchronization\CommonDataSyncViewBO.cs" />
+    <Compile Include="Synchronization\HotelRoomNumber.cs" />
+    <Compile Include="Synchronization\HotelRoomType.cs" />
+    <Compile Include="Synchronization\InvCategory.cs" />
+    <Compile Include="Synchronization\InvCategoryCostCenterMapping.cs" />
+    <Compile Include="Synchronization\InvCogsAccountVsItemCategoryMappping.cs" />
+    <Compile Include="Synchronization\InvInventoryAccountVsItemCategoryMappping.cs" />
+    <Compile Include="Synchronization\InvItem.cs" />
+    <Compile Include="Synchronization\InvItemClassification.cs" />
+    <Compile Include="Synchronization\InvItemClassificationCostCenterMapping.cs" />
+    <Compile Include="Synchronization\InvItemCostCenterMapping.cs" />
+    <Compile Include="Synchronization\InvLocation.cs" />
+    <Compile Include="Synchronization\InvLocationCostCenterMapping.cs" />
+    <Compile Include="Synchronization\InvUnitConversion.cs" />
+    <Compile Include="Synchronization\InvUnitHead.cs" />
+    <Compile Include="Synchronization\RegistrationDataSyncBO.cs" />
+    <Compile Include="Synchronization\RegistrationDataSyncViewBO.cs" />
+    <Compile Include="Synchronization\RestaurantBillSyncBO.cs" />
+    <Compile Include="Synchronization\RestaurantDataSyncBO.cs" />
+    <Compile Include="Synchronization\RestaurantDataSyncViewBO.cs" />
+    <Compile Include="Synchronization\RestaurantRecipeDetail.cs" />
+    <Compile Include="Synchronization\ServiceBillDataSyncBO.cs" />
+    <Compile Include="Synchronization\ServiceBillDataSyncViewBO.cs" />
+    <Compile Include="Synchronization\SetUpData.cs" />
+    <Compile Include="Synchronization\TemporarySync.cs" />
+    <Compile Include="TaskManagement\SMTaskViewBO.cs" />
+    <Compile Include="TaskManagement\TaskStageBO.cs" />
+    <Compile Include="TaskManagement\TMTaskAssignedEmployee.cs" />
+    <Compile Include="UserInformation\UserConfigurationBO.cs" />
+    <Compile Include="UserInformation\UserGroupCostCenterMappingBO.cs" />
+    <Compile Include="UserInformation\ObjectPermissionBO.cs" />
+    <Compile Include="UserInformation\UserGroupBO.cs" />
+    <Compile Include="UserInformation\UserInformationBO.cs" />
+    <Compile Include="VehicleManagement\VMManufacturerBO.cs" />
+    <Compile Include="VehicleManagement\VMDriverInformationBO.cs" />
+    <Compile Include="VehicleManagement\VMOverHeadBO.cs" />
+    <Compile Include="VehicleManagement\VMOverheadExpenseBO.cs" />
+    <Compile Include="VehicleManagement\VMVehicleInformationBO.cs" />
+    <Compile Include="VehicleManagement\VMVehicleTypeBO.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="obj\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Content\bootstrap-theme.css.map" />
+    <None Include="Content\bootstrap-theme.min.css.map" />
+    <None Include="Content\bootstrap.css.map" />
+    <None Include="Content\bootstrap.min.css.map" />
+    <None Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="packages.config" />
+    <None Include="Scripts\jquery-2.1.3.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.3.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

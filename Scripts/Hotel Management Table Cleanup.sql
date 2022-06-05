@@ -1,0 +1,63 @@
+TRUNCATE TABLE HotelGuestBillApproved
+TRUNCATE TABLE HotelGuestBillPayment
+TRUNCATE TABLE HotelGuestHouseCheckOut
+TRUNCATE TABLE HotelGuestInformation
+TRUNCATE TABLE HotelGuestRegistration
+TRUNCATE TABLE HotelGuestReservation
+TRUNCATE TABLE HotelGuestServiceBill
+TRUNCATE TABLE HotelGuestServiceBillApproved
+TRUNCATE TABLE HotelRegistrationAireportPickupDrop
+TRUNCATE TABLE HotelRegistrationComplementaryItem
+TRUNCATE TABLE HotelReservationAireportPickupDrop
+TRUNCATE TABLE HotelReservationBillPayment
+TRUNCATE TABLE HotelReservationComplementaryItem
+TRUNCATE TABLE HotelRoomInventory
+TRUNCATE TABLE HotelRoomLogFile
+TRUNCATE TABLE HotelRoomRegistration
+TRUNCATE TABLE HotelRoomRegistrationDetail
+TRUNCATE TABLE HotelRoomReservation
+TRUNCATE TABLE HotelRoomReservationDetail
+TRUNCATE TABLE HotelRoomReservationRoomDetail
+TRUNCATE TABLE HotelRoomReservationSummary
+TRUNCATE TABLE HotelOnlineRoomReservation
+TRUNCATE TABLE HotelOnlineRoomReservationDetail
+TRUNCATE TABLE HotelRoomStatusHistory
+TRUNCATE TABLE HotelRoomDiscrepancy
+TRUNCATE TABLE HotelStock
+TRUNCATE TABLE HotelDayClose
+TRUNCATE TABLE HotelReservationServiceInfo
+TRUNCATE TABLE HotelRegistrationServiceInfo
+TRUNCATE TABLE HotelGuestExtraServiceBillApproved
+TRUNCATE TABLE HotelInHouseGuestLedger
+TRUNCATE TABLE HotelServiceBillTransfered
+TRUNCATE TABLE HotelReservationNoShowProcess
+TRUNCATE TABLE HotelRoomReservationOnline
+TRUNCATE TABLE HotelRoomReservationDetailOnline
+TRUNCATE TABLE HotelGuestInformationOnline
+TRUNCATE TABLE HotelGuestReservationOnline
+TRUNCATE TABLE HotelCompanyPaymentLedger
+TRUNCATE TABLE HotelCompanyBillGeneration
+TRUNCATE TABLE HotelCompanyBillGenerationDetails
+TRUNCATE TABLE HotelCompanyPayment
+TRUNCATE TABLE HotelCompanyPaymentDetails
+TRUNCATE TABLE HotelCompanyPaymentTransectionDetails
+TRUNCATE TABLE HotelGuestDayLetCheckOut
+TRUNCATE TABLE HotelLinkedRoomDetails
+--TRUNCATE TABLE HotelLinkedRoomMaster
+DELETE FROM HotelLinkedRoomMaster
+TRUNCATE TABLE HotelRoomStopChargePosting
+TRUNCATE TABLE HotelRoomReservationSummary
+TRUNCATE TABLE HotelSalesSummary
+TRUNCATE TABLE HotelPaymentSummary
+TRUNCATE TABLE HotelDayProcessing
+--TRUNCATE TABLE CommonDocuments
+
+TRUNCATE TABLE RestaurantSalesReturn
+TRUNCATE TABLE RestaurantSalesReturnDetails
+TRUNCATE TABLE RestaurantSalesReturnItem
+
+UPDATE HotelRoomNumber
+SET	
+	StatusId = 1,
+	CleanupStatus = 'Cleaned',
+	HKRoomStatusId = 5

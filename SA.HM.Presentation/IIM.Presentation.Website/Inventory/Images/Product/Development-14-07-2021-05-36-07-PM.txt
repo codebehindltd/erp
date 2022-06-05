@@ -1,0 +1,18 @@
+Front End: JavaScript (AngularJS/ Angular)
+Back End: .Net Core (C#)
+Database: SQL Server
+
+
+React Native for IOS/Android
+
+TOP 10 Popular Programming Languages in 2020
+1. Python
+2. JavaScript
+3. Java
+4. C#
+5. C
+6. C++
+7. GO
+8. R
+9. Swift
+10. PHP

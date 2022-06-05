@@ -1,0 +1,79 @@
+Date		Version		Developer	Module			Description
+------------	------------	------------	------------		------------
+14-09-2018	8.9.1		NIS		Front Office		RRC (Reservation and Registration with Dynamically Show Hide)
+14-09-2018	8.9.1		AAM/NKD		Front Office		Reservation Search with Different Type Combination (Reservation Payment, Room Assignment)
+14-09-2018	8.9.1		NKD		Front Office		Reservation Cancelation Process with User Privilege
+14-09-2018	8.9.1		AAM		Front Office		Reservation New Field Add (Bookers Name and Classification with VIP Type)
+14-09-2018	8.9.1		FA		Front Office		Floor and Block Wise Today Room Status Design (Graphical Design and Room Number Assending Order)
+14-09-2018	8.9.1		AAM		Front Office		Room Check Out Validation for Occupied Room (Expected departure Room can Check Out Only)
+14-09-2018	8.9.1		AAM		Front Office		Stop Charge Posting Validation for Service Bill
+14-09-2018	8.9.1		AAM		Front Office		Hotel Room Position and Forcast Report Update for Future Date
+14-09-2018	8.9.1		AAM		Front Office		Guest Company Delete Related Validation if Used from Other Part
+14-09-2018	8.9.1		FA		Front Office		Re-CheckIn with User Privilege
+14-09-2018	8.9.1		NIS/AAM		Front Office		Room Rate, Service Rate and Late Check Out Related Calculation Process Update
+
+14-09-2018	8.9.1		NLD/AAM		House Keeping		Out Of Order and Service with Data to Date and Remarks Implement
+14-09-2018	8.9.1		AAM		House Keeping		Occupied Room Will Auto Dirty Process with Defined Time (Windows Scheduler and Time Configuration in database)
+
+14-09-2018	8.9.1		NIS		Restaurant		Stop Charge Posting Validation for Restaurant Bill
+14-09-2018	8.9.1		NIS		Restaurant		Special Remarks Impement for Restaurant Bill and effects on Daily Sales Statement
+14-09-2018	8.9.1		NIS		Restaurant		Browser and Tab Related Issue Solved for Restaurant Bill Settlement and Resettlement
+14-09-2018	8.9.1		NIS/AAM		Restaurant		Rate Related Calculation Process Update
+14-09-2018	8.9.1		NIS		Restaurant		Settlement Validation for Front Side and Back Side
+
+14-09-2018	8.9.1		NIS/NKD		Inventory		Item Consumption for Multi Costcenter
+14-09-2018	8.9.1		NKD/AAM		Inventory		Item Classification New Form and Effect to Item Entry Form
+14-09-2018	8.9.1		AAM/NIS		Inventory		Item Receive Related Issue Solved (Ex: Received one item for PO1 and Receive same item for other Po)
+
+14-09-2018	8.9.1		NIS/AAM		Accounts		Date wise Accounts Report (Ledger Book, Cash Flow, Profit Loss, Trial Balance, Receive and Payment, Balance Sheet and Notes Break Down)
+14-09-2018	8.9.1		NIS/AAM		Accounts		Balance Sheet Design Update
+14-09-2018	8.9.1		NIS		Accounts		Budget Entry and Approval Process
+14-09-2018	8.9.1		NIS		Accounts		Hotel P&L Statement Report with Dynamic Setup
+
+14-09-2018	8.9.1		AAM/NIS		Banquet			Rate(Rack Rate, Service Charge, City/SD Charge and Addition Charge) Distribution Process Update
+14-09-2018	8.9.1		NKD/FA		Banquet			Relational Database with Table Field Name Change
+
+14-09-2018	8.9.1		NKD		HR & Payroll		Device Employee and ERP Employee Mapping
+
+14-09-2018	8.9.1		NKD/FA		All			User Log Activity Transaction
+14-09-2018	8.9.1		NKD		All			Email Send Related Development (PO, Reservation and Banquet)
+
+
+17-09-2018	9.1.1		FA		Front Office		Room Features Setup and Effects on Today's Room Status Form
+17-09-2018	9.1.1		AAM		Front Office		Multi Possible Path Implement for Expected Arrival and Partial Check In Color Implement
+17-09-2018	9.1.1		AAM		Front Office		Partial Check In (Selected By Multi Check Box) and Reservation Information Update
+17-09-2018	9.1.1		AAM		Front Office		Expected Departure List Generated then "Bill Lock and Preview" then Check Out Option Open with New File Icon with when Bill Generated
+17-09-2018	9.1.1		AAM		Front Office		Classification Setup Wise Restaurant Bill Effects on Front Office Invoice (Food/ Beverage Wise or Only Room Part Only)
+04-10-2018	9.1.1		NKD		Front Office		Guest Birthday Notification(Send email to wish guest's Birthday)
+04-10-2018	9.1.1		NKD		Front Office		Guest Block and Related Effects for Reservation and Registration.
+04-10-2018	9.1.1		NKD		Front Office		Reservation Cancelation Process in different Panel.
+
+05-10-2018	9.1.1		NIS		Inventory		Updated Inventory Module (New Design in Inventory and Procurement Full Process)
+									1. Requisition (Design, 3 Layer Approval Process)
+									2. Purchase Order (Design, 3 Layer Approval Process, Partial/ Full PO from Requisition, Adhoc PO)
+									3. Product Receive (Design, Adhoc/ PO Wise Receive, 3 Layer Approval Process, Partial/ Full Receive according PO)
+									4. PJV Posting (Design, Purchase Jurnal Posting to Accounts)
+									5. Item Transfer according Requisition (Design, 3 Layer Approval Process and Inventory Stock Effects)
+									6. Transfered Product Receive (Design, 3 Layer Approval Process and Inventory Stock Effects)
+									7. Item Consumption for Employee and Costcenter (Design, 3 Layer Approval Process and Inventory Stock Effects)
+									8. Item Consumption Return (Design, 3 Layer Approval Process, Accounts Related Effects and Inventory Stock Effects)
+									9. Reports Related Development (Item Wise/ Location wise Stock with Serial Product, Chalan, Requisition and PO Invoice, Item Transaction Log)
+09-10-2018	9.1.1		AAM		Front Office		Advance/Payment/Rebate/PaidOut Related Work on Payment Form (Guest Payment, Banquet Payment) and 
+									Room Reservation Advance Process/ Reservation to Registration Advance Process/ Advance Refund Process/ Reports Related Effects (Front Office Transaction, Restaurant Transaction and Banquet Transaction)
+									and Accounts Effects.
+10-10-2018	9.1.1		AAM		Front Office		Settlement Summery Report
+10-10-2018	9.1.1		AAM		Front Office		Group Checkout with Related Linked Room
+25-10-2018	9.1.1		AAM		Front Office		New Pre Registration and Reservation Confirmation Letter Update
+06-11-2018	9.1.1		NKD		Front Office		VAT Syncronization Process (Server A to Server B)
+14-11-2018	9.1.1		NIS		Restaurant		Restaurant Re Settlement and Re Settlement Related Log Report
+15-11-2018	9.1.1		AAM		Front Office		Dynamically Room Rent Show/ Hide option implement from Reservation Panel
+16-11-2018	9.1.1		AAM		Front Office		Payment Summary Showing in Front Office Invoice Bill Summary Part
+17-11-2018	9.1.1		AAM		Front Office		Configurable Cheack Out for Bill Lock and Preview
+19-11-2018	9.1.1		NIS		Front Office		Reservation Copy To
+26-11-2018	9.1.1		AAM		Inventory		Inventory and Procurement with Accounts Integration (1. Purchase Jurnal Posting with Accounts Voucher Posting, 2. Item Consumption with Accounts Voucher Posting, 3. Supplier Payment with Accounts Voucher Posting).
+04-12-2018	9.1.1		FA		Front Office		Individual Guest Swap from a Specific Room
+07-12-2018	9.1.1		AAM		Front Office		Auto Link Create when Room Reservation to Registration
+14-12-2018	9.1.1		FA		Front Office		Individual/ Group wise Stop Charge Posting for a Specific/ Multi Outlet
+20-12-2018	9.1.1		FA		Front Office		Today's Room Status Related Modification (Search, Counting, Multi Type Filtering Implementation)
+03-01-2019	9.1.1		NIS		Restaurant		Waiter/ Cashier Name Confirmation when KOT from Table (Configurable)
+30-1-2019	9.1.1		NKD		Front Office		Market Segment wise report(Month wise,DTD/MTD/YTD,Sales Person Wise)

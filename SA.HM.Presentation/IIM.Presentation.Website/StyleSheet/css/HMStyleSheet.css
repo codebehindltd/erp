@@ -1,0 +1,1099 @@
+﻿.invisible
+{
+    display: none;
+}
+.InnBoardIcon
+{
+    background-repeat: no-repeat;
+    height: 22px;
+}
+.TransactionalButton
+{
+}
+.divClear
+{
+    clear: both;
+}
+.HMBodyContainer
+{
+    padding-top: 20px;
+}
+.HMBodyContainerMaster
+{
+    padding-left: 12px;
+}
+.HMBodyContainerGridView
+{
+    padding-top: 1px;
+}
+.HMContainerRow
+{
+    padding-top: 05px;
+    width: 700px;
+}
+.HMContainerRowButton
+{
+    padding-top: 20px;
+    padding-bottom: 15px;
+    text-align: left;
+}
+.left-Float
+{
+    float: left;
+    width: 200px;
+    height: 265px;
+    text-align: left;
+    border: 0px solid;
+}
+.l-left
+{
+    float: left;
+    width: 115px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: left;
+    border: 0px solid;
+}
+.l-right
+{
+    float: right;
+    width: 115px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: left;
+    border: 0px solid;
+}
+.right-Float
+{
+    float: right;
+    width: 200px;
+    height: 265px;
+    text-align: left;
+    border: 0px solid;
+}
+.r-left
+{
+    float: left;
+    width: 200px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: left;
+    border: 0px solid;
+}
+.r-right
+{
+    float: right;
+    width: 200px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: left;
+    border: 0px solid;
+}
+#SearchTextBox
+{
+    width: 165px;
+}
+#ImgBtnSearch
+{
+    width: 44px;
+    height: 35px;
+}
+.ReporContainerDiv
+{
+    float: left;
+    height: 100%;
+    margin: 2px;
+    width: 100%;
+}
+.ReporContainerDiv table
+{
+    width: 100%;
+}
+.DivRoomContainer
+{
+    margin: 2px;
+    height: 125px; /*height: 105px;*/
+    width: 79px;
+    float: left;
+}
+
+.DivRoomContainerHeight61
+{
+    margin: 2px;
+    height: 61px;
+    width: 79px;
+    float: left;
+}
+
+.DivRoomNumberContainer
+{
+    margin: auto;
+    height: 30px;
+}
+.FloorRoomManagementDiv
+{
+    width: 33%;
+    background-color: #07BA28;
+    color: White;
+    text-align: center;
+}
+.RoomReservedDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px; /*background-image: url("/StyleSheet/images/OutOfOrder.jpg");*/
+    background-color: Blue;
+    margin: 2px;
+    cursor: pointer;
+}
+.RoomStatusInfoDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    margin: 2px;
+    cursor: pointer;
+}
+.RoomPossibleVacantDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #F9966B;
+    margin: 2px;
+    cursor: pointer;
+}
+.RoomOutOfOrderDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: Red;
+    margin: 2px;
+    cursor: pointer;
+}
+.RoomOutOfServiceDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #AC1515;
+    margin: 2px;
+    cursor: pointer;
+}
+.RoomManagementBlockDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #AC1515;
+    margin: 2px;
+    cursor: pointer;
+}
+.RoomOccupaiedDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #D63CC4;
+    margin: 2px;
+    cursor: pointer;
+}
+.RoomTodaysCheckInDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #FFBF00;
+    margin: 2px;
+    cursor: pointer;
+}
+.RoomLongStayingDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #B45F04;
+    margin: 2px;
+    cursor: pointer;
+}
+.RoomVacantDirtyDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: Gray;
+    margin: 2px;
+    cursor: pointer;
+}
+.RoomVacantDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 73px;
+    height: 55px;
+    background-color: #07BA28;
+    margin: 2px;
+    cursor: pointer;
+}
+.RoomNumberDiv
+{
+    border: 0px solid #000;
+    float: left;
+    width: 73px;
+    height: 20px;
+    text-align: center;
+    margin: 8px 1px 1px -1px;
+    color: #000;
+}
+.TableNumberDiv
+{
+    border: 0px solid #000;
+    float: left;
+    width: 73px;
+    height: 20px;
+    text-align: center;
+    margin: 17px 1px 1px -1px;
+}
+.CustomTextBox60px
+{
+    width: 60px;
+}
+.CustomTextBox
+{
+    width: 100px;
+}
+.Custom90PercentNormalTextBox
+{
+    width: 185px;
+}
+.CustomDropDownForCheckOut
+{
+    width: 148px;
+}
+.CustomTimeSize
+{
+    width: 20px;
+}
+.CustomMinuteSize
+{
+    width: 20px;
+}
+.CustomAMPMSize
+{
+    width: 60px;
+}
+.contentInnBoardMaster
+{
+    position: relative;
+    background-color: rgb(249, 249, 249);
+    margin-left: 240px;
+    margin-top: 6px;
+    margin-right: 6px;
+}
+.CommonWidth
+{
+    /* width: 34%; */
+    font-weight: bold;
+}
+.draggable
+{
+    border: 1px solid black;
+    float: left;
+    margin: 2px;
+    position: absolute;
+    cursor: move;
+    transform :rotate()
+}
+.draggableClassWithRotate
+{
+    border: 1px solid black;
+    float: left;
+    margin: 2px;
+    position: absolute
+}
+.NotDraggable
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    margin: 2px;
+    position: absolute;
+}
+#FloorRoomAllocation
+{
+    position: relative;
+    height: 1000px;
+    width: 99%;
+}
+.FloorRoomAllocationBGImage
+{
+    background-image: url("/Images/GraphPaper.jpg");
+    background-repeat: repeat;
+}
+.InHouse
+{
+    /*background-color: #4C787E;*/
+    background-color: #D63CC4;
+    color: White;
+    text-align: center;
+}
+.CheckedOut
+{
+    background-color: #99C68E;
+    color: White;
+    text-align: center;
+}
+.Reservation
+{
+    /*background-color: #4E8975;*/
+    background-color: #0000FF;
+    color: White;
+    text-align: center;
+}
+.ReservationSettled
+{
+    /*background-color: #4E8975;*/
+    background-color: Gray;
+    color: White;
+    text-align: center;
+}
+.OutOfService
+{
+    background-color: Red;
+    color: White;
+    text-align: center;
+}
+.DivRestaurantItemContainer
+{
+    margin: 2px;
+    height: 140px;
+    float: left;
+    padding-left: 12px;
+    width: 110px;
+    /*width: 125px;*/
+}
+.RestaurantTableAvailableDiv
+{
+    background-color: #07BA28;
+    color: White;
+    text-align: center;
+}
+.RestaurantTableBookedDiv
+{
+    background-color: #D63CC4;
+    color: White;
+    text-align: center;
+}
+.RestaurantTableReservedDiv
+{
+    background-color: #ED0731;
+    color: White;
+    text-align: center;
+}
+.RestaurantItemDiv
+{
+    border: 1px solid red;
+    float: left;
+    width: 120px;
+    height: 90px;
+    margin: 2px;
+}
+.RestaurantItemImage
+{
+    width: 120px;
+    height: 90px;
+}
+.TableNumberDiv
+{
+    border: 0px solid #000;
+    float: left;
+    width: 73px;
+    height: 20px;
+    text-align: center;
+    margin: 17px 1px 1px -1px;
+}
+.ItemNameDiv
+{
+    border: 0px solid #000;
+    float: left;
+    /*width: 135px;*/
+    width: 110px;
+    height: 20px;
+    text-align: center;
+    margin: 8px 1px 1px 5px;
+}
+
+.DivNumericContainer
+{
+    margin: 2px;
+    height: 81px;
+    float: left;
+}
+.NumericItemDiv
+{
+    float: left;
+    width: 120px;
+    height: 90px;
+    margin: 2px;
+}
+.ItemImageSize
+{
+    height: 90px;
+    width: 120px;
+}
+.NumericItemImageDiv
+{
+    height: 80px;
+}
+#TouchKeypad
+{
+    height: 440px;
+    width: 410px;
+}
+#TouchKeypadResultDiv
+{
+    padding-left: 16px;
+}
+.TouchKeypadResult
+{
+    width: 361px;
+    height: 150px;
+    font-size: 50px;
+    text-align: right;
+    font-weight: bold;
+    color: Black;
+}
+#RestaurantMasterLeftPanel
+{
+    width: 475px;
+}
+#RestaurantContent
+{
+    width: 58%;
+    margin-left: 484px;
+}
+#TableWiseItemInformation
+{
+    color: #333333;
+    width: 100%;
+    border-collapse: collapse;
+    background: none repeat scroll 0 0 white;
+    border: 1px solid #CCCCCC;
+    margin: 0.3em 0;
+    font-size: 13px;
+}
+.dialogForBearerLogin
+{
+    margin: 0 auto;
+    width: 432px;
+}
+#TouchKeypadForBearerLogin
+{
+    height: 411px;
+    width: 410px;
+}
+.btnBackPreviousPage
+{
+    height: 40px;
+}
+.RestaurantContainerTouchScreen, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container
+{
+    width: 100%;
+    text-align: center;
+}
+#RestaurantContentTouchScreen
+{
+    margin-left: 535px;
+    padding-top: 10px;
+}
+#RestaurantMasterLeftPanel
+{
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    margin: 0.5em 0;
+    width: 525px;
+}
+.ThreeColumnTextBox
+{
+    /*width: 625px;*/
+    width: 648px;
+}
+.TwoColumnTextBox
+{
+    width: 405px;
+}
+.ThreeColumnDropDownList
+{
+    /*width: 639px;*/
+    width: 662px;
+}
+
+.InnerThreeColumnDropDownList
+{
+    /*width: 639px;*/
+    width: 648px;
+}
+.divSection
+{
+    margin: 1px;
+    padding-left: 10px; /*width: 805px;*/
+    width: 860px;
+}
+.divDisplaySection
+{
+    margin: 1px;
+    padding-left: 10px; /*width: 805px;*/
+    
+}
+.childDivSection
+{
+    /*padding: 10px;*/
+    padding: 0px; /*padding-left:15px;     padding-right:15px;*/
+}
+.divSectionGLAccountType
+{
+    margin: 1px;
+    padding-left: 10px;
+    width: 780px;
+}
+.divSectionLeftLeft
+{
+    float: left; /*width: 115px;*/
+    width: 140px;
+}
+.divSectionLeftRight
+{
+    float: left; /*width: 35%;*/
+    width: 30%;
+}
+.divSectionRightLeft
+{
+    float: left; /*width: 115px;*/
+    width: 140px;
+}
+.divSectionRightRight
+{
+    float: right; /*width: 31%;*/
+    width: 30%;
+}
+.divMargin
+{
+    margin: 1px;
+}
+.divLeftMargin
+{
+    margin-right: 1%;
+}
+.divRightMargin
+{
+    margin-left: 1%;
+}
+.divBox
+{
+    height: 100%;
+    padding: 3px 5px 3px 5px;
+}
+.divBoxWithoutLeftRightPadding
+{
+    height: 100%;
+    padding: -1px 0px -1px 0px;
+}
+.divFullSectionWithTwoDvie
+{
+    margin: 1px;
+    padding-left: 5px;
+    width: 100%;
+}
+.divFullSectionWithOneDvie
+{
+    margin: 1px;
+    padding-left: 10px;
+    width: 97%;
+}
+.divSectionLeftRightSameWidth
+{
+    float: left;
+    width: 48%;
+}
+.divSectionLeftRightSameWidthFor50Percent
+{
+    float: left;
+    width: 50%;
+}
+.block
+{
+    padding-bottom: 10px;
+}
+/* Tab Menue */
+.ui-widget
+{
+    font-family: Arial,sans-serif;
+    font-size: 1.1em; /*font-size: 1em;*/
+}
+.ui-widget .ui-widget
+{
+    font-size: 1em;
+}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button
+{
+    font-family: Arial,sans-serif;
+    font-size: 1em;
+}
+.ui-widget-header
+{
+    border: 1px solid #e3a1a1;
+    background: url(/StyleSheet/css/images/header.jpg) 50% 50% repeat-x;
+    font-weight: bold;
+}
+#myTabs .ui-state-default, #myTabs .ui-widget-content .ui-state-default, #myTabs .ui-widget-header .ui-state-default
+{
+    border: 1px solid #d8dcdf;
+    font-weight: bold;
+    color: white;
+    background: url(/StyleSheet/css/images/header.jpg) 50% 50% repeat-x;
+}
+#myTabs .ui-state-default a, #myTabs .ui-state-default a:link, #myTabs .ui-state-default a:visited
+{
+    color: white;
+    text-decoration: none;
+}
+#myTabs .ui-state-active, #myTabs .ui-widget-content .ui-state-active, #myTabs .ui-widget-header .ui-state-active
+{
+    border: 1px solid #cccccc;
+    font-weight: bold;
+    color: #004276;
+    background: white;
+}
+#myTabs .ui-state-active a, #myTabs .ui-state-active a:link, #myTabs .ui-state-active a:visited
+{
+    color: #004276;
+    text-decoration: none;
+}
+#myTabs .ui-widget :active
+{
+    outline: none;
+}
+#myTabs .ui-style
+{
+    background: #F9F9F9;
+    border: 0px solid #f9f9f9;
+}
+#tabPage
+{
+    margin-top: -42px;
+}
+/* Mozilla Specific CSS 
+@moz-document url-prefix() {
+    #tabPage { margin-top:-42px;}
+}*/
+/* Chrome Specific CSS */
+@media screen and (-webkit-min-device-pixel-ratio:0)
+{
+    #tabPage
+    {
+        margin-top: -39px;
+    }
+}
+/* Home Design */
+.left
+{
+    float: left;
+    text-align: justify;
+}
+.right
+{
+    float: right;
+}
+.leftWithPixel
+{
+    float: left;
+    width: 350px;
+    margin-left: 20px;
+    line-height: 25px;
+    text-align: justify;
+}
+.clear
+{
+    clear: both;
+}
+.menu
+{
+    margin-left: 20px;
+    float: left;
+    text-align: justify;
+    width: 400px;
+}
+.header
+{
+    margin-left: 0px;
+}
+.image
+{
+    width: 200px;
+    height: 200px;
+}
+.link
+{
+    float: right;
+    margin-top: 20px;
+    margin-right: 150px;
+}
+.secondmenu
+{
+    margin-left: 20px;
+    margin-top: 20px;
+    float: left;
+}
+.MandatoryField
+{
+    color: Red;
+}
+#imageDiv
+{
+    width: 310px;
+}
+.legend
+{
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 5px;
+}
+#legendContainerForRestaurant
+{
+    padding: 12px;
+    width: 320px;
+    float: left;
+}
+#legendContainer
+{
+    padding: 12px; /*width: 300px;*/
+    width: 285px;
+    float: left;
+}
+.controlContainer
+{
+    padding-top: 10px;
+    float: left;
+    width: 530px;
+}
+.legendLeftText
+{
+    /*width: 105px;*/
+    width: 80px;
+    color: Black;
+    margin: 5px;
+    float: left;
+    font-weight: bold;
+}
+.legendRightText
+{
+    width: 113px;
+    color: Black;
+    margin: 5px;
+    float: left;
+    font-weight: bold;
+}
+.legendText
+{
+    width: 113px;
+    color: Black;
+    margin: 5px;
+    float: left;
+    font-weight: bold;
+}
+.customChkBox input[type="checkbox"]
+{
+    margin-right: 10px;
+    margin-top: -3px;
+}
+.totalAmout
+{
+    margin-left: 10px;
+    font-size: small;
+    color: Black;
+    height: 20px;
+    float: left;
+    font-weight: bold;
+}
+
+.bold
+{
+    font-weight: bold;
+}
+
+
+/*Jquery Touch Screen Keyboard  Custom CSS*/
+button.ui-keyboard-accept.ui-keyboard-valid-input
+{
+    background: none repeat scroll 0 0 #e6e6e6;
+    border-color: #4863A0;
+    color: #000;
+}
+
+button.ui-keyboard-accept.ui-keyboard-valid-input:hover
+{
+    background: none repeat scroll 0 0 #dadada;
+    border-color: #737CA1;
+    color: #000;
+}
+
+.divSectionLeft
+{
+    float: left; /*width: 115px;*/
+    width: 310px;
+}
+.divSectionRight
+{
+    float: left; /*width: 35%;*/
+    width: 30%;
+}
+
+.DataGridYScroll
+{
+    height: 250px;
+    overflow-y: scroll;
+    text-align: left;
+}
+
+#TableContainerForTouchPad
+{
+    width: 68.3%;
+}
+.RoomLongStayingDivNoAction
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    background-color: #B45F04;
+    margin: 2px;
+}
+.RoomReservedDivNoAction
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    background-color: Blue;
+    margin: 2px;
+}
+.RoomPossibleVacantDivNoAction
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    background-color: #F9966B;
+    margin: 2px;
+}
+.RoomOutOfOrderDivNoAction
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    background-color: Red;
+    margin: 2px;
+}
+.RoomOutOfServiceDivNoAction
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    background-color: #C40909;
+    margin: 2px;
+}
+.RoomOccupaiedDivNoAction
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    background-color: #D63CC4;
+    margin: 2px;
+}
+.RoomTodaysCheckInDivNoAction
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    background-color: #FFBF00;
+    margin: 2px;
+}
+.RoomVacantDirtyDivNoAction
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    background-color: Gray;
+    margin: 2px;
+}
+.RoomVacantDivNoAction
+{
+    border: 1px solid #CCCCCC;
+    float: left;
+    background-color: #07BA28;
+    margin: 2px;
+}
+
+#MessageBriefDescription > li > a:hover, #gvInboxMessage tr:hover, #ContentPlaceHolder1_gvMessageSend tr:hover
+{
+    color: #459ECA;
+}
+
+.spinner
+{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px; /* half width of the spinner gif */
+    margin-top: -50px; /* half height of the spinner gif */
+    text-align: center;
+    z-index: 1234;
+    overflow: auto;
+    width: 100px; /* width of the spinner gif */
+    height: 102px; /*hight of the spinner gif +2px to fix IE8 issue */
+}
+
+
+/* Tree Customization CSS */
+
+.MenuItemTouchTree a
+{
+    display: block;
+    width: 98%;
+    color: #fff;
+}
+
+.MenuItemTouchTree a:link, a:visited
+{
+    font-weight: bold;
+    display: block;
+}
+
+.MenuItemTouchTree a:hover, a:visited
+{
+    color: #D7E2E9;
+    font-weight: bold;
+    background-color: #244559;
+    display: block;
+}
+.rootNodeTouch
+{
+    clear: both;
+    font-size: 13px;
+    width: 98%;
+    padding: 5px;
+    background-color: #577990;
+    border-radius: 4px;
+}
+
+.parentNodeTouch
+{
+    height: 20px;
+}
+
+.treeNodeTouch
+{
+    background-color: #577990;
+    width: 98%;
+    border-radius: 4px;
+    padding: 4px;
+}
+.leafNodeTouch
+{
+    padding: 4px;
+    background-color: #577990;
+    width: 98%;
+    border-radius: 4px;
+}
+
+.hoverNodeTouch
+{
+    font-weight: bolder;
+    width: 98%;
+    border-radius: 4px;
+}
+
+.selectNodeTouch
+{
+    background-color: #5297C3; /*0D629C 5784B5 0A3E60*/
+    width: 98%;
+    border-radius: 4px;
+}
+
+.navbar .nav > li > span
+{
+    float: none;
+    padding: 10px 5px;
+    text-decoration: none;
+}
+
+.restaurantPageHeader
+{
+    background: url(/StyleSheet/css/images/header.jpg);
+    padding: 0em 1em;
+    margin: 0px;
+    border-radius: 0px;
+    background-clip: padding-box;
+    border: 0px;
+    border-bottom: 1px solid #ccc;
+}
+
+.TouchDivNumericContainer
+{
+    margin: 0 2px;
+    height: 70px;
+    float: left;
+}
+.TouchNumericItemDiv
+{
+    float: left;
+    width: 120px;
+    height: 65px;
+    margin: 2px;
+}
+.TouchNumericItemImageDiv
+{
+    height: 65px;
+    width: 125px;
+}
+
+.TouchInputSetFocus
+{
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    outline: 0 none;
+}
+.HoldBillRegistrationDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;    
+    height: 55px;
+    background-color: #07BA28;
+    margin: 2px;
+    cursor: pointer;
+}
+.BlankRegistrationDiv
+{
+    border: 1px solid #CCCCCC;
+    float: left;    
+    height: 55px;
+    background-color: #07BA28;
+    margin: 2px;
+    cursor: pointer;
+}
+
+
+/*Keyboard Touch Screen Number Pad CSS*/
+#KeyBoardContainer .ui-keyboard { padding: .3em; position: static; left: 300; top: 0; z-index: 16000; }
+#KeyBoardContainer .ui-keyboard div { font-size: 25px; }
+#KeyBoardContainer .ui-keyboard-button { height: 50px; min-width: 115px; margin: .15em; cursor: pointer; overflow: hidden; line-height: 2em; -moz-user-focus: ignore; }
+#KeyBoardContainer .ui-keyboard-dec {font-weight: 900;}
+#KeyBoardContainer .ui-keyboard-bksp {font-weight: 900;}
+#KeyBoardContainer .ui-state-disabled {border: 1px solid #cccccc;}
+
+#KeyBoardContainerQuantityChange .ui-keyboard { padding: .3em; position: static; left: 300; top: 0; z-index: 16000; }
+#KeyBoardContainerQuantityChange .ui-keyboard div { font-size: 25px; }
+#KeyBoardContainerQuantityChange .ui-keyboard-button { height: 50px; min-width: 115px; margin: .15em; cursor: pointer; overflow: hidden; line-height: 2em; -moz-user-focus: ignore; }
+#KeyBoardContainerQuantityChange .ui-keyboard-dec {font-weight: 900;}
+#KeyBoardContainerQuantityChange .ui-keyboard-bksp {font-weight: 900;}
+#KeyBoardContainerQuantityChange .ui-state-disabled {border: 1px solid #cccccc;}

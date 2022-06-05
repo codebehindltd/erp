@@ -1,0 +1,1040 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="HMReport.master.cs" Inherits="HotelManagement.Presentation.Website.Common.HMReport" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title runat="server" id="SiteTitle"></title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="/StyleSheetOld/css/custom.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/StyleSheetOld/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/StyleSheetOld/css/theme.css" />
+    <link rel="stylesheet" href="/StyleSheetOld/lib/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/StyleSheetOld/css/flexslider.css" type="text/css" media="screen" />
+    <link href="/StyleSheetOld/css/jquery-ui-1.8.23.custom.css" rel="stylesheet" type="text/css" />
+    <link href="/StyleSheetOld/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/StyleSheetOld/css/HMStyleSheet.css" />
+    <link href="/StyleSheetOld/css/toastr.css" rel="stylesheet" type="text/css" />
+    <script src="/StyleSheetOld/lib/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="/StyleSheetOld/js/Common.js" type="text/javascript"></script>
+    <script src="/ScriptsOld/jquery-ui.js" type="text/javascript"></script>
+    <script src="/ScriptsOld/underscore.js" type="text/javascript"></script>
+    <script src="/ScriptsOld/toastr.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/StyleSheetOld/menucss/menuStyle.css" />
+    <script src="/ScriptsOld/js.cookie.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var innBoarDateFormat = "";
+        var innBoardOldMneuEnable = "";
+        $(document).ready(function () {
+            innBoarDateFormat = '<%=innBoardDateFormat%>';
+            innBoardOldMneuEnable = '<%=isOldMenuEnable%>';
+
+            if (innBoardOldMneuEnable == "1") {
+                $("#MainMenuTopNav").hide();
+                $("#MenuExpandable").show();
+                $("#ReportcolapsePanel").show();
+                $("#OldHomePanel").show();
+            }
+            else {
+
+                if (Cookies.getJSON('menuoption') != undefined) {
+                    var menuoption = Cookies.getJSON('menuoption');
+
+                    if (menuoption.IsHide) {
+                        $('#NavigationPanel').hide();
+                        $('#MainMenuSHowHide').show();
+                        $('.content').animate({ 'margin-left': '40px' });
+                    }
+
+                    $("#hfHomeIsHidden").val("0");
+                }
+                else {
+                    //$("#MainMenuTopNav").show();
+                    $('#NavigationPanel').show();
+                    $('#MainMenuSHowHide').hide();
+                }
+
+                $("#MenuExpandable").hide();
+                $("#ReportcolapsePanel").hide();
+                $("#OldReportPanel").hide();
+                $('#OldHomePanel').hide();
+                $('#ReportMainMenuPanel').hide();
+
+                //                var parentLi = $("a[href='" + window.location.pathname + "']").parent().parent().parent();
+                //                var parentUi = $("a[href='" + window.location.pathname + "']").parent().parent();
+                //                parentLi.addClass("active");
+                //                $(parentUi).slideDown('normal');
+                //                $(window).scrollTop($(parentUi).offset().top);
+            }
+        });
+    </script>
+    <script src="/ScriptsOld/HMCommonScript.js" type="text/javascript"></script>
+    <%--<script src="/StyleSheet/js/shortcut.js" type="text/javascript"></script>--%>
+    <script type="text/javascript">
+        //var innBoarDateFormat = "";
+        var messageHideTime = "";
+        $(document).ready(function () {
+
+            //innBoarDateFormat = '<%=innBoardDateFormat%>';
+            //alert(innBoarDateFormat);
+
+            $("a").click(function (event) {
+                AllCollapse(event.target.id);
+            });
+            //$('#NavigationPanel').show();
+            // $('#ReportcolapsePanel').show();
+            // $('#ReportMenuPanel').hide();
+            $("#HomeMenuPanel").hide();
+            $('#ReportcolapsePanel').height($('#MenuExpandable').height());
+
+            var isShowHideReportMenu = $("#hfReportIsHidden").val();
+
+            if (isShowHideReportMenu == "1" && innBoardOldMneuEnable == "1") {
+                $('#NavigationPanel').show("slide", { direction: "left" }, "slow");
+                $('#ReportMainMenuPanel').hide();
+
+                //$(".content").css("margin-left", "240px");
+                $('.content').animate({ 'margin-left': '275px' });
+
+            }
+            else {
+                if (innBoardOldMneuEnable == "1") {
+                    $('#NavigationPanel').hide();
+                    $('#ReportMainMenuPanel').show();
+
+                    //$(".content").css("margin-left", "40px");
+                    $('.content').animate({ 'margin-left': '40px' });
+                }
+            }
+
+            $('#ReportMainMenuPanel').click(function (event) {
+                $('#NavigationPanel').show("slide", { direction: "left" }, "slow");
+                $('#ReportMainMenuPanel').hide("slide", { direction: "right" }, "slow");
+                $('.content').animate({ 'margin-left': '275px' });
+                SetReportmenuShowHide("1");
+            });
+
+            $('#ReportcolapsePanel').click(function (event) {
+
+                $('#NavigationPanel').hide("slide", { direction: "left" }, "slow");
+                $('#ReportMainMenuPanel').show("slide", { direction: "right" }, "slow");
+                $('.content').animate({ 'margin-left': '40px' });
+                SetReportmenuShowHide("0");
+            });
+
+
+            messageHideTime = $("#hfMessageHideTime").val();
+            var grpHotelManagement = '<%=grpReportHotelManagement.ClientID%>';
+            var grpRestaurantManagement = '<%=grpReportRestaurant.ClientID%>';
+            var grpGeneralLedger = '<%=grpReportGeneralLedger.ClientID%>';
+            var grpPayrollManagement = '<%=grpReportPayrollManagement.ClientID%>';
+            var grpPurchaseManagement = '<%=grpReportPurchaseManagement.ClientID%>';
+            var grpInventoryManagement = '<%=grpReportInventoryManagement.ClientID%>';
+            var grpSalesManagement = '<%=grpReportSalesManagement.ClientID%>';
+            var grpBanquetManagement = '<%=grpReportBanquetManagement.ClientID%>';
+            var grpReportHMCommon = '<%=grpReportHMCommon.ClientID%>';
+            var grpRecruitmentManagement = '<%=grpReportRecruitmentManagement.ClientID%>';
+            var grpReportMembershipManagement = '<%=grpReportMembershipManagement.ClientID%>';
+
+
+            $('#' + grpHotelManagement).click(function (event) {
+                AllCollapse("grpReportHotelManagement");
+                setTimeout(function () { $('#ReportcolapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('#' + grpReportHMCommon).click(function (event) {
+                AllCollapse("grpReportHMCommon");
+                setTimeout(function () { $('#ReportcolapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+
+            $('#' + grpBanquetManagement).click(function (event) {
+                AllCollapse("grpReportBanquetManagement");
+                setTimeout(function () { $('#ReportcolapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+
+            $('#' + grpPayrollManagement).click(function (event) {
+                AllCollapse("grpReportPayrollManagement");
+                setTimeout(function () { $('#ReportcolapsePanel').height($('#MenuExpandable').height()); }, 500);
+
+            });
+            $('#' + grpRestaurantManagement).click(function (event) {
+                AllCollapse("grpReportRestaurant");
+                setTimeout(function () { $('#ReportcolapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('#' + grpGeneralLedger).click(function (event) {
+                AllCollapse("grpReportGeneralLedger");
+                setTimeout(function () { $('#ReportcolapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('#' + grpPurchaseManagement).click(function (event) {
+                AllCollapse("grpReportPurchaseManagement");
+                setTimeout(function () { $('#ReportcolapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('#' + grpInventoryManagement).click(function (event) {
+                AllCollapse("grpReportInventoryManagement");
+                setTimeout(function () { $('#ReportcolapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('#' + grpSalesManagement).click(function (event) {
+                AllCollapse("grpReportSalesManagement");
+                setTimeout(function () { $('#ReportcolapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('#' + grpRecruitmentManagement).click(function (event) {
+                AllCollapse("grpReportRecruitmentManagement");
+                setTimeout(function () { $('#ReportcolapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('#' + grpReportMembershipManagement).click(function (event) {
+                AllCollapse("grpReportMembershipManagement");
+                setTimeout(function () { $('#ReportcolapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('input[type!=hidden]:enabled, input[type!=hidden]:visible, select:enabled, select:visible, textarea:enabled, textarea:visible, options:selected').on('keypress', function (e) {
+
+                var code = (e.keyCode ? e.keyCode : e.which);
+                var currentClassName = "";
+
+                if (typeof $(this).attr('class') != 'undefined') {
+                    currentClassName = $(this).attr('class').split(' ')[0];
+                }
+
+                if (code == 13) {
+                    if (currentClassName != "TransactionalButton") {
+                        e.preventDefault();
+
+                        var inputs = $(this).closest('form').find(':focusable');
+                        inputs.eq(inputs.index(this) + 1).focus();
+                    }
+                    else {
+                        return true;
+                    }
+
+                    return false;
+                }
+            });
+        });
+
+        function SetReportmenuShowHide(showOrHide) {
+
+            var params = JSON.stringify({ showOrHide: showOrHide });
+
+            $.ajax({
+                type: "POST",
+                url: "../../Common/CheckMenuShowHide.asmx/ReportMenuShowHide",
+                data: params,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                },
+                error: function (error) {
+                }
+            });
+        }
+
+
+        function AllCollapse(id) {
+            if (id == "grpReportHotelManagement") {
+                CollapseMenuById("grpReportHMCommon", "menuReportHMCommont");
+                CollapseMenuById("grpReportRestaurant", "menuReportRestaurant");
+                CollapseMenuById("grpReportPurchaseManagement", "menuReportPurchaseManagement");
+                CollapseMenuById("grpReportInventoryManagement", "menuReportInventoryManagement");
+                CollapseMenuById("grpReportSalesManagement", "menuReportSalesManagement");
+                CollapseMenuById("grpReportGeneralLedger", "menuReportGeneralLedger");
+                CollapseMenuById("grpReportPayrollManagement", "menuReportPayrollManagement");
+                CollapseMenuById("grpReportBanquetManagement", "menuReportBanquetManagement");
+                CollapseMenuById("grpReportSalesNMarketing", "menuReportSalesNMarketing");
+                CollapseMenuById("grpReportRecruitmentManagement", "menuReportRecruitmentManagement");
+                CollapseMenuById("grpReportMembershipManagement", "menuReportMembershipManagement");
+            }
+            else if (id == "grpReportRestaurant") {
+                CollapseMenuById("grpReportHMCommon", "menuReportHMCommont");
+                CollapseMenuById("grpReportHotelManagement", "menuReportHotelManagement");
+                CollapseMenuById("grpReportPurchaseManagement", "menuReportPurchaseManagement");
+                CollapseMenuById("grpReportInventoryManagement", "menuReportInventoryManagement");
+                CollapseMenuById("grpReportSalesManagement", "menuReportSalesManagement");
+                CollapseMenuById("grpReportGeneralLedger", "menuReportGeneralLedger");
+                CollapseMenuById("grpReportPayrollManagement", "menuReportPayrollManagement");
+                CollapseMenuById("grpReportBanquetManagement", "menuReportBanquetManagement");
+                CollapseMenuById("grpReportSalesNMarketing", "menuReportSalesNMarketing");
+                CollapseMenuById("grpReportRecruitmentManagement", "menuReportRecruitmentManagement");
+                CollapseMenuById("grpReportMembershipManagement", "menuReportMembershipManagement");
+            }
+            else if (id == "grpReportPurchaseManagement") {
+                CollapseMenuById("grpReportHMCommon", "menuReportHMCommont");
+                CollapseMenuById("grpReportHotelManagement", "menuReportHotelManagement");
+                CollapseMenuById("grpReportRestaurant", "menuReportRestaurant");
+                CollapseMenuById("grpReportInventoryManagement", "menuReportInventoryManagement");
+                CollapseMenuById("grpReportSalesManagement", "menuReportSalesManagement");
+                CollapseMenuById("grpReportGeneralLedger", "menuReportGeneralLedger");
+                CollapseMenuById("grpReportPayrollManagement", "menuReportPayrollManagement");
+                CollapseMenuById("grpReportBanquetManagement", "menuReportBanquetManagement");
+                CollapseMenuById("grpReportSalesNMarketing", "menuReportSalesNMarketing");
+                CollapseMenuById("grpReportRecruitmentManagement", "menuReportRecruitmentManagement");
+                CollapseMenuById("grpReportMembershipManagement", "menuReportMembershipManagement");
+            }
+            else if (id == "grpReportInventoryManagement") {
+                CollapseMenuById("grpReportHMCommon", "menuReportHMCommont");
+                CollapseMenuById("grpReportHotelManagement", "menuReportHotelManagement");
+                CollapseMenuById("grpReportRestaurant", "menuReportRestaurant");
+                CollapseMenuById("grpReportPurchaseManagement", "menuReportPurchaseManagement");
+                CollapseMenuById("grpReportSalesManagement", "menuReportSalesManagement");
+                CollapseMenuById("grpReportGeneralLedger", "menuReportGeneralLedger");
+                CollapseMenuById("grpReportPayrollManagement", "menuReportPayrollManagement");
+                CollapseMenuById("grpReportBanquetManagement", "menuReportBanquetManagement");
+                CollapseMenuById("grpReportSalesNMarketing", "menuReportSalesNMarketing");
+                CollapseMenuById("grpReportRecruitmentManagement", "menuReportRecruitmentManagement");
+                CollapseMenuById("grpReportMembershipManagement", "menuReportMembershipManagement");
+            }
+            else if (id == "grpReportSalesManagement") {
+                CollapseMenuById("grpReportHMCommon", "menuReportHMCommont");
+                CollapseMenuById("grpReportHotelManagement", "menuReportHotelManagement");
+                CollapseMenuById("grpReportRestaurant", "menuReportRestaurant");
+                CollapseMenuById("grpReportPurchaseManagement", "menuReportPurchaseManagement");
+                CollapseMenuById("grpReportInventoryManagement", "menuReportInventoryManagement");
+                CollapseMenuById("grpReportGeneralLedger", "menuReportGeneralLedger");
+                CollapseMenuById("grpReportPayrollManagement", "menuReportPayrollManagement");
+                CollapseMenuById("grpReportBanquetManagement", "menuReportBanquetManagement");
+                CollapseMenuById("grpReportSalesNMarketing", "menuReportSalesNMarketing");
+                CollapseMenuById("grpReportRecruitmentManagement", "menuReportRecruitmentManagement");
+                CollapseMenuById("grpReportMembershipManagement", "menuReportMembershipManagement");
+            }
+            else if (id == "grpReportGeneralLedger") {
+                CollapseMenuById("grpReportHMCommon", "menuReportHMCommont");
+                CollapseMenuById("grpReportHotelManagement", "menuReportHotelManagement");
+                CollapseMenuById("grpReportRestaurant", "menuReportRestaurant");
+                CollapseMenuById("grpReportPurchaseManagement", "menuReportPurchaseManagement");
+                CollapseMenuById("grpReportInventoryManagement", "menuReportInventoryManagement");
+                CollapseMenuById("grpReportSalesManagement", "menuReportSalesManagement");
+                CollapseMenuById("grpReportPayrollManagement", "menuReportPayrollManagement");
+                CollapseMenuById("grpReportBanquetManagement", "menuReportBanquetManagement");
+                CollapseMenuById("grpReportSalesNMarketing", "menuReportSalesNMarketing");
+                CollapseMenuById("grpReportRecruitmentManagement", "menuReportRecruitmentManagement");
+                CollapseMenuById("grpReportMembershipManagement", "menuReportMembershipManagement");
+            }
+            else if (id == "grpReportBanquetManagement") {
+                CollapseMenuById("grpReportHMCommon", "menuReportHMCommont");
+                CollapseMenuById("grpReportHotelManagement", "menuReportHotelManagement");
+                CollapseMenuById("grpReportRestaurant", "menuReportRestaurant");
+                CollapseMenuById("grpReportPurchaseManagement", "menuReportPurchaseManagement");
+                CollapseMenuById("grpReportInventoryManagement", "menuReportInventoryManagement");
+                CollapseMenuById("grpReportSalesManagement", "menuReportSalesManagement");
+                CollapseMenuById("grpReportGeneralLedger", "menuReportGeneralLedger");
+                CollapseMenuById("grpReportPayrollManagement", "menuReportPayrollManagement");
+                CollapseMenuById("grpReportSalesNMarketing", "menuReportSalesNMarketing");
+                CollapseMenuById("grpReportRecruitmentManagement", "menuReportRecruitmentManagement");
+                CollapseMenuById("grpReportMembershipManagement", "menuReportMembershipManagement");
+            }
+            else if (id == "grpReportPayrollManagement") {
+                CollapseMenuById("grpReportHMCommon", "menuReportHMCommont");
+                CollapseMenuById("grpReportHotelManagement", "menuReportHotelManagement");
+                CollapseMenuById("grpReportRestaurant", "menuReportRestaurant");
+                CollapseMenuById("grpReportPurchaseManagement", "menuReportPurchaseManagement");
+                CollapseMenuById("grpReportInventoryManagement", "menuReportInventoryManagement");
+                CollapseMenuById("grpReportSalesManagement", "menuReportSalesManagement");
+                CollapseMenuById("grpReportGeneralLedger", "menuReportGeneralLedger");
+                CollapseMenuById("grpReportBanquetManagement", "menuReportBanquetManagement");
+                CollapseMenuById("grpReportSalesNMarketing", "menuReportSalesNMarketing");
+                CollapseMenuById("grpReportRecruitmentManagement", "menuReportRecruitmentManagement");
+                CollapseMenuById("grpReportMembershipManagement", "menuReportMembershipManagement");
+            }
+            else if (id == "grpReportHMCommon") {
+                CollapseMenuById("grpReportPayrollManagement", "menuReportPayrollManagement");
+                CollapseMenuById("grpReportHotelManagement", "menuReportHotelManagement");
+                CollapseMenuById("grpReportRestaurant", "menuReportRestaurant");
+                CollapseMenuById("grpReportPurchaseManagement", "menuReportPurchaseManagement");
+                CollapseMenuById("grpReportInventoryManagement", "menuReportInventoryManagement");
+                CollapseMenuById("grpReportSalesManagement", "menuReportSalesManagement");
+                CollapseMenuById("grpReportGeneralLedger", "menuReportGeneralLedger");
+                CollapseMenuById("grpReportBanquetManagement", "menuReportBanquetManagement");
+                CollapseMenuById("grpReportSalesNMarketing", "menuReportSalesNMarketing");
+                CollapseMenuById("grpReportRecruitmentManagement", "menuReportRecruitmentManagement");
+                CollapseMenuById("grpReportMembershipManagement", "menuReportMembershipManagement");
+            }
+            else if (id == "grpReportSalesNMarketing") {
+                CollapseMenuById("grpReportHMCommon", "menuReportHMCommont");
+                CollapseMenuById("grpReportPayrollManagement", "menuReportPayrollManagement");
+                CollapseMenuById("grpReportHotelManagement", "menuReportHotelManagement");
+                CollapseMenuById("grpReportRestaurant", "menuReportRestaurant");
+                CollapseMenuById("grpReportPurchaseManagement", "menuReportPurchaseManagement");
+                CollapseMenuById("grpReportInventoryManagement", "menuReportInventoryManagement");
+                CollapseMenuById("grpReportSalesManagement", "menuReportSalesManagement");
+                CollapseMenuById("grpReportGeneralLedger", "menuReportGeneralLedger");
+                CollapseMenuById("grpReportBanquetManagement", "menuReportBanquetManagement");
+                CollapseMenuById("grpReportRecruitmentManagement", "menuReportRecruitmentManagement");
+                CollapseMenuById("grpReportMembershipManagement", "menuReportMembershipManagement");
+            }
+            else if (id == "grpReportRecruitmentManagement") {
+                CollapseMenuById("grpReportHMCommon", "menuReportHMCommont");
+                CollapseMenuById("grpReportPayrollManagement", "menuReportPayrollManagement");
+                CollapseMenuById("grpReportHotelManagement", "menuReportHotelManagement");
+                CollapseMenuById("grpReportRestaurant", "menuReportRestaurant");
+                CollapseMenuById("grpReportPurchaseManagement", "menuReportPurchaseManagement");
+                CollapseMenuById("grpReportInventoryManagement", "menuReportInventoryManagement");
+                CollapseMenuById("grpReportSalesManagement", "menuReportSalesManagement");
+                CollapseMenuById("grpReportGeneralLedger", "menuReportGeneralLedger");
+                CollapseMenuById("grpReportBanquetManagement", "menuReportBanquetManagement");
+                CollapseMenuById("grpReportSalesNMarketing", "menuReportSalesNMarketing");
+                CollapseMenuById("grpReportMembershipManagement", "menuReportMembershipManagement");
+            }
+            else if (id == "grpReportMembershipManagement") {
+                CollapseMenuById("grpReportHMCommon", "menuReportHMCommont");
+                CollapseMenuById("grpReportPayrollManagement", "menuReportPayrollManagement");
+                CollapseMenuById("grpReportHotelManagement", "menuReportHotelManagement");
+                CollapseMenuById("grpReportRestaurant", "menuReportRestaurant");
+                CollapseMenuById("grpReportPurchaseManagement", "menuReportPurchaseManagement");
+                CollapseMenuById("grpReportInventoryManagement", "menuReportInventoryManagement");
+                CollapseMenuById("grpReportSalesManagement", "menuReportSalesManagement");
+                CollapseMenuById("grpReportGeneralLedger", "menuReportGeneralLedger");
+                CollapseMenuById("grpReportBanquetManagement", "menuReportBanquetManagement");
+                CollapseMenuById("grpReportSalesNMarketing", "menuReportSalesNMarketing");
+                CollapseMenuById("grpReportRecruitmentManagement", "menuReportRecruitmentManagement");
+            }
+        }
+
+        function CollapseMenuById(grpId, menuId) {
+            $('#' + grpId).removeClass("nav-header");
+            $('#' + menuId).removeClass("nav nav-list in collapse");
+            $('#' + menuId).css({ height: "0px" });
+            $('#' + grpId).addClass("nav-header collapsed");
+            $('#' + menuId).addClass("nav nav-list collapse");
+        }
+
+        function OpenMenuById(grpId, menuId) {
+            $('#' + grpId).removeClass("nav-header collapsed");
+            $('#' + menuId).removeClass("nav nav-list collapse");
+            $('#' + menuId).css({ height: "auto" });
+            $('#' + grpId).addClass("nav-header");
+            $('#' + menuId).addClass("nav nav-list in collapse");
+        }
+
+        function ShowHideMenu(showOrHide) {
+            if (showOrHide == 'hide') {
+                $('#NavigationPanel').hide("slide", { direction: "left" }, "slow");
+                $('#MainMenuSHowHide').show("slide", { direction: "right" }, "slow");
+                $('.content').animate({ 'margin-left': '40px' })
+
+                var hPanel = false, rPanel = false, gIndex = 0;
+
+                if ($("#MainMenu").is(":visible")) {
+                    hPanel = true;
+                    rPanel = false;
+                    gIndex = $("#MainMenu > div > ul > li.has-sub.active").index();
+                }
+                else if ($("#ReportMenu").is(":visible")) {
+                    hPanel = false;
+                    rPanel = true;
+                    gIndex = $("#ReportMenu > div > ul > li.has-sub.active").index();
+                }
+
+                var menuoption = {
+                    IsHide: true,
+                    HPanel: hPanel,
+                    RPanel: rPanel,
+                    GIndex: gIndex
+                };
+
+                if (Cookies.getJSON('menuoption') == undefined) {
+                    Cookies.set('menuoption', menuoption, { expires: 1 });
+                }
+                else {
+                    Cookies.remove('menuoption');
+                    Cookies.set('menuoption', menuoption);
+                }
+            }
+            else if (showOrHide == 'show') {
+                $('#NavigationPanel').show("slide", { direction: "left" }, "slow");
+                $('#MainMenuSHowHide').hide("slide", { direction: "right" }, "slow");
+                $('.content').animate({ 'margin-left': '262px' });
+
+                if (Cookies.getJSON('menuoption') != undefined) {
+
+                    var menuoption = Cookies.getJSON('menuoption');
+
+                    if (menuoption.HPanel) {
+                        var activeGroupMenu = $("#MainMenu > div > ul > li:eq(" + menuoption.GIndex + ")");
+                        if (activeGroupMenu.hasClass("active") == false) {
+                            activeGroupMenu.addClass("active");
+                            $("#MainMenu > div > ul > li:eq(" + menuoption.GIndex + ") > a").next().slideDown('normal');
+                            $(window).scrollTop($(activeGroupMenu).offset().top);
+                        }
+                    }
+                    else if (menuoption.RPanel) {
+                        var activeGroupMenu = $("#ReportMenu > div > ul > li:eq(" + menuoption.GIndex + ")");
+                        if (activeGroupMenu.hasClass("active") == false) {
+                            activeGroupMenu.addClass("active");
+                            $("#ReportMenu > div > ul > li:eq(" + menuoption.GIndex + ") > a").next().slideDown('normal');
+                            $(window).scrollTop($(activeGroupMenu).offset().top);
+                        }
+                    }
+
+                    Cookies.remove('menuoption');
+                }
+            }
+
+            return false;
+        }
+
+        function ShowHideHomeOrReportPanel(showOrHide) {
+            if (showOrHide == 'home') {
+                $('#HomeMenuPanel').show("slide", { direction: "up" }, "slow");
+                //$('#ReportMenuPanel').hide("slide", { direction: "up" }, "slow");
+                $('#ReportMenuPanel').hide();
+            }
+            else if (showOrHide == 'report') {
+                $('#ReportMenuPanel').show("slide", { direction: "up" }, "slow");
+                // $('#HomeMenuPanel').hide("slide", { direction: "up" }, "slow");
+                $('#HomeMenuPanel').hide();
+            }
+            return false;
+        }
+        
+    </script>
+</head>
+<body class="">
+    <form id="form1" runat="server" class="search form-inline">
+    <asp:HiddenField ID="hfReportIsHidden" runat="server" ClientIDMode="Static" />
+    <asp:HiddenField ID="InnboardMessageHiddenField" runat="server" Value="" ClientIDMode="Static" />
+    <div class="container">
+        <div id="ReportMainMenuPanel" style="padding: 9px; width: 10px; z-index: 0; position: absolute;
+            font-size: 18px; cursor: pointer; height: 600px; background-color: #476B8F; margin-top: 50px;
+            float: left">
+            <div style="height: 45%; width: 10px;">
+            </div>
+            <div style="height: 20px; width: 20px; background-position: 20px 90px; background-image: url('/Images/img/glyphicons-halflings-white.png');
+                background-repeat: repeat;">
+            </div>
+        </div>
+        <div id="MainMenuSHowHide" style="display: none; z-index: 1000; margin-top: 50px;
+            float: left" class="menuShowHide" onclick="ShowHideMenu('show')">
+            &nbsp;<i class="icon-list"></i>
+        </div>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <ul class="nav pull-right">
+                    <li><a href="javascript:void()" class="hidden-phone visible-tablet visible-desktop">
+                        Date:&nbsp;<asp:Label ID="lblDayOpenDate" runat="server" Text=""></asp:Label></a></li>
+                    <li id="message-menu" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-envelope"></i>&nbsp;Mail Box&nbsp;&nbsp;<span id="MessageCountBadge"
+                            class="badge" runat="server">
+                            <asp:Label ID="lblMessageCount" runat="server" Text="0" Font-Bold="true"></asp:Label></span>
+                    </a>
+                        <ul class="dropdown-menu" runat="server" id="MessageBriefDescription" style="width: 560px;">
+                        </ul>
+                    </li>
+                    <li id="OldHomePanel"><a href="/HMCommon/frmHMHome.aspx" class="hidden-phone visible-tablet visible-desktop">
+                        <i class="icon-home"></i>Home Panel</a></li>
+                    <li id="fat-menu" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-user"></i>
+                        <asp:Label ID="lblCurrentUser" runat="server" Text=""></asp:Label><i class="icon-caret-down">
+                        </i></a>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="/UserInformation/frmUpdateAccount.aspx">My Account</a></li>
+                            <li class="divider"></li>
+                            <li><a tabindex="-1" href="/UserInformation/frmChangePassword.aspx">Change Password</a></li>
+                            <li class="divider"></li>
+                            <li><a tabindex="-1" class="visible-phone" href="#">Settings</a></li>
+                            <li class="divider visible-phone"></li>
+                            <li><a tabindex="-1" href="/Logout.aspx">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <a class="brand" href="#">
+                    <img src="/StyleSheet/images/Innboard-Logo_White.png" class=" InnBoardIcon" alt="logo" /></a>
+                <%--<a class="brand" href="#"><i class="icon-magic"></i><span class="first">InnBoard</span>
+                    <span class="second">Admin</span></a>--%>
+            </div>
+        </div>
+        <div class="sidebar-nav" id="NavigationPanel">
+            <div style="height: 7px;">
+                <%-- <asp:TextBox ID="SearchTextBox" runat="server" placeholder="Guest Search..."></asp:TextBox>
+                <asp:ImageButton ID="ImgBtnSearch" runat="server" ImageUrl="~/Images/Search.png"
+                    OnClick="ImgBtnSearch_Click" />--%>
+            </div>
+            <div style="width: 250px;" id="MainMenuTopNav">
+                <div class="navbar" style="margin: 0; padding: 0;">
+                    <div class="navbar-inner" id="MainMenuTopLink">
+                        <a class="brand" style="padding: 11px 0 0 0; font-size: 13px;" href="javascript:void()"
+                            onclick="ShowHideMenu('hide')">&nbsp;&nbsp;<i class="icon-list"></i></a>
+                        <ul class="nav">
+                            <li><a href="javascript:void()" onclick="ShowHideHomeOrReportPanel('home')">Home Panel</a></li>
+                            <li class="active"><a href="javascript:void()" onclick="ShowHideHomeOrReportPanel('report')">
+                                Report Panel</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="HomeMenuPanel" style="display: none;">
+                    <div id="MainMenu" runat="server">
+                    </div>
+                </div>
+                <div id="ReportMenuPanel">
+                    <div id="ReportMenu" runat="server">
+                    </div>
+                </div>
+            </div>
+            <div style="float: left" id="MenuExpandable">
+                <a href="/HMCommon/frmHMHome.aspx" class="nav-header"><i class="icon-th-list"></i>Dashboard</a>
+                <a id="grpReportHMCommon" runat="server" visible="True" href="#menuReportHMCommont"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-food"></i>Common
+                    Report<i class="icon-chevron-up"> </i></a>
+                <ul id="menuReportHMCommont" class="nav nav-list collapse">
+                    <li id="lifrmReportActivitiLogs" runat="server" visible="False"><a href="/HMCommon/Reports/frmReportActivitiLogs.aspx">
+                        <i class="icon-file-alt"></i>Activity Log Report </a></li>
+                </ul>
+                <a id="grpReportHotelManagement" visible="False" runat="server" href="#menuReportHotelManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-h-sign"></i>Front
+                    Office Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuReportHotelManagement" class="nav nav-list collapse">
+                    <li id="liReportRoomStatusHistory" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportRoomStatusHistory.aspx">
+                        <i class="icon-file-alt"></i>Room Status History</a></li>
+                    <li id="liFrmReportRoomStatus" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportRoomStatus.aspx">
+                        <i class="icon-file-alt"></i>Room Status</a></li>
+                    <li id="liFrmReportRoomWiseStatus" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportRoomWiseStatus.aspx">
+                        <i class="icon-file-alt"></i>Room Wise Status</a></li>
+                    <li id="liFrmReportRoomAvailableStatus" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportRoomAvailableStatus.aspx">
+                        <i class="icon-file-alt"></i>Available Room Status</a></li>
+                    <li id="liFrmReportRoomReservation" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportRoomReservation.aspx">
+                        <i class="icon-file-alt"></i>Room Reservation</a></li>
+                    <li id="liFrmPromotionalGuestInfo" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportPromotionalGuestInfo.aspx">
+                        <i class="icon-file-alt"></i>Promotional Guest</a></li>
+                    <li id="liFrmCorporateGuestInfo" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportCorporateGuestInfo.aspx">
+                        <i class="icon-file-alt"></i>Corporate Guest</a></li>
+                    <li id="liFrmGuestCountry" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportGuestOfCountry.aspx">
+                        <i class="icon-file-alt"></i>Guest's Country</a></li>
+                    <li id="liFrmOccupencyInfoByRoopType" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportOccupencyInfoByRoopType.aspx">
+                        <i class="icon-file-alt"></i>Room Occupancy</a></li>
+                    <li id="liFrmReturnedGuest" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportReturnedGuestInfo.aspx">
+                        <i class="icon-file-alt"></i>Returned Guest</a></li>
+                    <li id="liFrmGuestSource" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportGuestSourceInfo.aspx">
+                        <i class="icon-file-alt"></i>Guest Source</a></li>
+                    <li id="liFrmReportDivisionRevenue" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportDivisionRevenue.aspx">
+                        <i class="icon-file-alt"></i>Cost Center Revenue</a></li>
+                    <li id="liFrmReportRoomSalesRevenue" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportRoomSalesRevenue.aspx">
+                        <i class="icon-file-alt"></i>Room Sales Revenue</a></li>
+                    <li id="liFrmReportBCDivisionRevenue" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportBCDivisionRevenue.aspx">
+                        <i class="icon-file-alt"></i>Division Bar Chart</a></li>
+                    <li id="liFrmReportBCRoomSalesRevenue" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportBCRoomSalesRevenue.aspx">
+                        <i class="icon-file-alt"></i>Room Sales Bar Chart</a></li>
+                    <li id="liFrmReportDiscountVsActualSales" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportDiscountVsActualSales.aspx">
+                        <i class="icon-file-alt"></i>Discount Vs Actual Sale</a></li>
+                    <li id="liFrmReportRoomOccupencyAnalysis" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportRoomOccupencyAnalysis.aspx">
+                        <i class="icon-file-alt"></i>Occupancy Analysis</a></li>
+                    <li id="liFrmServiceAndRoomBillByDate" runat="server" visible="False"><a href="/HotelManagement/Reports/frmServiceAndRoomBillByDate.aspx">
+                        <i class="icon-file-alt"></i>Night Audit Report</a></li>
+                    <li id="liFrmReportTimeSlabInfo" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportTimeSlabInfo.aspx">
+                        <i class="icon-file-alt"></i>Time Slab Info</a></li>
+                    <li id="liFrmReportGuestHouseInfo" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportGuestHouseInfo.aspx">
+                        <i class="icon-file-alt"></i>Guest House Report</a></li>
+                    <li id="liFrmReportCanceledReservation" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportCanceledReservation.aspx">
+                        <i class="icon-file-alt"></i>Canceled Reservation</a></li>
+                    <li id="liFrmReportInHouseGuestLedger" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportInHouseGuestLedger.aspx">
+                        <i class="icon-file-alt"></i>InHouse Guest Ledger</a></li>
+                    <li id="liFrmReportGuestLedgerTranscript" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportGuestLedgerTranscript.aspx">
+                        <i class="icon-file-alt"></i>Guest Ledger Transcript</a></li>
+                    <li id="liFrmReportSalesInfo" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportSalesInfo.aspx">
+                        <i class="icon-file-alt"></i>Sales Information</a></li>
+                    <li id="liFrmReportFrontOfficeCash" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportFrontOfficeCash.aspx">
+                        <i class="icon-file-alt"></i>Sales Transaction</a></li>
+                    <li id="liFrmReportHouseKeeping" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportHouseKeeping.aspx">
+                        <i class="icon-file-alt"></i>House Keeping Info</a></li>
+                    <li id="liFrmReportRoomShiftInfo" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportRoomShiftInfo.aspx">
+                        <i class="icon-file-alt"></i>Room Shift Info</a></li>
+                    <li id="liFrmReportSalesAudit" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportSalesAudit.aspx">
+                        <i class="icon-file-alt"></i>Sales Audit</a></li>
+                    <li id="liFrmReportSalesSummary" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportSalesSummary.aspx">
+                        <i class="icon-file-alt"></i>Sales Summary</a></li>
+                    <li id="liFrmReportDayUse" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportDayUse.aspx">
+                        <i class="icon-file-alt"></i>Day Use Information</a></li>
+                    <li id="liFrmReportLateCheckOut" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportLateCheckOut.aspx">
+                        <i class="icon-file-alt"></i>Late Check-Out </a></li>
+                    <li id="liFrmReportGuestPaymentInfo" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportGuestPaymentInfo.aspx">
+                        <i class="icon-file-alt"></i>Guest Payment Info</a></li>
+                    <li id="liFrmReportGuestInformationDetails" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportGuestInformationDetails.aspx">
+                        <i class="icon-file-alt"></i>SB/ NRB Report</a></li>
+                    <li id="liFrmReportGuestAirportPickupDropInfo" runat="server" visible="False"><a
+                        href="/HotelManagement/Reports/frmReportGuestAirportPickupDropInfo.aspx"><i class="icon-file-alt">
+                        </i>Airport Pickup-Drop Info</a></li>
+                    <li id="lifrmReportRoomReservationNoShow" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportRoomReservationNoShow.aspx">
+                        <i class="icon-file-alt"></i>Reservation No-Show</a></li>
+                    <li id="lifrmReservationBillTransaction" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReservationBillTransaction.aspx">
+                        <i class="icon-file-alt"></i>Reservation Transaction</a></li>
+                    <li id="liFrmReportMonthToDateInfo" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportMonthToDateInfo.aspx">
+                        <i class="icon-file-alt"></i>MTD Report</a></li>
+                    <li id="liFrmReportServiceBillTransfer" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportServiceBillTransfer.aspx">
+                        <i class="icon-file-alt"></i>Service Bill Transfer</a></li>
+                    <li id="liFrmCurrencyTransaction" runat="server" visible="False"><a href="/HotelManagement/Reports/frmCurrencyTransaction.aspx">
+                        <i class="icon-file-alt"></i>Currency Conversion</a></li>
+                    <li id="liFrmComplimentaryGuest" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportComplimentaryGuest.aspx">
+                        <i class="icon-file-alt"></i>Complimentary Guest</a></li>
+                    <li id="liFrmReportGuestTotalStayovers" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportGuestTotalStayovers.aspx">
+                        <i class="icon-file-alt"></i>Guest Total Stayovers</a></li>
+                    <li id="liFrmVIPGuest" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportVIPGuestInfo.aspx">
+                        <i class="icon-file-alt"></i>VIP Guest</a></li>
+                    <li id="liFrmGuestBirthday" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportGuestBirthday.aspx">
+                        <i class="icon-file-alt"></i>Guest's Birthday</a></li>
+                    <li id="liFrmReportGuestCreditCard" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportGuestCreditCardInfo.aspx">
+                        <i class="icon-file-alt"></i>Guest's Credit Card Info</a></li>
+                    <li id="liFrmReportAdvReservationForecast" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportAdvReservationForecast.aspx">
+                        <i class="icon-file-alt"></i>Advance Reservation Forecast</a></li>
+                </ul>
+                <a id="grpReportRestaurant" runat="server" visible="False" href="#menuReportRestaurant"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-food"></i>Restaurant
+                    Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuReportRestaurant" class="nav nav-list collapse">
+                    <li id="liFrmReportRestaurantSalesInfo" runat="server" visible="False"><a href="/Restaurant/Reports/frmReportRestaurantSalesInfo.aspx">
+                        <i class="icon-file-alt"></i>Sales Information</a></li>
+                    <li id="liFrmReportRestaurantTransaction" runat="server" visible="False"><a href="/Restaurant/Reports/frmReportRestaurantTransaction.aspx">
+                        <i class="icon-file-alt"></i>Sales Transaction</a></li>
+                    <li id="liFrmReportRestaurantCancelBill" runat="server" visible="False"><a href="/Restaurant/Reports/frmReportRestaurantCancelBill.aspx">
+                        <i class="icon-file-alt"></i>Bill Void Information</a></li>
+                    <li id="liFrmReportDailySalesStatement" runat="server" visible="False"><a href="/Restaurant/Reports/frmReportDailySalesStatement.aspx">
+                        <i class="icon-file-alt"></i>Daily Sales Statement</a></li>
+                    <li id="liFrmReportInvWiseRestaurantSalesInfo" runat="server" visible="False"><a
+                        href="/Restaurant/Reports/frmReportInvWiseRestaurantSalesInfo.aspx"><i class="icon-file-alt">
+                        </i>Invoice Wise Sales Info</a></li>
+                    <li id="liFrmReportDateWiseSalesSummary" runat="server" visible="False"><a href="/Restaurant/Reports/frmReportDateWiseSalesSummary.aspx">
+                        <i class="icon-file-alt"></i>Date Wise Sales Summary</a></li>
+                </ul>
+                <a id="grpReportBanquetManagement" runat="server" visible="False" href="#menuReportBanquetManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-bolt"></i>Banquet
+                    Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuReportBanquetManagement" class="nav nav-list collapse">
+                    <li id="liFrmReportBanquetClientRevenue" runat="server" visible="False"><a href="/Banquet/Reports/frmReportBanquetClientRevenue.aspx">
+                        <i class="icon-file-alt"></i>Client Revenues</a></li>
+                    <li id="liFrmReportBanquetHalRevenue" runat="server" visible="False"><a href="/Banquet/Reports/frmReportBanquetHalRevenue.aspx">
+                        <i class="icon-file-alt"></i>Hall Revenue</a></li>
+                    <li id="liFrmReportBanquetOccessionTypeRevenue" runat="server" visible="False"><a
+                        href="/Banquet/Reports/frmReportBanquetOccessionTypeRevenue.aspx"><i class="icon-file-alt">
+                        </i>Occasion Revenue</a></li>
+                    <li id="liFrmReportBanquetReferenceRevenue" runat="server" visible="False"><a href="/Banquet/Reports/frmReportBanquetReferenceRevenue.aspx">
+                        <i class="icon-file-alt"></i>Reference Revenue</a></li>
+                    <li id="liFrmReportReservationBillInfo" runat="server" visible="False"><a href="/Banquet/Reports/frmReportReservationBillInfo.aspx">
+                        <i class="icon-file-alt"></i>Reservation Bill</a></li>
+                    <li id="liFrmReportBanquetRevenueInfo" runat="server" visible="False"><a href="/Banquet/Reports/frmReportBanquetRevenueInfo.aspx">
+                        <i class="icon-file-alt"></i>Banquet Revenue</a></li>
+                    <li id="liFrmReportBanquetReservationInfo" runat="server" visible="False"><a href="/Banquet/Reports/frmReportBanquetReservationInfo.aspx">
+                        <i class="icon-file-alt"></i>Banquet Reservation</a></li>
+                    <li id="liFrmBanquetSalesInfo" runat="server" visible="False"><a href="/Banquet/Reports/frmReportBanquetSalesInfo.aspx">
+                        <i class="icon-file-alt"></i>Banquet Sales Info</a></li>
+                    <li id="liFrmReportBanquetTransaction" runat="server" visible="False"><a href="/Banquet/Reports/frmReportBanquetTransaction.aspx">
+                        <i class="icon-file-alt"></i>Sales Transaction</a></li>
+                    <li id="liFrmCanceledReservationInfo" runat="server" visible="False"><a href="/Banquet/Reports/frmReportReservationCancelInfo.aspx">
+                        <i class="icon-file-alt"></i>Canceled Reservations Info</a></li>
+                </ul>
+                <a id="grpReportPurchaseManagement" runat="server" visible="False" href="#menuReportPurchaseManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-shopping-cart">
+                    </i>Purchase Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuReportPurchaseManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmReportSupplierInformation" runat="server" visible="False"><a href="/PurchaseManagment/Reports/frmReportSupplierInformation.aspx">
+                        <i class="icon-file-alt"></i>Supplier Information</a></li>
+                    <li id="liFrmReportDateWisePurchaseInformation" runat="server" visible="False"><a
+                        href="/PurchaseManagment/Reports/frmReportDateWisePurchaseInformation.aspx"><i class="icon-file-alt">
+                        </i>Date Wise Purchase</a></li>
+                    <li id="liFrmReportItemWisePurchaseInformation" runat="server" visible="False"><a
+                        href="/PurchaseManagment/Reports/frmReportItemWisePurchaseInformation.aspx"><i class="icon-file-alt">
+                        </i>Item Wise Purchase</a></li>
+                    <li id="liFrmReportSupplierWisePurchaseInformation" runat="server" visible="False"><a
+                        href="/PurchaseManagment/Reports/frmReportSupplierWisePurchaseInformation.aspx">
+                        <i class="icon-file-alt"></i>Supplier Wise Purchase</a></li>
+                    <li id="liFrmReportPurchaseOrderInformation" runat="server" visible="False"><a href="/PurchaseManagment/Reports/frmReportPurchaseOrderInformation.aspx">
+                        <i class="icon-file-alt"></i>PO Information</a></li>
+                    <li id="liFrmReportPurchaseReturn" runat="server" visible="False"><a href="/PurchaseManagment/Reports/frmReportPurchaseReturn.aspx">
+                        <i class="icon-file-alt"></i>Purchase Return</a></li>
+                    <li id="liFrmReportSupplierStatement" runat="server" visible="False"><a href="/PurchaseManagment/Reports/frmReportSupplierStatement.aspx">
+                        <i class="icon-file-alt"></i>Supplier Statement</a></li>
+                </ul>
+                <a id="grpReportInventoryManagement" runat="server" visible="False" href="#menuReportInventoryManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-suitcase"></i>
+                    Inventory Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuReportInventoryManagement" class="nav nav-list collapse">
+                    <li id="liFrmReportItemWiseStock" runat="server"><a href="/Inventory/Reports/frmReportItemWiseStock.aspx">
+                        <i class="icon-file-alt"></i>Item Wise Stock</a></li>
+                    <li id="liFrmReportProductReceiveInfo" runat="server" visible="False"><a href="/Inventory/Reports/frmReportProductReceiveInfo.aspx">
+                        <i class="icon-file-alt"></i>Product Received</a></li>
+                    <li id="liFrmReportRoomInventory" runat="server" visible="False"><a href="/Inventory/Reports/frmReportRoomInventory.aspx">
+                        <i class="icon-file-alt"></i>Room Inventory</a></li>
+                    <li id="lifrmReportInvItemInfo" runat="server" visible="False"><a href="/Inventory/Reports/frmReportInvItemInfo.aspx">
+                        <i class="icon-file-alt"></i>Item Information</a></li>
+                    <li id="liAbcAnalysis" runat="server" visible="False"><a href="/Inventory/Reports/frmReportInvItemInfo.aspx">
+                        <i class="icon-file-alt"></i>ABC Analysis</a></li>
+                    <li id="liFrmReportItemRecipe" runat="server" visible="False"><a href="/Inventory/Reports/frmReportItemRecipe.aspx">
+                        <i class="icon-file-alt"></i>Recipe Information</a></li>
+                    <li id="liFrmReportInvStockVariance" runat="server" visible="False"><a href="/Inventory/Reports/frmReportInvStockVariance.aspx">
+                        <i class="icon-file-alt"></i>Inventory Count Variance</a></li>
+                    <li id="liFrmReportInvCOSDetails" runat="server" visible="False"><a href="/Inventory/Reports/frmReportInvCOSDetails.aspx">
+                        <i class="icon-file-alt"></i>Inventory Cost of Sales</a></li>
+                    <%-- <li id="liFrmReportInvItemUsage" runat="server" visible="False"><a href="/Inventory/Reports/frmReportInvItemUsage.aspx">
+                        <i class="icon-file-alt"></i>Inventory Item Usage</a></li>--%>
+                    <li id="liFrmReportInvVarianceInfo" runat="server" visible="False"><a href="/Inventory/Reports/frmReportInvVarianceInfo.aspx">
+                        <i class="icon-file-alt"></i>Item Wastage Info</a></li>
+                    <li id="liFrmReportConsolidatedMenuItemSalesDetail" runat="server" visible="False"><a
+                        href="/Inventory/Reports/frmReportConsolidatedMenuItemSalesDetail.aspx"><i class="icon-file-alt">
+                        </i>Consolidated Sales Detail</a></li>
+                    <li id="liFrmReportrptConsolidatedMenuItemSalesSummary" runat="server" visible="False">
+                        <a href="/Inventory/Reports/frmReportConsolidatedMenuItemSalesSummary.aspx"><i class="icon-file-alt">
+                        </i>Consolid. Sales Summary</a></li>
+                    <li id="liFrmInventoryItemUsageAnalysis" runat="server" visible="False"><a href="/Inventory/Reports/frmInventoryItemUsageAnalysis.aspx">
+                        <i class="icon-file-alt"></i>Item Usage Analysis</a></li>
+                    <li id="liFrmDailyConsolidatedRevenueCenterSalesDetail" runat="server" visible="False">
+                        <a href="/Inventory/Reports/frmDailyConsolidatedRevenueCenterSalesDetail.aspx"><i
+                            class="icon-file-alt"></i>Consolidated Revenue</a></li>
+                    <li id="liFrmDailyConsolidatedRevenueCostCenterSalesDetailByDineTime" runat="server"
+                        visible="False"><a href="/Inventory/Reports/frmDailyConsolidatedRevenueCostCenterSalesDetailByDineTime.aspx">
+                            <i class="icon-file-alt"></i>Dine Time Revenue</a></li>
+                    <li id="liFrmReportDatewisePurchaseComparison" runat="server" visible="False"><a
+                        href="/Inventory/Reports/frmReportDatewisePurchaseCompare.aspx"><i class="icon-file-alt">
+                        </i>Date Wise Purchase Comparison</a></li>
+                </ul>
+                <a id="grpReportSalesManagement" runat="server" visible="False" href="#menuReportSalesManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-money"></i>Sales
+                    Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuReportSalesManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmReportSalesInformation" runat="server" visible="False"><a href="/SalesManagment/Reports/frmReportSalesInformation.aspx">
+                        <i class="icon-file-alt"></i>Date Wise Sales</a></li>
+                    <li id="liFrmReportItemWiseSalesInfo" runat="server" visible="False"><a href="/SalesManagment/Reports/frmReportItemWiseSalesInformation.aspx">
+                        <i class="icon-file-alt"></i>Item Wise Sales</a></li>
+                    <li id="liFrmReportCustomerWiseSalesInfo" runat="server" visible="False"><a href="/SalesManagment/Reports/frmReportCustomerWiseSalesInformation.aspx">
+                        <i class="icon-file-alt"></i>Customer Wise Sales</a></li>
+                    <li id="liFrmReportSalesReturn" runat="server" visible="False"><a href="/SalesManagment/Reports/frmReportSalesReturn.aspx">
+                        <i class="icon-file-alt"></i>Sales Return</a></li>
+                    <li id="liFrmReportCustomerInfo" runat="server" visible="False"><a href="/SalesManagment/Reports/frmReportCustomerInfo.aspx">
+                        <i class="icon-file-alt"></i>Customer Info</a></li>
+                    <li id="liFrmReportServiceWiseSales" runat="server" visible="False"><a href="/SalesManagment/Reports/frmReportServiceWiseSales.aspx">
+                        <i class="icon-file-alt"></i>Service Sales Info</a></li>
+                </ul>
+                <a id="grpReportRecruitmentManagement" runat="server" visible="False" href="#menuReportRecruitmentManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-list"></i>Recruitment
+                    Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuReportRecruitmentManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmReportApplicantList" runat="server" visible="False"><a href="/Recruitment/Reports/frmReportApplicantList.aspx">
+                        <i class="icon-file-alt"></i>Applicant List</a></li>
+                    <li id="liFrmReportApplicantResume" runat="server" visible="False"><a href="/Recruitment/Reports/frmApplicantResume.aspx">
+                        <i class="icon-file-alt"></i>Applicant Resume</a></li>
+                </ul>
+                <a id="grpReportPayrollManagement" runat="server" visible="False" href="#menuReportPayrollManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-list"></i>HR
+                    Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuReportPayrollManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmReportStaffingBudget" runat="server" visible="false"><a href="/Payroll/Reports/frmReportStaffingBudget.aspx">
+                        <i class="icon-file-alt"></i>Staffing Budget</a> </li>
+                    <li id="liFrmReportStaffRequisition" runat="server" visible="false"><a href="/Payroll/Reports/frmReportStaffRequisition.aspx">
+                        <i class="icon-file-alt"></i>Staff Requisition</a> </li>
+                    <li id="liFrmReportEmployeeList" runat="server" visible="False"><a href="/Payroll/Reports/frmReportEmployeeList.aspx">
+                        <i class="icon-file-alt"></i>Employee List</a></li>
+                    <li id="liFrmReportEmployeeInformation" runat="server" visible="False"><a href="/Payroll/Reports/frmReportEmployeeInformation.aspx">
+                        <i class="icon-file-alt"></i>Employee Information</a></li>
+                    <li id="liFrmReportEmpRoster" runat="server" visible="False"><a href="/Payroll/Reports/frmReportEmpRoster.aspx">
+                        <i class="icon-file-alt"></i>Employee Roster</a></li>
+                    <li id="liFrmReportEmpAttendance" runat="server" visible="false"><a href="/Payroll/Reports/frmReportEmpAttendance.aspx">
+                        <i class="icon-file-alt"></i>Employee Attendance</a> </li>
+                    <li id="liFrmReportEmpCV" runat="server" visible="false"><a href="/Payroll/Reports/frmReportEmpCV.aspx">
+                        <i class="icon-file-alt"></i>Employee Profile</a> </li>
+                    <li id="liFrmTerminationLetter" runat="server" visible="false"><a href="/Payroll/Reports/frmTerminationLetter.aspx">
+                        <i class="icon-file-alt"></i>Termination Letter</a> </li>
+                    <li id="liFrmRelieveLetter" runat="server" visible="false"><a href="/Payroll/Reports/frmRelievingLetter.aspx">
+                        <i class="icon-file-alt"></i>Relieving Letter</a> </li>
+                    <li id="liFrmReportDisciplinaryAction" runat="server" visible="false"><a href="/Payroll/Reports/frmReportEmpDisciplinaryAction.aspx">
+                        <i class="icon-file-alt"></i>Disciplinary Action</a> </li>
+                    <li id="liFrmReportEmpTransfer" runat="server" visible="false"><a href="/Payroll/Reports/frmReportEmpTransfer.aspx">
+                        <i class="icon-file-alt"></i>Employee Transfer</a> </li>
+                    <li id="liFrmReportAppraisalEvaluation" runat="server" visible="false"><a href="/Payroll/Reports/frmReportAppraisalEvaluation.aspx">
+                        <i class="icon-file-alt"></i>Appraisal Evaluation</a> </li>
+                    <li id="liFrmReportAppraisalEvaluationDetails" runat="server" visible="false"><a
+                        href="/Payroll/Reports/frmReportAppraisalEvaluationDetails.aspx"><i class="icon-file-alt">
+                        </i>Appraisal Evaluation Details</a> </li>
+                    <li id="liFrmEmpLeaveReport" runat="server" visible="false"><a href="/Payroll/Reports/frmEmpLeaveReport.aspx">
+                        <i class="icon-file-alt"></i>Leave Information</a> </li>
+                    <li id="liFrmEmpLeaveInformation" runat="server" visible="false"><a href="/Payroll/Reports/frmEmpLeaveInformation.aspx">
+                        <i class="icon-file-alt"></i>Employee Leave</a> </li>
+                    <li id="liFrmEmployeeOfTheYearMonth" runat="server" visible="false"><a href="/Payroll/Reports/frmEmployeeOfTheYearMonth.aspx">
+                        <i class="icon-file-alt"></i>Best Employee</a> </li>
+                    <li id="liFrmEmployeeServiceChargeDistributionReport" runat="server" visible="false">
+                        <a href="/Payroll/Reports/frmEmployeeServiceChargeDistributionReport.aspx"><i class="icon-file-alt">
+                        </i>Service Charge Distribution</a> </li>
+                    <li id="liFrmReportEmpTraining" runat="server" visible="false"><a href="/Payroll/Reports/frmReportEmpTraining.aspx">
+                        <i class="icon-file-alt"></i>Employee Training</a> </li>
+                    <li id="liFrmEmpOvertime" runat="server" visible="false"><a href="/Payroll/Reports/frmEmpOvertime.aspx">
+                        <i class="icon-file-alt"></i>Employee Overtime</a> </li>
+                    <li id="liFrmOvertimeAnalysis" runat="server" visible="false"><a href="/Payroll/Reports/frmOvertimeAnalysis.aspx">
+                        <i class="icon-file-alt"></i>Overtime Analysis</a> </li>
+                    <li id="liFrmEmpPromotion" runat="server" visible="false"><a href="/Payroll/Reports/frmReportEmpPromotion.aspx">
+                        <i class="icon-file-alt"></i>Employee Promotion</a> </li>
+                    <li id="liFrmReportPF" runat="server" visible="false"><a href="/Payroll/Reports/frmReportProvidentFund.aspx">
+                        <i class="icon-file-alt"></i>Provident Fund</a> </li>
+                    <li id="liFrmReportPFMemberList" runat="server" visible="false"><a href="/Payroll/Reports/frmReportPFMemberSchedule.aspx">
+                        <i class="icon-file-alt"></i>PF Member List</a> </li>
+                    <li id="liFrmReportPFStatement" runat="server" visible="false"><a href="/Payroll/Reports/frmReportPFStatement.aspx">
+                        <i class="icon-file-alt"></i>PF Statement</a> </li>
+                    <li id="liFrmReportPFMonthlyBalance" runat="server" visible="false"><a href="/Payroll/Reports/frmReportPFMonthlyBalance.aspx">
+                        <i class="icon-file-alt"></i>PF Monthly Balance</a> </li>
+                    <li id="liFrmReportPFLoanCollection" runat="server" visible="false"><a href="/Payroll/Reports/frmReportPFLoanCollection.aspx">
+                        <i class="icon-file-alt"></i>PF Loan Collection</a> </li>
+                    <li id="liFrmReportPFReports" runat="server" visible="false"><a href="/Payroll/Reports/frmReportPFReports.aspx">
+                        <i class="icon-file-alt"></i>PF Reports</a> </li>
+                    <li id="liFrmReportGratuityApproval" runat="server" visible="false"><a href="/Payroll/Reports/frmReportEmpGratuityApproval.aspx">
+                        <i class="icon-file-alt"></i>Gratuity Approval</a> </li>
+                    <li id="liFrmReportGratuityEliEmpList" runat="server" visible="false"><a href="/Payroll/Reports/frmReportGratuityEligibleEmpList.aspx">
+                        <i class="icon-file-alt"></i>Gratuity Approved Emp list</a> </li>
+                    <li id="liFrmReportGratuityMonthlyBalance" runat="server" visible="false"><a href="/Payroll/Reports/frmReportGratuityMonthlyBalance.aspx">
+                        <i class="icon-file-alt"></i>Gratuity Monthly Balance</a> </li>
+                    <li id="liFrmReportGratuityStatement" runat="server" visible="false"><a href="/Payroll/Reports/frmReportGratuityStatement.aspx">
+                        <i class="icon-file-alt"></i>Gratuity Statement</a> </li>
+                    <li id="liFrmReportEmpSalarySheet" runat="server" visible="false"><a href="/Payroll/Reports/frmReportEmpSalarySheet.aspx">
+                        <i class="icon-file-alt"></i>Employee Salary Sheet</a> </li>
+                    <li id="liFrmReportPayslip" runat="server" visible="false"><a href="/Payroll/Reports/frmReportPayslip.aspx">
+                        <i class="icon-file-alt"></i>Employee Payslip</a> </li>
+                    <li id="liFrmBankSalaryInstruction" runat="server" visible="false"><a href="/Payroll/Reports/frmBankSalaryInstruction.aspx">
+                        <i class="icon-file-alt"></i>Bank Salary Instruction</a> </li>
+                    <li id="liFrmEmployeeServiceChargeBankAdvice" runat="server" visible="false"><a href="/Payroll/Reports/frmEmployeeServiceChargeBankAdvice.aspx">
+                        <i class="icon-file-alt"></i>Service Charge Bank Advice</a> </li>
+                    <li id="liFrmEmpTaxDeduction" runat="server" visible="false"><a href="/Payroll/Reports/frmReportEmpTaxDeduction.aspx">
+                        <i class="icon-file-alt"></i>Tax Deduction</a> </li>
+                    <li id="liFrmReportEmpReconsilation" runat="server" visible="false"><a href="/Payroll/Reports/frmReportReconcilation.aspx">
+                        <i class="icon-file-alt"></i>Employee Reconsilation</a> </li>
+                    <li id="liFrmReportReconcilationSummary" runat="server" visible="false"><a href="/Payroll/Reports/frmReportCostCenterWiseReconsilationSummary.aspx">
+                        <i class="icon-file-alt"></i>Reconcilation Summary</a> </li>
+                </ul>
+                <a id="grpReportGeneralLedger" runat="server" visible="False" href="#menuReportGeneralLedger"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-book"></i>Accounts
+                    Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuReportGeneralLedger" class="nav nav-list collapse">
+                    <li id="liFrmReportChartOfAccounts" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportChartOfAccounts.aspx">
+                        <i class="icon-file-alt"></i>Chart Of Accounts</a></li>
+                    <li id="liFrmReportJournalRegister" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportJournalRegister.aspx">
+                        <i class="icon-file-alt"></i>Transaction List</a></li>
+                    <li id="liFrmReportReceiveNPayment" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportReceiveNPayment.aspx">
+                        <i class="icon-file-alt"></i>Receive and Payment</a></li>
+                    <li id="liFrmReportCashBookStatement" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportCashBookStatement.aspx">
+                        <i class="icon-file-alt"></i>Cash Book Statement</a></li>
+                    <li id="liFrmReportBankBookStatement" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportBankBookStatement.aspx">
+                        <i class="icon-file-alt"></i>Bank Book Statement</a></li>
+                    <li id="liFrmReportGeneralLedger" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportGeneralLedger.aspx">
+                        <i class="icon-file-alt"></i>General Ledger</a></li>
+                    <li id="liFrmReportChequeList" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportChequeList.aspx">
+                        <i class="icon-file-alt"></i>Cheque List Statement</a></li>
+                    <li id="liFrmReportCashFlowStatement" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportCashFlowStatement.aspx">
+                        <i class="icon-file-alt"></i>Cash Flow Statement</a></li>
+                    <li id="liFrmReportProfitNLossStatement" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportProfitNLossStatement.aspx">
+                        <i class="icon-file-alt"></i>Profit/ Loss Statement</a></li>
+                    <li id="liFrmReportTrailBalanceStatement" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportTrailBalanceStatement.aspx">
+                        <i class="icon-file-alt"></i>Trail Balance</a></li>
+                    <li id="liFrmReportBalanceSheetStatement" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportBalanceSheetStatement.aspx">
+                        <i class="icon-file-alt"></i>Balance Sheet</a></li>
+                    <li id="liFrmReportReceivableNPayable" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportReceivableNPayable.aspx">
+                        <i class="icon-file-alt"></i>Receivable/ Payable</a></li>
+                    <li id="liFrmReportBreakDownStatement" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportBreakDownStatement.aspx">
+                        <i class="icon-file-alt"></i>Notes Break Down</a></li>
+                    <li id="liFrmReportFixedAssetsStatement" runat="server" visible="False"><a href="/GeneralLedger/Reports/frmReportFixedAssetsStatement.aspx">
+                        <i class="icon-file-alt"></i>Fixed Assets Statement</a></li>
+                </ul>
+                <a id="grpReportSalesNMarketing" runat="server" visible="False" href="#menuReportSalesNMarketing"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-suitcase"></i>
+                    Sales & Marketing<i class="icon-chevron-up"> </i></a>
+                <ul id="menuReportSalesNMarketing" class="nav nav-list collapse">
+                    <li id="liFrmReportGuestCompanyInfo" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportGuestCompanyInfo.aspx">
+                        <i class="icon-file-alt"></i>Company Information</a></li>
+                    <li id="liFrmReportGuestReferenceInfo" runat="server" visible="False"><a href="/HotelManagement/Reports/frmReportGuestReferenceInfo.aspx">
+                        <i class="icon-file-alt"></i>Guest Reference Info</a></li>
+                    <li id="liFrmReportSalesNMarketing" runat="server"><a href="/SalesAndMarketing/Reports/frmSalesNMarketingSchedule.aspx">
+                        <i class="icon-file-alt"></i>Schedule Information</a></li>
+                    <li id="liFrmReportGuestInformation" runat="server"><a href="/SalesAndMarketing/Reports/frmReportGuestInformation.aspx">
+                        <i class="icon-file-alt"></i>Guest Information</a></li>
+                </ul>
+                <a id="grpReportMembershipManagement" runat="server" visible="False" href="#menuReportMembershipManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-suitcase"></i>
+                    Membership<i class="icon-chevron-up"> </i></a>
+                <ul id="menuReportMembershipManagement" class="nav nav-list collapse">
+                    <li id="liFrmReportMemberList" runat="server" visible="False"><a href="/Membership/Reports/frmReportMemberList.aspx">
+                        <i class="icon-file-alt"></i>Member List</a></li>
+                </ul>
+            </div>
+            <div id="ReportcolapsePanel" style="float: right; z-index: 1; cursor: pointer; width: 18px;
+                background-color: #476b8f; float: right;">
+                <div style="width: 10px; height: 45%" id="blankPanel">
+                </div>
+                <div style="height: 20px; width: 20px; background-position: 40px 90px; background-image: url('/Images/img/glyphicons-halflings-white.png');
+                    background-repeat: repeat;">
+                </div>
+            </div>
+        </div>
+        <div class="content" style="margin-left: 275px;">
+            <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+            </asp:ScriptManager>
+            <ul class="breadcrumb">
+                <%--<li><a href="/HMCommon/frmHMHome.aspx">Home</a></li>--%>
+                <li>
+                    <div id="ltlBreadCrumbsInformation" runat="server">
+                    </div>
+                </li>
+            </ul>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="row-fluid">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                    <footer>
+                        <hr />
+                        <p class="pull-right">
+                            Developed by <a href="http://datagridbd.com" target="_blank">data grid limited</a></p>
+                        <p>
+                            &copy; 2013 <a href="http://www.innboard.com" target="_blank">innboard.com</a></p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+    <script type="text/javascript" src="/StyleSheetOld/lib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/StyleSheetOld/js/jquery.flexslider.js"></script>
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                start: function (slider) {
+                    $('body').removeClass('loading');
+                }
+            });
+        });
+
+        var x = '<%=isMenuCollupse%>';
+        if (x.length > 0) {
+            $('#' + x).addClass("nav nav-list collapse in");
+        }
+
+        $(document).ready(function () {
+
+            $('.MenuCollapsible > ul > li:has(ul)').addClass("has-sub");
+
+            $('.MenuCollapsible > ul > li > a').click(function () {
+                var checkElement = $(this).next();
+
+                $('.MenuCollapsible li').removeClass('active');
+                $(this).closest('li').addClass('active');
+
+                if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+                    $(this).closest('li').removeClass('active');
+                    checkElement.slideUp('normal');
+                }
+
+                if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+                    $('.MenuCollapsible ul ul:visible').slideUp('normal');
+                    checkElement.slideDown('normal');
+                }
+
+                if (checkElement.is('ul')) {
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+
+            $('#MainMenuTopLink > ul > li > a').click(function () {
+                var checkElement = $(this).next();
+
+                $('#MainMenuTopLink li').removeClass('active');
+                $(this).closest('li').addClass('active');
+
+            });
+
+        });
+    </script>
+</body>
+</html>

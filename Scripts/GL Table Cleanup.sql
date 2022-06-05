@@ -1,0 +1,3 @@
+TRUNCATE TABLE GLLedgerMaster
+TRUNCATE TABLE GLLedgerDetails
+TRUNCATE TABLE GLVoucherApprovedInfo

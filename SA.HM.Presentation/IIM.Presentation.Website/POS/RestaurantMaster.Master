@@ -1,0 +1,131 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="RestaurantMaster.Master.cs"
+    Inherits="HotelManagement.Presentation.Website.POS.RestaurantMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head id="Head1" runat="server">
+    <meta charset="utf-8">
+    <title runat="server" id="SiteTitle"></title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" type="text/css" href="/StyleSheetOld/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/StyleSheetOld/lib/bootstrap/css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="/StyleSheetOld/css/theme.css" />
+    <link rel="stylesheet" href="/StyleSheetOld/lib/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/StyleSheetOld/css/flexslider.css" type="text/css" media="screen" />
+    <link href="/StyleSheetOld/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="/StyleSheetOld/css/jquery-ui-1.11.2.css" rel="stylesheet" type="text/css" />
+    <link href="../JSLibrary/JqueryTouchKeyBoard/css/keyboard.css" rel="Stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/StyleSheetOld/css/HMStyleSheet.css" />
+    <link href="../StyleSheetOld/css/ResponsiveTableStyle.css" rel="stylesheet" type="text/css" />
+    <link href="../StyleSheetOld/css/toastr.css" rel="stylesheet" type="text/css" />
+    <script src="../ScriptsOld/jquery-2.1.3.js" type="text/javascript"></script>
+    <script src="../ScriptsOld/jquery-ui-1.11.2.js" type="text/javascript"></script>
+    <script src="/StyleSheetOld/js/Common.js" type="text/javascript"></script>
+    <script src="../JSLibrary/JqueryTouchKeyBoard/js/jquery.keyboard.js" type="text/javascript"></script>
+    <script src="../JSLibrary/JqueryTouchKeyBoard/js/jquery.keyboard.extension-autocomplete.js"
+        type="text/javascript"></script>
+    <script src="../ScriptsOld/underscore.js" type="text/javascript"></script>
+    <script src="../ScriptsOld/toastr.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var innBoarDateFormat = "";
+        $(document).ready(function () {
+
+            innBoarDateFormat = '<%=innBoardDateFormat%>';
+        });
+    </script>
+    <script src="../ScriptsOld/HMCommonScript.js" type="text/javascript"></script>
+    <%--<script src="/StyleSheet/lib/jquery-1.7.2.min.js" type="text/javascript"></script>--%>
+    <%--<link href="/StyleSheet/css/jquery-ui-1.8.23.custom.css" rel="stylesheet" type="text/css" />--%>
+    <%-- <link href="/StyleSheet/css/jquery-ui.css" rel="stylesheet" type="text/css" />--%>
+    <%--<script src="/Scripts/jquery-1.8.3.js" type="text/javascript"></script>--%>
+    <%-- <script src="/Scripts/jquery-ui.js" type="text/javascript"></script>--%>
+</head>
+<script type="text/javascript">
+    var innBoarDateFormat = "";
+    $(document).ready(function () {
+
+        innBoarDateFormat = '<%=innBoardDateFormat%>';
+    });
+</script>
+<body class="">
+    <form id="form1" runat="server" class="search form-inline">
+        <asp:HiddenField ID="InnboardMessageHiddenField" runat="server" Value="" ClientIDMode="Static" />
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+        </asp:ScriptManager>
+        <div id="popUpDiv" class="hiddenDiv">
+            <div id="popUpDivContainer">
+                <div class="popupHeaderBox">
+                    <div class="popupTitle">
+                    </div>
+                    <div class="btnClose">
+                        <a href="javascript:void(0)" onclick="javascript:popup(-1);">Close</a>
+                    </div>
+                    <div class="clearCls">
+                    </div>
+                </div>
+                <div class="popupContentBox">
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" style="padding-left: 5px; padding-right: 5px;">
+            <div class="row-fluid" style="margin: 0px; padding: 0px;">
+                <div class="span12" style="margin: 0px; padding: 0px;">
+                    <div class="navbar" style="margin: 0px; padding: 0px;">
+                        <div class="navbar-inner">
+                            <ul class="nav pull-right">
+                                <li style="color: #fff; padding-right: 5px; vertical-align: middle; padding-top: 9px;">
+                                    <asp:Label ID="lblLoggedInUser" runat="server" Text="bjhg"></asp:Label>
+                                </li>
+                                <li><a href="/Logout.aspx?LoginType=RestaurentLogin" class="hidden-phone visible-tablet visible-desktop">
+                                    <i class="icon-book"></i>Logout</a></li>
+                            </ul>
+                            <a class="brand" href="#">
+                                <img src="../StyleSheet/images/Innboard-Logo_White.png" class=" InnBoardIcon" alt="logo" /><span
+                                    class="second">Restaurant Management</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid" style="margin: 0px; padding: 0px;">
+                <div id="TableContainerForTouchPad" class="span8" style="margin: 0px; padding: 0px; padding-top: 3px; float: right;">
+                    <div style="background-color: rgb(249, 249, 249); overflow: hidden;">
+                        <div class="row-fluid" style="margin: 0px; padding: 0px;">
+                            <div class="span12" style="margin: 0px; padding: 0px;">
+                                <ul class="breadcrumb" style="margin-bottom: 0px;">
+                                    <li><a href="/Restaurant/frmKotBill.aspx?Kot=TableAllocation">Home</a> <span class="divider">/</span></li>
+                                    <li class="active">Restaurant Management</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                        <div class="row-fluid block" style="margin: 0px; padding: 0px; border: 0;">
+                            <hr style="margin: 2em 0">
+                            <div class="span12" style="margin: 0px; padding: 0px;">
+                                <p class="span6" style="margin: 0px; padding: 0px; padding-left: 5px;">
+                                    Developed by <a href="http://datagridbd.com" target="_blank">data grid limited</a>
+                                </p>
+                                <p class="span6" style="text-align: right; margin: 0px; padding: 0px; width: 49.718%;">
+                                    &copy; 2013 <a href="http://www.innboard.com" target="_blank">innboard.com</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4" style="margin: 0px; padding: 0px; float: left;">
+                    <div style="padding-top: 3px; padding-left: 2px;">
+                        <a href="javascript:void()" class="block-heading">Table Information </a>
+                        <div id="ltlTableWiseItemInformation">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="layer1" class="hiddenDiv">
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F4FE741A-8D74-4CAC-8A25-A96D5592A2B7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InnboardService</RootNamespace>
+    <AssemblyName>InnboardService</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\CommonServiceLocator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unity.Abstractions, Version=3.3.1.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Configuration, Version=5.2.5.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.8.11.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.Container.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Interception, Version=5.5.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.Interception.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Interception.Configuration, Version=5.1.7.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.Interception.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.RegistrationByConvention, Version=2.1.9.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.RegistrationByConvention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.ServiceLocation, Version=2.1.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.8.11\lib\net45\Unity.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BanquetReservationClassificationDiscountService.cs" />
+    <Compile Include="Services\BanquetReservationDetailService.cs" />
+    <Compile Include="Services\BanquetReservationService.cs" />
+    <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\CommonCostCenterService.cs" />
+    <Compile Include="Services\GenericService.cs" />
+    <Compile Include="Services\GLLedgerMasterService.cs" />
+    <Compile Include="Services\HotelCompanyPaymentLedgerService.cs" />
+    <Compile Include="Services\HotelGuestBillApprovedService.cs" />
+    <Compile Include="Services\HotelGuestBillPaymentService.cs" />
+    <Compile Include="Services\HotelGuestCompanyService.cs" />
+    <Compile Include="Services\HotelGuestDayLetCheckOutService.cs" />
+    <Compile Include="Services\HotelGuestExtraServiceBillApprovedService.cs" />
+    <Compile Include="Services\HotelGuestHouseCheckOutService.cs" />
+    <Compile Include="Services\HotelGuestInformationService.cs" />
+    <Compile Include="Services\HotelGuestRegistrationService.cs" />
+    <Compile Include="Services\HotelGuestServiceBillService.cs" />
+    <Compile Include="Services\HotelRegistrationAireportPickupDropService.cs" />
+    <Compile Include="Services\HotelRoomNumberService.cs" />
+    <Compile Include="Services\HotelRoomRegistrationService.cs" />
+    <Compile Include="Services\HotelRoomReservationOnlineService.cs" />
+    <Compile Include="Services\HotelRoomReservationService.cs" />
+    <Compile Include="Services\HotelRoomTypeService.cs" />
+    <Compile Include="Services\InvCategoryCostCenterMappingService.cs" />
+    <Compile Include="Services\InvCategoryService.cs" />
+    <Compile Include="Services\InvCogsAccountVsItemCategoryMapppingService.cs" />
+    <Compile Include="Services\InvInventoryAccountVsItemCategoryMapppingService.cs" />
+    <Compile Include="Services\InvItemClassificationCostCenterMappingService.cs" />
+    <Compile Include="Services\InvItemClassificationService.cs" />
+    <Compile Include="Services\InvItemCostCenterMappingService.cs" />
+    <Compile Include="Services\InvItemService.cs" />
+    <Compile Include="Services\InvLocationCostCenterMappingService.cs" />
+    <Compile Include="Services\InvLocationService.cs" />
+    <Compile Include="Services\InvUnitConversionService.cs" />
+    <Compile Include="Services\InvUnitHeadService.cs" />
+    <Compile Include="Services\RestaurantBillClassificationDiscountService.cs" />
+    <Compile Include="Services\RestaurantBillDetailService.cs" />
+    <Compile Include="Services\RestaurantBillService.cs" />
+    <Compile Include="Services\RestaurantKotBillDetailService.cs" />
+    <Compile Include="Services\RestaurantKotBillMasterService.cs" />
+    <Compile Include="Services\RestaurantKotSpecialRemarksDetailService.cs" />
+    <Compile Include="Services\RestaurantRecipeDetailService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InnboardConfiguration\InnboardConfiguration.csproj">
+      <Project>{4fbf2076-41ca-4398-87ff-a2f7147b5379}</Project>
+      <Name>InnboardConfiguration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InnboardDataAccess\InnboardDataAccess.csproj">
+      <Project>{51300d0e-d74c-4b3a-aef6-4cbeaa030590}</Project>
+      <Name>InnboardDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InnboardDomain\InnboardDomain.csproj">
+      <Project>{2896ded6-9814-4216-a9fb-d0fc8c450cc1}</Project>
+      <Name>InnboardDomain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

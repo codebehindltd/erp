@@ -1,0 +1,5668 @@
+﻿<%@ Page Title="" Language="C#" EnableEventValidation="false" MasterPageFile="~/InnBoard.Master"
+    AutoEventWireup="true" CodeBehind="frmOnlineRoomReservation.aspx.cs" Inherits="HotelManagement.Presentation.Website.HotelManagement.frmOnlineRoomReservation" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <script type="text/javascript">
+        var minCheckInDate = "", editedRowIndex = "";
+        var minCheckOutDate = "";
+        var alreadySavePaidServices = [];
+        var deletedRoomByType = new Array();
+        var editedRow = "";
+        var cvt = "";
+        var hfCurrentReservationGuestId = "";
+        var SelectdPreferenceId = "";
+        DeletedAirportPickupDrop = new Array();
+
+        $(document).ready(function () {
+
+            if ($("#InnboardMessageHiddenField").val() != "") {
+                CommonHelper.AlertMessage(JSON.parse($("#InnboardMessageHiddenField").val()));
+                $("#InnboardMessageHiddenField").val("");
+            }
+
+            var strDate = CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDateIn").val(), '/');
+            minCheckOutDate = GetStringFromDateTime(CommonHelper.DaysAdd(strDate, 1));
+
+            $("#ContentPlaceHolder1_txtDateOut").datepicker("option", {
+                minDate: minCheckOutDate
+            });
+
+
+            var hfCurrentReservationGuestId = $("#<%=hfCurrentReservationGuestId.ClientID %>").val();
+
+            minCheckInDate = $("#<%=hfMinCheckInDate.ClientID %>").val();
+            var vvc = [];
+
+            $("#myTabs").tabs();
+            $($("#myTabs").find("li")[1]).hide();
+
+            if ($("#ContentPlaceHolder1_hfReservationId").val() != "") {
+                $("#ReservationRoomGrid tbody").append($("#ContentPlaceHolder1_RoomDetailsTemp").text());
+                $("#PickupTable tbody").append($("#ContentPlaceHolder1_AirportPickupDetails").text());
+                $("#DepartureTable tbody").append($("#ContentPlaceHolder1_AirportDropDetails").text());
+                $('#MultiplePickup').show();
+                $('#MultipleGuest').show();
+                $($("#myTabs").find("li")[1]).show();
+                GetTempRegistrationDetailByWM();
+                var resId = $("#ContentPlaceHolder1_hfReservationId").val();
+                PageMethods.LoadRoomNumbers(resId, OnLoadRoomNumbersSucceeded, OnLoadRoomNumbersFailed);
+            }
+            //multiple airport pickup drop 
+            var ctrl = '#<%=chkMultiplePickup.ClientID%>'
+            if ($(ctrl).is(':checked')) {
+                $("#MultiplePickup").show();
+                $("#MultipleGuest").show();
+                $("#addMultiplePickup").show();
+                var hfReservationId = $("#<%=hfReservationId.ClientID %>").val();
+                var reservationId = parseInt(hfReservationId);
+                PageMethods.LoadMultipleGuest(reservationId, OnLoadMultipleGuestSucceeded, OnLoadMultipleGuestFailed);
+            }
+            else {
+                $("#MultiplePickup").hide();
+                $("#MultipleGuest").hide();
+                $("#addMultiplePickup").hide();
+            }
+
+            var ctrl = '#<%=chkMultipleDrop.ClientID%>'
+            if ($(ctrl).is(':checked')) {
+                $("#MultipleDrop").show();
+                $("#MultipleDropGuest").show();
+                $("#addMultipleDrop").show();
+                var hfReservationId = $("#<%=hfReservationId.ClientID %>").val();
+                var reservationId = parseInt(hfReservationId);
+                PageMethods.LoadMultipleGuest(reservationId, OnLoadMultipleGuestSucceeded, OnLoadMultipleGuestFailed);
+            }
+            else {
+                $("#MultipleDrop").hide();
+                $("#MultipleDropGuest").hide();
+                $("#addMultipleDrop").hide();
+            }
+            //$("#<%=ddlGuestTitle.ClientID %>").val('Mr.');
+            var moduleName = "<a href='/HMCommon/frmHMHome.aspx' class='inActive'>Front Desk Management</a>";
+            var formName = "<span class='divider'>/</span><li class='active'>Room Reservation</li>";
+            var breadCrumbs = moduleName + formName;
+            //$("#SearchPanel").hide('slow');
+            $("#ltlBreadCrumbsInformation").html(breadCrumbs);
+
+            $("#ContentPlaceHolder1_ddlGuestTitle").blur(function () {
+                var title = $("#<%=ddlGuestTitle.ClientID %>").val();
+                if (title == "MrNMrs.") {
+                    title = "Mr. & Mrs.";
+                }
+                else if (title == "N/A") {
+                    title = "0";
+                }
+                var firstName = $("#<%=txtGuestFirstName.ClientID %>").val();
+                var lastName = $("#<%=txtGuestLastName.ClientID %>").val();
+                if (title != "0") {
+                    $("#<%=txtGuestName.ClientID %>").val(title + " " + firstName + " " + lastName);
+                }
+                else $("#<%=txtGuestName.ClientID %>").val(firstName + " " + lastName);
+            });
+
+            $("#ContentPlaceHolder1_txtGuestFirstName").blur(function () {
+                var title = $("#<%=ddlGuestTitle.ClientID %>").val();
+                if (title == "MrNMrs.") {
+                    title = "Mr. & Mrs.";
+                }
+                else if (title == "N/A") {
+                    title = "0";
+                }
+                var firstName = $("#<%=txtGuestFirstName.ClientID %>").val();
+                var lastName = $("#<%=txtGuestLastName.ClientID %>").val();
+                if (title != "0") {
+                    $("#<%=txtGuestName.ClientID %>").val(title + " " + firstName + " " + lastName);
+                }
+                else $("#<%=txtGuestName.ClientID %>").val(firstName + " " + lastName);
+            });
+
+            $("#ContentPlaceHolder1_txtGuestLastName").blur(function () {
+                var title = $("#<%=ddlGuestTitle.ClientID %>").val();
+                if (title == "MrNMrs.") {
+                    title = "Mr. & Mrs.";
+                }
+                else if (title == "N/A") {
+                    title = "0";
+                }
+                var firstName = $("#<%=txtGuestFirstName.ClientID %>").val();
+                var lastName = $("#<%=txtGuestLastName.ClientID %>").val();
+                if (title != "0") {
+                    $("#<%=txtGuestName.ClientID %>").val(title + " " + firstName + " " + lastName);
+                }
+                else $("#<%=txtGuestName.ClientID %>").val(firstName + " " + lastName);
+            });
+
+            $("#<%=ddlRoomTypeId.ClientID %>").change(function () {
+                RoomDetailsByRoomTypeId($(this).val());
+                PerformFillFormActionByRoomTypeId($(this).val());
+                ClearRoomNumberAndId();
+            });
+            $("#<%=ddlGuestTitle.ClientID %>").change(function () {
+                AutoGenderLoadInfo();
+            });
+
+            VisibleListedCompany();
+            ToggleListedCompanyInfo();
+
+            $('#ContentPlaceHolder1_A').click(function () {
+                $('#SubmitButtonDiv').show();
+            });
+            $('#ContentPlaceHolder1_B').click(function () {
+                $('#SubmitButtonDiv').show();
+            });
+            $('#ContentPlaceHolder1_C').click(function () {
+                $('#SubmitButtonDiv').show();
+            });
+            $('#ContentPlaceHolder1_D').click(function () {
+                $('#SubmitButtonDiv').show();
+            });
+            $('#ContentPlaceHolder1_E').click(function () {
+                $('#SubmitButtonDiv').hide();
+            });
+
+            $('#ContentPlaceHolder1_txtProbableArrivalTime').timepicker({
+                showPeriod: is12HourFormat
+            });
+            $('#ContentPlaceHolder1_txtProbableArrivalPendingTime').timepicker({
+                showPeriod: is12HourFormat
+            });
+            $('#ContentPlaceHolder1_txtArrivalTime').timepicker({
+                showPeriod: is12HourFormat
+            });
+            $('#ContentPlaceHolder1_txtDepartureTime').timepicker({
+                showPeriod: is12HourFormat
+            });
+
+            $("#<%=txtRoomId.ClientID %>").click(function () {
+                var txtFromDate = $("#<%=txtDateIn.ClientID %>").val();
+                var txtToDate = $("#<%=txtDateOut.ClientID %>").val();
+
+                if (txtFromDate == "") {
+                    toastr.warning("Check In Date should not be empty.");
+                    document.getElementById("<%=txtDateIn.ClientID%>").focus();
+                    return false;
+                }
+                if (txtToDate == "") {
+                    toastr.warning("Check Out Date should not be empty.");
+                    document.getElementById("<%=txtToDate.ClientID%>").focus();
+                    return false;
+                }
+                $("#<%=DateInHiddenField.ClientID %>").val(txtFromDate);
+                $("#<%=DateOutHiddenField.ClientID %>").val(txtToDate);
+                $("#<%=hfCurrencyHiddenField.ClientID %>").val($("#ContentPlaceHolder1_ddlCurrency").val());
+            });
+
+            var ddlCurrencyId = $("#<%=ddlCurrency.ClientID %>").val();
+            PageMethods.LoadCurrencyType(ddlCurrencyId, OnLoadCurrencyTypeSucceeded, OnLoadCurrencyTypeFailed);
+
+            $("#<%=ddlCurrency.ClientID %>").change(function () {
+                var v = $("#<%=ddlCurrency.ClientID %>").val();
+                PageMethods.LoadCurrencyType(v, OnLoadCurrencyTypeSucceeded, OnLoadCurrencyTypeFailed);
+            });
+
+            function OnLoadCurrencyTypeSucceeded(result) {
+                $("#<%=hfCurrencyType.ClientID %>").val(result.CurrencyType);
+                PageMethods.LoadCurrencyConversionRate(result.CurrencyId, OnLoadConversionRateSucceeded, OnLoadConversionRateFailed);
+            }
+
+            function OnLoadCurrencyTypeFailed() {
+
+            }
+
+            function AutoGenderLoadInfo() {
+                if ($("#<%=ddlGuestTitle.ClientID %>").val() == "Mr.") {
+                    $("#<%=ddlGuestSex.ClientID %>").val("Male");
+                }
+                else if ($("#<%=ddlGuestTitle.ClientID %>").val() == "MrNMrs.") {
+                    $("#<%=ddlGuestSex.ClientID %>").val("0");
+                }
+                else if ($("#<%=ddlGuestTitle.ClientID %>").val() == "Dr.") {
+                    $("#<%=ddlGuestSex.ClientID %>").val("0");
+                }
+                else if ($("#<%=ddlGuestTitle.ClientID %>").val() == "N/A") {
+                    $("#<%=ddlGuestSex.ClientID %>").val("0");
+                }
+                else {
+                    $("#<%=ddlGuestSex.ClientID %>").val("Female");
+                }
+            }
+
+            function OnLoadConversionRateSucceeded(result) {
+                if ($("#<%=hfCurrencyType.ClientID %>").val() == "Local") {
+
+                    //$("#<%=txtConversionRate.ClientID %>").val('');
+                    //                    $('#<%=txtConversionRate.ClientID%>').attr("disabled", true);
+                }
+                else {
+                    //$('#<%=txtConversionRate.ClientID%>').attr("disabled", false);
+                    $("#<%=txtConversionRate.ClientID %>").val(result.BillingConversionRate);
+                }
+
+                RoomDetailsByRoomTypeId($('#<%=ddlRoomTypeId.ClientID%>').val());
+                CurrencyRateInfoEnable();
+            }
+
+            function OnLoadConversionRateFailed() {
+            }
+
+            $("#<%=ddlDiscountType.ClientID %>").change(function () {
+                UpdateTotalCostWithDiscount();
+            });
+            $("#<%=txtDiscountAmount.ClientID %>").blur(function () {
+                UpdateTotalCostWithDiscount();
+            });
+
+            $("#<%=ddlCompanyName.ClientID %>").change(function () {
+                GetTotalCostWithCompanyOrPersonalDiscount();
+                DiscountPolicyByCompanyNRoomType();
+            });
+            $("#<%=ddlBusinessPromotionId.ClientID %>").change(function () {
+                GetTotalCostWithCompanyOrPersonalDiscount();
+            });
+
+            $("#txtGuestCountrySearch").blur(function () {
+                var countryId = $("#<%=ddlGuestCountry.ClientID %>").val();
+                PageMethods.GetNationality(countryId, OnCountrySucceeded, OnCountryFailed);
+            });
+
+            CommonHelper.AutoSearchClientDataSource("txtGuestCountrySearch", "ContentPlaceHolder1_ddlGuestCountry", "ContentPlaceHolder1_ddlGuestCountry");
+            CommonHelper.AutoSearchClientDataSource("txtCountry", "ContentPlaceHolder1_ddlCountry", "ContentPlaceHolder1_ddlCountry");
+            CommonHelper.AutoSearchClientDataSource("txtPrevGstCountry", "ContentPlaceHolder1_ddlPrevGstCountry", "ContentPlaceHolder1_ddlPrevGstCountry");
+
+            $("#<%=ddlPaymentMode.ClientID %>").change(function () {
+                if ($("#<%=ddlPaymentMode.ClientID %>").val() != "Company") {
+                    $("#<%=ddlPayFor.ClientID %>").val('0');
+                    $("#<%=ddlPayFor.ClientID %>").attr("disabled", true);
+                }
+                else {
+                    $("#<%=ddlPayFor.ClientID %>").attr("disabled", false);
+                }
+            });
+
+            $("#ContentPlaceHolder1_txtRoomId").keypress(function (e) {
+                //if the letter is not digit then display error and don't type anything
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    //display error message
+                    toastr.warning("Digits Only");
+                    return false;
+                }
+            });
+
+            if ($("#<%=ddlReservationStatus.ClientID %>").val() == "Pending") {
+                $('#PendingDiv').show("slow");
+                $('#ReasonDiv').hide("slow");
+            }
+
+            else if ($("#<%=ddlReservationStatus.ClientID %>").val() == "Cancel") {
+                $('#ReasonDiv').show("slow");
+                $('#PendingDiv').hide("slow");
+            }
+            else {
+                $('#PendingDiv').hide("slow");
+                $('#ReasonDiv').hide("slow");
+            }
+
+            var txtStartDate = '<%=txtDateIn.ClientID%>'
+            var txtEndDate = '<%=txtDateOut.ClientID%>'
+
+            $("#ContentPlaceHolder1_txtDateIn").datepicker({
+                //defaultDate: "+1w",
+                changeMonth: true,
+                changeYear: true,
+                minDate: minCheckInDate,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $("#ContentPlaceHolder1_txtDateOut").datepicker("option", "minDate", selectedDate);
+
+                    var strDate = CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDateIn").val(), '/');
+                    minCheckOutDate = GetStringFromDateTime(CommonHelper.DaysAdd(strDate, 1));
+
+                    $("#ContentPlaceHolder1_txtDateOut").datepicker("option", {
+                        minDate: minCheckOutDate
+                    });
+
+                    if ($("#ContentPlaceHolder1_txtDateOut").val() != "")
+                        $("#txtReservationDuration").val(CommonHelper.DateDifferenceInDays(CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDateIn").val(), '/'), CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDateOut").val(), '/')));
+                    else
+                        $("#txtReservationDuration").val("");
+                }
+            });
+
+            $("#ContentPlaceHolder1_txtDateOut").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                minDate: minCheckOutDate,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $("#ContentPlaceHolder1_txtDateIn").datepicker("option", "maxDate", selectedDate);
+
+                    if ($("#ContentPlaceHolder1_txtDateOut").val() != "")
+                        $("#txtReservationDuration").val(CommonHelper.DateDifferenceInDays(CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDateIn").val(), '/'), CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDateOut").val(), '/')));
+                    else
+                        $("#txtReservationDuration").val("");
+                }
+            });
+
+            $("#txtReservationDuration").blur(function () {
+
+                if (CommonHelper.IsInt($(this).val()) == false) {
+                    toastr.info("Please Insert Valid Number.");
+                    return;
+                }
+
+                if ($.trim($(this).val()) != "") {
+                    var strDate = CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDateIn").val(), '/');
+                    $("#ContentPlaceHolder1_txtDateOut").val(GetStringFromDateTime(CommonHelper.DaysAdd(strDate, $(this).val())));
+                }
+                else {
+                    $(this).val("");
+                }
+            });
+
+            $("#ContentPlaceHolder1_txtFromDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $("#ContentPlaceHolder1_txtToDate").datepicker("option", "minDate", selectedDate);
+                }
+            });
+
+            $("#ContentPlaceHolder1_txtToDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $("#ContentPlaceHolder1_txtFromDate").datepicker("option", "maxDate", selectedDate);
+                }
+            });
+
+            $("#ContentPlaceHolder1_txtDOB").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                maxDate: minCheckInDate,
+                dateFormat: innBoarDateFormat
+                //                onClose: function (selectedDate) {
+                //                    $("#ContentPlaceHolder1_txtVExpireDate").datepicker("option", "minDate", selectedDate);
+                //                }
+            });
+
+            $("#ContentPlaceHolder1_txtGuestDOB").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                maxDate: minCheckInDate,
+                dateFormat: innBoarDateFormat
+                //                onClose: function (selectedDate) {
+                //                    $("#ContentPlaceHolder1_txtVExpireDate").datepicker("option", "minDate", selectedDate);
+                //                }
+            });
+
+            $("#ContentPlaceHolder1_txtVIssueDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $("#ContentPlaceHolder1_txtVExpireDate").datepicker("option", "minDate", selectedDate);
+                }
+            });
+
+            $("#ContentPlaceHolder1_txtVExpireDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $("#ContentPlaceHolder1_txtVIssueDate").datepicker("option", "maxDate", selectedDate);
+                }
+
+            });
+
+            $("#ContentPlaceHolder1_txtPIssueDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $("#ContentPlaceHolder1_txtPExpireDate").datepicker("option", "minDate", selectedDate);
+                }
+            });
+
+            $("#ContentPlaceHolder1_txtPExpireDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $("#ContentPlaceHolder1_txtPIssueDate").datepicker("option", "maxDate", selectedDate);
+                }
+            });
+            $("#ContentPlaceHolder1_txtSrcFromDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $("#ContentPlaceHolder1_txtSrcToDate").datepicker("option", "minDate", selectedDate);
+                }
+            });
+
+            $("#ContentPlaceHolder1_txtSrcToDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $("#ContentPlaceHolder1_txtSrcFromDate").datepicker("option", "maxDate", selectedDate);
+                }
+
+            });
+            $("#ContentPlaceHolder1_txtNoShowCharge").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat
+            });
+            $("#ContentPlaceHolder1_txtConfirmationDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat
+            });
+
+            $("#<%=ddlReservationStatus.ClientID %>").change(function () {
+
+                if ($(this).val() == "Active") {
+                    $('#PendingDiv').hide("slow");
+                    $('#ReasonDiv').hide("slow");
+
+                    $("#ContentPlaceHolder1_txtConfirmationDate").val("");
+                    $("#ContentPlaceHolder1_txtProbableArrivalPendingTime").val("12:00");
+                    $("#ContentPlaceHolder1_txtReason").val("");
+                }
+                else if ($("#<%=ddlReservationStatus.ClientID %>").val() == "Pending") {
+                    $('#PendingDiv').show("slow");
+                    $('#ReasonDiv').hide("slow");
+
+                    $("#ContentPlaceHolder1_txtConfirmationDate").val("");
+                    $("#ContentPlaceHolder1_txtProbableArrivalPendingTime").val("12:00");
+                    $("#ContentPlaceHolder1_txtReason").val("");
+
+                }
+                else if ($("#<%=ddlReservationStatus.ClientID %>").val() == "Cancel") {
+                    $('#ReasonDiv').show("slow");
+                    $('#PendingDiv').hide("slow");
+
+                    $("#ContentPlaceHolder1_txtConfirmationDate").val("");
+                    $("#ContentPlaceHolder1_txtProbableArrivalPendingTime").val("12:00");
+                    $("#ContentPlaceHolder1_txtReason").val("");
+                }
+                else if ($("#<%=ddlReservationStatus.ClientID %>").val() == "NoShow") {
+                    $('#PendingDiv').hide("slow");
+                    $('#ReasonDiv').hide("slow");
+
+                    $("#ContentPlaceHolder1_txtConfirmationDate").val("");
+                    $("#ContentPlaceHolder1_txtProbableArrivalPendingTime").val("12:00");
+                    $("#ContentPlaceHolder1_txtReason").val("");
+                }
+            });
+
+            // //-- Airport Pick Up Information Div ------------------
+            if ($("#<%=ddlAirportPickUp.ClientID %>").val() == "NO") {
+                $('#AirportPickUpInformationDiv').hide();
+                $('#AirportPickUpInformationDiv').hide();
+                $("#<%=txtArrivalFlightName.ClientID %>").val("");
+                $("#<%=txtArrivalFlightNumber.ClientID %>").val("");
+            }
+            else {
+                $('#AirportPickUpInformationDiv').show();
+            }
+            $("#<%=ddlAirportPickUp.ClientID %>").change(function () {
+                if ($("#<%=ddlAirportPickUp.ClientID %>").val() == "NO") {
+                    $('#AirportPickUpInformationDiv').hide();
+                    $("#<%=txtArrivalFlightName.ClientID %>").val("");
+                    $("#<%=txtArrivalFlightNumber.ClientID %>").val("");
+                    $('#MultiplePickup').hide();
+                    $('#MultipleGuest').hide();
+                    $('#addMultiplePickup').hide();
+                    $("#ContentPlaceHolder1_chkMultiplePickup").attr("checked", false);
+                    $("#PickupTable tbody").append("");
+                }
+                else {
+                    $('#AirportPickUpInformationDiv').show();
+                    var rowLength = $("#ReservedGuestInformation tbody tr").length;
+                    if (rowLength > 1) {
+                        $('#MultiplePickup').show();
+                    }
+                }
+                //                else {
+                //                    $('#AirportPickUpInformationDiv').show();
+                //                    $('#MultiplePickup').hide();
+                //                    $('#MultipleGuest').hide();
+                //                    $('#addMultiplePickup').hide();
+                //                    $("#ContentPlaceHolder1_chkMultiplePickup").attr("checked", false);
+                //                    $("#PickupTable tbody").append("");
+                //                }
+            });
+
+            // //-- Airport Drop Information Div ------------------
+            if ($("#<%=ddlAirportDrop.ClientID %>").val() == "NO") {
+                $('#AirportDropInformationDiv').hide();
+                $("#<%=txtDepartureFlightName.ClientID %>").val("");
+                $("#<%=txtDepartureFlightNumber.ClientID %>").val("");
+            }
+            else {
+                $('#AirportDropInformationDiv').show();
+            }
+            $("#<%=ddlAirportDrop.ClientID %>").change(function () {
+                if ($("#<%=ddlAirportDrop.ClientID %>").val() == "NO") {
+                    $('#AirportDropInformationDiv').hide();
+                    $("#<%=txtDepartureFlightName.ClientID %>").val("");
+                    $("#<%=txtDepartureFlightNumber.ClientID %>").val("");
+                    $('#MultipleDrop').hide();
+                    $('#MultipleDropGuest').hide();
+                    $('#addMultipleDrop').hide();
+                    $("#ContentPlaceHolder1_chkMultipleDrop").attr("checked", false);
+                    $("#DepartureTable tbody").append("");
+                }
+                else {
+                    $('#AirportDropInformationDiv').show();
+                    var rowLength = $("#ReservedGuestInformation tbody tr").length;
+                    if (rowLength > 1) {
+                        $('#MultipleDrop').show();
+                    }
+                }
+                //                else {
+                //                    $('#AirportDropInformationDiv').show();
+                //                    $('#MultipleDrop').hide();
+                //                    $('#MultipleDropGuest').hide();
+                //                    $('#addMultipleDrop').hide();
+                //                    $("#ContentPlaceHolder1_chkMultipleDrop").attr("checked", false);
+                //                    $("#DepartureTable tbody").append("");
+                //                }
+            });
+
+            //EnableDisable For DropDown Change event--------------
+            $('#' + '<%=ddlReservedMode.ClientID%>').change(function () {
+                $("#ContentPlaceHolder1_txtContactPerson").val("");
+                $("#ContentPlaceHolder1_txtContactAddress").val("");
+                $("#ContentPlaceHolder1_txtMobileNumber").val("");
+                $("#ContentPlaceHolder1_txtContactEmail").val("");
+                $("#ContentPlaceHolder1_txtFaxNumber").val("");
+
+                if ($('#' + '<%=ddlReservedMode.ClientID%>').val() == "Self") {
+                    var ctrl = '#<%=chkIsLitedCompany.ClientID%>'
+                    $(ctrl).prop('checked', false)
+                    ToggleListedCompanyInfo();
+                    $('#GroupDiv').hide();
+                    $('#PersonDiv').show();
+                    $('#ContactPersonDiv').show();
+                    $('#MobileNEmailDiv').show();
+                    $('#CurrencyDiv').show();
+                    $("#<%=ddlCurrency.ClientID %>").val("1");
+                    $('#CurrencyAmountInformationDiv').hide();
+                }
+                else if ($('#' + '<%=ddlReservedMode.ClientID%>').val() == "Group") {
+                    var ctrl = '#<%=chkIsLitedCompany.ClientID%>'
+                    $(ctrl).prop('checked', false);
+                    ToggleListedCompanyInfo();
+                    //$('#PersonDiv').hide();
+                    $('#GroupDiv').show();
+                    $('#PersonDiv').show();
+                    $('#ContactPersonDiv').show();
+                    $('#MobileNEmailDiv').show();
+                    $('#CurrencyDiv').show();
+                    $("#<%=ddlCurrency.ClientID %>").val("1");
+                    $('#CurrencyAmountInformationDiv').hide();
+                }
+                else if ($('#' + '<%=ddlReservedMode.ClientID%>').val() == "Company") {
+                    $('#PersonDiv').hide();
+                    $('#GroupDiv').hide();
+                    $('#ContactPersonDiv').show();
+                    $('#MobileNEmailDiv').show();
+                    $('#CurrencyDiv').show();
+                    $("#<%=ddlCurrency.ClientID %>").val("1");
+                    $('#CurrencyAmountInformationDiv').hide();
+                }
+                else {
+                    var ctrl = '#<%=chkIsLitedCompany.ClientID%>'
+                    $(ctrl).prop('checked', false);
+                    ToggleListedCompanyInfo();
+                    $('#GroupDiv').hide();
+                    $('#PersonDiv').hide();
+                    $('#ContactPersonDiv').hide();
+                    $('#MobileNEmailDiv').hide();
+                    $('#CurrencyDiv').hide();
+                    $("#<%=ddlCurrency.ClientID %>").val("1");
+                    $('#CurrencyAmountInformationDiv').hide();
+                }
+                VisibleListedCompany();
+            });
+
+            $("#btnAddDetailGuest").click(function () {
+                if ($("#ContentPlaceHolder1_ddlRoomTypeId").val() == "0") {
+                    toastr.warning("Please Select Room Type.");
+                    return;
+                }
+                else if ($("#ContentPlaceHolder1_txtRoomId").val() == "") {
+                    toastr.warning("Please Provide Room Quantity.");
+                    return;
+                }
+
+                PerformRoomAvailableChecking();
+            });
+
+            $("#PopSearchPanel").hide();
+            $("#PopTabPanel").hide();
+            $("#ExtraSearch").hide();
+            ClearRoomNumberAndId();
+            $("#btnPopSearch").click(function () {
+                $("#PopSearchPanel").show('slow');
+                $("#PopTabPanel").hide('slow');
+                GridPaging(1, 1, 1);
+            });
+            $("#btnSrchRsrvtn").click(function () {
+                $("#SearchPanel").show('slow');
+                GridPagingForSearchReservation(1, 1);
+            });
+
+            $('#imgCollapse').click(function () {
+
+                var imageSrc = $('#imgCollapse').attr("src");
+                if (imageSrc == '/HotelManagement/Image/expand_alt.png') {
+                    $("#ExtraSearch").show('slow');
+                    $('#imgCollapse').attr("src", '/HotelManagement/Image/collapse_alt.png');
+
+                }
+                else {
+                    $("#ExtraSearch").hide('slow');
+                    $('#imgCollapse').attr("src", '/HotelManagement/Image/expand_alt.png');
+                }
+
+            });
+            $("#btnAddPerson").click(function () {
+                $("#PopSearchPanel").show('slow');
+                $("#PopTabPanel").hide('slow');
+                GridPaging(1, 1, 0);
+                AddNewItem();
+            });
+            $("#btnSearchSuccess").click(function () {
+                $("#<%=txtGuestName.ClientID %>").val($("#<%=hiddenGuestName.ClientID %>").val());
+                $("#PopSearchPanel").hide();
+                $("#PopTabPanel").hide();
+                //popup(-1);
+                $("#TouchKeypad").dialog("close");
+                LoadDataOnParentForm();
+            });
+            $("#btnSearchCancel").click(function () {
+                $("#<%=hiddenGuestName.ClientID %>").val('');
+                $("#<%=hiddenGuestId.ClientID %>").val('');
+                $("#PopSearchPanel").hide();
+                $("#PopTabPanel").hide();
+                //popup(-1);
+                $("#TouchKeypad").dialog("close");
+            });
+
+            $("#btnPrintDocument").click(function () {
+                $("#<%=hiddenGuestName.ClientID %>").val('');
+
+                $("#PopSearchPanel").hide();
+                $("#PopTabPanel").hide();
+                $("#TouchKeypad").dialog("close");
+                //popup(-1);
+
+                window.location.href = '/HotelManagement/Reports/frmReportPrintImage.aspx?GuestId='
+                           + $("#<%=hiddenGuestId.ClientID %>").val();
+
+            });
+
+            $("#btnProfile").click(function () {
+                if ($("#ReservedGuestInformation tbody tr").length == 0) {
+                    var title = $("#<%=ddlTitle.ClientID %>").val();
+                    if (title == "MrNMrs.") {
+                        title = "Mr. & Mrs.";
+                    }
+                    else if (title == "N/A") {
+                        title = "0";
+                    }
+                    var firstName = $("#<%=txtFirstName.ClientID %>").val();
+                    var lastName = $("#<%=txtLastName.ClientID %>").val();
+                    var country = $('#<%=ddlCountry.ClientID%>').val();
+
+                    if (firstName == "") {
+                        toastr.warning('Please fill mandatory fields.');
+                        return;
+                    }
+
+                    $('#<%=ddlGuestTitle.ClientID%>').val($('#<%=ddlTitle.ClientID%>').val());
+                    if ($('#<%=ddlTitle.ClientID%>').val() == "Mr.") {
+                        $('#<%=ddlGuestSex.ClientID%>').val("Male");
+                    }
+                    else if ($('#<%=ddlTitle.ClientID%>').val() == "MrNMrs.") {
+                        $('#<%=ddlGuestSex.ClientID%>').val("0");
+                    }
+                    else if ($('#<%=ddlTitle.ClientID%>').val() == "Dr.") {
+                        $('#<%=ddlGuestSex.ClientID%>').val("0");
+                    }
+                    else if ($('#<%=ddlTitle.ClientID%>').val() == "N/A") {
+                        $('#<%=ddlGuestSex.ClientID%>').val("0");
+                    }
+                    else {
+                        $('#<%=ddlGuestSex.ClientID%>').val("Female");
+                    }
+
+                    $("#<%=ddlGuestCountry.ClientID %>").val($('#<%=ddlCountry.ClientID%>').val());
+                    var countryId = $("#<%=ddlGuestCountry.ClientID %>").val();
+                    if (countryId > 0) {
+                        PageMethods.GetNationality(countryId, OnCountrySucceeded, OnCountryFailed);
+                    }
+                    var name = '';
+                    if (title != '0') {
+                        name = title + " " + firstName + " " + lastName;
+                    }
+                    else {
+                        name = firstName + " " + lastName;
+                    }
+                    var phone = $('#<%=txtPhone.ClientID%>').val();
+                    var countryname = $("#txtCountry").val();
+                    var email = $('#<%=txtEmail.ClientID%>').val();
+
+                    //$('#<%=ddlGuestTitle.ClientID%>').val(title);
+                    $('#<%=txtGuestFirstName.ClientID%>').val(firstName);
+                    $('#<%=txtGuestLastName.ClientID%>').val(lastName);
+                    $('#<%=txtGuestName.ClientID%>').val(name);
+                    $('#<%=txtGuestPhone.ClientID%>').val(phone);
+                    $('#<%=ddlGuestCountry.ClientID%>').val(country);
+                    $("#txtGuestCountrySearch").val(countryname);
+                    $('#<%=txtGuestEmail.ClientID%>').val(email);
+
+                    //                $("#GuestDetailsAdd").hide();
+                    $("#ContentPlaceHolder1_hfProfileOrAddMore").val("Profile");
+                }
+                $($("#myTabs").find("li")[1]).show();
+                $("#myTabs").tabs({ active: 1 });
+            });
+
+            $("#btnAddmore").click(function () {
+                $("#GuestDetailsAdd").show();
+                var title = $("#<%=ddlTitle.ClientID %>").val();
+                var firstName = $("#<%=txtFirstName.ClientID %>").val();
+                var lastName = $("#<%=txtLastName.ClientID %>").val();
+                //var txtGuestName = title + " " + firstName + " " + lastName;
+
+                var txtGuestName = "";
+                if (title == "N/A") {
+                    txtGuestName = firstName + " " + lastName;
+                    title = "";
+                }
+                else {
+                    txtGuestName = title + " " + firstName + " " + lastName;
+                }
+
+                var txtGuestEmail = $("#<%=txtEmail.ClientID %>").val();
+                var txtGuestDOB = '';
+                var hiddenGuestId = $("#<%=hiddenGuestId.ClientID %>").val();
+                var txtGuestDrivinlgLicense = $("#<%=txtGuestDrivinlgLicense.ClientID %>").val();
+                var txtGuestAddress1 = $("#<%=txtGuestAddress1.ClientID %>").val();
+                var txtGuestAddress2 = $("#<%=txtGuestAddress2.ClientID %>").val();
+                var ddlProfessionId = $("#<%=ddlProfessionId.ClientID %>").val();
+                var txtGuestCity = $("#<%=txtGuestCity.ClientID %>").val();
+                var ddlGuestCountry = $("#<%=ddlCountry.ClientID %>").val();
+                var txtGuestNationality = $("#<%=txtGuestNationality.ClientID %>").val();
+                var txtGuestCountrySearch = $.trim($("#txtGuestCountrySearch").val());
+                var txtGuestPhone = $("#<%=txtPhone.ClientID %>").val();
+                var ddlGuestSex = $("#<%=ddlGuestSex.ClientID %>").val();
+                var txtGuestZipCode = $("#<%=txtGuestZipCode.ClientID %>").val();
+                var txtNationalId = $("#<%=txtNationalId.ClientID %>").val();
+                var txtPassportNumber = $("#<%=txtPassportNumber.ClientID %>").val();
+                var txtPExpireDate = $("#<%=txtPExpireDate.ClientID %>").val();
+                var txtPIssueDate = $("#<%=txtPIssueDate.ClientID %>").val();
+                var txtPIssuePlace = '';
+                var txtVExpireDate = $("#<%=txtVExpireDate.ClientID %>").val();
+                var txtVisaNumber = $("#<%=txtVisaNumber.ClientID %>").val();
+                var txtVIssueDate = $("#<%=txtVIssueDate.ClientID %>").val();
+                var txtNumberOfPersonAdult = $("#<%=txtNumberOfPersonAdult.ClientID %>").val();
+                var roomId = $("#ContentPlaceHolder1_hfFstAsndRoomId").val();
+                if (roomId == "") {
+                    roomId = 0;
+                }
+                var prevGuestId = $("#<%=hfPrevGuestId.ClientID %>").val();
+                if (prevGuestId == "") {
+                    prevGuestId = 0;
+                }
+
+                var IsEditFromAddMore = 0;
+                var hfCurrentResGuestId = hfCurrentReservationGuestId;
+                if (prevGuestId == 0 && hfCurrentReservationGuestId != "") {
+                    prevGuestId = hfCurrentResGuestId;
+                    IsEditFromAddMore = 1;
+                }
+
+                //                if (roomId == "") {
+                //                    toastr.warning("Please add atleast one room.");
+                //                    return;
+                //                }                
+
+                var txtGuestCountrySearch = $.trim($("#txtGuestCountrySearch").val());
+                if (title == "0") {
+                    toastr.warning("Please Select Title.");
+                    $("#ddlTitle").focus();
+                    return;
+                }
+                if (txtGuestEmail != "") {
+                    var mailformat = new RegExp('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$', 'i');
+                    if (txtGuestEmail.match(mailformat)) {
+                    }
+                    else {
+                        toastr.warning("You have entered an invalid email address!");
+                        $("#txtGuestEmail").focus();
+                        return;
+                    }
+                }
+                if (txtGuestPhone != "") {
+                    var phnformat = /[1-9](?:\d{0,2})(?:,\d{3})*(?:\.\d*[1-9])?|0?\.\d*[1-9]|0/;
+                    if (txtGuestPhone.match(phnformat)) {
+                    }
+                    else {
+                        toastr.warning("You have entered an invalid Phone Number!");
+                        return;
+                    }
+                }
+
+                if (firstName == "") {
+                    toastr.warning('Please provide First Name.');
+                }
+                else {
+                    $($("#myTabs").find("li")[1]).show();
+                    $("#myTabs").tabs({ active: 1 });
+
+                    var isEdit = "";
+                    if ($("#<%=EditId.ClientID %>").val() == "") {
+                        isEdit = "";
+                    }
+                    else {
+                        isEdit = $("#<%=EditId.ClientID %>").val();
+                    }
+                    $('#btnAddGuest').val('Add');
+
+                    var hfReservationIdTemp = $("#<%=hfReservationIdTemp.ClientID %>").val();
+                    var reservationId = parseInt(hfReservationIdTemp);
+
+                    if ($.trim(roomId) == "")
+                        roomId = "0";
+
+                    $("#ContentPlaceHolder1_hfProfileOrAddMore").val("AddMore");
+                    PageMethods.SaveGuestInformationAsDetail(reservationId, prevGuestId, isEdit, IsEditFromAddMore, title, firstName, lastName, txtGuestName, txtGuestEmail, hiddenGuestId, txtGuestDrivinlgLicense, txtGuestDOB, txtGuestAddress1, txtGuestAddress2, ddlProfessionId, txtGuestCity, ddlGuestCountry, txtGuestNationality, txtGuestPhone, ddlGuestSex, txtGuestZipCode, txtNationalId, txtPassportNumber, txtPExpireDate, txtPIssueDate, txtPIssuePlace, txtVExpireDate, txtVisaNumber, txtVIssueDate, roomId, "", OnLoadDetailGridInformationSucceeded, OnLoadDetailGridInformationFailed);
+                    return false;
+                }
+            });
+
+            $("#btnAddGuest").click(function () {
+                // Xtra Validation..............................
+                PageMethods.LoadReservationNRegistrationXtraValidation(OnLoadXtraValidationSucceeded, OnLoadXtraValidationFailed);
+                //LoadDetailGridInformation();
+            });
+
+            $("#btnaddMultiplePickup").click(function () {
+                var guestId = $("#<%=ddlGuest.ClientID %>").val();
+                var guest = $("#ContentPlaceHolder1_ddlGuest").find(":selected").text();
+                var airline = $("#<%=txtArrivalFlightName.ClientID %>").val();
+                var flightNo = $("#<%=txtArrivalFlightNumber.ClientID %>").val();
+                var arrivetime = $("#<%=txtArrivalTime.ClientID %>").val();
+
+                var rowLength = $("#PickupTable tbody tr").length;
+                var tr = "";
+
+                if (rowLength % 2 == 0) {
+                    tr = "<tr style='background-color:#FFFFFF;'>";
+                }
+                else {
+                    tr = "<tr style='background-color:#E3EAEB;'>";
+                }
+
+                tr += "<td style='display:none'>" + 0 + "</td>";
+                tr += "<td style='display:none'>" + 0 + "</td>";
+                tr += "<td style='display:none'>" + guestId + "</td>";
+                tr += "<td style='width:25%;'>" + guest + "</td>";
+                tr += "<td style='width:25%;'>" + airline + "</td>";
+                tr += "<td style='width:20%;'>" + flightNo + "</td>";
+                tr += "<td style='width:20%;'>" + arrivetime + "</td>";
+                tr += "<td style='width:10%;'> <a href='#' onclick= 'DeletePickup(this)' ><img alt='Delete' src='../Images/delete.png' /></a></td>"
+
+                tr += "</tr>";
+
+                $("#PickupTable tbody").append(tr);
+
+                tr = "";
+
+                $("#<%=txtArrivalFlightName.ClientID %>").val("");
+                $("#<%=txtArrivalFlightNumber.ClientID %>").val("");
+                $("#<%=txtArrivalTime.ClientID %>").val("12:00");
+            });
+            $("#btnaddMultipleDrop").click(function () {
+                var guestId = $("#<%=ddlDropGuest.ClientID %>").val();
+                var guest = $("#ContentPlaceHolder1_ddlDropGuest").find(":selected").text();
+                var airline = $("#<%=txtDepartureFlightName.ClientID %>").val();
+                var flightNo = $("#<%=txtDepartureFlightNumber.ClientID %>").val();
+                var arrivetime = $("#<%=txtDepartureTime.ClientID %>").val();
+
+                var rowLength = $("#DepartureTable tbody tr").length;
+
+                var tr = "";
+
+                if (rowLength % 2 == 0) {
+                    tr = "<tr style='background-color:#FFFFFF;'>";
+                }
+                else {
+                    tr = "<tr style='background-color:#E3EAEB;'>";
+                }
+
+                tr += "<td style='display:none'>" + 0 + "</td>";
+                tr += "<td style='display:none'>" + 0 + "</td>";
+                tr += "<td style='display:none'>" + guestId + "</td>";
+                tr += "<td style='width:25%;'>" + guest + "</td>";
+                tr += "<td style='width:25%;'>" + airline + "</td>";
+                tr += "<td style='width:20%;'>" + flightNo + "</td>";
+                tr += "<td style='width:20%;'>" + arrivetime + "</td>";
+                tr += "<td style='width:10%;'> <a href='#' onclick= 'DeletePickup(this)' ><img alt='Delete' src='../Images/delete.png' /></a></td>"
+
+                tr += "</tr>";
+
+                $("#DepartureTable tbody").append(tr);
+
+                tr = "";
+
+                $("#<%=txtDepartureFlightName.ClientID %>").val("");
+                $("#<%=txtDepartureFlightNumber.ClientID %>").val("");
+                $("#<%=txtDepartureTime.ClientID %>").val("12:00");
+            });
+
+            $("#tblRoomReserve").delegate("td > img.RoomreservationDelete", "click", function () {
+                var answer = confirm("Do you want to delete this record?")
+                if (answer) {
+                    var reservationId = $.trim($(this).parent().parent().find("td:eq(8)").text());
+                    var params = JSON.stringify({ pkId: reservationId });
+
+                    var $row = $(this).parent().parent();
+                    //$(this).parent().parent().remove();
+                    $.ajax({
+                        type: "POST",
+                        url: "/HotelManagement/frmRoomReservation.aspx/DeleteReservationRecord",
+                        data: params,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            CommonHelper.AlertMessage(data.d.AlertMessage);
+                            $row.remove();
+                            $("#myTabs").tabs('load', 5);
+                        },
+                        error: function (error) {
+                        }
+                    });
+                }
+            });
+
+            $("#btnItemwiseSpecialRemarksCancel").click(function () {
+                //CalculateServiceBill();
+                $("#PaidServiceDialog").dialog("close");
+            });
+
+            $("#btnItemwiseSpecialRemarksOk").click(function () {
+                CalculateServiceBill();
+            });
+
+            $("#ContentPlaceHolder1_cbReservationDuration").click(function () {
+                if ($(this).is(':checked') == true) {
+                    $("#txtReservationDuration").attr('readonly', false);
+                }
+                else {
+                    $("#txtReservationDuration").attr('readonly', true);
+                }
+            });
+
+            $("#ReservationRoomGrid").delegate("td > img.deleteroom", "click", function () {
+                var answer = confirm("Do you want to delete this room?")
+                if (answer) {
+                    var row = $(this).parent().parent();
+
+                    var roomTypeId = $.trim($(row).find("td:eq(4)").text());
+
+                    var reservationDetailsId = $.trim($(row).find("td:eq(3)").text());
+
+                    if (reservationDetailsId != "" && reservationDetailsId != "0") {
+                        deletedRoomByType.push({
+                            RoomTypeId: roomTypeId
+                        });
+                    }
+
+                    $(row).remove();
+                }
+            });
+
+            $("#ReservationRoomGrid").delegate("td > img.editroom", "click", function () {
+
+                var row = $(this).parent().parent();
+                editedRow = row;
+
+                var roomType = "", roomTypeId = "", roomIds = "", roomNumbers = "", roomNumbersDisplay = "", roomCount = 0, totalReservedRooms = 0;
+                var discountType = "", discountAmount = "0", unitPriceRackRate = "0", roomRateNegotiatedRate = "0", reservationDetailsId = "0";
+
+                roomTypeId = $.trim($(row).find("td:eq(4)").text());
+                reservationDetailsId = $.trim($(row).find("td:eq(3)").text());
+                roomIds = $.trim($(row).find("td:eq(5)").text());
+                roomNumbers = $.trim($(row).find("td:eq(6)").text());
+                discountType = $.trim($(row).find("td:eq(8)").text());
+                discountAmount = $.trim($(row).find("td:eq(9)").text());
+                unitPriceRackRate = $.trim($(row).find("td:eq(10)").text());
+                roomRateNegotiatedRate = $.trim($(row).find("td:eq(11)").text());
+                totalReservedRooms = $.trim($(row).find("td:eq(7)").text());
+
+                $("#ContentPlaceHolder1_hfSelectedRoomNumbers").val(roomNumbers);
+                $("#ContentPlaceHolder1_hfSelectedRoomId").val(roomIds);
+                $("#ContentPlaceHolder1_hfSelectedRoomReservedId").val(reservationDetailsId);
+
+                $("#ContentPlaceHolder1_ddlRoomTypeId").val(roomTypeId);
+                $("#ContentPlaceHolder1_ddlDiscountType").val(discountType);
+                $("#ContentPlaceHolder1_txtDiscountAmount").val(discountAmount);
+                $("#ContentPlaceHolder1_txtUnitPrice").val(unitPriceRackRate);
+                $("#ContentPlaceHolder1_txtRoomRate").val(roomRateNegotiatedRate);
+                $("#ContentPlaceHolder1_txtRoomId").val(totalReservedRooms);
+                $("#ContentPlaceHolder1_lblAddedRoomNumber").text(roomNumbers);
+
+                $('#DivAddedRoom').show();
+                $("#btnAddDetailGuest").val("Edit");
+
+            });
+            $("#btnReservationSearch").on('click', function (event) {
+                LoadReservationInformation();
+            });
+        });
+
+        function SearchGuestForReservation() {
+            $("#ReservationPopEntryPanel").show('slow');
+            //popup(1, 'ReservationPopup', '', 935, 500);
+            $("#ReservationPopup").dialog({
+                width: 935,
+                height: 500,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: true,
+                resizable: false,
+                fluid: true,
+                title: "Search Guest",
+                show: 'slide'
+            });
+            return false;
+        }
+
+        function LoadReservationInformation() {
+
+            CommonHelper.SpinnerOpen();
+
+            var guestName = $("#<%=txtPrevGstName.ClientID %>").val();
+            var countryId = $("#<%=ddlPrevGstCountry.ClientID %>").val();
+            var phn = $("#<%=txtPrevGstPhn.ClientID %>").val();
+            var email = $("#<%=txtPrevGstEmail.ClientID %>").val();
+
+            var popCompanyId = 0; // $("#<%=ddlSrcPopCompany.ClientID %>").val();
+            var popPassportNumber = $("#<%=txtSrcPopPassportNumber.ClientID %>").val();
+            var popNationalId = $("#<%=txtSrcPopNationalId.ClientID %>").val();
+
+            PageMethods.SearchNLoadReservationInfo(guestName, countryId, phn, email, popPassportNumber, popNationalId, popCompanyId, OnLoadReservInfoSucceeded, OnLoadReservInfoFailed);
+            return false;
+        }
+
+        function OnLoadReservInfoSucceeded(result) {
+            $("#ltlReservationInformation").html(result);
+            CommonHelper.SpinnerClose();
+            return false;
+        }
+        function OnLoadReservInfoFailed(error) {
+            CommonHelper.SpinnerClose();
+        }
+
+        function CalculateServiceBill() {
+
+            var reservationId = $("#<%=hfReservationId.ClientID %>").val();
+
+            if (reservationId == "") {
+                reservationId = 0;
+            }
+
+            var pidServiceId = 0, unitPrice = 0.0, totalPrice = 0.0, updatedPrice = 0.0, deletedPrice = 0.0;
+            var previousSelectedPrice = 0.0;
+            var HtlRegnPaidServiceDetails = [];
+            var HtlRegnPaidServiceDelete = [];
+            var SelectedPaidServiceAll = [];
+
+            var serviceSelected = "", unitPriceTxt = "", savedUnitPriceTxt = "";
+
+            $("#TableWisePaidServiceInfo tbody tr").each(function (index, item) {
+
+                serviceSelected = $(this).find('td:eq(1)').find("input");
+                unitPriceTxt = $(this).find('td:eq(3)').find("input");
+                savedUnitPriceTxt = $(this).find('td:eq(4)').text();
+
+                pidServiceId = parseInt($(this).find('td:eq(0)').text(), 10);
+                unitPrice = parseFloat(unitPriceTxt.val());
+
+                if (serviceSelected.is(':checked')) {
+
+                    var notNew = _.findWhere(alreadySavePaidServices, { ServiceId: pidServiceId });
+
+                    if (notNew != null) {
+                        notNew.UnitPrice = unitPrice;
+
+                        if (parseFloat(unitPriceTxt.val()) == parseFloat(savedUnitPriceTxt)) {
+                            previousSelectedPrice += parseFloat(savedUnitPriceTxt);
+                        }
+                    }
+
+                    SelectedPaidServiceAll.push({
+                        ReservationId: reservationId,
+                        ServiceId: pidServiceId,
+                        UnitPrice: unitPrice,
+                        IsAchieved: false
+                    });
+
+                    if (parseFloat(unitPriceTxt.val()) != parseFloat(savedUnitPriceTxt)) {
+
+                        if (notNew != null)
+                            updatedPrice += parseFloat(savedUnitPriceTxt);
+
+                        $(this).find('td:eq(4)').text(unitPriceTxt.val());
+
+                        if ($("#<%=hfIsPaidServiceAlreadySavedDb.ClientID %>").val() != "0")
+                            $("#<%= hfPaidServiceDeleteObj.ClientID %>").val("1");
+                    }
+
+                    totalPrice += parseFloat(unitPriceTxt.val());
+                }
+                else {
+                    var notOld = _.findWhere(alreadySavePaidServices, { ServiceId: pidServiceId });
+
+                    if (notOld != null) {
+                        HtlRegnPaidServiceDelete.push({
+
+                            DetailPaidServiceId: notOld.DetailPaidServiceId,
+                            ReservationId: reservationId,
+                            ServiceId: pidServiceId,
+                            UnitPrice: unitPrice,
+                            IsAchieved: false
+
+                        });
+
+                        deletedPrice += parseFloat(savedUnitPriceTxt);
+                        $("#<%= hfPaidServiceDeleteObj.ClientID %>").val("1");
+                    }
+                }
+            });
+
+            var roomRate = parseFloat($("#ContentPlaceHolder1_txtRoomRate").val());
+            roomRate = (roomRate - (previousSelectedPrice + updatedPrice + deletedPrice)) + totalPrice;
+            $("#ContentPlaceHolder1_txtRoomRate").val(roomRate);
+
+            //UpdateTotalCostWithDiscount();
+
+            alreadySavePaidServices = SelectedPaidServiceAll;
+            $("#<%=hfPaidServiceSaveObj.ClientID %>").val(JSON.stringify(SelectedPaidServiceAll));
+
+            $("#PaidServiceDialog").dialog("close");
+        }
+
+        function CalculatePaidServiceTotal() {
+            var totalPrice = 0.0;
+            var serviceSelected = "", unitPriceTxt = "";
+
+            if ($("#paidServiceContainer").has("table").length > 0) {
+                $("#TableWisePaidServiceInfo tbody tr").each(function (index, item) {
+
+                    serviceSelected = $(this).find('td:eq(1)').find("input");
+                    unitPriceTxt = $(this).find('td:eq(3)').find("input");
+
+                    if (serviceSelected.is(':checked')) {
+                        totalPrice += parseFloat(unitPriceTxt.val());
+                    }
+                });
+            }
+            return totalPrice;
+        }
+
+        //------End Document Ready--------
+        function CurrencyRateInfoEnable() {
+            if ($("#<%=hfCurrencyType.ClientID %>").val() == "Local") {
+                $("#<%=txtConversionRate.ClientID %>").val('');
+                $('#CurrencyAmountInformationDiv').hide()
+            }
+            else {
+                $('#CurrencyAmountInformationDiv').show()
+            }
+            //            var ddlCurrency = $("#<%=ddlCurrency.ClientID %>").val();
+            //            if (ddlCurrency == 0) {
+            //                $('#CurrencyAmountInformationDiv').hide()
+            //            }
+        }
+
+        function VisibleListedCompany() {
+            if ($('#' + '<%=ddlReservedMode.ClientID%>').val() == "Company") {
+                ListedCompanyVisibleTrue();
+            }
+            else {
+                ListedCompanyVisibleFalse();
+            }
+        }
+
+        function UpdateTotalCostWithDiscount() {
+
+            var txtDiscountAmount = $('#<%=txtDiscountAmount.ClientID%>').val();
+            var txtUnitPrice = '<%=txtUnitPrice.ClientID%>'
+            var txtRoomRate = '<%=txtRoomRate.ClientID%>'
+            var ddlDiscountType = '<%=ddlDiscountType.ClientID%>'
+
+            var discountType = $('#' + ddlDiscountType).val();
+            var unitPrice = 0.0, roomRate = 0.0;
+
+            if (txtDiscountAmount == "")
+                return;
+
+            if ($('#' + txtUnitPrice).val() != "")
+                unitPrice = parseFloat($('#' + txtUnitPrice).val());
+
+            if ($('#' + txtRoomRate).val() != "")
+                roomRate = parseFloat($('#' + txtRoomRate).val());
+
+            if (txtDiscountAmount == "") {
+                txtDiscountAmount = 0;
+            }
+
+            var totalPaidServiceAmount = CalculatePaidServiceTotal();
+            unitPrice += totalPaidServiceAmount;
+
+            var discount = 0.00;
+            discount = parseFloat(txtDiscountAmount);
+
+            if (discountType == "Fixed") {
+                unitPrice -= discount;
+            }
+            else {
+
+                discount = ((unitPrice * discount) / 100);
+                unitPrice -= discount;
+            }
+
+            $('#' + txtRoomRate).val(unitPrice.toFixed(2));
+        }
+
+        function CalculateDiscount() {
+
+            var txtUnitPrice = '<%=txtUnitPrice.ClientID%>'
+            var txtRoomRate = '<%=txtRoomRate.ClientID%>'
+            var ddlDiscountType = '<%=ddlDiscountType.ClientID%>'
+
+            var discountType = $('#' + ddlDiscountType).val();
+            var unitPrice = 0.0, roomRate = 0.0;
+
+            if ($('#' + txtUnitPrice).val() != "")
+                unitPrice = parseFloat($('#' + txtUnitPrice).val());
+
+            if ($('#' + txtRoomRate).val() != "")
+                roomRate = parseFloat($('#' + txtRoomRate).val());
+
+            var totalPaidServiceAmount = CalculatePaidServiceTotal();
+            unitPrice += totalPaidServiceAmount;
+
+            var discount = 0.0;
+
+            if (discountType == "Fixed") {
+                discount = unitPrice - roomRate;
+            }
+            else {
+                discount = unitPrice - roomRate;
+                discount = ((discount / unitPrice) * 100).toFixed(2);
+            }
+
+            $('#ContentPlaceHolder1_txtDiscountAmount').val(discount);
+        }
+
+        function DiscountPolicyByCompanyNRoomType() {
+
+            var companyId = "0";
+            var roomTypeId = "0";
+
+            if ($("#ContentPlaceHolder1_ddlReservedMode").val() == "Company") {
+                if ($("#ContentPlaceHolder1_chkIsLitedCompany").is(":checked")) {
+                    companyId = $("#ContentPlaceHolder1_ddlCompanyName").val()
+                    roomTypeId = $("#ContentPlaceHolder1_ddlRoomTypeId").val();
+                }
+            }
+
+            if (companyId != "0" && roomTypeId != "0") {
+                PageMethods.GetDiscountPolicyByCompanyNRoomType(companyId, roomTypeId, OnDiscountPolicyLoadSucceeded, OnDiscountPolicyLoadFailed);
+            }
+
+            return false;
+        }
+        function OnDiscountPolicyLoadSucceeded(result) {
+
+            if (result != null) {
+
+                $("#ContentPlaceHolder1_ddlDiscountType").attr('disabled', true);
+                $("#ContentPlaceHolder1_txtDiscountAmount").attr('disabled', true);
+
+                $("#ContentPlaceHolder1_ddlDiscountType").val(result.DiscountType);
+                $("#ContentPlaceHolder1_txtDiscountAmount").val(result.DiscountAmount);
+
+                UpdateTotalCostWithDiscount();
+            }
+            else {
+                $("#ContentPlaceHolder1_ddlDiscountType").attr('disabled', false);
+                $("#ContentPlaceHolder1_txtDiscountAmount").attr('disabled', false);
+            }
+        }
+        function OnDiscountPolicyLoadFailed() {
+
+        }
+
+        function RoomDetailsByRoomTypeId(roomtypeId) {
+            PageMethods.RoomDetailsByRoomTypeId(roomtypeId, OnRoomDetailsLoadSucceeded, OnRoomDetailsLoadFailed);
+            return false;
+        }
+        function OnRoomDetailsLoadSucceeded(result) {
+            if ($("#<%=hfCurrencyType.ClientID %>").val() != 'Local') {
+                $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRateUSD);
+                $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRateUSD);
+                $("#<%=txtRoomRate.ClientID %>").val(result.RoomRateUSD);
+            }
+            else {
+                $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRate);
+                $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRate);
+                $("#<%=txtRoomRate.ClientID %>").val(result.RoomRate);
+            }
+            DiscountPolicyByCompanyNRoomType();
+            UpdateTotalCostWithDiscount();
+            return false;
+        }
+        function OnRoomDetailsLoadFailed(error) {
+            toastr.error(error.get_message());
+        }
+
+        function OnCountrySucceeded(result) {
+            $("#ContentPlaceHolder1_txtGuestNationality").val(result);
+        }
+        function OnCountryFailed() { }
+
+
+        function IsEmail(email) {
+            var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        }
+        //Div Visible True/False-------------------
+        function EntryPanelVisibleTrue() {
+            $('#btnNewReservationPanel').hide("slow");
+            $('#EntryPanel').show("slow");
+        }
+        function EntryPanelVisibleFalse() {
+            $('#btnNewReservationPanel').show("slow");
+            $('#EntryPanel').hide("slow");
+            PerformClearAction();
+            return false;
+        }
+        function PerformClearSearchAction() {
+            var txtFromDate = '<%=txtFromDate.ClientID%>'
+            ("#" + txtFromDate).val("");
+
+            var txtToDate = '<%=txtToDate.ClientID%>'
+            ("#" + txtToDate).val("");
+        }
+
+        function ToggleListedCompanyInfo() {
+            var ctrl = '#<%=chkIsLitedCompany.ClientID%>'
+            if ($(ctrl).is(':checked')) {
+                $('#ReservedCompany').hide("slow");
+                $('#ListedCompany').show("slow");
+                $('#PaymentInformation').show("slow");
+            }
+            else {
+                $('#ListedCompany').hide("slow");
+                $('#ReservedCompany').show("slow");
+                $('#PaymentInformation').hide("slow");
+                $(ctrl).prop('checked', false)
+                $("#ContentPlaceHolder1_ddlCompanyName").val("0");
+            }
+        }
+
+        function GetCheckedRoomCheckBox() {
+            var SelectdRoomId = "";
+            var SelectdRoomNumber = "";
+            var SelectdRoomReservationId = "";
+            var totalRoomAdded = 0;
+
+            $('#TableRoomInformation tbody tr').each(function () {
+
+                var chkBox = $(this).find("td:eq(0)").find("input");
+
+                if ($(chkBox).is(":checked") == true) {
+
+                    if (SelectdRoomId != "") {
+                        SelectdRoomId += ',' + $(chkBox).attr('value');
+                        SelectdRoomNumber += ',' + $(chkBox).attr('name');
+                        SelectdRoomReservationId += ',' + $(this).find("td:eq(2)").text();
+                    }
+                    else {
+                        SelectdRoomId = $(chkBox).attr('value');
+                        SelectdRoomNumber = $(chkBox).attr('name');
+                        SelectdRoomReservationId = $(this).find("td:eq(2)").text();
+                    }
+
+                    totalRoomAdded++;
+                }
+            });
+
+            if (totalRoomAdded > 0) {
+
+                $("#ContentPlaceHolder1_hfSelectedRoomNumbers").val(SelectdRoomNumber);
+                $("#ContentPlaceHolder1_hfSelectedRoomId").val(SelectdRoomId);
+                $("#ContentPlaceHolder1_hfSelectedRoomReservedId").val(SelectdRoomReservationId);
+
+                $("#ContentPlaceHolder1_lblAddedRoomNumber").text(SelectdRoomNumber);
+                $("#ContentPlaceHolder1_txtRoomId").val(totalRoomAdded);
+
+                $('#DivAddedRoom').show();
+
+                //popup(-1);
+                $("#DivRoomSelect").dialog("close");
+            }
+            else {
+                $('#DivAddedRoom').hide();
+            }
+            //ShowRoomNumberAndId();
+        }
+        function SaveRoomDetailsInformationByWebMethod() {
+
+            var roomType = $("#ContentPlaceHolder1_ddlRoomTypeId option:selected").text();
+            var roomTypeId = $("#ContentPlaceHolder1_ddlRoomTypeId").val();
+            var reservationDetailsId = $("#ContentPlaceHolder1_hfSelectedRoomReservedId").val();
+
+            var roomIds = "", roomNumbers = "", roomCount = 0, totalReservedRooms = 0;
+            var roomNumbersDisplay = "";
+
+            if ($("#ContentPlaceHolder1_txtRoomId").val() != "" && $("#ContentPlaceHolder1_txtRoomId").val() != "0") {
+                totalReservedRooms = parseInt($("#ContentPlaceHolder1_txtRoomId").val(), 10);
+            }
+
+            if (totalReservedRooms == 0) {
+                toastr.warning("Please Give Room Quantity.");
+                return false;
+            }
+
+            roomNumbers = $("#ContentPlaceHolder1_hfSelectedRoomNumbers").val();
+            roomIds = $("#ContentPlaceHolder1_hfSelectedRoomId").val();
+
+            if (roomNumbers == "") {
+                $("#RoomNumberDiv").hide();
+            }
+            else {
+                $("#RoomNumberDiv").show();
+            }
+
+            var roomIdsArr = roomIds.split(',');
+            if (roomIdsArr.length > 0) {
+                $("#ContentPlaceHolder1_hfFstAsndRoomId").val(roomIdsArr[0]);
+            }
+            var j = 0, roomIdLength = roomIdsArr.length;
+            var isUnassignedRooms = false;
+
+            for (var i = 0; i < roomIdLength; i++) {
+                if (roomIdsArr[i] == "0") {
+                    j++;
+                }
+                else {
+                    break;
+                }
+            }
+
+            if (j == roomIdLength) {
+                isUnassignedRooms = true;
+            }
+            else {
+                isUnassignedRooms = false;
+            }
+
+            if (roomIds != "") {
+                var totalRoomAdded = roomIds.split(',').length;
+
+                if (isUnassignedRooms == false && parseInt(totalRoomAdded, 10) > 0 && (parseInt(totalRoomAdded, 10) < parseInt(totalReservedRooms, 10))) {
+                    toastr.warning("Room Quantiy Must Equall With Selected Room Quantity.");
+                    return false;
+                }
+            }
+
+            if (totalReservedRooms > 0 && $.trim(roomIds) != "" && isUnassignedRooms == false) {
+                //roomNumbersDisplay = totalReservedRooms + "(" + roomNumbers + ")";
+                roomNumbersDisplay = totalReservedRooms;
+            }
+            else {
+                //roomNumbersDisplay = totalReservedRooms + "(Unassigned)";
+                roomNumbersDisplay = totalReservedRooms;
+            }
+
+            var discountType = "", discountAmount = "0", unitPriceRackRate = "0", roomRateNegotiatedRate = "0";
+
+            discountType = $("#ContentPlaceHolder1_ddlDiscountType").val();
+            discountAmount = $("#ContentPlaceHolder1_txtDiscountAmount").val();
+            unitPriceRackRate = $("#ContentPlaceHolder1_txtUnitPrice").val();
+            roomRateNegotiatedRate = $("#ContentPlaceHolder1_txtRoomRate").val();
+
+            if (editedRow != "") {
+
+                $(editedRow).find("td:eq(0)").text(roomType);
+                $(editedRow).find("td:eq(1)").text(roomNumbersDisplay);
+
+                $(editedRow).find("td:eq(3)").text(reservationDetailsId);
+                $(editedRow).find("td:eq(4)").text(roomTypeId);
+                $(editedRow).find("td:eq(5)").text(roomIds);
+                $(editedRow).find("td:eq(6)").text(roomNumbers);
+                $(editedRow).find("td:eq(7)").text(totalReservedRooms);
+                $(editedRow).find("td:eq(8)").text(discountType);
+                $(editedRow).find("td:eq(9)").text(discountAmount);
+                $(editedRow).find("td:eq(10)").text(unitPriceRackRate);
+                $(editedRow).find("td:eq(11)").text(roomRateNegotiatedRate);
+
+                var reservationId = $("#ContentPlaceHolder1_hfReservationId").val();
+
+                if (reservationId != "") {
+
+                }
+
+                ClearReservationDeatil();
+                ClearRoomNumberAndId();
+                ClearRommTypeAfterAdded();
+
+                editedRow = "";
+                RoomNumberDropDown();
+
+                $("#ContentPlaceHolder1_hfFstAsndRoomId").val($("#ContentPlaceHolder1_ddlRoomNumber").val());
+
+                return false;
+            }
+
+            var alreadyExists = $("#ReservationRoomGrid tbody tr").find("td:eq(4):contains('" + roomTypeId + "')").length;
+
+            if (alreadyExists > 0) {
+                toastr.info("Same Room Type Already Added. Please Edit To Change.");
+                return false;
+            }
+
+            var grid = "", counter = 0;
+            counter = $("#ReservationRoomGrid tbody tr").length;
+
+            if (counter % 2 == 0) {
+                grid += "<tr style='background-color:#E3EAEB;'>";
+            }
+            else {
+                grid += "<tr style='background-color:White;'>";
+            }
+
+            grid += "<td align='left' style='width: 42%;'>" + roomType + "</td>";
+            grid += "<td align='left' style='width: 50%;'>" + roomNumbersDisplay + "</td>";
+
+            grid += "<td align='center' style='width: 8%;'>";
+            grid += "&nbsp;<img src='../Images/delete.png' class='deleteroom' alt='Delete Room' border='0' />";
+            grid += "&nbsp;<img src='../Images/edit.png' class='editroom' alt='Edit Room' border='0' />";
+            grid += "</td>";
+
+            grid += "<td align='left' style='display:none;'>" + reservationDetailsId + "</td>";
+            grid += "<td align='left' style='display:none;'>" + roomTypeId + "</td>";
+            grid += "<td align='left' style='display:none;'>" + roomIds + "</td>";
+            grid += "<td align='left' style='display:none;'>" + roomNumbers + "</td>";
+            grid += "<td align='left' style='display:none;'>" + totalReservedRooms + "</td>";
+            grid += "<td align='left' style='display:none;'>" + discountType + "</td>";
+            grid += "<td align='left' style='display:none;'>" + discountAmount + "</td>";
+            grid += "<td align='left' style='display:none;'>" + unitPriceRackRate + "</td>";
+            grid += "<td align='left' style='display:none;'>" + roomRateNegotiatedRate + "</td>";
+
+            grid += "</tr>";
+
+            $("#ReservationRoomGrid tbody").append(grid);
+
+            ClearReservationDeatil();
+            ClearRoomNumberAndId();
+            ClearRommTypeAfterAdded();
+
+            RoomNumberDropDown();
+            $("#ContentPlaceHolder1_hfFstAsndRoomId").val($("#ContentPlaceHolder1_ddlRoomNumber").val());
+
+            return false;
+
+            //------------------------------------------------------------------
+            var isEdit = false;
+
+            if ($('#btnAddDetailGuest').val() == "Save") {
+                isEdit = true;
+            }
+
+            var duplicateRoomType = 0, editedRoomType = 0, isDbType = 0;
+
+            var ddlRoomTypeId = $("#<%=ddlRoomTypeId.ClientID %>").val();
+            duplicateRoomType = $("#ReservationDetailGrid tbody tr").find("td:eq(0):contains(" + ddlRoomTypeId + ")").length;
+            //isDbType = parseInt($("#ReservationDetailGrid tbody tr").find("td:eq(1):contains(" + ddlRoomTypeId + ")").text(), 10);
+
+            var td = $("#ReservationDetailGrid tbody tr").find("td:eq(0):contains(" + ddlRoomTypeId + ")");
+            var tr = $(td).parent();
+
+            isDbType = parseInt($(tr).find("td:eq(1)").text(), 10);
+
+            if (isEdit == true) {
+
+                editedRoomType = $("#ReservationDetailGrid tbody tr:eq(" + editedRowIndex + ")").find("td:eq(0)").text();
+
+                if (editedRoomType != ddlRoomTypeId) {
+                    toastr.info("Please, first delete this room type to choose another type of room.");
+                    return false;
+                }
+            }
+            else if (isEdit == false && duplicateRoomType > 0 && isDbType > 0) {
+                toastr.info("Please, first take this room type as edit mode and add additional room.");
+                return false;
+            }
+
+            var hfSelectedRoomNumbers = $("#<%=hfSelectedRoomNumbers.ClientID %>").val();
+            var hfSelectedRoomId = $("#<%=hfSelectedRoomId.ClientID %>").val();
+
+            var txtUnitPriceHiddenField = $("#<%=txtUnitPriceHiddenField.ClientID %>").val();
+            var txtRoomRate = $("#<%=txtRoomRate.ClientID %>").val();
+            var txtRoomId = $("#<%=txtRoomId.ClientID %>").val();
+
+            if (ddlRoomTypeId == 0) {
+                toastr.warning('Please Provide Room Type.');
+                return;
+            }
+
+            if (txtRoomId == "") {
+                toastr.warning('Please Provide Room Quantity.');
+                return;
+            }
+
+            var ddlRoomTypeIdText = $("#<%=ddlRoomTypeId.ClientID %> option:selected").text();
+            var lblHiddenId = $("#<%=lblHiddenId.ClientID %>").text();
+            var txtDiscountAmount = $("#<%=txtDiscountAmount.ClientID %>").val();
+            var ddlCurrency = $("#<%=ddlCurrency.ClientID %>").val();
+
+            var ddlDiscountType = $("#<%=ddlDiscountType.ClientID %>").val();
+            var ddlReservedMode = $("#<%=ddlReservedMode.ClientID %>").val();
+
+            var prevRoomTypeId = $("#<%=ddlRoomTypeIdHiddenField.ClientID %>").val();
+
+            $('#btnAddDetailGuest').val("Add");
+
+            if (Isvalid) {
+                PageMethods.PerformSaveRoomDetailsInformationByWebMethod(isEdit, hfSelectedRoomNumbers, hfSelectedRoomId, txtUnitPriceHiddenField, txtRoomRate, txtRoomId, prevRoomTypeId, ddlRoomTypeId, ddlRoomTypeIdText, lblHiddenId, txtDiscountAmount, ddlCurrency, ddlDiscountType, ddlReservedMode, OnPerformSaveRoomDetailsSucceeded, OnPerformSaveRoomDetailsFailed);
+            }
+            return false;
+        }
+        function OnPerformSaveRoomDetailsFailed(error) {
+            toastr.error(error.get_message());
+        }
+        function OnPerformSaveRoomDetailsSucceeded(result) {
+            $("#<%=ddlRoomTypeIdHiddenField.ClientID %>").val('');
+            $("#<%=hfSelectedRoomId.ClientID %>").val('');
+            $("#<%=hfSelectedRoomNumbers.ClientID %>").val('');
+            $("#ReservationDetailGrid").html(result);
+            ClearReservationDeatil();
+            $("#<%=txtEditedRoom.ClientID %>").val('');
+            ClearRoomNumberAndId();
+            ClearRommTypeAfterAdded();
+            editedRowIndex = "";
+        }
+
+        function CancelRoomAddEdit() {
+
+            $("#<%=ddlRoomTypeIdHiddenField.ClientID %>").val('');
+            $("#<%=hfSelectedRoomId.ClientID %>").val('');
+            $("#<%=hfSelectedRoomNumbers.ClientID %>").val('');
+            ClearReservationDeatil();
+            $("#<%=txtEditedRoom.ClientID %>").val('');
+            ClearRoomNumberAndId();
+            ClearRommTypeAfterAdded();
+            editedRowIndex = "";
+            editedRow = "";
+
+            return false;
+        }
+
+        function Isvalid() {
+            var txtRoomId = $("#<%=txtRoomId.ClientID %>").val();
+            if (txtRoomId == "" || parseInt(txtRoomId) <= 0)
+            { return false; }
+            else {
+                return true;
+            }
+        }
+        function ClearReservationDeatil() {
+            $("#<%=ddlRoomTypeId.ClientID %>").val('1');
+            $("#<%=txtRoomId.ClientID %>").val('');
+            $("#<%=lblAddedRoomNumber.ClientID %>").text('');
+            $("#<%=txtRoomRate.ClientID %>").val($("#<%=txtUnitPrice.ClientID %>").val());
+            $("#btnAddDetailGuest").val('Add');
+            $("#TableRoomInformation tbody tr").find("td:eq(0)").find("input").prop("checked", false);
+        }
+        function PerformReservationDetailDelete(roomTypeId) {
+
+            if (!confirm("Do you want to delete?")) {
+                return false;
+            }
+            else {
+                $("#<%=txtRoomId.ClientID %>").val("");
+                $("#<%=ddlRoomTypeId.ClientID %>").val("");
+                ClearReservationDeatil();
+                $('#DivAddedRoom').hide();
+            }
+
+            PageMethods.PerformDeleteByWebMethod(roomTypeId, OnPerformDeleteRoomDetailsSucceeded, OnPerformDeleteRoomDetailsFailed);
+            return false;
+        }
+
+        function OnPerformDeleteRoomDetailsSucceeded(result) {
+            $("#<%=ddlRoomTypeId.ClientID %>").val("0");
+            $("#<%=txtUnitPrice.ClientID %>").val("0");
+            $("#<%=txtRoomRate.ClientID %>").val("0");
+            $("#<%=txtUnitPriceHiddenField.ClientID %>").val("0");
+            $("#<%=ddlDiscountType.ClientID %>").val("Fixed");
+            $("#<%=txtDiscountAmount.ClientID %>").val("0");
+            $("#<%=txtRoomId.ClientID %>").val("");
+            $("#ReservationDetailGrid").html(result);
+            return false;
+        }
+        function OnPerformDeleteRoomDetailsFailed(error) {
+        }
+
+        function PerformReservationDetailEdit(roomTypeId, rowIndex) {
+            editedRowIndex = rowIndex;
+            $('#btnAddDetailGuest').val("Save");
+            PageMethods.PerformReservationDetailEditByWebMethod(roomTypeId, OnPerformReservationDetailEditSucceeded, OnPerformReservationDetailEditFailed);
+            return false;
+        }
+        function OnPerformReservationDetailEditSucceeded(result) {
+            var RoomIdList = result.RoomNumberIdList;
+            var RoomNumberList = result.RoomNumberList;
+            var res = "";
+            var RoomArray = RoomIdList.split(",");
+            //$("#<%=txtEditedRoom.ClientID %>").val(RoomIdList);
+            //$("#<%=txtEditedRoomNumber.ClientID %>").val(RoomNumberList);
+
+            $("#<%=hfSelectedRoomNumbers.ClientID %>").val(RoomNumberList);
+            $("#<%=hfSelectedRoomId.ClientID %>").val(RoomIdList);
+            $("#<%=txtRoomId.ClientID %>").val(result.RoomQuantity);
+            $("#<%=ddlRoomTypeId.ClientID %>").val(result.RoomTypeId);
+
+            $("#<%=ddlRoomTypeIdHiddenField.ClientID %>").val(result.RoomTypeId);
+            $("#<%=lblAddedRoomNumber.ClientID %>").text(RoomNumberList);
+
+            $("#<%=txtUnitPrice.ClientID %>").val(result.UnitPrice);
+            $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.UnitPrice);
+            $("#<%=ddlDiscountType.ClientID %>").val(result.DiscountType);
+            $("#<%=txtDiscountAmount.ClientID %>").val(result.DiscountAmount);
+            $("#<%=txtRoomRate.ClientID %>").val(result.RoomRate);
+
+            $('#DivAddedRoom').show();
+            RoomDetailsByRoomTypeId($('#<%=ddlRoomTypeId.ClientID%>').val());
+            return false;
+
+        }
+
+        function OnPerformReservationDetailEditFailed(error) {
+        }
+
+        //AddNewButton Visible True/False-------------------
+        function NewAddButtonPanelShow() {
+            $('#btnNewReservationPanel').show("slow");
+        }
+        function NewAddButtonPanelHide() {
+            $('#btnNewReservationPanel').hide("slow");
+        }
+        //Listed Company True/False-------------------
+        function ListedCompanyVisibleTrue() {
+            $('#CompanyInformation').show();
+            $('#ContactAddress').show();
+        }
+        function ListedCompanyVisibleFalse() {
+            $('#CompanyInformation').hide();
+            $('#ContactAddress').hide();
+        }
+
+        //Listed Company DropDown True/False-------------------
+        function ListedCompanyDropDownVisibleTrue() {
+            $('#ListedCompany').show();
+            $('#ReservedCompany').hide();
+        }
+        function ListedCompanyDropDownVisibleFalse() {
+            $('#ReservedCompany').show();
+            $('#ListedCompany').hide();
+        }
+
+        function GetTotalCostWithCompanyOrPersonalDiscount() {
+
+            var promId = $("#<%=ddlBusinessPromotionId.ClientID %>").val();
+            var companyId = $("#<%=ddlCompanyName.ClientID %>").val();
+            var ddlReservedMode = $("#<%=ddlReservedMode.ClientID %>").val();
+            var isCheked = false;
+            if ($("#<%=chkIsLitedCompany.ClientID %>").is(":checked") == true) { isCheked = true; }
+            else { isCheked = false; }
+
+            if (ddlReservedMode != "Company" || isCheked == false && companyId <= 0) { companyId = 0; }
+
+            if (promId <= 0) { promId = 0; }
+
+            if (companyId != 0 || promId != 0) {
+                PageMethods.GetCalculatedDiscount(companyId, promId, GetCalculatedDiscountObjectSucceeded, GetCalculatedDiscountObjectFailed);
+                return false;
+            }
+        }
+        function GetCalculatedDiscountObjectSucceeded(result) {
+            $("#<%=txtContactAddress.ClientID %>").val(result.CompanyAddress)
+
+            $("#<%=txtContactPerson.ClientID %>").val(result.ContactPerson)
+            $("#<%=txtMobileNumber.ClientID %>").val(result.ContactNumber)
+            var prevDiscount = parseFloat($("#<%=txtDiscountAmount.ClientID %>").val());
+            if (isNaN(prevDiscount)) {
+                prevDiscount = 0;
+            }
+            $("#<%=ddlDiscountType.ClientID %>").val('Percentage');
+            var resultFloat = parseFloat(result.DiscountPercent);
+
+            $("#<%=txtDiscountAmount.ClientID %>").val(resultFloat);
+            //if (resultFloat > prevDiscount) {
+            //    $("#<%=txtDiscountAmount.ClientID %>").val(resultFloat);
+            //}
+            //else {
+            //    $("#<%=txtDiscountAmount.ClientID %>").val(prevDiscount);
+            //}
+            $("#<%=txtContactEmail.ClientID %>").val(result.EmailAddress)
+
+            UpdateTotalCostWithDiscount();
+            return false;
+        }
+        function GetCalculatedDiscountObjectFailed(error) {
+            toastr.error(error.get_message());
+        }
+
+        function LoadDataOnParentForm() {
+            var guestId = $("#<%=hiddenGuestId.ClientID %>").val();
+            //popup(-1); ////TODO close dialog
+            PageMethods.LoadDetailInformation(guestId, OnLoadParentFromDetailObjectSucceeded, OnLoadParentFromDetailObjectFailed);
+            return false;
+
+        }
+        function OnLoadParentFromDetailObjectSucceeded(result) {
+            if (result.GuestPreferences != null) {
+                $("#GuestPreferenceDiv").show();
+            }
+            else $("#GuestPreferenceDiv").hide();
+            if (result.GuestDOB) {
+                var date1 = new Date(result.GuestDOB);
+                $("#<%=txtGuestDOB.ClientID %>").val(GetStringFromDateTime(result.GuestDOB));
+            }
+            if (result.PIssueDate) {
+                var date2 = new Date(result.PIssueDate);
+                $("#<%=txtPIssueDate.ClientID %>").val(GetStringFromDateTime(result.PIssueDate));
+            }
+            if (result.PExpireDate) {
+                var date3 = new Date(result.PExpireDate);
+                $("#<%=txtPExpireDate.ClientID %>").val(GetStringFromDateTime(result.PExpireDate));
+            }
+            if (result.VIssueDate) {
+                var date4 = new Date(result.VIssueDate);
+                $("#<%=txtVIssueDate.ClientID %>").val(GetStringFromDateTime(result.VIssueDate));
+            }
+            if (result.VExpireDate) {
+                var date5 = new Date(result.VExpireDate);
+                $("#<%=txtVExpireDate.ClientID %>").val(GetStringFromDateTime(result.VExpireDate));
+            }
+
+            $("#<%=hiddenGuestName.ClientID %>").val(result.GuestName);
+            $("#<%=hiddenGuestId.ClientID %>").val(result.GuestId);
+            $("#<%=txtGuestName.ClientID %>").val(result.GuestName);
+            $("#<%=ddlGuestSex.ClientID %>").val(result.GuestSex);
+            $("#<%=txtGuestEmail.ClientID %>").val(result.GuestEmail);
+            $("#<%=txtGuestPhone.ClientID %>").val(result.GuestPhone);
+            $("#<%=txtGuestAddress1.ClientID %>").val(result.GuestAddress1);
+            $("#<%=txtGuestAddress2.ClientID %>").val(result.GuestAddress2);
+            $("#<%=ddlProfessionId.ClientID %>").val(result.ProfessionId);
+            $("#<%=txtGuestCity.ClientID %>").val(result.GuestCity);
+            $("#<%=txtGuestZipCode.ClientID %>").val(result.GuestZipCode);
+            $("#<%=txtGuestNationality.ClientID %>").val(result.GuestNationality);
+            $("#<%=txtGuestDrivinlgLicense.ClientID %>").val(result.GuestDrivinlgLicense);
+            $("#<%=txtNationalId.ClientID %>").val(result.NationalId);
+            $("#<%=txtPassportNumber.ClientID %>").val(result.PassportNumber);
+            $("#<%=txtVisaNumber.ClientID %>").val(result.VisaNumber);
+            $("#<%=ddlGuestCountry.ClientID %>").val(result.GuestCountryId);
+            $("#txtGuestCountrySearch").val(result.CountryName);
+            $("#<%=lblGstPreference.ClientID %>").text(result.GuestPreferences);
+            $("#ContentPlaceHolder1_hfGuestPreferenceId").val(result.GuestPreferenceId);
+
+            return false;
+        }
+        function OnLoadParentFromDetailObjectFailed(error) {
+            toastr.error(error.get_message());
+        }
+
+
+        function GridPaging(pageNumber, IsCurrentOrPreviousPage, searchoption) {
+
+            var gridRecordsCount = $("#gvGustIngormation tbody tr").length;
+
+            var GuestName = "";
+            if (searchoption == 0) {
+                GuestName = $("#<%=txtGuestName.ClientID %>").val();
+            }
+            else {
+                GuestName = $("#<%=txtSrcGuestName.ClientID %>").val();
+            }
+            var companyName = $("#<%=txtSrcCompanyName.ClientID %>").val();
+            var DateOfBirth = $("#<%=txtSrcDateOfBirth.ClientID %>").val();
+            var EmailAddress = $("#<%=txtSrcEmailAddress.ClientID %>").val();
+            var FromDate = $("#<%=txtSrcFromDate.ClientID %>").val();
+            var ToDate = $("#<%=txtSrcToDate.ClientID %>").val();
+            var MobileNumber = $("#<%=txtSrcMobileNumber.ClientID %>").val();
+            var NationalId = $("#<%=txtSrcNationalId.ClientID %>").val();
+            var PassportNumber = $("#<%=txtSrcPassportNumber.ClientID %>").val();
+            var RegistrationNumber = $("#<%=txtSrcRegistrationNumber.ClientID %>").val();
+            var RoomNumber = $("#<%=txtSrcRoomNumber.ClientID %>").val();
+            PageMethods.SearchGuestAndLoadGridInformation(companyName, DateOfBirth, EmailAddress, FromDate, ToDate, GuestName, MobileNumber, NationalId, PassportNumber, RegistrationNumber, RoomNumber, gridRecordsCount, pageNumber, IsCurrentOrPreviousPage, OnLoadObjectSucceeded, OnLoadObjectFailed);
+            return false;
+        }
+        function OnLoadObjectSucceeded(result) {
+            //$("#ltlTableWiseItemInformation").html(result);
+
+            $("#gvGustIngormation tbody tr").remove();
+            $("#GridPagingContainer ul").html("");
+
+            if (result.GridData == "") {
+                var emptyTr = "<tr style=\"background-color:#E3EAEB;\"> <td colspan=\"4\" >No Data Found</td> </tr>";
+                $("#gvGustIngormation tbody ").append(emptyTr);
+                return false;
+            }
+
+            var tr = "", totalRow = 0, editLink = "", deleteLink = "";
+
+            $.each(result.GridData, function (count, gridObject) {
+
+                totalRow = $("#gvGustIngormation tbody tr").length;
+                //totalRow = totalRow < 2 ? totalRow : (totalRow - 1);
+
+                if ((totalRow % 2) == 0) {
+                    tr += "<tr style=\"background-color:#E3EAEB;\">";
+                }
+                else {
+                    tr += "<tr style=\"background-color:#FFFFFF;\">";
+                }
+
+                tr += "<td align='left' style=\"width:40%; cursor:pointer;\" onClick= \"javascript:return SelectGuestInformation('" + gridObject.GuestId + "')\">" + gridObject.GuestName + "</td>";
+                tr += "<td align='left' style=\"width:25%; cursor:pointer;\" onClick= \"javascript:return SelectGuestInformation('" + gridObject.GuestId + "')\">" + gridObject.CountryName + "</td>";
+                tr += "<td align='left' style=\"width:15%; cursor:pointer;\" onClick= \"javascript:return SelectGuestInformation('" + gridObject.GuestId + "')\">" + gridObject.GuestPhone + "</td>";
+                tr += "<td align='left' style=\"width:20%; cursor:pointer;\" onClick= \"javascript:return SelectGuestInformation('" + gridObject.GuestId + "')\">" + gridObject.GuestEmail + "</td>";
+
+                tr += "</tr>"
+
+                $("#gvGustIngormation tbody ").append(tr);
+                tr = "";
+            });
+
+            $("#GridPagingContainer ul").append(result.GridPageLinks.PreviousButton);
+            $("#GridPagingContainer ul").append(result.GridPageLinks.Pagination);
+            $("#GridPagingContainer ul").append(result.GridPageLinks.NextButton);
+
+
+            return false;
+        }
+        function OnLoadObjectFailed(error) {
+            toastr.error(error.get_message());
+        }
+
+        function GridPagingForSearchReservation(pageNumber, IsCurrentOrPreviousPage) {
+
+            var gridRecordsCount = $("#tblRoomReserve tbody tr").length;
+
+            var fromDate = $("#<%=txtFromDate.ClientID %>").val();
+            var toDate = $("#<%=txtToDate.ClientID %>").val();
+            var guestName = $("#<%=txtSrcReservationGuest.ClientID %>").val();
+            var reserveNo = $("#<%=txtSearchReservationNumber.ClientID %>").val();
+            var companyName = $("#<%=txtSearchCompanyName.ClientID %>").val();
+            var contactPerson = $("#<%=txtCntPerson.ClientID %>").val();
+            var orderCriteria = $("#<%=ddlOrderCriteria.ClientID %>").val();
+            var orderOption = $("#<%=ddlorderOption.ClientID %>").val();
+            PageMethods.SearchResevationAndLoadGridInformation(fromDate, toDate, guestName, reserveNo, companyName, contactPerson, orderCriteria, orderOption, gridRecordsCount, pageNumber, IsCurrentOrPreviousPage, OnSuccess, OnFail);
+            return false;
+        }
+        function OnSuccess(result) {
+            var format = innBoarDateFormat.replace('mm', 'MM');
+            var format = format.replace('yy', 'yyyy');
+            //$("#ltlTableWiseItemInformation").html(result);
+            vvc = result;
+            $("#tblRoomReserve tbody tr").remove();
+            $("#GridPagingContainerForSearchReservation ul").html("");
+
+            if (result.GridData == "") {
+                var emptyTr = "<tr style=\"background-color:#E3EAEB;\"> <td colspan=\"4\" >No Data Found</td> </tr>";
+                $("#tblRoomReserve tbody ").append(emptyTr);
+                return false;
+            }
+
+            var tr = "", totalRow = 0, editLink = "", deleteLink = "";
+
+            $.each(result.GridData, function (count, gridObject) {
+
+                totalRow = $("#tblRoomReserve tbody tr").length;
+                //totalRow = totalRow < 2 ? totalRow : (totalRow - 1);
+
+                if ((totalRow % 2) == 0) {
+                    tr += "<tr style=\"background-color:#E3EAEB;\">";
+                }
+                else {
+                    tr += "<tr style=\"background-color:#FFFFFF;\">";
+                }
+
+                tr += "<td align='left' style=\"width:16px; cursor:pointer;\" onClick= \"javascript:return SelectGuestInformation('" + gridObject.ReservationId + "')\">" + gridObject.ReservationNumber + "</td>";
+                tr += "<td align='left' style=\"width:25px; cursor:pointer;\" onClick= \"javascript:return SelectGuestInformation('" + gridObject.ReservationId + "')\">" + gridObject.GuestName + "</td>";
+                tr += "<td align='left' style=\"width:17px; cursor:pointer;\" onClick= \"javascript:return SelectGuestInformation('" + gridObject.ReservationId + "')\">" + gridObject.CompanyName + "</td>";
+                tr += "<td align='left' style=\"width:18px; cursor:pointer;\" onClick= \"javascript:return SelectGuestInformation('" + gridObject.ReservationId + "')\">" + gridObject.RoomInformation + "</td>";
+                //tr += "<td align='left' style=\"width:5%; cursor:pointer;\" onClick= \"javascript:return SelectGuestInformation('" + gridObject.ReservationId + "')\">" + gridObject.ReservationDate.format(format) + "</td>";
+                tr += "<td align='left' style=\"width:8px; cursor:pointer;\" onClick= \"javascript:return SelectGuestInformation('" + gridObject.ReservationId + "')\">" + gridObject.DateIn.format(format) + "</td>";
+                tr += "<td align='left' style=\"width:8px; cursor:pointer;\" onClick= \"javascript:return SelectGuestInformation('" + gridObject.ReservationId + "')\">" + gridObject.DateOut.format(format) + "</td>";
+                tr += "<td align='left' style=\"width:9px; cursor:pointer;\" onClick= \"javascript:return SelectGuestInformation('" + gridObject.ReservationId + "')\">" + gridObject.ReservationMode + "</td>";
+
+                if ($.trim(gridObject.ReservationMode) != "Registered")
+                    tr += "<td align='right' style=\"width:45%; cursor:pointer;\"><img src='../Images/edit.png' ToolTip='Edit' onClick= \"javascript:return PerformEditAction('" + gridObject.ReservationId + "')\" alt='Edit Information' border='0' />&nbsp;<img src='../Images/delete.png' ToolTip='Delete' class= 'RoomreservationDelete'  alt='Delete Information' border='0' />&nbsp;<img src='../Images/ReportDocument.png' ToolTip='Preview' onClick= \"javascript:return PerformBillPreviewAction('" + gridObject.ReservationId + "')\" alt='Preview Information' border='0' /></td>";
+                else
+                    tr += "<td align='right' style=\"width:45%; cursor:pointer;\"><img src='../Images/ReportDocument.png' ToolTip='Preview' onClick= \"javascript:return PerformBillPreviewAction('" + gridObject.ReservationId + "')\" alt='Preview Information' border='0' /></td>";
+
+                tr += "<td align='right' style=\"width:5%; display:none;\">" + gridObject.ReservationId + "</td>";
+
+                tr += "</tr>"
+
+                $("#tblRoomReserve tbody ").append(tr);
+                tr = "";
+            });
+
+            $("#GridPagingContainerForSearchReservation ul").append(result.GridPageLinks.PreviousButton);
+            $("#GridPagingContainerForSearchReservation ul").append(result.GridPageLinks.Pagination);
+            $("#GridPagingContainerForSearchReservation ul").append(result.GridPageLinks.NextButton);
+
+
+            return false;
+        }
+        function OnFail(error) {
+            toastr.error(error.get_message());
+        }
+
+        function PerformEditAction(reservationId) {
+            var possiblePath = "frmRoomReservation.aspx?editId=" + reservationId;
+            window.location = possiblePath;
+        }
+        function PerformBillPreviewAction(reservationId) {
+            var url = "/HotelManagement/Reports/frmReportReservationBillInfo.aspx?GuestBillInfo=" + reservationId;
+            var popup_window = "Print Preview";
+            window.open(url, popup_window, "width=745,height=780,left=300,top=50,location=no,toolbar=no,menubar=no,resizable=yes, scrollbars=1");
+        }
+
+        function ReloadGrid(IsCurrentOrPreviousPage) {
+            var currentPageNumber = $("#GridPagingContainer ul li[class='active']").text();
+
+            if (currentPageNumber == "")
+                currentPageNumber = 1;
+
+            GridPaging(currentPageNumber, IsCurrentOrPreviousPage);
+        }
+
+        function SelectGuestInformation(GuestId) {
+            $("#PopSearchPanel").hide('slow');
+            $("#PopTabPanel").show('slow');
+            PageMethods.LoadDetailInformation(GuestId, OnLoadDetailObjectSucceeded, OnLoadDetailObjectFailed);
+            LoadGuestImage(GuestId);
+            LoadGuestHistory(GuestId);
+            return false;
+        }
+        function OnLoadDetailObjectSucceeded(result) {
+            if (result.GuestDOB) {
+
+                $("#<%=lblDGuestDOB.ClientID %>").text(GetStringFromDateTime(result.GuestDOB));
+            }
+            if (result.PIssueDate) {
+
+                $("#<%=lblDPIssueDate.ClientID %>").text(GetStringFromDateTime(result.PIssueDate));
+            }
+            if (result.PExpireDate) {
+
+                $("#<%=lblDPExpireDate.ClientID %>").text(GetStringFromDateTime(result.PExpireDate));
+            }
+            if (result.VIssueDate) {
+
+                $("#<%=lblDVIssueDate.ClientID %>").text(GetStringFromDateTime(result.VIssueDate));
+            }
+            if (result.VExpireDate) {
+
+                $("#<%=lblDVExpireDate.ClientID %>").text(GetStringFromDateTime(result.VExpireDate));
+            }
+
+            $("#<%=hiddenGuestName.ClientID %>").val(result.GuestName);
+            $("#<%=hiddenGuestId.ClientID %>").val(result.GuestId);
+            $("#<%=lblDGuestName.ClientID %>").text(result.GuestName);
+            $("#<%=lblDGuestSex.ClientID %>").text(result.GuestSex);
+            $("#<%=lblDGuestEmail.ClientID %>").text(result.GuestEmail);
+            $("#<%=lblDGuestPhone.ClientID %>").text(result.GuestPhone);
+            $("#<%=lblDGuestAddress1.ClientID %>").text(result.GuestAddress1);
+            $("#<%=lblDGuestAddress2.ClientID %>").text(result.GuestAddress2);
+            $("#<%=lblDGuestCity.ClientID %>").text(result.GuestCity);
+            $("#<%=lblDGuestZipCode.ClientID %>").text(result.GuestZipCode);
+            $("#<%=lblDGuestNationality.ClientID %>").text(result.GuestNationality);
+            $("#<%=lblDGuestDrivinlgLicense.ClientID %>").text(result.GuestDrivinlgLicense);
+            $("#<%=lblDGuestAuthentication.ClientID %>").text(result.GuestAuthentication);
+            $("#<%=lblDNationalId.ClientID %>").text(result.NationalId);
+            $("#<%=lblDPassportNumber.ClientID %>").text(result.PassportNumber);
+            $("#<%=lblDPIssuePlace.ClientID %>").text(result.PIssuePlace);
+            $("#<%=lblDVisaNumber.ClientID %>").text(result.VisaNumber);
+            $("#<%=lblDCountryName.ClientID %>").text(result.CountryName);
+            $("#ContentPlaceHolder1_hfGuestPreferenceId").val(result.GuestPreferenceId);
+
+            $('#imageDiv').text('');
+            var img = document.createElement("IMG");
+            img.src = result.Path;
+            document.getElementById('imageDiv').appendChild(img);
+
+            PageMethods.LoadGuestPreferences(result.GuestId, OnLoadGuestPreferencesSucceeded, OnLoadGuestPreferencesFailed);
+
+            return false;
+        }
+        function OnLoadDetailObjectFailed(error) {
+            toastr.error(error.get_message());
+        }
+        function OnLoadGuestPreferencesSucceeded(result) {
+            $("#Preference").html(result);
+        }
+        function OnLoadGuestPreferencesFailed(error) {
+        }
+
+        function LoadGuestHistory(guestId) {
+            PageMethods.GetGuestRegistrationHistoryGuestId(guestId, OnLoadGuestHistorySucceeded, OnLoadGuestHistoryFailed);
+            return false;
+        }
+        function OnLoadGuestHistorySucceeded(result) {
+            $("#guestHistoryDiv").html(result);
+            return false;
+        }
+        function OnLoadGuestHistoryFailed(error) {
+            toastr.error(error.get_message());
+        }
+
+
+        function LoadGuestImage(guestId) {
+            PageMethods.GetDocumentsByUserTypeAndUserId(guestId, OnLoadImagesSucceeded, OnLoadImagesFailed);
+            return false;
+        }
+        function OnLoadImagesSucceeded(result) {
+            $("#imageDiv").html(result);
+            return false;
+        }
+        function OnLoadImagesFailed(error) {
+            toastr.error(error.get_message());
+        }
+
+        $(function () {
+            $("#PopMyTabs").tabs();
+        });
+        function AddNewItem() {
+            //popup(1, 'TouchKeypad', '', 900, 500);
+            $("#TouchKeypad").dialog({
+                width: 900,
+                height: 500,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: true,
+                resizable: false,
+                fluid: true,
+                title: "Search Guest",
+                show: 'slide'
+            });
+            return false;
+        }
+
+        // Room Select
+        function LoadRoomNumber() {
+            //alert('hi');
+            var txtFromDate = $("#<%=txtDateIn.ClientID %>").val();
+            var txtToDate = $("#<%=txtDateOut.ClientID %>").val();
+
+            if (txtFromDate == "") {
+                //CustomAlert('The Check-In Date should not be empty.', 'Check In', 'Ok')
+                toastr.warning('The Check-In Date should not be empty.');
+                document.getElementById("<%=txtDateIn.ClientID%>").focus();
+                return false;
+            }
+            else if (txtToDate == "") {
+                //CustomAlert('The Check-Out Date should not be empty.', 'Check Out', 'Ok')
+                toastr.warning('The Check-Out Date should not be empty.');
+                document.getElementById("<%=txtToDate.ClientID%>").focus();
+                return false;
+            }
+            else if ($("#ContentPlaceHolder1_ddlRoomTypeId").val() == "0") {
+                toastr.warning("Please Select Room Type.");
+                return false;
+            }
+
+            // ClearRoomNumberAndId();
+            LoadRoomInformationWithControl();
+            //popup(1, 'DivRoomSelect', '', 300, 525);
+            $("#DivRoomSelect").dialog({
+                width: 250,
+                height: 400,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: true,
+                resizable: false,
+                fluid: true,
+                title: "Room Number",
+                show: 'slide'
+            });
+            return false;
+        }
+        function LoadRoomInformationWithControl() {
+            var RoomTypeId = $("#<%=ddlRoomTypeId.ClientID %>").val();
+            var txtFromDate = $("#<%=txtDateIn.ClientID %>").val();
+            var txtToDate = $("#<%=txtDateOut.ClientID %>").val();
+
+            $("#<%=DateInHiddenField.ClientID %>").val(txtFromDate);
+            $("#<%=DateOutHiddenField.ClientID %>").val(txtToDate);
+            $("#<%=hfCurrencyHiddenField.ClientID %>").val($("#ContentPlaceHolder1_ddlCurrency").val());
+
+            PageMethods.LoadRoomInformationWithControl(RoomTypeId, txtFromDate, txtToDate, OnLoadRoomInformationWithControlSucceeded, OnLoadRoomInformationWithControlFailed);
+
+            return false;
+        }
+        function OnLoadRoomInformationWithControlSucceeded(result) {
+
+            $("#ltlRoomNumberInfo").html(result);
+
+            var RoomIdList = "";
+
+            if (editedRow != "" && $("#ContentPlaceHolder1_hfSelectedRoomId").val() == "") {
+                RoomIdList = $.trim($(editedRow).find("td:eq(5)").text());
+            }
+            else {
+                RoomIdList = $("#ContentPlaceHolder1_hfSelectedRoomId").val();
+            }
+
+            var RoomArray = RoomIdList.split(",");
+
+            if (RoomArray.length > 0) {
+                for (var i = 0; i < RoomArray.length; i++) {
+                    var roomId = "#" + RoomArray[i].trim();
+                    $(roomId).attr("checked", true);
+                }
+            }
+            return false;
+        }
+        function OnLoadRoomInformationWithControlFailed(error) {
+            toastr.error(error.get_message());
+        }
+
+        function ShowRoomNumberAndId() {
+            //popup(-1); ////TODO close dialog
+
+            var ids = $("#<%=hfSelectedRoomId.ClientID %>").val();
+            var numbers = $("#<%=hfSelectedRoomNumbers.ClientID %>").val();
+            var addedRoom = $("#<%=lblAddedRoomNumber.ClientID %>").val()
+            var splitedNumbers = numbers.split(",");
+            var flag = "";
+            for (var i = 0; i < splitedNumbers.length; i++) {
+                if (splitedNumbers[i] != '') {
+                    flag = splitedNumbers[i] + " , " + flag;
+                }
+            }
+            flag = RemoveFirstCommas(flag);
+            flag = RomoveLastCommas(flag);
+
+            $("#<%=hfSelectedRoomNumbers.ClientID %>").val(flag);
+            if (splitedNumbers.length > 0) {
+                $("#<%=lblAddedRoomNumber.ClientID %>").text(flag);
+                $('#DivAddedRoom').show();
+            }
+            else {
+                $("#<%=lblAddedRoomNumber.ClientID %>").text('No Room Is Added.')
+                $('#DivAddedRoom').hide();
+            }
+
+            var roomIds = $("#<%=hfSelectedRoomId.ClientID %>").val();
+            var splitedRoomId = roomIds.split(",");
+            var roomIdFlag = "";
+            for (var i = 0; i < splitedRoomId.length; i++) {
+                if (splitedNumbers[i] != '') {
+                    roomIdFlag = splitedRoomId[i] + " , " + roomIdFlag;
+                }
+            }
+            roomIdFlag = RemoveFirstCommas(roomIdFlag);
+            roomIdFlag = RomoveLastCommas(roomIdFlag);
+            var roomsArray = roomIdFlag.split(',');
+            var roomLength = roomsArray.length;
+            $("#<%=hfSelectedRoomId.ClientID %>").val(roomIdFlag);
+            $("#<%=txtRoomId.ClientID %>").val(roomLength);
+        }
+        function RemoveFirstCommas(flag) {
+            var length = flag.length;
+            var Index = 0;
+            for (var j = 0; j < length; j++) {
+                if (flag.charAt(j) == '0' || flag.charAt(j) == '1' || flag.charAt(j) == '2' || flag.charAt(j) == '3' || flag.charAt(j) == '4' || flag.charAt(j) == '5' || flag.charAt(j) == '6' || flag.charAt(j) == '7' || flag.charAt(j) == '8' || flag.charAt(j) == '9') {
+                    Index = j;
+                    break;
+                }
+            }
+            flag = flag.substring(Index, length - Index);
+
+            return flag;
+        }
+        function RomoveLastCommas(flag) {
+            var length = flag.length;
+            var Index = 0;
+            var lastIndex = flag.lastIndexOf(',');
+            flag = flag.substring(0, length - (length - lastIndex));
+            return flag;
+        }
+        function ClearRoomNumberAndId() {
+            //popup(-1); ////TODO close dialog            
+            $("#<%=hfSelectedRoomNumbers.ClientID %>").val('');
+            $("#<%=hfSelectedRoomId.ClientID %>").val('');
+            $("#<%=hfSelectedRoomReservedId.ClientID %>").val('');
+            $("#<%=lblAddedRoomNumber.ClientID %>").text('')
+            $("#ContentPlaceHolder1_txtRoomId").val('');
+
+            $("#ltlRoomNumberInfo").html('');
+            $('#DivAddedRoom').hide();
+        }
+
+        function ClearRommTypeAfterAdded() {
+            $("#ContentPlaceHolder1_ddlRoomTypeId").val('0');
+            $("#ContentPlaceHolder1_txtUnitPrice").val('');
+            $("#ContentPlaceHolder1_txtRoomRate").val('');
+            $("#ContentPlaceHolder1_txtDiscountAmount").val('');
+        }
+
+        function AddRoomNumberAndIdTemporary(RoomId, RoomNumber) {
+
+
+            if ($('#' + RoomId).is(":checked")) {
+                // Add Room Ids
+                var ids = $("#<%=hfSelectedRoomId.ClientID %>").val();
+                var splitedIds = ids.split(",");
+                var flag = -1;
+                for (var i = 0; i < splitedIds.length; i++) {
+                    if (splitedIds[i].trim() == RoomId) {
+                        flag = 1;
+                    }
+                }
+                if (flag == -1) {
+                    ids = RoomId + ',' + ids;
+                }
+                $("#<%=hfSelectedRoomId.ClientID %>").val(ids);
+                //Add Room Numbers
+
+                var numbers = $("#<%=hfSelectedRoomNumbers.ClientID %>").val();
+                var splitedNumbers = numbers.split(",");
+                var roomFlag = -1;
+                for (var i = 0; i < splitedNumbers.length; i++) {
+                    if (splitedNumbers[i].trim() == RoomNumber) {
+                        roomFlag = 1;
+                    }
+                }
+                if (roomFlag == -1) {
+                    numbers = RoomNumber + ',' + numbers;
+                }
+                $("#<%=hfSelectedRoomNumbers.ClientID %>").val(numbers)
+            }
+            else {
+                //Delete Room Ids
+                var ids = $("#<%=hfSelectedRoomId.ClientID %>").val();
+                var splitedIds = ids.split(",");
+                var activeIds = "";
+                for (var i = 0; i < splitedIds.length; i++) {
+                    if (splitedIds[i].trim() == RoomId) {
+                        splitedIds[i] = -1;
+                    }
+                }
+                for (var i = 0; i < splitedIds.length; i++) {
+                    if (splitedIds[i].trim() != -1) {
+                        activeIds = splitedIds[i].trim() + ',' + activeIds;
+                    }
+                }
+                $("#<%=hfSelectedRoomId.ClientID %>").val(activeIds);
+                //Delete Room Numbers
+                var rooms = $("#<%=hfSelectedRoomNumbers.ClientID %>").val();
+                var splitedRooms = rooms.split(",");
+                var activeIds = "";
+                for (var i = 0; i < splitedRooms.length; i++) {
+                    if (splitedRooms[i].trim() == RoomNumber) {
+                        splitedRooms[i] = -1;
+                    }
+                }
+                for (var i = 0; i < splitedRooms.length; i++) {
+                    if (splitedRooms[i].trim() != -1) {
+                        activeIds = splitedRooms[i] + ',' + activeIds;
+                    }
+                }
+                $("#<%=hfSelectedRoomNumbers.ClientID %>").val(activeIds);
+            }
+        }
+
+        function CustomAlert(message, title, buttonText) {
+
+            buttonText = (buttonText == undefined) ? "Ok" : buttonText;
+            title = (title == undefined) ? "The page says:" : title;
+            var div = $('<div>');
+            div.html(message);
+            div.attr('title', title);
+            div.dialog({
+                autoOpen: true,
+                modal: true,
+                draggable: false,
+                resizable: false,
+                buttons: [{
+                    text: buttonText,
+                    click: function () {
+                        $(this).dialog("close");
+                        div.remove();
+                    }
+                }]
+            });
+        }
+
+        function GetRoomDetailInformationByWM() {
+            PageMethods.GetRoomDetailGridInformationByWM(RoomDetailInformationSucceeded, RoomDetailInformationFailed);
+            return false;
+        }
+        function RoomDetailInformationSucceeded(result) {
+            $("#ReservationDetailGrid").html(result);
+            return false;
+        }
+        function RoomDetailInformationFailed(error) {
+
+            toastr.error(error.get_message());
+        }
+
+        function GetTempRegistrationDetailByWM() {
+            PageMethods.GetTempRegistration(OnLoadDetailGridInformationSucceeded, OnLoadDetailGridInformationFailed);
+            return false;
+        }
+        function OnLoadDetailGridInformationSucceeded(result) {
+            $("#ltlGuestDetailGrid").html(result);
+            $("#<%=EditId.ClientID %>").val("");
+            $("#<%=hfPrevGuestId.ClientID %>").val("");
+            $("#<%=hfCurrentReservationGuestId.ClientID %>").val("");
+            SelectdPreferenceId = "";
+            clearUserDetailsControl();
+            return false;
+        }
+        function OnLoadDetailGridInformationFailed(error) {
+            $("#<%=EditId.ClientID %>").val("");
+            toastr.error(error.get_message());
+        }
+        function LoadDetailGridInformation() {
+            //Guest Detail
+            var txtTitle = $("#<%=ddlGuestTitle.ClientID %>").val();
+            if (txtTitle == "MrNMrs.") {
+                txtTitle = "Mr. & Mrs.";
+            }
+            else if (txtTitle == "N/A") {
+                txtTitle = "";
+            }
+            var txtFirstName = $("#<%=txtGuestFirstName.ClientID %>").val();
+            var txtLastName = $("#<%=txtGuestLastName.ClientID %>").val();
+            var txtGuestName = $("#<%=txtGuestName.ClientID %>").val();
+            var txtGuestEmail = $("#<%=txtGuestEmail.ClientID %>").val();
+            var hiddenGuestId = $("#<%=hiddenGuestId.ClientID %>").val();
+            var txtGuestDrivinlgLicense = $("#<%=txtGuestDrivinlgLicense.ClientID %>").val();
+            var txtGuestDOB = $("#<%=txtGuestDOB.ClientID %>").val();
+
+            var txtGuestAddress1 = $("#<%=txtGuestAddress1.ClientID %>").val();
+            var txtGuestAddress2 = $("#<%=txtGuestAddress2.ClientID %>").val();
+            var ddlProfessionId = $("#<%=ddlProfessionId.ClientID %>").val();
+            var txtGuestCity = $("#<%=txtGuestCity.ClientID %>").val();
+            var ddlGuestCountry = $("#<%=ddlGuestCountry.ClientID %>").val();
+            var txtGuestNationality = $("#<%=txtGuestNationality.ClientID %>").val();
+            var txtGuestCountrySearch = $.trim($("#txtGuestCountrySearch").val());
+
+            var txtGuestPhone = $("#<%=txtGuestPhone.ClientID %>").val();
+
+            var ddlGuestSex = $("#<%=ddlGuestSex.ClientID %>").val();
+            var txtGuestZipCode = $("#<%=txtGuestZipCode.ClientID %>").val();
+            var txtNationalId = $("#<%=txtNationalId.ClientID %>").val();
+            var txtPassportNumber = $("#<%=txtPassportNumber.ClientID %>").val();
+            var txtPExpireDate = $("#<%=txtPExpireDate.ClientID %>").val();
+            var txtPIssueDate = $("#<%=txtPIssueDate.ClientID %>").val();
+            var txtPIssuePlace = '';
+            var txtVExpireDate = $("#<%=txtVExpireDate.ClientID %>").val();
+            var txtVisaNumber = $("#<%=txtVisaNumber.ClientID %>").val();
+            var txtVIssueDate = $("#<%=txtVIssueDate.ClientID %>").val();
+            var txtNumberOfPersonAdult = $("#<%=txtNumberOfPersonAdult.ClientID %>").val();
+            var roomId = $("#<%=ddlRoomNumber.ClientID %>").val();
+            if (roomId == "" || roomId == null) {
+                roomId = 0;
+            }
+            var prevGuestId = $("#<%=hfPrevGuestId.ClientID %>").val();
+            if (prevGuestId == "") {
+                prevGuestId = 0;
+            }
+
+            var txtGuestCountrySearch = $.trim($("#txtGuestCountrySearch").val());
+
+            //            if (txtGuestCountrySearch == "") {
+            //                MessagePanelShow();
+            //                $('#MessageBox').text('Please Enter Country Name.');
+            //                $("#txtGuestCountrySearch").focus();
+            //                return;
+            //            }
+
+            if (txtTitle == "0") {
+                toastr.warning("Please Select Title.");
+                $("#ddlGuestTitle").focus();
+                return;
+            }
+            if (txtGuestEmail != "") {
+                var mailformat = new RegExp('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$', 'i');
+                if (txtGuestEmail.match(mailformat)) {
+                }
+                else {
+                    toastr.warning("You have entered an invalid email address!");
+                    $("#txtGuestEmail").focus();
+                    return;
+                }
+            }
+            if (txtGuestPhone != "") {
+                var phnformat = /[1-9](?:\d{0,2})(?:,\d{3})*(?:\.\d*[1-9])?|0?\.\d*[1-9]|0/;
+                if (txtGuestPhone.match(phnformat)) {
+                }
+                else {
+                    toastr.warning("You have entered an invalid Phone Number!");
+                    return;
+                }
+            }
+
+            /*
+            if (ddlGuestSex == "0") {
+            toastr.warning('Please Select Gender');
+            return;
+            }
+
+            if (txtGuestCountrySearch == "") {
+            toastr.warning('Please Enter Country Name.');
+            $("#txtGuestCountrySearch").focus();
+            return;
+            }
+            */
+
+            if (txtGuestName == "" || txtNumberOfPersonAdult == "") {
+                toastr.warning('Please fill mandatory fields.');
+            }
+            else {
+                // Document Detail
+                var isEdit = "";
+                if ($("#<%=EditId.ClientID %>").val() == "") {
+                    isEdit = "";
+                }
+                else {
+                    isEdit = $("#<%=EditId.ClientID %>").val();
+                }
+                $('#btnAddGuest').val('Add');
+
+                var hfReservationIdTemp = $("#<%=hfReservationIdTemp.ClientID %>").val();
+                var reservationId = parseInt(hfReservationIdTemp);
+                PageMethods.SaveGuestInformationAsDetail(reservationId, prevGuestId, isEdit, 0, txtTitle, txtFirstName, txtLastName, txtGuestName, txtGuestEmail, hiddenGuestId, txtGuestDrivinlgLicense, txtGuestDOB, txtGuestAddress1, txtGuestAddress2, ddlProfessionId, txtGuestCity, ddlGuestCountry, txtGuestNationality, txtGuestPhone, ddlGuestSex, txtGuestZipCode, txtNationalId, txtPassportNumber, txtPExpireDate, txtPIssueDate, txtPIssuePlace, txtVExpireDate, txtVisaNumber, txtVIssueDate, roomId, SelectdPreferenceId, OnLoadDetailGridInformationSucceeded, OnLoadDetailGridInformationFailed);
+                return false;
+            }
+        }
+        function clearUserDetailsControl() {
+            $("#<%=ddlGuestTitle.ClientID %>").val();
+            $("#<%=txtGuestFirstName.ClientID %>").val('');
+            $("#<%=txtGuestLastName.ClientID %>").val('');
+            $("#<%=txtGuestName.ClientID %>").val('');
+            $("#<%=txtGuestEmail.ClientID %>").val('');
+            $("#<%=hiddenGuestId.ClientID %>").val('0');
+            $("#<%=txtGuestDrivinlgLicense.ClientID %>").val('');
+            $("#<%=txtGuestDOB.ClientID %>").val('');
+            $("#<%=txtGuestAddress1.ClientID %>").val('');
+            $("#<%=txtGuestAddress2.ClientID %>").val('');
+            $("#<%=ddlProfessionId.ClientID %>").val('1');
+            $("#<%=txtGuestCity.ClientID %>").val('');
+            $("#<%=ddlGuestCountry.ClientID %>").val('');
+            $("#<%=txtGuestNationality.ClientID %>").val('');
+            $("#<%=txtGuestPhone.ClientID %>").val('');
+            $("#<%=ddlGuestSex.ClientID %>").val('0');
+            $("#<%=txtGuestZipCode.ClientID %>").val('');
+            $("#<%=txtNationalId.ClientID %>").val('');
+            $("#<%=txtPassportNumber.ClientID %>").val('');
+            $("#<%=txtPExpireDate.ClientID %>").val('');
+            $("#<%=txtPIssueDate.ClientID %>").val('');
+            $("#<%=txtVExpireDate.ClientID %>").val('');
+            $("#<%=txtVisaNumber.ClientID %>").val('');
+            $("#<%=txtVIssueDate.ClientID %>").val('');
+            $("#<%=lblGstPreference.ClientID %>").text('');
+            $("#GuestPreferenceDiv").hide();
+
+            $("#txtGuestCountrySearch").val("");
+        }
+        function PerformEditActionForGuestDetail(GuestId) {
+            $("#<%=EditId.ClientID %>").val(GuestId);
+            $('#btnAddGuest').val('Save');
+            PageMethods.PerformEditActionForGuestDetailByWM(GuestId, OnEditGuestInformationSucceeded, OnEditGuestInformationFailed);
+            return false;
+        }
+        function OnEditGuestInformationSucceeded(result) {
+            $("#GuestPreferenceDiv").show();
+            $("#<%=ddlGuestTitle.ClientID %>").val(result.Title);
+            $("#<%=txtGuestFirstName.ClientID %>").val(result.FirstName);
+            $("#<%=txtGuestLastName.ClientID %>").val(result.LastName);
+            $("#<%=txtGuestName.ClientID %>").val(result.GuestName);
+            var date = new Date(result.GuestDOB);
+
+            var shortDate = "";
+            if (!result.GuestDOB) {
+                shortDate = "";
+            }
+            else {
+                shortDate = GetStringFromDateTime(date);
+            }
+            $("#<%=txtGuestDOB.ClientID %>").val(shortDate);
+            $("#<%=ddlGuestSex.ClientID %>").val(result.GuestSex);
+            $("#<%=txtGuestAddress1.ClientID %>").val(result.GuestAddress1);
+            $("#<%=txtGuestAddress2.ClientID %>").val(result.GuestAddress2);
+            $("#<%=txtGuestEmail.ClientID %>").val(result.GuestEmail);
+            $("#<%=txtGuestPhone.ClientID %>").val(result.GuestPhone);
+            $("#<%=ddlProfessionId.ClientID %>").val(result.ProfessionId);
+            $("#<%=txtGuestCity.ClientID %>").val(result.GuestCity);
+            $("#<%=txtGuestZipCode.ClientID %>").val(result.GuestZipCode);
+
+            $("#<%=txtGuestNationality.ClientID %>").val(result.GuestNationality);
+            $("#<%=txtGuestDrivinlgLicense.ClientID %>").val(result.GuestDrivinlgLicense);
+            $("#<%=txtNationalId.ClientID %>").val(result.NationalId);
+            $("#<%=txtVisaNumber.ClientID %>").val(result.VisaNumber);
+            //$("#<%=txtVIssueDate.ClientID %>").val(result.VIssueDate);
+            var dateVIssue = new Date(result.VIssueDate);
+            var shortDateVIssue = "";
+            if (!result.VIssueDate) {
+                shortDateVIssue = "";
+            }
+            else {
+                shortDateVIssue = GetStringFromDateTime(dateVIssue);
+            }
+
+            $("#<%=txtVIssueDate.ClientID %>").val(shortDateVIssue);
+            var dateVExpire = new Date(result.VExpireDate);
+            var shortDateVExpire = "";
+            if (!result.VExpireDate) {
+                shortDateVExpire = "";
+            }
+            else {
+                shortDateVExpire = GetStringFromDateTime(dateVExpire);
+            }
+
+            $("#<%=txtVExpireDate.ClientID %>").val(shortDateVExpire);
+
+            //$("#<%=txtVExpireDate.ClientID %>").val(result.VExpireDate);
+            $("#<%=txtPassportNumber.ClientID %>").val(result.PassportNumber);
+            //$("#<%=txtPIssueDate.ClientID %>").val(result.PIssueDate);
+            var datePIssue = new Date(result.PIssueDate);
+            var shortDatePIssue = "";
+            if (!result.PIssueDate) {
+                shortDatePIssue = "";
+            }
+            else {
+                shortDatePIssue = GetStringFromDateTime(datePIssue);
+            }
+
+            $("#<%=txtPIssueDate.ClientID %>").val(shortDatePIssue);
+
+            //$("#<%=txtPExpireDate.ClientID %>").val(result.PExpireDate);
+            var datePExpire = new Date(result.PExpireDate);
+            var shortDatePExpire = "";
+            if (!result.PExpireDate) {
+                shortDatePExpire = "";
+            }
+            else {
+                shortDatePExpire = GetStringFromDateTime(datePExpire);
+            }
+            $("#<%=txtPExpireDate.ClientID %>").val(shortDatePExpire);
+            $("#txtGuestCountrySearch").val(result.CountryName);
+            $("#<%=ddlGuestCountry.ClientID %>").val(result.GuestCountryId);
+            $("#<%=ddlRoomNumber.ClientID %>").val(result.RoomId);
+            if (result.RoomId > 0) {
+                $("#RoomNumberDiv").show();
+            }
+            $("#<%=lblGstPreference.ClientID %>").text(result.GuestPreferences);
+            $("#ContentPlaceHolder1_hfGuestPreferenceId").val(result.GuestPreferenceId);
+
+            return false;
+        }
+        function OnEditGuestInformationFailed(error) {
+            toastr.error(error.get_message());
+        }
+        function PerformDeleteActionForGuestDetail(GuestId) {
+            $("#<%=EditId.ClientID %>").val("")
+            PageMethods.PerformDeleteActionForGuestDetailByWM(GuestId, OnLoadDetailGridInformationSucceeded, OnLoadDetailGridInformationFailed);
+            return false;
+        }
+
+        function LoadPrevGuestInfo(guestId) {
+            PageMethods.LoadPrevGuestInfo(guestId, OnLoadPrevGuestInfoSucceeded, OnLoadPrevGuestInfoFailed);
+            return false;
+        }
+        function OnLoadPrevGuestInfoSucceeded(result) {
+            //popup(-1);
+            $("#ReservationPopup").dialog("close");
+
+            $("#<%=hfPrevGuestId.ClientID %>").val(result.GuestId);
+            $("#<%=ddlTitle.ClientID %>").val(result.Title);
+            $("#<%=txtFirstName.ClientID %>").val(result.FirstName);
+            $("#<%=txtLastName.ClientID %>").val(result.LastName);
+            $("#<%=txtEmail.ClientID %>").val(result.GuestEmail);
+            document.getElementById("txtCountry").value = result.CountryName;
+            $("#<%=ddlCountry.ClientID %>").val(result.GuestCountryId);
+            $("#<%=txtPhone.ClientID %>").val(result.GuestPhone);
+            $("#<%=txtGuestDOB.ClientID %>").val(result.ShowDOB);
+            $("#<%=txtGuestAddress1.ClientID %>").val(result.GuestAddress1);
+            $("#<%=txtGuestAddress2.ClientID %>").val(result.GuestAddress2);
+            $("#<%=ddlProfessionId.ClientID %>").val(result.ProfessionId);
+            $("#<%=txtGuestCity.ClientID %>").val(result.GuestCity);
+            $("#<%=txtGuestZipCode.ClientID %>").val(result.GuestZipCode);
+            $("#<%=txtGuestDrivinlgLicense.ClientID %>").val(result.GuestDrivinlgLicense);
+            $("#<%=txtNationalId.ClientID %>").val(result.NationalId);
+            $("#<%=txtVisaNumber.ClientID %>").val(result.VisaNumber);
+            $("#<%=txtVIssueDate.ClientID %>").val(result.ShowVIssueDate);
+            $("#<%=txtVExpireDate.ClientID %>").val(result.ShowVExpireDate);
+            $("#<%=txtPassportNumber.ClientID %>").val(result.PassportNumber);
+            $("#<%=txtPIssueDate.ClientID %>").val(result.ShowPIssueDate);
+            $("#<%=txtPExpireDate.ClientID %>").val(result.ShowPExpireDate);
+        }
+        function OnLoadPrevGuestInfoFailed(error) {
+        }
+
+        function ValidateGuestNumber() {
+            var rowCount = $('#ReservedGuestInformation tbody tr').length;
+            if (rowCount == 0) {
+                if ($("#<%=txtFirstName.ClientID %>").val() == "") {
+                    var answer = confirm("No Guest Added, Do you want to continue the Reservation Process ?")
+                    if (!answer) {
+                        return false;
+                    }
+                }
+            }
+
+			var txtTitle = $("#<%=ddlTitle.ClientID %>").val();
+			if (txtTitle == "0") {
+                toastr.warning("Please Select Title.");
+                $("#ddlGuestTitle").focus();
+                return;
+            }
+
+			if ($("#<%=txtPhone.ClientID %>").val() == "") {
+                toastr.warning("Please Provide Mobile Number.");
+                $("#<%=txtPhone.ClientID %>").focus();
+                return;
+            }
+
+            var reservationId = "0", reservationNumber = "", reservationDate = "", dateIn = "", dateOut = "", probableArrivalTime = "", confirmationDate = "",
+            reservedCompany = "", guestId = "", contactAddress = "", contactPerson = "", contactNumber = "", mobileNumber = "", faxNumber = "", contactEmail = "",
+            totalRoomNumber = "0", reservedMode = "", reservationType = "", reservationMode = "", pendingDeadline = "", isListedCompany = false, companyId = "",
+            businessPromotionId = "", referenceId = "", paymentMode = "", payFor = "", currencyType = "", conversionRate = "", reason = "", remarks = "",
+            numberOfPersonAdult = "", numberOfPersonChild = "", isFamilyOrCouple = "", airportPickUp = "", airportDrop = "", isAirportPickupDropExist = false,
+            reservationTempId = "0", reservationDuration = "";
+
+            var arrivalFlightName = "", arrivalFlightNumber = "", arrivalTime = "", departureFlightName = "", departureFlightNumber = "", departureTime = "";
+
+            var apdId = '', APId = '', ADId = '', reservId = '', gstId = '', guestName = '', fligtName = '', flightNo = '', arrivtime = '';
+            var AddedAirportPickupDrop = new Array();
+            var AireportPickupDrop = new Array();
+
+            reservationId = $("#ContentPlaceHolder1_hfReservationId").val();
+            reservationTempId = $("#ContentPlaceHolder1_hfReservationIdTemp").val();
+            APId = $("#ContentPlaceHolder1_hfAPId").val();
+            ADId = $("#ContentPlaceHolder1_hfADId").val();
+            if (APId == "") {
+                APId = "0";
+            }
+            if (ADId == "") {
+                ADId = "0";
+            }
+            if (reservationId == "") {
+                reservationId = "0";
+            }
+            if (reservationTempId == "") {
+                reservationTempId = "0";
+            }
+
+            dateIn = $("#ContentPlaceHolder1_txtDateIn").val();
+            dateOut = $("#ContentPlaceHolder1_txtDateOut").val();
+
+            dateIn = CommonHelper.DateFormatMMDDYYYYFromDDMMYYYY(dateIn, innBoarDateFormat);
+            dateOut = CommonHelper.DateFormatMMDDYYYYFromDDMMYYYY(dateOut, innBoarDateFormat);
+
+            reservationDuration = $("#txtReservationDuration").val();
+            probableArrivalTime = $("#ContentPlaceHolder1_txtProbableArrivalTime").val();
+            reservedMode = $("#ContentPlaceHolder1_ddlReservedMode").val();
+            reservationType = $("#ContentPlaceHolder1_ddlReservationType").val();
+            contactAddress = $("#ContentPlaceHolder1_txtContactAddress").val();
+            contactPerson = $("#ContentPlaceHolder1_txtContactPerson").val();
+            contactNumber = "";
+            mobileNumber = $("#ContentPlaceHolder1_txtMobileNumber").val();
+            faxNumber = $("#ContentPlaceHolder1_txtFaxNumber").val();
+            contactEmail = $("#ContentPlaceHolder1_txtContactEmail").val();
+            currencyType = $("#ContentPlaceHolder1_ddlCurrency").val();
+            payFor = $("#ContentPlaceHolder1_ddlPayFor").val();
+            businessPromotionId = $("#ContentPlaceHolder1_ddlBusinessPromotionId").val();
+            referenceId = $("#ContentPlaceHolder1_ddlReferenceId").val();
+            conversionRate = $("#ContentPlaceHolder1_txtConversionRate").val() == "" ? "0" : $("#ContentPlaceHolder1_txtConversionRate").val();
+            numberOfPersonAdult = $("#ContentPlaceHolder1_txtNumberOfPersonAdult").val() == "" ? "0" : $("#ContentPlaceHolder1_txtNumberOfPersonAdult").val();
+            isFamilyOrCouple = $("#ContentPlaceHolder1_cbFamilyOrCouple").is(":checked");
+            numberOfPersonChild = $("#ContentPlaceHolder1_txtNumberOfPersonChild").val() == "" ? "0" : $("#ContentPlaceHolder1_txtNumberOfPersonChild").val();
+            remarks = $("#ContentPlaceHolder1_txtRemarks").val();
+
+            airportPickUp = $("#ContentPlaceHolder1_ddlAirportPickUp").val();
+            airportDrop = $("#ContentPlaceHolder1_ddlAirportDrop").val();
+
+            if (numberOfPersonAdult == "0") {
+                toastr.warning("Adult person can not be less than 1.");
+                return false;
+            }
+            if (dateIn == "") {
+                toastr.warning("Please Provide Check In Date.");
+                return false;
+            }
+            else if (dateOut == "") {
+                toastr.warning("Please Provide Expected Check Out Date.");
+                return false;
+            }
+            else if (reservationDuration == "") {
+                toastr.warning("Please Provide Valid Number For Number of Nights.");
+                return false;
+            }
+            else if (probableArrivalTime == "") {
+                toastr.warning("Please Provide Probable Arrival Time.");
+                return false;
+            }
+
+            var currency = $("#<%=hfCurrencyType.ClientID %>").val();
+            if (currency != "Local") {
+                if ($("#ContentPlaceHolder1_ddlCurrency").val() == "0") {
+                    toastr.warning("Please Select Currency Type.");
+                    return false;
+                }
+                else if ($("#ContentPlaceHolder1_txtConversionRate").val() == "" || $("#ContentPlaceHolder1_txtConversionRate").val() == "0") {
+                    toastr.warning("Please Provide Conversion Rate.");
+                    return false;
+                }
+            }
+
+            if ($("#ReservationRoomGrid tbody tr").length == 0) {
+                toastr.warning("Please add at least one room.");
+                return false;
+            }
+
+            if (airportPickUp == "YES") {
+                var pickuptablerowLength = $("#PickupTable tbody tr").length;
+                if (pickuptablerowLength == 0) {
+                    if ($("#ContentPlaceHolder1_txtArrivalFlightName").val() == "") {
+                        toastr.warning("Please Provide Arrival Flight Name");
+                        return false;
+                    }
+                    else if ($("#ContentPlaceHolder1_txtArrivalFlightNumber").val() == "") {
+                        toastr.warning("Please Provide Arrival Flight Number");
+                        return false;
+                    }
+                    else if ($("#ContentPlaceHolder1_txtArrivalTime").val() == "") {
+                        toastr.warning("Please Provide Arrival Flight Time");
+                        return false;
+                    }
+                }
+            }
+
+            if (airportDrop == "YES") {
+                var departuretablerowLength = $("#DepartureTable tbody tr").length;
+                if (departuretablerowLength == 0) {
+                    if ($("#ContentPlaceHolder1_txtDepartureFlightName").val() == "") {
+                        toastr.warning("Please Provide Departure Flight Name");
+                        return false;
+                    }
+                    else if ($("#ContentPlaceHolder1_txtDepartureFlightNumber").val() == "") {
+                        toastr.warning("Please Provide Departure Flight Number");
+                        return false;
+                    }
+                    else if ($("#ContentPlaceHolder1_txtDepartureTime").val() == "") {
+                        toastr.warning("Please Provide Departure Flight Time");
+                        return false;
+                    }
+                }
+            }
+
+            if (airportPickUp == "YES" || airportPickUp == "TBA") {
+                isAirportPickupDropExist = true;
+
+                var ctrl = '#<%=chkMultiplePickup.ClientID%>'
+                if ($(ctrl).is(':checked')) {
+                    $("#PickupTable tbody tr").each(function () {
+                        apdId = $(this).find("td:eq(0)").text();
+                        reservId = $(this).find("td:eq(1)").text();
+                        gstId = $(this).find("td:eq(2)").text();
+                        guestName = $(this).find("td:eq(3)").text();
+                        fligtName = $(this).find("td:eq(4)").text();
+                        flightNo = $(this).find("td:eq(5)").text();
+                        arrivtime = $(this).find("td:eq(6)").text();
+
+                        if (apdId == "0") {
+                            AddedAirportPickupDrop.push({
+                                APDId: apdId,
+                                ReservationId: reservId,
+                                GuestId: gstId,
+                                ArrivalFlightName: fligtName,
+                                ArrivalFlightNumber: flightNo,
+                                ArrivalTime: arrivtime,
+                                DepartureFlightName: '',
+                                DepartureFlightNumber: '',
+                                DepartureTime: '',
+                                PickupDropType: 'Pickup'
+                            });
+                        }
+                    });
+                    if (APId > "0") {
+                        DeletedAirportPickupDrop.push({
+                            APDId: APId
+                        });
+                    }
+                }
+                else {
+                    arrivalFlightName = $("#ContentPlaceHolder1_txtArrivalFlightName").val();
+                    arrivalFlightNumber = $("#ContentPlaceHolder1_txtArrivalFlightNumber").val();
+                    arrivalTime = $("#ContentPlaceHolder1_txtArrivalTime").val();
+
+                    AireportPickupDrop.push({
+                        APDId: APId,
+                        ReservationId: reservationId,
+                        GuestId: "0",
+                        ArrivalFlightName: arrivalFlightName,
+                        ArrivalFlightNumber: arrivalFlightNumber,
+                        ArrivalTime: arrivalTime,
+                        DepartureFlightName: '',
+                        DepartureFlightNumber: '',
+                        DepartureTime: '',
+                        PickupDropType: 'Pickup'
+                    });
+                }
+            }
+            else {
+                var rowLength = $("#PickupTable tbody tr").length;
+                if (rowLength > 0) {
+                    $("#PickupTable tbody tr").each(function () {
+                        apdId = $(this).find("td:eq(0)").text();
+
+                        DeletedAirportPickupDrop.push({
+                            APDId: apdId
+                        });
+                    });
+                }
+                else if (APId > "0") {
+                    DeletedAirportPickupDrop.push({
+                        APDId: APId
+                    });
+                }
+            }
+
+            if (airportDrop == "YES" || airportDrop == "TBA") {
+                isAirportPickupDropExist = true;
+
+                var ctrl = '#<%=chkMultipleDrop.ClientID%>'
+                if ($(ctrl).is(':checked')) {
+                    $("#DepartureTable tbody tr").each(function () {
+                        apdId = $(this).find("td:eq(0)").text();
+                        reservId = $(this).find("td:eq(1)").text();
+                        gstId = $(this).find("td:eq(2)").text();
+                        guestName = $(this).find("td:eq(3)").text();
+                        fligtName = $(this).find("td:eq(4)").text();
+                        flightNo = $(this).find("td:eq(5)").text();
+                        arrivtime = $(this).find("td:eq(6)").text();
+
+                        if (apdId == "0") {
+                            AddedAirportPickupDrop.push({
+                                APDId: apdId,
+                                ReservationId: reservId,
+                                GuestId: gstId,
+                                ArrivalFlightName: '',
+                                ArrivalFlightNumber: '',
+                                ArrivalTime: '',
+                                DepartureFlightName: fligtName,
+                                DepartureFlightNumber: flightNo,
+                                DepartureTime: arrivtime,
+                                PickupDropType: 'Drop'
+                            });
+                        }
+                    });
+                    if (ADId > "0") {
+                        DeletedAirportPickupDrop.push({
+                            APDId: ADId
+                        });
+                    }
+                }
+                else {
+                    departureFlightName = $("#ContentPlaceHolder1_txtDepartureFlightName").val();
+                    departureFlightNumber = $("#ContentPlaceHolder1_txtDepartureFlightNumber").val();
+                    departureTime = $("#ContentPlaceHolder1_txtDepartureTime").val();
+
+                    AireportPickupDrop.push({
+                        APDId: ADId,
+                        ReservationId: reservationId,
+                        GuestId: "0",
+                        ArrivalFlightName: '',
+                        ArrivalFlightNumber: '',
+                        ArrivalTime: '',
+                        DepartureFlightName: departureFlightName,
+                        DepartureFlightNumber: departureFlightNumber,
+                        DepartureTime: departureTime,
+                        PickupDropType: 'Drop'
+                    });
+                }
+            }
+            else {
+                var rowLength = $("#DepartureTable tbody tr").length;
+                if (rowLength > 0) {
+                    $("#DepartureTable tbody tr").each(function () {
+                        apdId = $(this).find("td:eq(0)").text();
+
+                        DeletedAirportPickupDrop.push({
+                            APDId: apdId
+                        });
+                    });
+                }
+                else if (ADId > "0") {
+                    DeletedAirportPickupDrop.push({
+                        APDId: ADId
+                    });
+                }
+            }
+
+            if (reservedMode == "Company") {
+
+                if ($("#ContentPlaceHolder1_chkIsLitedCompany").is(":checked")) {
+                    isListedCompany = true;
+                    companyId = $("#ContentPlaceHolder1_ddlCompanyName").val();
+                    reservedCompany = null;
+                    paymentMode = $("#ContentPlaceHolder1_ddlPaymentMode").val();
+                }
+                else {
+                    isListedCompany = false;
+                    companyId = "0";
+                    reservedCompany = $("#ContentPlaceHolder1_txtReservedCompany").val();
+                    paymentMode = "Self";
+                }
+            }
+            else if (reservedMode == "Group") {
+                isListedCompany = false;
+                companyId = "0";
+                reservedCompany = $("#ContentPlaceHolder1_txtGroupName").val();
+                paymentMode = "Self";
+            }
+            else {
+                isListedCompany = false;
+                paymentMode = "Self";
+                companyId = "0";
+            }
+
+            if ($("#ContentPlaceHolder1_hiddenGuestId").val() == "") {
+                guestId = "0";
+            }
+            else {
+                guestId = $("#ContentPlaceHolder1_hiddenGuestId").val();
+            }
+
+            if ($("#ContentPlaceHolder1_ddlReservationStatus").val() == "Active") {
+                reservationMode = $("#ContentPlaceHolder1_ddlReservationStatus").val();
+            }
+            else if ($("#ContentPlaceHolder1_ddlReservationStatus").val() == "Pending") {
+                confirmationDate = $("#ContentPlaceHolder1_txtConfirmationDate").val();
+                reservationMode = $("#ContentPlaceHolder1_ddlReservationStatus").val();
+            }
+            else if ($("#ContentPlaceHolder1_ddlReservationStatus").val() == "Cancel") {
+                reservationMode = $("#ContentPlaceHolder1_ddlReservationStatus").val();
+                reason = $("#ContentPlaceHolder1_txtReason").val();
+            }
+            else if ($("#ContentPlaceHolder1_ddlReservationStatus").val() == "Registered") {
+                reservationMode = $("#ContentPlaceHolder1_ddlReservationStatus").val();
+                reason = $("#ContentPlaceHolder1_txtReason").val();
+            }
+
+            if (reservationId == "")
+                reservationId = "0";
+
+            var dateInHiddenFieldEdit = $("#ContentPlaceHolder1_DateInHiddenFieldEdit").val();
+            var minCheckInDate = $("#ContentPlaceHolder1_hfMinCheckInDate").val();
+
+            var RoomReservation = {
+                ReservationId: reservationId,
+                ReservationTempId: reservationTempId,
+                DateIn: dateIn,
+                DateOut: dateOut,
+                DateInStr: dateIn,
+                DateInFieldEdit: dateInHiddenFieldEdit,
+                MinCheckInDate: minCheckInDate,
+                ProbableArrivalTime: probableArrivalTime,
+                ConfirmationDate: confirmationDate,
+                ReservedCompany: reservedCompany,
+                GuestId: 0,
+                ContactAddress: contactAddress,
+                ContactPerson: contactPerson,
+                ContactNumber: contactNumber,
+                MobileNumber: mobileNumber,
+                FaxNumber: faxNumber,
+                ContactEmail: contactEmail,
+                TotalRoomNumber: totalRoomNumber,
+                ReservedMode: reservedMode,
+                ReservationType: reservationType,
+                ReservationMode: 'Pending',
+                PendingDeadline: confirmationDate,
+                IsListedCompany: isListedCompany,
+                CompanyId: companyId,
+                BusinessPromotionId: businessPromotionId,
+                ReferenceId: referenceId,
+                PaymentMode: paymentMode,
+                PayFor: payFor,
+                CurrencyType: currencyType,
+                ConversionRate: conversionRate,
+                Reason: reason,
+                Remarks: remarks,
+                NumberOfPersonAdult: numberOfPersonAdult,
+                NumberOfPersonChild: numberOfPersonChild,
+                IsFamilyOrCouple: isFamilyOrCouple,
+                IsAirportPickupDropExist: (isAirportPickupDropExist == true ? 1 : 0),
+                AirportPickUp: airportPickUp,
+                AirportDrop: airportDrop
+            };
+
+            var ComplementaryItem = new Array();
+
+            $("#ContentPlaceHolder1_chkComplementaryItem tbody tr").each(function () {
+                if ($(this).find("td:eq(0)").find("input").is(":checked")) {
+                    ComplementaryItem.push({
+                        RCItemId: 0,
+                        ReservationId: 0,
+                        ComplementaryItemId: $(this).find("td:eq(0)").find("input").val()
+                    });
+                }
+            });
+
+            var PaidServiceDetails = new Array();
+            var paidServiceDeleted = false;
+
+            if ($("#ContentPlaceHolder1_hfPaidServiceSaveObj").val() != "")
+                PaidServiceDetails = JSON.parse($("#ContentPlaceHolder1_hfPaidServiceSaveObj").val());
+
+            if ($("#ContentPlaceHolder1_hfPaidServiceDeleteObj").val() == "1")
+                paidServiceDeleted = true;
+
+            var reservationDetailId = "0", reservationDetailIds = "", roomTypeId = "", roomIds = "", unitPrice = "", discountType = "",
+                roomId = "0", discountAmount = "", roomRate = "", totalRoom = 0, i = 0, j = 0;
+            var RoomReservationDetail = new Array();
+
+            $("#ReservationRoomGrid tbody tr").each(function () {
+
+                roomTypeId = $.trim($(this).find("td:eq(4)").text());
+                reservationDetailIds = $.trim($(this).find("td:eq(3)").text());
+                roomIds = $.trim($(this).find("td:eq(5)").text());
+                discountType = $.trim($(this).find("td:eq(8)").text());
+                discountAmount = $.trim($(this).find("td:eq(9)").text());
+                unitPrice = $.trim($(this).find("td:eq(10)").text());
+                roomRate = $.trim($(this).find("td:eq(11)").text());
+                totalRoom = parseInt($.trim($(this).find("td:eq(7)").text()), 10);
+
+                if (discountAmount == "")
+                    discountAmount = "0";
+
+                var roomIdList = roomIds.split(",");
+                var reservationRoomIdList = reservationDetailIds.split(",");
+
+                for (i = 0; i < roomIdList.length; i++) {
+
+                    roomId = (roomIdList[i] == null ? "0" : roomIdList[i]);
+                    reservationDetailId = (reservationRoomIdList[i] == null ? "0" : reservationRoomIdList[i]);
+
+                    roomId = (roomId == "" ? "0" : roomId);
+                    reservationDetailId = (reservationDetailId == "" ? "0" : reservationDetailId);
+
+                    if (roomId == "0") {
+
+                        for (j = 0; j < totalRoom; j++) {
+                            RoomReservationDetail.push({
+                                ReservationDetailId: ((reservationRoomIdList[j] == null || reservationRoomIdList[j] == "") ? "0" : reservationRoomIdList[j]),
+                                ReservationId: reservationId,
+                                RoomTypeId: roomTypeId,
+                                RoomId: ((roomIdList[j] == null || roomIdList[j] == "") ? "0" : roomIdList[j]),
+                                UnitPrice: unitPrice,
+                                DiscountType: discountType,
+                                DiscountAmount: discountAmount,
+                                RoomRate: roomRate,
+                                IsRegistered: false
+                            });
+                        }
+                    }
+                    else {
+                        RoomReservationDetail.push({
+                            ReservationDetailId: reservationDetailId,
+                            ReservationId: reservationId,
+                            RoomTypeId: roomTypeId,
+                            RoomId: roomId,
+                            UnitPrice: unitPrice,
+                            DiscountType: discountType,
+                            DiscountAmount: discountAmount,
+                            RoomRate: roomRate,
+                            IsRegistered: false
+                        });
+                    }
+                }
+
+                reservationDetailId = "0";
+
+            });
+
+            var GuestDetails = null;
+            var rowLength = $("#ReservedGuestInformation tbody tr").length;
+            if (rowLength == 0) {
+                if (reservationId > 0) {
+                    toastr.warning("Please add atleast one guest.");
+                    return false;
+                }
+                else {
+                    var prevguestId = $("#<%=hfPrevGuestId.ClientID %>").val();
+                    if (prevguestId == "") {
+                        prevguestId = 0;
+                    }
+                    var title = $("#<%=ddlTitle.ClientID %>").val();
+                    if (title == "MrNMrs.") {
+                        title = "Mr. & Mrs.";
+                    }
+                    var firstName = $("#<%=txtFirstName.ClientID %>").val();
+                    var lastName = $("#<%=txtLastName.ClientID %>").val();
+
+                    var txtGuestName = "";
+                    if (title == "N/A") {
+                        txtGuestName = firstName + " " + lastName;
+                        title = "";
+                    }
+                    else {
+                        txtGuestName = title + " " + firstName + " " + lastName;
+                    }
+
+                    var txtGuestEmail = $("#<%=txtEmail.ClientID %>").val();
+                    var hiddenGuestId = $("#<%=hiddenGuestId.ClientID %>").val();
+                    var txtGuestDrivinlgLicense = $("#<%=txtGuestDrivinlgLicense.ClientID %>").val();
+                    var txtGuestAddress1 = $("#<%=txtGuestAddress1.ClientID %>").val();
+                    var txtGuestAddress2 = $("#<%=txtGuestAddress2.ClientID %>").val();
+                    var ddlProfessionId = $("#<%=ddlProfessionId.ClientID %>").val();
+                    var txtGuestCity = $("#<%=txtGuestCity.ClientID %>").val();
+                    var ddlGuestCountry = $("#<%=ddlCountry.ClientID %>").val();
+                    var txtGuestNationality = $("#<%=txtGuestNationality.ClientID %>").val();
+                    var txtGuestCountrySearch = $.trim($("#txtGuestCountrySearch").val());
+                    var txtGuestPhone = $("#<%=txtPhone.ClientID %>").val();
+                    var ddlGuestSex = $("#<%=ddlGuestSex.ClientID %>").val();
+                    var txtGuestZipCode = $("#<%=txtGuestZipCode.ClientID %>").val();
+                    var txtNationalId = $("#<%=txtNationalId.ClientID %>").val();
+                    var txtPassportNumber = $("#<%=txtPassportNumber.ClientID %>").val();
+                    var txtPExpireDate = $("#<%=txtPExpireDate.ClientID %>").val();
+                    var txtPIssueDate = $("#<%=txtPIssueDate.ClientID %>").val();
+                    var txtPIssuePlace = '';
+                    var txtVExpireDate = $("#<%=txtVExpireDate.ClientID %>").val();
+                    var txtVisaNumber = $("#<%=txtVisaNumber.ClientID %>").val();
+                    var txtVIssueDate = $("#<%=txtVIssueDate.ClientID %>").val();
+                    var txtGuestDOB = $("#ContentPlaceHolder1_txtGuestDOB").val();
+
+                    txtGuestDOB = txtGuestDOB = null;
+                    txtPIssueDate = txtPIssueDate = null;
+                    txtPExpireDate = txtPExpireDate = null;
+                    txtVExpireDate = txtVExpireDate = null;
+                    txtVIssueDate = txtVIssueDate = null;
+
+                    var roomId = $("#ContentPlaceHolder1_hfFstAsndRoomId").val();
+                    if (roomId == "") {
+                        roomId = 0;
+                    }
+
+                    if (txtGuestEmail != "") {
+                        var mailformat = new RegExp('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$', 'i');
+                        if (txtGuestEmail.match(mailformat)) {
+                        }
+                        else {
+                            toastr.warning("You have entered an invalid email address!");
+                            //$("#txtGuestEmail>").focus();
+                            return;
+                        }
+                    }
+                    if (txtGuestPhone != "") {
+                        var phnformat = /[1-9](?:\d{0,2})(?:,\d{3})*(?:\.\d*[1-9])?|0?\.\d*[1-9]|0/;
+                        if (txtGuestPhone.match(phnformat)) {
+                        }
+                        else {
+                            toastr.warning("You have entered an invalid Phone Number!");
+                            return;
+                        }
+                    }
+
+                    if (firstName == "") {
+                        toastr.warning('Please provide guest name.');
+                        return;
+                    }
+
+                    GuestDetails = {
+                        tempOwnerId: reservationTempId,
+                        GuestAddress1: txtGuestAddress1,
+                        GuestAddress2: txtGuestAddress2,
+                        GuestAuthentication: '',
+                        ProfessionId: ddlProfessionId,
+                        GuestCity: txtGuestCity,
+                        GuestCountryId: ddlGuestCountry,
+                        GuestDrivinlgLicense: txtGuestDrivinlgLicense,
+                        GuestEmail: txtGuestEmail,
+                        Title: title,
+                        FirstName: firstName,
+                        LastName: lastName,
+                        GuestName: txtGuestName,
+                        GuestDOB: txtGuestDOB,
+                        GuestId: hiddenGuestId == "" ? 0 : hiddenGuestId,
+                        GuestNationality: txtGuestNationality,
+                        GuestPhone: txtGuestPhone,
+                        GuestSex: ddlGuestSex,
+                        GuestZipCode: txtGuestZipCode,
+                        NationalId: txtNationalId,
+                        PassportNumber: txtPassportNumber,
+                        PExpireDate: txtPExpireDate,
+                        PIssueDate: txtPIssueDate,
+                        PIssuePlace: txtPIssuePlace,
+                        VExpireDate: txtVExpireDate,
+                        VisaNumber: txtVisaNumber,
+                        VIssueDate: txtVIssueDate,
+                        GuestPreferences: SelectdPreferenceId,
+                        RoomId: roomId,
+                        PreviousGuestId: prevguestId
+                    };
+                }
+            }
+            PageMethods.SaveReservation(RoomReservation, GuestDetails, RoomReservationDetail, OnSaveReservationSucceed, OnSaveReservationFailed);
+
+            return false;
+        }
+
+        function OnSaveReservationSucceed(result) {
+            if (result.IsSuccess) {
+
+                $("#ContentPlaceHolder1_hfIsSaveRUpdate").val(result.Pk);
+                $("#ContentPlaceHolder1_hfAPId").val("");
+                $("#ContentPlaceHolder1_hfADId").val("");
+                $("#ContentPlaceHolder1_hfPrevGuestId").val("");
+
+                if ($("#ContentPlaceHolder1_btnSave").val() == "Save") {
+                    //CommonHelper.AlertMessage(result.AlertMessage);
+                }
+
+                ClearForm();
+                window.location = "frmOnlineRoomReservationSuccess.aspx?ReservationSuccessMsg=" + result.PKey[0].RN + ',' + result.PKey[0].Pk
+            }
+            else {
+
+                if (result.IsReservationCheckInDateValidation == false) {
+                    $("#ContentPlaceHolder1_hfMinCheckInDate").val($("#ContentPlaceHolder1_DateInHiddenField").val());
+                    $("#ContentPlaceHolder1_hfIsSaveRUpdate").val("");
+                }
+
+                CommonHelper.AlertMessage(result.AlertMessage);
+            }
+        }
+        function OnSaveReservationFailed(error) { }
+
+        function ClearForm() {
+            $("#form1")[0].reset();
+            $('#AirportPickUpInformationDiv').hide();
+            $('#AirportDropInformationDiv').hide();
+            $("ContentPlaceHolder1_hfReservationId").val("");
+            $("#ReservationRoomGrid tbody").html('');
+            ClearFormFromServer();
+        }
+
+        function ClearFormFromServer() {
+            $("#ContentPlaceHolder1_btnCancel").trigger("click");
+        }
+
+        function activaTab() {
+            $('#tabPage a[href="#tab-2"]').tab('show')
+        };
+
+        function AddServiceCharge() {
+            var alreadyLoad = $.trim($("#<%=hfIsPaidServiceAlreadyLoded.ClientID %>").val());
+            if (alreadyLoad != "0") {
+                $("#PaidServiceDialog").dialog({
+                    autoOpen: true,
+                    modal: true,
+                    width: 450,
+                    closeOnEscape: true,
+                    resizable: false,
+                    title: "Paid Service",
+                    show: 'slide'
+                });
+                return;
+            }
+
+            var reservationId = $("#<%=hfReservationId.ClientID %>").val();
+            var currencyType = $("#<%=hfCurrencyType.ClientID %>").val();
+            var currencyId = $("#<%=ddlCurrency.ClientID %>").val();
+            var convertionRate = $("#<%=txtConversionRate.ClientID %>").val();
+
+            if (currencyType != "Local") {
+                if (convertionRate == "") {
+                    toastr.error("Please give conversion rate");
+                    return;
+                }
+            }
+
+            if (reservationId == "")
+                reservationId = 0;
+
+            $("#<%=hfPaidServiceSaveObj.ClientID %>").val("");
+            PageMethods.GetPaidServiceDetails(reservationId, currencyId, currencyType, convertionRate, OnGetPaidServiceSucceed, OnGetPaidServiceFailed);
+            return false;
+        }
+
+        var vvc = [], vvd = [];
+        function OnGetPaidServiceSucceed(result) {
+
+            $("#<%=hfIsPaidServiceAlreadyLoded.ClientID %>").val("1");
+            var currencyType = $("#<%=hfCurrencyType.ClientID %>").val();
+
+            if (result.RegistrationPaidService.length == 0) {
+                if ($("#<%=hfPaidServiceSaveObj.ClientID %>").val() != "") {
+                    alreadySavePaidServices = JSON.parse($("#<%=hfPaidServiceSaveObj.ClientID %>").val());
+                    result.RegistrationPaidService = alreadySavePaidServices;
+                }
+            }
+            else {
+                alreadySavePaidServices = result.RegistrationPaidService;
+
+                if ($("#<%=hfPaidServiceSaveObj.ClientID %>").val() != "") {
+                    alreadySavePaidServices = JSON.parse($("#<%=hfPaidServiceSaveObj.ClientID %>").val());
+                    result.RegistrationPaidService = alreadySavePaidServices;
+                }
+
+                $("#<%= hfPaidServiceDeleteObj.ClientID %>").val("1");
+            }
+
+            vvc = result;
+
+            var table = "", tr = "", td = "", i = 0, alreadyChecked = "", serviceCost = 0;
+            var paidServiceLength = result.PaidService.length;
+
+            table = "<table cellspacing=\"2\" cellpadding=\"2\" id=\"TableWisePaidServiceInfo\" style=\"margin:0;\" >";
+
+            table += "<thead>" +
+                            "<tr style=\"color: White; background-color: #44545E; font-weight: bold;\">" +
+                                "<th align=\"center\" scope=\"col\" style=\"width: 30px\">" +
+                                    "Select" +
+                                "</th>" +
+                                "<th align=\"center\" scope=\"col\" style=\"width: 350px\">" +
+                                    "Service" +
+                                "</th>" +
+                                "<th align=\"center\" scope=\"col\" style=\"width: 65px\">" +
+                                    "Cost (" + $("#<%=ddlCurrency.ClientID %>").find("option:selected").text() + ")" + "</th>" +
+                            "</tr>" +
+                        "</thead> <tbody>";
+
+            for (i = 0; i < paidServiceLength; i++) {
+
+                alreadyChecked = '';
+                if (currencyType == "Local") {
+                    serviceCost = (result.PaidService[i].UnitPriceLocal == null ? 0 : result.PaidService[i].UnitPriceLocal);
+                }
+                else {
+                    serviceCost = (result.PaidService[i].UnitPriceUsd == null ? 0 : result.PaidService[i].UnitPriceUsd);
+                }
+
+                var vc = _.findWhere(result.RegistrationPaidService, { ServiceId: result.PaidService[i].ServiceId });
+                if (vc != null) {
+                    alreadyChecked = "checked='checked'";
+                    if (currencyType == "Local") {
+                        serviceCost = (vc.UnitPrice == null ? serviceCost : vc.UnitPrice);
+                    }
+                    else {
+                        serviceCost = (vc.UnitPrice == null ? serviceCost : vc.UnitPrice);
+                    }
+                }
+                else
+                    alreadyChecked = '';
+
+                if ((i % 2) == 0)
+                    tr = "<tr id='trsr" + result.PaidService[i].ServiceId + "' style=\"background-color:#ffffff;\">";
+                else
+                    tr = "<tr id='trsr" + result.PaidService[i].ServiceId + "' style=\"background-color:#E3EAEB;\">";
+
+                td = "<td style=\"display:none\">" + result.PaidService[i].ServiceId + "</td>" +
+                     "<td align=\"center\" style=\"width: 30px\">" +
+                     "&nbsp;<input type='checkbox' value=\"" + result.PaidService[i].ServiceId + "\"" + alreadyChecked + " id=\"ch" + result.PaidService[i].ServiceId + "\" onchange = 'ChangeServiceCost (" + result.PaidService[i].ServiceId + ")'" + "\">" +
+                      "</td>" +
+                      "<td align=\"left\" style=\"width: 350px\">" +
+                       result.PaidService[i].ServiceName +
+                      "</td>" +
+                      "<td align=\"left\" style=\"width: 65px\">"
+                      + "<input type=\"text\" value=\"" + serviceCost + "\" id=\"txt" + result.PaidService[i].ServiceId + "\" onblur = 'UpdateServiceCost(this, " + result.PaidService[i].ServiceId + ")' disabled = 'disabled' style=\"width:60px; margin-bottom: 1px;\" />" +
+                      "</td>" +
+                       "<td align=\"left\" style=\"display:none; width: 65px\">" +
+                       serviceCost +
+                       "</td>";
+
+                tr += td + "</tr>";
+
+                table += tr;
+            }
+            table += " </tbody> </table>";
+
+            vvd = table;
+
+            $("#paidServiceContainer").html(table);
+
+            $("#PaidServiceDialog").dialog({
+                autoOpen: true,
+                modal: true,
+                width: 450,
+                closeOnEscape: true,
+                resizable: false,
+                title: "Paid Service",
+                show: 'slide'
+            });
+        }
+
+        function OnGetPaidServiceFailed(error) {
+
+        }
+
+        function ChangeServiceCost(serviceId) {
+            if ($("#ch" + serviceId).is(':checked') == true) {
+                $("#txt" + serviceId).attr('disabled', false);
+            }
+            else if ($("#ch" + serviceId).is(':checked') == false) {
+                $("#txt" + serviceId).attr('disabled', true);
+            }
+        }
+
+        function PerformRoomAvailableChecking() {
+            var RoomTypeId = $("#<%=ddlRoomTypeId.ClientID %>").val();
+            var txtFromDate = $("#<%=txtDateIn.ClientID %>").val();
+            var txtToDate = $("#<%=txtDateOut.ClientID %>").val();
+            var serverDateFormat = $("#<%=hfServerDateFormat.ClientID %>").val();
+            PageMethods.PerformGetRoomAvailableChecking(serverDateFormat, RoomTypeId, txtFromDate, txtToDate, OnPerformRoomAvailableCheckingSucceeded, OnPerformRoomAvailableCheckingFailed);
+            return false;
+        }
+        function OnPerformRoomAvailableCheckingSucceeded(result) {
+            var txtRoomIdVal = $("#<%=txtRoomId.ClientID %>").val();
+            if (parseFloat(result) < parseFloat(txtRoomIdVal)) {
+                var hfIsRoomOverbookingEnableVal = $("#<%=hfIsRoomOverbookingEnable.ClientID %>").val();
+				var txtAvailableRoomCountVal = $("#<%=txtAvailableRoomCount.ClientID %>").val();
+                if (hfIsRoomOverbookingEnableVal == "1") {
+					if (parseFloat(result) < parseFloat(txtRoomIdVal)) {
+						toastr.info("Please enter valid Room Quantity.");
+					}
+					else {
+                    toastr.info("This type of room is not available.");
+					}
+					$("#<%=txtRoomId.ClientID %>").val("0");
+                }
+                else {
+                    toastr.info("This type of room is not available.");
+                }
+            }
+            else {
+                SaveRoomDetailsInformationByWebMethod();
+            }
+            return false;
+        }
+        function OnPerformRoomAvailableCheckingFailed(error) {
+            toastr.error(error.get_message());
+        }
+        function GridPagingForSearchRegistration(pageNumber, isCurrentOrPreviousPage) {
+            var gridRecordCounts = ($("#ContentPlaceHolder1_gvRoomRegistration tbody tr").length + 1);
+            $("#ContentPlaceHolder1_hfPageNumber").val(pageNumber);
+            $("#ContentPlaceHolder1_hfGridRecordCounts").val(gridRecordCounts);
+            $("#ContentPlaceHolder1_hfIsCurrentRPreviouss").val(isCurrentOrPreviousPage);
+            $("#ContentPlaceHolder1_btnPagination").trigger("click");
+        }
+        function OnLoadXtraValidationSucceeded(result) {
+            if (result.SetupValue == "1") {
+                var country = $("#<%=ddlGuestCountry.ClientID %>").val();
+                if (country == 19) {
+                    var nationalId = $("#<%=txtNationalId.ClientID %>").val();
+                    if (nationalId == "") {
+                        toastr.warning("Please Provide National Id.");
+                        return;
+                    }
+                }
+                else {
+                    var visaNumber = $("#<%=txtVisaNumber.ClientID %>").val();
+                    var visaIssueDate = $("#<%=txtVIssueDate.ClientID %>").val();
+                    var visaExpiryDate = $("#<%=txtVExpireDate.ClientID %>").val();
+                    var passportNumber = $("#<%=txtPassportNumber.ClientID %>").val();
+                    var passIssuePlace = '';
+                    var passIssueDate = $("#<%=txtPIssueDate.ClientID %>").val();
+                    var passExpiryDate = $("#<%=txtPExpireDate.ClientID %>").val();
+
+                    if (visaNumber == "") {
+                        toastr.warning("Please Provide Visa Number.");
+                        return;
+                    }
+                    else if (visaIssueDate == "") {
+                        toastr.warning("Please Provide Visa Issue Date.");
+                        return;
+                    }
+                    else if (visaExpiryDate == "") {
+                        toastr.warning("Please Provide Visa Expiry Date.");
+                        return;
+                    }
+                    else if (passportNumber == "") {
+                        toastr.warning("Please Provide Passport Number.");
+                        return;
+                    }
+                    else if (passIssuePlace == "") {
+                        toastr.warning("Please Provide Passport Issue Place.");
+                        return;
+                    }
+                    else if (passIssueDate == "") {
+                        toastr.warning("Please Provide Passport Issue Date.");
+                        return;
+                    }
+                    else if (passExpiryDate == "") {
+                        toastr.warning("Please Provide Passport Expiry Date.");
+                        return;
+                    }
+                }
+                var dob = $("#<%=txtGuestDOB.ClientID %>").val();
+                var address = $("#<%=txtGuestAddress2.ClientID %>").val();
+                var email = $("#<%=txtGuestEmail.ClientID %>").val();
+                var phoneNo = $("#<%=txtGuestPhone.ClientID %>").val();
+
+                if (dob == "") {
+                    toastr.warning("Please Provide Date of Birth.");
+                    return;
+                }
+                else if (address == "") {
+                    toastr.warning("Please Provide Address.");
+                    return;
+                }
+                else if (email == "") {
+                    toastr.warning("Please Provide Email Address.");
+                    return;
+                }
+                else if (phoneNo == "") {
+                    toastr.warning("Please Provide Phone No.");
+                    return;
+                }
+            }
+            LoadDetailGridInformation();
+        }
+        function OnLoadXtraValidationFailed(error) {
+        }
+        function SameAsGuest() {
+            var ctrl = '#<%=IsSameasGuest.ClientID%>'
+            if ($(ctrl).is(':checked')) {
+                var title = $("#<%=ddlTitle.ClientID %>").val();
+                if (title == "MrNMrs.") {
+                    title = "Mr. & Mrs.";
+                }
+                var firstName = $("#<%=txtFirstName.ClientID %>").val();
+                var lastName = $("#<%=txtLastName.ClientID %>").val();
+                var name = title + " " + firstName + " " + lastName;
+                var phone = $('#<%=txtPhone.ClientID%>').val();
+                var email = $('#<%=txtEmail.ClientID%>').val();
+
+                $('#<%=txtContactPerson.ClientID%>').val(name);
+                $('#<%=txtMobileNumber.ClientID%>').val(phone);
+                $('#<%=txtContactEmail.ClientID%>').val(email);
+            }
+            else {
+                $('#<%=txtContactPerson.ClientID%>').val("");
+                $('#<%=txtMobileNumber.ClientID%>').val("");
+                $('#<%=txtContactEmail.ClientID%>').val("");
+            }
+        }
+        function OnMultiplePickup() {
+            var ctrl = '#<%=chkMultiplePickup.ClientID%>'
+            if ($(ctrl).is(':checked')) {
+                $("#MultipleGuest").show();
+                $("#addMultiplePickup").show();
+                var hfReservationIdTemp = $("#<%=hfReservationIdTemp.ClientID %>").val();
+                var reservationId = parseInt(hfReservationIdTemp);
+                PageMethods.LoadMultipleGuest(reservationId, OnLoadMultipleGuestSucceeded, OnLoadMultipleGuestFailed);
+            }
+            else {
+                $("#MultipleGuest").hide();
+                $("#addMultiplePickup").hide();
+            }
+        }
+        function OnMultipleDrop() {
+            var ctrl = '#<%=chkMultipleDrop.ClientID%>'
+            if ($(ctrl).is(':checked')) {
+                $("#MultipleDropGuest").show();
+                $("#addMultipleDrop").show();
+                var hfReservationIdTemp = $("#<%=hfReservationIdTemp.ClientID %>").val();
+                var reservationId = parseInt(hfReservationIdTemp);
+                PageMethods.LoadMultipleGuest(reservationId, OnLoadMultipleGuestSucceeded, OnLoadMultipleGuestFailed);
+            }
+            else {
+                $("#MultipleDropGuest").hide();
+                $("#addMultipleDrop").hide();
+            }
+        }
+        function OnLoadMultipleGuestSucceeded(result) {
+            var list = result;
+            var ddlGuestId = '<%=ddlGuest.ClientID%>';
+            var control = $('#' + ddlGuestId);
+            control.empty();
+
+            if (list != null) {
+                if (list.length > 0) {
+                    control.empty().append('<option selected="selected" value="0">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
+                    for (i = 0; i < list.length; i++) {
+                        control.append('<option title="' + list[i].GuestName + '" value="' + list[i].GuestId + '">' + list[i].GuestName + '</option>');
+                    }
+                }
+            }
+            var ddlDropGuest = '<%=ddlDropGuest.ClientID%>';
+            var control2 = $('#' + ddlDropGuest);
+            control2.empty();
+
+            if (list != null) {
+                if (list.length > 0) {
+                    control2.empty().append('<option selected="selected" value="0">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
+                    for (i = 0; i < list.length; i++) {
+                        control2.append('<option title="' + list[i].GuestName + '" value="' + list[i].GuestId + '">' + list[i].GuestName + '</option>');
+                    }
+                }
+            }
+            return false;
+        }
+        function OnLoadMultipleGuestFailed() {
+        }
+        function DeletePickup(deleteItem) {
+            var tr = $(deleteItem).parent().parent();
+            var apdId = $.trim($(tr).find("td:eq(0)").text());
+            if (apdId != "") {
+                DeletedAirportPickupDrop.push({
+                    APDId: apdId
+                });
+            }
+            $(deleteItem).parent().parent().remove();
+        }
+        function RoomNumberDropDown() {
+            var roomNumbersArr = []; // roomNumbers.split(',');
+            var roomIdsArr = []; // roomIds.split(',');
+            var i = 0;
+
+            var ddlRoomNumber = '<%=ddlRoomNumber.ClientID%>';
+            var control = $('#' + ddlRoomNumber);
+            control.empty();
+
+            $("#ReservationRoomGrid tbody tr").each(function () {
+                roomIdsArr = $.trim($(this).find("td:eq(5)").text()).split(","); // id
+                roomNumbersArr = $.trim($(this).find("td:eq(6)").text()).split(","); //number
+
+                if (roomIdsArr != null) {
+                    if (roomIdsArr.length > 0) {
+                        for (i = 0; i < roomIdsArr.length; i++) {
+                            if (roomIdsArr[i] != "0") {
+                                control.append('<option title="' + roomNumbersArr[i] + '" value="' + roomIdsArr[i] + '">' + roomNumbersArr[i] + '</option>');
+                            }
+                        }
+                    }
+                }
+
+                roomIdsArr = [];
+                roomNumbersArr = [];
+            });
+        }
+        function OnLoadRoomNumbersSucceeded(result) {
+            var list = result;
+            var ddlRoomNumber = '<%=ddlRoomNumber.ClientID%>';
+            var control = $('#' + ddlRoomNumber);
+            control.empty();
+
+            if (list != null) {
+                if (list.length > 0) {
+                    for (i = 0; i < list.length; i++) {
+                        control.append('<option title="' + list[i].RoomNumber + '" value="' + list[i].RoomId + '">' + list[i].RoomNumber + '</option>');
+                    }
+                }
+            }
+        }
+        function OnLoadRoomNumbersFailed(error) {
+        }
+
+        function MultiplePickUpDropInfo(reservationId) {
+
+            PageMethods.MultipleAireportPickupDropInfo(reservationId, OnLoadMultipleAireportPickupDropInfoSucceeded, OnLoadMultipleAireportPickupDropInfoFailed);
+            return false;
+        }
+        function OnLoadMultipleAireportPickupDropInfoSucceeded(result) {
+            $("#MultipleAireportPickupDropInfo").html(result);
+            $("#MultiplePickUpDropInfoDiv").dialog({
+                autoOpen: true,
+                modal: true,
+                width: 550,
+                closeOnEscape: true,
+                resizable: false,
+                title: "Multiple PickUp Drop Info",
+                show: 'slide'
+            });
+        }
+        function OnLoadMultipleAireportPickupDropInfoFailed() { }
+
+        function ShowReport(reservationId, aPDId) {
+            var iframeid = 'printDoc';
+            var url = "/HotelManagement/Reports/frmReportReservationBillInfo.aspx?GuestBillInfo=" + reservationId + "&APDInfo=" + aPDId;
+            parent.document.getElementById(iframeid).src = url;
+
+            $("#displayBill").dialog({
+                autoOpen: true,
+                modal: true,
+                minWidth: 800,
+                minHeight: 555,
+                width: 'auto',
+                closeOnEscape: false,
+                resizable: false,
+                height: 'auto',
+                fluid: true,
+                title: "Confirmation Letter",
+                show: 'slide'
+            });
+        }
+
+        // Guest Reference
+        function LoadGuestReference() {
+            LoadGuestReferenceInfo();
+            //popup(1, 'DivGuestReference', '', 600, 525);
+            $("#DivGuestReference").dialog({
+                width: 600,
+                height: 525,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: true,
+                resizable: false,
+                fluid: true,
+                title: "Guest Preference",
+                show: 'slide'
+            });
+            return false;
+        }
+
+        function LoadGuestReferenceInfo() {
+            PageMethods.LoadGuestReferenceInfo(OnLoadGuestReferenceSucceeded, OnLoadGuestReferenceFailed);
+            return false;
+        }
+        function OnLoadGuestReferenceSucceeded(result) {
+            $("#ltlGuestReference").html(result);
+            var PreferenceIdList = "";
+            PreferenceIdList = $("#ContentPlaceHolder1_hfGuestPreferenceId").val();
+
+            if (SelectdPreferenceId != "") {
+                var PreferenceArray = SelectdPreferenceId.split(",");
+                if (PreferenceArray.length > 0) {
+                    for (var i = 0; i < PreferenceArray.length; i++) {
+                        var preferenceId = "#" + PreferenceArray[i].trim();
+                        $(preferenceId).attr("checked", true);
+                    }
+                }
+                SelectdPreferenceId = "";
+            }
+
+            if (PreferenceIdList != "") {
+                var SavedPreferenceArray = PreferenceIdList.split(",");
+                if (SavedPreferenceArray.length > 0) {
+                    for (var i = 0; i < SavedPreferenceArray.length; i++) {
+                        var preferenceId = "#" + SavedPreferenceArray[i].trim();
+                        $(preferenceId).attr("checked", true);
+                    }
+                }
+            }
+            return false;
+        }
+        function OnLoadGuestReferenceFailed() {
+        }
+
+        function GetCheckedGuestPreference() {
+            $("#GuestPreferenceDiv").show();
+            var SelectdPreferenceName = "";
+
+            $('#GuestReferenceInformation tbody tr').each(function () {
+                var chkBox = $(this).find("td:eq(1)").find("input");
+
+                if ($(chkBox).is(":checked") == true) {
+                    if (SelectdPreferenceId != "") {
+                        SelectdPreferenceId += ',' + $(chkBox).attr('value');
+                        SelectdPreferenceName += ', ' + $(chkBox).attr('name');
+                    }
+                    else {
+                        SelectdPreferenceId = $(chkBox).attr('value');
+                        SelectdPreferenceName = $(chkBox).attr('name');
+                    }
+                }
+            });
+            $("#<%=lblGstPreference.ClientID %>").text(SelectdPreferenceName);
+            $("#DivGuestReference").dialog("close");
+        }
+
+        function CloseRoomDialog() {
+            $("#DivRoomSelect").dialog("close");
+        }
+
+        function ClosePreferenceDialog() {
+            $("#DivGuestReference").dialog("close");
+        }
+        function PerformFillFormActionByRoomTypeId(actionId) {
+            var RoomTypeId = $("#<%=ddlRoomTypeId.ClientID %>").val();
+            var txtFromDate = $("#<%=txtDateIn.ClientID %>").val();
+            var txtToDate = $("#<%=txtDateOut.ClientID %>").val();
+            var hfServerDateFormat = $("#<%=hfServerDateFormat.ClientID %>").val();
+
+            PageMethods.PerformFillFormActionByTypeId(hfServerDateFormat, actionId, RoomTypeId, txtFromDate, txtToDate, OnFillRoomObjectSucceededByTypeId, OnFillRoomObjectFailedByTypeId);
+            return false;
+        }
+        function OnFillRoomObjectSucceededByTypeId(result) {
+            if ($("#<%=ddlCurrency.ClientID %>").val() == '46') {
+                $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRateUSD);
+                $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRateUSD);
+                $("#<%=txtRoomRate.ClientID %>").val(result.RoomRateUSD);
+            }
+            else {
+                $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRate);
+                $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRate);
+                $("#<%=txtRoomRate.ClientID %>").val(result.RoomRate);
+            }
+            $("#<%=txtAvailableRoomCount.ClientID %>").val(result.AvailableRoomCount);
+            $("#<%=hfAvailableRoomCount.ClientID %>").val(result.AvailableRoomCount);
+            UpdateTotalCostWithDiscount();
+            return false;
+        }
+        function OnFillRoomObjectFailedByTypeId(error) {
+            toastr.error(error.get_message());
+        }
+    </script>
+    <asp:HiddenField ID="hfCurrencyType" runat="server" />
+    <asp:HiddenField ID="hfMinCheckInDate" runat="server" />
+    <asp:HiddenField ID="hfIsRoomOverbookingEnable" runat="server" />
+    <asp:HiddenField ID="hfReservationId" runat="server" Value="" />
+    <asp:HiddenField ID="hfIsSaveRUpdate" runat="server" Value="" />
+    <asp:HiddenField ID="hfReservationIdTemp" runat="server" />
+    <asp:HiddenField ID="hfReservationEditId" runat="server" Value="" />
+    <asp:HiddenField ID="hfPaidServiceSaveObj" runat="server" />
+    <asp:HiddenField ID="hfPaidServiceDeleteObj" runat="server" />
+    <asp:HiddenField ID="hfIsPaidServiceAlreadyLoded" runat="server" Value="0" />
+    <asp:HiddenField ID="hfIsPaidServiceAlreadySavedDb" runat="server" Value="0" />
+    <asp:HiddenField ID="hfPageNumber" runat="server" />
+    <asp:HiddenField ID="hfGridRecordCounts" runat="server" />
+    <asp:HiddenField ID="hfIsCurrentRPreviouss" runat="server" />
+    <asp:HiddenField ID="hfProfileOrAddMore" runat="server" />
+    <asp:HiddenField ID="hfFstAsndRoomId" runat="server" />
+    <asp:HiddenField ID="hfAPId" runat="server" />
+    <asp:HiddenField ID="hfADId" runat="server" />
+    <asp:HiddenField ID="hfPrevGuestId" runat="server" Value="" />
+    <asp:HiddenField ID="CommonDropDownHiddenField" runat="server"></asp:HiddenField>
+    <asp:HiddenField ID="hfCurrentReservationGuestId" runat="server" />
+    <asp:HiddenField ID="hfIsSameasContactPersonAsGuest" runat="server" />
+    <asp:HiddenField ID="hfGuestPreferenceId" runat="server" />
+    <asp:HiddenField ID="hfServerDateFormat" runat="server"></asp:HiddenField>
+    <div id="displayBill" style="display: none;">
+        <iframe id="printDoc" name="printDoc" width="800" height="650" frameborder="0" style="overflow: hidden;">
+        </iframe>
+        <div id="bottomPrint">
+        </div>
+    </div>
+    <div style="display: none;">
+        <asp:Button ID="btnPagination" runat="server" Text="pagination" OnClick="btnPagination_Click" />
+    </div>
+    <div style="display: none;">
+        <div runat="server" id="RoomDetailsTemp">
+        </div>
+    </div>
+    <div style="display: none;">
+        <div runat="server" id="AirportPickupDetails">
+        </div>
+    </div>
+    <div style="display: none;">
+        <div runat="server" id="AirportDropDetails">
+        </div>
+    </div>
+    <div style="display: none;" id="MultiplePickUpDropInfoDiv">
+        <div id="MultipleAireportPickupDropInfo">
+        </div>
+    </div>
+    <div id="PaidServiceDialog" style="width: 450px; display: none;">
+        <div class="">
+            <div class="DataGridYScroll">
+                <div id="paidServiceContainer" style="width: 100%;">
+                </div>
+            </div>
+            <div id="Div4" style="padding-left: 5px; width: 100%; margin-top: 5px;">
+                <div style="float: left; padding-bottom: 15px;">
+                    <input type="button" id="btnItemwiseSpecialRemarksOk" class="btn btn-primary btn-sm"
+                        value="Ok" />
+                    <input type="button" id="btnItemwiseSpecialRemarksCancel" class="btn btn-primary btn-sm"
+                        value="Cancel" />
+                </div>
+                <div id="ItemWiseSpecialRemarksContainer" class="alert alert-info" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert">
+                        ×</button>
+                    <asp:Label ID='ItemWiseSpecialRemarksMessage' Font-Bold="True" runat="server" ClientIDMode="Static"></asp:Label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Online Reservation</div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="CheckInDate" class="control-label required-field col-md-2">
+                        Check In Date</label>
+                    <div class="col-md-4">
+                        <div class="col-md-10 col-padding-left-none">
+                            <asp:HiddenField ID="DateInHiddenField" runat="server"></asp:HiddenField>
+                            <asp:HiddenField ID="DateInHiddenFieldEdit" runat="server"></asp:HiddenField>
+                            <asp:TextBox ID="txtDateIn" CssClass="form-control" runat="server" TabIndex="1"></asp:TextBox>
+                        </div>
+                        <div class="col-padding-rigth-none" style="display: none;">
+                            <asp:TextBox ID="txtProbableArrivalTime" placeholder="12" runat="server" CssClass="form-control"
+                                TabIndex="23"></asp:TextBox>
+                        </div>
+                    </div>
+                    <label for="CheckOutDate" class="control-label required-field col-md-2">
+                        Check Out Date</label>
+                    <div class="col-md-4">
+                        <div class="col-md-8 col-padding-left-none">
+                            <asp:HiddenField ID="DateOutHiddenField" runat="server"></asp:HiddenField>
+                            <asp:HiddenField ID="txtEditedRoom" runat="server"></asp:HiddenField>
+                            <asp:HiddenField ID="txtEditedRoomNumber" runat="server"></asp:HiddenField>
+                            <asp:TextBox ID="txtDateOut" runat="server" CssClass="form-control" TabIndex="5"></asp:TextBox>
+                        </div>
+                        <div class="col-md-3 col-padding-left-none" style="display:none;">
+                            <asp:TextBox ID="txtReservationDuration" CssClass="form-control" runat="server" ReadOnly="true"
+                                ClientIDMode="Static"></asp:TextBox>
+                        </div>
+                        <div class="col-md-1 col-padding-left-none" style="display: none;">
+                            <span>
+                                <asp:CheckBox ID="cbReservationDuration" runat="server" /></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="childDivSection" style="padding-top: 10px;">
+                    <div id="RoomDetailsInformation" class="panel panel-default">
+                        <div class="panel-heading">
+                            Room Detailed Information
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="RoomType" class="control-label required-field col-md-2">
+                                        Room Type</label>
+                                    <div class="col-md-4">
+                                        <asp:DropDownList ID="ddlRoomTypeId" runat="server" CssClass="form-control" TabIndex="16">
+                                        </asp:DropDownList>
+                                    </div>
+                                    <label for="RackRate" class="control-label col-md-2">
+                                        Rack Rate</label>
+                                    <div class="col-md-4">
+                                        <asp:HiddenField ID="txtUnitPriceHiddenField" runat="server"></asp:HiddenField>
+                                        <asp:TextBox ID="txtUnitPrice" runat="server" CssClass="form-control" TabIndex="17"
+                                            Enabled="false"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="RoomQuantity" class="control-label required-field col-md-2">
+                                        Room Quantity</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtRoomId" runat="server" CssClass="form-control" TabIndex="17"></asp:TextBox>
+                                        <div class="col-md-8 col-padding-left-none" style="display: none;">
+                                            <input type="button" tabindex="18" id="btnChange" value="Room Number" class="btn btn-primary btn-sm"
+                                                onclick="javascript: return LoadRoomNumber();" />
+                                        </div>
+                                    </div>
+                                    <label for="DiscountAmount" class="control-label col-md-2">
+                                        Available Room</label>
+                                    <div class="col-md-4">
+                                        <asp:HiddenField ID="hfAvailableRoomCount" runat="server"></asp:HiddenField>
+                                        <asp:TextBox ID="txtAvailableRoomCount" runat="server" CssClass="form-control" Enabled="false"
+                                            TabIndex="17"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div style="display: none;">
+                                    <div class="form-group">
+                                        <label for="DiscountType" class="control-label col-md-2">
+                                            Discount Type</label>
+                                        <div class="col-md-4">
+                                            <asp:DropDownList ID="ddlDiscountType" runat="server" CssClass="form-control" TabIndex="16">
+                                                <asp:ListItem>Fixed</asp:ListItem>
+                                                <asp:ListItem>Percentage</asp:ListItem>
+                                            </asp:DropDownList>
+                                        </div>
+                                        <label for="DiscountAmount" class="control-label col-md-2">
+                                            Discount Amount</label>
+                                        <div class="col-md-4">
+                                            <asp:TextBox ID="txtDiscountAmount" runat="server" CssClass="form-control" TabIndex="17"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="NegotiatedRate" class="control-label col-md-2">
+                                            Negotiated Rate</label>
+                                        <div class="col-md-4">
+                                            <asp:TextBox ID="txtRoomRate" runat="server" CssClass="form-control" TabIndex="17"
+                                                onblur="CalculateDiscount()"></asp:TextBox><span style="margin-left: 3px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="DivAddedRoom" style="display: none">
+                                    <label for="RoomNumber" class="control-label col-md-2">
+                                        Added Room</label>
+                                    <div class="col-md-10">
+                                        <asp:Label ID="lblAddedRoomNumber" class="control-label" runat="server"></asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="button" id="btnAddDetailGuest" tabindex="19" value="Add" class="btn btn-primary btn-sm" />
+                                        <input type="button" id="btnDiscard" onclick="CancelRoomAddEdit()" tabindex="19"
+                                            value="Cancel" class="btn btn-primary btn-sm" />
+                                        <asp:Label ID="lblHiddenId" runat="server" Text='' Visible="False"></asp:Label>
+                                        <asp:HiddenField ID="ddlRoomTypeIdHiddenField" runat="server"></asp:HiddenField>
+                                    </div>
+                                </div>
+                                <div id="ReservationDetailGrid" style="padding-top: 10px;">
+                                    <table class="table table-bordered table-condensed table-responsive" id='ReservationRoomGrid'>
+                                        <thead>
+                                            <tr style='color: White; background-color: #44545E; font-weight: bold;'>
+                                                <th align='left' style="width: 42%;">
+                                                    Room Type
+                                                </th>
+                                                <th align='left' style="width: 50%;">
+                                                    Room Numbers
+                                                </th>
+                                                <th align='center' style="width: 8%;">
+                                                    Action
+                                                </th>
+                                                <th style="display: none;">
+                                                    ReserVation Details Id
+                                                </th>
+                                                <th style="display: none;">
+                                                    Room Type Id
+                                                </th>
+                                                <th style="display: none;">
+                                                    Room Id
+                                                </th>
+                                                <th style="display: none;">
+                                                    Room Number
+                                                </th>
+                                                <th style="display: none;">
+                                                    Total Room
+                                                </th>
+                                                <th style="display: none;">
+                                                    Discount Type
+                                                </th>
+                                                <th style="display: none;">
+                                                    Discount Amount
+                                                </th>
+                                                <th style="display: none;">
+                                                    Unit Price Rack Rate
+                                                </th>
+                                                <th style="display: none;">
+                                                    Room Rate Negotiated Rate
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="childDivSection">
+                    <div id="Div7" class="panel panel-default">
+                        <div class="panel-heading">
+                            Contact Information
+                        </div>
+                        <asp:Panel ID="pnlReservationEditTimePanelwillHide" runat="server">
+                            <div class="form-group" style="padding-top: 10px;">
+                                <label for="Title" class="control-label required-field col-md-2">
+                                    Title</label>
+                                <div class="col-md-4">
+                                    <div class="col-md-10 col-padding-left-none">
+                                        <asp:DropDownList ID="ddlTitle" runat="server" CssClass="form-control" TabIndex="2">
+                                            <asp:ListItem Value="0">--- Please Select ---</asp:ListItem>
+                                            <asp:ListItem Value="Mr.">Mr.</asp:ListItem>
+                                            <asp:ListItem Value="Mrs.">Mrs.</asp:ListItem>
+                                            <asp:ListItem Value="Miss.">Miss.</asp:ListItem>
+                                            <asp:ListItem Value="MrNMrs.">Mr. & Mrs.</asp:ListItem>
+                                            <asp:ListItem Value="Dr.">Dr.</asp:ListItem>
+                                            <asp:ListItem Value="N/A">Not Applicable</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                    <div class="col-md-2 col-padding-left-none" style="display: none;">
+                                        <asp:ImageButton ID="imgReservationSearch" Width="25" runat="server" OnClientClick="javascript:return SearchGuestForReservation()"
+                                            ImageUrl="~/Images/SearchItem.png" ToolTip="Search Guest" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="FirstName" class="control-label required-field col-md-2">
+                                    First Name</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtFirstName" CssClass="form-control" runat="server"></asp:TextBox>
+                                </div>
+                                <label for="LastName" class="control-label col-md-2">
+                                    Last Name</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtLastName" CssClass="form-control" runat="server"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="MobileNumber" class="control-label col-md-2  required-field">
+                                    Mobile Number</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtPhone" runat="server" CssClass="form-control" TabIndex="41"></asp:TextBox>
+                                </div>
+                                <label for="Email" class="control-label col-md-2">
+                                    Email</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Country" class="control-label col-md-2">
+                                    Country</label>
+                                <div class="col-md-4">
+                                    <input id="txtCountry" type="text" class="form-control" />
+                                    <div style="display: none;">
+                                        <asp:DropDownList ID="ddlCountry" runat="server" TabIndex="40">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-4">
+                                    <div style="display: none;">
+                                        <input id="btnProfile" type="button" value="Add More" class="btn btn-primary btn-sm"
+                                            tabindex="51" />
+                                        <input id="btnAddmore" type="button" value="Profile" class="btn btn-primary btn-sm"
+                                            tabindex="51" style="display: none;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </asp:Panel>
+                        <div class="form-group" style="display: none;">
+                            <label for="ReservationMode" class="control-label required-field col-md-2">
+                                Reservation Mode</label>
+                            <div class="col-md-4">
+                                <asp:DropDownList ID="ddlReservedMode" runat="server" CssClass="form-control" TabIndex="7">
+                                    <asp:ListItem>--- Please Select ---</asp:ListItem>
+                                    <asp:ListItem>Self</asp:ListItem>
+                                    <asp:ListItem>Company</asp:ListItem>
+                                    <asp:ListItem>Group</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                            <div id="PersonDiv" style="display: none">
+                                <div class="col-md-6 aspBoxText" style="width: 250px;">
+                                    <asp:Panel ID="pnlIsSameasGuest" runat="server">
+                                        <asp:CheckBox ID="IsSameasGuest" runat="server" OnClick="SameAsGuest();" CssClass="aspBoxAlign" />&nbsp;
+                                        Guest as Contact Person
+                                    </asp:Panel>
+                                </div>
+                            </div>
+                            <div style="display: none;">
+                                <label for="BusinessPromotion" class="control-label col-md-2">
+                                    Business Promotion</label>
+                                <div class="col-md-10">
+                                    <asp:DropDownList ID="ddlBusinessPromotionId" runat="server" CssClass="form-control"
+                                        TabIndex="8">
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="GroupDiv" style="display: none;">
+                            <label for="GroupName" class="control-label col-md-2">
+                                Group Name</label>
+                            <div class="col-md-10">
+                                <asp:TextBox ID="txtGroupName" runat="server" CssClass="form-control" TabIndex="11"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div id="CompanyInformation" style="display: none;">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <div class="col-md-3" style="padding-top: 5px;">
+                                        <asp:CheckBox ID="chkIsLitedCompany" runat="server" Text="" onclick="javascript: return ToggleListedCompanyInfo();"
+                                            TabIndex="9" />
+                                    </div>
+                                    <label for="ListedCompany" class="control-label col-md-9">
+                                        Listed Company</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <div id="ListedCompany" style="display: none;">
+                                        <asp:DropDownList ID="ddlCompanyName" runat="server" TabIndex="10" CssClass="form-control">
+                                        </asp:DropDownList>
+                                    </div>
+                                    <div id="ReservedCompany">
+                                        <asp:TextBox ID="txtReservedCompany" runat="server" TabIndex="11" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ContactPersonDiv" style="display: none">
+                            <div class="form-group">
+                                <label for="ContactPerson" class="control-label col-md-2">
+                                    Contact Person</label>
+                                <div class="col-md-10">
+                                    <asp:TextBox ID="txtContactPerson" runat="server" CssClass="form-control" TabIndex="11"
+                                        MaxLength="150"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ContactAddress" style="display: none;">
+                            <div class="form-group">
+                                <label for="ContactAddress" class="control-label col-md-2">
+                                    Contact Address</label>
+                                <div class="col-md-10">
+                                    <asp:TextBox ID="txtContactAddress" runat="server" CssClass="form-control" TextMode="MultiLine"
+                                        TabIndex="11" MaxLength="300"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="MobileNEmailDiv" style="display: none">
+                            <div class="form-group">
+                                <label for="MobileNumber" class="control-label col-md-2">
+                                    Mobile Number</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtMobileNumber" runat="server" CssClass="form-control" TabIndex="14"></asp:TextBox>
+                                </div>
+                                <label for="EmailAddress" class="control-label col-md-2">
+                                    Email Address</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtContactEmail" runat="server" CssClass="form-control" TabIndex="13"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="PaymentInformation" style="display: none;">
+                            <div class="form-group">
+                                <label for="PaymentMode" class="control-label col-md-2">
+                                    Payment Mode</label>
+                                <div class="col-md-4">
+                                    <asp:DropDownList ID="ddlPaymentMode" runat="server" CssClass="form-control" TabIndex="16">
+                                        <asp:ListItem Value="Company">Company</asp:ListItem>
+                                        <asp:ListItem Value="Self">Self</asp:ListItem>
+                                        <asp:ListItem Value="TBA">Before C/O (Company/ Host)</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                                <label for="PayFor" class="control-label col-md-2">
+                                    Pay For</label>
+                                <div class="col-md-4">
+                                    <asp:DropDownList ID="ddlPayFor" runat="server" CssClass="form-control" TabIndex="17">
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="CurrencyDiv" style="display: none">
+                            <label for="CurrencyType" class="control-label col-md-2">
+                                Currency Type</label>
+                            <div class="col-md-4">
+                                <asp:HiddenField ID="hfCurrencyHiddenField" runat="server" />
+                                <asp:DropDownList ID="ddlCurrency" runat="server" CssClass="form-control" TabIndex="16">
+                                </asp:DropDownList>
+                            </div>
+                            <div id="CurrencyAmountInformationDiv" style="display: none;">
+                                <label for="ConversionRate" class="control-label col-md-2">
+                                    Conversion Rate</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtConversionRate" CssClass="form-control" runat="server"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: none;">
+                            <div class="form-group">
+                                <label for="Reference" class="control-label col-md-2">
+                                    Reference</label>
+                                <div class="col-md-4">
+                                    <asp:DropDownList ID="ddlReferenceId" runat="server" CssClass="form-control" TabIndex="20">
+                                    </asp:DropDownList>
+                                </div>
+                                <label for="ReservationStatus" class="control-label col-md-2">
+                                    Reservation Status</label>
+                                <div class="col-md-4">
+                                    <asp:DropDownList ID="ddlReservationStatus" runat="server" CssClass="form-control"
+                                        TabIndex="21">
+                                        <asp:ListItem Value="Active">Active</asp:ListItem>
+                                        <%--<asp:ListItem Value="Pending">Pending</asp:ListItem>--%>
+                                        <asp:ListItem Value="Cancel">Cancel</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="NoShowChargeDiv" style="display: none;">
+                            <label for="ChargeAmount" class="control-label col-md-2">
+                                Charge Amount</label>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtNoShowCharge" CssClass="form-control" runat="server" TabIndex="22"></asp:TextBox>
+                                <div style="display: none;">
+                                    <asp:DropDownList ID="ddlCashPaymentAccountHeadForNoShow" runat="server" CssClass="form-control"
+                                        TabIndex="21">
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="PendingDiv">
+                            <label for="RoomNumber" class="control-label col-md-2">
+                                Confirmation Date</label>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtConfirmationDate" CssClass="form-control" runat="server" TabIndex="22"></asp:TextBox>
+                            </div>
+                            <label for="ProbableArrivalTime" class="control-label col-md-2">
+                                Probable Arrival Time</label>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtProbableArrivalPendingTime" placeholder="12" runat="server" CssClass="form-control"
+                                    TabIndex="23"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="form-group" id="ReasonDiv">
+                            <label for="CancelReason" class="control-label col-md-2">
+                                Cancel Reason</label>
+                            <div class="col-md-10">
+                                <asp:TextBox ID="txtReason" runat="server" CssClass="form-control" TextMode="MultiLine"
+                                    TabIndex="26"></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Remarks" class="control-label col-md-2">
+                        Special Request</label>
+                    <div class="col-md-10">
+                        <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control" TextMode="MultiLine"
+                            TabIndex="27"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="SubmitButtonDiv" style="padding: 10px 0 10px 25px;">
+            <div class="col-md-12">
+                <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="btn btn-primary btn-sm"
+                    TabIndex="80" OnClientClick="javascript: return ValidateGuestNumber();" />
+                <asp:Button ID="btnCancel" runat="server" Text="Clear" CssClass="btn btn-primary btn-sm"
+                    TabIndex="81" OnClick="btnCancel_Click" />
+            </div>
+        </div>
+    </div>
+    <div style="display: none;">
+        <div id="myTabs" style="display: none;">
+            <ul id="tabPage" class="ui-style">
+                <li id="A" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
+                    href="#tab-1">Reservation</a></li>
+                <li id="B" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
+                    href="#tab-2">Guest Details</a></li>
+                <li id="D" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
+                    href="#tab-3">Airport Pick-Up/Drop</a></li>
+                <li id="C" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
+                    href="#tab-4">Complimentary Item</a></li>
+                <li id="E" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
+                    href="#tab-5">Search Reservation</a></li>
+            </ul>
+            <div id="tab-1">
+            </div>
+            <div id="tab-2">
+                <div class="childDivSection">
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label for="Person Adult" class="control-label col-md-2">
+                                    Person (Adult)</label>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input id="EditId" runat="server" type="hidden" />
+                                            <asp:TextBox ID="txtNumberOfPersonAdult" runat="server" Width="110px" CssClass="form-control"
+                                                TabIndex="28">1</asp:TextBox>
+                                        </div>
+                                        <div class="col-md-1 col-padding-left-none">
+                                            <asp:CheckBox ID="cbFamilyOrCouple" runat="server" Text="" TabIndex="9" />
+                                        </div>
+                                        <div class="col-md-5 col-padding-left-none">
+                                            <asp:Label ID="Label16" runat="server" class="control-label" Text="Family/ Couple"></asp:Label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label for="PersonChild" class="control-label col-md-2">
+                                    Person (Child)</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtNumberOfPersonChild" runat="server" CssClass="form-control" TabIndex="29"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Title" class="control-label required-field col-md-2">
+                                    Title</label>
+                                <div class="col-md-4">
+                                    <asp:DropDownList ID="ddlGuestTitle" runat="server" CssClass="form-control" TabIndex="2">
+                                        <asp:ListItem Value="0">--- Please Select ---</asp:ListItem>
+                                        <asp:ListItem Value="Mr.">Mr.</asp:ListItem>
+                                        <asp:ListItem Value="Mrs.">Mrs.</asp:ListItem>
+                                        <asp:ListItem Value="Miss.">Miss.</asp:ListItem>
+                                        <asp:ListItem Value="MrNMrs.">Mr. & Mrs.</asp:ListItem>
+                                        <asp:ListItem Value="Dr.">Dr.</asp:ListItem>
+                                        <asp:ListItem Value="N/A">Not Applicable</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="FirstName" class="control-label required-field col-md-2">
+                                    First Name</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtGuestFirstName" runat="server" CssClass="form-control" TabIndex="30"></asp:TextBox>
+                                </div>
+                                <label for="LastName" class="control-label col-md-2">
+                                    Last Name</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtGuestLastName" runat="server" CssClass="form-control" TabIndex="30"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Name" class="control-label col-md-2">
+                                    Name</label>
+                                <div class="col-md-8">
+                                    <asp:TextBox ID="txtGuestName" CssClass="form-control" runat="server" TabIndex="30"
+                                        disabled></asp:TextBox>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" id="btnAddPerson" tabindex="31" class="btn btn-primary btn-sm">
+                                        Search Guest</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="DateOfBirth" class="control-label col-md-2">
+                                    Date Of Birth</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtGuestDOB" runat="server" CssClass="form-control" TabIndex="32"></asp:TextBox>
+                                </div>
+                                <label for="Gender" class="control-label required-field col-md-2">
+                                    Gender</label>
+                                <div class="col-md-4">
+                                    <asp:DropDownList ID="ddlGuestSex" runat="server" CssClass="form-control" TabIndex="33">
+                                        <asp:ListItem Value="0">--- Please Select ---</asp:ListItem>
+                                        <asp:ListItem>Male</asp:ListItem>
+                                        <asp:ListItem>Female</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="CompanyName" class="control-label col-md-2">
+                                    Company Name</label>
+                                <div class="col-md-10">
+                                    <asp:TextBox ID="txtGuestAddress1" runat="server" CssClass="form-control" TabIndex="34"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Address" class="control-label col-md-2">
+                                    Address</label>
+                                <div class="col-md-10">
+                                    <asp:TextBox ID="txtGuestAddress2" runat="server" CssClass="form-control" TabIndex="35"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="EmailAddress" class="control-label col-md-2">
+                                    Email Address</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtGuestEmail" runat="server" TabIndex="36" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <label for="Profession" class="control-label col-md-2">
+                                    Profession</label>
+                                <div class="col-md-4">
+                                    <asp:DropDownList ID="ddlProfessionId" runat="server" TabIndex="40" CssClass="form-control">
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="MobileNumber" class="control-label col-md-2">
+                                    Mobile Number</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtGuestPhone" runat="server" CssClass="form-control" TabIndex="37"></asp:TextBox>
+                                </div>
+                                <label for="City" class="control-label col-md-2">
+                                    City</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtGuestCity" runat="server" CssClass="form-control" TabIndex="38"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ZipCode" class="control-label col-md-2">
+                                    Zip Code</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtGuestZipCode" runat="server" CssClass="form-control" TabIndex="39"></asp:TextBox>
+                                </div>
+                                <label for="Country" class="control-label required-field col-md-2">
+                                    Country</label>
+                                <div class="col-md-4">
+                                    <input id="txtGuestCountrySearch" type="text" class="form-control" />
+                                    <div style="display: none;">
+                                        <asp:DropDownList ID="ddlGuestCountry" runat="server" CssClass="form-control" TabIndex="40">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Nationality" class="control-label col-md-2">
+                                    Nationality</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtGuestNationality" runat="server" CssClass="form-control" TabIndex="41"></asp:TextBox>
+                                </div>
+                                <label for="DrivingLicense" class="control-label col-md-2">
+                                    Driving License</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtGuestDrivinlgLicense" runat="server" CssClass="form-control"
+                                        TabIndex="42"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="NationalID" class="control-label col-md-2">
+                                    National ID</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtNationalId" runat="server" CssClass="form-control" TabIndex="43"></asp:TextBox>
+                                </div>
+                                <label for="VisaNumber" class="control-label col-md-2">
+                                    Visa Number</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtVisaNumber" runat="server" CssClass="form-control" TabIndex="44"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="VisaIssueDate" class="control-label col-md-2">
+                                    Visa Issue Date</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtVIssueDate" CssClass="form-control" runat="server" TabIndex="45"></asp:TextBox>
+                                </div>
+                                <label for="VisaExpiryDate" class="control-label col-md-2">
+                                    Visa Expiry Date</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtVExpireDate" CssClass="form-control" runat="server" TabIndex="46"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="PassportNumber" class="control-label col-md-2">
+                                    Passport Number</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtPassportNumber" runat="server" CssClass="form-control" TabIndex="47"></asp:TextBox>
+                                </div>
+                                <label for="PassIssueDate" class="control-label col-md-2">
+                                    Pass. Issue Date</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtPIssueDate" runat="server" CssClass="form-control" TabIndex="49"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="PassExpiryDate" class="control-label col-md-2">
+                                    Pass. Expiry Date</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtPExpireDate" runat="server" CssClass="form-control" TabIndex="50"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group" id="GuestPreferenceDiv" style="display: none">
+                                <label for="GuestPreferences" class="control-label col-md-2">
+                                    Guest Preferences</label>
+                                <div class="col-md-10">
+                                    <asp:Label ID="lblGstPreference" runat="server" class="control-label"></asp:Label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div id="RoomNumberDiv" style="display: none">
+                                    <label for="RoomNumber" class="control-label col-md-2">
+                                        Room Number</label>
+                                    <div class="col-md-4">
+                                        <asp:DropDownList ID="ddlRoomNumber" CssClass="form-control" runat="server">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="button" tabindex="18" id="btnGuestReferences" value="Preferences" class="btn btn-primary btn-sm"
+                                        onclick="javascript: return LoadGuestReference()" />
+                                </div>
+                            </div>
+                            <div id="GuestDetailsAdd" class="row">
+                                <div class="col-md-12">
+                                    <input id="btnAddGuest" type="button" value="Add" class="btn btn-primary btn-sm"
+                                        tabindex="51" />
+                                    <asp:Button ID="btnCancelDetailGuest" runat="server" Text="Cancel" CssClass="btn btn-primary btn-sm"
+                                        TabIndex="52" />
+                                    <asp:Label ID="Label2" runat="server" Text='' Visible="False"></asp:Label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="float: right; padding-right: 30px">
+                                    <input id="btnNext2" type="button" tabindex="54" value="Next" class="btn btn-primary btn-sm"
+                                        style="display: none;" />
+                                </div>
+                                <div style="float: right; padding-right: 10px">
+                                    <input id="btnPrev1" type="button" tabindex="53" value="Prev" class="btn btn-primary btn-sm"
+                                        style="display: none;" />
+                                </div>
+                            </div>
+                            <div id="ltlGuestDetailGrid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Arrival Information
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label for="AirportPick-Up" class="control-label col-md-2">
+                                    Airport Pick-Up</label>
+                                <div class="col-md-4">
+                                    <asp:DropDownList ID="ddlAirportPickUp" CssClass="form-control" runat="server">
+                                        <asp:ListItem>NO</asp:ListItem>
+                                        <asp:ListItem>YES</asp:ListItem>
+                                        <asp:ListItem>TBA</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                                <div id="MultiplePickup" style="display: none">
+                                    <div class="col-md-2">
+                                        <asp:CheckBox ID="chkMultiplePickup" runat="server" OnClick="OnMultiplePickup();" />&nbsp;&nbsp;&nbsp;&nbsp;Multiple
+                                        Pickup
+                                    </div>
+                                </div>
+                                <div id="MultipleGuest" style="display: none">
+                                    <div class="col-md-4">
+                                        <asp:DropDownList ID="ddlGuest" CssClass="form-control" runat="server">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="AirportPickUpInformationDiv">
+                                <div class="form-group">
+                                    <label for="AirlineName" class="control-label col-md-2">
+                                        Airline Name</label>
+                                    <div class="col-md-10">
+                                        <asp:TextBox ID="txtArrivalFlightName" runat="server" CssClass="form-control" TabIndex="54"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="FlightNumber" class="control-label col-md-2">
+                                        Flight Number</label>
+                                    <div class="col-md-10">
+                                        <asp:TextBox ID="txtArrivalFlightNumber" runat="server" CssClass="form-control" TabIndex="55"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ArrivalTime" class="control-label col-md-2">
+                                        Arrival Time (ETA)</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtArrivalTime" placeholder="12" runat="server" CssClass="form-control"
+                                            TabIndex="56"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="addMultiplePickup" style="display: none">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input id="btnaddMultiplePickup" type="button" value="Add" class="btn btn-primary btn-sm"
+                                    tabindex="51" />
+                            </div>
+                        </div>
+                        <div class="form-group" id="ArrivalTableContainer" style="overflow: scroll;">
+                            <table id="PickupTable" class="table table-bordered table-condensed table-responsive">
+                                <thead>
+                                    <tr style='color: White; background-color: #44545E; text-align: left; font-weight: bold;'>
+                                        <th style="width: 25%;">
+                                            Guest Name
+                                        </th>
+                                        <th style="width: 25%;">
+                                            Airline Name
+                                        </th>
+                                        <th style="width: 20%;">
+                                            Flight Number
+                                        </th>
+                                        <th style="width: 20%;">
+                                            Arrival Time
+                                        </th>
+                                        <th style="width: 10%;">
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Departure Information
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label for="AirportDrop" class="control-label col-md-2">
+                                    Airport Drop</label>
+                                <div class="col-md-4">
+                                    <asp:DropDownList ID="ddlAirportDrop" CssClass="form-control" runat="server">
+                                        <asp:ListItem>NO</asp:ListItem>
+                                        <asp:ListItem>YES</asp:ListItem>
+                                        <asp:ListItem>TBA</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                                <div id="MultipleDrop" style="display: none">
+                                    <div class="col-md-2">
+                                        <asp:CheckBox ID="chkMultipleDrop" runat="server" OnClick="OnMultipleDrop();" />&nbsp;&nbsp;&nbsp;&nbsp;Multiple
+                                        Drop
+                                    </div>
+                                </div>
+                                <div id="MultipleDropGuest" style="display: none">
+                                    <div class="col-md-4">
+                                        <asp:DropDownList ID="ddlDropGuest" CssClass="form-control" runat="server">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="AirportDropInformationDiv">
+                                <div class="form-group">
+                                    <label for="AirlineName" class="control-label col-md-2">
+                                        Airline Name</label>
+                                    <div class="col-md-10">
+                                        <asp:TextBox ID="txtDepartureFlightName" runat="server" CssClass="form-control" TabIndex="59"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="FlightNumber" class="control-label col-md-2">
+                                        Flight Number</label>
+                                    <div class="col-md-10">
+                                        <asp:TextBox ID="txtDepartureFlightNumber" runat="server" CssClass="form-control"
+                                            TabIndex="60"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="DepartureTime" class="control-label col-md-2">
+                                        Departure Time (ETD)</label>
+                                    <div class="col-md-10">
+                                        <asp:TextBox ID="txtDepartureTime" placeholder="12" runat="server" CssClass="form-control"
+                                            TabIndex="61"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="addMultipleDrop" style="display: none">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input id="btnaddMultipleDrop" type="button" value="Add" class="btn btn-primary btn-sm"
+                                            tabindex="51" />
+                                    </div>
+                                </div>
+                                <div class="divSection" id="DepartureTableContainer" style="overflow: scroll;">
+                                    <table id="DepartureTable" class="table table-bordered table-condensed table-responsive">
+                                        <thead>
+                                            <tr style='color: White; background-color: #44545E; text-align: left; font-weight: bold;'>
+                                                <th style="width: 25%;">
+                                                    Guest Name
+                                                </th>
+                                                <th style="width: 25%;">
+                                                    Airline Name
+                                                </th>
+                                                <th style="width: 20%;">
+                                                    Flight Number
+                                                </th>
+                                                <th style="width: 20%;">
+                                                    Departure Time
+                                                </th>
+                                                <th style="width: 10%;">
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-4">
+                <div class="panel-body">
+                    <div class="checkbox checkboxlist col-md-12">
+                        <asp:CheckBoxList ID="chkComplementaryItem" runat="server">
+                        </asp:CheckBoxList>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-5">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="FromDate" class="control-label col-md-2">
+                                        From Date</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtFromDate" runat="server" CssClass="form-control" TabIndex="63"></asp:TextBox>
+                                    </div>
+                                    <label for="ToDate" class="control-label col-md-2">
+                                        To Date</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtToDate" runat="server" TabIndex="64" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="GuestName" class="control-label col-md-2">
+                                        Guest Name</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtSrcReservationGuest" runat="server" CssClass="form-control" TabIndex="65"></asp:TextBox>
+                                    </div>
+                                    <label for="ReservationNumber" class="control-label col-md-2">
+                                        Reservation Number</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtSearchReservationNumber" runat="server" CssClass="form-control"
+                                            TabIndex="66"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="CompanyName" class="control-label col-md-2">
+                                        Company Name</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtSearchCompanyName" runat="server" CssClass="form-control" TabIndex="66"></asp:TextBox>
+                                    </div>
+                                    <label for="ContactPerson" class="control-label col-md-2">
+                                        Contact Person</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtCntPerson" runat="server" CssClass="form-control" TabIndex="67"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="SearchOrdering" class="control-label col-md-2">
+                                        Search Ordering</label>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <asp:DropDownList ID="ddlOrderCriteria" runat="server" CssClass="form-control">
+                                                    <asp:ListItem Value="ReservationNo">Reservation No</asp:ListItem>
+                                                    <asp:ListItem Value="CheckInDate">Check In Date</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div class="col-md-4 col-padding-left-none">
+                                                <asp:DropDownList ID="ddlorderOption" runat="server" CssClass="form-control">
+                                                    <asp:ListItem Value="DESC">DESC</asp:ListItem>
+                                                    <asp:ListItem Value="ASC">ASC</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-primary btn-sm"
+                                            TabIndex="5" OnClick="btnSearch_Click" />
+                                        <asp:Button ID="btnClearSearch" runat="server" TabIndex="68" Text="Clear" CssClass="btn btn-primary btn-sm"
+                                            OnClientClick="javascript: return PerformClearSearchAction();" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="SearchPanel" class="panel panel-default">
+                    <div class="panel-heading">
+                        Search Information
+                    </div>
+                    <div class="panel-body">
+                        <asp:GridView ID="gvRoomRegistration" Width="100%" runat="server" AllowPaging="True"
+                            AutoGenerateColumns="False" CellPadding="4" GridLines="None" AllowSorting="True"
+                            ForeColor="#333333" PageSize="20" OnRowCommand="gvRoomRegistration_RowCommand"
+                            OnRowDataBound="gvRoomRegistration_RowDataBound" CssClass="table table-bordered table-condensed table-responsive">
+                            <RowStyle BackColor="#E3EAEB" />
+                            <Columns>
+                                <asp:TemplateField HeaderText="IDNO" Visible="False">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblid" runat="server" Text='<%#Eval("ReservationId") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="ReservationNumber" HeaderText="Reserv. No." ItemStyle-Width="10%">
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Left" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="GuestName" HeaderText="Guest Name" ItemStyle-Width="25%">
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Left" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="CompanyName" HeaderText="Company" ItemStyle-Width="14%">
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Left" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="RoomInformation" HeaderText="Room Info" ItemStyle-Width="14%">
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Left" />
+                                </asp:BoundField>
+                                <asp:TemplateField HeaderText="Check In" ItemStyle-Width="8%" ItemStyle-HorizontalAlign="Left">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblgvDateIn" runat="server" Text='<%# GetStringFromDateTime(Convert.ToDateTime(Eval("DateIn"))) %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Left" />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Check Out" ItemStyle-Width="9%" ItemStyle-HorizontalAlign="Left">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblgvDateOut" runat="server" Text='<%# GetStringFromDateTime(Convert.ToDateTime(Eval("DateOut"))) %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Left" />
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="ReservationMode" HeaderText="Status" ItemStyle-Width="10%">
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Left" />
+                                </asp:BoundField>
+                                <asp:TemplateField HeaderText="ReservationStatusInfo" Visible="False">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblReservationStatusInfo" runat="server" Text='<%#Eval("ReservationMode") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="PickUpDropStatusInfo" Visible="False">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblPickUpDropStatusInfo" runat="server" Text='<%#Eval("PickUpDropCount") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Action" ShowHeader="False" ItemStyle-Width="18%">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="ImgUpdate" runat="server" CausesValidation="False" CommandArgument='<%# bind("ReservationId") %>'
+                                            CommandName="CmdEdit" ImageUrl="~/Images/edit.png" Text="" AlternateText="Edit"
+                                            ToolTip="Edit" />
+                                        &nbsp;<asp:ImageButton ID="ImgDelete" runat="server" CausesValidation="False" CommandArgument='<%# bind("ReservationId") %>'
+                                            CommandName="CmdDelete" ImageUrl="~/Images/delete.png" OnClientClick="return confirm('Do you want to save?');"
+                                            Text="" AlternateText="Delete" ToolTip="Delete" />
+                                        &nbsp;<asp:ImageButton ID="ImgBillPreview" runat="server" CausesValidation="False"
+                                            CommandArgument='<%# bind("ReservationId") %>' CommandName="CmdBillPreview" ImageUrl="~/Images/ReportDocument.png"
+                                            Text="" AlternateText="Bill Preview" ToolTip="Bill Preview" />
+                                        <asp:ImageButton ID="ImgBillPreviewForMultiplePickUpDrop" runat="server" CausesValidation="False"
+                                            CommandName="CmdDetails" CommandArgument='<%# bind("ReservationId") %>' OnClientClick='<%#String.Format("return MultiplePickUpDropInfo({0})", Eval("ReservationId")) %>'
+                                            ImageUrl="~/Images/detailsInfo.png" Text="" AlternateText="Details" ToolTip="Bill Preview" />
+                                    </ItemTemplate>
+                                    <ControlStyle Font-Size="Small" />
+                                    <HeaderStyle HorizontalAlign="Center" />
+                                    <ItemStyle HorizontalAlign="Center" />
+                                </asp:TemplateField>
+                            </Columns>
+                            <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
+                            <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                            <EmptyDataTemplate>
+                                <asp:Label ID="lblRecordNotFound" runat="server" Text="Record Not Found."></asp:Label>
+                            </EmptyDataTemplate>
+                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+                            <HeaderStyle BackColor="#44545E" Font-Bold="True" ForeColor="White" />
+                            <EditRowStyle BackColor="#7C6F57" />
+                            <AlternatingRowStyle BackColor="White" />
+                        </asp:GridView>
+                        <div class="childDivSection">
+                            <div class="text-center" id="Div2">
+                                <ul class="pagination">
+                                    <asp:Literal ID="gridPaging" runat="server"></asp:Literal>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--    Pop Up Guest Search   -->
+            <div id="TouchKeypad" style="display: none;">
+                <div id="PopMessageBox" class="alert alert-info" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert">
+                        ×</button>
+                    <asp:Label ID='lblPopMessageBox' Font-Bold="True" runat="server"></asp:Label>
+                </div>
+                <div id="PopEntryPanel" class="panel panel-default" style="width: 875px">
+                    <div class="panel-heading">
+                        Guest Information
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label for="GuestName" class="control-label col-md-2">
+                                    Guest Name</label>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <asp:HiddenField ID="hiddenGuestId" runat="server" />
+                                            <asp:HiddenField ID="hiddenGuestName" runat="server" />
+                                            <asp:TextBox ID="txtSrcGuestName" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                                        </div>
+                                        <div class="form-inline col-md-1">
+                                            <img id="imgCollapse" width="30px" src="/HotelManagement/Image/expand_alt.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="ExtraSearch">
+                                <div class="form-group">
+                                    <label for="CompanyName" class="control-label col-md-2">
+                                        Company Name</label>
+                                    <div class="col-md-10">
+                                        <asp:TextBox ID="txtSrcCompanyName" runat="server" CssClass="form-control" TabIndex="2"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="RoomNumber" class="control-label col-md-2">
+                                        Room Number</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtSrcRoomNumber" runat="server" CssClass="form-control" TabIndex="3"></asp:TextBox>
+                                    </div>
+                                    <label for="RegistrationNo" class="control-label col-md-2">
+                                        Registration No.</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtSrcRegistrationNumber" runat="server" CssClass="form-control"
+                                            TabIndex="4"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="FromDate" class="control-label col-md-2">
+                                        From Date</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtSrcFromDate" runat="server" CssClass="form-control" TabIndex="3"></asp:TextBox>
+                                    </div>
+                                    <label for="ToDate" class="control-label col-md-2">
+                                        To Date</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtSrcToDate" runat="server" CssClass="form-control" TabIndex="4"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="EmailAddress" class="control-label col-md-2">
+                                        Email Address</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtSrcEmailAddress" runat="server" CssClass="form-control" TabIndex="3"></asp:TextBox>
+                                    </div>
+                                    <label for="MobileNumber" class="control-label col-md-2">
+                                        Mobile Number</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtSrcMobileNumber" runat="server" CssClass="form-control" TabIndex="4"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="NationalID" class="control-label col-md-2">
+                                        National ID</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtSrcNationalId" runat="server" CssClass="form-control" TabIndex="3"></asp:TextBox>
+                                    </div>
+                                    <label for="DateOfBirth" class="control-label col-md-2">
+                                        Date of Birth</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtSrcDateOfBirth" runat="server" CssClass="form-control" TabIndex="4"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="PassportNumber" class="control-label col-md-2">
+                                        Passport Number</label>
+                                    <div class="col-md-10">
+                                        <asp:TextBox ID="txtSrcPassportNumber" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" id="btnPopSearch" class="btn btn-primary btn-sm">
+                                        Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="PopSearchPanel" class="panel panel-default" style="width: 875px">
+                    <div class="panel-heading">
+                        Search Information
+                    </div>
+                    <div class="panel-body">
+                        <table id='gvGustIngormation' class="table table-bordered table-condensed table-responsive">
+                            <colgroup>
+                                <col style="width: 40%;" />
+                                <col style="width: 25%;" />
+                                <col style="width: 15%;" />
+                                <col style="width: 20%;" />
+                            </colgroup>
+                            <thead>
+                                <tr style="color: White; background-color: #44545E; font-weight: bold;">
+                                    <td>
+                                        Guest Name
+                                    </td>
+                                    <td>
+                                        Country Name
+                                    </td>
+                                    <td>
+                                        Phone
+                                    </td>
+                                    <td>
+                                        Email
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <div class="childDivSection">
+                            <div class="text-center" id="GridPagingContainer">
+                                <ul class="pagination">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 45px">
+                </div>
+                <div id="PopTabPanel" style="width: 900px">
+                    <div id="PopMyTabs">
+                        <ul id="PoptabPage" class="ui-style">
+                            <li id="PopA" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none">
+                                <a href="#Poptab-1">Guest Information</a></li>
+                            <li id="PopB" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none">
+                                <a href="#Poptab-2">Guest Documents</a></li>
+                            <li id="PopC" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none">
+                                <a href="#Poptab-3">Guest History</a></li>
+                            <li id="PopD" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none">
+                                <a href="#Poptab-4">Guest Preferences</a></li>
+                        </ul>
+                        <div id="Poptab-1">
+                            <div id="GuestInfo" class="panel panel-default" style="font-weight: bold">
+                                <div class="panel-heading">
+                                    Guest Information
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-striped table-bordered table-condensed table-hover">
+                                        <tr>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLGuestName" runat="server" Text="Guest Name"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDGuestName" runat="server" Text=""></asp:Label>
+                                            </td>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLGuestDOB" runat="server" Text="Date of Birth"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDGuestDOB" runat="server" Text=""></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLGuestSex" runat="server" Text="Gender"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDGuestSex" runat="server" Text=""></asp:Label>
+                                            </td>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLGuestEmail" runat="server" Text="Email"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDGuestEmail" runat="server" Text=""></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLGuestPhone" runat="server" Text="Phone Number"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDGuestPhone" runat="server" Text=""></asp:Label>
+                                            </td>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLGuestAddress1" runat="server" Text="Company Name"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDGuestAddress1" runat="server" Text=""></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLGuestAddress2" runat="server" Text="Guest Address"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDGuestAddress2" runat="server" Text=""></asp:Label>
+                                            </td>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLGuestCity" runat="server" Text="City "></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDGuestCity" runat="server" Text=""></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLGuestZipCode" runat="server" Text="Zip Code"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDGuestZipCode" runat="server" Text=""></asp:Label>
+                                            </td>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLGuestNationality" runat="server" Text="Guest Nationality"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDGuestNationality" runat="server" Text=""></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLGuestDrivinlgLicense" runat="server" Text="Driving License No"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDGuestDrivinlgLicense" runat="server" Text=""></asp:Label>
+                                            </td>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLGuestAuthentication" runat="server" Text="Authentication"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDGuestAuthentication" runat="server"></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLNationalId" runat="server" Text="National ID"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDNationalId" runat="server" Text=""></asp:Label>
+                                            </td>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLPassportNumber" runat="server" Text="Passport Number"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDPassportNumber" runat="server" Text=""></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLPIssueDate" runat="server" Text="Pasport Issue Date"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDPIssueDate" runat="server" Text=""></asp:Label>
+                                            </td>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLPIssuePlace" runat="server" Text="Passport Issue Place"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDPIssuePlace" runat="server" Text=""></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLPExpireDate" runat="server" Text="Passport Expiry Date"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDPExpireDate" runat="server" Text=""></asp:Label>
+                                            </td>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLVisaNumber" runat="server" Text="Visa Number"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDVisaNumber" runat="server" Text=""></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLVIssueDate" runat="server" Text="Visa Issue Date"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDVIssueDate" runat="server" Text=""></asp:Label>
+                                            </td>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLVExpireDate" runat="server" Text="Visa Expiry Date"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDVExpireDate" runat="server" Text=""></asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="span2">
+                                                <asp:Label ID="lblLCountryName" runat="server" Text="Country Name"></asp:Label>
+                                            </td>
+                                            <td class="span4">
+                                                <asp:Label ID="lblDCountryName" runat="server" Text=""></asp:Label>
+                                            </td>
+                                            <td class="span2">
+                                                <%--<asp:Label ID="lblPreferences" runat="server" Text="Guest Preferences"></asp:Label>--%>
+                                            </td>
+                                            <td class="span4">
+                                                <%--<asp:Label ID="lblGuestPreferences" runat="server" Text=""></asp:Label>--%>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Poptab-2">
+                            <div id="imageDiv">
+                            </div>
+                        </div>
+                        <div id="Poptab-3">
+                            <div class="HMBodyContainer">
+                                <div id="guestHistoryDiv">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Poptab-4">
+                            <div id="Div6" class="panel panel-default" style="font-weight: bold">
+                                <div class="panel-heading">
+                                    Preferences
+                                </div>
+                                <div class="panel-body">
+                                    <div id="Preference">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="btnSearchSuccess" class="btn btn-primary btn-sm">
+                            OK</button>
+                        <button type="button" id="btnSearchCancel" class="btn btn-primary btn-sm">
+                            Cancel</button>
+                        <button type="button" id="btnPrintDocument" class="btn btn-primary btn-sm">
+                            Print</button>
+                    </div>
+                </div>
+            </div>
+            <!--  End Pop Up Guest Search  -->
+            <!--Room Load PopUp -->
+            <div id="DivRoomSelect" style="display: none;">
+                <div id="Div1">
+                    <asp:HiddenField ID="hfSelectedRoomNumbers" runat="server" />
+                    <asp:HiddenField ID="hfSelectedRoomId" runat="server" />
+                    <asp:HiddenField ID="hfSelectedRoomReservedId" runat="server" />
+                    <div id="ltlRoomNumberInfo">
+                    </div>
+                </div>
+            </div>
+            <!-- Pop Up Guest Search -->
+            <div id="ReservationPopup" style="display: none;">
+                <div id="Div3" class="alert alert-info" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert">
+                        ×</button>
+                    <asp:Label ID='Label17' Font-Bold="True" runat="server"></asp:Label>
+                </div>
+                <div id="ReservationPopEntryPanel" class="panel panel-default" style="width: 875px">
+                    <div class="panel-heading">
+                        Search Guest
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label for="GuestName" class="control-label col-md-2">
+                                    Guest Name</label>
+                                <div class="col-md-10">
+                                    <asp:TextBox ID="txtPrevGstName" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Country" class="control-label col-md-2">
+                                    Country</label>
+                                <div class="col-md-4">
+                                    <input id="txtPrevGstCountry" type="text" class="form-control" />
+                                    <div style="display: none;">
+                                        <asp:DropDownList ID="ddlPrevGstCountry" runat="server" CssClass="form-control" TabIndex="40">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                                <label for="Phone" class="control-label col-md-2">
+                                    Phone</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtPrevGstPhn" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Email" class="control-label col-md-2">
+                                    Email</label>
+                                <div class="col-md-10">
+                                    <asp:TextBox ID="txtPrevGstEmail" runat="server" CssClass="form-control" TabIndex="3"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="PassportNumber" class="control-label col-md-2">
+                                    Passport Number</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtSrcPopPassportNumber" runat="server" CssClass="form-control"
+                                        TabIndex="1"></asp:TextBox>
+                                </div>
+                                <label for="NationalID" class="control-label col-md-2">
+                                    National ID</label>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtSrcPopNationalId" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group" style="display: none;">
+                                <label for="Company" class="control-label col-md-2">
+                                    Company</label>
+                                <div class="col-md-10">
+                                    <input id="txtSrcPopCompany" type="text" class="form-control" />
+                                    <div style="display: none;">
+                                        <asp:DropDownList ID="ddlSrcPopCompany" runat="server" CssClass="form-control" TabIndex="40">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" id="btnReservationSearch" class="btn btn-primary btn-sm">
+                                    Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="ReservationPopSearchPanel" class="panel panel-default" style="width: 875px">
+                    <div class="panel-heading">
+                        Search Information
+                    </div>
+                    <div class="panel-body">
+                        <div id="ltlReservationInformation">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Pop Up Guest Search -->
+    <!--Guest Reference PopUp -->
+    <div id="DivGuestReference" style="display: none;">
+        <div id="Div5">
+            <div id="ltlGuestReference">
+            </div>
+        </div>
+    </div>
+    <!--End Guest Reference PopUp -->
+    <script type="text/javascript">
+        var x = '<%=_RoomReservationId%>';
+        if (x > -1)
+            EntryPanelVisibleTrue();
+
+        var xNewAdd = '<%=isNewAddButtonEnable%>';
+        if (xNewAdd > -1) {
+            NewAddButtonPanelShow();
+            if (parseInt(xNewAdd) == 2) {
+                $('#btnNewReservationPanel').hide();
+                $('#EntryPanel').show();
+            }
+        }
+        else {
+            NewAddButtonPanelHide();
+        }
+
+        var isListedCompanyVisible = '<%=isListedCompanyVisible%>';
+        if (isListedCompanyVisible > -1) {
+            ListedCompanyVisibleTrue();
+        }
+        else {
+            ListedCompanyVisibleFalse();
+        }
+
+        var isListedCompanyDropDownVisible = '<%=isListedCompanyDropDownVisible%>';
+        if (isListedCompanyDropDownVisible > -1) {
+            ListedCompanyDropDownVisibleTrue();
+        }
+        else {
+            ListedCompanyDropDownVisibleFalse();
+        }
+
+        $(document).ready(function () {
+            if ($("#<%=ddlCountry.ClientID %>").val() != "0") {
+                $('#txtCountry').val($("#<%=ddlCountry.ClientID %> option:selected").text());
+            }
+
+            if ($("#<%=hfIsSameasContactPersonAsGuest.ClientID %>").val() == "1") {
+                $("#ContentPlaceHolder1_IsSameasGuest").attr('checked', true);
+            }
+
+            if ($('#' + '<%=ddlReservedMode.ClientID%>').val() == "Self") {
+                var ctrl = '#<%=chkIsLitedCompany.ClientID%>'
+                $(ctrl).prop('checked', false);
+                ToggleListedCompanyInfo();
+                $('#GroupDiv').hide();
+                $('#PersonDiv').show();
+                $('#ContactPersonDiv').show();
+                $('#MobileNEmailDiv').show();
+                $('#CurrencyDiv').show();
+                $("#<%=ddlCurrency.ClientID %>").val("1");
+                $('#CurrencyAmountInformationDiv').hide();
+            }
+            else if ($('#' + '<%=ddlReservedMode.ClientID%>').val() == "Group") {
+                var ctrl = '#<%=chkIsLitedCompany.ClientID%>'
+                $(ctrl).prop('checked', false);
+                ToggleListedCompanyInfo();
+                //$('#PersonDiv').hide();
+                $('#GroupDiv').show();
+                $('#PersonDiv').show();
+                $('#ContactPersonDiv').show();
+                $('#MobileNEmailDiv').show();
+                $('#CurrencyDiv').show();
+                $("#<%=ddlCurrency.ClientID %>").val("1");
+                $('#CurrencyAmountInformationDiv').hide();
+            }
+            else if ($('#' + '<%=ddlReservedMode.ClientID%>').val() == "Company") {
+                $('#PersonDiv').hide();
+                $('#GroupDiv').hide();
+                $('#ContactPersonDiv').show();
+                $('#MobileNEmailDiv').show();
+                $('#CurrencyDiv').show();
+                $("#<%=ddlCurrency.ClientID %>").val("1");
+                $('#CurrencyAmountInformationDiv').hide();
+            }
+            else {
+                var ctrl = '#<%=chkIsLitedCompany.ClientID%>'
+                $(ctrl).prop('checked', false);
+                ToggleListedCompanyInfo();
+                $('#GroupDiv').hide();
+                $('#PersonDiv').hide();
+                $('#ContactPersonDiv').hide();
+                $('#MobileNEmailDiv').hide();
+                $('#CurrencyDiv').hide();
+                $("#<%=ddlCurrency.ClientID %>").val("1");
+                $('#CurrencyAmountInformationDiv').hide();
+            }
+            VisibleListedCompany();
+
+            if ($("#ContentPlaceHolder1_txtDateIn").val() != "" && $("#ContentPlaceHolder1_txtDateOut").val() != "") {
+                $("#txtReservationDuration").val(CommonHelper.DateDifferenceInDays(CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDateIn").val(), '/'), CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDateOut").val(), '/')));
+            }
+        });
+    </script>
+</asp:Content>

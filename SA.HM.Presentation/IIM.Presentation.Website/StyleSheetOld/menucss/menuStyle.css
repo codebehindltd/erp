@@ -1,0 +1,179 @@
+﻿/*@import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
+  @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,300);*/
+
+/* Base Styles */
+.MenuCollapsible, .MenuCollapsible ul, .MenuCollapsible li, .MenuCollapsible a
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    text-decoration: none;
+    line-height: 1;
+    position: relative;
+}
+.MenuCollapsible
+{
+    width: 250px;
+    border-bottom: 4px solid #495461;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.MenuCollapsible a
+{
+    line-height: 1.3;
+}
+.MenuCollapsible > ul > li:first-child
+{
+    background: #66665e;
+    background: -moz-linear-gradient(#66665e 0%, #45463d 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #66665e), color-stop(100%, #45463d));
+    background: -webkit-linear-gradient(#66665e 0%, #45463d 100%);
+    background: linear-gradient(#66665e 0%, #45463d 100%);
+    border: 1px solid #45463d;
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+}
+.MenuCollapsible > ul > li:first-child > a
+{
+    padding: 8px 4px;
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/header.jpg") repeat scroll 0 0;
+    border: none;
+    border-top: 1px solid #818176;
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+    text-align: left;
+    font-weight: 300;
+    text-shadow: 0 -1px 1px #44545E;
+}
+.MenuCollapsible > ul > li:first-child > a > span
+{
+    padding: 0;
+}
+.MenuCollapsible > ul > li:first-child:hover
+{
+    background: #66665e;
+    background: -moz-linear-gradient(#66665e 0%, #45463d 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #66665e), color-stop(100%, #45463d));
+    background: -webkit-linear-gradient(#66665e 0%, #45463d 100%);
+    background: linear-gradient(#66665e 0%, #45463d 100%);
+}
+
+.MenuCollapsible > ul > li
+{
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/header.jpg") repeat scroll 0 0;
+}
+.MenuCollapsible > ul > li:hover
+{
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/box-head-active.jpg") repeat scroll 0 0;
+}
+.MenuCollapsible > ul > li > a
+{
+    /*font-size: 1.1em;*/
+    display: block;
+    background: url(menu_images/pattern.png) top left repeat;
+    color: #ffffff;
+    border: 1px solid #042D5C;
+    border-top: none;
+    border-style: none solid inset; /*text-shadow: -2px 2px 1px #091c32; 0 -1px 1px #751d0c;*/
+}
+.MenuCollapsible > ul > li > a > span
+{
+    display: block;
+    padding: 8px 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.MenuCollapsible > ul > li > a:hover
+{
+    text-decoration: none;
+}
+.MenuCollapsible > ul > li.active
+{
+    border-bottom: none;
+}
+.MenuCollapsible > ul > li.has-sub > a span
+{
+    background: url(menu_images/icon_plus.png) 96% center no-repeat;
+}
+.MenuCollapsible > ul > li.has-sub.active > a span
+{
+    background: url(menu_images/icon_minus.png) 96% center no-repeat;
+}
+
+.MenuCollapsible ul ul
+{
+    display: none;
+    background: #fff;
+    border-right: 1px solid #a2a194;
+    border-left: 1px solid #a2a194;
+}
+.MenuCollapsible ul ul li
+{
+    padding: 0;
+    border-bottom: 1px solid #d4d4d4;
+    border-top: none;
+    background: #f7f7f7;
+    background: -moz-linear-gradient(#f7f7f7 0%, #ececec 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(100%, #ececec));
+    background: -webkit-linear-gradient(#f7f7f7 0%, #ececec 100%);
+    background: linear-gradient(#f7f7f7 0%, #ececec 100%);
+}
+.MenuCollapsible ul ul li:last-child
+{
+    border-bottom: none;
+}
+.MenuCollapsible ul ul a
+{
+    padding: 8px 10px 8px 25px;
+    display: block;
+    color: #676767;
+    font-weight: normal;
+}
+.MenuCollapsible ul ul a:before
+{
+    content: '\00BB';
+    position: absolute;
+    left: 10px;
+    color: #495461; /*#e94f31;*/
+}
+.MenuCollapsible ul ul a:hover
+{
+    /*color: #e94f31;*/
+    background: #E2EAEE none repeat scroll 0 0;
+}
+
+#MainMenuTopNav .navbar .nav > li > a
+{
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/header.jpg") repeat scroll 0 0; /* #759DB4 background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/header.jpg") repeat scroll 0 0;  #759DB4*/
+}
+
+#MainMenuTopNav .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus
+{
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/box-head-active.jpg") repeat scroll 0 0;
+    color: #fff; /*background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/header.jpg") repeat scroll 0 0;  #759DB4*/
+}
+
+#MainMenuTopNav .navbar .nav > li > a:hover
+{
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/box-head-active.jpg") repeat scroll 0 0;
+}
+
+.menuShowHide
+{
+    /*background: #394A5D none repeat scroll 0 0;*/
+    background: rgba(0, 0, 0, 0) url("/StyleSheet/css/images/box-head-active.jpg") repeat scroll 0 0;
+    border-radius: 0 20px 20px 0;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    left: 0;
+    padding: 7px 10px 7px 13px;
+    position: absolute;
+    top: 0;
+    width: 40px;
+}

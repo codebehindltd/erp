@@ -1,0 +1,9 @@
+﻿/// <reference path="jquery-2.1.3.js" />
+/// <reference path="HMCommonScript.js"/>
+/// <reference path="toastr.js"/>
+/// <reference path="jquery-ui.js"/>
+/// <reference path="underscore.js"/>
+/// <reference path="js.cookie.js"/>
+/// <reference path="jquery-sortable.js"/>
+/// <reference path="highcharts.js"/>
+/// <reference path="/Highcharts-4.2.1/js/highcharts.js" />

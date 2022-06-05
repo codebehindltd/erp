@@ -1,0 +1,1294 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="HM.Master.cs" Inherits="Mamun.Presentation.Website.Common.HM" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <title runat="server" id="SiteTitle"></title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="/StyleSheetOld/css/custom.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/StyleSheetOld/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/StyleSheetOld/css/theme.css" />
+    <link rel="stylesheet" href="/StyleSheetOld/lib/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/StyleSheetOld/css/flexslider.css" type="text/css" media="screen" />
+    <link href="/StyleSheetOld/css/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+    <link href="/StyleSheetOld/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="/ScriptsOld/uploadify.css" rel="stylesheet" type="text/css" />
+    <link href="/StyleSheetOld/css/jquery-ui-1.8.23.custom.css" rel="stylesheet" type="text/css" />
+    <link href="/StyleSheetOld/css/toastr.css" rel="stylesheet" type="text/css" />
+    <link rel="Stylesheet" type="text/css" href="/StyleSheetOld/JqueryTouchKeyBoard/keyboard.css" />
+    <link rel="stylesheet" type="text/css" href="/StyleSheetOld/css/HMStyleSheet.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
+    <script src="/ScriptsOld/jquery-2.1.3.js" type="text/javascript"></script>
+    <script src="/StyleSheetOld/js/Common.js" type="text/javascript"></script>
+    <script src="/ScriptsOld/jquery-ui.js" type="text/javascript"></script>
+    <script src="/ScriptsOld/jquery.ui.timepicker.js" type="text/javascript"></script>
+    <script src="/ScriptsOld/jquery.uploadify-3.1.js" type="text/javascript"></script>
+    <script src="/ScriptsOld/jquery.uploadify-3.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/ScriptsOld/JqueryTouchKeyBoard/jquery.keyboard.js"></script>
+    <script src="/ScriptsOld/underscore.js" type="text/javascript"></script>
+    <script src="/ScriptsOld/toastr.js" type="text/javascript"></script>
+    <script src="/ScriptsOld/jquery-sortable.js" type="text/javascript"></script>
+    <script src="../ScriptsOld/Highcharts-4.2.1/js/highcharts.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/StyleSheetOld/menucss/menuStyle.css" />
+    <script src="../ScriptsOld/js.cookie.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var innBoarDateFormat = "";
+        var innBoardOldMneuEnable = "";
+        $(document).ready(function () {
+            innBoarDateFormat = '<%=innBoardDateFormat%>';
+            innBoardOldMneuEnable = '<%=isOldMenuEnable%>';
+
+            if (innBoardOldMneuEnable == "1") {
+                $("#MainMenuTopNav").hide();
+                $("#MenuExpandable").show();
+                $("#colapsePanel").show();
+                $("#OldReportPanel").show();
+            }
+            else {
+
+                if (Cookies.getJSON('menuoption') != undefined) {
+                    var menuoption = Cookies.getJSON('menuoption');
+
+                    if (menuoption.IsHide) {
+                        $('#NavigationPanel').hide();
+                        $('#MainMenuSHowHide').show();
+                        $('.content').animate({ 'margin-left': '40px' });
+                    }
+
+                    $("#hfHomeIsHidden").val("0");
+                }
+                else {
+                    //$("#MainMenuTopNav").show();
+                    $('#NavigationPanel').show();
+                    $('#MainMenuSHowHide').hide();
+                }
+
+                $("#MenuExpandable").hide();
+                $("#colapsePanel").hide();
+                $("#OldReportPanel").hide();
+                $('#MenuPanel').hide();
+
+                //                var parentLi = $("a[href='" + window.location.pathname + "']").parent().parent().parent();
+                //                var parentUi = $("a[href='" + window.location.pathname + "']").parent().parent();
+                //                parentLi.addClass("active");
+                //                $(parentUi).slideDown('normal');
+                //                $(window).scrollTop($(parentUi).offset().top);                
+            }
+        });
+    </script>
+    <script src="/ScriptsOld/HMCommonScript.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var messageHideTime = "";
+        // var innBoarDateFormat = "";
+        var vvcc = [];
+        $(document).ready(function () {
+            //innBoarDateFormat = '<%=innBoardDateFormat%>';
+
+            //$('#NavigationPanel').show();
+            //$('#colapsePanel').show();
+            //$('#MenuPanel').hide();
+
+            $("#ReportMenuPanel").hide();
+            $('#colapsePanel').height($('#MenuExpandable').height());
+
+            var isShowHideHomeMenu = $("#hfHomeIsHidden").val();
+            if (isShowHideHomeMenu == "1" && innBoardOldMneuEnable == "1") {
+
+                $('#NavigationPanel').show("slide", { direction: "left" }, "slow");
+                $('#MenuPanel').hide();
+
+                //$(".content").css("margin-left", "240px");
+                $('.content').animate({ 'margin-left': '262px' });
+
+            }
+            else {
+
+                if (innBoardOldMneuEnable == "1") {
+                    $('#NavigationPanel').hide();
+                    $('#MenuPanel').show();
+
+
+                    //$(".content").css("margin-left", "40px");
+                    $('.content').animate({ 'margin-left': '40px' });
+                }
+            }
+
+            $('#MenuPanel').click(function (event) {
+                $('#NavigationPanel').show("slide", { direction: "left" }, "slow");
+                $('#MenuPanel').hide("slide", { direction: "right" }, "slow");
+                $('.content').animate({ 'margin-left': '262px' });
+                SetHomemenuShowHide("1");
+
+            });
+
+            $('#colapsePanel').click(function (event) {
+                $('#NavigationPanel').hide("slide", { direction: "left" }, "slow");
+                $('#MenuPanel').show("slide", { direction: "right" }, "slow");
+                $('.content').animate({ 'margin-left': '40px' });
+                SetHomemenuShowHide("0");
+            });
+
+            // Hide the sub menu items first
+            messageHideTime = $("#hfMessageHideTime").val();
+            var grpHotelManagement = '<%=grpHotelManagement.ClientID%>';
+            var grpDashboard = '<%=grpDashboard.ClientID%>';
+            var grpRestaurantManagement = '<%=grpRestaurantManagement.ClientID%>';
+            var grpGeneralLedger = '<%=grpGeneralLedger.ClientID%>';
+            var grpRecruitmentManagement = '<%=grpRecruitmentManagement.ClientID%>';
+            var grpPayrollManagement = '<%=grpPayrollManagement.ClientID%>';
+            var grpPurchaseManagement = '<%=grpPurchaseManagement.ClientID%>';
+            var grpInventoryManagement = '<%=grpInventoryManagement.ClientID%>';
+            var grpSalesManagement = '<%=grpSalesManagement.ClientID%>';
+            var grpUserPanel = '<%=grpUserPanel.ClientID%>';
+            var grpBanquetManagement = '<%=grpBanquetManagement.ClientID%>';
+            var grpSalesMarketingManagement = '<%=grpSalesMarketingManagement.ClientID%>';
+            var grpMembershipManagement = '<%=grpMembershipManagement.ClientID%>';
+
+            $('#' + grpHotelManagement).click(function (event) {
+                AllCollapse("grpHotelManagement");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+
+            $('#' + grpBanquetManagement).click(function (event) {
+
+                AllCollapse("grpBanquetManagement");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+
+            });
+
+            $('#' + grpRecruitmentManagement).click(function (event) {
+                AllCollapse("grpRecruitmentManagement");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+
+            });
+
+            $('#' + grpPayrollManagement).click(function (event) {
+                AllCollapse("grpPayrollManagement");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+
+            });
+
+            $('#' + grpDashboard).click(function (event) {
+                AllCollapse("grpDashboard");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('#' + grpRestaurantManagement).click(function (event) {
+                AllCollapse("grpRestaurantManagement");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('#' + grpGeneralLedger).click(function (event) {
+                AllCollapse("grpGeneralLedger");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('#' + grpPurchaseManagement).click(function (event) {
+                AllCollapse("grpPurchaseManagement");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('#' + grpInventoryManagement).click(function (event) {
+                AllCollapse("grpInventoryManagement");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+            });
+            $('#' + grpSalesManagement).click(function (event) {
+                AllCollapse("grpSalesManagement");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+
+            });
+            $('#' + grpSalesMarketingManagement).click(function (event) {
+                AllCollapse("grpSalesMarketingManagement");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+
+            });
+            $('#' + grpMembershipManagement).click(function (event) {
+                AllCollapse("grpMembershipManagement");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+
+            });
+            $('#' + grpUserPanel).click(function (event) {
+                AllCollapse("grpUserPanel");
+                setTimeout(function () { $('#colapsePanel').height($('#MenuExpandable').height()); }, 500);
+
+            });
+
+            $('input[type!=hidden]:enabled, input[type!=hidden]:visible, select:enabled, select:visible, textarea:enabled, textarea:visible, options:selected').on('keypress', function (e) {
+
+                var code = (e.keyCode ? e.keyCode : e.which);
+                var currentClassName = "";
+
+                if (typeof $(this).attr('class') != 'undefined') {
+                    currentClassName = $(this).attr('class').split(' ')[0];
+                }
+
+                if (code == 13) {
+                    if (currentClassName != "TransactionalButton") {
+                        e.preventDefault();
+
+                        var inputs = $(this).closest('form').find(':focusable');
+                        inputs.eq(inputs.index(this) + 1).focus();
+                    }
+                    else {
+                        return true;
+                    }
+
+                    return false;
+                }
+            });
+        });
+
+        //MessageDiv Visible True/False-------------------
+        function MessagePanelShow() {
+            $('#SoftwareLicenseExpiredNotificationMessageBox').show("slow");
+        }
+        function MessagePanelHide() {
+            $('#SoftwareLicenseExpiredNotificationMessageBox').hide("slow");
+        }
+
+        function SetHomemenuShowHide(showOrHide) {
+            var params = JSON.stringify({ showOrHide: showOrHide });
+            $.ajax({
+                type: "POST",
+                url: "../../Common/CheckMenuShowHide.asmx/HomeMenuShowHide",
+                data: params,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                },
+                error: function (error) {
+                }
+            });
+        }
+
+
+        function AllCollapse(id) {
+            if (id == "grpHotelManagement") {
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpDashboard") {
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpRestaurantManagement") {
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpGeneralLedger") {
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpPayrollManagement") {
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpPurchaseManagement") {
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpInventoryManagement") {
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpSalesManagement") {
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpUserPanel") {
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpBanquetManagement") {
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpCostofGoodsSold") {
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpSalesMarketingManagement") {
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpRecruitmentManagement") {
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpMembershipManagement", "menuMembershipManagement");
+            }
+            else if (id == "grpMembershipManagement") {
+                CollapseMenuById("grpDashboard", "menuDashboard");
+                CollapseMenuById("grpRestaurantManagement", "menuRestaurantManagement");
+                CollapseMenuById("grpGeneralLedger", "menuGeneralLedger");
+                CollapseMenuById("grpSalesMarketingManagement", "menuSalesMarketingManagement");
+                CollapseMenuById("grpPayrollManagement", "menuPayrollManagement");
+                CollapseMenuById("grpPurchaseManagement", "menuPurchaseManagement");
+                CollapseMenuById("grpInventoryManagement", "menuInventoryManagement");
+                CollapseMenuById("grpSalesManagement", "menuSalesManagement");
+                CollapseMenuById("grpHotelManagement", "menuHotelManagement");
+                CollapseMenuById("grpUserPanel", "menuUserPanel");
+                CollapseMenuById("grpCostofGoodsSold", "menuCostofGoodsSoldPanel");
+                CollapseMenuById("grpBanquetManagement", "menuBanquetManagement");
+                CollapseMenuById("grpRecruitmentManagement", "menuRecruitmentManagement");
+            }
+            else {
+                alert("else");
+            }
+        }
+
+        function CollapseMenuById(grpId, menuId) {
+            $('#' + grpId).removeClass("nav-header");
+            $('#' + menuId).removeClass("nav nav-list in collapse");
+            $('#' + menuId).css({ height: "0px" });
+            $('#' + grpId).addClass("nav-header collapsed");
+            $('#' + menuId).addClass("nav nav-list collapse");
+        }
+
+        function OpenMenuById(grpId, menuId) {
+            $('#' + grpId).removeClass("nav-header collapsed");
+            $('#' + menuId).removeClass("nav nav-list collapse");
+            $('#' + menuId).css({ height: "auto" });
+            $('#' + grpId).addClass("nav-header");
+            $('#' + menuId).addClass("nav nav-list in collapse");
+        }
+
+        function ShowHideMenu(showOrHide) {
+            if (showOrHide == 'hide') {
+                $('#NavigationPanel').hide("slide", { direction: "left" }, "slow");
+                $('#MainMenuSHowHide').show("slide", { direction: "right" }, "slow");
+                $('.content').animate({ 'margin-left': '40px' });
+
+                var hPanel = false, rPanel = false, gIndex = 0;
+
+                if ($("#MainMenu").is(":visible")) {
+                    hPanel = true;
+                    rPanel = false;
+                    gIndex = $("#MainMenu > div > ul > li.has-sub.active").index();
+                }
+                else if ($("#ReportMenu").is(":visible")) {
+                    hPanel = false;
+                    rPanel = true;
+                    gIndex = $("#ReportMenu > div > ul > li.has-sub.active").index();
+                }
+
+                var menuoption = {
+                    IsHide: true,
+                    HPanel: hPanel,
+                    RPanel: rPanel,
+                    GIndex: gIndex
+                };
+
+                if (Cookies.getJSON('menuoption') == undefined) {
+                    Cookies.set('menuoption', menuoption, { expires: 1 });
+                }
+                else {
+                    Cookies.remove('menuoption');
+                    Cookies.set('menuoption', menuoption);
+                }
+            }
+            else if (showOrHide == 'show') {
+                $('#NavigationPanel').show("slide", { direction: "left" }, "slow");
+                $('#MainMenuSHowHide').hide("slide", { direction: "right" }, "slow");
+                $('.content').animate({ 'margin-left': '262px' });
+
+                if (Cookies.getJSON('menuoption') != undefined) {
+
+                    var menuoption = Cookies.getJSON('menuoption');
+
+                    if (menuoption.HPanel) {
+                        var activeGroupMenu = $("#MainMenu > div > ul > li:eq(" + menuoption.GIndex + ")");
+                        if (activeGroupMenu.hasClass("active") == false) {
+                            activeGroupMenu.addClass("active");
+                            $("#MainMenu > div > ul > li:eq(" + menuoption.GIndex + ") > a").next().slideDown('normal');
+                            $(window).scrollTop($(activeGroupMenu).offset().top);
+                        }
+                    }
+                    else if (menuoption.RPanel) {
+                        var activeGroupMenu = $("#ReportMenu > div > ul > li:eq(" + menuoption.GIndex + ")");
+                        if (activeGroupMenu.hasClass("active") == false) {
+                            activeGroupMenu.addClass("active");
+                            $("#ReportMenu > div > ul > li:eq(" + menuoption.GIndex + ") > a").next().slideDown('normal');
+                            $(window).scrollTop($(activeGroupMenu).offset().top);
+                        }
+                    }
+
+                    Cookies.remove('menuoption');
+                }
+            }
+
+            return false;
+        }
+
+        function ShowHideHomeOrReportPanel(showOrHide) {
+
+            if (showOrHide == 'home') {
+                $('#HomeMenuPanel').show("slide", { direction: "up" }, "slow");
+                //$('#ReportMenuPanel').hide("slide", { direction: "up" }, "slow");
+                $('#ReportMenuPanel').hide();
+            }
+            else if (showOrHide == 'report') {
+                $('#ReportMenuPanel').show("slide", { direction: "up" }, "slow");
+                // $('#HomeMenuPanel').hide("slide", { direction: "up" }, "slow");
+                $('#HomeMenuPanel').hide();
+            }
+
+            return false;
+        }
+
+
+    </script>
+    <asp:ContentPlaceHolder ID="ContentPlaceHolderHeader" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="">
+    <form id="frmHotelManagement" runat="server" class="search form-inline">
+    <asp:HiddenField ID="hfHomeIsHidden" runat="server" ClientIDMode="Static" />
+    <asp:HiddenField ID="InnboardMessageHiddenField" runat="server" Value="" ClientIDMode="Static" />
+    <input type="hidden" id="hfMessageHideTime" value="7000" runat="server" />
+    <div id="layer1" class="hiddenDiv">
+    </div>
+    <div style="display: none;" id="MessageList">
+        <ul class="nav nav-list">
+            <li class="nav-header">List header</li>
+            <li class="divider"></li>
+            <li class="active"><a href="#">Home</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Library</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Applications</a></li>
+            <li class="divider"></li>
+            <li class="nav-header">Another list header</li>
+            <li><a href="#">Profile</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Settings</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Help</a></li>
+        </ul>
+    </div>
+    <div id="popUpDiv" class="hiddenDiv">
+        <div id="popUpDivContainer">
+            <div class="popupHeaderBox">
+                <div class="popupTitle">
+                </div>
+                <div class="btnClose">
+                    <a href="javascript:void(0)" onclick="javascript:popup(-1);"><span id="closeSpan">Close</span></a></div>
+                <div class="clearCls">
+                </div>
+            </div>
+            <div class="popupContentBox">
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="MenuPanel" style="padding: 9px; width: 10px; z-index: 0; position: absolute;
+            font-size: 18px; cursor: pointer; height: 600px; background-color: #476B8F; margin-top: 50px;
+            float: left">
+            <div style="height: 45%; width: 10px;">
+            </div>
+            <div style="height: 20px; width: 20px; background-position: 20px 90px; background-image: url('/Images/img/glyphicons-halflings-white.png');
+                background-repeat: repeat;">
+            </div>
+        </div>
+        <div id="MainMenuSHowHide" style="display: none; z-index: 1000; margin-top: 50px;
+            float: left" class="menuShowHide" onclick="ShowHideMenu('show')">
+            &nbsp;<i class="icon-list"></i>
+        </div>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <ul class="nav pull-right">
+                    <li><a href="javascript:void()" class="hidden-phone visible-tablet visible-desktop">
+                        Date:&nbsp;<asp:Label ID="lblDayOpenDate" runat="server" Text=""></asp:Label></a></li>
+                    <li id="message-menu" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-envelope"></i>&nbsp;Mail Box&nbsp;&nbsp;<span id="MessageCountBadge"
+                            class="badge" runat="server">
+                            <asp:Label ID="lblMessageCount" runat="server" Text="0" Font-Bold="true"></asp:Label></span>
+                    </a>
+                        <ul class="dropdown-menu" runat="server" id="MessageBriefDescription" style="width: 560px;">
+                        </ul>
+                    </li>
+                    <li id="OldReportPanel"><a href="/HMCommon/frmHMReport.aspx" class="hidden-phone visible-tablet visible-desktop">
+                        <i class="icon-book"></i>Report Panel</a></li>
+                    <li id="fat-menu" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-user"></i>
+                        <asp:Label ID="lblCurrentUser" runat="server" Text=""></asp:Label><i class="icon-caret-down">
+                        </i></a>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="/UserInformation/frmUpdateAccount.aspx">My Account</a></li>
+                            <li class="divider"></li>
+                            <li><a tabindex="-1" href="/UserInformation/frmChangePassword.aspx">Change Password</a></li>
+                            <li class="divider"></li>
+                            <li><a tabindex="-1" class="visible-phone" href="#">Settings</a></li>
+                            <li class="divider visible-phone"></li>
+                            <li><a tabindex="-1" href="/Logout.aspx?LoginType=MainLogin">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <a class="brand" href="#">
+                    <img src="/StyleSheetOld/images/Innboard-Logo_White.png" class=" InnBoardIcon" alt="logo" /></a>
+            </div>
+        </div>
+        <div class="sidebar-nav" id="NavigationPanel">
+            <div style="height: 7px;">
+                <%-- <asp:TextBox ID="SearchTextBox" runat="server" placeholder="Guest Search..."></asp:TextBox>
+                <asp:ImageButton ID="ImgBtnSearch" runat="server" ImageUrl="~/Images/Search.png"
+                    OnClick="ImgBtnSearch_Click" />--%>
+            </div>
+            <%-- Main Menu Left --%>
+            <div style="width: 250px;" id="MainMenuTopNav">
+                <div class="navbar" style="margin: 0; padding: 0;">
+                    <div class="navbar-inner" id="MainMenuTopLink">
+                        <a class="brand" style="padding: 11px 0 0 0; font-size: 13px;" href="javascript:void()"
+                            onclick="ShowHideMenu('hide')">&nbsp;&nbsp;<i class="icon-list"></i></a>
+                        <ul class="nav">
+                            <li class="active"><a href="javascript:void()" onclick="ShowHideHomeOrReportPanel('home')">
+                                Home Panel</a></li>
+                            <li><a href="javascript:void()" onclick="ShowHideHomeOrReportPanel('report')">Report
+                                Panel</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="HomeMenuPanel">
+                    <div id="MainMenu" runat="server">
+                    </div>
+                </div>
+                <div id="ReportMenuPanel" style="display: none;">
+                    <div id="ReportMenu" runat="server">
+                    </div>
+                </div>
+            </div>
+            <div id="MenuExpandable" style="float: left;">
+                <%--display: none;--%>
+                <a href="/HMCommon/frmHMHome.aspx" class="nav-header"><i class="icon-th-list"></i>Dashboard</a>
+                <a id="grpDashboard" runat="server" visible="False" href="#menuDashboard" class="nav-header collapsed"
+                    data-toggle="collapse"><i class="icon-home"></i>Company Information <i class="icon-chevron-up">
+                    </i></a>
+                <ul id="menuDashboard" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmCompany" runat="server" visible="False"><a href="/HMCommon/frmCompany.aspx">
+                        <i class="icon-file-alt"></i>Company Information</a></li>
+                    <li id="liFrmCostCentre" runat="server" visible="False"><a href="/HMCommon/frmCostCentre.aspx">
+                        <i class="icon-file-alt"></i>Cost Center</a></li>
+                    <li id="liFrmPrinterInfo" runat="server" visible="False"><a href="/HMCommon/frmPrinterInfo.aspx">
+                        <i class="icon-file-alt"></i>Printer Information</a></li>
+                    <li id="liFrmBank" runat="server" visible="False"><a href="/HMCommon/frmBank.aspx"><i
+                        class="icon-file-alt"></i>Bank Name</a></li>
+                    <li id="liFrmBusinessPromotion" runat="server" visible="False"><a href="/HMCommon/frmBusinessPromotion.aspx">
+                        <i class="icon-file-alt"></i>Business Promotion</a></li>
+                    <li id="liFrmHMCommonSetup" runat="server" visible="False"><a href="/HMCommon/frmHMCommonSetup.aspx">
+                        <i class="icon-file-alt"></i>Configuration</a></li>
+                    <li id="liFrmCommonCurrency" runat="server" visible="False"><a href="/HMCommon/frmCommonCurrency.aspx">
+                        <i class="icon-file-alt"></i>Currency Head</a></li>
+                    <li id="liFrmCurrencyConversion" runat="server" visible="False"><a href="/HMCommon/frmCurrencyConversion.aspx">
+                        <i class="icon-file-alt"></i>Currency Conversion</a></li>
+                    <li id="liFrmCurrencyTransaction" runat="server" visible="False"><a href="/HMCommon/frmCurrencyTransaction.aspx">
+                        <i class="icon-file-alt"></i>Currency Transaction</a></li>
+                    <li id="liFrmMessageMail" runat="server" visible="False"><a href="/HMCommon/frmCommonMessage.aspx">
+                        <i class="icon-file-alt"></i>Message Sending</a></li>
+                    <li id="liFrmDatabaseBackup" runat="server" visible="False"><a href="/HMCommon/frmDatabaseBackup.aspx">
+                        <i class="icon-file-alt"></i>Database Backup</a></li>
+                    <li id="liFrmDashboardPermission" runat="server" visible="False"><a href="/HMCommon/frmDashboardPermission.aspx">
+                        <i class="icon-file-alt"></i>Dashboard Management</a></li>
+                    <li id="liFrmDashboard" runat="server" visible="False"><a href="/HMCommon/frmInnboardDashboard.aspx">
+                        <i class="icon-file-alt"></i>Dashboard</a></li>
+                    <li id="liFrmVatAdjustment" runat="server" visible="False"><a href="/HMCommon/frmVatAdjustment.aspx">
+                        <i class="icon-file-alt"></i>Vat Adjustment</a></li>
+                </ul>
+                <a id="grpHotelManagement" runat="server" visible="False" href="#menuHotelManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-h-sign"></i>Front
+                    Office Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuHotelManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmHotelConfiguration" runat="server" visible="False"><a href="/HotelManagement/frmHotelConfiguration.aspx">
+                        <i class="icon-file-alt"></i>Configuration</a></li>
+                    <li id="liFrmSearchGuest" runat="server" visible="False"><a href="/HotelManagement/frmSearchGuest.aspx">
+                        <i class="icon-file-alt"></i>Guest Search</a></li>
+                    <li id="liFrmHMComplementaryItem" runat="server" visible="False"><a href="/HotelManagement/frmHMComplementaryItem.aspx">
+                        <i class="icon-file-alt"></i>Complimentary Item</a></li>
+                    <li id="liFrmGuestServiceInfo" runat="server" visible="False"><a href="/HotelManagement/frmGuestServiceInfo.aspx">
+                        <i class="icon-file-alt"></i>Service Information</a></li>
+                    <li id="liFrmHMFloor" runat="server" visible="False"><a href="/HotelManagement/frmHMFloor.aspx">
+                        <i class="icon-file-alt"></i>Floor Name</a></li>
+                    <li id="liFrmHMFloorManagement" runat="server" visible="False"><a href="/HotelManagement/frmHMFloorManagement.aspx">
+                        <i class="icon-file-alt"></i>Floor Management</a></li>
+                    <li id="liFrmRoomType" runat="server" visible="False"><a href="/HotelManagement/frmRoomType.aspx">
+                        <i class="icon-file-alt"></i>Room Type</a></li>
+                    <li id="liFrmRoomNumber" runat="server" visible="False"><a href="/HotelManagement/frmRoomNumber.aspx">
+                        <i class="icon-file-alt"></i>Room Number</a></li>
+                    <li id="liFrmRoomCleanup" runat="server" visible="False"><a href="/HotelManagement/frmRoomCleanup.aspx">
+                        <i class="icon-file-alt"></i>Room Clean Up</a></li>
+                    <li id="liFrmRoomOwner" runat="server" visible="False"><a href="/HotelManagement/frmRoomOwner.aspx">
+                        <i class="icon-file-alt"></i>Room Owner</a></li>
+                    <li id="liFrmRoomCalender" runat="server" visible="False"><a href="/HotelManagement/frmRoomCalender.aspx">
+                        <i class="icon-file-alt"></i>Room Calendar</a></li>
+                    <li id="liFrmRoomStatusInfo" runat="server" visible="False"><a href="/HotelManagement/frmRoomStatusInfo.aspx">
+                        <i class="icon-file-alt"></i>Today's Room Status</a></li>
+                    <li id="liFrmRoomAllocation" runat="server" visible="False"><a href="/HotelManagement/frmRoomAllocation.aspx">
+                        <i class="icon-file-alt"></i>Room Status</a></li>
+                    <li id="liFrmFloorWiseRoomAllocation" runat="server" visible="false"><a href="/HotelManagement/frmFloorWiseRoomAllocation.aspx">
+                        <i class="icon-file-alt"></i>Room Allocation</a></li>
+                    <li id="liFrmManageOnlineRoomReservation" runat="server" visible="False"><a href="/HotelManagement/frmOnlineRoomReservationList.aspx">
+                        <i class="icon-file-alt"></i>Online Reservation</a></li>
+                    <li id="liFrmRoomReservation" runat="server" visible="False"><a href="/HotelManagement/frmRoomReservation.aspx">
+                        <i class="icon-file-alt"></i>Room Reservation</a></li>
+                    <li id="liFrmReservationBillPayment" runat="server" visible="False"><a href="/HotelManagement/frmReservationBillPayment.aspx">
+                        <i class="icon-file-alt"></i>Reservation Payment</a></li>
+                    <li id="liFrmRoomRegistration" runat="server" visible="False"><a href="/HotelManagement/frmRoomRegistration.aspx">
+                        <i class="icon-file-alt"></i>Room Registration</a></li>
+                    <li id="liFrmRoomShift" runat="server" visible="False"><a href="/HotelManagement/frmRoomShift.aspx">
+                        <i class="icon-file-alt"></i>Room Change</a></li>
+                    <li id="liFrmGHServiceBill" runat="server" visible="False"><a href="/HotelManagement/frmGHServiceBill.aspx">
+                        <i class="icon-file-alt"></i>Service Bill</a></li>
+                    <li id="liFrmGuestCheckIn" runat="server" visible="False"><a href="/HotelManagement/frmGuestCheckIn.aspx">
+                        <i class="icon-file-alt"></i>Pax In</a></li>
+                    <li id="liFrmGuestCheckOut" runat="server" visible="False"><a href="/HotelManagement/frmGuestCheckOut.aspx">
+                        <i class="icon-file-alt"></i>Pax Out</a></li>
+                    <li id="liFrmServiceBillTransfer" runat="server" visible="False"><a href="/HotelManagement/frmServiceBillTransfer.aspx">
+                        <i class="icon-file-alt"></i>Bill Transfer</a></li>
+                    <li id="liFrmBillAdjustment" runat="server" visible="False"><a href="/HotelManagement/frmBillAdjustment.aspx">
+                        <i class="icon-file-alt"></i>Bill Adjustment</a></li>
+                    <%--<li id="liFrmFrontOfficePS" runat="server" visible="False"><a href="/HotelManagement/frmFrontOfficePaidService.aspx">
+                        <i class="icon-file-alt"></i>Paid Service</a></li>--%>
+                    <li id="liFrmNightAudit" runat="server" visible="False"><a href="/HotelManagement/frmNightAudit.aspx">
+                        <i class="icon-file-alt"></i>Night Audit</a></li>
+                    <li id="liFrmGuestBillPayment" runat="server" visible="False"><a href="/HotelManagement/frmGuestBillPayment.aspx">
+                        <i class="icon-file-alt"></i>Guest Bill Payment</a></li>
+                    <li id="liFrmRoomCheckOut" runat="server" visible="False"><a href="/HotelManagement/frmRoomCheckOut.aspx">
+                        <i class="icon-file-alt"></i>Room Check-Out</a></li>
+                    <li id="liFrmHMDayClose" runat="server" visible="False"><a href="/HotelManagement/frmHMDayClose.aspx">
+                        <i class="icon-file-alt"></i>Day Close</a></li>
+                    <li id="liFrmApproveRoomReservationNoShow" runat="server" visible="False"><a href="/HotelManagement/frmNoShowApproval.aspx">
+                        <i class="icon-file-alt"></i>No Show Approval</a></li>
+                    <li id="liFrmDiscountPolicy" runat="server" visible="False"><a href="/HotelManagement/frmCompanyWiseDiscountSetUp.aspx">
+                        <i class="icon-file-alt"></i>Discount Policy</a></li>
+                    <li id="liFrmGuestPreference" runat="server" visible="False"><a href="/HotelManagement/frmGuestPreference.aspx">
+                        <i class="icon-file-alt"></i>Guest Preference</a></li>
+                </ul>
+                <a id="grpRestaurantManagement" runat="server" visible="False" href="#menuRestaurantManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-food"></i>Restaurant
+                    Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuRestaurantManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmRestaurantConfiguration" runat="server" visible="False"><a href="/Restaurant/frmRestaurantConfiguration.aspx">
+                        <i class="icon-file-alt"></i>Configuration</a></li>
+                    <li id="liFrmRestaurantKitchen" runat="server" visible="False"><a href="/Restaurant/frmRestaurantKitchen.aspx">
+                        <i class="icon-file-alt"></i>Restaurant Kitchen</a></li>
+                    <li id="liFrmRestaurantTable" runat="server" visible="False"><a href="/Restaurant/frmRestaurantTable.aspx">
+                        <i class="icon-file-alt"></i>Restaurant Table</a></li>
+                    <li id="liFrmRestaurantTableManagement" runat="server" visible="False"><a href="/Restaurant/frmRestaurantTableManagement.aspx">
+                        <i class="icon-file-alt"></i>Table Management</a></li>
+                    <li id="liFrmFrontOfficeUser" runat="server" visible="False"><a href="/Restaurant/frmFrontOfficeUser.aspx">
+                        <i class="icon-file-alt"></i>Cashier Information</a></li>
+                    <li id="liFrmRestaurantBearer" runat="server" visible="False"><a href="/Restaurant/frmRestaurantBearer.aspx">
+                        <i class="icon-file-alt"></i>Waiter Information</a></li>
+                    <%--<li id="liFrmRestaurantItemCategory" runat="server" visible="False"><a href="/Restaurant/frmRestaurantItemCategory.aspx">
+                        <i class="icon-file-alt"></i>Item Category</a></li>--%>
+                    <li id="liFrmRestaurantCombo" runat="server" visible="False"><a href="/Restaurant/frmRestaurantCombo.aspx">
+                        <i class="icon-file-alt"></i>Restaurant Combo</a></li>
+                    <li id="liFrmRestaurantBuffet" runat="server" visible="False"><a href="/Restaurant/frmRestaurantBuffet.aspx">
+                        <i class="icon-file-alt"></i>Restaurant Buffet</a></li>
+                    <%--<li id="liFrmRestaurantPS" runat="server" visible="False"><a href="/Restaurant/frmRestaurantPaidService.aspx">
+                        <i class="icon-file-alt"></i>Paid Service</a></li>--%>
+                    <li id="liFrmRestaurantReservation" runat="server" visible="False"><a href="/Restaurant/frmRestaurantReservation.aspx">
+                        <i class="icon-file-alt"></i>Restaurant Reservation</a></li>
+                    <li id="liFrmRestaurantTableCalendar" runat="server" visible="False"><a href="/Restaurant/frmRestaurantTableCalendar.aspx">
+                        <i class="icon-file-alt"></i>Table Calendar</a></li>
+                    <li id="liFrmCostCenterChooseForKot" runat="server" visible="False"><a href="/Restaurant/frmCostCenterChooseForKot.aspx">
+                        <i class="icon-file-alt"></i>Restaurant Kot Bill</a></li>
+                    <li id="liFrmRestaurantBill" runat="server" visible="False"><a href="/Restaurant/frmCostCenterChooseForRB.aspx">
+                        <i class="icon-file-alt"></i>Restaurant Bill</a></li>
+                    <li id="liFrmRestaurantBillSearch" runat="server" visible="False"><a href="/Restaurant/frmRestaurantBillSearch.aspx">
+                        <i class="icon-file-alt"></i>Restaurant Bill Search</a></li>
+                    <li id="liFrmFoodDisPatch" runat="server" visible="False"><a href="/Restaurant/frmCostCenterChooseForFD.aspx">
+                        <i class="icon-file-alt"></i>Food Dispatch</a></li>
+                    <li id="liFrmPayFirstRestaurantBill" runat="server" visible="False"><a href="/Restaurant/frmPayFirstRestaurantBill.aspx">
+                        <i class="icon-file-alt"></i>Pay First Restaurant Bill</a></li>
+                </ul>
+                <a id="grpBanquetManagement" runat="server" visible="False" href="#menuBanquetManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-bolt"></i>Banquet
+                    Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuBanquetManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmBanquetTheme" runat="server" visible="False"><a href="/Banquet/frmBanquetOccessionType.aspx">
+                        <i class="icon-file-alt"></i>Occasion Type</a></li>
+                    <li id="liFrmSeatingPlan" runat="server" visible="False"><a href="/Banquet/frmBanquetSeatingPlan.aspx">
+                        <i class="icon-file-alt"></i>Seating Plan</a></li>
+                    <li id="liFrmBanquetRequisites" runat="server" visible="False"><a href="/Banquet/frmBanquetRequisites.aspx">
+                        <i class="icon-file-alt"></i>Requisites Information</a></li>
+                    <li id="liFrmBanquetRefference" runat="server" visible="False"><a href="/Banquet/frmBanquetRefference.aspx">
+                        <i class="icon-file-alt"></i>Banquet Reference</a></li>
+                    <li id="liFrmBanquetInformation" runat="server" visible="False"><a href="/Banquet/frmBanquetInformation.aspx">
+                        <i class="icon-file-alt"></i>Banquet Information</a></li>
+                    <li id="liFrmBanquetReservation" runat="server" visible="False"><a href="/Banquet/frmBanquetReservation.aspx">
+                        <i class="icon-file-alt"></i>Banquet Reservation</a></li>
+                    <li id="liFrmBanquetReservationCancel" runat="server" visible="False"><a href="/Banquet/frmBanquetReservationCancel.aspx">
+                        <i class="icon-file-alt"></i>Reservation Cancel</a></li>
+                    <li id="liFrmBanquetBillPayment" runat="server" visible="False"><a href="/Banquet/frmBanquetBillPayment.aspx">
+                        <i class="icon-file-alt"></i>Banquet Bill Payment</a></li>
+                    <li id="liFrmBanquetCalendar" runat="server" visible="False"><a href="/Banquet/frmBanquetCalendar.aspx">
+                        <i class="icon-file-alt"></i>Banquet Calendar</a></li>
+                    <li id="liFrmBanquetBillSettlement" runat="server" visible="False"><a href="/Banquet/frmBanquetBillSettlement.aspx">
+                        <i class="icon-file-alt"></i>Bill Settlement</a></li>
+                    <li id="liBanquetBillSearch" runat="server" visible="False"><a href="/Banquet/frmBanquetBillSearch.aspx">
+                        <i class="icon-file-alt"></i>Bill Search Info</a></li>
+                </ul>
+                <a id="grpPurchaseManagement" runat="server" visible="False" href="#menuPurchaseManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-shopping-cart">
+                    </i>Purchase Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuPurchaseManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmPMSupplier" runat="server" visible="False"><a href="/PurchaseManagment/frmPMSupplier.aspx">
+                        <i class="icon-file-alt"></i>Supplier</a></li>
+                    <li id="liFrmPMRequisition" runat="server" visible="False"><a href="/PurchaseManagment/frmPMRequisition.aspx">
+                        <i class="icon-file-alt"></i>Product Requisition</a></li>
+                    <li id="liFrmPMRequisitionApproval" runat="server" visible="False"><a href="/PurchaseManagment/frmPMRequisitionApproval.aspx">
+                        <i class="icon-file-alt"></i>Requisition Approval</a></li>
+                    <li id="liFrmPMProductPO" runat="server" visible="False"><a href="/PurchaseManagment/frmPMProductPO.aspx">
+                        <i class="icon-file-alt"></i>Product Purchase Order</a></li>
+                    <li id="liFrmPMProductPOApproval" runat="server" visible="False"><a href="/PurchaseManagment/frmPMProductPOApproval.aspx">
+                        <i class="icon-file-alt"></i>Product PO Approval</a></li>
+                    <li id="liFrmPMPurchaseReturn" runat="server" visible="False"><a href="/PurchaseManagment/frmPMPurchaseReturn.aspx">
+                        <i class="icon-file-alt"></i>Purchase Return</a></li>
+                    <li id="liFrmPMServicePO" runat="server" visible="False"><a href="/PurchaseManagment/frmPMServicePO.aspx">
+                        <i class="icon-file-alt"></i>Service Purchase Order</a></li>
+                    <li id="liFrmPMServicePOApproval" runat="server" visible="False"><a href="/PurchaseManagment/frmPMServicePOApproval.aspx">
+                        <i class="icon-file-alt"></i>Service PO Approval</a></li>
+                </ul>
+                <a id="grpInventoryManagement" runat="server" visible="False" href="#menuInventoryManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-suitcase"></i>
+                    Inventory Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuInventoryManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmUnitHead" runat="server" visible="False"><a href="/Inventory/frmUnitHead.aspx">
+                        <i class="icon-file-alt"></i>Unit Head</a></li>
+                    <li id="liFrmUnitConversionRate" runat="server" visible="False"><a href="/Inventory/frmUnitConversionRate.aspx">
+                        <i class="icon-file-alt"></i>Unit Conversion</a></li>
+                    <li id="liFrmInvLocation" runat="server" visible="False"><a href="/Inventory/frmInvLocation.aspx">
+                        <i class="icon-file-alt"></i>Location Information</a></li>
+                    <li id="liFrmInvManufacturer" runat="server" visible="False"><a href="/Inventory/frmInvManufacturer.aspx">
+                        <i class="icon-file-alt"></i>Manufacturer / Brand</a></li>
+                    <li id="liFrmInvCategory" runat="server" visible="False"><a href="/Inventory/frmInvCategory.aspx">
+                        <i class="icon-file-alt"></i>Category Information</a></li>
+                    <li id="liFrmInvItem" runat="server" visible="False"><a href="/Inventory/frmInvItem.aspx">
+                        <i class="icon-file-alt"></i>Item Information</a></li>
+                    <li id="liFrmInvFinishedProduct" runat="server" visible="False"><a href="/Inventory/frmInvFinishedProduct.aspx">
+                        <i class="icon-file-alt"></i>Finished Product</a></li>
+                    <li id="liFrmInvFinishedProductApproval" runat="server" visible="False"><a href="/Inventory/frmInvFinishedProductApproval.aspx">
+                        <i class="icon-file-alt"></i>Finished Product Approval</a></li>
+                    <li id="liFrmInvStockVariance" runat="server" visible="False"><a href="/Inventory/frmInvStockVariance.aspx">
+                        <i class="icon-file-alt"></i>Item Wastage</a></li>
+                    <li id="liFrmInvStockVarianceApproval" runat="server" visible="False"><a href="/Inventory/frmInvStockVarianceApproval.aspx">
+                        <i class="icon-file-alt"></i>Item Wastage Approval</a></li>
+                    <li id="liFrmInvItemSpecialRemarks" runat="server" visible="False"><a href="/Inventory/frmInvItemSpecialRemarks.aspx">
+                        <i class="icon-file-alt"></i>Special Remarks</a></li>
+                    <li id="liFrmPMProductReceive" runat="server" visible="False"><a href="/Inventory/frmPMProductReceive.aspx">
+                        <i class="icon-file-alt"></i>Product Receive</a></li>
+                    <li id="liFrmProductReceiveApproval" runat="server" visible="False"><a href="/Inventory/frmProductReceiveApproval.aspx">
+                        <i class="icon-file-alt"></i>Product Receive Approval</a></li>
+                    <li id="liFrmPMProductOut" runat="server" visible="False"><a href="/Inventory/frmPMProductOut.aspx">
+                        <i class="icon-file-alt"></i>Product Out</a></li>
+                    <li id="liFrmProductOut" runat="server" visible="False"><a href="/Inventory/frmProductOut.aspx">
+                        <i class="icon-file-alt"></i>Product Direct Out</a></li>
+                    <li id="liFrmProductOutForRoom" runat="server" visible="False"><a href="/Inventory/frmProductOutForRoom.aspx">
+                        <i class="icon-file-alt"></i>Product Out For Room</a></li>
+                    <li id="liFrmInvStockAdjustment" runat="server" visible="False"><a href="/Inventory/frmInvStockAdjustment.aspx">
+                        <i class="icon-file-alt"></i>Stock Adjustment</a></li>
+                </ul>
+                <a id="grpSalesManagement" runat="server" visible="False" href="#menuSalesManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-money"></i>Sales
+                    Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuSalesManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmSalesCustomer" runat="server" visible="False"><a href="/SalesManagment/frmSalesCustomer.aspx">
+                        <i class="icon-file-alt"></i>Customer</a> </li>
+                    <li id="liFrmSalesBandwidthInfo" runat="server" visible="false"><a href="/SalesManagment/frmSalesBandwidthInfo.aspx">
+                        <i class="icon-file-alt"></i>Bandwidth Info</a></li>
+                    <li id="liFrmSalesService" runat="server" visible="False"><a href="/SalesManagment/frmSalesService.aspx">
+                        <i class="icon-file-alt"></i>Service</a></li>
+                    <li id="liFrmServiceBundle" runat="server" visible="False"><a href="/SalesManagment/frmServiceBundle.aspx">
+                        <i class="icon-file-alt"></i>Service Bundle</a></li>
+                    <li id="liFrmPMSales" runat="server" visible="False"><a href="/SalesManagment/frmPMSales.aspx">
+                        <i class="icon-file-alt"></i>Sales</a></li>
+                    <li id="liFrmPMSalesReturn" runat="server" visible="False"><a href="/SalesManagment/frmPMSalesReturn.aspx">
+                        <i class="icon-file-alt"></i>Sales Return</a></li>
+                    <li id="liFrmPMSalesInvoice" runat="server" visible="False"><a href="/SalesManagment/frmPMSalesInvoice.aspx">
+                        <i class="icon-file-alt"></i>Bill Generate</a></li>
+                    <li id="liFrmPMSalesBillPayment" runat="server" visible="False"><a href="/SalesManagment/frmPMSalesBillPayment.aspx">
+                        <i class="icon-file-alt"></i>Bill Receive</a></li>
+                    <li id="liFrmSearchInvoice" runat="server" visible="False"><a href="/SalesManagment/frmSearchInvoice.aspx">
+                        <i class="icon-file-alt"></i>Search Invoice</a></li>
+                    <li id="liFrmSalesContractDetails" runat="server" visible="False"><a href="/SalesManagment/frmSalesContractDetails.aspx">
+                        <i class="icon-file-alt"></i>Contract Details</a></li>
+                </ul>
+                <a id="grpRecruitmentManagement" runat="server" visible="False" href="#menuRecruitmentManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-list"></i>Recruitment
+                    Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuRecruitmentManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmEmpJobCircular" runat="server" visible="False"><a href="/Recruitment/frmEmpJobCircular.aspx">
+                        <i class="icon-file-alt"></i>Job Circular</a></li>
+                    <li id="liFrmResumeSearch" runat="server" visible="False"><a href="/Recruitment/frmResumeSearch.aspx">
+                        <i class="icon-file-alt"></i>Search Resume Bank</a></li>
+                    <li id="liFrmApplicantInfo" runat="server" visible="False"><a href="/Recruitment/frmApplicant.aspx">
+                        <i class="icon-file-alt"></i>Applicant Information</a></li>
+                    <li id="liFrmInterviewType" runat="server" visible="False"><a href="/Recruitment/frmInterviewType.aspx">
+                        <i class="icon-file-alt"></i>Interview Type</a></li>
+                    <li id="liFrmInterviewEvaluation" runat="server" visible="False"><a href="/Recruitment/frmInterviewEvalution.aspx">
+                        <i class="icon-file-alt"></i>Interview Evaluation</a></li>
+                    <li id="liFrmAppicantMarksDetails" runat="server" visible="False"><a href="/Recruitment/frmAppicantMarksDetails.aspx">
+                        <i class="icon-file-alt"></i>Appointment Letter</a></li>
+                </ul>
+                <a id="grpPayrollManagement" runat="server" visible="False" href="#menuPayrollManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-list"></i>HR
+                    Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuPayrollManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmStaffingBudget" runat="server" visible="False"><a href="/Payroll/frmStaffingBudget.aspx">
+                        <i class="icon-file-alt"></i>Staffing Budget</a></li>
+                    <li id="liFrmStaffRequisition" runat="server" visible="False"><a href="/Payroll/frmStaffRequisition.aspx">
+                        <i class="icon-file-alt"></i>Staff Requisition</a></li>
+                    <li id="liFrmPayrollConfiguration" runat="server" visible="False"><a href="/Payroll/frmPayrollConfiguration.aspx">
+                        <i class="icon-file-alt"></i>Configuration</a></li>
+                    <li id="liFrmDivisionList" runat="server" visible="False"><a href="/Payroll/frmDivisionList.aspx">
+                        <i class="icon-file-alt"></i>Common Configuration</a></li>
+                    <li id="liFrmDepartment" runat="server" visible="False"><a href="/Payroll/frmDepartment.aspx">
+                        <i class="icon-file-alt"></i>Department</a></li>
+                    <li id="liFrmEmpGrade" runat="server" visible="False"><a href="/Payroll/frmEmpGrade.aspx">
+                        <i class="icon-file-alt"></i>Employee Grade</a></li>
+                    <li id="liFrmDesignation" runat="server" visible="False"><a href="/Payroll/frmDesignation.aspx">
+                        <i class="icon-file-alt"></i>Employee Designation</a></li>
+                    <li id="liFrmEmpType" runat="server" visible="False"><a href="/Payroll/frmEmpType.aspx">
+                        <i class="icon-file-alt"></i>Employee Type</a></li>
+                    <li id="liFrmEmployee" runat="server" visible="False"><a href="/Payroll/frmEmployee.aspx">
+                        <i class="icon-file-alt"></i>Employee Information</a></li>
+                    <li id="liFrmLeaveType" runat="server" visible="False"><a href="/Payroll/frmLeaveType.aspx">
+                        <i class="icon-file-alt"></i>Leave Type</a></li>
+                    <li id="liFrmPayrollHoliday" runat="server" visible="False"><a href="/Payroll/frmPayrollHoliday.aspx">
+                        <i class="icon-file-alt"></i>Holiday Information</a></li>
+                    <li id="liFrmWorkingPlan" runat="server" visible="False"><a href="/Payroll/frmWorkingPlan.aspx">
+                        <i class="icon-file-alt"></i>Working Plan</a></li>
+                    <li id="liFrmRosterHead" runat="server" visible="False"><a href="/Payroll/frmRosterHead.aspx">
+                        <i class="icon-file-alt"></i>Roster Head</a></li>
+                    <li id="liFrmTimeSlabHead" runat="server" visible="False"><a href="/Payroll/frmTimeSlabHead.aspx">
+                        <i class="icon-file-alt"></i>Timeslab Head</a></li>
+                    <li id="liFrmEmpYearlyLeave" runat="server" visible="False"><a href="/Payroll/frmEmpYearlyLeave.aspx">
+                        <i class="icon-file-alt"></i>Employee Yearly Leave</a></li>
+                    <li id="liFrmEmpRoster" runat="server" visible="False"><a href="/Payroll/frmEmpRoster.aspx">
+                        <i class="icon-file-alt"></i>Employee Roster</a></li>
+                    <li id="liFrmLeaveInformation" runat="server" visible="False"><a href="/Payroll/frmLeaveInformation.aspx">
+                        <i class="icon-file-alt"></i>Employee Leave</a></li>
+                    <li id="liFrmEmpIncrement" runat="server" visible="False"><a href="/Payroll/frmEmpIncrement.aspx">
+                        <i class="icon-file-alt"></i>Employee Increment</a></li>
+                    <li id="liFrmEmpAllowanceDeduction" runat="server" visible="False"><a href="/Payroll/frmEmpAllowanceDeduction.aspx">
+                        <i class="icon-file-alt"></i>Employee Allow/ Deduct</a></li>
+                    <li id="liFrmDeviceAttendanceSynchronization" runat="server" visible="False"><a href="/Payroll/frmDeviceAttendanceSynchronization.aspx">
+                        <i class="icon-file-alt"></i>Device Attendance Synch.</a></li>
+                    <li id="liFrmEmpAttendance" runat="server" visible="False"><a href="/Payroll/frmEmpAttendance.aspx">
+                        <i class="icon-file-alt"></i>Employee Attendance</a></li>
+                    <li id="liFrmAttendanceSynchronization" runat="server" visible="False"><a href="/Payroll/frmDeviceAttendanceSynchronization.aspx">
+                        <i class="icon-file-alt"></i>Attendance Synchronization</a></li>
+                    <li id="liFrmEmpOverTime" runat="server" visible="False"><a href="/Payroll/frmEmpOverTime.aspx">
+                        <i class="icon-file-alt"></i>Employee Over Time</a></li>
+                    <li id="liFrmEmpLeaveAdjustment" runat="server" visible="False"><a href="/Payroll/frmEmpLeaveAdjustment.aspx">
+                        <i class="icon-file-alt"></i>Leave Adjustment</a></li>
+                    <li id="liFrmEmpAdvanceTaken" runat="server" visible="False"><a href="/Payroll/frmEmpAdvanceTaken.aspx">
+                        <i class="icon-file-alt"></i>Employee Advance Taken</a></li>
+                    <li id="liFrmLoan" runat="server" visible="False"><a href="/Payroll/frmEmpLoan.aspx">
+                        <i class="icon-file-alt"></i>Loan Sanction</a></li>
+                    <li id="liFrmLoanCollectionSearch" runat="server" visible="False"><a href="/Payroll/frmLoanCollectionSearch.aspx">
+                        <i class="icon-file-alt"></i>Loan Collection Search</a></li>
+                    <li id="liFrmEmpLoanSearch" runat="server" visible="False"><a href="/Payroll/frmLoanSearch.aspx">
+                        <i class="icon-file-alt"></i>Loan Search</a></li>
+                    <li id="liFrmEmpTaxDeduction" runat="server" visible="False"><a href="/Payroll/frmEmpTaxDeduction.aspx">
+                        <i class="icon-file-alt"></i>Employee Tax Deduction</a></li>
+                    <li id="liFrmApprMarksIndicator" runat="server" visible="False"><a href="/Payroll/frmAppraisalMarksIndicatorSetting.aspx">
+                        <i class="icon-file-alt"></i>Appraisal Marks Indicator</a></li>
+                    <li id="liFrmApprRatingFactor" runat="server" visible="False"><a href="/Payroll/frmAppraisalRatingFactorSetting.aspx">
+                        <i class="icon-file-alt"></i>Appraisal Rating Factor</a></li>
+                    <li id="liFrmEmpAppraisalCriteriaSetup" runat="server" visible="False"><a href="/Payroll/frmEmpAppraisalCriteriaSetup.aspx">
+                        <i class="icon-file-alt"></i>Appraisal Criteria Setup</a></li>
+                    <li id="liFrmApprEvatuation" runat="server" visible="False"><a href="/Payroll/frmAppraisalEvaluationBy.aspx">
+                        <i class="icon-file-alt"></i>Appraisal Evaluation</a></li>
+                    <li id="liFrmOrganizer" runat="server" visible="False"><a href="/Payroll/frmEmpTrainingOrganizer.aspx">
+                        <i class="icon-file-alt"></i>Training Organizer</a></li>
+                    <li id="liFrmEmptrainingType" runat="server" visible="False"><a href="/Payroll/frmEmpTrainingType.aspx">
+                        <i class="icon-file-alt"></i>Employee Training Info</a></li>
+                    <li id="liFrmEmpTraining" runat="server" visible="False"><a href="/Payroll/frmEmpTraining.aspx">
+                        <i class="icon-file-alt"></i>Employee Training</a></li>
+                    <li id="liFrmSalaryHead" runat="server" visible="False"><a href="/Payroll/frmSalaryHead.aspx">
+                        <i class="icon-file-alt"></i>Salary Head</a></li>
+                    <li id="liFrmSalaryFormula" runat="server" visible="False"><a href="/Payroll/frmSalaryFormula.aspx">
+                        <i class="icon-file-alt"></i>Salary Formula</a></li>
+                    <li id="liEmpLastMonthBenifit" runat="server" visible="False"><a href="/Payroll/frmEmpLastMonthSalaryPay.aspx">
+                        <i class="icon-file-alt"></i>Last Month Benefit Pay</a></li>
+                    <li id="liFrmEmpSalaryProcess" runat="server" visible="False"><a href="/Payroll/frmEmpSalaryProcess.aspx">
+                        <i class="icon-file-alt"></i>Monthly Salary Process</a></li>
+                    <li id="liFrmEmpChangePassword" runat="server" visible="False"><a href="/Payroll/frmEmpChangePassword.aspx">
+                        <i class="icon-file-alt"></i>Change Password</a></li>
+                    <li id="liFrmEmpResignationInfo" runat="server" visible="False"><a href="/Payroll/frmEmpResignationInfo.aspx">
+                        <i class="icon-file-alt"></i>Emp Resignation Info</a></li>
+                    <li id="liFrmDiscipinaryAction" runat="server" visible="False"><a href="/Payroll/frmDisciplinaryAction.aspx">
+                        <i class="icon-file-alt"></i>Disciplinary Action</a></li>
+                    <li id="liFrmDisciplinaryActionType" runat="server" visible="False"><a href="/Payroll/frmDisciplinaryActionType.aspx">
+                        <i class="icon-file-alt"></i>Disciplinary Action Type</a></li>
+                    <li id="liFrmDisciplinaryActionReason" runat="server" visible="False"><a href="/Payroll/frmDisciplinaryActionReason.aspx">
+                        <i class="icon-file-alt"></i>Disciplinary Action Reason</a></li>
+                    <li id="liFrmEmpLeaveApplication" runat="server" visible="False"><a href="/Payroll/frmEmpLeaveApplication.aspx">
+                        <i class="icon-file-alt"></i>Leave Application</a></li>
+                    <li id="liFrmEmpTransfer" runat="server" visible="False"><a href="/Payroll/frmEmpTransfer.aspx">
+                        <i class="icon-file-alt"></i>Employee Transfer</a></li>
+                    <li id="liFrmLeaveOpening" runat="server" visible="False"><a href="/Payroll/frmLeaveOpening.aspx">
+                        <i class="icon-file-alt"></i>Opening Leave</a></li>
+                    <li id="liFrmLeaveBalanceClosing" runat="server" visible="False"><a href="/Payroll/frmLeaveBalanceClosing.aspx">
+                        <i class="icon-file-alt"></i>Leave Balance Closing</a></li>
+                    <li id="liFrmServiceChargeDistribution" runat="server" visible="False"><a href="/Payroll/frmServiceChargeDistribution.aspx">
+                        <i class="icon-file-alt"></i>Service Charge Distribution</a></li>
+                    <li id="liFrmServiceChargeConfiguration" runat="server" visible="False"><a href="/Payroll/frmServiceChargeConfiguration.aspx">
+                        <i class="icon-file-alt"></i>Service Charge Config</a></li>
+                    <li id="liFrmBestEmployeeNomination" runat="server" visible="False"><a href="/Payroll/frmBestEmployeeNomination.aspx">
+                        <i class="icon-file-alt"></i>Best Employee Nomination</a></li>
+                    <li id="liFrmBestEmployeeSelection" runat="server" visible="False"><a href="/Payroll/frmBestEmployeeSelection.aspx">
+                        <i class="icon-file-alt"></i>Best Employee Selection</a></li>
+                    <li id="liFrmEmpSearch" runat="server" visible="False"><a href="/Payroll/frmEmpSearch.aspx">
+                        <i class="icon-file-alt"></i>Search Employee</a></li>
+                    <li id="liFrmOvertimeHourOfEmployee" runat="server" visible="False"><a href="/Payroll/frmOvertimeHourOfEmployee.aspx">
+                        <i class="icon-file-alt"></i>Over Time Approval</a></li>
+                    <li id="liFrmEmpPFApproval" runat="server" visible="False"><a href="/Payroll/frmEmpPFApproval.aspx">
+                        <i class="icon-file-alt"></i>PF Approval</a></li>
+                    <li id="liFrmPFopeningBalance" runat="server" visible="False"><a href="/Payroll/frmPFOpeningBalance.aspx">
+                        <i class="icon-file-alt"></i>PF Opening Balance</a></li>
+                    <li id="liFrmEmpGratuityApproval" runat="server" visible="False"><a href="/Payroll/frmEmpGratuityApproval.aspx">
+                        <i class="icon-file-alt"></i>Gratuity Approval</a></li>
+                    <li id="liFrmEmpPromotion" runat="server" visible="False"><a href="/Payroll/frmEmpPromotion.aspx">
+                        <i class="icon-file-alt"></i>Employee Promotion</a></li>
+                    <li id="liFrmRelieveLetter" runat="server" visible="False"><a href="/Payroll/frmRelievingLetter.aspx">
+                        <i class="icon-file-alt"></i>Relieving Letter</a> </li>
+                </ul>
+                <a id="grpGeneralLedger" runat="server" visible="False" href="#menuGeneralLedger"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-book"></i>Accounts
+                    Management <i class="icon-chevron-up"></i></a>
+                <ul id="menuGeneralLedger" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmNodeMatrix" runat="server" visible="False"><a href="/GeneralLedger/frmNodeMatrix.aspx">
+                        <i class="icon-file-alt"></i>Chart Of Accounts</a></li>
+                    <li id="liFrmGLCompany" runat="server" visible="False"><a href="/GeneralLedger/frmGLCompany.aspx">
+                        <i class="icon-file-alt"></i>Company Information</a></li>
+                    <li id="liFrmGLProject" runat="server" visible="False"><a href="/GeneralLedger/frmGLProject.aspx">
+                        <i class="icon-file-alt"></i>Project Information</a></li>
+                    <li id="liFrmGLConfiguration" runat="server" visible="False"><a href="/GeneralLedger/frmGLConfiguration.aspx">
+                        <i class="icon-file-alt"></i>GL Configuration</a></li>
+                    <li id="liFrmVoucher" runat="server" visible="False"><a href="/GeneralLedger/frmVoucher.aspx">
+                        <i class="icon-file-alt"></i>Voucher Entry</a></li>
+                    <li id="liFrmVoucherSearch" runat="server" visible="False"><a href="/GeneralLedger/frmVoucherSearch.aspx">
+                        <i class="icon-file-alt"></i>Search Voucher</a></li>
+                    <li id="liFrmGLFixedAssets" runat="server" visible="False"><a href="/GeneralLedger/frmGLFixedAssets.aspx">
+                        <i class="icon-file-alt"></i>Fixed Assets Entry</a></li>
+                </ul>
+                <a id="grpCostofGoodsSold" visible="False" runat="server" href="#menuCostofGoodsSoldPanel"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-user"></i>Cost
+                    of Goods Sold<i class="icon-chevron-up"> </i></a>
+                <ul id="menuCostofGoodsSoldPanel" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmMonthlyTransaction" runat="server" visible="False"><a href="/CostofGoodsSold/frmCgsMonthlyTransaction.aspx">
+                        <i class="icon-file-alt"></i>Monthly Transaction</a></li>
+                    <li id="liFrmTransactionHead" runat="server" visible="False"><a href="/CostofGoodsSold/frmCgsTransactionHead.aspx">
+                        <i class="icon-file-alt"></i>Transaction Head</a></li>
+                </ul>
+                <a id="grpSalesMarketingManagement" visible="False" runat="server" href="#menuSalesMarketingManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-user"></i>Sales
+                    & Marketing<i class="icon-chevron-up"> </i></a>
+                <ul id="menuSalesMarketingManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmGuestReference" runat="server" visible="False"><a href="/HotelManagement/frmGuestReference.aspx">
+                        <i class="icon-file-alt"></i>Guest Reference</a></li>
+                    <li id="liFrmGuestCompany" runat="server" visible="False"><a href="/HotelManagement/frmGuestCompany.aspx">
+                        <i class="icon-file-alt"></i>Company Information</a></li>
+                    <li id="liFrmLocation" runat="server" visible="False"><a href="/SalesAndMarketing/frmLocation.aspx">
+                        <i class="icon-file-alt"></i>Location Information</a></li>
+                    <li id="liFrmCity" runat="server" visible="False"><a href="/SalesAndMarketing/frmCity.aspx">
+                        <i class="icon-file-alt"></i>City Information</a></li>
+                    <li id="liFrmIndustry" runat="server" visible="False"><a href="/SalesAndMarketing/frmIndustry.aspx">
+                        <i class="icon-file-alt"></i>Industry Information</a></li>
+                    <li id="liFrmSalesCall" runat="server" visible="False"><a href="/SalesAndMarketing/frmSalesCall.aspx">
+                        <i class="icon-file-alt"></i>Sales Call</a></li>
+                </ul>
+                <a id="grpMembershipManagement" visible="False" runat="server" href="#menuMembershipManagement"
+                    class="nav-header collapsed" data-toggle="collapse"><i class="icon-user"></i>Membership
+                    <i class="icon-chevron-up"></i></a>
+                <ul id="menuMembershipManagement" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmMemberType" runat="server" visible="False"><a href="/Membership/frmMemMemberType.aspx">
+                        <i class="icon-file-alt"></i>Member Type</a></li>
+                    <li id="liFrmMemberBasic" runat="server" visible="False"><a href="/Membership/frmMemMembersBasics.aspx">
+                        <i class="icon-file-alt"></i>Membership Info</a></li>
+                </ul>
+                <a id="grpUserPanel" visible="False" runat="server" href="#menuUserPanel" class="nav-header collapsed"
+                    data-toggle="collapse"><i class="icon-user"></i>User Management <i class="icon-chevron-up">
+                    </i></a>
+                <ul id="menuUserPanel" runat="server" class="nav nav-list collapse">
+                    <li id="liFrmUserGroup" runat="server" visible="False"><a href="/UserInformation/frmUserGroup.aspx">
+                        <i class="icon-group"></i>User Group</a></li>
+                    <li id="liFrmUserInformation" runat="server" visible="False"><a href="/UserInformation/frmUserInformation.aspx">
+                        <i class="icon-user"></i>User Information</a></li>
+                    <li id="liFrmObjectPermission" runat="server" visible="False"><a href="/UserInformation/frmObjectPermission.aspx">
+                        <i class="icon-user"></i>User Permission</a></li>
+                </ul>
+            </div>
+            <div id="colapsePanel" style="float: right; z-index: 1; cursor: pointer; width: 18px;
+                background-color: #476b8f; float: right;">
+                <%--display: none;--%>
+                <div style="width: 10px; height: 45%" id="blankPanel">
+                </div>
+                <div style="height: 20px; width: 20px; background-position: 40px 90px; background-image: url('/Images/img/glyphicons-halflings-white.png');
+                    background-repeat: repeat;">
+                </div>
+            </div>
+        </div>
+        <div class="content" style="margin-left: 262px;">
+            <div id="SoftwareLicenseExpiredNotificationMessageBox" class="alert alert-info" style="display: none;">
+                <asp:Label ID='lblSoftwareLicenseExpiredNotificationMessage' Font-Bold="True" runat="server"></asp:Label>
+            </div>
+            <div>
+                <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+                </asp:ScriptManager>
+            </div>
+            <ul class="breadcrumb">
+                <%--<li><a href="/HMCommon/frmHMHome.aspx">Home</a></li>--%>
+                <li>
+                    <div id="ltlBreadCrumbsInformation" runat="server">
+                    </div>
+                </li>
+            </ul>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="row-fluid">
+                        <div id="spinner" class="spinner" style="display: none;">
+                            <img id="img-spinner" src="../Images/spinner.gif" alt="Loading ..." />
+                        </div>
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                    <footer>
+                        <hr>
+                        <p class="pull-right">
+                            Developed by <a href="http://datagridbd.com" target="_blank"><span style="color: Blue;
+                                font-weight: bold;">data grid limited</span></a></p>
+                        <p>
+                            &copy; 2013 <a href="http://www.innboard.com" target="_blank"><span style="color: Blue;
+                                font-weight: bold;">innboard.com</span></a></p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+    <script type="text/javascript" src="/StyleSheetOld/lib/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/StyleSheetOld/js/jquery.flexslider.js"></script>
+    <script type="text/javascript">
+
+        var $loading = $('#spinner').hide();
+        $(document)
+          .ajaxStart(function () {
+              $loading.show();
+          })
+          .ajaxStop(function () {
+              $loading.hide();
+          })
+          .ajaxError(function () {
+              $loading.hide();
+          });
+
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                start: function (slider) {
+                    $('body').removeClass('loading');
+                }
+            });
+        });
+        var x = '<%=isMenuCollupse%>';
+        vvcc = x;
+        if (x.length > 0) {
+            $('#' + x).addClass("nav nav-list collapse in");
+        }
+
+        var x = '<%=isSoftwareLicenseExpiredNotificationMessageBoxEnable%>';
+
+        if (x > -1) {
+            MessagePanelShow();
+            if (x == 2) {
+                $('#SoftwareLicenseExpiredNotificationMessageBox').addClass("alert-success-info").removeClass("alert alert-info");
+            }
+        }
+        else {
+            MessagePanelHide();
+        }
+
+        $(document).ready(function () {
+
+            $('.MenuCollapsible > ul > li:has(ul)').addClass("has-sub");
+
+            $('.MenuCollapsible > ul > li > a').click(function () {
+                var checkElement = $(this).next();
+
+                $('.MenuCollapsible li').removeClass('active');
+                $(this).closest('li').addClass('active');
+
+                if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+                    $(this).closest('li').removeClass('active');
+                    checkElement.slideUp('normal');
+                }
+
+                if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+                    $('.MenuCollapsible ul ul:visible').slideUp('normal');
+                    checkElement.slideDown('normal');
+                }
+
+                if (checkElement.is('ul')) {
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+
+            $('#MainMenuTopLink > ul > li > a').click(function () {
+                var checkElement = $(this).next();
+
+                $('#MainMenuTopLink li').removeClass('active');
+                $(this).closest('li').addClass('active');
+
+            });
+
+        });
+
+    </script>
+</body>
+</html>
