@@ -31,7 +31,9 @@ namespace HotelManagement.Data.Payroll
                                 headBO.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
                                 headBO.ActiveStatus = Convert.ToString(reader["ActiveStatus"]);
                                 headBO.SlabStartTime = Convert.ToDateTime(reader["SlabStartTime"].ToString());
+                                headBO.SlabStartTimeDisplay = reader["SlabStartTimeDisplay"].ToString();
                                 headBO.SlabEndTime = Convert.ToDateTime(reader["SlabEndTime"].ToString());
+                                headBO.SlabEndTimeDisplay = reader["SlabEndTimeDisplay"].ToString();
 
                                 List.Add(headBO);
                             }

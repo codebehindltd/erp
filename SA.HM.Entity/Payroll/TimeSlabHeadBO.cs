@@ -12,7 +12,9 @@ namespace HotelManagement.Entity.Payroll
         public int SecondTimeSlabId { get; set; }
         public string SecondTimeSlabHead { get; set; }
         public DateTime SlabStartTime { get; set; }
+        public string SlabStartTimeDisplay { get; set; }
         public DateTime SlabEndTime { get; set; }
+        public string SlabEndTimeDisplay { get; set; }
         public bool ActiveStat { get; set; }
         public string ActiveStatus { get; set; }
         public int CreatedBy { get; set; }

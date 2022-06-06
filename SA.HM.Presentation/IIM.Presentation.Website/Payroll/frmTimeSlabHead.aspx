@@ -233,11 +233,19 @@
                                 <ItemTemplate>
                                     <asp:Label ID="lblid" runat="server" Text='<%#Eval("TimeSlabId") %>'></asp:Label></ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="TimeSlabHead" HeaderText="Time Slab " ItemStyle-Width="50%">
+                            <asp:BoundField DataField="TimeSlabHead" HeaderText="Time Slab " ItemStyle-Width="40%">
                                 <HeaderStyle HorizontalAlign="Left" />
                                 <ItemStyle HorizontalAlign="Left" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="ActiveStatus" HeaderText="Status" ItemStyle-Width="35%">
+                            <asp:BoundField DataField="SlabStartTimeDisplay" HeaderText="Start Time" ItemStyle-Width="15%">
+                                <HeaderStyle HorizontalAlign="Left" />
+                                <ItemStyle HorizontalAlign="Left" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="SlabEndTimeDisplay" HeaderText="End Time" ItemStyle-Width="15%">
+                                <HeaderStyle HorizontalAlign="Left" />
+                                <ItemStyle HorizontalAlign="Left" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="ActiveStatus" HeaderText="Status" ItemStyle-Width="15%">
                                 <HeaderStyle HorizontalAlign="Left" />
                                 <ItemStyle HorizontalAlign="Left" />
                             </asp:BoundField>
