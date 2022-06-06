@@ -855,7 +855,7 @@ Fields!AttendanceStatus.Value = "H", "Green"), "Yellow")</BackgroundColor>
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>=Fields!TimeSlabHead.Value</Value>
+                                    <Value>=Replace(Fields!TimeSlabHead.Value, "~", System.Environment.NewLine)</Value>
                                     <Style>
                                       <FontSize>8pt</FontSize>
                                       <FontWeight>Normal</FontWeight>

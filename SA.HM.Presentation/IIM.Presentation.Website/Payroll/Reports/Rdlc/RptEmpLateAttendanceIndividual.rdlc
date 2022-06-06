@@ -945,7 +945,7 @@
                                 </Style>
                               </TextRun>
                               <TextRun>
-                                <Value>=Fields!TimeSlabHead.Value</Value>
+                                <Value>=Replace(Fields!TimeSlabHead.Value, "~", System.Environment.NewLine)</Value>
                                 <Style>
                                   <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
@@ -1002,7 +1002,7 @@
         <DataSetName>EmployeeAttendanceSet</DataSetName>
         <Top>1.78417in</Top>
         <Height>0.64845in</Height>
-        <Width>10.37534in</Width>
+        <Width>10.3753in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
