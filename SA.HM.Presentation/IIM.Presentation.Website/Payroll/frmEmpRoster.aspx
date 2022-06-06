@@ -45,8 +45,7 @@
                         toastr.warning("Same Time Slab Cannot Be Given");
                         return false;
                     }
-                }
-                
+                }                
             }
             return true;
         }
@@ -103,13 +102,8 @@
                             OnRowDataBound="gvEmpRoster_RowDataBound" CssClass="table table-bordered table-condensed table-responsive">
                             <RowStyle BackColor="#E3EAEB" />
                             <Columns>
-                                <%--<asp:TemplateField HeaderText="IDNO" Visible="False">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblid" runat="server" Text='<%#Eval("DepartmentId") %>'></asp:Label></ItemTemplate>
-                            </asp:TemplateField>--%>
                                 <asp:TemplateField HeaderText="Schedule Date" ItemStyle-Width="50%" ItemStyle-HorizontalAlign="Left">
                                     <ItemTemplate>
-                                        <%--<asp:Label ID="lblgvShowRosterDate" runat="server" Text='<%# GetStringFromDateTime(Convert.ToDateTime(Eval("RosterDate").ToString())).ToString("dddd") +", "+ GetStringFromDateTime(Convert.ToDateTime(Eval("RosterDate").ToString())).ToString("MMMM d, yyyy") %>'></asp:Label>--%>
                                         <asp:Label ID="lblgvShowRosterDate" runat="server" Text='<%# DateTime.Parse(Eval("RosterDate").ToString()).ToString("dddd") +", "+ DateTime.Parse(Eval("RosterDate").ToString()).ToString("MMMM d, yyyy") %>'></asp:Label>
                                     </ItemTemplate>
                                     <HeaderStyle HorizontalAlign="Left" />
@@ -123,14 +117,14 @@
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <ItemStyle HorizontalAlign="Left" />
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Time Slab 1" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Left">
+                                <asp:TemplateField HeaderText="Time Slab" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Left">
                                     <ItemTemplate>
                                         <asp:DropDownList ID="ItemDropDown" CssClass="form-control" runat="server" />
                                     </ItemTemplate>
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <ItemStyle HorizontalAlign="Left" />
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Time Slab 2" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Left">
+                                <asp:TemplateField HeaderText="Time Slab 2" ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Left" Visible="False">
                                     <ItemTemplate>
                                         <asp:DropDownList ID="SecondTimeSlabId" CssClass="form-control" runat="server" />
                                     </ItemTemplate>
@@ -151,7 +145,6 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <%--Right Left--%>
                             <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="TransactionalButton btn btn-primary"
                                 OnClick="btnSave_Click" OnClientClick="javascript:return CheckValidity()"/>
                             <asp:Button ID="btnClear" runat="server" Text="Clear" CssClass="TransactionalButton btn btn-primary"
@@ -162,7 +155,6 @@
             </div>
         </div>
     </div>
-    <%--</div>--%>
     <script type="text/javascript">
         var isEnableEmpRosterGrid = '<%=isEnableEmpRosterGrid%>';
         if (isEnableEmpRosterGrid > -1) {
