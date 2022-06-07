@@ -1247,7 +1247,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.60021in</Height>
+              <Height>0.78771in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1281,7 +1281,7 @@
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.20338in</Height>
+                            <Height>0.19941in</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -1582,7 +1582,7 @@
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.19345in</Height>
+                            <Height>0.18948in</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -1692,14 +1692,14 @@
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="ReferenceKotId">
+                                  <Textbox Name="BagWaight">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Fields!ReferenceKotId.Value</Value>
+                                            <Value>=Fields!BagWaight.Value</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
@@ -1711,7 +1711,7 @@
                                         </Style>
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>ReferenceKotId</rd:DefaultName>
+                                    <rd:DefaultName>BagWaight</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Color>LightGrey</Color>
@@ -1872,7 +1872,7 @@
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.20338in</Height>
+                            <Height>0.19941in</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -1956,7 +1956,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!ReferenceKotId.Value)</Value>
+                                            <Value>=Sum(Fields!BagWaight.Value)</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -2131,6 +2131,167 @@
                               </TablixCell>
                             </TablixCells>
                           </TablixRow>
+                          <TablixRow>
+                            <Height>0.19941in</Height>
+                            <TablixCells>
+                              <TablixCell>
+                                <CellContents>
+                                  <Textbox Name="Textbox17">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value>="In Word: " + Code.AmountToWord(CStr(First(Fields!RoundedGrandTotal.Value, "BillNew")))</Value>
+                                            <Style>
+                                              <FontSize>8pt</FontSize>
+                                            </Style>
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style />
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>Textbox17</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                      </Border>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>2pt</PaddingRight>
+                                      <PaddingTop>2pt</PaddingTop>
+                                      <PaddingBottom>2pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                  <ColSpan>4</ColSpan>
+                                </CellContents>
+                              </TablixCell>
+                              <TablixCell />
+                              <TablixCell />
+                              <TablixCell />
+                              <TablixCell>
+                                <CellContents>
+                                  <Tablix Name="Tablix9">
+                                    <TablixBody>
+                                      <TablixColumns>
+                                        <TablixColumn>
+                                          <Width>2.33759in</Width>
+                                        </TablixColumn>
+                                        <TablixColumn>
+                                          <Width>1.07648in</Width>
+                                        </TablixColumn>
+                                      </TablixColumns>
+                                      <TablixRows>
+                                        <TablixRow>
+                                          <Height>0.19941in</Height>
+                                          <TablixCells>
+                                            <TablixCell>
+                                              <CellContents>
+                                                <Textbox Name="Textbox97">
+                                                  <CanGrow>true</CanGrow>
+                                                  <KeepTogether>true</KeepTogether>
+                                                  <Paragraphs>
+                                                    <Paragraph>
+                                                      <TextRuns>
+                                                        <TextRun>
+                                                          <Value>=IIF(Fields!ItemName.Value = "Company", "Company (Receivable)", Fields!ItemName.Value)</Value>
+                                                          <Style>
+                                                            <FontSize>8pt</FontSize>
+                                                            <FontWeight>Bold</FontWeight>
+                                                          </Style>
+                                                        </TextRun>
+                                                      </TextRuns>
+                                                      <Style>
+                                                        <TextAlign>Right</TextAlign>
+                                                      </Style>
+                                                    </Paragraph>
+                                                  </Paragraphs>
+                                                  <rd:DefaultName>Textbox91</rd:DefaultName>
+                                                  <Style>
+                                                    <Border>
+                                                      <Style>None</Style>
+                                                    </Border>
+                                                    <PaddingLeft>2pt</PaddingLeft>
+                                                    <PaddingRight>2pt</PaddingRight>
+                                                    <PaddingTop>2pt</PaddingTop>
+                                                    <PaddingBottom>2pt</PaddingBottom>
+                                                  </Style>
+                                                </Textbox>
+                                              </CellContents>
+                                            </TablixCell>
+                                            <TablixCell>
+                                              <CellContents>
+                                                <Textbox Name="CalculatedDiscountAmount3">
+                                                  <CanGrow>true</CanGrow>
+                                                  <KeepTogether>true</KeepTogether>
+                                                  <Paragraphs>
+                                                    <Paragraph>
+                                                      <TextRuns>
+                                                        <TextRun>
+                                                          <Value>=Fields!ItemTotalAmount.Value</Value>
+                                                          <Style>
+                                                            <FontSize>8pt</FontSize>
+                                                            <FontWeight>Bold</FontWeight>
+                                                            <Format>#,0.00;(#,0.00)</Format>
+                                                          </Style>
+                                                        </TextRun>
+                                                      </TextRuns>
+                                                      <Style>
+                                                        <TextAlign>Right</TextAlign>
+                                                      </Style>
+                                                    </Paragraph>
+                                                  </Paragraphs>
+                                                  <rd:DefaultName>CalculatedDiscountAmount</rd:DefaultName>
+                                                  <Style>
+                                                    <Border>
+                                                      <Color>LightGrey</Color>
+                                                      <Style>Solid</Style>
+                                                      <Width>0.25pt</Width>
+                                                    </Border>
+                                                    <PaddingLeft>2pt</PaddingLeft>
+                                                    <PaddingRight>2pt</PaddingRight>
+                                                    <PaddingTop>2pt</PaddingTop>
+                                                    <PaddingBottom>2pt</PaddingBottom>
+                                                  </Style>
+                                                </Textbox>
+                                              </CellContents>
+                                            </TablixCell>
+                                          </TablixCells>
+                                        </TablixRow>
+                                      </TablixRows>
+                                    </TablixBody>
+                                    <TablixColumnHierarchy>
+                                      <TablixMembers>
+                                        <TablixMember />
+                                        <TablixMember />
+                                      </TablixMembers>
+                                    </TablixColumnHierarchy>
+                                    <TablixRowHierarchy>
+                                      <TablixMembers>
+                                        <TablixMember>
+                                          <Group Name="Details3" />
+                                          <Visibility>
+                                            <Hidden>=Microsoft.VisualBasic.Interaction.IIF(Fields!TransactionType.Value = "Service", True, False)</Hidden>
+                                          </Visibility>
+                                        </TablixMember>
+                                      </TablixMembers>
+                                    </TablixRowHierarchy>
+                                    <DataSetName>BillNew</DataSetName>
+                                    <ZIndex>4</ZIndex>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                      </Border>
+                                    </Style>
+                                  </Tablix>
+                                  <ColSpan>4</ColSpan>
+                                </CellContents>
+                              </TablixCell>
+                              <TablixCell />
+                              <TablixCell />
+                              <TablixCell />
+                            </TablixCells>
+                          </TablixRow>
                         </TablixRows>
                       </TablixBody>
                       <TablixColumnHierarchy>
@@ -2153,8 +2314,11 @@
                           <TablixMember>
                             <Group Name="Details2" />
                             <Visibility>
-                              <Hidden>=Microsoft.VisualBasic.Interaction.IIF(Parameters!CompanyProfile.Value = "Payment", True, False)</Hidden>
+                              <Hidden>=Microsoft.VisualBasic.Interaction.IIF(Fields!TransactionType.Value = "Payment", True, False)</Hidden>
                             </Visibility>
+                          </TablixMember>
+                          <TablixMember>
+                            <KeepWithGroup>Before</KeepWithGroup>
                           </TablixMember>
                           <TablixMember>
                             <KeepWithGroup>Before</KeepWithGroup>
@@ -2206,159 +2370,8 @@
         </TablixRowHierarchy>
         <DataSetName>BillNew</DataSetName>
         <Left>0.00694in</Left>
-        <Height>2.65508in</Height>
+        <Height>2.84258in</Height>
         <Width>7.92748in</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Tablix>
-      <Tablix Name="Tablix6">
-        <TablixBody>
-          <TablixColumns>
-            <TablixColumn>
-              <Width>1.32867in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>0.093in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>1.66537in</Width>
-            </TablixColumn>
-          </TablixColumns>
-          <TablixRows>
-            <TablixRow>
-              <Height>0.20543in</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="PayMode">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=IIF(Fields!PayMode.Value = "Company", "Company (Receivable)", Fields!PayMode.Value)</Value>
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>PayMode</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox131">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>:</Value>
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox67</rd:DefaultName>
-                      <ZIndex>8</ZIndex>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="PaymentAmount">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!PaymentAmount.Value</Value>
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <Format>#,0.00;(#,0.00)</Format>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>PaymentAmount</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-              </TablixCells>
-            </TablixRow>
-          </TablixRows>
-        </TablixBody>
-        <TablixColumnHierarchy>
-          <TablixMembers>
-            <TablixMember />
-            <TablixMember />
-            <TablixMember />
-          </TablixMembers>
-        </TablixColumnHierarchy>
-        <TablixRowHierarchy>
-          <TablixMembers>
-            <TablixMember>
-              <Group Name="Details1" />
-            </TablixMember>
-          </TablixMembers>
-        </TablixRowHierarchy>
-        <DataSetName>BillPayment</DataSetName>
-        <Top>2.69255in</Top>
-        <Left>4.84738in</Left>
-        <Height>0.20543in</Height>
-        <Width>3.08704in</Width>
-        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2567,115 +2580,11 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>BillNew</DataSetName>
-        <Top>2.92298in</Top>
+        <Top>2.89798in</Top>
         <Left>0.00694in</Left>
         <Height>0.7394in</Height>
         <Width>7.92746in</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Tablix>
-      <Tablix Name="Tablix8">
-        <TablixBody>
-          <TablixColumns>
-            <TablixColumn>
-              <Width>4.53741in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>0.25694in</Width>
-            </TablixColumn>
-          </TablixColumns>
-          <TablixRows>
-            <TablixRow>
-              <Height>0.20402in</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox137">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>="In Word: " + Code.AmountToWord(CStr(First(Fields!RoundedGrandTotal.Value, "BillNew")))</Value>
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox137</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox62">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox62</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-              </TablixCells>
-            </TablixRow>
-          </TablixRows>
-        </TablixBody>
-        <TablixColumnHierarchy>
-          <TablixMembers>
-            <TablixMember />
-            <TablixMember />
-          </TablixMembers>
-        </TablixColumnHierarchy>
-        <TablixRowHierarchy>
-          <TablixMembers>
-            <TablixMember />
-          </TablixMembers>
-        </TablixRowHierarchy>
-        <DataSetName>BillNew</DataSetName>
-        <Top>2.69396in</Top>
-        <Height>0.20402in</Height>
-        <Width>4.79435in</Width>
-        <ZIndex>3</ZIndex>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2683,7 +2592,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.67261in</Height>
+    <Height>3.65544in</Height>
     <Style />
   </Body>
   <Width>7.93442in</Width>
@@ -2954,12 +2863,20 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="TransactionType">
+          <DataField>TransactionType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="BillId">
           <DataField>BillId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="BillNumber">
           <DataField>BillNumber</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BillType">
+          <DataField>BillType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ReturnBillId">
@@ -3042,6 +2959,10 @@
           <DataField>BillSubject</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="CompanyType">
+          <DataField>CompanyType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="KotId">
           <DataField>KotId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
@@ -3082,6 +3003,10 @@
           <DataField>UnitHead</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="ServiceType">
+          <DataField>ServiceType</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="PointsAwarded">
           <DataField>PointsAwarded</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -3098,10 +3023,14 @@
           <DataField>BalancePoints</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="BagWaight">
+          <DataField>BagWaight</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>InnboardDataSet</rd:DataSetName>
-        <rd:SchemaPath>E:\003 Data Grid Limited\Source Code\Innboard\Trunk\SA.HM.Presentation\IIM.Presentation.Website\InnboardDataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\005 Code Behind Limited\Source Code\Innboard\SA.HM.Presentation\IIM.Presentation.Website\InnboardDataSet.xsd</rd:SchemaPath>
         <rd:TableName>RetailPosBill_SP</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
