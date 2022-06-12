@@ -2272,7 +2272,7 @@
                                                                         <Value>=Max(Fields!NSSFEmployeeContribution.Value)</Value>
                                                                         <Style>
                                                                           <FontSize>8pt</FontSize>
-                                                                          <Format>0.00;(0.00)</Format>
+                                                                          <Format>#,0.00;(#,0.00)</Format>
                                                                         </Style>
                                                                       </TextRun>
                                                                     </TextRuns>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Innboard.Master" AutoEventWireup="true"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Innboard.Master" AutoEventWireup="true" EnableEventValidation="false"
     CodeBehind="frmEmpTransfer.aspx.cs" Inherits="HotelManagement.Presentation.Website.Payroll.frmEmpTransfer" %>
 
 <%@ Register TagPrefix="UserControl" TagName="companyProjectUserControl" Src="~/HMCommon/UserControl/CompanyProjectUserControl.ascx" %>
@@ -415,7 +415,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblReportingTo" runat="server" class="control-label required-field" Text="Reporting To (1)"></asp:Label>
+                                <asp:Label ID="lblReportingTo" runat="server" class="control-label" Text="Reporting To (1)"></asp:Label>
                             </div>
                             <div class="col-md-10">
                                 <asp:DropDownList ID="ddlReportingTo" CssClass="form-control" TabIndex="10"
@@ -425,7 +425,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblReportingTo2" runat="server" class="control-label required-field" Text="Reporting To (2)"></asp:Label>
+                                <asp:Label ID="lblReportingTo2" runat="server" class="control-label" Text="Reporting To (2)"></asp:Label>
                             </div>
                             <div class="col-md-10">
                                 <asp:DropDownList ID="ddlReportingTo2" CssClass="form-control" TabIndex="10"
@@ -446,7 +446,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblDescription" runat="server" class="control-label required-field" Text="Description"></asp:Label>
+                                <asp:Label ID="lblDescription" runat="server" class="control-label" Text="Description"></asp:Label>
                             </div>
                             <div class="col-md-10">
                                 <asp:TextBox TextMode="MultiLine" ID="txtDescription" CssClass="form-control" runat="server" autocomplete="off" Rows="4"> </asp:TextBox>

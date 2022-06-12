@@ -1455,7 +1455,11 @@
                   </TablixMembers>
                 </TablixMember>
                 <TablixMember />
-                <TablixMember />
+                <TablixMember>
+                  <Visibility>
+                    <Hidden>true</Hidden>
+                  </Visibility>
+                </TablixMember>
               </TablixMembers>
               <KeepTogether>true</KeepTogether>
             </TablixMember>
@@ -1476,7 +1480,7 @@
     <Height>3.76818in</Height>
     <Style />
   </Body>
-  <Width>7.77102in</Width>
+  <Width>7.74996in</Width>
   <Page>
     <PageHeader>
       <Height>1.18417in</Height>

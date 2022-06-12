@@ -433,28 +433,28 @@ namespace HotelManagement.Presentation.Website.Payroll
                 ddlDepartmentTo.Focus();
                 SetTab("entry");
             }
-            else if (ddlReportingTo.SelectedIndex == 0)
-            {
-                CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Reporting To 1.", AlertType.Warning);
-                status = false;
-                ddlReportingTo.Focus();
-                SetTab("entry");
-            }
-            else if (ddlReportingTo2.SelectedIndex == 0)
-            {
-                CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Reporting To 2.", AlertType.Warning);
-                status = false;
-                ddlReportingTo2.Focus();
-                SetTab("entry");
-            }
-            else if (ddlReportingTo2.SelectedIndex == ddlReportingTo.SelectedIndex)
-            {
-                CommonHelper.AlertInfo(innboardMessage, "Reporting To 1 & Reporting To 2 Couldn't be same", AlertType.Warning);
-                status = false;
-                ddlReportingTo2.Focus();
-                ddlReportingTo.Focus();
-                SetTab("entry");
-            }
+            //else if (ddlReportingTo.SelectedIndex == 0)
+            //{
+            //    CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Reporting To 1.", AlertType.Warning);
+            //    status = false;
+            //    ddlReportingTo.Focus();
+            //    SetTab("entry");
+            //}
+            //else if (ddlReportingTo2.SelectedIndex == 0)
+            //{
+            //    CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Reporting To 2.", AlertType.Warning);
+            //    status = false;
+            //    ddlReportingTo2.Focus();
+            //    SetTab("entry");
+            //}
+            //else if (ddlReportingTo2.SelectedIndex == ddlReportingTo.SelectedIndex)
+            //{
+            //    CommonHelper.AlertInfo(innboardMessage, "Reporting To 1 & Reporting To 2 Couldn't be same", AlertType.Warning);
+            //    status = false;
+            //    ddlReportingTo2.Focus();
+            //    ddlReportingTo.Focus();
+            //    SetTab("entry");
+            //}
             else if (string.IsNullOrEmpty(txtReportingDate.Text))
             {
                 CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Reporting Date.", AlertType.Warning);

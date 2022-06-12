@@ -456,7 +456,7 @@
             });
 
             function GetRMInvItemStockInfoByItemAndAttributeId() {
-                var locationId = parseInt($("#ContentPlaceHolder1_ddlCostCenter").val(), 10);
+                var locationId = parseInt($("#ContentPlaceHolder1_ddlRMLocationId").val(), 10);
                 var colorddlLength = $('#ContentPlaceHolder1_ddlRMColorAttribute > option').length;
                 var sizeddlLength = $('#ContentPlaceHolder1_ddlRMSizeAttribute > option').length;
                 var styleddlLength = $('#ContentPlaceHolder1_ddlRMStyleAttribute > option').length;
@@ -500,7 +500,7 @@
             }
 
             function GetFGInvItemStockInfoByItemAndAttributeId() {
-                var locationId = parseInt($("#ContentPlaceHolder1_ddlCostCenter").val(), 10);
+                var locationId = parseInt($("#ContentPlaceHolder1_ddlFGLocationId").val(), 10);
                 var colorddlLength = $('#ContentPlaceHolder1_ddlFGColorAttribute > option').length;
                 var sizeddlLength = $('#ContentPlaceHolder1_ddlFGSizeAttribute > option').length;
                 var styleddlLength = $('#ContentPlaceHolder1_ddlFGStyleAttribute > option').length;
