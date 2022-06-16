@@ -1380,6 +1380,14 @@ namespace HotelManagement.Data.PurchaseManagment
                                 requisitionBO.HeadName = Convert.ToString(reader["HeadName"]);
                                 requisitionBO.CheckedByName = reader["CheckedByName"].ToString();
                                 requisitionBO.ApprovedByName = reader["ApprovedByName"].ToString();
+
+                                requisitionBO.ApprovedPOQuantity = Convert.ToDecimal(reader["ApprovedPOQuantity"]);
+                                requisitionBO.RemainingPOQuantity = Convert.ToDecimal(reader["RemainingPOQuantity"]);
+                                requisitionBO.ApprovedReceiveQuantity = Convert.ToDecimal(reader["ApprovedReceiveQuantity"]);
+                                requisitionBO.RemainingReceiveQuantity = Convert.ToDecimal(reader["RemainingReceiveQuantity"]);
+                                requisitionBO.ApprovedTransferQuantity = Convert.ToDecimal(reader["ApprovedTransferQuantity"]);
+                                requisitionBO.RemainingTransferQuantity = Convert.ToDecimal(reader["RemainingTransferQuantity"]);
+
                                 requisitionList.Add(requisitionBO);
                             }
                         }

@@ -3656,9 +3656,11 @@ namespace HotelManagement.Data.Payroll
                         GrossAmount = r.Field<decimal?>("GrossAmount"),
                         HomeTakenAmount = r.Field<decimal?>("HomeTakenAmount"),
                         MedicalAllowance = r.Field<decimal?>("MedicalAllowance"),
+                        NSSFCompanyContribution = r.Field<decimal?>("NSSFCompanyContribution"),                        
+                        CurrencyExchangeRate = r.Field<decimal?>("CurrencyExchangeRate"),
                         EmployeeRank = r.Field<int>("EmployeeRank"),
                         SalaryTypeRank = r.Field<int>("SalaryTypeRank"),
-
+                        CompanyContributionLabelTitle = r.Field<string>("CompanyContributionLabelTitle"),
                         BankId = r.Field<int?>("BankId"),
                         BankName = r.Field<string>("BankName"),
                         AccountNumber = r.Field<string>("AccountNumber")

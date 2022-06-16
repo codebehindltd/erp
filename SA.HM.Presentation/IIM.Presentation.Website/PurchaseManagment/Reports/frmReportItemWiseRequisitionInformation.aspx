@@ -235,7 +235,7 @@
                             <asp:ListItem Value="Costcenter Wise">Cost Center Wise</asp:ListItem>
                             <asp:ListItem Value="Category Wise">Category Wise</asp:ListItem>
                             <asp:ListItem Value="Requisition Number Wise">Requisition Number Wise</asp:ListItem>
-                            <asp:ListItem Value="Invoice Format Wise">Invoice Format Wise</asp:ListItem>
+                            <asp:ListItem Value="Invoice Format Wise">Invoice Wise Requisition</asp:ListItem>
                              <%--<asp:ListItem Value="CompanyProject">Company & Project</asp:ListItem>--%>
                         </asp:DropDownList>
                     </div>
@@ -324,7 +324,7 @@
                 </div>
                 <div class="form-group" id="CompanyProjectDiv">
                     <div class="col-md-2">
-                        <asp:Label ID="Label6" runat="server" class="control-label required-field"
+                        <asp:Label ID="Label6" runat="server" class="control-label"
                             Text="Company"></asp:Label>
                     </div>
                     <div class="col-md-4">
@@ -332,7 +332,7 @@
                         </asp:DropDownList>
                     </div>
                     <div class="col-md-2">
-                        <asp:Label ID="Label7" runat="server" class="control-label required-field"
+                        <asp:Label ID="Label7" runat="server" class="control-label"
                             Text="Project"></asp:Label>
                     </div>
                     <div class="col-md-4">

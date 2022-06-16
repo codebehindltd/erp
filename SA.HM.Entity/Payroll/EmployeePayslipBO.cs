@@ -72,7 +72,10 @@ namespace HotelManagement.Entity.Payroll
         //public Nullable<decimal> TotalAllowance { get; set; }
         //public Nullable<decimal> TotalDeduction { get; set; }
         public decimal? MedicalAllowance { get; set; }
-        //public decimal NSSFEmployeeContribution { get; set; }
+        public decimal? NSSFEmployeeContribution { get; set; }
+        public decimal? NSSFCompanyContribution { get; set; }
+        public string CompanyContributionLabelTitle { get; set; }
+        public decimal? CurrencyExchangeRate { get; set; }
         public int? BankId { get; set; }
         public string BankName { get; set; }
         public string AccountNumber { get; set; }

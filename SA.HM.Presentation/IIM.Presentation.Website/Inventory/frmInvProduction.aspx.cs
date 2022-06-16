@@ -32,7 +32,7 @@ namespace HotelManagement.Presentation.Website.Inventory
                 this.CheckObjectPermission();
                 this.LoadCostCenter();
                 this.LoadCategoryInfo();
-
+                this.LoadGridInformation();
                 if (Session["FinishProductId"] != null)
                 {
                     hfIsEditedFromApprovedForm.Value = "1";
@@ -81,7 +81,7 @@ namespace HotelManagement.Presentation.Website.Inventory
                     if (status)
                     {
                         CommonHelper.AlertInfo(innboardMessage, AlertMessage.Delete, AlertType.Success);
-                        LoadGrid();
+                        LoadGridInformation();
                     }
                     else
                     {
@@ -104,7 +104,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         }
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            LoadGrid();
+            LoadGridInformation();
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {
@@ -221,7 +221,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         {
             return dateTime.ToString(hmUtility.GetFormat(true));
         }
-        private void LoadGrid()
+        private void LoadGridInformation()
         {
             this.SetTab("SearchTab");
 

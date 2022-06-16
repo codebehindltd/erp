@@ -1255,7 +1255,12 @@
         function OnFinishProductApprovalSucceeded(result) {
             if (result.IsSuccess) {
                 CommonHelper.AlertMessage(result.AlertMessage);
+                GoToProductionPage();
             }
+        }
+        function GoToProductionPage() {
+            window.location = "/Inventory/frmInvProduction.aspx";
+            return false;
         }
         function OnFinishProductApprovalFailed(result) { }
         function FinishProductDetails(finishProductId) {
@@ -1811,7 +1816,7 @@
                         CssClass="table table-bordered table-condensed table-responsive">
                         <RowStyle BackColor="#E3EAEB" />
                         <Columns>
-                            <asp:TemplateField HeaderText="IDNO" Visible="False">
+                            <asp:TemplateField HeaderText="P.Id">
                                 <ItemTemplate>
                                     <asp:Label ID="lblid" runat="server" Text='<%#Eval("Id") %>'></asp:Label>
                                 </ItemTemplate>
@@ -1835,14 +1840,8 @@
                             <asp:TemplateField HeaderText="" ShowHeader="False" ItemStyle-Width="15%">
                                 <ItemTemplate>
                                     &nbsp;<asp:ImageButton ID="ImgApproval" runat="server" CausesValidation="False"
-                                        CommandName="CmdDetails" CommandArgument='<%# bind("OrderDate") %>' OnClientClick='<%#String.Format("return FinishProductApproval({0})", Eval("Id")) %>'
-                                        ImageUrl="~/Images/approved.png" Text="" AlternateText="Approval" ToolTip="Approval" />
-                                    <%--&nbsp;<asp:ImageButton ID="ImgDetailsRequisition" runat="server" CausesValidation="False"
-                                        CommandName="CmdDetails" CommandArgument='<%# bind("OrderDate") %>' OnClientClick='<%#String.Format("return FinishProductDetails({0})", Eval("Id")) %>'
-                                        ImageUrl="~/Images/detailsInfo.png" Text="" AlternateText="Details" ToolTip="Product Details" />
-                                    &nbsp;<asp:ImageButton ID="ImgUpdate" runat="server" CausesValidation="False" CommandName="CmdEdit"
-                                        CommandArgument='<%# bind("FinishProductId") %>' OnClientClick='<%#String.Format("return FillForm({0})", Eval("Id")) %>'
-                                        ImageUrl="~/Images/edit.png" Text="" AlternateText="Edit" ToolTip="Edit" />--%>
+                                        CommandName="CmdApproval" CommandArgument='<%# bind("OrderDate") %>' OnClientClick='<%#String.Format("return FinishProductApproval({0})", Eval("Id")) %>'
+                                        ImageUrl="~/Images/approved.png" Text="" AlternateText="Approval" ToolTip="Approval" />                                
                                     &nbsp;<asp:ImageButton ID="ImgDelete" runat="server" CausesValidation="False" CommandName="CmdDelete"
                                         CommandArgument='<%# bind("Id") %>' ImageUrl="~/Images/delete.png"
                                         Text="" AlternateText="Delete" ToolTip="Delete Order" />

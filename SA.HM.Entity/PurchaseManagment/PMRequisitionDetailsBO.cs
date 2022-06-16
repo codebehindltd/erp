@@ -47,5 +47,10 @@ namespace HotelManagement.Entity.PurchaseManagment
         public string RequisitionBy { get; set; }
         public string CheckedBy { get; set; }
         public string LastTransferType { get; set; }
+
+        public decimal? ApprovedPOQuantity { get; set; }
+        public decimal? RemainingPOQuantity { get; set; }
+        public decimal? ApprovedReceiveQuantity { get; set; }
+        public decimal? RemainingReceiveQuantity { get; set; }
     }
 }
