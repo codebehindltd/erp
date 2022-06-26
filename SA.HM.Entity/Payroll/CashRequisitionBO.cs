@@ -59,5 +59,24 @@ namespace HotelManagement.Entity.Payroll
         public string OfficialEmail { get; set; }
         public string OfficialPhone { get; set; }
         public int? SupplierId { get; set; }
+
+        
+        public DateTime? RequisitionDate { get; set; }
+        public string Employee { get; set; }
+        //public decimal? Amount { get; set; }
+        public string Company { get; set; }
+        public string Project { get; set; }
+        public string RequisitionFor { get; set; }
+        //public string Remarks { get; set; }
+        public DateTime? VoucherDate { get; set; }
+        public string VoucherNo { get; set; }
+        public string VoucherNarration { get; set; }
+        //public decimal? RemainingBalance { get; set; }
+        public string AdjustmentNo { get; set; }
+        public DateTime? AdjustmentDate { get; set; }
+        public decimal? AdjustmentAmount { get; set; }
+        public string AdjustmentCompany { get; set; }
+        public string AdjustmentProject { get; set; }
+        public string AdjustmentPurpose { get; set; }
     }
 }

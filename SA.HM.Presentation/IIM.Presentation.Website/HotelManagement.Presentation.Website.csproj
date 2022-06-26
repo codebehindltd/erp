@@ -350,6 +350,7 @@
     <Content Include="Payroll\Reports\CompanyWiseEmployeeList.aspx" />
     <Content Include="Payroll\Reports\DynamicEmployeeReport.aspx" />
     <Content Include="Payroll\Reports\frmPayrollReport.aspx" />
+    <Content Include="Payroll\Reports\frmReportCashRequisitionNAdjustment.aspx" />
     <Content Include="Payroll\Reports\frmReportEmpProvisionPeriod.aspx" />
     <Content Include="Payroll\Reports\frmReportEmployeeBirthday.aspx" />
     <Content Include="Payroll\Reports\ReportEmployeeProfile.aspx" />
@@ -834,6 +835,7 @@
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />
+    <EmbeddedResource Include="Payroll\Reports\Rdlc\rptCashRequisitionNAdjustment.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptEmpJoiningAgreement.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptEmpJoiningAgreementWTHF.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpPromotionLetter.rdlc" />
@@ -3073,6 +3075,13 @@
     </Compile>
     <Compile Include="Payroll\Reports\frmPayrollReport.aspx.designer.cs">
       <DependentUpon>frmPayrollReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Payroll\Reports\frmReportCashRequisitionNAdjustment.aspx.cs">
+      <DependentUpon>frmReportCashRequisitionNAdjustment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Payroll\Reports\frmReportCashRequisitionNAdjustment.aspx.designer.cs">
+      <DependentUpon>frmReportCashRequisitionNAdjustment.aspx</DependentUpon>
     </Compile>
     <Compile Include="Payroll\Reports\frmReportEmpProvisionPeriod.aspx.cs">
       <DependentUpon>frmReportEmpProvisionPeriod.aspx</DependentUpon>
@@ -8606,6 +8615,11 @@
     <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
+  <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' == ''" />
+  <PropertyGroup>
+    <SsdtUnitTestVersion>2.0</SsdtUnitTestVersion>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
