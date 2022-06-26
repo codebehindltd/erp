@@ -343,7 +343,7 @@
                                 AppraisalRatingFactorId: ratingFactorId,
                                 AppraisalWeight: appraisalWeight,
                                 RatingWeight: ratingWeight,
-                                RatingValue: 0.0,
+                                RatingValue: -1.0,
                                 Marks: 0.0
                             });
                         }
@@ -354,7 +354,7 @@
                                 AppraisalRatingFactorId: ratingFactorId,
                                 AppraisalWeight: appraisalWeight,
                                 RatingWeight: ratingWeight,
-                                RatingValue: 0.0,
+                                RatingValue: -1.0,
                                 Marks: 0.0
                             });
                         }
@@ -372,7 +372,7 @@
                                 AppraisalRatingFactorId: ratingFactorId,
                                 AppraisalWeight: appraisalWeight,
                                 RatingWeight: ratingWeight,
-                                RatingValue: 0.0,
+                                RatingValue: -1.0,
                                 Marks: 0.0
                             });
                         }

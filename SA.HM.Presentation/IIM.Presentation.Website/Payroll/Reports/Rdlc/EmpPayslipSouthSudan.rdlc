@@ -1674,7 +1674,7 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox6">
+                    <Textbox Name="Textbox11">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -1710,14 +1710,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox7">
+                    <Textbox Name="Textbox8">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Round(Max(Fields!GrossAmount.Value) / Max(Fields!CurrencyExchangeRate.Value))</Value>
+                              <Value>=System.Math.Round(Max(Fields!GrossAmount.Value) / Max(Fields!CurrencyExchangeRate.Value))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1801,11 +1801,9 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
               <KeepTogether>true</KeepTogether>
-            </TablixMember>
-            <TablixMember>
-              <KeepWithGroup>Before</KeepWithGroup>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
@@ -1821,7 +1819,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>4.15373in</Height>
+    <Height>4.17456in</Height>
     <Style />
   </Body>
   <Width>7.74996in</Width>
