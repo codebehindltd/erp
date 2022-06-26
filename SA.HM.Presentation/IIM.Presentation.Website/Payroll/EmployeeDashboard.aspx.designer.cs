@@ -238,13 +238,13 @@ namespace HotelManagement.Presentation.Website.Payroll {
         protected global::System.Web.UI.WebControls.Literal literalLeaveTomorrowTemplete;
         
         /// <summary>
-        /// CelebrationsTemplete control.
+        /// CelebrationsBirthdayTemplete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CelebrationsTemplete;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CelebrationsBirthdayTemplete;
         
         /// <summary>
         /// UpdatePanel7 control.
@@ -256,13 +256,40 @@ namespace HotelManagement.Presentation.Website.Payroll {
         protected global::System.Web.UI.UpdatePanel UpdatePanel7;
         
         /// <summary>
-        /// literalCelebrationsTemplete control.
+        /// literalCelebrationsBirthdayTemplete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal literalCelebrationsTemplete;
+        protected global::System.Web.UI.WebControls.Literal literalCelebrationsBirthdayTemplete;
+        
+        /// <summary>
+        /// CelebrationsWorkAnniversaryTemplete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CelebrationsWorkAnniversaryTemplete;
+        
+        /// <summary>
+        /// UpdatePanel18 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel18;
+        
+        /// <summary>
+        /// literalCelebrationsWorkAnniversaryTemplete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal literalCelebrationsWorkAnniversaryTemplete;
         
         /// <summary>
         /// ProvisionPeriodTemplete control.
@@ -319,33 +346,6 @@ namespace HotelManagement.Presentation.Website.Payroll {
         protected global::System.Web.UI.WebControls.Literal literalTranningTemplete;
         
         /// <summary>
-        /// CompanyWiseEmployeeCountTemplete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CompanyWiseEmployeeCountTemplete;
-        
-        /// <summary>
-        /// UpdatePanel12 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel12;
-        
-        /// <summary>
-        /// literalCompanyWiseEmployeeCountTemplete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal literalCompanyWiseEmployeeCountTemplete;
-        
-        /// <summary>
         /// HolidayInformationTemplete control.
         /// </summary>
         /// <remarks>
@@ -398,6 +398,33 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal literalLetterTemplete;
+        
+        /// <summary>
+        /// CompanyWiseEmployeeCountTemplete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CompanyWiseEmployeeCountTemplete;
+        
+        /// <summary>
+        /// UpdatePanel12 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel12;
+        
+        /// <summary>
+        /// literalCompanyWiseEmployeeCountTemplete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal literalCompanyWiseEmployeeCountTemplete;
         
         /// <summary>
         /// ReminderTemplete control.
