@@ -22,6 +22,7 @@ namespace HotelManagement.Entity.Payroll
         public string TransactionName { get; set; }
 
         public DateTime? JoinDate { get; set; }
+        public int WorkAnniversary { get; set; }
         public DateTime? ResignationDate { get; set; }
         public DateTime? InitialContractEndDate { get; set; }
         public DateTime? ProvisionPeriod { get; set; }

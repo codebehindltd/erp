@@ -4288,6 +4288,39 @@ namespace HotelManagement.Data.Payroll
             }
             return empList;
         }
+        public List<EmployeeBO> GetUpcomingEmployeeWorkAnniversary()
+        {
+            List<EmployeeBO> empList = new List<EmployeeBO>();
+            DataSet employeeDS = new DataSet();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetUpcomingEmployeeWorkAnniversary_SP"))
+                {
+
+                    dbSmartAspects.LoadDataSet(cmd, employeeDS, "EmployeeInfo");
+                    DataTable table = employeeDS.Tables["EmployeeInfo"];
+
+                    empList = table.AsEnumerable().Select(r =>
+                                   new EmployeeBO
+                                   {
+                                       EmpId = r.Field<int>("EmpId"),
+                                       EmpCode = r.Field<string>("EmpCode"),
+                                       FirstName = r.Field<string>("FirstName"),
+                                       LastName = r.Field<string>("LastName"),
+                                       DisplayName = r.Field<string>("DisplayName"),
+                                       JoinDate = r.Field<DateTime>("JoinDate"),
+                                       JoinDateDisplay = r.Field<string>("JoinDateDisplay"),
+                                       DepartmentId = r.Field<int>("DepartmentId"),
+                                       Department = r.Field<string>("Department"),
+                                       DesignationId = r.Field<int>("DesignationId"),
+                                       Designation = r.Field<string>("Designation"),
+                                       WorkAnniversary = r.Field<int>("WorkAnniversary")
+                                   }).ToList();
+
+                }
+            }
+            return empList;
+        }
         public List<EmployeeBO> GetUpcomingEmployeeProvisionPeriod()
         {
             List<EmployeeBO> empList = new List<EmployeeBO>();

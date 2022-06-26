@@ -56,6 +56,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                 LoadUpcommingTrainningsByEmployee(empId);
                 LoadTask(empId);
                 LoadUpcommingBirthdays();
+                LoadUpcommingWorkAnniversary();
                 LoadEmpProvisionPeriod();
                 LoadNotice(empId);
                 LoadFixedAsset(empId);
@@ -366,10 +367,37 @@ namespace HotelManagement.Presentation.Website.Payroll
                 subContent += "</div>";
             }
 
-            literalCelebrationsTemplete.Text = subContent;
+            literalCelebrationsBirthdayTemplete.Text = subContent;
             if (empList.Count == 0)
             {
-                CelebrationsTemplete.Visible = false;
+                CelebrationsBirthdayTemplete.Visible = false;
+            }
+        }
+        private void LoadUpcommingWorkAnniversary()
+        {
+            EmployeeDA empDA = new EmployeeDA();
+            List<EmployeeBO> empList = new List<EmployeeBO>();
+            empList = empDA.GetUpcomingEmployeeWorkAnniversary();
+            string subContent = string.Empty;
+            HMUtility hmUtility = new HMUtility();
+            for (int i = 0; i < empList.Count; i++)
+            {
+                subContent += @"<div class='BirthdayTypeDiv col-md-12'>";
+                subContent += "<div class='form-group'>";
+                subContent += "<img class=\"imgCircle\" src =\"/Payroll/Images/Documents/birthdayIcon.png\"  style=\"height:20px; width:20px; float:left\"alt=\"Work Anniversary\">";
+                subContent += "<h5>&nbsp;" + empList[i].DisplayName + "</h5></div>";
+                subContent += "<div class='form-group'>";
+                subContent += "<img class=\"imgCircle\" src =\"/Payroll/Images/Documents/CalenderIcon.png\"  style=\"height:20px; width:20px; float:left\"alt=\"Calender\">";
+                subContent += "<b>&nbsp; " + empList[i].JoinDateDisplay + " (Anniversary: " + empList[i].WorkAnniversary.ToString() + ")" + "</b>  </div>";
+                subContent += "<div class='form-group'> <b>Designation :</b> " + empList[i].Designation + "   </div>";
+                subContent += "<div class='form-group'> <b>Department :</b> " + empList[i].Department + "  </div>";
+                subContent += "</div>";
+            }
+
+            literalCelebrationsWorkAnniversaryTemplete.Text = subContent;
+            if (empList.Count == 0)
+            {
+                CelebrationsWorkAnniversaryTemplete.Visible = false;
             }
         }
         private void LoadEmpProvisionPeriod()

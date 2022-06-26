@@ -651,20 +651,36 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-6 form-group" id="CelebrationsTemplete" runat="server">
+                <div class="col-md-6 form-group" id="CelebrationsBirthdayTemplete" runat="server">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Celebrations
+                            Celebration (Birthday)
                         </div>
                         <div class="panel-body form-group" style="height: 250px; overflow-y: scroll">
                             <asp:UpdatePanel ID="UpdatePanel7" runat="server" UpdateMode="Conditional">
                                 <ContentTemplate>
-                                    <asp:Literal ID="literalCelebrationsTemplete" runat="server"> </asp:Literal>
+                                    <asp:Literal ID="literalCelebrationsBirthdayTemplete" runat="server"> </asp:Literal>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6 form-group" id="CelebrationsWorkAnniversaryTemplete" runat="server">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Celebration (Work Anniversary)
+                        </div>
+                        <div class="panel-body form-group" style="height: 250px; overflow-y: scroll">
+                            <asp:UpdatePanel ID="UpdatePanel18" runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>
+                                    <asp:Literal ID="literalCelebrationsWorkAnniversaryTemplete" runat="server"> </asp:Literal>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-md-6 form-group" id="ProvisionPeriodTemplete" runat="server">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -679,8 +695,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
                 <div class="col-md-6 form-group" id="TranningTemplete" runat="server">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -694,21 +708,7 @@
                             </asp:UpdatePanel>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 form-group" id="CompanyWiseEmployeeCountTemplete" runat="server">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Employee Distribution
-                        </div>
-                        <div class="panel-body form-group" style="height: 250px; overflow-y: scroll">
-                            <asp:UpdatePanel ID="UpdatePanel12" runat="server" UpdateMode="Conditional">
-                                <ContentTemplate>
-                                    <asp:Literal ID="literalCompanyWiseEmployeeCountTemplete" runat="server"> </asp:Literal>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
-                        </div>
-                    </div>
-                </div>
+                </div>                
             </div>
             <div class="form-group">
                 <div class="col-md-6 form-group" id="HolidayInformationTemplete" runat="server">
@@ -741,6 +741,20 @@
                 </div>
             </div>
             <div class="form-group">
+                <div class="col-md-6 form-group" id="CompanyWiseEmployeeCountTemplete" runat="server">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Employee Distribution
+                        </div>
+                        <div class="panel-body form-group" style="height: 250px; overflow-y: scroll">
+                            <asp:UpdatePanel ID="UpdatePanel12" runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>
+                                    <asp:Literal ID="literalCompanyWiseEmployeeCountTemplete" runat="server"> </asp:Literal>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-6 form-group" id="ReminderTemplete" runat="server">
                     <div class="panel panel-default">
                         <div class="panel-heading">
