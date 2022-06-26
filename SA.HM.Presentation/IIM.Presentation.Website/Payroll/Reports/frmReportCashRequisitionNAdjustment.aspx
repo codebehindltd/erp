@@ -34,7 +34,7 @@
     <asp:HiddenField ID="hfProjectName" runat="server" Value=""></asp:HiddenField>
     <div id="SearchPanel" class="panel panel-default">
         <div class="panel-heading">
-            Promotion Info</div>
+            Cash Requisition And Adjustment</div>
         <div class="panel-body">
             <div class="form-horizontal">
                 <div class="form-horizontal">
