@@ -913,7 +913,7 @@
                                                         </TextRun>
                                                       </TextRuns>
                                                       <Style>
-                                                        <TextAlign>Center</TextAlign>
+                                                        <TextAlign>Right</TextAlign>
                                                       </Style>
                                                     </Paragraph>
                                                   </Paragraphs>
@@ -985,11 +985,7 @@
                           <TablixMember />
                           <TablixMember />
                           <TablixMember />
-                          <TablixMember>
-                            <Visibility>
-                              <Hidden>=IIF(Parameters!CurrencyType.Value = "LocalCurrency", true, false)</Hidden>
-                            </Visibility>
-                          </TablixMember>
+                          <TablixMember />
                           <TablixMember />
                           <TablixMember />
                         </TablixMembers>
@@ -1008,6 +1004,47 @@
                         </LeftBorder>
                       </Style>
                     </Tablix>
+                    <ColSpan>2</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="SalaryType">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!SalaryType.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>SalaryType</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                          <Width>0.25pt</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
                     <ColSpan>2</ColSpan>
                   </CellContents>
                 </TablixCell>
@@ -1256,7 +1293,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Total Job Cost</Value>
+                              <Value EvaluationMode="Constant">Gross Salary</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1368,7 +1405,13 @@
                       </SortExpressions>
                       <TablixMembers>
                         <TablixMember>
+                          <KeepWithGroup>After</KeepWithGroup>
+                        </TablixMember>
+                        <TablixMember>
                           <Group Name="Details" />
+                          <TablixMembers>
+                            <TablixMember />
+                          </TablixMembers>
                         </TablixMember>
                         <TablixMember>
                           <KeepWithGroup>Before</KeepWithGroup>
@@ -1387,7 +1430,7 @@
         <DataSetName>Payslip</DataSetName>
         <Top>0.05083in</Top>
         <Left>0.02583in</Left>
-        <Height>2.70712in</Height>
+        <Height>2.95712in</Height>
         <Width>7.72329in</Width>
         <Style>
           <Border>
@@ -1396,7 +1439,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2.75795in</Height>
+    <Height>3.00795in</Height>
     <Style />
   </Body>
   <Width>7.74996in</Width>
@@ -1605,7 +1648,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.46459in</Height>
+      <Height>0.98542in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1631,7 +1674,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox7</rd:DefaultName>
-          <Top>0.24584in</Top>
+          <Top>0.74584in</Top>
           <Height>0.20833in</Height>
           <Width>5.55654in</Width>
           <Style>
@@ -1663,8 +1706,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.24584in</Top>
-          <Left>6.31367in</Left>
+          <Top>0.74584in</Top>
+          <Left>6.18867in</Left>
           <Height>0.20833in</Height>
           <Width>0.58412in</Width>
           <ZIndex>1</ZIndex>
@@ -1699,8 +1742,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox67</rd:DefaultName>
-          <Top>0.24584in</Top>
-          <Left>6.91117in</Left>
+          <Top>0.74584in</Top>
+          <Left>6.78617in</Left>
           <Height>0.20833in</Height>
           <Width>0.12944in</Width>
           <ZIndex>2</ZIndex>
@@ -1734,10 +1777,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>RoomNumber</rd:DefaultName>
-          <Top>0.24584in</Top>
-          <Left>7.0559in</Left>
+          <Top>0.74584in</Top>
+          <Left>6.9309in</Left>
           <Height>0.20833in</Height>
-          <Width>0.65456in</Width>
+          <Width>0.80488in</Width>
           <ZIndex>3</ZIndex>
           <Style>
             <Border>
@@ -1772,7 +1815,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox50</rd:DefaultName>
-          <Top>0.03004in</Top>
+          <Top>0.53004in</Top>
           <Left>6.18677in</Left>
           <Height>0.1875in</Height>
           <Width>1.56319in</Width>
@@ -1788,7 +1831,7 @@
           </Style>
         </Textbox>
         <Line Name="Line5">
-          <Top>0.0106in</Top>
+          <Top>0.5106in</Top>
           <Left>6.18677in</Left>
           <Height>0in</Height>
           <Width>1.56319in</Width>
@@ -1821,7 +1864,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox50</rd:DefaultName>
-          <Top>0.03004in</Top>
+          <Top>0.53004in</Top>
           <Left>0.0601in</Left>
           <Height>0.1875in</Height>
           <Width>1.84653in</Width>
@@ -1837,7 +1880,7 @@
           </Style>
         </Textbox>
         <Line Name="Line4">
-          <Top>0.0106in</Top>
+          <Top>0.5106in</Top>
           <Left>0.0601in</Left>
           <Height>0in</Height>
           <Width>1.83334in</Width>

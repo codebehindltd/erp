@@ -114,12 +114,10 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                     return;
 
                 rvTransaction.LocalReport.ReportPath = reportPath;
-
                 departmentId = Convert.ToInt32(ddlDepartmentId.SelectedValue);
                 gradeId = Convert.ToInt32(ddlGrade.SelectedValue);
 
                 workStationId = !string.IsNullOrWhiteSpace(ddlWorkStation.SelectedValue) ? Convert.ToInt32(ddlWorkStation.SelectedValue) : 0;
-
                 List<ReportParameter> paramReport = new List<ReportParameter>();
 
                 string companyName = string.Empty;
@@ -132,17 +130,13 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 {
                     companyName = files[0].CompanyName;
                     companyAddress = files[0].CompanyAddress;
-                    //paramReport.Add(new ReportParameter("CompanyProfile", fileCompany[0].Name));
-                    //paramReport.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
 
                     if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
                     {
-                        //paramReport.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
                         webAddress = files[0].WebAddress;
                     }
                     else
                     {
-                        //paramReport.Add(new ReportParameter("CompanyWeb", files[0].ContactNumber));
                         webAddress = files[0].ContactNumber;
                     }
                 }
@@ -160,6 +154,41 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 rvTransaction.LocalReport.EnableExternalImages = true;
 
                 int glCompanyId = Convert.ToInt32(ddlGLCompany.SelectedValue);
+
+                EmployeeDA empDA = new EmployeeDA();
+                List<EmployeePayslipBO> payslip = new List<EmployeePayslipBO>();
+
+                if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.Regular)
+                {
+                    payslip = empDA.GetEmployeePayslip(glCompanyId, empId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue), departmentId, gradeId, workStationId, currencyType);
+                }
+                else if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.RedCross)
+                {
+                    payslip = empDA.GetEmployeePayslipForRedcross(glCompanyId, empId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue), departmentId, gradeId, workStationId);
+                }
+                else if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.IPTech)
+                {
+                    payslip = empDA.GetEmployeePayslipForIPTech(glCompanyId, empId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue), departmentId, gradeId, workStationId, currencyType);
+                }
+                else if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.SouthSudan)
+                {
+                    payslip = empDA.GetEmployeePayslipForSouthSudan(glCompanyId, empId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue), departmentId, gradeId, workStationId);
+                }
+
+                if (glCompanyId == 0)
+                {
+                    if (empId != 0)
+                    {
+                        EmployeeBO employeeBO = new EmployeeBO();
+                        EmployeeDA employeeDA = new EmployeeDA();
+                        employeeBO = employeeDA.GetEmployeeInfoById(empId);
+                        if (employeeBO.EmpId > 0)
+                        {
+                            glCompanyId = employeeBO.EmpCompanyId;
+                        }
+                    }
+                }
+
                 if (glCompanyId > 0)
                 {
                     GLCompanyBO glCompanyBO = new GLCompanyBO();
@@ -195,31 +224,10 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 paramReport.Add(new ReportParameter("CurrencyType", ddlCurrencyType.SelectedValue.ToString()));
 
                 rvTransaction.LocalReport.SetParameters(paramReport);
-
-                EmployeeDA empDA = new EmployeeDA();
-                List<EmployeePayslipBO> payslip = new List<EmployeePayslipBO>();
-
-                if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.Regular)
-                {
-                    payslip = empDA.GetEmployeePayslip(glCompanyId, empId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue), departmentId, gradeId, workStationId, currencyType);
-                }
-                else if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.RedCross)
-                {
-                    payslip = empDA.GetEmployeePayslipForRedcross(glCompanyId, empId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue), departmentId, gradeId, workStationId);
-                }
-                else if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.IPTech)
-                {
-                    payslip = empDA.GetEmployeePayslipForIPTech(glCompanyId, empId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue), departmentId, gradeId, workStationId, currencyType);
-                }
-                else if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.SouthSudan)
-                {
-                    payslip = empDA.GetEmployeePayslipForSouthSudan(glCompanyId, empId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue), departmentId, gradeId, workStationId);
-                }
-
                 var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
                 rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], payslip));
 
-                rvTransaction.LocalReport.DisplayName = "Employee Salary Slip";
+                rvTransaction.LocalReport.DisplayName = "Employee Payslip";
                 rvTransaction.LocalReport.Refresh();
             }
 
@@ -228,10 +236,8 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
         protected void btnPrintReportFromClient_Click(object sender, EventArgs e)
         {
             ReportPrinting print = new ReportPrinting();
-
             LocalReport rpt = rvTransaction.LocalReport;
             var reportSource = print.PrintReport(rpt, HMConstants.PrintPageType.Portrait.ToString());
-
             frmPrint.Attributes["src"] = reportSource;
         }
         //************************ User Defined Function ********************//

@@ -4165,10 +4165,21 @@
                 <div class="col-md-12">
                     <div id="PosControlRight">
                         <div id="SalesCalculationArea">
-                            <div class="form-group no-gutter" id="ProjectDiv" style="display:none;">
-                                <div class="col-md-12">
+                            <div id="ProjectDiv" class="form-group no-gutter">
+                                <div class="col-md-2">
+                                    <label for="TotalSales">
+                                        Project</label>
+                                </div>
+                                <div class="col-md-10">
                                     <asp:DropDownList ID="ddlProject" runat="server" CssClass="form-control">
                                     </asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="form-group no-gutter">
+                                <div class="col-md-12">
+                                    <div class="PosDivider">
+                                        <hr />
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group no-gutter">
@@ -4507,7 +4518,7 @@
                                             <div class="col-md-8">
                                                 <asp:TextBox ID="txtRemarksForFullRefund" CssClass="form-control" TextMode="MultiLine" runat="server"></asp:TextBox>
                                             </div>
-                                        </div>                                        
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <input type="button" id="AddRemarksForFullRefund" class="TransactionalButton btn btn-primary btn-sm" onclick="AddRemarks()" value="Add" />
@@ -4564,7 +4575,7 @@
                             </div>
                             <div class="col-md-7">
                                 <asp:DropDownList ID="ddlDeliveredBy" runat="server" CssClass="form-control">
-                                                </asp:DropDownList>
+                                </asp:DropDownList>
                             </div>
                         </div>
                     </div>
