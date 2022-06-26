@@ -44,19 +44,14 @@
 
             var approvalEvolutionId = $.trim(CommonHelper.GetParameterByName("ae"));
             var perform = $.trim(CommonHelper.GetParameterByName("per"));
-            if (approvalEvolutionId != "" && ($("#ContentPlaceHolder1_hfEditLoad").val() =="0")) {
-                
+            if (approvalEvolutionId != "" && ($("#ContentPlaceHolder1_hfEditLoad").val() =="0")) {                
                 $("#ContentPlaceHolder1_hfEditLoad").val("1");
                 $("#ContentPlaceHolder1_hfPerform").val(perform);
-
                 $("#ContentPlaceHolder1_ddlEmployee").val(approvalEvolutionId).trigger('change');
-            }
-            
+            }            
 
             if (($("#ContentPlaceHolder1_hfEditLoad").val() == "1")) {
-
                 var apprEvaId = $("#<%=hfApprEvaId.ClientID %>").val();
-
                 if (apprEvaId == "")
                     apprEvaId = 0;
                 else
@@ -64,28 +59,22 @@
 
                 if (apprEvaId > 0) {
                     $("#ContentPlaceHolder1_btnEmpApprEvaluation").val('Update').show();
-
                     $("#ContentPlaceHolder1_btnAppraisalEvalutionApproval").hide();
                     $("#ContentPlaceHolder1_btnEmpApprEvaluationClear").hide();
                 }
                 else {
                     $("#ContentPlaceHolder1_btnEmpApprEvaluation").val('Save').show();
-
                     $("#ContentPlaceHolder1_btnAppraisalEvalutionApproval").hide();
                     $("#ContentPlaceHolder1_btnEmpApprEvaluationClear").hide();
-
                 }
 
                 if ($("#ContentPlaceHolder1_hfPerform").val() == "approve") {
                     $("#ContentPlaceHolder1_btnEmpApprEvaluation").hide();
-
                     $("#ContentPlaceHolder1_btnAppraisalEvalutionApproval").show();
                     $("#ContentPlaceHolder1_btnEmpApprEvaluationClear").hide();
                 }
 
                 PerformEdit(approvalEvolutionId);
-
-
             }
 
         });
@@ -141,16 +130,8 @@
                         options.val(Result[index].RatingDropDownValue).trigger('change');
                         remarks.val(Result[index].Remarks);
                     }
-                    //if ($("#ContentPlaceHolder1_hfPerform").val() == "approve") {
-                    //    options.prop("disabled", true);
-                    //    remarks.prop("disabled", true);
-                    //}
-                    
-
-
                 }
             }
-
 
             return false;
         }
@@ -191,17 +172,12 @@
                 AppraisalEvalutionById: apprEvaId,
                 EmpId: $("#ContentPlaceHolder1_ddlEmployee").val(),
                 AppraisalType: $("#<%=ddlAppraisalType.ClientID %>").val(),
-                //EvaluationFromDate: $("#<%=txtEvaltnDate.ClientID %>").val(),
-                //EvaluationToDate: $("#<%=txtEvalToDate.ClientID %>").val(),
                 EvaluationFromDate: evaDate,
                 EvaluationToDate: evaToDate,
                 ApprovalStatus: approvedStatus
             }
 
             var empId = $("#ContentPlaceHolder1_employeeSearch_hfEmployeeId").val();
-            //var evaDate = $("#<%=txtEvaltnDate.ClientID %>").val();
-            //var evaToDate = $("#<%=txtEvalToDate.ClientID %>").val();
-
 
             if (empId == 0) {
 
@@ -219,73 +195,12 @@
                 isClose = false;
                 alert('Please Provide Evaluation To Date');
                 return false;
-            }
-
-            //            for (row = 0; row < accordionLength; row++) {
-
-            //                indicatorName = $("#h" + (row + 1)).text();
-            //                indicatorNameText = indicatorName.replace('Indicator:', '');
-
-            //                indicatorName = $.trim(indicatorName);
-            //                indicatorName = CommonHelper.WhiteSpaceRemove(indicatorName.replace('Indicator:', ''));
-
-            //                marksIndicatorId = parseInt($.trim($("#mi" + indicatorName).text()), 10);
-            //                totalWeight = parseFloat($.trim($("#apw" + indicatorName).text()));
-
-            //                ratingFactorLength = $("#" + indicatorName + " > tbody tr").length;
-
-            //                for (ratingRow = 0; ratingRow < ratingFactorLength; ratingRow++) {
-
-            //                    var options = $("#" + indicatorName + " > tbody tr:eq(" + ratingRow + ")").find("td:eq(4)").find("select");
-            //                    IsRemarksMandatory = options.val().split(',')[1];
-
-            //                    remarks = $("#" + indicatorName + " > tbody tr:eq(" + ratingRow + ")").find("td:eq(5)").find("input");
-
-            //                    remarksText = $.trim(remarks.val());
-
-            //                    var textt = $("#" + indicatorName + " > tbody tr:eq(" + ratingRow + ")").find("td:eq(2)").text();
-            //                    var detailsId = $("#" + indicatorName + " > tbody tr:eq(" + ratingRow + ")").find("td:eq(1)").text();
-
-            //                    if (IsRemarksMandatory == "1" && remarksText == "") {
-            //                        message = "Please Give Remarks for " + textt + " of " + indicatorNameText;
-            //                        break;
-            //                    }
-
-            //                    if (detailsId == "") {
-            //                        detailsId = 0;
-            //                    }
-
-            //                    indicatorId = $("#" + indicatorName + " > tbody tr:eq(" + ratingRow + ")").find("td:eq(0)").text();
-            //                    weight = $("#" + indicatorName + " > tbody tr:eq(" + ratingRow + ")").find("td:eq(3)").text();
-            //                    ratingValue = parseFloat(options.val().split(',')[0]);
-
-            //                    marks = (parseFloat(options.val().split(',')[0]) * parseFloat(weight)) / totalWeight;
-
-            //                    appraisalEvalution.push({
-            //                        MarksIndicatorId: marksIndicatorId,
-            //                        AppraisalRatingFactorId: indicatorId,
-            //                        RatingFacotrDetailsId: detailsId,
-            //                        Marks: marks,
-            //                        Weight: weight,
-            //                        RatingValue: ratingValue,
-            //                        Remarks: remarksText
-            //                    });
-
-            //                }
-
-            //                if (message != "") {
-            //                    appraisalEvalution = [];
-            //                    break;
-            //                }
-            //            }   
+            }                       
 
             for (row = 0; row < accordionLength; row++) {
 
                 indicatorName = $("#h" + (row + 1)).text();
                 indicatorNameText = indicatorName.replace('Indicator:', '');
-
-                //indicatorName = $.trim(indicatorName);
-                //indicatorName = CommonHelper.WhiteSpaceRemove(indicatorName.replace('Indicator:', ''));
 
                 marksIndicatorId = parseInt($.trim($("#mi" + (row + 1)).text()), 10);
                 totalWeight = parseFloat($.trim($("#apw" + (row + 1)).text()));
@@ -313,9 +228,17 @@
                         detailsId = 0;
                     }
 
+                    debugger;
                     indicatorId = $("#" + (row + 1) + " > tbody tr:eq(" + ratingRow + ")").find("td:eq(0)").text();
                     weight = $("#" + (row + 1) + " > tbody tr:eq(" + ratingRow + ")").find("td:eq(3)").text();
                     ratingValue = parseFloat(options.val().split(',')[0]);
+
+                    if (approvedStatus == "Approved") {
+                        if (ratingValue == -1) {
+                            message = "Please Provide Ratings for Indicator: " + indicatorNameText;
+                            break;
+                        }
+                    }
 
                     marks = (parseFloat(options.val().split(',')[0]) * parseFloat(weight)) / totalWeight;
 
@@ -351,20 +274,15 @@
 
             return false;
         }
-
-
+        
         function SaveNClose(approvedStatus) {
             //debugger;
             isClose = true;
-            //SaveOrUpdateTask();
             $.when(AppraisalEvalutionSave(approvedStatus)).done(function () {
-                if (isClose) {
-
-                    
+                if (isClose) {                    
                     if (typeof parent.CloseDialog === "function") {
                         parent.CloseDialog();
                     }
-
                 }
             });
             return false;
@@ -374,12 +292,10 @@
             if (result.IsSuccess) {
                 parent.ShowAlert(result.AlertMessage);
                 parent.SearchInformation(1, 1);
-                //$("#frmHotelManagement")[0].reset();
                 $("#<%=hfApprEvaId.ClientID %>").val("");
                 ClearForm();
             }
             else {
-
                 CommonHelper.AlertMessage(result.AlertMessage);
             }
         }
@@ -391,7 +307,6 @@
             if (result.IsSuccess) {
                 parent.ShowAlert(result.AlertMessage);
                 parent.SearchInformation(1, 1);
-                //$("#frmHotelManagement")[0].reset();
                 $("#<%=hfApprEvaId.ClientID %>").val("");
                 ClearForm();
             }
@@ -489,7 +404,6 @@
 
     <asp:HiddenField ID="hfEditLoad" runat="server" Value="0" />
     <asp:HiddenField ID="hfPerform" runat="server" Value="" />
-
     <asp:HiddenField ID="hfApprEvaId" runat="server" Value="" />
     <div id="ApprEvaluationEntryPanel" class="panel panel-default">
         <div class="panel-heading">

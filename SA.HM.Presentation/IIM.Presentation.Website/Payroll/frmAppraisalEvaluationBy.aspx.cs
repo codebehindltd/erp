@@ -316,12 +316,10 @@ namespace HotelManagement.Presentation.Website.Payroll
                 if(appraisalEvalution.ApprovalStatus == "Approved")
                 {
                     rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Approved, AlertType.Success);
-
                 }
                 else
                 {
                     rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
-
                 }
                 bool logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
                       EntityTypeEnum.EntityType.AppraisalEvaluation.ToString(), appraisalEvalution.AppraisalEvalutionById,
@@ -339,12 +337,11 @@ namespace HotelManagement.Presentation.Website.Payroll
         [WebMethod]
         public static GridViewDataNPaging<AppraisalEvaluationViewBO, GridPaging> SearchApprEvaluationAndLoadGridInformation(string empId, string appraisalType, string fromDate, string toDate, int gridRecordsCount, int pageNumber, int isCurrentOrPreviousPage)
         {
+            int totalRecords = 0;
             HMUtility hmUtility = new HMUtility();
             UserInformationBO userInformationBO = new UserInformationBO();
             userInformationBO = System.Web.HttpContext.Current.Session["UserInformationBOSession"] as UserInformationBO;
-
-            int totalRecords = 0;
-
+            
             GridViewDataNPaging<AppraisalEvaluationViewBO, GridPaging> myGridData = new GridViewDataNPaging<AppraisalEvaluationViewBO, GridPaging>(userInformationBO.GridViewPageSize, userInformationBO.GridViewPageLink, isCurrentOrPreviousPage);
             pageNumber = myGridData.PageNumberCalculation(gridRecordsCount, pageNumber);
 
@@ -362,15 +359,10 @@ namespace HotelManagement.Presentation.Website.Payroll
             HMCommonDA commonDA = new HMCommonDA();
             AppraisalEvaluationDA apprEvaDA = new AppraisalEvaluationDA();
             List<AppraisalEvaluationViewBO> apprEvaList = new List<AppraisalEvaluationViewBO>();
-            //apprEvaList = apprEvaDA.GetApprEvaluationInfoWithPagination(empId, appraisalType, startDate, endDate, userInformationBO.GridViewPageSize, pageNumber, out totalRecords);
 
             List<AppraisalEvaluationViewBO> distinctItems = new List<AppraisalEvaluationViewBO>();
             distinctItems = apprEvaList.GroupBy(test => test.AppraisalEvalutionById).Select(group => group.First()).ToList();
-
-
-            //myGridData.GridPagingProcessing(guestInfoList, totalRecords);
             myGridData.GridPagingProcessing(distinctItems, totalRecords);
-
             return myGridData;
         }
 
@@ -398,7 +390,6 @@ namespace HotelManagement.Presentation.Website.Payroll
             apprEvaViewBO.Master = apprEvaBO;
             apprEvaViewBO.Details = apprEvaList;
             apprEvaViewBO.RatingFactorScale = rtngScale;
-
             return apprEvaViewBO;
         }
 

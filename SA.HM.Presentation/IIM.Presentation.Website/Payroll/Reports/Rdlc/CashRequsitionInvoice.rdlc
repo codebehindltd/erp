@@ -337,7 +337,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Requsition No</Value>
+                              <Value>Requisition No</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -438,7 +438,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Requsition Date</Value>
+                              <Value>Requisition Date</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -642,7 +642,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Requsition By</Value>
+                              <Value>Requisition By</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -850,7 +850,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Depertment</Value>
+                              <Value>Department</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>

@@ -2145,7 +2145,7 @@
                           <TablixMember>
                             <Group Name="Details2" />
                             <Visibility>
-                              <Hidden>=Microsoft.VisualBasic.Interaction.IIF(Parameters!CompanyProfile.Value = "Payment", True, False)</Hidden>
+                              <Hidden>=Microsoft.VisualBasic.Interaction.IIF(Fields!ItemUnit.Value = 0, True, False)</Hidden>
                             </Visibility>
                           </TablixMember>
                           <TablixMember>
