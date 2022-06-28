@@ -141,7 +141,7 @@ namespace HotelManagement.Data.Payroll
 
                             dbSmartAspects.AddOutParameter(command, "@OutId", DbType.Int32, sizeof(Int32));
                             dbSmartAspects.AddOutParameter(command, "@TransactionNo", DbType.String, 100);
-                            dbSmartAspects.AddOutParameter(command, "@TransactionTypeCash", DbType.String,100);
+                            dbSmartAspects.AddOutParameter(command, "@TransactionTypeCash", DbType.String, 100);
                             dbSmartAspects.AddOutParameter(command, "@ApproveStatusCash", DbType.String, 100);
 
                             Recentstatus = dbSmartAspects.ExecuteNonQuery(command, transction);
@@ -150,7 +150,7 @@ namespace HotelManagement.Data.Payroll
                             TransactionTypeCash = command.Parameters["@TransactionTypeCash"].Value.ToString();
                             ApproveStatusCash = command.Parameters["@ApproveStatusCash"].Value.ToString();
 
-                            
+
                         }
 
                         if (Recentstatus > 0 && RequisitionForBillVoucherNewlyAdded.Count > 0)
@@ -176,7 +176,7 @@ namespace HotelManagement.Data.Payroll
 
                                     }
 
-                                    if(bVoucher.SupplierId > 0)
+                                    if (bVoucher.SupplierId > 0)
                                     {
                                         dbSmartAspects.AddInParameter(cmdDetails, "@SupplierId", DbType.Int32, bVoucher.SupplierId);
                                     }
@@ -253,8 +253,8 @@ namespace HotelManagement.Data.Payroll
                             dbSmartAspects.AddInParameter(commandMaster, "@ApproveStatus", DbType.String, ApprovalStatusUpdate);
                             dbSmartAspects.AddInParameter(commandMaster, "@CheckedOrApprovedBy", DbType.Int32, checkedOrApprovedBy);
                             dbSmartAspects.AddOutParameter(commandMaster, "@TransactionNo", DbType.String, 100);
-                            dbSmartAspects.AddOutParameter(commandMaster, "@TransactionTypeCash", DbType.String,100);
-                            dbSmartAspects.AddOutParameter(commandMaster, "@ApproveStatusCash", DbType.String, 100);                           
+                            dbSmartAspects.AddOutParameter(commandMaster, "@TransactionTypeCash", DbType.String, 100);
+                            dbSmartAspects.AddOutParameter(commandMaster, "@ApproveStatusCash", DbType.String, 100);
 
                             status = dbSmartAspects.ExecuteNonQuery(commandMaster, transction);
                             TransactionNo = commandMaster.Parameters["@TransactionNo"].Value.ToString();
@@ -610,15 +610,16 @@ namespace HotelManagement.Data.Payroll
             }
             return cashRequisitionBO;
         }
-        
-        public List<CashRequisitionBO> GetCashRequisitionNAdjustmentForReport(int companyId, int projectId, string companyName, string projectName, string employeeId, string transactionTypeId, DateTime? fromDate, DateTime? toDate, string fromAmount, string toAmount, string transactionNo, string adjustmentNo, string status, string remarks)
+
+        public List<CashRequisitionBO> GetCashRequisitionNAdjustmentForReport(int companyId, int projectId, int employeeId, string transactionTypeId, DateTime? fromDate, DateTime? toDate, string fromAmount, string toAmount, string transactionNo, string adjustmentNo, string status, string remarks)
         {
             List<CashRequisitionBO> CashRequisitionBOList = new List<CashRequisitionBO>();
-            CashRequisitionBO CashRequisitionBo = new CashRequisitionBO();
+
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCashRequisitionNAdjustmentForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (companyId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                     else
@@ -629,27 +630,10 @@ namespace HotelManagement.Data.Payroll
                     else
                         dbSmartAspects.AddInParameter(cmd, "@ProjectId", DbType.Int32, DBNull.Value);
 
-                    if (!string.IsNullOrEmpty(companyName))
-                        dbSmartAspects.AddInParameter(cmd, "@CompanyName", DbType.String, companyName);
+                    if (employeeId > 0)
+                        dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, employeeId);
                     else
-                        dbSmartAspects.AddInParameter(cmd, "@CompanyName", DbType.String, DBNull.Value);
-
-                    if (!string.IsNullOrEmpty(projectName))
-                        dbSmartAspects.AddInParameter(cmd, "@ProjectName", DbType.String, projectName);
-                    else
-                        dbSmartAspects.AddInParameter(cmd, "@ProjectName", DbType.String, DBNull.Value);
-
-                    if (!string.IsNullOrEmpty(employeeId))
-                        dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.String, employeeId);
-                    else
-                        dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.String, DBNull.Value);
-
-                    //if (AccountHeadId != 0)
-                    //    dbSmartAspects.AddInParameter(cmd, "@AccountHeadId", DbType.Int32, AccountHeadId);
-                    //else
-                    //    dbSmartAspects.AddInParameter(cmd, "@AccountHeadId", DbType.Int32, DBNull.Value);
-
-
+                        dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, DBNull.Value);
 
                     if (!string.IsNullOrEmpty(transactionTypeId))
                         dbSmartAspects.AddInParameter(cmd, "@TransactionType", DbType.String, transactionTypeId);
@@ -693,88 +677,130 @@ namespace HotelManagement.Data.Payroll
                     else
                         dbSmartAspects.AddInParameter(cmd, "@Remarks", DbType.String, DBNull.Value);
 
-                    //dbSmartAspects.AddInParameter(cmd, "@RecordPerPage", DbType.Int32, recordPerPage);
-                    //dbSmartAspects.AddInParameter(cmd, "@PageIndex", DbType.Int32, pageIndex);
-
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
-                        if(reader != null)
+                        if (reader != null)
                         {
-                            while(reader.Read())
+                            while (reader.Read())
                             {
-                                if(reader["TransactionNo"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.TransactionNo = Convert.ToString(reader["TransactionNo"]);
-                                }
-                                if(reader["RequisitionDate"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]);
-                                }
-                                if(reader["Employee"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.Employee = Convert.ToString(reader["Employee"]);
-                                }
-                                if(reader["Amount"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.Amount = Convert.ToDecimal(reader["Amount"]);
-                                }
-                                if (reader["Company"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.Company = Convert.ToString(reader["Company"]);
-                                }
-                                if (reader["Project"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.Project = Convert.ToString(reader["Project"]);
-                                }
-                                if (reader["RequisitionFor"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.RequisitionFor = Convert.ToString(reader["RequisitionFor"]);
-                                }
+                                CashRequisitionBO CashRequisitionBo = new CashRequisitionBO();
+
+                                CashRequisitionBo.TransactionNo = Convert.ToString(reader["TransactionNo"]);
+                                CashRequisitionBo.RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]);
+                                CashRequisitionBo.RequisitionDateDisplay = reader["RequisitionDateDisplay"].ToString();
+                                CashRequisitionBo.Employee = Convert.ToString(reader["Employee"]);
+                                CashRequisitionBo.Amount = Convert.ToDecimal(reader["Amount"]);
+                                CashRequisitionBo.Company = Convert.ToString(reader["Company"]);
+                                CashRequisitionBo.Project = Convert.ToString(reader["Project"]);
+                                CashRequisitionBo.RequisitionFor = Convert.ToString(reader["RequisitionFor"]);
                                 if (reader["VoucherDate"] != DBNull.Value)
                                 {
                                     CashRequisitionBo.VoucherDate = Convert.ToDateTime(reader["VoucherDate"]);
+                                    CashRequisitionBo.VoucherDateDisplay = reader["VoucherDateDisplay"].ToString();
                                 }
-                                if (reader["VoucherNo"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.VoucherNo = Convert.ToString(reader["VoucherNo"]);
-                                }
-                                if (reader["VoucherNarration"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.VoucherNarration = Convert.ToString(reader["VoucherNarration"]);
-                                }
-                                if (reader["RemainingBalance"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.RemainingBalance = Convert.ToDecimal(reader["RemainingBalance"]);
-                                }
-                                if (reader["AdjustmentNo"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.AdjustmentNo = Convert.ToString(reader["AdjustmentNo"]);
-                                }
+                                
+                                CashRequisitionBo.VoucherNo = Convert.ToString(reader["VoucherNo"]);
+                                CashRequisitionBo.VoucherNarration = Convert.ToString(reader["VoucherNarration"]);
+                                CashRequisitionBo.RemainingBalance = Convert.ToDecimal(reader["RemainingBalance"]);
+                                CashRequisitionBo.AdjustmentNo = Convert.ToString(reader["AdjustmentNo"]);
                                 if (reader["AdjustmentDate"] != DBNull.Value)
                                 {
                                     CashRequisitionBo.AdjustmentDate = Convert.ToDateTime(reader["AdjustmentDate"]);
+                                    CashRequisitionBo.AdjustmentDateDisplay = reader["AdjustmentDateDisplay"].ToString();
                                 }
-                                if (reader["AdjustmentAmount"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.AdjustmentAmount = Convert.ToDecimal(reader["AdjustmentAmount"]);
-                                }
-                                if (reader["AdjustmentCompany"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.AdjustmentCompany = Convert.ToString(reader["AdjustmentCompany"]);
-                                }
-                                if (reader["AdjustmentProject"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.AdjustmentProject = Convert.ToString(reader["AdjustmentProject"]);
-                                }
-                                if (reader["AdjustmentPurpose"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.AdjustmentPurpose = Convert.ToString(reader["AdjustmentPurpose"]);
-                                }
+                                
+                                CashRequisitionBo.AdjustmentAmount = Convert.ToDecimal(reader["AdjustmentAmount"]);
+                                CashRequisitionBo.AdjustmentCompany = Convert.ToString(reader["AdjustmentCompany"]);
+                                CashRequisitionBo.AdjustmentProject = Convert.ToString(reader["AdjustmentProject"]);
+                                CashRequisitionBo.AdjustmentPurpose = Convert.ToString(reader["AdjustmentPurpose"]);
+                                CashRequisitionBOList.Add(CashRequisitionBo);
+
+                                //if (reader["TransactionNo"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.TransactionNo = Convert.ToString(reader["TransactionNo"]);
+                                //}
+                                //if(reader["RequisitionDate"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]);
+                                //}
+                                //if (reader["RequisitionDateDisplay"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.RequisitionDateDisplay = Convert.ToDateTime(reader["RequisitionDateDisplay"]);
+                                //}
+                                //if (reader["Employee"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.Employee = Convert.ToString(reader["Employee"]);
+                                //}
+                                //if(reader["Amount"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.Amount = Convert.ToDecimal(reader["Amount"]);
+                                //}
+                                //if (reader["Company"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.Company = Convert.ToString(reader["Company"]);
+                                //}
+                                //if (reader["Project"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.Project = Convert.ToString(reader["Project"]);
+                                //}
+                                //if (reader["RequisitionFor"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.RequisitionFor = Convert.ToString(reader["RequisitionFor"]);
+                                //}
+                                //if (reader["VoucherDate"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.VoucherDate = Convert.ToDateTime(reader["VoucherDate"]);
+                                //}
+                                //if (reader["VoucherDateDisplay"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.VoucherDateDisplay = Convert.ToDateTime(reader["VoucherDateDisplay"]);
+                                //}
+                                //if (reader["VoucherNo"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.VoucherNo = Convert.ToString(reader["VoucherNo"]);
+                                //}
+                                //if (reader["VoucherNarration"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.VoucherNarration = Convert.ToString(reader["VoucherNarration"]);
+                                //}
+                                //if (reader["RemainingBalance"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.RemainingBalance = Convert.ToDecimal(reader["RemainingBalance"]);
+                                //}
+                                //if (reader["AdjustmentNo"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.AdjustmentNo = Convert.ToString(reader["AdjustmentNo"]);
+                                //}
+                                //if (reader["AdjustmentDate"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.AdjustmentDate = Convert.ToDateTime(reader["AdjustmentDate"]);
+                                //}
+                                //if (reader["AdjustmentDateDisplay"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.AdjustmentDateDisplay = Convert.ToDateTime(reader["AdjustmentDateDisplay"]);
+                                //}
+                                //if (reader["AdjustmentAmount"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.AdjustmentAmount = Convert.ToDecimal(reader["AdjustmentAmount"]);
+                                //}
+                                //if (reader["AdjustmentCompany"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.AdjustmentCompany = Convert.ToString(reader["AdjustmentCompany"]);
+                                //}
+                                //if (reader["AdjustmentProject"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.AdjustmentProject = Convert.ToString(reader["AdjustmentProject"]);
+                                //}
+                                //if (reader["AdjustmentPurpose"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.AdjustmentPurpose = Convert.ToString(reader["AdjustmentPurpose"]);
+                                //}
+
+                                //CashRequisitionBOList.Add(CashRequisitionBo);
                             }
                         }
                     }
                 }
-                CashRequisitionBOList.Add(CashRequisitionBo);
             }
             return CashRequisitionBOList;
         }
@@ -795,7 +821,7 @@ namespace HotelManagement.Data.Payroll
                         {
                             while (reader.Read())
                             {
-                                
+
                                 BO.Id = Convert.ToInt32(reader["Id"]);
                                 if ((reader["RequireDate"] != DBNull.Value))
                                 {
@@ -835,7 +861,7 @@ namespace HotelManagement.Data.Payroll
         public List<CashRequisitionBO> GetCashRequisitionDetailsByIdForInvoice(int id)
         {
             List<CashRequisitionBO> CashRequisitionBOList = new List<CashRequisitionBO>();
-            
+
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCashRequisitionInvoiceDetailsInfo_SP"))
@@ -856,7 +882,7 @@ namespace HotelManagement.Data.Payroll
                             }
                         }
                     }
-                }                
+                }
             }
             return CashRequisitionBOList;
         }

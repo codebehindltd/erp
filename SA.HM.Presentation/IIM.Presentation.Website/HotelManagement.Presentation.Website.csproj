@@ -835,7 +835,7 @@
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />
-    <EmbeddedResource Include="Payroll\Reports\Rdlc\rptCashRequisitionNAdjustment.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\rptCashRequisitionNAdjustment.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptEmpJoiningAgreement.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptEmpJoiningAgreementWTHF.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpPromotionLetter.rdlc" />

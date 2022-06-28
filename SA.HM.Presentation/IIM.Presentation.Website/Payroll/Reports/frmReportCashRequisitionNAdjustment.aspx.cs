@@ -15,7 +15,7 @@ using System.Web.UI.WebControls;
 
 namespace HotelManagement.Presentation.Website.Payroll.Reports
 {
-    public partial class frmReportCashRequisitionNAdjustment : System.Web.UI.Page
+    public partial class frmReportCashRequisitionNAdjustment : BasePage
     {
         protected int _CashRequisitionShow = -1;
         HMUtility hmUtility = new HMUtility();
@@ -56,13 +56,13 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             if (hfCompanyId.Value != "0" && hfCompanyId.Value != "")
             {
                 companyId = Convert.ToInt32(hfCompanyId.Value);
-                ddlCompanyName = hfCompanyName.Value;
+                //ddlCompanyName = hfCompanyName.Value;
             }
 
             if (hfProjectId.Value != "0" && hfProjectId.Value != "")
             {
                 projectId = Convert.ToInt32(hfProjectId.Value);
-                ddlProjectName = hfProjectName.Value;
+                //ddlProjectName = hfProjectName.Value;
             }
 
             //int companyId = 0;
@@ -84,8 +84,8 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             rvTransaction.LocalReport.DataSources.Clear();
             rvTransaction.ProcessingMode = ProcessingMode.Local;
             rvTransaction.LocalReport.EnableExternalImages = true;
-            
-            var employeeId = ddlAssignEmployee.SelectedItem.Text;
+
+            int employeeId = Convert.ToInt32(ddlAssignEmployee.SelectedValue);
             var transactionTypeId = ddlTransactionType.SelectedValue;
             var CRFromDate = txtSearchFromDate.Text;
             var CRToDate = txtSearchToDate.Text;
@@ -108,7 +108,6 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 toDate = hmUtility.GetDateTimeFromString(CRToDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             }
 
-
             string reportPath = Server.MapPath(@"~/Payroll/Reports/Rdlc/rptCashRequisitionNAdjustment.rdlc");
 
             if (!File.Exists(reportPath))
@@ -128,17 +127,13 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             {
                 companyName = files[0].CompanyName;
                 companyAddress = files[0].CompanyAddress;
-                //paramReport.Add(new ReportParameter("CompanyProfile", fileCompany[0].Name));
-                //paramReport.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
 
                 if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
                 {
-                    //paramReport.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
                     webAddress = files[0].WebAddress;
                 }
                 else
                 {
-                    //paramReport.Add(new ReportParameter("CompanyWeb", files[0].ContactNumber));
                     webAddress = files[0].ContactNumber;
                 }
             }
@@ -164,25 +159,12 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
 
             List<CashRequisitionBO> viewList = new List<CashRequisitionBO>();
             CashRequisitionDA cashRequisitionDa = new CashRequisitionDA();
-            viewList = cashRequisitionDa.GetCashRequisitionNAdjustmentForReport(companyId, projectId, ddlCompanyName, ddlProjectName, employeeId, transactionTypeId, fromDate, toDate, fromAmount, toAmount, transactionNo, adjustmentNo, statusId, remarks);
+            viewList = cashRequisitionDa.GetCashRequisitionNAdjustmentForReport(companyId, projectId, employeeId, transactionTypeId, fromDate, toDate, fromAmount, toAmount, transactionNo, adjustmentNo, statusId, remarks);
             
-            //foreach (var item in viewList)
-            //{
-            //    if(item.AdjustmentNo == null)
-            //    {
-            //        paramReport.Add(new ReportParameter("column_visible", "True"));
-            //    }
-            //    else
-            //    {
-            //        paramReport.Add(new ReportParameter("column_visible", "False"));
-            //    }
-            //}
-
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], viewList));
 
             rvTransaction.LocalReport.DisplayName = "Cash Requisition And Adjustment";
-
             rvTransaction.LocalReport.Refresh();
         }
 

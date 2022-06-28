@@ -793,7 +793,6 @@ namespace HotelManagement.Data.Payroll
 
             using (DbConnection con = dbSmartAspects.CreateConnection())
             {
-                //using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("EmployeeSalarySheetRedcross_SP"))
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("EmployeeSalarySheetSouthSudan_SP"))
                 {
                     dbSmartAspects.AddInParameter(cmd, "@ReportType", DbType.String, reportType);
@@ -860,6 +859,7 @@ namespace HotelManagement.Data.Payroll
 
                         MedicalAllowance = r.Field<decimal>("MedicalAllowance"),
                         NSSFEmployeeContribution = r.Field<decimal>("NSSFEmployeeContribution"),
+                        NSSFCompanyContribution = r.Field<decimal>("NSSFCompanyContribution"),
 
                         TotalAllowance = r.Field<decimal>("TotalAllowance"),
                         TotalDeduction = r.Field<decimal>("TotalDeduction"),
@@ -874,7 +874,8 @@ namespace HotelManagement.Data.Payroll
 
                         SalaryEffectiveness = r.Field<string>("SalaryEffectiveness"),
                         PayHead = r.Field<string>("PayHead"),
-                        PayHeadDescription = r.Field<string>("PayHeadDescription")
+                        PayHeadDescription = r.Field<string>("PayHeadDescription"),
+                        CurrencyExchangeRate = r.Field<decimal?>("CurrencyExchangeRate")
 
                     }).ToList();
 
@@ -1148,6 +1149,7 @@ namespace HotelManagement.Data.Payroll
 
                         MedicalAllowance = r.Field<decimal>("MedicalAllowance"),
                         NSSFEmployeeContribution = r.Field<decimal>("NSSFEmployeeContribution"),
+                        NSSFCompanyContribution = r.Field<decimal>("NSSFCompanyContribution"),
 
                         TotalAllowance = r.Field<decimal>("TotalAllowance"),
                         TotalDeduction = r.Field<decimal>("TotalDeduction"),
@@ -1162,8 +1164,8 @@ namespace HotelManagement.Data.Payroll
 
                         SalaryEffectiveness = r.Field<string>("SalaryEffectiveness"),
                         PayHead = r.Field<string>("PayHead"),
-                        PayHeadDescription = r.Field<string>("PayHeadDescription")
-
+                        PayHeadDescription = r.Field<string>("PayHeadDescription"),
+                        CurrencyExchangeRate = r.Field<decimal?>("CurrencyExchangeRate")
                     }).ToList();
 
                 }
