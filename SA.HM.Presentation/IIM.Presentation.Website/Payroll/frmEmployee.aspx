@@ -2478,6 +2478,12 @@
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtAccountType" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblCardNumber" runat="server" class="control-label" Text="Card Number"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtCardNumber" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">

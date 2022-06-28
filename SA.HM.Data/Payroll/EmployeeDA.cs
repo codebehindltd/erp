@@ -654,6 +654,7 @@ namespace HotelManagement.Data.Payroll
                                     dbSmartAspects.AddInParameter(commandBankInfo, "@AccountName", DbType.String, bankInfo.AccountName);
                                     dbSmartAspects.AddInParameter(commandBankInfo, "@AccountNumber", DbType.String, bankInfo.AccountNumber);
                                     dbSmartAspects.AddInParameter(commandBankInfo, "@AccountType", DbType.String, bankInfo.AccountType);
+                                    dbSmartAspects.AddInParameter(commandBankInfo, "@CardNumber", DbType.String, bankInfo.CardNumber);
                                     dbSmartAspects.AddInParameter(commandBankInfo, "@Remarks", DbType.String, bankInfo.BankRemarks);
 
                                     countBank += dbSmartAspects.ExecuteNonQuery(commandBankInfo, transction);
@@ -1240,6 +1241,7 @@ namespace HotelManagement.Data.Payroll
                                             dbSmartAspects.AddInParameter(commandBankInfo, "@AccountName", DbType.String, bankInfo.AccountName);
                                             dbSmartAspects.AddInParameter(commandBankInfo, "@AccountNumber", DbType.String, bankInfo.AccountNumber);
                                             dbSmartAspects.AddInParameter(commandBankInfo, "@AccountType", DbType.String, bankInfo.AccountType);
+                                            dbSmartAspects.AddInParameter(commandBankInfo, "@CardNumber", DbType.String, bankInfo.CardNumber);
                                             dbSmartAspects.AddInParameter(commandBankInfo, "@Remarks", DbType.String, bankInfo.BankRemarks);
 
                                             countBank += dbSmartAspects.ExecuteNonQuery(commandBankInfo, transction);
@@ -1259,6 +1261,7 @@ namespace HotelManagement.Data.Payroll
                                         dbSmartAspects.AddInParameter(commandBankInfo, "@AccountName", DbType.String, bankInfo.AccountName);
                                         dbSmartAspects.AddInParameter(commandBankInfo, "@AccountNumber", DbType.String, bankInfo.AccountNumber);
                                         dbSmartAspects.AddInParameter(commandBankInfo, "@AccountType", DbType.String, bankInfo.AccountType);
+                                        dbSmartAspects.AddInParameter(commandBankInfo, "@CardNumber", DbType.String, bankInfo.CardNumber);
                                         dbSmartAspects.AddInParameter(commandBankInfo, "@Remarks", DbType.String, bankInfo.BankRemarks);
 
                                         countBank += dbSmartAspects.ExecuteNonQuery(commandBankInfo, transction);
@@ -2024,6 +2027,7 @@ namespace HotelManagement.Data.Payroll
                                             dbSmartAspects.AddInParameter(commandBankInfo, "@AccountName", DbType.String, bankInfo.AccountName);
                                             dbSmartAspects.AddInParameter(commandBankInfo, "@AccountNumber", DbType.String, bankInfo.AccountNumber);
                                             dbSmartAspects.AddInParameter(commandBankInfo, "@AccountType", DbType.String, bankInfo.AccountType);
+                                            dbSmartAspects.AddInParameter(commandBankInfo, "@CardNumber", DbType.String, bankInfo.CardNumber);
                                             dbSmartAspects.AddInParameter(commandBankInfo, "@Remarks", DbType.String, bankInfo.BankRemarks);
 
                                             countBank += dbSmartAspects.ExecuteNonQuery(commandBankInfo, transction);
@@ -2047,6 +2051,7 @@ namespace HotelManagement.Data.Payroll
                                         dbSmartAspects.AddInParameter(commandBankInfo, "@AccountName", DbType.String, bankInfo.AccountName);
                                         dbSmartAspects.AddInParameter(commandBankInfo, "@AccountNumber", DbType.String, bankInfo.AccountNumber);
                                         dbSmartAspects.AddInParameter(commandBankInfo, "@AccountType", DbType.String, bankInfo.AccountType);
+                                        dbSmartAspects.AddInParameter(commandBankInfo, "@CardNumber", DbType.String, bankInfo.CardNumber);
                                         dbSmartAspects.AddInParameter(commandBankInfo, "@Remarks", DbType.String, bankInfo.BankRemarks);
 
                                         countBank += dbSmartAspects.ExecuteNonQuery(commandBankInfo, transction);
@@ -3791,6 +3796,7 @@ namespace HotelManagement.Data.Payroll
                         AccountName = r.Field<string>("AccountName"),
                         AccountNumber = r.Field<string>("AccountNumber"),
                         AccountType = r.Field<string>("AccountType"),
+                        CardNumber = r.Field<string>("CardNumber"),
                         BankRemarks = r.Field<string>("Remarks")
 
                     }).FirstOrDefault();

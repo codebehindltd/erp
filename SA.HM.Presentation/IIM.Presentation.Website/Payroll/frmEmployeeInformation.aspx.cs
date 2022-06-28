@@ -676,6 +676,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                     bankInfo.AccountName = existingBankInfo.AccountName;
                     bankInfo.AccountNumber = existingBankInfo.AccountNumber;
                     bankInfo.AccountType = existingBankInfo.AccountType;
+                    bankInfo.CardNumber = existingBankInfo.CardNumber;
                     bankInfo.BankRemarks = existingBankInfo.BankRemarks;
 
                     ddlBank.SelectedValue = bankInfo.BankId.ToString();
@@ -683,6 +684,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                     txtAccountName.Text = bankInfo.AccountName;
                     txtAccountNumber.Text = bankInfo.AccountNumber;
                     txtAccountType.Text = bankInfo.AccountType;
+                    txtCardNumber.Text = bankInfo.CardNumber;
                     txtRemarksForBankInfo.Text = bankInfo.BankRemarks;
                 }
             }
@@ -2123,6 +2125,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                     txtAccountName.Text = bankInfo.AccountName;
                     txtAccountNumber.Text = bankInfo.AccountNumber;
                     txtAccountType.Text = bankInfo.AccountType;
+                    txtCardNumber.Text = bankInfo.CardNumber;
                     txtRemarksForBankInfo.Text = bankInfo.BankRemarks;
                 }
             }
@@ -2442,6 +2445,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             txtAccountType.Text = string.Empty;
             txtBranchName.Text = string.Empty;
             txtAccountNumber.Text = string.Empty;
+            txtCardNumber.Text = string.Empty;
             txtRemarksForBankInfo.Text = string.Empty;
         }
         //************************ User Defined Web Method ********************//
