@@ -1257,7 +1257,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!SalaryHead.Value + " (" + Fields!SalaryHeadNote.Value + ")"</Value>
+                              <Value>=Fields!SalaryHead.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
