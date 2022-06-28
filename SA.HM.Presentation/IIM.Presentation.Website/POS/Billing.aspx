@@ -1811,6 +1811,7 @@
                 });
             }
             else {
+                debugger;
                 $("#AddedRiceMillBillingItem tbody tr").each(function () {
                     totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(6)").text() == null ? 0 : $(this).find("td:eq(6)").text());
                     totalItem++;
@@ -1832,7 +1833,7 @@
 
             var totalAmount = 0.00, amount = 0.00, index = 0;
             var discountAmount = 0.00, afterDiscountAmount = 0.00;
-            var vat = 0.00, totalDiscountAmount = 0.00, grandTotal = 0.00, exchangeTotal = 0.00;
+            var vat = 0.00, ServiceCharge = 0.00, totalDiscountAmount = 0.00, grandTotal = 0.00, exchangeTotal = 0.00;
             var discountType = "Percentage", discount = 0.00;
 
             var discountType = "Percentage", discount = 0.00, roundedGrandTotal = 0.00;
@@ -1939,15 +1940,15 @@
             debugger;
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 $("#AddedItem tbody tr").each(function () {
-                    if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
-                        vatPercentAmount = parseFloat($(this).find("td:eq(20)").text());
-                        totalItemAmount = parseFloat($(this).find("td:eq(9)").text());
-                        totalItemDiscount = parseFloat($(this).find("td:eq(17)").text());
-                    }
-                    else {
+                    if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "0") {
                         vatPercentAmount = parseFloat($(this).find("td:eq(17)").text());
                         totalItemAmount = parseFloat($(this).find("td:eq(6)").text());
                         totalItemDiscount = parseFloat($(this).find("td:eq(14)").text());
+                    }
+                    else {
+                        vatPercentAmount = parseFloat($(this).find("td:eq(20)").text());
+                        totalItemAmount = parseFloat($(this).find("td:eq(9)").text());
+                        totalItemDiscount = parseFloat($(this).find("td:eq(17)").text());
                     }
 
                     totalAmountAfterDiscount = totalItemAmount - totalItemDiscount;
@@ -4536,13 +4537,6 @@
                             </div>
                             <div class="col-md-7">
                                 <input type="text" class="form-control quantitydecimal" id="txtDueRChnage" disabled="disabled" placeholder="Due/Change Amount" />
-                            </div>
-                        </div>
-                        <div class="form-group no-gutter">
-                            <div class="col-md-12">
-                                <div class="PosDivider">
-                                    <hr />
-                                </div>
                             </div>
                         </div>
                         <div class="form-group no-gutter">

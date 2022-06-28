@@ -78,5 +78,8 @@ namespace HotelManagement.Entity.Payroll
         public string AdjustmentCompany { get; set; }
         public string AdjustmentProject { get; set; }
         public string AdjustmentPurpose { get; set; }
+        public string RequisitionDateDisplay { get; set; }
+        public string VoucherDateDisplay { get; set; }
+        public string AdjustmentDateDisplay { get; set; }
     }
 }

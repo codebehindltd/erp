@@ -36,6 +36,7 @@ namespace HotelManagement.Entity.Payroll
         public decimal BasicAmount { get; set; }
         public decimal MedicalAllowance { get; set; }
         public decimal NSSFEmployeeContribution { get; set; }
+        public decimal NSSFCompanyContribution { get; set; }        
         public int SalaryHeadId { get; set; }
         public string SalaryHead { get; set; }
         public string SalaryType { get; set; }
@@ -54,5 +55,6 @@ namespace HotelManagement.Entity.Payroll
         public decimal ConvertionRate { get; set; }
         public decimal BasicAmountInEmployeeCurrency { get; set; }
         public Int64 Serial { get; set; }
+        public decimal? CurrencyExchangeRate { get; set; }
     }
 }
