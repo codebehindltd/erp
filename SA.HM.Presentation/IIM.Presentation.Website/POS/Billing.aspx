@@ -30,7 +30,6 @@
 
         $(document).ready(function () {
             if ($("#ContentPlaceHolder1_hfBillId").val() != '' && $("#ContentPlaceHolder1_hfBillIdControl").val() != '1') {
-                debugger;
                 $('#btnPrintPreview').trigger('click');
             }
             $('#txtEstimatedTaskDoneDate').keypress(function (event) {
@@ -60,7 +59,6 @@
             $("#txtSerialAutoComplete").autocomplete({
                 minLength: 1,
                 source: function (request, response) {
-                    debugger;
                     var costcenterId = $("#ContentPlaceHolder1_hfCostcenterId").val();
                     var projectId = $("#ContentPlaceHolder1_ddlProject").val();
                     var itemId = $("#ContentPlaceHolder1_hfItemIdForSerial").val();
@@ -746,7 +744,6 @@
         }
 
         function GetInvItemStockInfoByItemAndAttributeId() {
-            debugger;
             var itemCode = $("#ItemCode").val();
             //var itemName = $("#ItemName").val();
             var itemName = $("#ItemName").val().replace("'", "");
@@ -1321,7 +1318,6 @@
         }
 
         function AdditemByCodeOrBarCode() {
-            debugger;
             var itemCode = "", itemName = "", categoryName = "";
             itemCode = $("#ItemCode").val();
             var costCenterId = $("#ContentPlaceHolder1_hfCostcenterId").val();
@@ -1372,7 +1368,6 @@
         }
 
         function AddItem() {
-            debugger;
             var alreadyAddedItem, itemId, itemName, colorId = 0, colorText = '', sizeId = 0, sizeText = '', styleId = 0, styleText = '', productType = 'Non Serial Product';
 
             productType = $("#ContentPlaceHolder1_ddlProductType option:selected").val();
@@ -1381,7 +1376,6 @@
             if (IsItemAutoSave == '0' && ItemDetails == null) {
                 return false;
             }
-            debugger;
 
             if (ItemDetails == null)
                 return;
@@ -1472,7 +1466,6 @@
                     $(trAlreadyAdded).find("td:eq(9)").text(addedTotalPrice);
                 }
                 else {
-                    debugger;
                     var trAlreadyAddedItem = $("#AddedRiceMillBillingItem tbody tr:eq(" + index + ")");
                     var addedRiceMillBillingBagWaaightQuantity = 0.00, addedRiceMillBillingBagQuantity = 0.00, addedRiceMillBillingQuantity = 0.00, addedRiceMillBillingUnitPrice = 0.00, addedRiceMillBillingTotalPrice = 0.00, totalRiceMillBillingDiscount = 0.0, unitRiceMillBillingDiscount = 0.0;
 
@@ -1644,7 +1637,6 @@
                 $("#AddedItem tbody").append(tr);
             }
             else {
-                debugger;
                 var rowLength = $("#AddedRiceMillBillingItem tbody tr").length;
                 totalQuantity = quantity * (ItemDetails == null ? 0.00 : ItemDetails.UnitPriceLocal);
                 tr += "<tr>";
@@ -1797,7 +1789,6 @@
         }
 
         function calculateTotalQuantity() {
-            debugger;
             var totalQuantity = 0.0, totalItem = 0.0;
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 $("#AddedItem > tbody > tr").each(function () {
@@ -1811,7 +1802,6 @@
                 });
             }
             else {
-                debugger;
                 $("#AddedRiceMillBillingItem tbody tr").each(function () {
                     totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(6)").text() == null ? 0 : $(this).find("td:eq(6)").text());
                     totalItem++;
@@ -1823,7 +1813,6 @@
         }
 
         function SalesNDiscountCalculation() {
-            debugger;
             /*if ($("#AddedItem tbody tr").length == 0) {
                 toastr.info("Please Add Item First.");
                 return false;
@@ -1851,9 +1840,9 @@
             //    discount = 0.00;
             //}
 
-            debugger;
+            
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
-                $("#AddedItem tbody tr").each(function () {
+                $("#AddedItem tbody tr").each(function () {                
                     if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
                         amount = parseFloat($(this).find("td:eq(9)").text());
                     }
@@ -2048,7 +2037,6 @@
                 }
             }
             else {
-                debugger;
                 bagWaight = $.trim($(tr).find("td:eq(4)").find("input").val());
                 bagQuantity = $.trim($(tr).find("td:eq(5)").find("input").val());
                 quantity = parseFloat(bagWaight) * parseFloat(bagQuantity);
@@ -2243,7 +2231,6 @@
         }
 
         function DeleteItemOrder(control) {
-            debugger;
             var index = 0;
             var tr = $(control).parent().parent();
             var itemId = 0;
@@ -2272,7 +2259,6 @@
         }
 
         function BillSettlement() {
-            debugger;
             PaymentCalculation(0);
 
             if ($("#ContentPlaceHolder1_ddlProject").val() == "0") {
@@ -2419,14 +2405,12 @@
             var companyAmount = $("#txtCompanyPayment").val();
             var companyName = $("#lblCompanyName").text();
 
-            debugger;
             var companyId = $("#ContentPlaceHolder1_hfCompanyId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfCompanyId").val();
             var paymentId = $("#ContentPlaceHolder1_hfPaymentId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfPaymentId").val();
             var contactId = $("#ContentPlaceHolder1_hfContactId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfContactId").val();
 
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 $("#AddedItem tbody tr").each(function () {
-                    debugger;
 
                     if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
                         kotDetailId = $(this).find("td:eq(14)").text();
@@ -2523,8 +2507,6 @@
             }
             else {
                 $("#AddedRiceMillBillingItem tbody tr").each(function () {
-                    debugger;
-
                     kotDetailId = $(this).find("td:eq(12)").text();
                     itemId = $(this).find("td:eq(9)").text();
 
@@ -2593,7 +2575,6 @@
             var invoiceDiscount = 0.0;
 
             if ($("#PreviousBillItem tbody tr").length > 0) {
-                debugger;
                 var index = 0;
                 $("#PreviousBillItem tbody tr").each(function () {
 
@@ -4794,6 +4775,7 @@
                 $("#RiceMillBillingItemDiv").hide();
             }
 
+            $("#BillingItemDiv").show();
             if (CommonHelper.BrowserType().mozilla || CommonHelper.BrowserType().chrome) {
                 var barControlId = CommonHelper.GetReportViewerControlId($("#<%=rvTransactionShow.ClientID %>"));
                 var printTemplate = $("#<%=hfBillTemplate.ClientID %>").val();
@@ -4807,7 +4789,6 @@
         });
 
         function PrintDocumentFunc(printTemplate) {
-            debugger;
             if (printTemplate == "1") {
                 $('#btnPrintReportTemplate1').trigger('click');
             }
