@@ -204,7 +204,7 @@ namespace HotelManagement.Data.HotelManagement
 
                         tmpCompanyId = Convert.ToInt32(command.Parameters["@CompanyId"].Value);
 
-                        
+
                         HMCommonDA hmCommonDA = new HMCommonDA();
                         Boolean uploadStatus = hmCommonDA.UpdateUploadedDocumentsInformationByOwnerId(tmpCompanyId, guestCompany.RandomProductId);
                     }
@@ -734,12 +734,12 @@ namespace HotelManagement.Data.HotelManagement
                         dbSmartAspects.AddInParameter(cmd, "@CompanyNumber", DbType.String, companyNumber);
                     else
                         dbSmartAspects.AddInParameter(cmd, "@CompanyNumber", DbType.String, DBNull.Value);
-                    
+
                     dbSmartAspects.AddInParameter(cmd, "@DateSearchCriteria", DbType.Int32, dateSearchCriteria);
 
                     dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, fromDate);
                     dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, toDate);
-                    
+
                     dbSmartAspects.AddInParameter(cmd, "@RecordPerPage", DbType.Int32, recordPerPage);
                     dbSmartAspects.AddInParameter(cmd, "@PageIndex", DbType.Int32, pageIndex);
                     dbSmartAspects.AddOutParameter(cmd, "@RecordCount", DbType.Int32, sizeof(Int32));
@@ -907,10 +907,10 @@ namespace HotelManagement.Data.HotelManagement
                                 guestCompany.WebAddress = reader["WebAddress"].ToString();
                                 guestCompany.ContactNumber = reader["ContactNumber"].ToString();
                                 guestCompany.ContactPerson = reader["ContactPerson"].ToString();
-                                
+
                                 guestCompany.BillingStreet = reader["BillingStreet"].ToString();
                                 guestCompany.BillingCity = reader["BillingCity"].ToString();
-                                guestCompany.BillingState = reader["BillingState"].ToString();                                
+                                guestCompany.BillingState = reader["BillingState"].ToString();
                                 guestCompany.BillingCountry = reader["BillingCountry"].ToString();
                                 guestCompany.BillingPostCode = reader["BillingPostCode"].ToString();
 
@@ -2384,7 +2384,7 @@ namespace HotelManagement.Data.HotelManagement
                                 status = dbSmartAspects.ExecuteNonQuery(command, transaction);
                             }
                         }
-                        
+
                         if (status > 0)
                         {
                             transaction.Commit();
@@ -2402,7 +2402,7 @@ namespace HotelManagement.Data.HotelManagement
             return status > 0 ? true : false;
         }
 
-public bool SaveCompanyBillPaymentTransaction(CompanyPaymentBO companyPayment, List<CompanyPaymentDetailsBO> companyPaymentDetails, List<CompanyPaymentDetailsBO> ReceiveInformationDetails, List<CompanyPaymentDetailsBO> ReceiveInformationDeletedDetails, out long companyPaymentId)
+        public bool SaveCompanyBillPaymentTransaction(CompanyPaymentBO companyPayment, List<CompanyPaymentDetailsBO> companyPaymentDetails, List<CompanyPaymentDetailsBO> ReceiveInformationDetails, List<CompanyPaymentDetailsBO> ReceiveInformationDeletedDetails, out long companyPaymentId)
         {
             int status = 0;
             //Int64 companyPaymentId = 0;
@@ -2487,13 +2487,13 @@ public bool SaveCompanyBillPaymentTransaction(CompanyPaymentBO companyPayment, L
                                 status = dbSmartAspects.ExecuteNonQuery(command, transaction);
                             }
                         }
-                        
+
                         using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateHotelCompanyPaymentTransectionDetails_SP"))
                         {
                             foreach (CompanyPaymentDetailsBO rfd in ReceiveInformationDetails)
                             {
                                 command.Parameters.Clear();
-                               
+
                                 dbSmartAspects.AddInParameter(command, "@PaymentMode", DbType.String, rfd.PaymentMode);
                                 dbSmartAspects.AddInParameter(command, "@PaymentHeadId", DbType.Int64, rfd.PaymentHeadId);
                                 dbSmartAspects.AddInParameter(command, "@PaymentAmount", DbType.Decimal, rfd.PaymentAmount);
@@ -2676,8 +2676,8 @@ public bool SaveCompanyBillPaymentTransaction(CompanyPaymentBO companyPayment, L
         }
 
 
-public bool UpdateCompanyBillPaymentTransaction(CompanyPaymentBO companyPayment, List<CompanyPaymentDetailsBO> companyPaymentDetails,
-            List<CompanyPaymentDetailsBO> companyPaymentDetailsEdited, List<CompanyPaymentDetailsBO> companyPaymentDetailsDeleted, List<CompanyPaymentDetailsBO> ReceiveInformationDetails, List<CompanyPaymentDetailsBO> ReceiveInformationDeletedDetails)
+        public bool UpdateCompanyBillPaymentTransaction(CompanyPaymentBO companyPayment, List<CompanyPaymentDetailsBO> companyPaymentDetails,
+                    List<CompanyPaymentDetailsBO> companyPaymentDetailsEdited, List<CompanyPaymentDetailsBO> companyPaymentDetailsDeleted, List<CompanyPaymentDetailsBO> ReceiveInformationDetails, List<CompanyPaymentDetailsBO> ReceiveInformationDeletedDetails)
         {
             int status = 0;
             Int64 supplierIdPaymentId = 0;
@@ -3457,6 +3457,127 @@ public bool UpdateCompanyBillPaymentTransaction(CompanyPaymentBO companyPayment,
                             }
                         }
                     }
+                }
+            }
+            return roomTypeList;
+        }
+        public List<GuestCompanyBO> GetGuestCompanyInfoBySearchCriteriaForReport(int isAdminUser, int userInfoId, string companyName, Int32 companyType, string contactNumber, string companyEmail, Int64 countryId, Int64 stateId, Int64 cityId, Int64 areaId, int lifeCycleStage, Int32 companyOwnerId, Int32 dateSearchCriteria, DateTime fromDate, DateTime toDate, string companyNumber, int recordPerPage, int pageIndex, out int totalRecords)
+        {
+            List<GuestCompanyBO> roomTypeList = new List<GuestCompanyBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestCompanyInfoBySearchCriteriaForReport_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+
+                    dbSmartAspects.AddInParameter(cmd, "@IsAdminUser", DbType.Int32, isAdminUser);
+                    dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int32, userInfoId);
+
+                    if (!string.IsNullOrEmpty(companyName))
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyName", DbType.String, companyName);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyName", DbType.String, DBNull.Value);
+
+                    if (companyType > 0)
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyType", DbType.Int32, companyType);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyType", DbType.Int32, DBNull.Value);
+
+                    if (!string.IsNullOrEmpty(contactNumber))
+                        dbSmartAspects.AddInParameter(cmd, "@ContactNumber", DbType.String, contactNumber);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@ContactNumber", DbType.String, DBNull.Value);
+
+                    if (!string.IsNullOrEmpty(companyEmail))
+                        dbSmartAspects.AddInParameter(cmd, "@EmailAddress", DbType.String, companyEmail);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@EmailAddress", DbType.String, DBNull.Value);
+
+                    if (countryId > 0)
+                        dbSmartAspects.AddInParameter(cmd, "@CountryId", DbType.String, countryId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@CountryId", DbType.String, DBNull.Value);
+
+                    if (stateId > 0)
+                        dbSmartAspects.AddInParameter(cmd, "@StateId", DbType.String, stateId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@StateId", DbType.String, DBNull.Value);
+
+                    if (cityId > 0)
+                        dbSmartAspects.AddInParameter(cmd, "@CityId", DbType.String, cityId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@CityId", DbType.String, DBNull.Value);
+
+                    if (areaId > 0)
+                        dbSmartAspects.AddInParameter(cmd, "@LocationId", DbType.String, areaId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@LocationId", DbType.String, DBNull.Value);
+
+                    if (lifeCycleStage > 0)
+                        dbSmartAspects.AddInParameter(cmd, "@LifeCycleStageId", DbType.String, lifeCycleStage);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@LifeCycleStageId", DbType.String, DBNull.Value);
+
+                    if (companyOwnerId != 0)
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyOwnerId", DbType.Int32, companyOwnerId);
+                    }
+                    else
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyOwnerId", DbType.Int32, DBNull.Value);
+                    }
+
+                    if (!string.IsNullOrEmpty(companyNumber))
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyNumber", DbType.String, companyNumber);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyNumber", DbType.String, DBNull.Value);
+
+                    dbSmartAspects.AddInParameter(cmd, "@DateSearchCriteria", DbType.Int32, dateSearchCriteria);
+
+                    dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, fromDate);
+                    dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, toDate);
+
+                    dbSmartAspects.AddInParameter(cmd, "@RecordPerPage", DbType.Int32, recordPerPage);
+                    dbSmartAspects.AddInParameter(cmd, "@PageIndex", DbType.Int32, pageIndex);
+                    dbSmartAspects.AddOutParameter(cmd, "@RecordCount", DbType.Int32, sizeof(Int32));
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                GuestCompanyBO guestCompany = new GuestCompanyBO();
+                                guestCompany.CompanyId = Convert.ToInt32(reader["CompanyId"]);
+                                guestCompany.ParentCompanyId = Convert.ToInt32(reader["ParentCompanyId"]);
+                                guestCompany.ParentCompany = reader["ParentCompany"].ToString();
+                                guestCompany.CompanyName = reader["CompanyName"].ToString();
+                                guestCompany.CompanyAddress = reader["CompanyAddress"].ToString();
+                                guestCompany.EmailAddress = reader["EmailAddress"].ToString();
+                                guestCompany.WebAddress = reader["WebAddress"].ToString();
+                                guestCompany.ContactNumber = reader["ContactNumber"].ToString();
+                                guestCompany.ContactPerson = reader["ContactPerson"].ToString();
+                                guestCompany.Remarks = reader["Remarks"].ToString();
+                                guestCompany.DiscountPercent = Convert.ToDecimal(reader["DiscountPercent"]);
+                                guestCompany.NodeId = Convert.ToInt32(reader["NodeId"]);
+                                guestCompany.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);
+                                guestCompany.CompanyNumber = reader["CompanyNumber"].ToString();
+                                guestCompany.CompanyContact = reader["CompanyContact"].ToString();
+                                guestCompany.CompanyEmail = reader["CompanyEmail"].ToString();
+                                guestCompany.StateName = reader["StateName"].ToString();
+                                guestCompany.CityName = reader["CityName"].ToString();
+                                guestCompany.CountryName = reader["CountryName"].ToString();
+                                guestCompany.AssociateContacts = reader["AssociateContacts"].ToString();
+                                guestCompany.LifeCycleStage = reader["LifeCycleStage"].ToString();
+                                guestCompany.AccountManager = reader["AccountManager"].ToString();
+                                guestCompany.CreatedDisplayDate = reader["CreatedDisplayDate"].ToString();
+                                guestCompany.IsDetailPanelEnableForCompany = Convert.ToInt32(reader["IsDetailPanelEnableForCompany"]);
+                                guestCompany.IsDetailPanelEnableForParentCompany = Convert.ToInt32(reader["IsDetailPanelEnableForParentCompany"]);
+                                roomTypeList.Add(guestCompany);
+                            }
+                        }
+                    }
+                    totalRecords = (int)cmd.Parameters["@RecordCount"].Value;
                 }
             }
             return roomTypeList;
