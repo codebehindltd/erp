@@ -185,7 +185,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
             Int64 cityId = 0;
             Int64 areaId = 0;
             int totalRecords = 0;
-            int pageNumber = 0;
+            int pageNumber = Convert.ToInt32(hfPageIndex.Value);
             guestCompanyBO.CompanyOwnerId = Convert.ToInt32(ddlCompanyOwner.SelectedValue);
             int companyOwnerId = Convert.ToInt32(ddlSrcOwnerId.SelectedValue);
 

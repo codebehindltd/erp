@@ -615,21 +615,20 @@
                 CommonHelper.AlertMessage(error.AlertMessage);
                 return false;
             }
-
-
-            function EntryPanelVisibleFalse() {
-                $('#ReportPanel').show();
-            }
         });
-        function LoadCompanyNameForReport() {
+
+        function EntryPanelVisibleFalse() {
+            $('#ReportPanel').show();
+        }
+        function LoadCompanyNameForReport(pageIndex) {
             if ($("#ContentPlaceHolder1_txtSCompanyName").val() == "") {
                 var companyName = "";
             } else {
                 var companyName = $("#ContentPlaceHolder1_hfSearchCompanyId").val();
             }
-            console.log(companyName);
 
             $("#ContentPlaceHolder1_hfGuestCompanyName").val(companyName);
+            $("#ContentPlaceHolder1_hfPageIndex").val(pageIndex);
         }
     </script>
     <asp:HiddenField ID="hfCompanyId" runat="server" Value="0"></asp:HiddenField>
@@ -650,6 +649,7 @@
     <asp:HiddenField ID="txtCompanyId" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="HiddenField1" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfSearchCompanyId" runat="server" Value=""></asp:HiddenField>
+    <asp:HiddenField ID="hfPageIndex" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfIsHotelGuestCompanyRescitionForAllUsers" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfBillingCountryId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfBillingStateId" runat="server" Value="0"></asp:HiddenField>
@@ -757,7 +757,7 @@
         </div>
     <div class="row">
                     <div class="col-md-12">
-                        <asp:Button ID="btnGenerate" runat="server" Text="Generate" CssClass="btn btn-primary" OnClientClick="javascript: return LoadCompanyNameForReport();"
+                        <asp:Button ID="btnGenerate" runat="server" Text="Generate" CssClass="btn btn-primary" OnClientClick="javascript: return LoadCompanyNameForReport(1);"
                             OnClick="btnGenerate_Click" />
                     </div>
                 </div>
@@ -798,7 +798,7 @@
             $('#btnPrintReportFromClient').trigger('click');
             return true;
         }
-         var x = '<%=_CompanyListReportShow%>';
+        var x = '<%=_CompanyListReportShow%>';
         if (x > -1)
             EntryPanelVisibleFalse();
     </script>

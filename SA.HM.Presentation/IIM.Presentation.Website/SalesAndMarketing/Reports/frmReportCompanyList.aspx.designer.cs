@@ -157,6 +157,15 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports {
         protected global::System.Web.UI.WebControls.HiddenField hfSearchCompanyId;
         
         /// <summary>
+        /// hfPageIndex control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfPageIndex;
+        
+        /// <summary>
         /// hfIsHotelGuestCompanyRescitionForAllUsers control.
         /// </summary>
         /// <remarks>
