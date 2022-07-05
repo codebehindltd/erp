@@ -439,10 +439,11 @@
                     var companyName = "";
                 } else {
                     var companyName = $("#ContentPlaceHolder1_hfSearchCompanyId").val();
+                    $("#ContentPlaceHolder1_hfGuestCompanyName").val(companyName);
                 }
                 console.log(companyName);
 
-                $("#ContentPlaceHolder1_hfGuestCompanyName").val(companyName);
+                
 
                 var companyType = $("#ContentPlaceHolder1_ddlSrcCompanyType").val();
                 var contactNumber = $("#ContentPlaceHolder1_txtSContactNumber").val();
@@ -648,7 +649,7 @@
     <asp:HiddenField ID="txtNodeId" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="txtCompanyId" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="HiddenField1" runat="server"></asp:HiddenField>
-    <asp:HiddenField ID="hfSearchCompanyId" runat="server" Value=""></asp:HiddenField>
+    <asp:HiddenField ID="hfSearchCompanyId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfPageIndex" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfIsHotelGuestCompanyRescitionForAllUsers" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfBillingCountryId" runat="server" Value="0"></asp:HiddenField>
@@ -715,11 +716,11 @@
                                 <asp:TextBox ID="txtBillingCity" runat="server" CssClass="form-control" TabIndex="1">
                                 </asp:TextBox>
                             </div>
-                            <label class="control-label col-md-2 " runat="server" id="BillingAreaLabel">Area</label>
+                           <%-- <label class="control-label col-md-2 " runat="server" id="BillingAreaLabel">Area</label>
                             <div class="col-sm-4">
                                 <asp:TextBox ID="txtBillingLocation" runat="server" CssClass="form-control"
                                     TabIndex="2"></asp:TextBox>
-                            </div>
+                            </div>--%>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">Life Cycle Stage</label>

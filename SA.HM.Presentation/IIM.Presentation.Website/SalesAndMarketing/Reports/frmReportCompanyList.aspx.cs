@@ -204,10 +204,10 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
                 cityId = Convert.ToInt32(hfBillingCityId.Value);
             }
 
-            if (!string.IsNullOrWhiteSpace(txtBillingLocation.Text))
-            {
-                areaId = Convert.ToInt32(hfBillingLocationId.Value);
-            }
+            //if (!string.IsNullOrWhiteSpace(txtBillingLocation.Text))
+            //{
+            //    areaId = Convert.ToInt32(hfBillingLocationId.Value);
+            //}
 
             int lifeCycleStage = Convert.ToInt32(ddlSrcLifeCycleStage.SelectedValue);
             int companyType = Convert.ToInt32(ddlSrcCompanyType.SelectedValue);
@@ -342,7 +342,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], viewList));
 
-            rvTransaction.LocalReport.DisplayName = "Cash Requisition And Adjustment";
+            rvTransaction.LocalReport.DisplayName = "Company List Report";
 
             rvTransaction.LocalReport.Refresh();
 

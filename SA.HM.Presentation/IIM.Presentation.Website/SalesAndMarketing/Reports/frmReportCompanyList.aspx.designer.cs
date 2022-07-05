@@ -301,24 +301,6 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports {
         protected global::System.Web.UI.WebControls.TextBox txtBillingCity;
         
         /// <summary>
-        /// BillingAreaLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl BillingAreaLabel;
-        
-        /// <summary>
-        /// txtBillingLocation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBillingLocation;
-        
-        /// <summary>
         /// ddlSrcLifeCycleStage control.
         /// </summary>
         /// <remarks>
