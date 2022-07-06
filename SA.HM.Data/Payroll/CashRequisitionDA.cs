@@ -686,8 +686,8 @@ namespace HotelManagement.Data.Payroll
                                 CashRequisitionBO CashRequisitionBo = new CashRequisitionBO();
 
                                 CashRequisitionBo.TransactionNo = Convert.ToString(reader["TransactionNo"]);
-                                CashRequisitionBo.RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]);
-                                CashRequisitionBo.RequisitionDateDisplay = reader["RequisitionDateDisplay"].ToString();
+                                //CashRequisitionBo.RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]);
+                                //CashRequisitionBo.RequisitionDateDisplay = reader["RequisitionDateDisplay"].ToString();
                                 CashRequisitionBo.Employee = Convert.ToString(reader["Employee"]);
                                 CashRequisitionBo.Amount = Convert.ToDecimal(reader["Amount"]);
                                 CashRequisitionBo.Company = Convert.ToString(reader["Company"]);
@@ -715,88 +715,88 @@ namespace HotelManagement.Data.Payroll
                                 CashRequisitionBo.AdjustmentPurpose = Convert.ToString(reader["AdjustmentPurpose"]);
                                 CashRequisitionBOList.Add(CashRequisitionBo);
 
-                                //if (reader["TransactionNo"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.TransactionNo = Convert.ToString(reader["TransactionNo"]);
-                                //}
-                                //if(reader["RequisitionDate"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]);
-                                //}
-                                //if (reader["RequisitionDateDisplay"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.RequisitionDateDisplay = Convert.ToDateTime(reader["RequisitionDateDisplay"]);
-                                //}
-                                //if (reader["Employee"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.Employee = Convert.ToString(reader["Employee"]);
-                                //}
-                                //if(reader["Amount"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.Amount = Convert.ToDecimal(reader["Amount"]);
-                                //}
-                                //if (reader["Company"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.Company = Convert.ToString(reader["Company"]);
-                                //}
-                                //if (reader["Project"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.Project = Convert.ToString(reader["Project"]);
-                                //}
-                                //if (reader["RequisitionFor"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.RequisitionFor = Convert.ToString(reader["RequisitionFor"]);
-                                //}
-                                //if (reader["VoucherDate"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.VoucherDate = Convert.ToDateTime(reader["VoucherDate"]);
-                                //}
-                                //if (reader["VoucherDateDisplay"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.VoucherDateDisplay = Convert.ToDateTime(reader["VoucherDateDisplay"]);
-                                //}
-                                //if (reader["VoucherNo"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.VoucherNo = Convert.ToString(reader["VoucherNo"]);
-                                //}
-                                //if (reader["VoucherNarration"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.VoucherNarration = Convert.ToString(reader["VoucherNarration"]);
-                                //}
-                                //if (reader["RemainingBalance"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.RemainingBalance = Convert.ToDecimal(reader["RemainingBalance"]);
-                                //}
-                                //if (reader["AdjustmentNo"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.AdjustmentNo = Convert.ToString(reader["AdjustmentNo"]);
-                                //}
-                                //if (reader["AdjustmentDate"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.AdjustmentDate = Convert.ToDateTime(reader["AdjustmentDate"]);
-                                //}
-                                //if (reader["AdjustmentDateDisplay"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.AdjustmentDateDisplay = Convert.ToDateTime(reader["AdjustmentDateDisplay"]);
-                                //}
-                                //if (reader["AdjustmentAmount"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.AdjustmentAmount = Convert.ToDecimal(reader["AdjustmentAmount"]);
-                                //}
-                                //if (reader["AdjustmentCompany"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.AdjustmentCompany = Convert.ToString(reader["AdjustmentCompany"]);
-                                //}
-                                //if (reader["AdjustmentProject"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.AdjustmentProject = Convert.ToString(reader["AdjustmentProject"]);
-                                //}
-                                //if (reader["AdjustmentPurpose"] != DBNull.Value)
-                                //{
-                                //    CashRequisitionBo.AdjustmentPurpose = Convert.ToString(reader["AdjustmentPurpose"]);
-                                //}
+                                if (reader["TransactionNo"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.TransactionNo = Convert.ToString(reader["TransactionNo"]);
+                                }
+                                if (reader["RequisitionDate"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.RequisitionDate = Convert.ToDateTime(reader["RequisitionDate"]);
+                                }
+                                if (reader["RequisitionDateDisplay"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.RequisitionDateDisplay = Convert.ToDateTime(reader["RequisitionDateDisplay"]).ToString();
+                                }
+                                if (reader["Employee"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.Employee = Convert.ToString(reader["Employee"]);
+                                }
+                                if (reader["Amount"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.Amount = Convert.ToDecimal(reader["Amount"]);
+                                }
+                                if (reader["Company"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.Company = Convert.ToString(reader["Company"]);
+                                }
+                                if (reader["Project"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.Project = Convert.ToString(reader["Project"]);
+                                }
+                                if (reader["RequisitionFor"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.RequisitionFor = Convert.ToString(reader["RequisitionFor"]);
+                                }
+                                if (reader["VoucherDate"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.VoucherDate = Convert.ToDateTime(reader["VoucherDate"]);
+                                }
+                                if (reader["VoucherDateDisplay"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.VoucherDateDisplay = Convert.ToDateTime(reader["VoucherDateDisplay"]).ToString();
+                                }
+                                if (reader["VoucherNo"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.VoucherNo = Convert.ToString(reader["VoucherNo"]);
+                                }
+                                if (reader["VoucherNarration"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.VoucherNarration = Convert.ToString(reader["VoucherNarration"]);
+                                }
+                                if (reader["RemainingBalance"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.RemainingBalance = Convert.ToDecimal(reader["RemainingBalance"]);
+                                }
+                                if (reader["AdjustmentNo"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.AdjustmentNo = Convert.ToString(reader["AdjustmentNo"]);
+                                }
+                                if (reader["AdjustmentDate"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.AdjustmentDate = Convert.ToDateTime(reader["AdjustmentDate"]);
+                                }
+                                if (reader["AdjustmentDateDisplay"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.AdjustmentDateDisplay = Convert.ToDateTime(reader["AdjustmentDateDisplay"]).ToString();
+                                }
+                                if (reader["AdjustmentAmount"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.AdjustmentAmount = Convert.ToDecimal(reader["AdjustmentAmount"]);
+                                }
+                                if (reader["AdjustmentCompany"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.AdjustmentCompany = Convert.ToString(reader["AdjustmentCompany"]);
+                                }
+                                if (reader["AdjustmentProject"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.AdjustmentProject = Convert.ToString(reader["AdjustmentProject"]);
+                                }
+                                if (reader["AdjustmentPurpose"] != DBNull.Value)
+                                {
+                                    CashRequisitionBo.AdjustmentPurpose = Convert.ToString(reader["AdjustmentPurpose"]);
+                                }
 
-                                //CashRequisitionBOList.Add(CashRequisitionBo);
+                                CashRequisitionBOList.Add(CashRequisitionBo);
                             }
                         }
                     }

@@ -13,7 +13,29 @@
                 allowClear: true,
                 width: "99.75%"
             });
+
+            $('#ContentPlaceHolder1_txtSearchFromDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                // defaultDate: DayOpenDate,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $('#ContentPlaceHolder1_txtSearchToDate').datepicker("option", "minDate", selectedDate);
+                }
+            });
+
+            $('#ContentPlaceHolder1_txtSearchToDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                //defaultDate: DayOpenDate,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $('#ContentPlaceHolder1_txtSearchFromDate').datepicker("option", "maxDate", selectedDate);
+                }
+            });
         })
+
+       
 
         function ValidationProcess() {
             var company = $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val();

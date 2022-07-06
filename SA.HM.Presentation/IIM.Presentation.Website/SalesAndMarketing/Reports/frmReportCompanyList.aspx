@@ -753,15 +753,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                    <div class="col-md-12">
+                        <asp:Button ID="Button1" runat="server" Text="Generate" CssClass="btn btn-primary" OnClientClick="javascript: return LoadCompanyNameForReport(1);"
+                            OnClick="btnGenerate_Click" />
+                    </div>
+                </div>
                     </div>
                 </div>
         </div>
-    <div class="row">
+   <%-- <div class="row">
                     <div class="col-md-12">
                         <asp:Button ID="btnGenerate" runat="server" Text="Generate" CssClass="btn btn-primary" OnClientClick="javascript: return LoadCompanyNameForReport(1);"
                             OnClick="btnGenerate_Click" />
                     </div>
-                </div>
+                </div>--%>
     <%--<div style="display: none;">
         <asp:Button ID="btnPrintReportFromClient" runat="server" Text="Button" OnClick="btnPrintReportFromClient_Click"
             ClientIDMode="Static" />
