@@ -96,8 +96,8 @@ namespace HotelManagement.Presentation.Website.EmailTemplates
 
             if (oldMenuEnbale.SetupValue != "1")
             {
-                userInformation.UserMenu = new MenuProcess().UserMainMenu(userInformation.UserGroupId);
-                userInformation.UserReportMenu = new MenuProcess().UserReportMenu(userInformation.UserGroupId);
+                userInformation.UserMenu = new MenuProcess().UserMainMenu(userInformation.UserGroupId, userInformation.UserInfoId);
+                userInformation.UserReportMenu = new MenuProcess().UserReportMenu(userInformation.UserGroupId, userInformation.UserInfoId);
             }
 
            

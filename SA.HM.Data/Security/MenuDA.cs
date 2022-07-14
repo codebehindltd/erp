@@ -37,7 +37,7 @@ namespace HotelManagement.Data.Security
             return menuGroup;
         }
 
-        public List<MenuGroupBO> GetMenuGroupByUserGroupId(int userGroupId, string pageType)
+        public List<MenuGroupBO> GetMenuGroupByUserGroupId(int userGroupId, int userInfoId, string pageType)
         {
             List<MenuGroupBO> menuGroup = new List<MenuGroupBO>();
 
@@ -46,6 +46,7 @@ namespace HotelManagement.Data.Security
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetMenuGroupByUserGroupId_SP"))
                 {
                     dbSmartAspects.AddInParameter(cmd, "@UserGroupId", DbType.Int32, userGroupId);
+                    dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int32, userInfoId);
                     dbSmartAspects.AddInParameter(cmd, "@PageType", DbType.String, pageType);
 
                     DataSet SaleServiceDS = new DataSet();
@@ -194,7 +195,7 @@ namespace HotelManagement.Data.Security
             }
             return menuLinks;
         }
-        public List<MenuWiseLinkViewBO> GetMenuWiseLinksByUserGroupId(int userGroupId, string pageType)
+        public List<MenuWiseLinkViewBO> GetMenuWiseLinksByUserGroupId(int userGroupId, int userInfoId, string pageType)
         {
             List<MenuWiseLinkViewBO> menuWiseLinks = new List<MenuWiseLinkViewBO>();
 
@@ -203,6 +204,7 @@ namespace HotelManagement.Data.Security
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetMenuLinksByUserGroupId_SP"))
                 {
                     dbSmartAspects.AddInParameter(cmd, "@UserGroupId", DbType.Int32, userGroupId);
+                    dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int32, userInfoId);
                     dbSmartAspects.AddInParameter(cmd, "@PageType", DbType.String, pageType);
 
                     DataSet SaleServiceDS = new DataSet();

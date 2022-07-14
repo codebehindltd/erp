@@ -10,7 +10,7 @@ namespace HotelManagement.Presentation.Website.Common
 {
     public class MenuProcess
     {
-        public string UserMenu(int userGroupId)
+        public string UserMenu(int userGroupId, int userInfoId)
         {
             string menu = string.Empty;
             string linkName = string.Empty;
@@ -21,8 +21,8 @@ namespace HotelManagement.Presentation.Website.Common
             List<MenuWiseLinkViewBO> menuWiseLinks = new List<MenuWiseLinkViewBO>();
             List<MenuWiseLinkViewBO> userWiseMenu = new List<MenuWiseLinkViewBO>();
 
-            menuGroup = menuDa.GetMenuGroupByUserGroupId(userGroupId, "");
-            menuWiseLinks = menuDa.GetMenuWiseLinksByUserGroupId(userGroupId, "");
+            menuGroup = menuDa.GetMenuGroupByUserGroupId(userGroupId, userInfoId, "");
+            menuWiseLinks = menuDa.GetMenuWiseLinksByUserGroupId(userGroupId, userInfoId, "");
 
             menu = "<div id='MenuExpandable' style='float: left'>";
             menu += "<a href='/HMCommon/frmHMHome.aspx' class='nav-header'><i class='icon-th-list'></i>Dashboard</a>";
@@ -50,7 +50,7 @@ namespace HotelManagement.Presentation.Website.Common
 
             return menu;
         }
-        public string UserMainMenu(int userGroupId)
+        public string UserMainMenu(int userGroupId, int userInfoId)
         {
             string menu = string.Empty;
             string linkName = string.Empty;
@@ -61,8 +61,8 @@ namespace HotelManagement.Presentation.Website.Common
             List<MenuWiseLinkViewBO> menuWiseLinks = new List<MenuWiseLinkViewBO>();
             List<MenuWiseLinkViewBO> userWiseMenu = new List<MenuWiseLinkViewBO>();
 
-            menuGroup = menuDa.GetMenuGroupByUserGroupId(userGroupId, "Page");
-            menuWiseLinks = menuDa.GetMenuWiseLinksByUserGroupId(userGroupId, "Page");
+            menuGroup = menuDa.GetMenuGroupByUserGroupId(userGroupId, userInfoId, "Page");
+            menuWiseLinks = menuDa.GetMenuWiseLinksByUserGroupId(userGroupId, userInfoId, "Page");
 
             menu = "<div class='MenuCollapsible'>";
             menu += "<ul>";
@@ -112,7 +112,7 @@ namespace HotelManagement.Presentation.Website.Common
 
             return menu;
         }
-        public string UserReportMenu(int userGroupId)
+        public string UserReportMenu(int userGroupId, int userInfoId)
         {
             string menu = string.Empty;
             string linkName = string.Empty;
@@ -123,8 +123,8 @@ namespace HotelManagement.Presentation.Website.Common
             List<MenuWiseLinkViewBO> menuWiseLinks = new List<MenuWiseLinkViewBO>();
             List<MenuWiseLinkViewBO> userWiseMenu = new List<MenuWiseLinkViewBO>();
 
-            menuGroup = menuDa.GetMenuGroupByUserGroupId(userGroupId, "Report");
-            menuWiseLinks = menuDa.GetMenuWiseLinksByUserGroupId(userGroupId, "Report");
+            menuGroup = menuDa.GetMenuGroupByUserGroupId(userGroupId, userInfoId, "Report");
+            menuWiseLinks = menuDa.GetMenuWiseLinksByUserGroupId(userGroupId, userInfoId, "Report");
 
             menu = "<div class='MenuCollapsible'>";
             menu += "<ul>";
