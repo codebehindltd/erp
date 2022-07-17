@@ -512,7 +512,7 @@ namespace HotelManagement.Data.Security
             return retVal;
         }
 
-        public bool SaveUserIdWiseMenuNPermission(List<MenuWiseLinksBO> securityMenuWiseLinksNelyAdded, List<MenuWiseLinksBO> securityMenuWiseLinksEdited, List<MenuWiseLinksBO> securityMenuWiseLinksDeleted, int createdBy, string transactionType)
+        public bool SaveUserIdWiseMenuNPermission(List<MenuWiseLinksBO> securityMenuWiseLinksNelyAdded, List<MenuWiseLinksBO> securityMenuWiseLinksEdited, List<MenuWiseLinksBO> securityMenuWiseLinksDeleted, int createdBy)
         {
             int status = 0;
             bool retVal = false;
@@ -534,7 +534,6 @@ namespace HotelManagement.Data.Security
                                     commandAdd.Parameters.Clear();
                                     dbSmartAspects.AddInParameter(commandAdd, "@MenuWiseLinksId", DbType.Int32, mwl.MenuWiseLinksId);
                                     dbSmartAspects.AddInParameter(commandAdd, "@UserId", DbType.Int32, mwl.UserId);
-                                    dbSmartAspects.AddInParameter(commandAdd, "@TransactionType", DbType.String, transactionType);
                                     dbSmartAspects.AddInParameter(commandAdd, "@MenuGroupId", DbType.Int64, mwl.MenuGroupId);
 
                                     dbSmartAspects.AddInParameter(commandAdd, "@MenuLinksId", DbType.Int64, mwl.MenuLinksId);
@@ -597,6 +596,8 @@ namespace HotelManagement.Data.Security
                                     dbSmartAspects.AddInParameter(commandAdd, "@TableName", DbType.String, "SecurityMenuWiseLinksByUserInfoId");
                                     dbSmartAspects.AddInParameter(commandAdd, "@TablePKField", DbType.String, "MenuWiseLinksByUserInfoId");
                                     dbSmartAspects.AddInParameter(commandAdd, "@TablePKId", DbType.String, mwl.MenuWiseLinksId.ToString());
+                                    dbSmartAspects.AddInParameter(commandAdd, "@MenuGroupId", DbType.Int64, mwl.MenuGroupId);
+                                    dbSmartAspects.AddInParameter(commandAdd, "@MenuLinksId", DbType.Int64, mwl.MenuLinksId);
 
                                     status = dbSmartAspects.ExecuteNonQuery(commandAdd, transction);
                                 }
