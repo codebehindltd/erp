@@ -334,14 +334,8 @@
                     return false;
                 }
             }
-            else if (permissionType == "2" || permissionType == "3") {
+            else if (permissionType == "2") {
                 userGroupId = "0";
-                if (permissionType == "2") {
-                    var transactionType = "Approve";
-                }
-                else if (permissionType == "3") {
-                    var transactionType = "Remove";
-                }
                 if (userId == "0") {
                     toastr.info("Please Select a User");
                     return false;
@@ -462,7 +456,7 @@
 
 
             });
-
+            debugger;
             if (SecurityMenuWiseLinksNelyAdded.length == 0 && SecurityMenuWiseLinksEdited.length == 0 && SecurityMenuWiseLinksDeleted.length == 0) {
                 toastr.info("Please Select Menu Links From Grid.");
                 return false;
@@ -471,7 +465,7 @@
                 PageMethods.SaveUserGroupWiseMenuNPermission(SecurityMenuWiseLinksNelyAdded, SecurityMenuWiseLinksEdited, SecurityMenuWiseLinksDeleted, userGroupId, menuGroupId, moduleId, OnSaveMenuLinksSucceed, OnSaveMenuLinksFailed);
             }
             else {
-                PageMethods.SaveUserIdWiseMenuNPermission(SecurityMenuWiseLinksNelyAdded, SecurityMenuWiseLinksEdited, SecurityMenuWiseLinksDeleted, userId, transactionType, menuGroupId, moduleId, OnSaveMenuLinksSucceed, OnSaveMenuLinksFailed);
+                PageMethods.SaveUserIdWiseMenuNPermission(SecurityMenuWiseLinksNelyAdded, SecurityMenuWiseLinksEdited, SecurityMenuWiseLinksDeleted, userId, menuGroupId, moduleId, OnSaveMenuLinksSucceed, OnSaveMenuLinksFailed);
             }
 
             return false;

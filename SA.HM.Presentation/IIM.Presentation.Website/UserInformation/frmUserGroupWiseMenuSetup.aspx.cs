@@ -261,7 +261,7 @@ namespace HotelManagement.Presentation.Website.UserInformation
         }
 
         [WebMethod]
-        public static ReturnInfo SaveUserIdWiseMenuNPermission(List<MenuWiseLinksBO> SecurityMenuWiseLinksNelyAdded, List<MenuWiseLinksBO> SecurityMenuWiseLinksEdited, List<MenuWiseLinksBO> SecurityMenuWiseLinksDeleted, int userId, string transactionType, long menuGroupId, int moduleId)
+        public static ReturnInfo SaveUserIdWiseMenuNPermission(List<MenuWiseLinksBO> SecurityMenuWiseLinksNelyAdded, List<MenuWiseLinksBO> SecurityMenuWiseLinksEdited, List<MenuWiseLinksBO> SecurityMenuWiseLinksDeleted, int userId, long menuGroupId, int moduleId)
         {
             ReturnInfo rtninf = new ReturnInfo();
 
@@ -314,7 +314,7 @@ namespace HotelManagement.Presentation.Website.UserInformation
 
                 if (SecurityMenuWiseLinksNelyAdded.Count != 0 || editedLinks.Count != 0 || SecurityMenuWiseLinksDeleted.Count != 0)
                 {
-                    rtninf.IsSuccess = menuDa.SaveUserIdWiseMenuNPermission(SecurityMenuWiseLinksNelyAdded, editedLinks, SecurityMenuWiseLinksDeleted, userInformationBO.UserInfoId, transactionType);
+                    rtninf.IsSuccess = menuDa.SaveUserIdWiseMenuNPermission(SecurityMenuWiseLinksNelyAdded, editedLinks, SecurityMenuWiseLinksDeleted, userInformationBO.UserInfoId);
                 }
                 else
                 {

@@ -512,7 +512,7 @@ namespace HotelManagement.Data.Security
             return retVal;
         }
 
-        public bool SaveUserIdWiseMenuNPermission(List<MenuWiseLinksBO> securityMenuWiseLinksNelyAdded, List<MenuWiseLinksBO> securityMenuWiseLinksEdited, List<MenuWiseLinksBO> securityMenuWiseLinksDeleted, int createdBy, string transactionType)
+        public bool SaveUserIdWiseMenuNPermission(List<MenuWiseLinksBO> securityMenuWiseLinksNelyAdded, List<MenuWiseLinksBO> securityMenuWiseLinksEdited, List<MenuWiseLinksBO> securityMenuWiseLinksDeleted, int createdBy)
         {
             int status = 0;
             bool retVal = false;
