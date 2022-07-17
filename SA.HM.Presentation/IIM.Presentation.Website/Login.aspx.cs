@@ -180,8 +180,8 @@ namespace HotelManagement.Presentation.Website.UserInformation
 
                 if (oldMenuEnbale.SetupValue != "1")
                 {
-                    userInformation.UserMenu = new MenuProcess().UserMainMenu(userInformation.UserGroupId, userInformation.UserInfoId);
-                    userInformation.UserReportMenu = new MenuProcess().UserReportMenu(userInformation.UserGroupId, userInformation.UserInfoId);
+                    userInformation.UserMenu = new MenuProcess().UserMainMenu(userInformation.UserGroupId);
+                    userInformation.UserReportMenu = new MenuProcess().UserReportMenu(userInformation.UserGroupId);
                 }
 
                 if (restaurantBearerBO.UserInfoId != 0 && restaurantBearerBO.BearerId != 0)

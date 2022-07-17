@@ -327,8 +327,8 @@ namespace HotelManagement.Presentation.Website.POS
 
                             if (oldMenuEnbale.SetupValue != "1")
                             {
-                                userInformation.UserMenu = new MenuProcess().UserMainMenu(userInformation.UserGroupId, userInformation.UserInfoId);
-                                userInformation.UserReportMenu = new MenuProcess().UserReportMenu(userInformation.UserGroupId, userInformation.UserInfoId);
+                                userInformation.UserMenu = new MenuProcess().UserMainMenu(userInformation.UserGroupId);
+                                userInformation.UserReportMenu = new MenuProcess().UserReportMenu(userInformation.UserGroupId);
                             }
 
                             //-------------Restaurnat Related Options
