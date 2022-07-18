@@ -917,6 +917,7 @@ IIF(First(Fields!SupplierContactEmail.Value, "DataSet1") = "", "", vbCrLf + Firs
                       </Style>
                     </Textbox>
                     <ColSpan>3</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -1190,7 +1191,7 @@ IIF(First(Fields!SupplierContactEmail.Value, "DataSet1") = "", "", vbCrLf + Firs
     <Height>3.85139in</Height>
     <Style />
   </Body>
-  <Width>7.74945in</Width>
+  <Width>7.82237in</Width>
   <Page>
     <PageHeader>
       <Height>1.07686in</Height>
@@ -1889,7 +1890,7 @@ IIF(First(Fields!SupplierContactEmail.Value, "DataSet1") = "", "", vbCrLf + Firs
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.78333in</Height>
+      <Height>1.2in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>

@@ -1205,12 +1205,31 @@
                     tr += "</td>";
                 }
 
-                tr += "<td style=display:none;'>" + result[row].PaymentId + "</td>";
+                tr += "<td>" + "<a href='javascript:void(0);' onclick= 'javascript:return ShowReport(" + result[row].PaymentId + ")' ><img alt='approved' src='../Images/ReportDocument.png' /></a>" + "</td>";
                 tr += "</tr>";
 
                 $("#BillInfoSearch tbody").append(tr);
                 tr = "";
             }
+        }
+
+
+        function ShowReport(paymentId) {
+            var iframeid = 'printDoc';
+            var url = "Reports/frmCompanyPaymentReceipt.aspx?PId=" + paymentId;
+            parent.document.getElementById(iframeid).src = url;
+
+            $("#displayReceipt").dialog({
+                autoOpen: true,
+                modal: true,
+                width: 800,
+                height: 600,
+                closeOnEscape: false,
+                resizable: false,
+                fluid: true,
+                title: "Payment Receipt",
+                show: 'slide'
+            })
         }
 
         function OnSearchPaymentFailed() { }
@@ -2944,6 +2963,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+     <div id="displayReceipt" style="display: none;">
+        <iframe id="printDoc" name="printDoc" width="1000" height="800" frameborder="0" style="overflow: hidden;"></iframe>
+        <div id="bottomPrint">
         </div>
     </div>
     <script type="text/javascript">

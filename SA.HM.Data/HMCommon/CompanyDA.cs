@@ -5,6 +5,7 @@ using System.Text;
 using HotelManagement.Entity.HMCommon;
 using System.Data.Common;
 using System.Data;
+using HotelManagement.Entity.HotelManagement;
 
 namespace HotelManagement.Data.HMCommon
 {
@@ -89,6 +90,46 @@ namespace HotelManagement.Data.HMCommon
             }
             return Company;
         }
+
+
+        public List<CompanyPaymentBO> GetCompanyListInfoById(int id)
+        {
+            List<CompanyPaymentBO> CompanyList = new List<CompanyPaymentBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyPaymentInfoById_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@PaymentId", DbType.Int32, id);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                CompanyPaymentBO Company = new CompanyPaymentBO();
+                                Company.ChequeNumber = reader["ChequeNumber"].ToString();
+                                Company.Remarks = reader["Remarks"].ToString();
+                                Company.CurrencyType = reader["CurrencyType"].ToString();
+                                Company.CurrencyName = reader["CurrencyName"].ToString();
+                                //Company.ChequeDate = Convert.ToDateTime(reader["ChequeDate"]);
+                                //Company.PaymentDate = Convert.ToDateTime(reader["PaymentDate"]);
+                                Company.PaymentDisplayDate = reader["PaymentDisplayDate"].ToString();
+                                Company.BillNumber = reader["BillNumber"].ToString();
+                                Company.CompanyName = reader["CompanyName"].ToString();
+                                Company.CompanyAddress = reader["CompanyAddress"].ToString();
+                                Company.LedgerNumber = reader["LedgerNumber"].ToString();
+                                Company.AdjustmentAmount = Convert.ToDecimal(reader["AdjustmentAmount"].ToString());
+                                Company.AdvanceAmount = Convert.ToDecimal(reader["AdvanceAmount"].ToString());
+                                Company.PaymentAmount = Convert.ToDecimal(reader["PaymentAmount"].ToString());
+                                CompanyList.Add(Company);
+                            }
+                        }
+                    }
+                }
+            }
+            return CompanyList;
+        }
+
 
 
         public bool SaveCompanyInfo(CompanyBO companyBO, out int tmpCompanyId)
