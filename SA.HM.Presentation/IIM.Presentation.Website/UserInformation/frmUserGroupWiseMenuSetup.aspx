@@ -474,10 +474,12 @@
         function OnSaveMenuLinksSucceed(result) {
             if (result.AlertMessage.IsSuccess) {
                 CommonHelper.AlertMessage(result.AlertMessage);
+                
             }
             else {
                 CommonHelper.AlertMessage(result.AlertMessage);
             }
+            GetLinkByModuleId();
         }
         function OnSaveMenuLinksFailed() {
 
