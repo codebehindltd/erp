@@ -42,7 +42,6 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             {
                 CommonHelper.AlertInfo(innboardMessage, "Please Provide Employee ID.", AlertType.Warning);
                 return;
-
             }
 
             EmployeeBO empBo = new EmployeeBO();
@@ -83,8 +82,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             #endregion
 
             EmployeeInformationDiv.Visible = IsAdminUser;
-
-
+            
             // // ----------IsPayrollWorkStationHide
             HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
             HMCommonSetupBO isPayrollWorkStationHideBO = new HMCommonSetupBO();
@@ -339,21 +337,6 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                     webAddress = files[0].ContactNumber;
                 }
             }
-
-            //if (files[0].CompanyId > 0)
-            //{
-            //    paramLogo.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
-            //    paramLogo.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
-
-            //    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
-            //    {
-            //        paramLogo.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
-            //    }
-            //    else
-            //    {
-            //        paramLogo.Add(new ReportParameter("CompanyWeb", files[0].ContactNumber));
-            //    }
-            //}
 
             if (companyId > 0)
             {
