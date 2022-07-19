@@ -1896,7 +1896,7 @@
                                             ImageUrl="~/Images/edit.png" Text="" AlternateText="Edit" ToolTip="Edit" />
                                         <%--<asp:ImageButton ID="ImgDelete" runat="server" CausesValidation="False" CommandName="CmdDelete"
                                             ImageUrl="~/Images/delete.png" Text="" AlternateText="Delete" ToolTip="Delete" />--%>
-                                        <asp:ImageButton ID="ImgPaymentPreview" runat="server" CausesValidation="False" CommandArgument='<%# bind("SupplierPaymentId") %>'
+                                        <asp:ImageButton ID="ImgPaymentPreview" runat="server" CausesValidation="False" CommandArgument='<%# Bind("SupplierPaymentId") %>'
                                             CommandName="CmdPaymentPreview" ImageUrl="~/Images/ReportDocument.png" Text=""
                                             AlternateText="Payment Preview" ToolTip="Payment Preview" />
                                     </ItemTemplate>

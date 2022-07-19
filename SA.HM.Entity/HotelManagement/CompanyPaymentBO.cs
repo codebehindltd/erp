@@ -17,6 +17,7 @@ namespace HotelManagement.Entity.HotelManagement
         public decimal AdvanceAmount { get; set; }
         public decimal AdjustmentAmount { get; set; }
         public int CompanyId { get; set; }
+        public string CurrencyName { get; set; }
         public string Remarks { get; set; }
         public string PaymentType { get; set; }
         public int AccountingPostingHeadId { get; set; }
@@ -26,6 +27,10 @@ namespace HotelManagement.Entity.HotelManagement
         public decimal? ConvertionRate { get; set; }
         public string ApprovedStatus { get; set; }
         public string CurrencyType { get; set; }
+        public string BillNumber { get; set; }
+        public string CompanyAddress { get; set; }
+        public string PaymentDisplayDate { get; set; }
+        public decimal? PaymentAmount { get; set; }
 
         public int? AdjustmentAccountHeadId { get; set; }
         public decimal? PaymentAdjustmentAmount { get; set; }
