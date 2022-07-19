@@ -211,20 +211,20 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             }
 
             int companyId = 0;
-            string companyName = "All";
+            string glCompanyName = "All";
             int projectId = 0;
-            string projectName = "All";
+            string glProjectName = "All";
 
             if (hfCompanyId.Value != "0" && hfCompanyId.Value != "")
             {
                 companyId = Convert.ToInt32(hfCompanyId.Value);
-                companyName = hfCompanyName.Value;
+                glCompanyName = hfCompanyName.Value;
             }
 
             if (hfProjectId.Value != "0" && hfProjectId.Value != "")
             {
                 projectId = Convert.ToInt32(hfProjectId.Value);
-                projectName = hfProjectName.Value;
+                glProjectName = hfProjectName.Value;
             }
 
             HMCommonDA hmCommonDA = new HMCommonDA();
@@ -315,26 +315,76 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             List<CompanyBO> files = companyDA.GetCompanyInfo();
 
             //-- Company Logo -------------------------------
-            string ImageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
+            string imageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
             rvTransaction.LocalReport.EnableExternalImages = true;
 
             List<ReportParameter> paramLogo = new List<ReportParameter>();
-            paramLogo.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
+            //paramLogo.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
+
+            string companyName = string.Empty;
+            string companyAddress = string.Empty;
+            string webAddress = string.Empty;
 
             if (files[0].CompanyId > 0)
             {
-                paramLogo.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
-                paramLogo.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
+                companyName = files[0].CompanyName;
+                companyAddress = files[0].CompanyAddress;
 
                 if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
                 {
-                    paramLogo.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
+                    webAddress = files[0].WebAddress;
                 }
                 else
                 {
-                    paramLogo.Add(new ReportParameter("CompanyWeb", files[0].ContactNumber));
+                    webAddress = files[0].ContactNumber;
                 }
             }
+
+            //if (files[0].CompanyId > 0)
+            //{
+            //    paramLogo.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
+            //    paramLogo.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
+
+            //    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
+            //    {
+            //        paramLogo.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
+            //    }
+            //    else
+            //    {
+            //        paramLogo.Add(new ReportParameter("CompanyWeb", files[0].ContactNumber));
+            //    }
+            //}
+
+            if (companyId > 0)
+            {
+                GLCompanyBO glCompanyBO = new GLCompanyBO();
+                GLCompanyDA glCompanyDA = new GLCompanyDA();
+                glCompanyBO = glCompanyDA.GetGLCompanyInfoById(companyId);
+                if (glCompanyBO != null)
+                {
+                    if (glCompanyBO.CompanyId > 0)
+                    {
+                        companyName = glCompanyBO.Name;
+                        if (!string.IsNullOrWhiteSpace(glCompanyBO.CompanyAddress))
+                        {
+                            companyAddress = glCompanyBO.CompanyAddress;
+                        }
+                        if (!string.IsNullOrWhiteSpace(glCompanyBO.WebAddress))
+                        {
+                            webAddress = glCompanyBO.WebAddress;
+                        }
+                        if (!string.IsNullOrWhiteSpace(glCompanyBO.ImageName))
+                        {
+                            imageName = glCompanyBO.ImageName;
+                        }
+                    }
+                }
+            }
+
+            paramLogo.Add(new ReportParameter("CompanyProfile", companyName));
+            paramLogo.Add(new ReportParameter("CompanyAddress", companyAddress));
+            paramLogo.Add(new ReportParameter("CompanyWeb", webAddress));
+            paramLogo.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + imageName)));
 
             DateTime currentDate = DateTime.Now;
             string printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);

@@ -585,9 +585,7 @@ namespace HotelManagement.Data.Security
                                 {
                                     commandAdd.Parameters.Clear();
                                     dbSmartAspects.AddInParameter(commandAdd, "@UserId", DbType.Int32, mwl.UserId);
-                                    dbSmartAspects.AddInParameter(commandAdd, "@TableName", DbType.String, "SecurityMenuWiseLinksByUserInfoId");
-                                    dbSmartAspects.AddInParameter(commandAdd, "@TablePKField", DbType.String, "MenuWiseLinksByUserInfoId");
-                                    dbSmartAspects.AddInParameter(commandAdd, "@TablePKId", DbType.String, mwl.MenuWiseLinksId.ToString());
+                                    dbSmartAspects.AddInParameter(commandAdd, "@MenuWiseLinksByUserInfoId", DbType.Int64, mwl.MenuWiseLinksId);
                                     dbSmartAspects.AddInParameter(commandAdd, "@MenuGroupId", DbType.Int64, mwl.MenuGroupId);
                                     dbSmartAspects.AddInParameter(commandAdd, "@MenuLinksId", DbType.Int64, mwl.MenuLinksId);
 
