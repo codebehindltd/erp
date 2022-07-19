@@ -599,6 +599,8 @@
                 }
                 
 
+                tr += "&nbsp;&nbsp;<img src='../Images/ReportDocument.png'  onClick= \"javascript:return ShowSalesReport(" + gridObject.ReturnId + ")\" alt='Invoice' title='Receive Return Information' border='0' />";
+
                 tr += "</td>";
                 tr += "<td style='display:none;'>" + gridObject.ReturnId + "</td>";
                 tr += "<td style='display:none;'>" + gridObject.TransactionId + "</td>";
@@ -615,6 +617,28 @@
             CommonHelper.SpinnerClose();
             return false;
         }
+
+        function ShowSalesReport(returnId) {
+            console.log(returnId);
+            var iframeid = 'printDoc';
+            var url = "Reports/ReportSalesReturn.aspx?returnId=" + returnId;
+            parent.document.getElementById(iframeid).src = url;
+
+            $("#displayBill").dialog({
+                autoOpen: true,
+                modal: true,
+                width: 900,
+                height: 600,
+                closeOnEscape: false,
+                resizable: false,
+                fluid: true,
+                title: "Sales Return",
+                show: 'slide'
+            });
+        }
+
+
+
         function OnSearchPurchaseOrderFailed(error) {
             CommonHelper.SpinnerClose();
             toastr.error(error.get_message());
@@ -1058,6 +1082,12 @@
                 </div>
 
             </div>
+
+            <div id="displayBill" style="display: none;">
+                <iframe id="printDoc" name="IframeName" width="100%" height="100%" runat="server"
+                    clientidmode="static" scrolling="yes"></iframe>
+            </div>
+
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-md-12">

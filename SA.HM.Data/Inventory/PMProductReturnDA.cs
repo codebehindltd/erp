@@ -1480,6 +1480,56 @@ namespace HotelManagement.Data.PurchaseManagment
 
             return proRet;
         }
+
+
+        public List<PMSupplierProductReturnBO> GetSalesReturnRecipt(long returnId)
+        {
+            List<PMSupplierProductReturnBO> proRet = new List<PMSupplierProductReturnBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetSalesReturnRecipt_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@ReturnId", DbType.Int64, returnId);
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                PMSupplierProductReturnBO product = new PMSupplierProductReturnBO();
+                                product.ReturnDateString = reader["ReturnDateString"].ToString();
+                                product.Remarks = reader["Remarks"].ToString();
+                                product.BillNumber = reader["BillNumber"].ToString();
+                                product.PaxQuantity = Convert.ToInt32(reader["PaxQuantity"]);
+                                
+                                product.LocationName = reader["LocationName"].ToString();
+                                product.CostCenter = reader["CostCenter"].ToString();
+                                product.ItemName = reader["ItemName"].ToString();
+                                //product.ReturnByName = reader["ReturnByName"].ToString();
+                                
+                                product.GrandTotal = Convert.ToDecimal(reader["GrandTotal"]);
+                                product.ReturnNumber = Convert.ToString(reader["ReturnNumber"]);
+                                product.CheckedByName = Convert.ToString(reader["CheckedByName"]);
+                                product.ApprovedBy = Convert.ToInt32(reader["ApprovedBy"]);
+                                
+
+                                proRet.Add(product);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return proRet;
+        }
+
+
+
+
+
+
+
         public List<PMSupplierProductReturnDetailsBO> GetPurchaseReturnForReportBySearchCriteria(string fromDate, string toDate, string returnNumber, int supplierId)
         {
             List<PMSupplierProductReturnDetailsBO> proRet = new List<PMSupplierProductReturnDetailsBO>();
