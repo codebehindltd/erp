@@ -50,22 +50,6 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
             List<CompanyPaymentBO> companyPaymentInfo = new List<CompanyPaymentBO>();
             companyPaymentInfo = companyDA.GetCompanyListInfoById(paymentId);
 
-            //List<SupplierPaymentBO> supplierPaymentInfo = new List<SupplierPaymentBO>();
-            //supplierPaymentInfo = supplierDA.GetSupplierPaymentInfoByPaymentId(paymentId);
-
-            //List<PMSupplierPaymentLedgerBO> SupplierBillInfoBOList = new List<PMSupplierPaymentLedgerBO>();
-            //List<PurchaseOrderDetailsForInvoiceBO> supplierInfoBOList = new List<PurchaseOrderDetailsForInvoiceBO>();
-
-            //if (companyPaymentInfo != null)
-            //{
-            //    if (companyPaymentInfo.Count > 0)
-            //    {
-            //        PMPurchaseOrderDA purchaseDa = new PMPurchaseOrderDA();
-            //        supplierInfoBOList = purchaseDa.GetSupplierInformationForInvoice(supplierPaymentInfo[0].SupplierId);
-
-            //    }
-            //}
-
             rvTransaction.LocalReport.ReportPath = reportPath;
             rvTransaction.LocalReport.EnableExternalImages = true;
             var reportDataSet = rvTransaction.LocalReport.GetDataSourceNames();
@@ -77,8 +61,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
             rvTransaction.LocalReport.DisplayName = "Company Invoice";
 
             reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
-            //reportParam.Add(new ReportParameter("CurrencyId", currencyId.ToString()));
-            //rvTransaction.LocalReport.SetParameters(reportParam);
+           
 
             rvTransaction.LocalReport.Refresh();
         }

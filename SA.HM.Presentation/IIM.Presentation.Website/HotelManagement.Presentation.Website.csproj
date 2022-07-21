@@ -869,17 +869,6 @@
     <EmbeddedResource Include="SalesAndMarketing\Reports\Rdlc\rptCompanyPaymentReceipt.rdlc" />
     <EmbeddedResource Include="SalesAndMarketing\Reports\Rdlc\rptSalesOrderInformation.rdlc" />
     <EmbeddedResource Include="SalesAndMarketing\Reports\Rdlc\rptSalesTargetNAchievement.rdlc" />
-    <Content Include="AutoRiceMillDataSet.xsc">
-      <DependentUpon>AutoRiceMillDataSet.xsd</DependentUpon>
-    </Content>
-    <None Include="AutoRiceMillDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>AutoRiceMillDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="AutoRiceMillDataSet.xss">
-      <DependentUpon>AutoRiceMillDataSet.xsd</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\select2.js" />
@@ -2353,11 +2342,6 @@
     </Compile>
     <Compile Include="About.aspx.designer.cs">
       <DependentUpon>About.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AutoRiceMillDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AutoRiceMillDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Banquet\Reports\frmReportAdvBanquetReservationForecast.aspx.cs">
       <DependentUpon>frmReportAdvBanquetReservationForecast.aspx</DependentUpon>

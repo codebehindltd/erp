@@ -111,8 +111,8 @@ namespace HotelManagement.Data.HMCommon
                                 Company.Remarks = reader["Remarks"].ToString();
                                 Company.CurrencyType = reader["CurrencyType"].ToString();
                                 Company.CurrencyName = reader["CurrencyName"].ToString();
-                                //Company.ChequeDate = Convert.ToDateTime(reader["ChequeDate"]);
-                                //Company.PaymentDate = Convert.ToDateTime(reader["PaymentDate"]);
+                                Company.ChequeDate = Convert.ToDateTime(reader["ChequeDate"]);
+                                Company.PaymentDate = Convert.ToDateTime(reader["PaymentDate"]);
                                 Company.PaymentDisplayDate = reader["PaymentDisplayDate"].ToString();
                                 Company.BillNumber = reader["BillNumber"].ToString();
                                 Company.CompanyName = reader["CompanyName"].ToString();

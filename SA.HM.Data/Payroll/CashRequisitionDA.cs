@@ -725,7 +725,7 @@ namespace HotelManagement.Data.Payroll
                                 }
                                 if (reader["RequisitionDateDisplay"] != DBNull.Value)
                                 {
-                                    CashRequisitionBo.RequisitionDateDisplay = Convert.ToDateTime(reader["RequisitionDateDisplay"]).ToString();
+                                    CashRequisitionBo.RequisitionDateDisplay = reader["RequisitionDateDisplay"].ToString();
                                 }
                                 if (reader["Employee"] != DBNull.Value)
                                 {
@@ -747,14 +747,14 @@ namespace HotelManagement.Data.Payroll
                                 {
                                     CashRequisitionBo.RequisitionFor = Convert.ToString(reader["RequisitionFor"]);
                                 }
-                                if (reader["VoucherDate"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.VoucherDate = Convert.ToDateTime(reader["VoucherDate"]);
-                                }
-                                if (reader["VoucherDateDisplay"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.VoucherDateDisplay = Convert.ToDateTime(reader["VoucherDateDisplay"]).ToString();
-                                }
+                                //if (reader["VoucherDate"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.VoucherDate = Convert.ToDateTime(reader["VoucherDate"]);
+                                //}
+                                //if (reader["VoucherDateDisplay"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.VoucherDateDisplay = Convert.ToDateTime(reader["VoucherDateDisplay"]).ToString();
+                                //}
                                 if (reader["VoucherNo"] != DBNull.Value)
                                 {
                                     CashRequisitionBo.VoucherNo = Convert.ToString(reader["VoucherNo"]);
@@ -771,14 +771,14 @@ namespace HotelManagement.Data.Payroll
                                 {
                                     CashRequisitionBo.AdjustmentNo = Convert.ToString(reader["AdjustmentNo"]);
                                 }
-                                if (reader["AdjustmentDate"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.AdjustmentDate = Convert.ToDateTime(reader["AdjustmentDate"]);
-                                }
-                                if (reader["AdjustmentDateDisplay"] != DBNull.Value)
-                                {
-                                    CashRequisitionBo.AdjustmentDateDisplay = Convert.ToDateTime(reader["AdjustmentDateDisplay"]).ToString();
-                                }
+                                //if (reader["AdjustmentDate"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.AdjustmentDate = Convert.ToDateTime(reader["AdjustmentDate"]);
+                                //}
+                                //if (reader["AdjustmentDateDisplay"] != DBNull.Value)
+                                //{
+                                //    CashRequisitionBo.AdjustmentDateDisplay = Convert.ToDateTime(reader["AdjustmentDateDisplay"]).ToString();
+                                //}
                                 if (reader["AdjustmentAmount"] != DBNull.Value)
                                 {
                                     CashRequisitionBo.AdjustmentAmount = Convert.ToDecimal(reader["AdjustmentAmount"]);

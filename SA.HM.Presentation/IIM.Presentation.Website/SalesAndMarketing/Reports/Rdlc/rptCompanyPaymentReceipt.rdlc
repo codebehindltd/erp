@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>7.46174in</Width>
+              <Width>7.47862in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -103,10 +103,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>2.23881in</Top>
+        <Top>2.24722in</Top>
         <Left>0.77964in</Left>
         <Height>0.72916in</Height>
-        <Width>7.46174in</Width>
+        <Width>7.47862in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -136,8 +136,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Left>0.77964in</Left>
-        <Height>0.37308in</Height>
+        <Top>0.00842in</Top>
+        <Left>0.76276in</Left>
+        <Height>0.3453in</Height>
         <Width>4.30543in</Width>
         <ZIndex>1</ZIndex>
         <Style>
@@ -171,8 +172,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.5806in</Top>
-        <Left>5.43081in</Left>
+        <Top>0.41679in</Top>
+        <Left>5.75708in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>2</ZIndex>
@@ -206,8 +207,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.5806in</Top>
-        <Left>6.59317in</Left>
+        <Top>0.41679in</Top>
+        <Left>6.91944in</Left>
         <Height>0.19224in</Height>
         <Width>0.10313in</Width>
         <ZIndex>3</ZIndex>
@@ -241,8 +242,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.37308in</Top>
-        <Left>5.43081in</Left>
+        <Top>0.20927in</Top>
+        <Left>5.75708in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>4</ZIndex>
@@ -276,8 +277,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.7931in</Top>
-        <Left>5.43081in</Left>
+        <Top>0.62929in</Top>
+        <Left>5.75708in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>5</ZIndex>
@@ -311,8 +312,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.37308in</Top>
-        <Left>6.59317in</Left>
+        <Top>0.20927in</Top>
+        <Left>6.91944in</Left>
         <Height>0.19224in</Height>
         <Width>0.10542in</Width>
         <ZIndex>6</ZIndex>
@@ -346,8 +347,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.7931in</Top>
-        <Left>6.59317in</Left>
+        <Top>0.62929in</Top>
+        <Left>6.91944in</Left>
         <Height>0.19224in</Height>
         <Width>0.10542in</Width>
         <ZIndex>7</ZIndex>
@@ -381,8 +382,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.18084in</Top>
-        <Left>5.43081in</Left>
+        <Top>0.01703in</Top>
+        <Left>5.75708in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>8</ZIndex>
@@ -416,8 +417,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.18084in</Top>
-        <Left>6.57789in</Left>
+        <Top>0.01703in</Top>
+        <Left>6.90416in</Left>
         <Height>0.19224in</Height>
         <Width>0.10542in</Width>
         <ZIndex>9</ZIndex>
@@ -451,8 +452,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.44253in</Top>
-        <Left>0.77964in</Left>
+        <Top>0.3815in</Top>
+        <Left>0.76276in</Left>
         <Height>0.19224in</Height>
         <Width>1.11236in</Width>
         <ZIndex>10</ZIndex>
@@ -486,8 +487,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.66254in</Top>
-        <Left>0.77964in</Left>
+        <Top>0.60151in</Top>
+        <Left>0.76276in</Left>
         <Height>0.19224in</Height>
         <Width>1.11236in</Width>
         <ZIndex>11</ZIndex>
@@ -505,10 +506,10 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>3.72667in</Width>
+              <Width>3.73511in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.73506in</Width>
+              <Width>3.7435in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -675,10 +676,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>1.02701in</Top>
+        <Top>1.03542in</Top>
         <Left>0.77964in</Left>
         <Height>1.15625in</Height>
-        <Width>7.46173in</Width>
+        <Width>7.47861in</Width>
         <ZIndex>12</ZIndex>
         <Style>
           <Border>
@@ -707,7 +708,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>4.86572in</Top>
+        <Top>4.87413in</Top>
         <Left>0.77665in</Left>
         <Height>0.4769in</Height>
         <Width>2.36785in</Width>
@@ -746,10 +747,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>4.86572in</Top>
+        <Top>4.87413in</Top>
         <Left>5.8904in</Left>
         <Height>0.4769in</Height>
-        <Width>2.36785in</Width>
+        <Width>2.36786in</Width>
         <ZIndex>14</ZIndex>
         <Style>
           <Border>
@@ -784,8 +785,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.18084in</Top>
-        <Left>6.76803in</Left>
+        <Top>0.01703in</Top>
+        <Left>7.0943in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>15</ZIndex>
@@ -819,8 +820,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.7931in</Top>
-        <Left>6.76803in</Left>
+        <Top>0.62929in</Top>
+        <Left>7.0943in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>16</ZIndex>
@@ -854,8 +855,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.54531in</Top>
-        <Left>6.76803in</Left>
+        <Top>0.3815in</Top>
+        <Left>7.0943in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>17</ZIndex>
@@ -889,8 +890,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.37308in</Top>
-        <Left>6.76803in</Left>
+        <Top>0.20927in</Top>
+        <Left>7.0943in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>18</ZIndex>
@@ -924,8 +925,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.44253in</Top>
-        <Left>2.01131in</Left>
+        <Top>0.3815in</Top>
+        <Left>1.99443in</Left>
         <Height>0.19224in</Height>
         <Width>1.13319in</Width>
         <ZIndex>19</ZIndex>
@@ -959,8 +960,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.44253in</Top>
-        <Left>1.892in</Left>
+        <Top>0.3815in</Top>
+        <Left>1.87512in</Left>
         <Height>0.19224in</Height>
         <Width>0.10542in</Width>
         <ZIndex>20</ZIndex>
@@ -994,8 +995,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.66254in</Top>
-        <Left>1.892in</Left>
+        <Top>0.60151in</Top>
+        <Left>1.87512in</Left>
         <Height>0.19224in</Height>
         <Width>0.10542in</Width>
         <ZIndex>21</ZIndex>
@@ -1029,163 +1030,14 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.66254in</Top>
-        <Left>1.99742in</Left>
+        <Top>0.60151in</Top>
+        <Left>1.98054in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>22</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox5">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Advance Amount</Value>
-                <Style>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>2.99576in</Top>
-        <Left>0.77964in</Left>
-        <Height>0.1875in</Height>
-        <Width>5.30801in</Width>
-        <ZIndex>23</ZIndex>
-        <Style>
-          <Border>
-            <Color>LightGrey</Color>
-            <Style>Solid</Style>
-            <Width>0.25pt</Width>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox20">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Sum(Fields!AdvanceAmount.Value, "DataSet1")</Value>
-                <Style>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Format>#,0.00;(#,0.00)</Format>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox14</rd:DefaultName>
-        <Top>3.00965in</Top>
-        <Left>6.04497in</Left>
-        <Height>0.1875in</Height>
-        <Width>2.19641in</Width>
-        <ZIndex>24</ZIndex>
-        <Style>
-          <Border>
-            <Color>LightGrey</Color>
-            <Style>Solid</Style>
-            <Width>0.25pt</Width>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox3">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Adjustment Amount</Value>
-                <Style>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>3.95486in</Top>
-        <Left>0.77964in</Left>
-        <Height>0.1875in</Height>
-        <Width>5.24845in</Width>
-        <ZIndex>25</ZIndex>
-        <Style>
-          <Border>
-            <Color>LightGrey</Color>
-            <Style>Solid</Style>
-            <Width>0.25pt</Width>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox2">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Payment Total</Value>
-                <Style>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>4.2118in</Top>
-        <Left>0.77665in</Left>
-        <Height>0.1875in</Height>
-        <Width>5.25144in</Width>
-        <ZIndex>26</ZIndex>
-        <Style>
-          <Border>
-            <Color>LightGrey</Color>
-            <Style>Solid</Style>
-            <Width>0.25pt</Width>
           </Border>
           <PaddingLeft>2pt</PaddingLeft>
           <PaddingRight>2pt</PaddingRight>
@@ -1211,11 +1063,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>4.45486in</Top>
+        <Top>4.46327in</Top>
         <Left>0.77665in</Left>
         <Height>0.25in</Height>
-        <Width>0.79153in</Width>
-        <ZIndex>27</ZIndex>
+        <Width>0.54153in</Width>
+        <ZIndex>23</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1245,92 +1097,15 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>LedgerAmount</rd:DefaultName>
-        <Top>4.45486in</Top>
-        <Left>1.35637in</Left>
+        <Top>4.46327in</Top>
+        <Left>1.37373in</Left>
         <Height>0.25in</Height>
-        <Width>6.885in</Width>
-        <ZIndex>28</ZIndex>
+        <Width>6.88453in</Width>
+        <ZIndex>24</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox16">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Sum(Fields!AdjustmentAmount.Value, "DataSet1")</Value>
-                <Style>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Format>#,0.00;(#,0.00)</Format>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox14</rd:DefaultName>
-        <Top>3.95486in</Top>
-        <Left>6.04497in</Left>
-        <Height>0.1875in</Height>
-        <Width>2.21329in</Width>
-        <ZIndex>29</ZIndex>
-        <Style>
-          <Border>
-            <Color>LightGrey</Color>
-            <Style>Solid</Style>
-            <Width>0.25pt</Width>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox17">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Sum(Fields!PaymentAmount.Value, "DataSet1") - Sum(Fields!AdjustmentAmount.Value, "DataSet1")</Value>
-                <Style>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Format>#,0.00;(#,0.00)</Format>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox14</rd:DefaultName>
-        <Top>4.2118in</Top>
-        <Left>6.02809in</Left>
-        <Height>0.1875in</Height>
-        <Width>2.23017in</Width>
-        <ZIndex>30</ZIndex>
-        <Style>
-          <Border>
-            <Color>LightGrey</Color>
-            <Style>Solid</Style>
-            <Width>0.25pt</Width>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
           <PaddingRight>2pt</PaddingRight>
           <PaddingTop>2pt</PaddingTop>
           <PaddingBottom>2pt</PaddingBottom>
@@ -1581,11 +1356,336 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>3.20708in</Top>
+        <Top>3.34049in</Top>
         <Left>0.79042in</Left>
         <Height>0.5in</Height>
         <Width>7.46784in</Width>
-        <ZIndex>31</ZIndex>
+        <ZIndex>25</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+      <Image Name="Image1">
+        <Source>External</Source>
+        <Value>=Parameters!Path.Value</Value>
+        <Sizing>FitProportional</Sizing>
+        <Height>0.79375in</Height>
+        <Width>0.73498in</Width>
+        <ZIndex>26</ZIndex>
+        <ToolTip>=Parameters!Path.Value</ToolTip>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Image>
+      <Tablix Name="Tablix3">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>3.7309in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>3.7309in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox7">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Advance Amount</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
+                      <ZIndex>23</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                          <Width>0.25pt</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox22">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Sum(Fields!AdvanceAmount.Value, "DataSet1")</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Format>#,0.00;(#,0.00)</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox14</rd:DefaultName>
+                      <ZIndex>24</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                          <Width>0.25pt</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember />
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <Top>3.10292in</Top>
+        <Left>0.79042in</Left>
+        <Height>0.25in</Height>
+        <Width>7.4618in</Width>
+        <ZIndex>27</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+      <Tablix Name="Tablix4">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>3.73392in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>3.73392in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox4">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Adjustment Amount</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
+                      <ZIndex>23</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                          <Width>0.25pt</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox18">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Sum(Fields!AdjustmentAmount.Value, "DataSet1")</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Format>#,0.00;(#,0.00)</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox14</rd:DefaultName>
+                      <ZIndex>27</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                          <Width>0.25pt</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox3">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Payment Total</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
+                      <ZIndex>23</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                          <Width>0.25pt</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox20">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Sum(Fields!PaymentAmount.Value, "DataSet1") - Sum(Fields!AdjustmentAmount.Value, "DataSet1")</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Format>#,0.00;(#,0.00)</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox14</rd:DefaultName>
+                      <ZIndex>26</ZIndex>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                          <Width>0.25pt</Width>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember />
+            <TablixMember />
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <Top>3.86827in</Top>
+        <Left>0.79042in</Left>
+        <Height>0.5in</Height>
+        <Width>7.46784in</Width>
+        <ZIndex>28</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1593,10 +1693,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>5.54167in</Height>
+    <Height>5.55008in</Height>
     <Style />
   </Body>
-  <Width>8.69804in</Width>
+  <Width>14.86333in</Width>
   <Page>
     <PageFooter>
       <Height>1in</Height>
@@ -1734,6 +1834,14 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="Path">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <Code>Function AmountToWord(ByVal MyNumber)
 Dim Temp
 Dim Rupees, Paisa As String

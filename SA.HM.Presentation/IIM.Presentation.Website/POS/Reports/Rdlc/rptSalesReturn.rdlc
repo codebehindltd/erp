@@ -130,7 +130,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>2.70347in</Top>
+        <Top>2.95348in</Top>
+        <Left>0.93042in</Left>
         <Height>0.27013in</Height>
         <Width>1.33209in</Width>
         <ZIndex>3</ZIndex>
@@ -389,8 +390,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>0.92917in</Top>
-        <Height>0.54167in</Height>
+        <Top>1.17918in</Top>
+        <Left>0.93042in</Left>
+        <Height>0.54166in</Height>
         <Width>6.33209in</Width>
         <ZIndex>6</ZIndex>
         <Style>
@@ -851,7 +853,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>1.47084in</Top>
+        <Top>1.72085in</Top>
+        <Left>0.93042in</Left>
         <Height>0.5in</Height>
         <Width>6.33209in</Width>
         <ZIndex>7</ZIndex>
@@ -882,7 +885,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>2.0125in</Top>
+        <Top>2.43959in</Top>
+        <Left>0.93042in</Left>
         <Height>0.27013in</Height>
         <Width>0.64459in</Width>
         <ZIndex>8</ZIndex>
@@ -920,8 +924,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>2.0125in</Top>
-        <Left>0.64459in</Left>
+        <Top>2.43959in</Top>
+        <Left>1.57501in</Left>
         <Height>0.27013in</Height>
         <Width>3.50679in</Width>
         <ZIndex>9</ZIndex>
@@ -938,6 +942,20 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Image Name="Image1">
+        <Source>External</Source>
+        <Value>=Parameters!Path.Value</Value>
+        <Sizing>FitProportional</Sizing>
+        <Height>0.91528in</Height>
+        <Width>0.87486in</Width>
+        <ZIndex>10</ZIndex>
+        <ToolTip>=Parameters!Path.Value</ToolTip>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Image>
     </ReportItems>
     <Height>4.66667in</Height>
     <Style />

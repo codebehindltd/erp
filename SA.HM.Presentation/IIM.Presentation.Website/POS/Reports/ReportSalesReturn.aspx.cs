@@ -50,23 +50,6 @@ namespace HotelManagement.Presentation.Website.POS.Reports
 
             List<ReportParameter> paramReport = new List<ReportParameter>();
 
-            //if (files[0].CompanyId > 0)
-            //{
-            //    paramReport.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
-            //    paramReport.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
-            //    paramReport.Add(new ReportParameter("EmailAddress", files[0].EmailAddress));
-            //    paramReport.Add(new ReportParameter("ContactNumber", files[0].ContactNumber));
-
-            //    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
-            //    {
-            //        paramReport.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
-            //    }
-            //    else
-            //    {
-            //        paramReport.Add(new ReportParameter("CompanyWeb", files[0].ContactNumber));
-            //    }
-            //}
-
             DateTime currentDate = DateTime.Now;
             string printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);
             string footerPoweredByInfo = string.Empty;
@@ -83,9 +66,6 @@ namespace HotelManagement.Presentation.Website.POS.Reports
 
             rvTransaction.LocalReport.SetParameters(paramReport);
 
-
-
-            //PMSupplierProductReturnDetailsBO //PMProductReturnDA
             List<PMSupplierProductReturnBO> proRet = new List<PMSupplierProductReturnBO>();
             PMProductReturnDA proDA = new PMProductReturnDA();
 
