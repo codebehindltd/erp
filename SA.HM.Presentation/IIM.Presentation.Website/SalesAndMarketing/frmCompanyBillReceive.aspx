@@ -1205,7 +1205,7 @@
                     tr += "</td>";
                 }
 
-                tr += "<td>" + "<a href='javascript:void(0);' onclick= 'javascript:return ShowReport(" + result[row].PaymentId + ")' ><img alt='approved' src='../Images/ReportDocument.png' /></a>" + "</td>";
+                //tr += "<td>" + "<a href='javascript:void(0);' onclick= 'javascript:return ShowReport(" + result[row].PaymentId + ")' ><img alt='approved' src='../Images/ReportDocument.png' /></a>" + "</td>";
                 tr += "</tr>";
 
                 $("#BillInfoSearch tbody").append(tr);

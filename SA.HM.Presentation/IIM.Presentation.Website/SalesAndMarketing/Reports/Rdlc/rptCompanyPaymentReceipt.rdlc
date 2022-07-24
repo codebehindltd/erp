@@ -104,7 +104,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Top>2.24722in</Top>
-        <Left>0.77964in</Left>
+        <Left>0.01714in</Left>
         <Height>0.72916in</Height>
         <Width>7.47862in</Width>
         <Style>
@@ -120,7 +120,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>ComPany PayMent Information</Value>
+                <Value>ComPany Transaction</Value>
                 <Style>
                   <FontFamily>Algerian</FontFamily>
                   <FontSize>18pt</FontSize>
@@ -139,7 +139,7 @@
         <Top>0.00842in</Top>
         <Left>0.76276in</Left>
         <Height>0.3453in</Height>
-        <Width>4.30543in</Width>
+        <Width>3.13876in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -173,7 +173,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.41679in</Top>
-        <Left>5.75708in</Left>
+        <Left>5.01146in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>2</ZIndex>
@@ -208,7 +208,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.41679in</Top>
-        <Left>6.91944in</Left>
+        <Left>6.17382in</Left>
         <Height>0.19224in</Height>
         <Width>0.10313in</Width>
         <ZIndex>3</ZIndex>
@@ -243,7 +243,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.20927in</Top>
-        <Left>5.75708in</Left>
+        <Left>5.01146in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>4</ZIndex>
@@ -278,7 +278,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.62929in</Top>
-        <Left>5.75708in</Left>
+        <Left>5.01146in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>5</ZIndex>
@@ -313,7 +313,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.20927in</Top>
-        <Left>6.91944in</Left>
+        <Left>6.17382in</Left>
         <Height>0.19224in</Height>
         <Width>0.10542in</Width>
         <ZIndex>6</ZIndex>
@@ -348,7 +348,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.62929in</Top>
-        <Left>6.91944in</Left>
+        <Left>6.17382in</Left>
         <Height>0.19224in</Height>
         <Width>0.10542in</Width>
         <ZIndex>7</ZIndex>
@@ -383,7 +383,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.01703in</Top>
-        <Left>5.75708in</Left>
+        <Left>5.01146in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>8</ZIndex>
@@ -418,7 +418,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.01703in</Top>
-        <Left>6.90416in</Left>
+        <Left>6.15854in</Left>
         <Height>0.19224in</Height>
         <Width>0.10542in</Width>
         <ZIndex>9</ZIndex>
@@ -677,7 +677,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Top>1.03542in</Top>
-        <Left>0.77964in</Left>
+        <Left>0.01714in</Left>
         <Height>1.15625in</Height>
         <Width>7.47861in</Width>
         <ZIndex>12</ZIndex>
@@ -709,7 +709,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
         <Top>4.87413in</Top>
-        <Left>0.77665in</Left>
+        <Left>0.01415in</Left>
         <Height>0.4769in</Height>
         <Width>2.36785in</Width>
         <ZIndex>13</ZIndex>
@@ -748,7 +748,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
         <Top>4.87413in</Top>
-        <Left>5.8904in</Left>
+        <Left>5.1279in</Left>
         <Height>0.4769in</Height>
         <Width>2.36786in</Width>
         <ZIndex>14</ZIndex>
@@ -786,7 +786,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.01703in</Top>
-        <Left>7.0943in</Left>
+        <Left>6.34868in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>15</ZIndex>
@@ -821,7 +821,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.62929in</Top>
-        <Left>7.0943in</Left>
+        <Left>6.34868in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>16</ZIndex>
@@ -856,7 +856,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.3815in</Top>
-        <Left>7.0943in</Left>
+        <Left>6.34868in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>17</ZIndex>
@@ -891,7 +891,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.20927in</Top>
-        <Left>7.0943in</Left>
+        <Left>6.34868in</Left>
         <Height>0.19224in</Height>
         <Width>1.14708in</Width>
         <ZIndex>18</ZIndex>
@@ -1064,7 +1064,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
         <Top>4.46327in</Top>
-        <Left>0.77665in</Left>
+        <Left>0.01415in</Left>
         <Height>0.25in</Height>
         <Width>0.54153in</Width>
         <ZIndex>23</ZIndex>
@@ -1085,7 +1085,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Code.AmountToWord(CStr(Sum(Fields!PaymentAmount.Value, "DataSet1")))</Value>
+                <Value>=Code.AmountToWord(CStr((Sum(Fields!AdvanceAmount.Value, "DataSet1") + Sum(Fields!PaymentAmount.Value, "DataSet1")) - Sum(Fields!AdjustmentAmount.Value, "DataSet1")))</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                 </Style>
@@ -1098,7 +1098,7 @@
         </Paragraphs>
         <rd:DefaultName>LedgerAmount</rd:DefaultName>
         <Top>4.46327in</Top>
-        <Left>1.37373in</Left>
+        <Left>0.61123in</Left>
         <Height>0.25in</Height>
         <Width>6.88453in</Width>
         <ZIndex>24</ZIndex>
@@ -1251,7 +1251,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!BillNumber.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1281,7 +1283,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!PaymentDisplayDate.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1352,12 +1356,15 @@
             </TablixMember>
             <TablixMember>
               <Group Name="Details" />
+              <Visibility>
+                <Hidden>=IIF(Sum(Fields!PaymentAmount.Value, "DataSet1") = 0, true, false)</Hidden>
+              </Visibility>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Top>3.34049in</Top>
-        <Left>0.79042in</Left>
+        <Left>0.02792in</Left>
         <Height>0.5in</Height>
         <Width>7.46784in</Width>
         <ZIndex>25</ZIndex>
@@ -1486,7 +1493,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <Top>3.10292in</Top>
-        <Left>0.79042in</Left>
+        <Left>0.02792in</Left>
         <Height>0.25in</Height>
         <Width>7.4618in</Width>
         <ZIndex>27</ZIndex>
@@ -1636,7 +1643,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!PaymentAmount.Value, "DataSet1") - Sum(Fields!AdjustmentAmount.Value, "DataSet1")</Value>
+                              <Value>=(Sum(Fields!AdvanceAmount.Value, "DataSet1") + Sum(Fields!PaymentAmount.Value, "DataSet1")) - Sum(Fields!AdjustmentAmount.Value, "DataSet1")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1682,7 +1689,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <Top>3.86827in</Top>
-        <Left>0.79042in</Left>
+        <Left>0.02792in</Left>
         <Height>0.5in</Height>
         <Width>7.46784in</Width>
         <ZIndex>28</ZIndex>
@@ -1696,10 +1703,10 @@
     <Height>5.55008in</Height>
     <Style />
   </Body>
-  <Width>14.86333in</Width>
+  <Width>7.49576in</Width>
   <Page>
     <PageFooter>
-      <Height>1in</Height>
+      <Height>0.29861in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1724,9 +1731,9 @@
           </Paragraphs>
           <rd:DefaultName>RoomNumber</rd:DefaultName>
           <Top>0.05556in</Top>
-          <Left>6.86795in</Left>
+          <Left>6.11795in</Left>
           <Height>0.18359in</Height>
-          <Width>1.37343in</Width>
+          <Width>1.37781in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1744,10 +1751,10 @@
         </Border>
       </Style>
     </PageFooter>
-    <LeftMargin>1in</LeftMargin>
-    <RightMargin>1in</RightMargin>
-    <TopMargin>1in</TopMargin>
-    <BottomMargin>1in</BottomMargin>
+    <LeftMargin>0.5in</LeftMargin>
+    <RightMargin>0.5in</RightMargin>
+    <TopMargin>0.25in</TopMargin>
+    <BottomMargin>0.25in</BottomMargin>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
