@@ -29,7 +29,9 @@ namespace HotelManagement.Entity.PurchaseManagment
         public int CreatedBy { get; set; }        
         public int LastModifiedBy { get; set; }
         public string ItemName { get; set; }
-
+        public string HeadName { get; set; }
+        public string ApprovedByName { get; set; }
+        public string CreatedByName { get; set; }
 
         public string CostCenter { get; set; }
         public string LocationName { get; set; }

@@ -1507,12 +1507,15 @@ namespace HotelManagement.Data.PurchaseManagment
                                 product.CostCenter = reader["CostCenter"].ToString();
                                 product.ItemName = reader["ItemName"].ToString();
                                 //product.ReturnByName = reader["ReturnByName"].ToString();
-                                
+                                product.ApprovedByName = reader["ApprovedByName"].ToString();
+                                product.HeadName = reader["HeadName"].ToString();
                                 product.GrandTotal = Convert.ToDecimal(reader["GrandTotal"]);
                                 product.ReturnNumber = Convert.ToString(reader["ReturnNumber"]);
                                 product.CheckedByName = Convert.ToString(reader["CheckedByName"]);
-                                product.ApprovedBy = Convert.ToInt32(reader["ApprovedBy"]);
-                                
+                                //product.ApprovedBy = Convert.ToInt32(reader["ApprovedBy"]);
+                                product.ApprovedByName = reader["ApprovedByName"].ToString();
+                                product.HeadName = reader["HeadName"].ToString();
+                                product.CreatedByName = reader["CreatedByName"].ToString();
 
                                 proRet.Add(product);
                             }
