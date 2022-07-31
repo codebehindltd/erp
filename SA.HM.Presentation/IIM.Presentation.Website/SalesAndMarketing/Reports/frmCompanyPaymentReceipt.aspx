@@ -28,17 +28,6 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
-           <%-- if (CommonHelper.BrowserType().mozilla || CommonHelper.BrowserType().chrome) {
-
-                var barControlId = CommonHelper.GetReportViewerControlId($("#<%=rvTransaction.ClientID %>"));
-
-                var innerTbodyEmail = '<tbody><tr><td><input type="image" style="border-width: 0px; padding: 2px; height: 16px; width: 16px;" alt="Print" src="/Images/emailsend.png" title="Send Mail"></td></tr></tbody>';
-                var innerTableEmail = '<table title="Send Mail" onclick="SendEmail(\'' + barControlId + '\'); return false;" id="ff_print" style="cursor: default;">' + innerTbodyEmail + '</table>'
-                var outerDiv = '<div style="display: inline-block; font-size: 8pt; height: 30px;" class=" "><table cellspacing="0" cellpadding="0" style="display: inline;"><tbody><tr><td height="28px">' + innerTableEmail + '</td></tr></tbody></table></div>';
-
-                $("#" + barControlId + " > div").append(outerDiv);
-            }--%>
-
             if (CommonHelper.BrowserType().mozilla || CommonHelper.BrowserType().chrome) {
 
                 var barControlId2 = CommonHelper.GetReportViewerControlId($("#<%=rvTransaction.ClientID %>"));

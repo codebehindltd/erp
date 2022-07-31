@@ -713,7 +713,6 @@ namespace HotelManagement.Data.Payroll
                                 CashRequisitionBo.AdjustmentCompany = Convert.ToString(reader["AdjustmentCompany"]);
                                 CashRequisitionBo.AdjustmentProject = Convert.ToString(reader["AdjustmentProject"]);
                                 CashRequisitionBo.AdjustmentPurpose = Convert.ToString(reader["AdjustmentPurpose"]);
-                                CashRequisitionBOList.Add(CashRequisitionBo);
 
                                 if (reader["TransactionNo"] != DBNull.Value)
                                 {

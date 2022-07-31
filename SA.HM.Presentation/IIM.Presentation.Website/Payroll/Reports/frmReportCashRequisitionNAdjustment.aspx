@@ -83,7 +83,7 @@
                     </div>
                     <div id="dvSearchDateTime" class="form-group">
                         <div class="col-md-2">
-                            <label class="control-label">Date</label>
+                            <label class="control-label">Transaction Date</label>
                         </div>
                         <div class="col-md-2">
                             <asp:TextBox ID="txtSearchFromDate" placeholder="From Date" runat="server" CssClass="form-control"></asp:TextBox>
@@ -121,7 +121,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-2">
-                            <label class="control-label">Status</label>
+                            <label class="control-label">Transaction Status</label>
                         </div>
                         <div class="col-md-4">
                             <asp:DropDownList ID="ddlSearchStatus" CssClass="form-control" runat="server">
@@ -139,7 +139,7 @@
                     </div>
                     <div id="dvRemarks" class="form-group">
                         <div class="col-md-2">
-                            <label class="control-label">Remarks</label>
+                            <label class="control-label">Requisition For</label>
                         </div>
                         <div class="col-md-10">
                             <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control"></asp:TextBox>
@@ -165,14 +165,17 @@
     </div>
     <div id="ReportPanel" class="panel panel-default" style="display: none;">
         <div class="panel-heading">
-            Cash Requisition And Adjustment</div>
+            Report:: Cash Requisition And Adjustment
+        </div>
         <div class="panel-body">
-            <rsweb:ReportViewer ID="rvTransaction" runat="server" ShowFindControls="false" ShowWaitControlCancelLink="false"
+            <asp:Panel ID="pnlReporContainer" runat="server" ScrollBars="Both" Height="700px">
+
+                <rsweb:ReportViewer ID="rvTransaction" runat="server" ShowFindControls="false" ShowWaitControlCancelLink="false"
                     PageCountMode="Actual" SizeToReportContent="true" ShowPrintButton="true" Font-Names="Verdana"
                     Font-Size="8pt" InteractiveDeviceInfos="(Collection)" WaitMessageFont-Names="Verdana"
                     WaitMessageFont-Size="14pt" Width="830px" Height="820px">
                 </rsweb:ReportViewer>
-            
+            </asp:Panel>
         </div>
     </div>
     <script type="text/javascript">
