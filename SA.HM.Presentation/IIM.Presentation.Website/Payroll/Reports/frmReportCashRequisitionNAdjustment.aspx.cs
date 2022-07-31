@@ -49,38 +49,25 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             _CashRequisitionShow = 1;
 
             int companyId = 0;
-            string ddlCompanyName = "All";
             int projectId = 0;
-            string ddlProjectName = "All";
 
             if (hfCompanyId.Value != "0" && hfCompanyId.Value != "")
             {
                 companyId = Convert.ToInt32(hfCompanyId.Value);
-                //ddlCompanyName = hfCompanyName.Value;
             }
 
             if (hfProjectId.Value != "0" && hfProjectId.Value != "")
             {
                 projectId = Convert.ToInt32(hfProjectId.Value);
-                //ddlProjectName = hfProjectName.Value;
             }
-
-            //int companyId = 0;
-            //int projectId = 0;
-
-            //if (hfCompanyId.Value != "0" && hfCompanyId.Value != "")
-            //{
-            //    companyId = Convert.ToInt32(hfCompanyId.Value);
-            //}
-
-            //if (hfProjectId.Value != "0" && hfProjectId.Value != "")
-            //{
-            //    projectId = Convert.ToInt32(hfProjectId.Value);
-            //}
 
             HMCommonDA hmCommonDA = new HMCommonDA();
             UserInformationBO userInformationBO = new UserInformationBO();
             userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+            CommonHelper.DisableReportExportFormat(rvTransaction, CommonHelper.ReportImportFormat.PDF.ToString());
+            CommonHelper.DisableReportExportFormat(rvTransaction, CommonHelper.ReportImportFormat.Word.ToString());
+
             rvTransaction.LocalReport.DataSources.Clear();
             rvTransaction.ProcessingMode = ProcessingMode.Local;
             rvTransaction.LocalReport.EnableExternalImages = true;

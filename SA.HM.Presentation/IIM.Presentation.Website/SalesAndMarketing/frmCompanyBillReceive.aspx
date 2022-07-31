@@ -586,10 +586,10 @@
                 $('#ChequeNChequeNumber').hide();
                 $('#AdjustmentDiv').hide();
             }
-        }
+}
 
-        function PaymentModeNewShowHideInformation() {
-            var ddlPayMode = '<%=ddlPaymentMode.ClientID%>'
+function PaymentModeNewShowHideInformation() {
+    var ddlPayMode = '<%=ddlPaymentMode.ClientID%>'
             var lblPaymentAccountHead = '<%=lblPaymentAccountHead.ClientID%>'
             if ($('#' + ddlPayMode).val() == "0") {
                 $("#<%=txtChequeNumber.ClientID %>").val("");
@@ -726,30 +726,30 @@
                 $('#ChequeNChequeNumber').hide();
                 $('#AdjustmentDiv').hide();
             }
-        }
-        function PopulateProjects() {
-            $("#<%=ddlGLProject.ClientID%>").attr("disabled", "disabled");
+}
+function PopulateProjects() {
+    $("#<%=ddlGLProject.ClientID%>").attr("disabled", "disabled");
             if ($('#<%=ddlGLCompany.ClientID%>').val() == "0") {
                 $('#<%=ddlGLProject.ClientID %>').empty().append('<option selected="selected" value="0">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
             }
             else {
-            $('#<%=ddlGLProject.ClientID %>').empty().append('<option selected="selected" value="0">Loading...</option>');
-            $.ajax({
-            type: "POST",
-            url: "/GeneralLedger/frmGLProject.aspx/PopulateProjects",
-            data: '{companyId: ' + $('#<%=ddlGLCompany.ClientID%>').val() + '}',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: OnProjectsPopulated,
-                    failure: function (response) {
-                        alert(response.d);
-                    }
-                });
+                $('#<%=ddlGLProject.ClientID %>').empty().append('<option selected="selected" value="0">Loading...</option>');
+                $.ajax({
+                    type: "POST",
+                    url: "/GeneralLedger/frmGLProject.aspx/PopulateProjects",
+                    data: '{companyId: ' + $('#<%=ddlGLCompany.ClientID%>').val() + '}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: OnProjectsPopulated,
+            failure: function (response) {
+                alert(response.d);
             }
-        }
+            });
+    }
+}
 
-        function OnProjectsPopulated(response) {
-            var ddlGLProject = '<%=ddlGLProject.ClientID%>'
+function OnProjectsPopulated(response) {
+    var ddlGLProject = '<%=ddlGLProject.ClientID%>'
             $("#" + ddlGLProject).attr("disabled", false);
 
             PopulateControl(response.d, $("#<%=ddlGLProject.ClientID %>"), $("#<%=CommonDropDownHiddenField.ClientID %>").val());
@@ -1182,7 +1182,7 @@
                     tr += "<td style='width: 30%'>" + result[row].Remarks + "</td>";
                 else
                     tr += "<td style='width: 30%'></td>";
-                
+
                 if (result[row].ApprovedStatus == null) {
                     tr += "<td style='width:10%;'>";
                     tr += "<a href='javascript:void();' onclick= 'javascript:return ApprovedPayment(" + result[row].PaymentId + ")' ><img alt='approved' src='../Images/approved.png' /></a>";
@@ -1227,7 +1227,7 @@
                 closeOnEscape: false,
                 resizable: false,
                 fluid: true,
-                title: "Payment Receipt",
+                title: "Transaction Receipt",
                 show: 'slide'
             })
         }
@@ -2905,19 +2905,14 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="From Date"></asp:Label>
+                                <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="Transaction Date"></asp:Label>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <asp:TextBox ID="txtFromDate" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-md-2">
-                                <asp:Label ID="lblToDate" runat="server" class="control-label" Text="To Date"></asp:Label>
-                            </div>
-                            <div class="col-md-4">
                                 <asp:TextBox ID="txtToDate" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
-                        </div>
-                        <div class="form-group">
                             <div class="col-md-2">
                                 <asp:Label ID="Label18" runat="server" class="control-label" Text="Transaction Type"></asp:Label>
                             </div>
@@ -2965,7 +2960,7 @@
             </div>
         </div>
     </div>
-     <div id="displayReceipt" style="display: none;">
+    <div id="displayReceipt" style="display: none;">
         <iframe id="printDoc" name="printDoc" width="1000" height="800" frameborder="0" style="overflow: hidden;"></iframe>
         <div id="bottomPrint">
         </div>
