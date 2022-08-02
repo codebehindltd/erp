@@ -552,6 +552,8 @@ namespace HotelManagement.Data.Payroll
                         EmpId = r.Field<Int32>("EmpId"),
                         EmpCode = r.Field<string>("EmpCode"),
                         DisplayName = r.Field<string>("DisplayName"),
+                        //Designation = r.Field<string>("Designation"),
+                        //Department = r.Field<string>("DepartmentName"),
                         Day = r.Field<Int32>("Day"),
                         Entrytime = r.Field<string>("Entrytime"),
                         Exittime = r.Field<string>("Exittime")
