@@ -427,12 +427,18 @@
                           <Style>Solid</Style>
                           <Width>0.25pt</Width>
                         </Border>
+                        <BackgroundColor>=Switch(Fields!Entrytime.Value = "P", "Transparent", 
+Fields!Entrytime.Value = "A", "Red",
+Fields!Entrytime.Value = "L", "Blue",
+Fields!Entrytime.Value = "D/O", "DarkViolet",
+Fields!Entrytime.Value = "H", "Green")</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1259,7 +1265,7 @@
         <Top>2.09687in</Top>
         <Left>0.00358in</Left>
         <Height>0.54167in</Height>
-        <Width>12.90942in</Width>
+        <Width>12.90941in</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>

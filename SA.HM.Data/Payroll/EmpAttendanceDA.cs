@@ -552,11 +552,17 @@ namespace HotelManagement.Data.Payroll
                         EmpId = r.Field<Int32>("EmpId"),
                         EmpCode = r.Field<string>("EmpCode"),
                         DisplayName = r.Field<string>("DisplayName"),
-                        //Designation = r.Field<string>("Designation"),
-                        //Department = r.Field<string>("DepartmentName"),
+                        Designation = r.Field<string>("Designation"),
+                        Department = r.Field<string>("Department"),
                         Day = r.Field<Int32>("Day"),
                         Entrytime = r.Field<string>("Entrytime"),
-                        Exittime = r.Field<string>("Exittime")
+                        Exittime = r.Field<string>("Exittime"),
+                        TotalDaysThisMOnth = r.Field<Int32>("TotalDaysThisMOnth"),
+                        TotalPresentThisMonth = r.Field<Int32>("TotalPresentThisMonth"),
+                        TotalLeaveThisMonth = r.Field<Int32>("TotalLeaveThisMonth"),
+                        TotalHolidayThisMonth = r.Field<Int32>("TotalHolidayThisMonth"),
+                        TotalDayOffThisMonth = r.Field<Int32>("TotalDayOffThisMonth"),
+                        TotalAbsentThisMonth = r.Field<Int32>("TotalAbsentThisMonth")
                     }).ToList();
                 }
             }

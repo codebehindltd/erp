@@ -1263,6 +1263,21 @@
             return false;
         }
         function OnFinishProductApprovalFailed(result) { }
+
+        function FinishProductCheck(productionId) {
+            PageMethods.FinishProductCheck(productionId, OnFinishProductCheckSucceded, OnFinishProductCheckFailed);
+            return false;
+        }
+        function OnFinishProductCheckSucceded(result) {
+            if (result.IsSuccess) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                GoToProductionPage();
+            }
+        }
+        function OnFinishProductCheckFailed(result) {
+
+        }
+
         function FinishProductDetails(finishProductId) {
             PageMethods.GetFinishProductDetails(finishProductId, OnFinishProductLoadSucceeded, OnSaveFinishGoodsFailed);
             return false;
@@ -1839,6 +1854,9 @@
                             </asp:BoundField>
                             <asp:TemplateField HeaderText="" ShowHeader="False" ItemStyle-Width="15%">
                                 <ItemTemplate>
+                                    &nbsp;<asp:ImageButton ID="ImgCheck" runat="server" CausesValidation="False"
+                                        CommandName="CmdCheck" CommandArgument='<%# bind("OrderDate") %>' OnClientClick='<%#String.Format("return FinishProductCheck({0})", Eval("Id")) %>'
+                                        ImageUrl="~/Images/checked.png" Text="" AlternateText="Check" ToolTip="Check" />
                                     &nbsp;<asp:ImageButton ID="ImgApproval" runat="server" CausesValidation="False"
                                         CommandName="CmdApproval" CommandArgument='<%# bind("OrderDate") %>' OnClientClick='<%#String.Format("return FinishProductApproval({0})", Eval("Id")) %>'
                                         ImageUrl="~/Images/approved.png" Text="" AlternateText="Approval" ToolTip="Approval" />                                

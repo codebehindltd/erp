@@ -51,18 +51,30 @@ namespace HotelManagement.Presentation.Website.Inventory
                 //ImageButton imgUpdate = (ImageButton)e.Row.FindControl("ImgUpdate");
                 ImageButton imgDelete = (ImageButton)e.Row.FindControl("ImgDelete");
                 ImageButton imgApproval = (ImageButton)e.Row.FindControl("ImgApproval");
+                ImageButton imgCheck = (ImageButton)e.Row.FindControl("ImgCheck");
 
                 if (item.ApprovedStatus != HMConstants.ApprovalStatus.Approved.ToString() && item.ApprovedStatus != HMConstants.ApprovalStatus.Cancel.ToString())
                 {
                     //imgUpdate.Visible = true;
+                    if(item.ApprovedStatus != HMConstants.ApprovalStatus.Checked.ToString())
+                    {
+                        imgCheck.Visible = true;
+                        imgApproval.Visible = false;
+                    }
+                    else
+                    {
+                        imgApproval.Visible = true;
+                        imgCheck.Visible = false;
+                    }
                     imgDelete.Visible = true;
-                    imgApproval.Visible = true;
+                    // imgApproval.Visible = true;
                 }
                 else
                 {
                     //imgUpdate.Visible = false;
                     imgDelete.Visible = false;
                     imgApproval.Visible = false;
+                    imgCheck.Visible = false;
                 }
             }
         }
@@ -384,6 +396,61 @@ namespace HotelManagement.Presentation.Website.Inventory
 
             return rtninfo;
         }
+        [WebMethod]
+        public static ReturnInfo FinishProductCheck(long productionId)
+        {
+            ReturnInfo rtninf = new ReturnInfo();
+            PMFinishProductDA orderDetailDA = new PMFinishProductDA();
+            string approvedStatus = "Checked";
+            string TransactionNo = "";
+            string TransactionType = "";
+            string ApproveStatus = "";
+
+            try
+            {
+                HMUtility hmUtility = new HMUtility();
+                UserInformationBO userInformationBO = new UserInformationBO();
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+                rtninf.IsSuccess = orderDetailDA.InventoryProductionApproval(productionId, approvedStatus);
+
+                if (!rtninf.IsSuccess)
+                {
+                    rtninf.IsSuccess = false;
+                    rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+                else
+                {
+                    rtninf.IsSuccess = true;
+                    rtninf.PrimaryKeyValue = productionId.ToString();
+                    rtninf.TransactionNo = TransactionNo;
+                    rtninf.TransactionType = TransactionType;
+                    rtninf.TransactionStatus = ApproveStatus;
+
+                    if (approvedStatus == HMConstants.ApprovalStatus.Checked.ToString())
+                    {
+                        rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Checked, AlertType.Success);
+                    }
+                    else
+                    {
+                        rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Approved, AlertType.Success);
+                    }
+
+                    //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Approve.ToString(), EntityTypeEnum.EntityType.ProductReceive.ToString(), receivedId,
+                    //           ProjectModuleEnum.ProjectModule.PurchaseManagement.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.ProductReceive));
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninf.IsSuccess = false;
+                rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            return rtninf;
+        }
+
         [WebMethod]
         public static ReturnInfo FinishProductApproval(long productionId)
         {
