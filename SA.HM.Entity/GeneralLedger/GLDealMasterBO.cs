@@ -15,6 +15,7 @@ namespace HotelManagement.Entity.GeneralLedger
         public string VoucherNo { get; set; }
         public DateTime VoucherDate { get; set; }
         public string Narration { get; set; }
+        public string ReferenceNumber { get; set; }
         public string PayerOrPayee { get; set; }
         public int CashChequeMode { get; set; }
         public string GLStatus { get; set; }

@@ -896,6 +896,7 @@ namespace HotelManagement.Data.GeneralLedger
                         ClosingBalance = r.Field<decimal?>("ClosingBalance"),
                         CommulativeBalance = r.Field<decimal?>("CommulativeBalance"),
                         Narration = r.Field<string>("Narration"),
+                        ReferenceNumber = r.Field<string>("ReferenceNumber"),
                         NodeNarration = r.Field<string>("NodeNarration"),
                         LedgerNodeId = r.Field<Int64?>("LedgerNodeId"),
                         LedgerNodeHead = r.Field<string>("LedgerNodeHead"),

@@ -539,6 +539,7 @@ namespace HotelManagement.Data.GeneralLedger
                         VoucherNo = r.Field<string>("VoucherNo"),
                         VoucherDate = r.Field<DateTime>("VoucherDate"),
                         Narration = r.Field<string>("Narration"),
+                        ReferenceNumber = r.Field<string>("ReferenceNumber"),
                         CompanyName = r.Field<string>("CompanyName"),
                         ProjectName = r.Field<string>("ProjectName"),
                         VoucherTypeName = r.Field<string>("VoucherTypeName"),

@@ -21,6 +21,7 @@ namespace HotelManagement.Entity.GeneralLedger
         public Nullable<decimal> ClosingBalance { get; set; }
         public Nullable<decimal> CommulativeBalance { get; set; }
         public string Narration { get; set; }
+        public string ReferenceNumber { get; set; }
         public string NodeNarration { get; set; }
         public string NodeType { get; set; }
         public Nullable<bool> IsTransactionalHead { get; set; }

@@ -220,6 +220,7 @@ namespace HotelManagement.Data.GeneralLedger
                                 masterBO.VoucherNo = reader["VoucherNo"].ToString();
                                 masterBO.CashChequeMode = Convert.ToInt32( reader["CashChequeMode"].ToString());
                                 masterBO.Narration = reader["Narration"].ToString();
+                                masterBO.ReferenceNumber = reader["ReferenceNumber"].ToString();
                                 masterBO.GLStatus =reader["GLStatus"].ToString();
                                 masterBO.VoucherDate = Convert.ToDateTime(reader["VoucherDate"].ToString());
 
