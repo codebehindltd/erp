@@ -33,6 +33,7 @@ namespace HotelManagement.Presentation.Website.Inventory
                 this.LoadCostCenter();
                 this.LoadCategoryInfo();
                 this.LoadGridInformation();
+                this.SetTab("EntryTab");
                 if (Session["FinishProductId"] != null)
                 {
                     hfIsEditedFromApprovedForm.Value = "1";
@@ -277,7 +278,7 @@ namespace HotelManagement.Presentation.Website.Inventory
             {
                 A.Attributes.Add("class", "ui-state-default ui-corner-top ui-tabs-active ui-state-active");
                 B.Attributes.Add("class", "ui-state-default ui-corner-top");
-            }
+            }            
         }
         //************************ User Defined Web Method ********************//
         [WebMethod]
