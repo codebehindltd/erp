@@ -1337,21 +1337,20 @@
                                                             <div class="col-md-4">
                                                                 <asp:TextBox ID="txtCurrentStockByForSupport" Enabled="false" runat="server" CssClass="form-control"></asp:TextBox>
                                                             </div>
-
                                                             <div class="col-md-2">
                                                                 <label for="Vat">
                                                                     Vat Amount</label>
-                                                            </div>
-                                                            <div class="col-md-1">
+                                                           <%-- </div>
+                                                            <div class="col-md-1">--%>
                                                                 <asp:CheckBox ID="cbTPVatAmount" runat="server" onclick="javascript: return IsVatEnableCheckOrUncheck(this);" />
                                                             </div>
-                                                            <div class="col-md-2" style="display: none;">
+                                                            <div class="col-md-2">
                                                                 <asp:DropDownList ID="ddlInclusiveOrExclusive" runat="server" CssClass="form-control">
                                                                     <asp:ListItem Value="Inclusive">Inc.</asp:ListItem>
                                                                     <asp:ListItem Value="Exclusive">Exc.</asp:ListItem>
                                                                 </asp:DropDownList>
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-2">
                                                                 <input type="text" class="form-control" id="txtVat" placeholder="Vat Amount" disabled="disabled" />
                                                             </div>
                                                         </div>

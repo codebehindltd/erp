@@ -1808,14 +1808,14 @@
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="Textbox33">
+                                  <Textbox Name="Textbox34">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>Total</Value>
+                                            <Value>Rate</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -1882,14 +1882,14 @@
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="Textbox32">
+                                  <Textbox Name="Textbox33">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>Line Total</Value>
+                                            <Value>Total</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -2108,7 +2108,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=(Fields!ItemUnit.Value * Fields!UnitRate.Value)</Value>
+                                            <Value>=(Fields!ItemTotalAmount.Value - Fields!InvoiceVatAmount.Value)</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
@@ -2173,14 +2173,14 @@
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="ItemTotalAmount1">
+                                  <Textbox Name="ItemTotalAmount3">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=(Fields!ItemUnit.Value * Fields!UnitRate.Value) + Fields!InvoiceVatAmount.Value</Value>
+                                            <Value>=Fields!ItemTotalAmount.Value</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
@@ -2253,14 +2253,14 @@
                               <TablixCell />
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="InvoiceVatAmount3">
+                                  <Textbox Name="InvoiceVatAmount6">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!ItemUnit.Value * Fields!UnitRate.Value)</Value>
+                                            <Value>=Sum((Fields!ItemTotalAmount.Value - Fields!InvoiceVatAmount.Value))</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -2327,14 +2327,14 @@
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="InvoiceVatAmount5">
+                                  <Textbox Name="InvoiceVatAmount7">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=ROUND(Sum((Fields!ItemUnit.Value * Fields!UnitRate.Value) + Fields!InvoiceVatAmount.Value))</Value>
+                                            <Value>=Sum(Fields!ItemTotalAmount.Value)</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -3106,7 +3106,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="In Word: " + Code.AmountToWord(CStr(ROUND(Sum((Fields!ItemUnit.Value * Fields!UnitRate.Value) + Fields!InvoiceVatAmount.Value))))</Value>
+                              <Value>="In Word: " + Code.AmountToWord(CStr(ROUND(Sum(Fields!ItemTotalAmount.Value))))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>

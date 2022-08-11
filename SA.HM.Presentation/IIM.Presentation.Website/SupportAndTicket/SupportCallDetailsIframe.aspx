@@ -568,13 +568,12 @@
                     tr += "<td style='width:15%;'>" + Result.STSupportDetails[i].HeadName + "</td>";
                     tr += "<td style='width:15%;'>" + Result.STSupportDetails[i].UnitPrice + "</td>";
                     tr += "<td style='width:15%;'>" + Result.STSupportDetails[i].UnitQuantity  + "</td>";
-                    //tr += "<td style='width:15%;'>" + (parseFloat(Result.STSupportDetails[i].UnitPrice) * parseFloat(Result.STSupportDetails[i].UnitQuantity)).toFixed(2) + "</td>";
 
                     tr += "<td style='width:10%;'>" + (Result.STSupportDetails[i].VatAmount) + "</td>";
-                    tr += "<td style='width:15%;'>" + ((parseFloat(Result.STSupportDetails[i].UnitPrice) * parseFloat(Result.STSupportDetails[i].UnitQuantity)) + Result.STSupportDetails[i].VatAmount).toFixed(2) + "</td>";
+                    tr += "<td style='width:10%;'>" + (Result.STSupportDetails[i].TotalPrice) + "</td>";
 
+                    //tr += "<td style='width:15%;'>" + ((parseFloat(Result.STSupportDetails[i].UnitPrice) * parseFloat(Result.STSupportDetails[i].UnitQuantity)) + Result.STSupportDetails[i].VatAmount).toFixed(2) + "</td>";
 
-                    //tr += "<td style='width:20%;'>";
                     tr += "</td>";
                     tr += "<td style='display:none;'>" + Result.STSupportDetails[i].ItemId + "</td>";
                     tr += "<td style='display:none;'>" + Result.STSupportDetails[i].CategoryId + "</td>";
@@ -593,7 +592,8 @@
                         VatRate: parseFloat(Result.STSupportDetails[i].VatRate),
                         VatAmount: parseFloat(Result.STSupportDetails[i].VatAmount),
 
-                        TotalPrice: parseFloat((Result.STSupportDetails[i].UnitPrice * Result.STSupportDetails[i].UnitQuantity) + Result.STSupportDetails[i].VatAmount),
+                        TotalPrice: parseFloat(Result.STSupportDetails[i].TotalPrice),
+                        //TotalPrice: parseFloat((Result.STSupportDetails[i].UnitPrice * Result.STSupportDetails[i].UnitQuantity) + Result.STSupportDetails[i].VatAmount),
 
                         Type: Result.STSupportDetails[i].Type,
                         STSupportDetailsId: Result.STSupportDetails[i].STSupportDetailsId,
