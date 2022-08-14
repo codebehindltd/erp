@@ -733,6 +733,7 @@
             ClearSupportItemContainer();
         }
         function AddItemForSupport() {
+            debugger;
             if (ItemSelectedForSupportDetails == null) {
                 toastr.warning("Select a Item.");
                 $("#ContentPlaceHolder1_txtItemForSupport").focus();
@@ -758,7 +759,7 @@
                 $("#ContentPlaceHolder1_txtUnitQuantityForSupport").focus();
                 return false;
             }
-            debugger;
+            
             var calculatedVatAmount = 0, calculatedTotalAmount = 0;
             var VatAmount = $("#txtVat").val();
             if (VatAmount > 0) {
@@ -773,8 +774,9 @@
                     }
                 }
                 else {
-                    calculatedVatAmount = ((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport))) * parseFloat(VatAmount / 100);
-                    calculatedTotalAmount = ((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport)));
+                    calculatedVatAmount = parseFloat(((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport))) * parseFloat(VatAmount / (100 + parseFloat(VatAmount))));
+                    UnitPriceForSupport = ((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport)) - calculatedVatAmount);
+                    calculatedTotalAmount = ((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport)) + calculatedVatAmount);
                 }
             }
             else {
@@ -787,14 +789,14 @@
             tr += "<td style='width:35%;'>" + ItemSelectedForSupportDetails.label + "</td>";
             tr += "<td style='width:10%;'>" + ItemSelectedForSupportDetails.UnitHead + "</td>";
             tr += "<td style='width:10%;'>" +
-                "<input type='text' value='" + UnitPriceForSupport + "' id='pp" + ItemSelectedForSupportDetails.label + "' class='form-control quantitydecimal' onblur='CalculateTotalForAdhoqDetails(this)'  />" +
+                "<input type='text' value='" + UnitPriceForSupport.toFixed(2) + "' id='pp" + ItemSelectedForSupportDetails.label + "' class='form-control quantitydecimal' onblur='CalculateTotalForAdhoqDetails(this)'  />" +
                 "</td>";
             tr += "<td style='width:15%;'>" +
                 "<input type='text' value='" + UnitQuantityForSupport + "' id='pi" + ItemSelectedForSupportDetails.label + "' class='form-control quantitydecimal' onblur='CalculateTotalForAdhoqDetails(this)'  />" +
                 "</td>";
-            tr += "<td style='width:10%;'>" + (calculatedVatAmount) + "</td>";
+            tr += "<td style='width:10%;'>" + (calculatedVatAmount).toFixed(2) + "</td>";
             //tr += "<td style='width:15%;'>" + ((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport)) + calculatedVatAmount).toFixed(2) + "</td>";
-            tr += "<td style='width:15%;'>" + calculatedTotalAmount + "</td>";
+            tr += "<td style='width:15%;'>" + calculatedTotalAmount.toFixed(2) + "</td>";
             tr += "<td style='width:5%;'>";
             tr += "<a href='javascript:void()' onclick= 'DeleteAdhoqItemForSupportDetails(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
             tr += "</td>";
@@ -861,8 +863,9 @@
                     }
                 }
                 else {
-                    calculatedVatAmount = VatAmount;
-                    calculatedTotalAmount = ((parseFloat(reAmount) * parseFloat(reQuantity)));
+                    calculatedVatAmount = parseFloat(((parseFloat(reAmount) * parseFloat(reQuantity))) * parseFloat(VatAmount / (100 + parseFloat(VatAmount))));
+                    UnitPriceForSupport = ((parseFloat(reAmount) * parseFloat(reQuantity)) - calculatedVatAmount);
+                    calculatedTotalAmount = ((parseFloat(reAmount) * parseFloat(reQuantity)) + calculatedVatAmount);
                 }
             }
             else {
@@ -870,8 +873,8 @@
                 calculatedTotalAmount = ((parseFloat(reAmount) * parseFloat(reQuantity)));
             }
 
-            $(tr).find("td:eq(4)").text(calculatedVatAmount);
-            $(tr).find("td:eq(5)").text(calculatedTotalAmount);
+            $(tr).find("td:eq(4)").text(calculatedVatAmount.toFixed(2));
+            $(tr).find("td:eq(5)").text(calculatedTotalAmount.toFixed(2));
             //$(tr).find("td:eq(5)").text((parseFloat(reAmount) * parseFloat(reQuantity)).toFixed(2));
 
             var itemId = parseInt($.trim($(tr).find("td:eq(7)").text()), 10);
