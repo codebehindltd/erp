@@ -758,7 +758,7 @@
                 $("#ContentPlaceHolder1_txtUnitQuantityForSupport").focus();
                 return false;
             }
-
+            debugger;
             var calculatedVatAmount = 0, calculatedTotalAmount = 0;
             var VatAmount = $("#txtVat").val();
             if (VatAmount > 0) {
@@ -773,7 +773,7 @@
                     }
                 }
                 else {
-                    calculatedVatAmount = VatAmount;
+                    calculatedVatAmount = ((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport))) * parseFloat(VatAmount / 100);
                     calculatedTotalAmount = ((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport)));
                 }
             }
