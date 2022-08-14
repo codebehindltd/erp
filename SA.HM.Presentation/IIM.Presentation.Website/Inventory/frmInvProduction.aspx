@@ -1809,6 +1809,26 @@
                                 <asp:TextBox ID="txtToDate" CssClass="form-control" runat="server" TabIndex="4"></asp:TextBox>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:Label ID="lblProductionId" runat="server" class="control-label" Text="Production Id"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtProductionId" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblStatus" runat="server" class="control-label" Text="Status"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control" TabIndex="2">
+                                    <asp:ListItem Text="--- All ---" Value="All"></asp:ListItem>
+                                    <asp:ListItem Text="Pending" Value="Pending"></asp:ListItem>
+                                    <asp:ListItem Text="Checked" Value="Checked"></asp:ListItem>
+                                    <asp:ListItem Text="Approved" Value="Approved"></asp:ListItem>
+                                    <asp:ListItem Text="Cancel" Value="Cancel"></asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click"
@@ -1821,12 +1841,13 @@
                 </div>
             </div>
             <div id="SearchPanel" class="panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-heading" pagersettings-mode="NextPreviousFirstLast">
                     Search Information
                 </div>
                 <div class="panel-body">
                     <asp:GridView ID="gvFinishedProductInfo" Width="100%" runat="server" AutoGenerateColumns="False"
                         CellPadding="4" GridLines="None" AllowSorting="True" ForeColor="#333333" TabIndex="9"
+                        AllowPaging ="true" PageSize ="30" OnPageIndexChanging="gvFinishedProductInfo_PageIndexChanging"
                         OnRowCommand="gvFinishedProductInfo_RowCommand" OnRowDataBound="gvFinishedProductInfo_RowDataBound"
                         CssClass="table table-bordered table-condensed table-responsive">
                         <RowStyle BackColor="#E3EAEB" />
@@ -1873,6 +1894,7 @@
                             </asp:TemplateField>
                         </Columns>
                         <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
+                        <PagerSettings Mode="NextPreviousFirstLast" FirstPageText="First" LastPageText="Last" NextPageText="Next" PreviousPageText="Prev" />
                         <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
                         <EmptyDataTemplate>
                             <asp:Label ID="lblRecordNotFound" runat="server" Text="Record Not Found."></asp:Label>

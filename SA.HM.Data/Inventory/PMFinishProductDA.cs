@@ -432,7 +432,7 @@ namespace HotelManagement.Data.PurchaseManagment
 
             return finishGoodsDetails;
         }
-        public List<FinishedProductBO> GetInventoryProductionSearch(int costCenterId, DateTime? dateFrom, DateTime? dateTo, int userInfoId)
+        public List<FinishedProductBO> GetInventoryProductionSearch(int costCenterId, DateTime? dateFrom, DateTime? dateTo, string productionId, string status, int userInfoId)
         {
             List<FinishedProductBO> finishGoods = new List<FinishedProductBO>();
 
@@ -455,6 +455,16 @@ namespace HotelManagement.Data.PurchaseManagment
                     else
                         dbSmartAspects.AddInParameter(cmd, "@DateTo", DbType.DateTime, DBNull.Value);
 
+                    if (productionId != null)
+                        dbSmartAspects.AddInParameter(cmd, "@ProductionId", DbType.String, productionId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@ProductionId", DbType.String, DBNull.Value);
+
+                    if (status != "All")
+                        dbSmartAspects.AddInParameter(cmd, "@Status", DbType.String, status);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@Status", DbType.String, DBNull.Value);
+
                     dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int32, userInfoId);
 
                     DataSet ds = new DataSet();
@@ -469,7 +479,14 @@ namespace HotelManagement.Data.PurchaseManagment
                         ProductionDate = r.Field<DateTime>("ProductionDate"),
                         ProductionDateDisplay = r.Field<string>("ProductionDateDisplay"),
                         ApprovedStatus = r.Field<string>("ApprovedStatus"),
-                        Remarks = r.Field<string>("Remarks")
+                        Remarks = r.Field<string>("Remarks"),
+                        CreatedBy = r.Field<Int32>("CreatedBy"),
+                        CheckedBy = r.Field<Int32>("CheckedBy"),
+                        ApprovedBy = r.Field<Int32>("ApprovedBy"),
+                        IsCanEdit = r.Field<bool>("IsCanEdit"),
+                        IsCanDelete = r.Field<bool>("IsCanDelete"),
+                        IsCanChecked = r.Field<bool>("IsCanChecked"),
+                        IsCanApproved = r.Field<bool>("IsCanApproved")
 
                     }).ToList();
                 }

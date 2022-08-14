@@ -54,7 +54,7 @@ namespace HotelManagement.Presentation.Website.Inventory
                 ImageButton imgApproval = (ImageButton)e.Row.FindControl("ImgApproval");
                 ImageButton imgCheck = (ImageButton)e.Row.FindControl("ImgCheck");
 
-                if (item.ApprovedStatus != HMConstants.ApprovalStatus.Approved.ToString() && item.ApprovedStatus != HMConstants.ApprovalStatus.Cancel.ToString())
+                if (item.ApprovedStatus != HMConstants.ApprovalStatus.Approved.ToString() && item.ApprovedStatus != HMConstants.ApprovalStatus.Cancel.ToString() && (item.IsCanChecked == true || item.IsCanApproved == true))
                 {
                     //imgUpdate.Visible = true;
                     if(item.ApprovedStatus != HMConstants.ApprovalStatus.Checked.ToString())
@@ -247,6 +247,8 @@ namespace HotelManagement.Presentation.Website.Inventory
 
             DateTime? fromDate = null, toDate = null;
             int costCenterId = 0;
+            string productionId = "";
+            string status = "";
 
             if (ddlSearchCostCenter.SelectedValue != "0")
             {
@@ -263,7 +265,11 @@ namespace HotelManagement.Presentation.Website.Inventory
                 toDate = CommonHelper.DateTimeToMMDDYYYY(txtToDate.Text);
             }
 
-            finishGoods = productDa.GetInventoryProductionSearch(costCenterId, fromDate, toDate, userInformationBO.UserInfoId);
+
+            productionId = txtProductionId.Text;
+            status = ddlStatus.SelectedValue;
+
+            finishGoods = productDa.GetInventoryProductionSearch(costCenterId, fromDate, toDate, productionId, status, userInformationBO.UserInfoId);
             gvFinishedProductInfo.DataSource = finishGoods;
             gvFinishedProductInfo.DataBind();
         }
@@ -514,6 +520,12 @@ namespace HotelManagement.Presentation.Website.Inventory
             StockInformation = DA.GetInvItemStockInfoByItemAndAttributeIdForPurchase(itemId, colorId, sizeId, styleId, locationId, companyId);
 
             return StockInformation;
+        }
+
+        protected void gvFinishedProductInfo_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvFinishedProductInfo.PageIndex = e.NewPageIndex;
+            this.LoadGridInformation();
         }
     }
 }
