@@ -454,7 +454,7 @@
         }
 
         function SaveItemReceiveOrderReturn() {
-
+            debugger;
             var itemId = 0, colorId = 0, sizeId = 0, styleId = 0, remarks = "";
             var purchaseItem = null;
 
@@ -592,11 +592,11 @@
                     canReturn = true;
                 }
             });
-            if (!canReturn) {
-                toastr.warning("Return amount is not in correct quantity.");
+            //if (!canReturn) {
+            //    toastr.warning("Return amount is not in correct quantity.");
 
-                return false;
-            }
+            //    return false;
+            //}
             PageMethods.SaveItemReturn(ProductReturn, ReturnItemNewlyAdded, ReturnItemDeleted, AddedSerialzableProduct, DeletedSerialzableProduct, OnSavePurchaseOrderSucceed, OnSavePurchaseOrderFailed);
 
             return false;

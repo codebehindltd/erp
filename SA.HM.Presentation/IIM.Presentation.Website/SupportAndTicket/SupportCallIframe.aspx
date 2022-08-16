@@ -775,8 +775,9 @@
                 }
                 else {
                     calculatedVatAmount = parseFloat(((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport))) * parseFloat(VatAmount / (100 + parseFloat(VatAmount))));
-                    UnitPriceForSupport = ((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport)) - calculatedVatAmount);
-                    calculatedTotalAmount = ((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport)) + calculatedVatAmount);
+                    //UnitPriceForSupport = ((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport)) - calculatedVatAmount);
+                    //calculatedTotalAmount = ((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport)) + calculatedVatAmount);
+                    calculatedTotalAmount = ((parseFloat(UnitPriceForSupport) * parseFloat(UnitQuantityForSupport)));
                 }
             }
             else {
@@ -789,7 +790,7 @@
             tr += "<td style='width:35%;'>" + ItemSelectedForSupportDetails.label + "</td>";
             tr += "<td style='width:10%;'>" + ItemSelectedForSupportDetails.UnitHead + "</td>";
             tr += "<td style='width:10%;'>" +
-                "<input type='text' value='" + UnitPriceForSupport.toFixed(2) + "' id='pp" + ItemSelectedForSupportDetails.label + "' class='form-control quantitydecimal' onblur='CalculateTotalForAdhoqDetails(this)'  />" +
+                "<input type='text' value='" + UnitPriceForSupport + "' id='pp" + ItemSelectedForSupportDetails.label + "' class='form-control quantitydecimal' onblur='CalculateTotalForAdhoqDetails(this)'  />" +
                 "</td>";
             tr += "<td style='width:15%;'>" +
                 "<input type='text' value='" + UnitQuantityForSupport + "' id='pi" + ItemSelectedForSupportDetails.label + "' class='form-control quantitydecimal' onblur='CalculateTotalForAdhoqDetails(this)'  />" +
