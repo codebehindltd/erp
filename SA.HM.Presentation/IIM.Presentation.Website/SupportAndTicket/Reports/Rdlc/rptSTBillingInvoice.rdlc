@@ -1802,7 +1802,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>Rate</Value>
+                                            <Value>Total</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -1876,7 +1876,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>Total</Value>
+                                            <Value>Line Total</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>

@@ -719,7 +719,11 @@
                 return false;
             }
             else if ($("#ContentPlaceHolder1_txtVoucherDate").val() == "") {
-                toastr.warning("Please Give Voucher Date.");
+                toastr.warning("Please Enter Voucher Date.");
+                return false;
+            }
+            else if ($("#ContentPlaceHolder1_txtVoucherNarration").val() == "") {
+                toastr.warning("Please Enter Voucher Narration.");
                 return false;
             }
             var corncy = _.findWhere(Currency, { CurrencyId: parseInt(currencyId) });
@@ -1562,7 +1566,7 @@
                                 <div class="col-md-4">
                                     <asp:TextBox ID="txtVoucherDate" runat="server" CssClass="form-control" TabIndex="4"></asp:TextBox>
                                 </div>
-                                <label for="" class="control-label col-md-2">
+                                <label for="" class="control-label col-md-2 required-field">
                                     Voucher Type</label>
                                 <div class="col-md-4">
                                     <asp:DropDownList ID="ddlVoucherType" runat="server" CssClass="form-control" TabIndex="5">
@@ -1720,7 +1724,7 @@
                         </table>
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label for="" class="control-label col-md-2">
+                                <label for="" class="control-label col-md-2 required-field">
                                     Voucher Narration</label>
                                 <div class="col-md-10">
                                     <asp:TextBox ID="txtVoucherNarration" TextMode="MultiLine" runat="server" CssClass="form-control"
