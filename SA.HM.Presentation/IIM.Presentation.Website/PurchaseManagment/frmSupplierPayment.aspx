@@ -912,12 +912,16 @@
             var transactionType = $("#ContentPlaceHolder1_ddlSrcTransactionType").val();
             supplierId = $("#ContentPlaceHolder1_ddlSupplier").val();
 
+            $("#GridPagingContainer ul").html("");
+            $("#BillInfoSearch tbody").html("");
+
             PageMethods.GetSupplierPaymentBySearch(transactionType, supplierId, dateFrom, dateTo, gridRecordsCount, pageNumber, IsCurrentOrPreviousPage, OnSearchPaymentSucceeded, OnSearchPaymentFailed);
 
             return false;
         }
 
         function ShowReport(paymentId) {
+            GridPagingContainer
             var iframeid = 'printDoc';
             var url = "Reports/frmSupplierPamenyInvoice.aspx?PId=" + paymentId;
             parent.document.getElementById(iframeid).src = url;
@@ -936,64 +940,58 @@
         }
 
         function OnSearchPaymentSucceeded(result) {
-            var pagination = result;
-            result = result.GridData;
-            $("#BillInfoSearch tbody").html("");
-            $("#GridPagingContainer ul").html("");
-            var row = 0, tr = "";
+            //var pagination = result;
+            //result = result.GridData;
+            var tr = "";
 
-            for (row = 0; row < result.length; row++) {
+            $.each(result.GridData, function (count, gridObject) {
 
-                if ((row + 1) % 2 == 0) {
-                    tr += "<tr style='background-color:#FFFFFF;'>";
-                }
-                else {
-                    tr += "<tr style='background-color:#E3EAEB;'>";
-                }
+                tr += "<tr>";
 
-                tr += "<td style='width: 10%'>" + result[row].LedgerNumber + "</td>";
-                tr += "<td style='width: 10%'>" + GetStringFromDateTime(result[row].PaymentDate) + "</td>";
-                tr += "<td style='width: 10%'>" + result[row].PaymentFor + "</td>";
-                tr += "<td style='width: 20%'>" + result[row].SupplierName + "</td>";
-
-                if (result[row].Remarks != "" && result[row].Remarks != null)
-                    tr += "<td style='width: 35%'>" + result[row].Remarks + "</td>";
+                tr += "<td style='width:10%;'>" + gridObject.LedgerNumber + "</td>";
+                if (gridObject.PaymentDate != null)
+                    tr += "<td style='width:10%;'>" + CommonHelper.DateFromDateTimeToDisplay(gridObject.PaymentDate, innBoarDateFormat) + "</td>";
                 else
-                    tr += "<td style='width: 35%'></td>";
+                    tr += "<td style='width:10%;'></td>";
 
-                if (result[row].ApprovedStatus == null) {
-                    tr += "<td style='width:10%;'>";
-                    if (IsCanDelete) {
-                        tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteItemReceivedDetails(" + result[row].PaymentId + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
-                    }
-                    tr += "&nbsp;&nbsp;";
-                    if (IsCanEdit) {
-                        tr += "<a onclick=\"javascript:return FIllForEditWithConfirmation(" + result[row].PaymentId + ");\" title='Edit' href='javascript:void();'><img src='../Images/edit.png' alt='Edit'></a>"
-                    }
-                    tr += "&nbsp;&nbsp;";
-                    if (IsCanSave) {
-                        tr += "<a href='javascript:void();' onclick= 'javascript:return ApprovedPaymentWithConfirmation(" + result[row].PaymentId + ")' ><img alt='approved' src='../Images/approved.png' /></a>";
-                    }
-                    tr += "&nbsp;&nbsp;";
+                tr += "<td style='width:10%;'>" + gridObject.PaymentFor + "</td>";
+                tr += "<td style='width:15%;'>" + gridObject.SupplierName + "</td>";
 
-                    tr += "<a href='javascript:void();' onclick= 'javascript:return ShowReport(" + result[row].PaymentId + ")' ><img alt='approved' src='../Images/ReportDocument.png' /></a>";
-
-
-                    tr += "</td>";
-                }
-                else {
-                    tr += "<td style='width:10%;'>";
-                    tr += "<a href='javascript:void();' onclick= 'javascript:return ShowReport(" + result[row].PaymentId + ")' ><img alt='approved' src='../Images/ReportDocument.png' /></a>";
-                    tr += "</td>";
+                if (gridObject.Remarks != null)
+                    tr += "<td style='width:30%;'>" + gridObject.Remarks + "</td>";
+                else
+                    tr += "<td style='width:30%;'></td>";
+                tr += "<td style='width:10%;'>" + (gridObject.ApprovedStatus == 'Pending' ? 'Submitted' : gridObject.ApprovedStatus) + "</td>";
+                tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
+                if (gridObject.IsCanEdit && IsCanEdit) {
+                    tr += "<a onclick=\"javascript:return FIllForEditWithConfirmation(" + gridObject.PaymentId + ");\" title='Edit' href='javascript:void();'><img src='../Images/edit.png' alt='Edit'></a>"
                 }
 
-                tr += "<td style=display:none;'>" + result[row].PaymentId + "</td>";
+                if (gridObject.IsCanDelete && IsCanDelete) {
+                    tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteItemReceivedDetails(" + gridObject.PaymentId + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                }
+
+                if (gridObject.IsCanChecked && IsCanSave) {
+                    tr += "<a href='javascript:void();' onclick= 'javascript:return CheckedPaymentWithConfirmation(" + gridObject.PaymentId + ")' ><img alt='Checked' src='../Images/checked.png' /></a>";
+                }
+
+                if (gridObject.IsCanApproved && IsCanSave) {
+                    tr += "<a href='javascript:void();' onclick= 'javascript:return ApprovedPaymentWithConfirmation(" + gridObject.PaymentId + ")' ><img alt='approved' src='../Images/approved.png' /></a>";
+                }
+
+                tr += "&nbsp;&nbsp;";
+
+                tr += "<a href='javascript:void();' onclick= 'javascript:return ShowReport(" + gridObject.PaymentId + ")' ><img alt='approved' src='../Images/ReportDocument.png' /></a>";
+
+                tr += "</td>";
+
+                tr += "<td style='display:none;'>" + gridObject.PaymentId + "</td>";
+
                 tr += "</tr>";
 
                 $("#BillInfoSearch tbody").append(tr);
                 tr = "";
-            }
-
+            });
             $("#GridPagingContainer ul").append(pagination.GridPageLinks.PreviousButton);
             $("#GridPagingContainer ul").append(pagination.GridPageLinks.Pagination);
             $("#GridPagingContainer ul").append(pagination.GridPageLinks.NextButton);
@@ -1217,6 +1215,30 @@
             toastr.error(error.get_message());
         }
 
+        function CheckedPayment(paymentId) {
+            PageMethods.CheckedPayment(paymentId, OnCheckedSucceed, OnCheckedFailed);
+            return false;
+        }
+        function CheckedPaymentWithConfirmation(paymentId) {
+            if (!confirm("Do you Want To Check ?")) {
+                return false;
+            }
+            CheckedPayment(paymentId);
+        }
+        function OnCheckedSucceed(result) {
+            if (result.IsSuccess) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                SearchPayment(1, 1);
+                PerformClearAction();
+            }
+            else {
+                CommonHelper.AlertMessage(result.AlertMessage);
+            }
+        }
+        function OnCheckedFailed(error) {
+            toastr.error(error.get_message());
+        }
+
         function ApprovedPayment(paymentId) {
             PageMethods.ApprovedPayment(paymentId, OnApporavalSucceed, OnApporavalFailed);
             return false;
@@ -1327,6 +1349,7 @@
     <asp:HiddenField ID="hfEditPermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfDeletePermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfViewPermission" runat="server" Value="0" />
+
 
     <div id="DivPaymentSelect" style="display: none;">
         <div id="Div1" class="panel panel-default">
@@ -1847,8 +1870,9 @@
                                     <th style="width: 10%;">Transaction No.</th>
                                     <th style="width: 10%;">Transaction Date</th>
                                     <th style="width: 10%;">Transaction Type</th>
-                                    <th style="width: 20%;">Supplier Name</th>
-                                    <th style="width: 35%;">Description</th>
+                                    <th style="width: 15%;">Supplier Name</th>
+                                    <th style="width: 30%;">Description</th>
+                                    <th style="width: 10%;">Status</th>
                                     <th style="width: 10%;">Action</th>
                                 </tr>
                             </thead>

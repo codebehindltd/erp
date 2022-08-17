@@ -13,6 +13,42 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
     public partial class frmCompanyBillReceive {
         
         /// <summary>
+        /// hfSavePermission control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfSavePermission;
+        
+        /// <summary>
+        /// hfEditPermission control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfEditPermission;
+        
+        /// <summary>
+        /// hfDeletePermission control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfDeletePermission;
+        
+        /// <summary>
+        /// hfViewPermission control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfViewPermission;
+        
+        /// <summary>
         /// RandomDocId control.
         /// </summary>
         /// <remarks>

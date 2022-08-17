@@ -1301,6 +1301,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             bool status = false;
             int OwnerIdForDocuments = 0;
 
+            companyPayment.ApprovedStatus = HMConstants.ApprovalStatus.Pending.ToString();
+
             try
             {
                 if (companyPayment.PaymentId == 0)
@@ -1374,6 +1376,34 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             paymentInfo = companyDa.GetCompanyPaymentBySearch(userInformationBO.UserInfoId, companyId, dateFrom, dateTo, transactionType);
 
             return paymentInfo;
+        }
+
+        [WebMethod]
+        public static ReturnInfo CheckedPayment(Int64 paymentId)
+        {
+            ReturnInfo rtninfo = new ReturnInfo();
+            GuestCompanyDA companyDa = new GuestCompanyDA();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            HMUtility hmUtility = new HMUtility();
+
+            try
+            {
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                rtninfo.IsSuccess = companyDa.CheckedPayment(paymentId, userInformationBO.UserInfoId);
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            if (rtninfo.IsSuccess)
+            {
+                rtninfo.IsSuccess = true;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Approved, AlertType.Success);
+            }
+
+            return rtninfo;
         }
 
         [WebMethod]

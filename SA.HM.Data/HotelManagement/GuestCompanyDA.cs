@@ -2427,6 +2427,7 @@ namespace HotelManagement.Data.HotelManagement
 
                             dbSmartAspects.AddInParameter(command, "@PaymentType", DbType.String, companyPayment.PaymentType);
                             dbSmartAspects.AddInParameter(command, "@AccountingPostingHeadId", DbType.Int32, companyPayment.AccountingPostingHeadId);
+                            dbSmartAspects.AddInParameter(command, "@ApprovedStatus", DbType.Int32, companyPayment.ApprovedStatus);
 
                             if (!string.IsNullOrEmpty(companyPayment.Remarks))
                                 dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, companyPayment.Remarks);
@@ -2907,7 +2908,14 @@ namespace HotelManagement.Data.HotelManagement
                         Remarks = r.Field<string>("Remarks"),
                         CompanyName = r.Field<string>("CompanyName"),
                         ApprovedStatus = r.Field<string>("ApprovedStatus"),
-                        AdjustmentType = r.Field<string>("AdjustmentType")
+                        AdjustmentType = r.Field<string>("AdjustmentType"),
+                        CreatedBy = r.Field<Int32>("CreatedBy"),
+                        CheckedBy = r.Field<Int32>("CheckedBy"),
+                        ApprovedBy = r.Field<Int32>("ApprovedBy"),
+                        IsCanEdit = r.Field<bool>("IsCanEdit"),
+                        IsCanDelete = r.Field<bool>("IsCanDelete"),
+                        IsCanChecked = r.Field<bool>("IsCanChecked"),
+                        IsCanApproved = r.Field<bool>("IsCanApproved")
 
                     }).ToList();
                 }
@@ -3035,6 +3043,44 @@ namespace HotelManagement.Data.HotelManagement
             }
 
             return supplierInfo;
+        }
+
+        public bool CheckedPayment(Int64 paymentId, int checkedBy)
+        {
+            int status = 0;
+            Int64 supplierIdPaymentId = 0;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand command = dbSmartAspects.GetStoredProcCommand("CheckedCompanyPaymentLedger_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(command, "@PaymentId", DbType.String, paymentId);
+                            dbSmartAspects.AddInParameter(command, "@CheckedBy", DbType.String, checkedBy);
+
+                            status = dbSmartAspects.ExecuteNonQuery(command, transaction);
+                            supplierIdPaymentId = Convert.ToInt32(command.Parameters["@PaymentId"].Value);
+                        }
+
+                        if (status > 0)
+                        {
+                            transaction.Commit();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        status = 0;
+                        transaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+
+            return status > 0 ? true : false;
         }
 
         public bool ApprovedPayment(Int64 paymentId, int createdBy)

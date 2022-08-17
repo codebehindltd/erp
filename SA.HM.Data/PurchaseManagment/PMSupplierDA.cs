@@ -1075,7 +1075,7 @@ namespace HotelManagement.Data.PurchaseManagment
             }
             return status;
         }
-        public bool SaveSupplierBillPayment(SupplierPaymentBO supplierPayment, List<SupplierPaymentDetailsBO> supplierPaymentDetails)
+        public bool SaveSupplierBillPayment(SupplierPaymentBO supplierPayment, int userInfoId, List<SupplierPaymentDetailsBO> supplierPaymentDetails)
         {
             int status = 0;
             Int64 supplierIdPaymentId = 0;
@@ -1099,6 +1099,8 @@ namespace HotelManagement.Data.PurchaseManagment
                             dbSmartAspects.AddInParameter(command, "@AdjustmentAmount", DbType.Decimal, supplierPayment.AdjustmentAmount);
                             dbSmartAspects.AddInParameter(command, "@PaymentType", DbType.String, supplierPayment.PaymentType);
                             dbSmartAspects.AddInParameter(command, "@AccountingPostingHeadId", DbType.Int32, supplierPayment.AccountingPostingHeadId);
+                            dbSmartAspects.AddInParameter(command, "@ApprovedStatus", DbType.String, supplierPayment.ApprovedStatus);
+                            dbSmartAspects.AddInParameter(command, "@UserInfoId", DbType.Int32, userInfoId);
 
                             if (!string.IsNullOrEmpty(supplierPayment.Remarks))
                                 dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, supplierPayment.Remarks);
@@ -1170,7 +1172,7 @@ namespace HotelManagement.Data.PurchaseManagment
 
             return status > 0 ? true : false;
         }
-        public bool UpdateSupplierBillPayment(SupplierPaymentBO supplierPayment, List<SupplierPaymentDetailsBO> supplierPaymentDetails,
+        public bool UpdateSupplierBillPayment(SupplierPaymentBO supplierPayment, int userInfoId, List<SupplierPaymentDetailsBO> supplierPaymentDetails,
                                               List<SupplierPaymentDetailsBO> SupplierPaymentDetailsEdited, List<SupplierPaymentDetailsBO> SupplierPaymentDetailsDeleted)
         {
             int status = 0;
@@ -1284,6 +1286,43 @@ namespace HotelManagement.Data.PurchaseManagment
                                     status = dbSmartAspects.ExecuteNonQuery(command, transaction);
                                 }
                             }
+                        }
+
+                        if (status > 0)
+                        {
+                            transaction.Commit();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        status = 0;
+                        transaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+
+            return status > 0 ? true : false;
+        }
+        public bool CheckedPayment(Int64 paymentId, int checkedBy)
+        {
+            int status = 0;
+            Int64 supplierIdPaymentId = 0;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand command = dbSmartAspects.GetStoredProcCommand("CheckedSupplierPaymentLedger_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(command, "@PaymentId", DbType.String, paymentId);
+                            dbSmartAspects.AddInParameter(command, "@CheckedBy", DbType.String, checkedBy);
+
+                            status = dbSmartAspects.ExecuteNonQuery(command, transaction);
+                            supplierIdPaymentId = Convert.ToInt32(command.Parameters["@PaymentId"].Value);
                         }
 
                         if (status > 0)
@@ -1684,7 +1723,14 @@ namespace HotelManagement.Data.PurchaseManagment
                         Remarks = r.Field<string>("Remarks"),
                         SupplierName = r.Field<string>("SupplierName"),
                         ApprovedStatus = r.Field<string>("ApprovedStatus"),
-                        AdjustmentType = r.Field<string>("AdjustmentType")
+                        AdjustmentType = r.Field<string>("AdjustmentType"),
+                        CreatedBy = r.Field<Int32>("CreatedBy"),
+                        CheckedBy = r.Field<Int32>("CheckedBy"),
+                        ApprovedBy = r.Field<Int32>("ApprovedBy"),
+                        IsCanEdit = r.Field<bool>("IsCanEdit"),
+                        IsCanDelete = r.Field<bool>("IsCanDelete"),
+                        IsCanChecked = r.Field<bool>("IsCanChecked"),
+                        IsCanApproved = r.Field<bool>("IsCanApproved")
 
                     }).ToList();
                     totalRecords = Convert.ToInt32(cmd.Parameters["@RecordCount"].Value);

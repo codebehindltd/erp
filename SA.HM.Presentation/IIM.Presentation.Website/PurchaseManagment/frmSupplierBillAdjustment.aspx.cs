@@ -308,18 +308,23 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
         public static ReturnInfo AdjustedSupplierBillPayment(SupplierPaymentBO supplierPayment, List<SupplierPaymentDetailsBO> supplierPaymentDetails,
                                                       List<SupplierPaymentDetailsBO> supplierPaymentDetailsEdited, List<SupplierPaymentDetailsBO> supplierPaymentDetailsDeleted)
         {
+            HMUtility hmUtility = new HMUtility();
             ReturnInfo rtninfo = new ReturnInfo();
             PMSupplierDA supplierDA = new PMSupplierDA();
+            supplierPayment.ApprovedStatus = HMConstants.ApprovalStatus.Pending.ToString();
+
+            UserInformationBO userInformation = new UserInformationBO();
+            userInformation = hmUtility.GetCurrentApplicationUserInfo();
 
             try
             {
                 if (supplierPayment.PaymentId == 0)
                 {
-                    rtninfo.IsSuccess = supplierDA.SaveSupplierBillPayment(supplierPayment, supplierPaymentDetails);
+                    rtninfo.IsSuccess = supplierDA.SaveSupplierBillPayment(supplierPayment, userInformation.UserInfoId, supplierPaymentDetails);
                 }
                 else
                 {
-                    rtninfo.IsSuccess = supplierDA.UpdateSupplierBillPayment(supplierPayment, supplierPaymentDetails, supplierPaymentDetailsEdited, supplierPaymentDetailsDeleted);
+                    rtninfo.IsSuccess = supplierDA.UpdateSupplierBillPayment(supplierPayment, userInformation.UserInfoId, supplierPaymentDetails, supplierPaymentDetailsEdited, supplierPaymentDetailsDeleted);
                 }
             }
             catch (Exception ex)

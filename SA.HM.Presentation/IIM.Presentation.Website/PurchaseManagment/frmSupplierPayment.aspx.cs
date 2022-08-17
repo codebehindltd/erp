@@ -246,7 +246,7 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
 
                 supplierPaymentLedgerBO.CurrencyAmount = guestBillPaymentBO.CurrencyAmount;
                 guestBillPaymentBO.Remarks = txtRemarks.Text;
-                supplierPaymentLedgerBO.PaymentStatus = HMConstants.ApprovalStatus.Approved.ToString();
+                supplierPaymentLedgerBO.PaymentStatus = HMConstants.ApprovalStatus.Pending.ToString();
 
                 if (string.IsNullOrWhiteSpace(hfSupplierPaymentId.Value))
                 {
@@ -789,18 +789,23 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
         [WebMethod]
         public static ReturnInfo SaveSupplierBillPayment(SupplierPaymentBO supplierPayment, List<SupplierPaymentDetailsBO> supplierPaymentDetails, List<SupplierPaymentDetailsBO> SupplierPaymentDetailsEdited, List<SupplierPaymentDetailsBO> SupplierPaymentDetailsDeleted)
         {
+            HMUtility hmUtility = new HMUtility();
             ReturnInfo rtninfo = new ReturnInfo();
             PMSupplierDA supplierDA = new PMSupplierDA();
+            supplierPayment.ApprovedStatus = HMConstants.ApprovalStatus.Pending.ToString();
+
+            UserInformationBO userInformation = new UserInformationBO();
+            userInformation = hmUtility.GetCurrentApplicationUserInfo();
 
             try
             {
                 if (supplierPayment.PaymentId == 0)
                 {
-                    rtninfo.IsSuccess = supplierDA.SaveSupplierBillPayment(supplierPayment, supplierPaymentDetails);
+                    rtninfo.IsSuccess = supplierDA.SaveSupplierBillPayment(supplierPayment, userInformation.UserInfoId, supplierPaymentDetails);
                 }
                 else
                 {
-                    rtninfo.IsSuccess = supplierDA.UpdateSupplierBillPayment(supplierPayment, supplierPaymentDetails, SupplierPaymentDetailsEdited, SupplierPaymentDetailsDeleted);
+                    rtninfo.IsSuccess = supplierDA.UpdateSupplierBillPayment(supplierPayment, userInformation.UserInfoId, supplierPaymentDetails, SupplierPaymentDetailsEdited, SupplierPaymentDetailsDeleted);
                 }
             }
             catch (Exception ex)
@@ -848,6 +853,35 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
             myGridData.GridPagingProcessing(outList, totalRecords);
 
             return myGridData;
+        }
+
+        [WebMethod]
+        public static ReturnInfo CheckedPayment(Int64 paymentId)
+        {
+            ReturnInfo rtninfo = new ReturnInfo();
+            PMSupplierDA supplierDA = new PMSupplierDA();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            HMUtility hmUtility = new HMUtility();
+
+            try
+            {
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                rtninfo.IsSuccess = supplierDA.CheckedPayment(paymentId, userInformationBO.UserInfoId);
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+
+            }
+
+            if (rtninfo.IsSuccess)
+            {
+                rtninfo.IsSuccess = true;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Checked, AlertType.Success);
+            }
+
+            return rtninfo;
         }
 
         [WebMethod]

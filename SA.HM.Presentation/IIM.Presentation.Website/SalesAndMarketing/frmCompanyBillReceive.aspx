@@ -271,12 +271,24 @@
 
         });
 
+        var IsCanSave = false, IsCanEdit = false, IsCanDelete = false, IsCanView = false;
         $(document).ready(function () {
             var moduleName = "<a href='/HMCommon/frmHMHome.aspx' class='inActive'>Membership</a>";
             var formName = "<span class='divider'>/</span><li class='active'>Member Bill Payment</li>";
             var breadCrumbs = moduleName + formName;
             $("#ltlBreadCrumbsInformation").html(breadCrumbs);
             //EnableDisable For DropDown Change event--------------
+
+            IsCanSave = $('#ContentPlaceHolder1_hfSavePermission').val() == '1' ? true : false;
+            IsCanEdit = $('#ContentPlaceHolder1_hfEditPermission').val() == '1' ? true : false;
+            IsCanDelete = $('#ContentPlaceHolder1_hfDeletePermission').val() == '1' ? true : false;
+            IsCanView = $('#ContentPlaceHolder1_hfViewPermission').val() == '1' ? true : false;
+
+            //if (IsCanSave) {
+            //    $('#ContentPlaceHolder1_btnSave').show();
+            //} else {
+            //    $('#ContentPlaceHolder1_btnSave').hide();
+            //}
 
             var ddlPayMode = '<%=ddlPayMode.ClientID%>'
             if ($('#' + ddlPayMode).val() == "0") {
@@ -756,8 +768,15 @@ function OnProjectsPopulated(response) {
         }
         //For FillForm-------------------------   
         function FIllForEdit(actionId) {
+            $("#ContentPlaceHolder1_hfPaymentId").val("0");
             PageMethods.FillForm(actionId, OnFillFormObjectSucceeded, OnFillFormObjectFailed);
             return false;
+        }
+        function FIllForEditWithConfirmation(paymentId) {
+            if (!confirm("Do you Want To Edit?")) {
+                return false;
+            }
+            FIllForEdit(paymentId);
         }
 
         function OnFillFormObjectSucceeded(result) {
@@ -1134,7 +1153,7 @@ function OnProjectsPopulated(response) {
         }
 
         function SearchPayment() {
-
+            var gridRecordsCount = $("#BillInfoSearch tbody tr").length;
             var dateFrom = null, dateTo = null, companyId = 0;
 
             companyId = $("#ContentPlaceHolder1_ddlCompanyForSearch").val();
@@ -1154,63 +1173,55 @@ function OnProjectsPopulated(response) {
         }
 
         function OnSearchPaymentSucceeded(result) {
-            $("#BillInfoSearch tbody").html("");
-            var row = 0, tr = "";
+            var tr = "";
+            $.each(result, function (count, gridObject) {
 
-            var isUpdatepermission = false, isDeletePermission = false;
+                tr += "<tr>";
 
-            if ($("#ContentPlaceHolder1_hfIsUpdatePermission").val() == "1")
-                isUpdatepermission = true;
-            if ($("#ContentPlaceHolder1_hfIsDeletePermission").val() == "1")
-                isDeletePermission = true;
-
-            for (row = 0; row < result.length; row++) {
-
-                if ((row + 1) % 2 == 0) {
-                    tr += "<tr style='background-color:#FFFFFF;'>";
-                }
-                else {
-                    tr += "<tr style='background-color:#E3EAEB;'>";
-                }
-
-                tr += "<td style='width: 10%'>" + result[row].LedgerNumber + "</td>";
-                tr += "<td style='width: 10%'>" + GetStringFromDateTime(result[row].PaymentDate) + "</td>";
-                tr += "<td style='width: 10%'>" + result[row].PaymentFor + "</td>";
-                tr += "<td style='width: 20%'>" + result[row].CompanyName + "</td>";
-
-                if (result[row].Remarks != "" && result[row].Remarks != null)
-                    tr += "<td style='width: 30%'>" + result[row].Remarks + "</td>";
+                tr += "<td style='width:10%;'>" + gridObject.LedgerNumber + "</td>";
+                if (gridObject.PaymentDate != null)
+                    tr += "<td style='width:10%;'>" + CommonHelper.DateFromDateTimeToDisplay(gridObject.PaymentDate, innBoarDateFormat) + "</td>";
                 else
-                    tr += "<td style='width: 30%'></td>";
+                    tr += "<td style='width:10%;'></td>";
 
-                if (result[row].ApprovedStatus == null) {
-                    tr += "<td style='width:10%;'>";
-                    tr += "<a href='javascript:void();' onclick= 'javascript:return ApprovedPayment(" + result[row].PaymentId + ")' ><img alt='approved' src='../Images/approved.png' /></a>";
-                    tr += "&nbsp;&nbsp;";
-                    tr += "<a onclick=\"ShowDocumentByID(" + result[row].PaymentId + ", '" + result[row].LedgerNumber + "'" + ");\" title='Edit' href='javascript:void();'><img src='/Images/document.png' alt='Edit'></a>"
+                tr += "<td style='width:10%;'>" + gridObject.PaymentFor + "</td>";
+                tr += "<td style='width:15%;'>" + gridObject.CompanyName + "</td>";
 
-                    tr += "&nbsp;&nbsp;";
-                    if (isUpdatepermission) {
-                        tr += "<a onclick=\"javascript:return FIllForEdit(" + result[row].PaymentId + ");\" title='Edit' href='javascript:void();'><img src='../Images/edit.png' alt='Edit'></a>"
-                        tr += "&nbsp;&nbsp;";
-                    }
-                    if (isDeletePermission) {
-                        tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteCompanyPayment(" + result[row].PaymentId + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
-                        tr += "</td>";
-                    }
-                }
-                else {
-                    tr += "&nbsp;&nbsp;";
-                    tr += "<a href='javascript:void();' onclick= 'javascript:return EmployeePaymentInvoice(" + result[row].PaymentId + ")' ><img alt='Invoice' src='../Images/ReportDocument.png' /></a>";
-                    tr += "</td>";
+                if (gridObject.Remarks != null)
+                    tr += "<td style='width:30%;'>" + gridObject.Remarks + "</td>";
+                else
+                    tr += "<td style='width:30%;'></td>";
+                tr += "<td style='width:10%;'>" + (gridObject.ApprovedStatus == 'Pending' ? 'Submitted' : gridObject.ApprovedStatus) + "</td>";
+                tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
+                if (gridObject.IsCanEdit && IsCanEdit) {
+                    tr += "<a onclick=\"javascript:return FIllForEditWithConfirmation(" + gridObject.PaymentId + ");\" title='Edit' href='javascript:void();'><img src='../Images/edit.png' alt='Edit'></a>"
                 }
 
-                //tr += "<td>" + "<a href='javascript:void(0);' onclick= 'javascript:return ShowReport(" + result[row].PaymentId + ")' ><img alt='approved' src='../Images/ReportDocument.png' /></a>" + "</td>";
+                if (gridObject.IsCanDelete && IsCanDelete) {
+                    tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteCompanyPayment(" + gridObject.PaymentId + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                }
+
+                if (gridObject.IsCanChecked && IsCanSave) {
+                    tr += "<a href='javascript:void();' onclick= 'javascript:return CheckedPayment(" + gridObject.PaymentId + ")' ><img alt='Checked' src='../Images/checked.png' /></a>";
+                }
+
+                if (gridObject.IsCanApproved && IsCanSave) {
+                    tr += "<a href='javascript:void();' onclick= 'javascript:return ApprovedPayment(" + gridObject.PaymentId + ")' ><img alt='approved' src='../Images/approved.png' /></a>";
+                }
+
+                tr += "&nbsp;&nbsp;";
+
+                tr += "<a href='javascript:void();' onclick= 'javascript:return ShowReport(" + gridObject.PaymentId + ")' ><img alt='approved' src='../Images/ReportDocument.png' /></a>";
+
+                tr += "</td>";
+
+                tr += "<td style='display:none;'>" + gridObject.PaymentId + "</td>";
+
                 tr += "</tr>";
 
                 $("#BillInfoSearch tbody").append(tr);
                 tr = "";
-            }
+            });
         }
 
 
@@ -1244,6 +1255,27 @@ function OnProjectsPopulated(response) {
             }
             return false;
         }
+
+        function CheckedPayment(paymentId) {
+            if (confirm("Do You Want to Check? ")) {
+                PageMethods.CheckedPayment(paymentId, OnCheckedSucceed, OnCheckedFailed);
+                return false;
+            }
+        }
+        function OnCheckedSucceed(result) {
+            if (result.IsSuccess) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                SearchPayment();
+                PerformClearAction();
+            }
+            else {
+                CommonHelper.AlertMessage(result.AlertMessage);
+            }
+        }
+        function OnCheckedFailed(error) {
+            toastr.error(error.get_message());
+        }
+
         function ApprovedPayment(paymentId) {
             if (confirm("Do You Want to Approve? ")) {
                 PageMethods.ApprovedPayment(paymentId, OnApporavalSucceed, OnApporavalFailed);
@@ -2244,6 +2276,10 @@ function OnProjectsPopulated(response) {
             display: none;
         }
     </style>
+    <asp:HiddenField ID="hfSavePermission" runat="server" Value="0" />
+    <asp:HiddenField ID="hfEditPermission" runat="server" Value="0" />
+    <asp:HiddenField ID="hfDeletePermission" runat="server" Value="0" />
+    <asp:HiddenField ID="hfViewPermission" runat="server" Value="0" />
     <asp:HiddenField ID="RandomDocId" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfDeletedDoc" runat="server" Value="0" />
     <asp:HiddenField ID="tempDocId" runat="server"></asp:HiddenField>
@@ -2947,8 +2983,9 @@ function OnProjectsPopulated(response) {
                                     <th style="width: 10%;">Transaction No.</th>
                                     <th style="width: 10%;">Transaction Date</th>
                                     <th style="width: 10%;">Transaction Type</th>
-                                    <th style="width: 20%;">Company Name</th>
-                                    <th style="width: 30%;">Remarks</th>
+                                    <th style="width: 15%;">Company Name</th>
+                                    <th style="width: 30%;">Description</th>
+                                    <th style="width: 10%;">Status</th>
                                     <th style="width: 10%;">Action</th>
                                 </tr>
                             </thead>

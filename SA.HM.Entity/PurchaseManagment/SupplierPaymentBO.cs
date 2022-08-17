@@ -32,5 +32,12 @@ namespace HotelManagement.Entity.PurchaseManagment
         public string ApprovedStatus { get; set; }
         public int? AdjustmentAccountHeadId { get; set; }
         public decimal? PaymentAdjustmentAmount { get; set; }
+        public int CreatedBy { get; set; }
+        public int? CheckedBy { get; set; }
+        public int? ApprovedBy { get; set; }
+        public bool IsCanEdit { get; set; }
+        public bool IsCanDelete { get; set; }
+        public bool IsCanChecked { get; set; }
+        public bool IsCanApproved { get; set; }
     }
 }
