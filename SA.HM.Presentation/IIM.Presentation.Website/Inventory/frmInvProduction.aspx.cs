@@ -104,6 +104,7 @@ namespace HotelManagement.Presentation.Website.Inventory
                 }
                 else if (e.CommandName == "CmdReportRI")
                 {
+                    this.SetTab("SearchTab");
                     int finishProductId = Convert.ToInt32(e.CommandArgument.ToString());
                     string url = "/Inventory/Reports/frmReportProductionInfo.aspx?iFGId=" + finishProductId;
                     string s = "window.open('" + url + "', 'popup_window', 'width=800,height=680,left=300,top=50,resizable=yes');";

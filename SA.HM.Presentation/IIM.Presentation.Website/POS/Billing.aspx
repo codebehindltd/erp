@@ -4775,7 +4775,7 @@
                 $("#RiceMillBillingItemDiv").hide();
             }
 
-            $("#BillingItemDiv").show();
+            //$("#BillingItemDiv").show();
             if (CommonHelper.BrowserType().mozilla || CommonHelper.BrowserType().chrome) {
                 var barControlId = CommonHelper.GetReportViewerControlId($("#<%=rvTransactionShow.ClientID %>"));
                 var printTemplate = $("#<%=hfBillTemplate.ClientID %>").val();
