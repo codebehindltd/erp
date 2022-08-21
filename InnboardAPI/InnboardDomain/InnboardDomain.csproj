@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cryptography.cs" />
+    <Compile Include="Interfaces\IAppsLogin.cs" />
     <Compile Include="Interfaces\IBanquetReservation.cs" />
     <Compile Include="Interfaces\IBanquetReservationClassificationDiscount.cs" />
     <Compile Include="Interfaces\IBanquetReservationDetail.cs" />
@@ -134,6 +135,8 @@
     <Compile Include="Interfaces\IRestaurantKotBillMaster.cs" />
     <Compile Include="Interfaces\IRestaurantKotSpecialRemarksDetail.cs" />
     <Compile Include="Interfaces\IRestaurantRecipeDetail.cs" />
+    <Compile Include="Models\AppAttendanceModel.cs" />
+    <Compile Include="Models\AppsLoginModel.cs" />
     <Compile Include="Models\BanquetBillPayment.cs" />
     <Compile Include="Models\BanquetInformation.cs" />
     <Compile Include="Models\BanquetOccessionType.cs" />
@@ -241,6 +244,7 @@
     <Compile Include="Models\HotelGuestDocuments.cs" />
     <Compile Include="Models\HotelGuestExtraServiceBillApproved.cs" />
     <Compile Include="Models\HotelGuestHouseCheckOut.cs" />
+    <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Utility\CommonHelper.cs" />
     <Compile Include="ViewModel\HotelGuestExtraServiceBillApprovedView.cs" />
     <Compile Include="Models\HotelGuestInformation.cs" />

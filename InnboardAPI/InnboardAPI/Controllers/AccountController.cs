@@ -18,6 +18,13 @@ using InnboardAPI.Providers;
 using InnboardAPI.Results;
 using System.Text;
 using InnboardDomain.Models;
+using InnboardService.Services;
+using InnboardDataAccess.DataAccesses;
+using System.Web.Script.Serialization;
+using System.Drawing;
+using System.IO;
+using System.Web.Hosting;
+using Microsoft.Owin.FileSystems;
 
 namespace InnboardAPI.Controllers
 {
@@ -27,9 +34,12 @@ namespace InnboardAPI.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        
+        //private readonly IHostingEnvironment hostingEnvironment;
 
         public AccountController()
         {
+            
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -37,6 +47,8 @@ namespace InnboardAPI.Controllers
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            
+
         }
 
         public ApplicationUserManager UserManager
@@ -96,6 +108,117 @@ namespace InnboardAPI.Controllers
             }
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("AppsLogin")]
+        public async Task<IHttpActionResult> AppsLoginUser(AppsLoginModel userInformation)
+        {
+            AppsLoginDataAccess dbLogin = new AppsLoginDataAccess();
+            UserInfoModel infoModel = dbLogin.LoginUser(userInformation);
+            if (infoModel != null)
+            {
+                //var serializer = new JavaScriptSerializer();
+                //var userJsonData = serializer.Serialize(infoModel);
+                //var responseMsg = new HttpResponseMessage()
+                //{
+                //    Content = new StringContent("Succesfully login")
+                //};
+                return Ok(infoModel);
+            }
+            else
+            {
+                return BadRequest("Username or password invalid!");
+            }
+            
+            
+            //return responseMsg;
+        }
+
+       
+        //private string ProcessUploadFile(Image model)
+        //{
+        //    string uniqueFilename = null;
+        //    if (model != null)
+        //    {
+        //        string uploadFolder = Path.Combine(hostingEnvironment.WebRootPath, "img");
+        //        uniqueFilename = Guid.NewGuid().ToString() + "_" + model.FileName;
+        //        string filePath = Path.Combine(uploadFolder, uniqueFilename);
+        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            model.CopyTo(fileStream);
+        //        }
+        //    }
+        //    return uniqueFilename;
+        //}
+        public string UploadByteArrayToFileForAttd(string fileName, byte[] byteArray)
+        {
+
+            try
+            {
+                string uniqFileName = null;
+                if(byteArray!=null && byteArray.Length > 0)
+                {
+                    string root = AppDomain.CurrentDomain.BaseDirectory;
+                    var physicalFileSystem = new PhysicalFileSystem(Path.Combine(root, "wwwroot"));
+                    var folderPath = Path.Combine(physicalFileSystem.Root, "images");
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    uniqFileName = Guid.NewGuid().ToString() + "_" + fileName;
+                    var fileLocation = Path.Combine(folderPath, uniqFileName); 
+                    using (var fs = new FileStream(fileLocation, FileMode.Create, FileAccess.Write))
+                    {
+
+                        fs.Write(byteArray, 0, byteArray.Length);
+                        
+                        //fs.CopyTo(fileName);
+
+                    }
+                }
+                
+                return uniqFileName;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("AppsAttendance")]
+        public async Task<HttpResponseMessage> AppsAttendance(AppAttendanceModel appAttModel)
+        {
+            
+            AppsLoginDataAccess dbLogin = new AppsLoginDataAccess();
+            
+            appAttModel.Image = UploadByteArrayToFileForAttd(appAttModel.ImageName, appAttModel.ImageByte);
+            appAttModel.GoogleMapUrl = "https://www.google.com/maps/place/" + appAttModel.Latitude + "+" + appAttModel.Longitude;
+
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            TimeSpan diff = appAttModel.AttDateTime.ToUniversalTime() - origin;
+            double intDateTime = Math.Floor(diff.TotalSeconds);
+
+            bool isSuccess = dbLogin.AppUserAttendanceSave(appAttModel);
+            if(isSuccess)
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Succesfully Attendance Recorded")
+                };
+                return responseMsg;
+            }
+            else
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent("Bad Request")
+                };
+                return responseMsg;
+            }
+        }
+
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
@@ -103,6 +226,26 @@ namespace InnboardAPI.Controllers
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return Ok();
         }
+
+        //[AllowAnonymous]
+        //[Route("GetForTest/{id}")]
+        //public async Task<IHttpActionResult> GetForTest(string id)
+        //{
+        //    try
+        //    {
+        //        var data = context.Database.SqlQuery<InvCategory>("Select * from InvCategory");
+        //        //var data = _billService.GetAll();
+        //       // IdentityUser user = await UserManager.FindByIdAsync(id);
+                
+
+        //        return Ok(data);
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        var dx = ex;
+        //        return Ok(dx);
+        //    }
+        //}
 
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
         [Route("ManageInfo")]

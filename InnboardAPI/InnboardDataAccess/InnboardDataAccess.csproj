@@ -84,6 +84,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccesses\AppsLoginDataAccess.cs" />
     <Compile Include="DataAccesses\BanquetReservationClassificationDiscountDataAccess.cs" />
     <Compile Include="DataAccesses\BanquetReservationDataAccess.cs" />
     <Compile Include="DataAccesses\BanquetReservationDetailDataAccess.cs" />
