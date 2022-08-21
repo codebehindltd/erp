@@ -23,31 +23,6 @@
                 FillForm($("#ContentPlaceHolder1_hfFinishProductId").val());
             }
 
-            //if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
-            //$("#AttributeRMDiv").show();
-            //$("#cId").show();
-            //$("#cPOId").show();
-            //$("#sId").show();
-            //$("#sPOId").show();
-            //$("#stId").show();
-            //$("#stPOId").show();
-            //$("#cIdd").show();
-            //$("#sIdd").show();
-            //$("#stIdd").show();
-            //}
-            //else {
-            //$("#AttributeRMDiv").hide();
-            //$("#cId").hide();
-            //$("#cPOId").hide();
-            //$("#sId").hide();
-            //$("#sPOId").hide();
-            //$("#stId").hide();
-            //$("#stPOId").hide();
-            //$("#cIdd").hide();
-            //$("#sIdd").hide();
-            //$("#stIdd").hide();
-            //}
-
             $("#ContentPlaceHolder1_ddlCostCenter").select2({
                 tags: "true",
                 placeholder: "--- Please Select ---",
@@ -137,8 +112,7 @@
                     // manually update the textbox and hidden field
                     $(this).val(ui.item.label);
                     $("#<%=hfRMItemId.ClientID %>").val(ui.item.value);
-
-
+                    
                     //var list = result;
                     var ddlRMStockById = '<%=ddlRMItemStockBy.ClientID%>';
                     var control = $('#' + ddlRMStockById);
@@ -157,13 +131,7 @@
                     }
                 }
             });
-
-            <%--$("#txtRMItemName").blur(function () {
-                var costCentreId = $("#<%=ddlCostCenter.ClientID %>").val();
-                var ProductName = $("#txtRMItemName").val();
-                PageMethods.GetItemNameForAutoSearch(ProductName, costCentreId, OnLoadRMProductInfoSucceeded, OnLoadProductInfoFailed);
-            });--%>
-
+            
             $("#txtItemName").autocomplete({
                 source: function (request, response) {
                     var costcenterId = $("#ContentPlaceHolder1_ddlCostCenter").val();
@@ -1797,25 +1765,22 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="From Date"></asp:Label>
-                            </div>
-                            <div class="col-md-4">
-                                <asp:TextBox ID="txtFromDate" CssClass="form-control" runat="server" TabIndex="3"></asp:TextBox>
+                                <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="Date"></asp:Label>
                             </div>
                             <div class="col-md-2">
-                                <asp:Label ID="lblToDate" runat="server" class="control-label" Text="To Date"></asp:Label>
+                                <asp:TextBox ID="txtFromDate" CssClass="form-control" placeholder="From Date" runat="server" TabIndex="3"></asp:TextBox>
                             </div>
-                            <div class="col-md-4">
-                                <asp:TextBox ID="txtToDate" CssClass="form-control" runat="server" TabIndex="4"></asp:TextBox>
+                            <div class="col-md-2">
+                                <asp:TextBox ID="txtToDate" CssClass="form-control" placeholder="To Date" runat="server" TabIndex="4"></asp:TextBox>
                             </div>
-                        </div>
-                        <div class="form-group">
                             <div class="col-md-2">
                                 <asp:Label ID="lblProductionId" runat="server" class="control-label" Text="Production Id"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtProductionId" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
                             </div>
+                        </div>
+                        <div class="form-group">                            
                             <div class="col-md-2">
                                 <asp:Label ID="lblStatus" runat="server" class="control-label" Text="Status"></asp:Label>
                             </div>

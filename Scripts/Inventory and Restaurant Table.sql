@@ -26,6 +26,10 @@ TRUNCATE TABLE RestaurantSalesReturn
 TRUNCATE TABLE RestaurantSalesReturnDetails
 TRUNCATE TABLE RestaurantSalesReturnItem
 
+TRUNCATE TABLE InvProduction
+TRUNCATE TABLE InvProductionRMDetails
+TRUNCATE TABLE InvProductionFGDetails
+
 UPDATE RestaurantCostCenterTableMapping SET StatusId = 1
 UPDATE InvItem SET PurchasePrice = 0, AverageCost = 0
 

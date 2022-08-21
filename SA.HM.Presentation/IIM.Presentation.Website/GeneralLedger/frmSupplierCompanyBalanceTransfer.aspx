@@ -15,6 +15,20 @@
                 PageMethods.GetSupplierCompanyList(transactionTypeId, OnGetSupplierCompanyListSucceed, OnGetSupplierCompanyListFailed);
             });
 
+            $("#ContentPlaceHolder1_ddlFrom").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
+            $("#ContentPlaceHolder1_ddlTo").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             if ($("#ContentPlaceHolder1_ddlTransactionType").val() == "0") {
                 $("#SupplierToCompanyDiv").hide();
             } else {
