@@ -176,6 +176,7 @@ namespace InnboardAPI.Controllers
                         //fs.CopyTo(fileName);
 
                     }
+                    uniqFileName= Path.Combine("images", uniqFileName);
                 }
                 
                 return uniqFileName;
