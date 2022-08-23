@@ -39,6 +39,12 @@ namespace HotelManagement.Entity.HotelManagement
         public string CreatedDate { get; set; }
         public int LastModifiedBy { get; set; }
         public string LastModifiedDate { get; set; }
+        public int? CheckedBy { get; set; }
+        public int? ApprovedBy { get; set; }
+        public bool IsCanEdit { get; set; }
+        public bool IsCanDelete { get; set; }
+        public bool IsCanChecked { get; set; }
+        public bool IsCanApproved { get; set; }
 
     }
 }
