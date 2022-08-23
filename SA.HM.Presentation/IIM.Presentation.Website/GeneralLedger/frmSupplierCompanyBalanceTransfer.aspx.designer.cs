@@ -7,13 +7,47 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Presentation.Website.GeneralLedger
-{
-
-
-    public partial class frmSupplierCompanyBalanceTransfer
-    {
-
+namespace HotelManagement.Presentation.Website.GeneralLedger {
+    
+    
+    public partial class frmSupplierCompanyBalanceTransfer {
+        
+        /// <summary>
+        /// hfSavePermission control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfSavePermission;
+        
+        /// <summary>
+        /// hfEditPermission control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfEditPermission;
+        
+        /// <summary>
+        /// hfDeletePermission control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfDeletePermission;
+        
+        /// <summary>
+        /// hfViewPermission control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfViewPermission;
+        
         /// <summary>
         /// CommonDropDownHiddenField control.
         /// </summary>
@@ -22,7 +56,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField CommonDropDownHiddenField;
-
+        
         /// <summary>
         /// hfProjectIdList control.
         /// </summary>
@@ -31,7 +65,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfProjectIdList;
-
+        
         /// <summary>
         /// txtMonthSetupId control.
         /// </summary>
@@ -40,7 +74,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField txtMonthSetupId;
-
+        
         /// <summary>
         /// hfUpdateId control.
         /// </summary>
@@ -49,7 +83,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfUpdateId;
-
+        
         /// <summary>
         /// hfEditFromTransaction control.
         /// </summary>
@@ -58,7 +92,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfEditFromTransaction;
-
+        
         /// <summary>
         /// hfEditToTransaction control.
         /// </summary>
@@ -67,7 +101,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfEditToTransaction;
-
+        
         /// <summary>
         /// A control.
         /// </summary>
@@ -76,7 +110,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl A;
-
+        
         /// <summary>
         /// B control.
         /// </summary>
@@ -85,7 +119,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl B;
-
+        
         /// <summary>
         /// lblTransactionType control.
         /// </summary>
@@ -94,7 +128,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTransactionType;
-
+        
         /// <summary>
         /// ddlTransactionType control.
         /// </summary>
@@ -103,7 +137,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTransactionType;
-
+        
         /// <summary>
         /// lblFrom control.
         /// </summary>
@@ -112,7 +146,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFrom;
-
+        
         /// <summary>
         /// ddlFrom control.
         /// </summary>
@@ -121,7 +155,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlFrom;
-
+        
         /// <summary>
         /// lblTo control.
         /// </summary>
@@ -130,7 +164,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTo;
-
+        
         /// <summary>
         /// ddlTo control.
         /// </summary>
@@ -139,7 +173,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTo;
-
+        
         /// <summary>
         /// lblAmount control.
         /// </summary>
@@ -148,7 +182,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAmount;
-
+        
         /// <summary>
         /// txtAmount control.
         /// </summary>
@@ -157,7 +191,25 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAmount;
-
+        
+        /// <summary>
+        /// lblRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRemarks;
+        
+        /// <summary>
+        /// txtRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRemarks;
+        
         /// <summary>
         /// btnSave control.
         /// </summary>
@@ -166,7 +218,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
-
+        
         /// <summary>
         /// btnClear control.
         /// </summary>
@@ -175,61 +227,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnClear;
-
-        /// <summary>
-        /// lblTransactionTypeSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTransactionTypeSearch;
-
-        /// <summary>
-        /// ddlTransactionTypeSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTransactionTypeSearch;
-
-        /// <summary>
-        /// lblFromSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFromSearch;
-
-        /// <summary>
-        /// ddlFromSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlFromSearch;
-
-        /// <summary>
-        /// lblToSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblToSearch;
-
-        /// <summary>
-        /// ddlToSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlToSearch;
-
+        
         /// <summary>
         /// lblFromDate control.
         /// </summary>
@@ -238,7 +236,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFromDate;
-
+        
         /// <summary>
         /// txtFromDate control.
         /// </summary>
@@ -247,7 +245,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFromDate;
-
+        
         /// <summary>
         /// lblToDate control.
         /// </summary>
@@ -256,7 +254,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblToDate;
-
+        
         /// <summary>
         /// txtToDate control.
         /// </summary>
@@ -265,5 +263,59 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtToDate;
+        
+        /// <summary>
+        /// lblTransactionTypeSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTransactionTypeSearch;
+        
+        /// <summary>
+        /// ddlTransactionTypeSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTransactionTypeSearch;
+        
+        /// <summary>
+        /// lblFromSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFromSearch;
+        
+        /// <summary>
+        /// ddlFromSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFromSearch;
+        
+        /// <summary>
+        /// lblToSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblToSearch;
+        
+        /// <summary>
+        /// ddlToSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlToSearch;
     }
 }

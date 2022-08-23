@@ -23,7 +23,22 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         protected void Page_Load(object sender, EventArgs e)
         {
             //innboardMessage = (HiddenField)Master.FindControl("InnboardMessageHiddenField");
+
+            //if (!IsPostBack)
+            //{
+            //    CheckPermission();
+            //}
         }
+
+        //private void CheckPermission()
+        //{
+
+        //    hfSavePermission.Value = isSavePermission ? "1" : "0";
+        //    hfDeletePermission.Value = isDeletePermission ? "1" : "0";
+        //    hfEditPermission.Value = isUpdatePermission ? "1" : "0";
+        //    hfViewPermission.Value = isViewPermission ? "1" : "0";
+        //}
+
         [WebMethod]
         public static Object[] GetSupplierCompanyList(int transactionTypeId)
         {
@@ -73,7 +88,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         }
 
         [WebMethod]
-        public static Boolean SaveSupplierCompanyBalanceTransfer(string editId, string transactionType, int fromTransactionId, int toTransactionId, decimal amount)
+        public static Boolean SaveSupplierCompanyBalanceTransfer(string editId, string transactionType, int fromTransactionId, int toTransactionId, decimal amount, string remarks)
         {
             HMUtility hmUtility = new HMUtility();
             UserInformationBO userInformationBO = new UserInformationBO();
@@ -88,7 +103,9 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             SCBalanceTransferInfo.FromTransactionId = fromTransactionId;
             SCBalanceTransferInfo.ToTransactionId = toTransactionId;
             SCBalanceTransferInfo.Amount = amount;
+            SCBalanceTransferInfo.Remarks = remarks;
             SCBalanceTransferInfo.CreatedBy = userInformationBO.UserInfoId;
+            SCBalanceTransferInfo.ApprovedStatus = HMConstants.ApprovalStatus.Pending.ToString();
 
             Boolean status = false;
             status = SCda.SaveSupplierCompanyBalanceTransfer(SCBalanceTransferInfo);
@@ -100,8 +117,65 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         {
             List<SupplierCompanyBalanceTransferBO> transactionInfo = new List<SupplierCompanyBalanceTransferBO>();
             SupplierCompanyBalanceTransferDA SCda = new SupplierCompanyBalanceTransferDA();
-            transactionInfo = SCda.GetTransactionsBySearch(transactionTypeSearch, fromTransaction, toTransaction, dateFrom, dateTo);
+            HMUtility hmUtility = new HMUtility();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            transactionInfo = SCda.GetTransactionsBySearch(transactionTypeSearch, fromTransaction, toTransaction, dateFrom, dateTo, userInformationBO.UserInfoId);
             return transactionInfo;
+        }
+        [WebMethod]
+        public static ReturnInfo CheckedTransfer(Int64 transferId)
+        {
+            ReturnInfo rtninfo = new ReturnInfo();
+            SupplierCompanyBalanceTransferDA SCda = new SupplierCompanyBalanceTransferDA();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            HMUtility hmUtility = new HMUtility();
+
+            try
+            {
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                rtninfo.IsSuccess = SCda.CheckedTransfer(transferId, userInformationBO.UserInfoId);
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            if (rtninfo.IsSuccess)
+            {
+                rtninfo.IsSuccess = true;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Checked, AlertType.Success);
+            }
+
+            return rtninfo;
+        }
+        [WebMethod]
+        public static ReturnInfo ApprovedTransfer(Int64 transferId)
+        {
+            ReturnInfo rtninfo = new ReturnInfo();
+            SupplierCompanyBalanceTransferDA SCda = new SupplierCompanyBalanceTransferDA();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            HMUtility hmUtility = new HMUtility();
+
+            try
+            {
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                rtninfo.IsSuccess = SCda.ApprovedTransfer(transferId, userInformationBO.UserInfoId);
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            if (rtninfo.IsSuccess)
+            {
+                rtninfo.IsSuccess = true;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Approved, AlertType.Success);
+            }
+
+            return rtninfo;
         }
 
         [WebMethod]

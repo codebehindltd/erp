@@ -1400,7 +1400,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             if (rtninfo.IsSuccess)
             {
                 rtninfo.IsSuccess = true;
-                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Approved, AlertType.Success);
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Checked, AlertType.Success);
             }
 
             return rtninfo;

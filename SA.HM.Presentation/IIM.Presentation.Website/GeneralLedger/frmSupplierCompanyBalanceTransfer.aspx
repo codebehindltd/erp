@@ -15,6 +15,20 @@
                 PageMethods.GetSupplierCompanyList(transactionTypeId, OnGetSupplierCompanyListSucceed, OnGetSupplierCompanyListFailed);
             });
 
+            $("#ContentPlaceHolder1_ddlFromSearch").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
+            $("#ContentPlaceHolder1_ddlToSearch").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             $("#ContentPlaceHolder1_ddlFrom").select2({
                 tags: "true",
                 placeholder: "--- Please Select ---",
@@ -41,6 +55,10 @@
             $('#ContentPlaceHolder1_ddlFrom').empty();
             $('#ContentPlaceHolder1_ddlTo').empty();
             var fromId = $("#ContentPlaceHolder1_hfEditFromTransaction").val();
+            $('#ContentPlaceHolder1_ddlFrom').append($('<option/>', {
+                value: 0,
+                text: "--- Please Select ---"
+            }));
             $.each(result[0], function (key, value) {
                 if (value.CompanyId) {
                     $('#ContentPlaceHolder1_ddlFrom').append($('<option/>', {
@@ -56,6 +74,10 @@
             });
             $('#ContentPlaceHolder1_ddlFrom option[value="' + fromId + '"]').attr("selected", "selected");
             var toId = $("#ContentPlaceHolder1_hfEditToTransaction").val();
+            $('#ContentPlaceHolder1_ddlTo').append($('<option/>', {
+                value: 0,
+                text: "--- Please Select ---"
+            }));
             $.each(result[1], function (key, value) {
                 if (value.CompanyId) {
                     $('#ContentPlaceHolder1_ddlTo').append($('<option/>', {
@@ -81,10 +103,11 @@
             $("#ContentPlaceHolder1_ddlFrom").val("1");
             $("#ContentPlaceHolder1_ddlTo").val("1");
             $("#ContentPlaceHolder1_txtAmount").val("");
+            $("#ContentPlaceHolder1_txtRemarks").val("");
         }
 
         function SaveTransferInfo() {
-            var transactionType = "", fromTransactionId = "0", toTransactionId = "0", amount = 0.00, editId = "";
+            var transactionType = "", fromTransactionId = "0", toTransactionId = "0", amount = 0.00, editId = "", remarks = "";
             transactionType = $("#ContentPlaceHolder1_ddlTransactionType :selected").text();
             transactionTypeId = $("#ContentPlaceHolder1_ddlTransactionType").val();
             fromTransactionId = $("#ContentPlaceHolder1_ddlFrom").val();
@@ -92,6 +115,37 @@
             toTransactionId = $("#ContentPlaceHolder1_ddlTo").val();
             toTransactionText = $("#ContentPlaceHolder1_ddlTo :selected").text();
             amount = $("#ContentPlaceHolder1_txtAmount").val();
+            remarks = $("#ContentPlaceHolder1_txtRemarks").val();
+            if ($("#ContentPlaceHolder1_ddlFrom").val() == "0") {
+                if (transactionTypeId == 1 || transactionTypeId == 3) {
+                    toastr.warning("Please Provide From Supplier.");
+                }
+                else if (transactionTypeId == 2 || transactionTypeId == 4) {
+                    toastr.warning("Please Provide From Company.");
+                }
+                $("#ContentPlaceHolder1_ddlFrom").focus();
+                return false;
+            }
+            if ($("#ContentPlaceHolder1_ddlTo").val() == "0") {
+                if (transactionTypeId == 2 || transactionTypeId == 3) {
+                    toastr.warning("Please Provide To Supplier.");
+                }
+                else if (transactionTypeId == 1 || transactionTypeId == 4) {
+                    toastr.warning("Please Provide To Company.");
+                }
+                $("#ContentPlaceHolder1_ddlTo").focus();
+                return false;
+            }
+            if ($("#ContentPlaceHolder1_txtAmount").val() == "") {
+                toastr.warning("Please Provide Amount.");
+                $("#ContentPlaceHolder1_txtAmount").focus();
+                return false;
+            }
+            if ($("#ContentPlaceHolder1_txtRemarks").val() == "") {
+                toastr.warning("Please Provide Description.");
+                $("#ContentPlaceHolder1_txtRemarks").focus();
+                return false;
+            }
             if (transactionTypeId == "0") {
                 toastr.info("Please Select Transaction Type");
                 return false;
@@ -109,7 +163,7 @@
                     toastr.info("You can't transfer balace to the same Company.");
                 }
             } else {
-                PageMethods.SaveSupplierCompanyBalanceTransfer(editId, transactionType, fromTransactionId, toTransactionId, amount, OnSaveSupplierCompanyBalanceTransferSucceed, OnSaveSupplierCompanyBalanceTransferFailed);
+                PageMethods.SaveSupplierCompanyBalanceTransfer(editId, transactionType, fromTransactionId, toTransactionId, amount, remarks, OnSaveSupplierCompanyBalanceTransferSucceed, OnSaveSupplierCompanyBalanceTransferFailed);
             }
             return false;
         }
@@ -131,6 +185,7 @@
                 } else {
                     $("#SupplierToCompanyDiv").show();
                 }
+                $("#ContentPlaceHolder1_txtRemarks").val("");
             }
             else {
                 toastr.warning("Balance Transfer Failed.");
@@ -140,6 +195,10 @@
             
         }
     </script>
+    <asp:HiddenField ID="hfSavePermission" runat="server" Value="1" />
+    <asp:HiddenField ID="hfEditPermission" runat="server" Value="1" />
+    <asp:HiddenField ID="hfDeletePermission" runat="server" Value="1" />
+    <asp:HiddenField ID="hfViewPermission" runat="server" Value="1" />
     <asp:HiddenField ID="CommonDropDownHiddenField" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfProjectIdList" runat="server" />
     <asp:HiddenField ID="txtMonthSetupId" runat="server"></asp:HiddenField>
@@ -178,14 +237,14 @@
                         <div id="SupplierToCompanyDiv" style="display: none;">
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    <asp:Label ID="lblFrom" runat="server" class="control-label" Text="From"></asp:Label>
+                                    <asp:Label ID="lblFrom" runat="server" class="control-label required-field" Text="From"></asp:Label>
                                 </div>
                                 <div class="col-md-4">
                                     <asp:DropDownList ID="ddlFrom" runat="server" CssClass="form-control" TabIndex="2">
                                     </asp:DropDownList>
                                 </div>
                                 <div class="col-md-2">
-                                    <asp:Label ID="lblTo" runat="server" class="control-label" Text="To"></asp:Label>
+                                    <asp:Label ID="lblTo" runat="server" class="control-label required-field" Text="To"></asp:Label>
                                 </div>
                                 <div class="col-md-4">
                                     <asp:DropDownList ID="ddlTo" runat="server" CssClass="form-control" TabIndex="3">
@@ -194,10 +253,19 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    <asp:Label ID="lblAmount" runat="server" class="control-label" Text="Amount"></asp:Label>
+                                    <asp:Label ID="lblAmount" runat="server" class="control-label required-field" Text="Amount"></asp:Label>
                                 </div>
                                 <div class="col-md-4">
                                     <asp:TextBox ID="txtAmount" runat="server" CssClass="form-control" TabIndex="4"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <asp:Label ID="lblRemarks" runat="server" class="control-label required-field" Text="Description"></asp:Label>
+                                </div>
+                                <div class="col-md-10">
+                                    <asp:TextBox ID="txtRemarks" CssClass="form-control" TextMode="MultiLine" runat="server"
+                                        TabIndex="11"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -222,12 +290,26 @@
                     <div class="form-horizontal">
                         <div class="form-group">
                             <div class="col-md-2">
+                                <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="From Date"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtFromDate" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblToDate" runat="server" class="control-label" Text="To Date"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtToDate" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
                                 <asp:Label ID="lblTransactionTypeSearch" runat="server" class="control-label" Text="Transaction Type"></asp:Label>
                             </div>
                             <div class="col-md-10">
                                 <asp:DropDownList ID="ddlTransactionTypeSearch" runat="server" CssClass="form-control"
                                     TabIndex="1">
-                                    <asp:ListItem Value="0">--- Please Select ---</asp:ListItem>
+                                    <asp:ListItem Value="0">--- All ---</asp:ListItem>
                                     <asp:ListItem Value="1">Supplier To Company</asp:ListItem>
                                     <asp:ListItem Value="2">Company To Supplier</asp:ListItem>
                                     <asp:ListItem Value="3">Supplier To Supplier</asp:ListItem>
@@ -252,24 +334,10 @@
                                     </asp:DropDownList>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-2">
-                                    <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="From Date"></asp:Label>
-                                </div>
-                                <div class="col-md-4">
-                                    <asp:TextBox ID="txtFromDate" CssClass="form-control" runat="server"></asp:TextBox>
-                                </div>
-                                <div class="col-md-2">
-                                    <asp:Label ID="lblToDate" runat="server" class="control-label" Text="To Date"></asp:Label>
-                                </div>
-                                <div class="col-md-4">
-                                    <asp:TextBox ID="txtToDate" CssClass="form-control" runat="server"></asp:TextBox>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input type="button" class="btn btn-primary btn-sm" value="Search" onclick="SearchTransaction()" />
-                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="button" class="btn btn-primary btn-sm" value="Search" onclick="SearchTransaction()" />
                             </div>
                         </div>
                     </div>
@@ -283,11 +351,13 @@
                         <table id="TransactionInfoSearch" class="table table-bordered table-condensed table-hover table-responsive">
                             <thead>
                                 <tr>
-                                    <th style="width: 25%;">Transaction Type</th>
+                                    <th style="width: 10%;">Transaction Type</th>
                                     <th style="width: 15%;">From Transaction</th>
                                     <th style="width: 15%;">To Transaction</th>
-                                    <th style="width: 25%;">Amount</th>
-                                    <th style="width: 20%;">Action</th>
+                                    <th style="width: 10%;">Amount</th>
+                                    <th style="width: 30%">Description</th>
+                                    <th style="width: 10%">Status</th>
+                                    <th style="width: 10%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -298,7 +368,13 @@
         </div>
     </div>
     <script>
+        var IsCanSave = false, IsCanEdit = false, IsCanDelete = false, IsCanView = false;
         $(document).ready(function () {
+            IsCanSave = $('#ContentPlaceHolder1_hfSavePermission').val() == '1' ? true : false;
+            IsCanEdit = $('#ContentPlaceHolder1_hfEditPermission').val() == '1' ? true : false;
+            IsCanDelete = $('#ContentPlaceHolder1_hfDeletePermission').val() == '1' ? true : false;
+            IsCanView = $('#ContentPlaceHolder1_hfViewPermission').val() == '1' ? true : false;
+
             $("#ContentPlaceHolder1_ddlTransactionTypeSearch").change(function () {
                 
                 var transactionTypeSearchId = $("#ContentPlaceHolder1_ddlTransactionTypeSearch").val();
@@ -311,6 +387,7 @@
             });
 
             if ($("#ContentPlaceHolder1_ddlTransactionTypeSearch").val() == "0") {
+                $("#ContentPlaceHolder1_ddlTransactionTypeSearch :selected").text("--- All ---");
                 $("#TransactionTypeSearchDiv").hide();
             } else {
                 $("#TransactionTypeSearchDiv").show();
@@ -371,7 +448,11 @@
             $("#ContentPlaceHolder1_lblToSearch").text("To " + result[3]);
             $('#ContentPlaceHolder1_ddlFromSearch').empty();
             $('#ContentPlaceHolder1_ddlToSearch').empty();
-            
+
+            $('#ContentPlaceHolder1_ddlFromSearch').append($('<option/>', {
+                value: 0,
+                text: "--- All ---"
+            }));
             $.each(result[0], function (key, value) {
                 if (value.CompanyId) {
                     $('#ContentPlaceHolder1_ddlFromSearch').append($('<option/>', {
@@ -385,7 +466,11 @@
                     }));
                 }
             });
-            
+
+            $('#ContentPlaceHolder1_ddlToSearch').append($('<option/>', {
+                value: 0,
+                text: "--- All ---"
+            }));
             $.each(result[1], function (key, value) {
                 if (value.CompanyId) {
                     $('#ContentPlaceHolder1_ddlToSearch').append($('<option/>', {
@@ -415,9 +500,14 @@
             if ($("#ContentPlaceHolder1_txtToDate").val() != "")
                 dateTo = CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtToDate").val(), '/');
             transactionTypeSearch = $("#ContentPlaceHolder1_ddlTransactionTypeSearch :selected").text();
+            
             fromTransaction = $("#ContentPlaceHolder1_ddlFromSearch").val();
             toTransaction = $("#ContentPlaceHolder1_ddlToSearch").val();
-
+            if (transactionTypeSearch == "--- All ---") {
+                fromTransaction = 0;
+                toTransaction = 0;
+            }
+           
             $("#TransactionInfoSearch tbody").html("");
             PageMethods.GetTransactionsBySearch(transactionTypeSearch, fromTransaction, toTransaction, dateFrom, dateTo, OnGetTransactionsBySearchSucceeded, OnGetTransactionsBySearchFailed);
 
@@ -425,38 +515,51 @@
         }
 
         function OnGetTransactionsBySearchSucceeded(result) {
-            console.log(result);
-            $("#TransactionInfoSearch tbody").html("");
-            var row = 0, tr = "";
+            var tr = "";
+            $.each(result, function (count, gridObject) {
 
-            for (row = 0; row < result.length; row++) {
+                tr += "<tr>";
 
-                if ((row + 1) % 2 == 0) {
-                    tr += "<tr style='background-color:#FFFFFF;'>";
+                tr += "<td style='width:10%;'>" + gridObject.TransactionType + "</td>";
+                tr += "<td style='width:15%;'>" + gridObject.FromTransactionText + "</td>";
+                tr += "<td style='width:15%;'>" + gridObject.ToTransactionText + "</td>";
+                tr += "<td style='width:10%;'>" + gridObject.Amount + "</td>";
+
+                if (gridObject.Remarks != null)
+                    tr += "<td style='width:30%;'>" + gridObject.Remarks + "</td>";
+                else
+                    tr += "<td style='width:30%;'></td>";
+                tr += "<td style='width:10%;'>" + (gridObject.ApprovedStatus == 'Pending' ? 'Pending' : gridObject.ApprovedStatus) + "</td>";
+                tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
+                if (gridObject.IsCanEdit && IsCanEdit) {
+                    tr += "<a onclick=\"javascript:return FIllForEdit(" + gridObject.Id + ");\" title='Edit' href='javascript:void();'><img src='../Images/edit.png' alt='Edit'></a>"
                 }
-                else {
-                    tr += "<tr style='background-color:#E3EAEB;'>";
+
+                if (gridObject.IsCanDelete && IsCanDelete) {
+                    tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteTransactionInfo(" + gridObject.Id + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
                 }
 
-                tr += "<td style='width: 25%'>" + result[row].TransactionType + "</td>";
-                tr += "<td style='width: 15%'>" + result[row].FromTransactionText + "</td>";
-                tr += "<td style='width: 15%'>" + result[row].ToTransactionText + "</td>";
-                tr += "<td style='width: 25%'>" + result[row].Amount + "</td>";
+                if (gridObject.IsCanChecked && IsCanSave) {
+                    tr += "<a href='javascript:void();' onclick= 'javascript:return CheckedTransfer(" + gridObject.Id + ")' ><img alt='Checked' src='../Images/checked.png' /></a>";
+                }
 
-                tr += "<td style='width: 20%;'>";
+                if (gridObject.IsCanApproved && IsCanSave) {
+                    tr += "<a href='javascript:void();' onclick= 'javascript:return ApprovedTransfer(" + gridObject.Id + ")' ><img alt='approved' src='../Images/approved.png' /></a>";
+                }
 
-                tr += "<a onclick=\"javascript:return FIllForEdit(" + result[row].Id + ");\" title='Edit' href='javascript:void();'><img src='../Images/edit.png' alt='Edit'></a>"
-                tr += "&nbsp;&nbsp;";
+                //tr += "&nbsp;&nbsp;";
 
-                tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteTransactionInfo(" + result[row].Id + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                //tr += "<a href='javascript:void();' onclick= 'javascript:return ShowReport(" + gridObject.Id + ")' ><img alt='approved' src='../Images/ReportDocument.png' /></a>";
+
                 tr += "</td>";
 
-                tr += "<td style=display:none;'>" + result[row].Id + "</td>";
+                tr += "<td style='display:none;'>" + gridObject.Id + "</td>";
+
                 tr += "</tr>";
 
                 $("#TransactionInfoSearch tbody").append(tr);
                 tr = "";
-            }
+            });
         }
         function OnGetTransactionsBySearchFailed() { }
 
@@ -479,12 +582,12 @@
             } else if (result.TransactionType == "Company To Company") {
                 editTransactionId = "4";
             }
-
             $("#ContentPlaceHolder1_hfEditFromTransaction").val(result.FromTransactionId);
             $("#ContentPlaceHolder1_hfEditToTransaction").val(result.ToTransactionId);
 
             $("#ContentPlaceHolder1_ddlTransactionType").val(editTransactionId).trigger("change");
             $("#ContentPlaceHolder1_txtAmount").val(result.Amount);
+            $("#ContentPlaceHolder1_txtRemarks").val(result.Remarks);
             $("#ContentPlaceHolder1_btnSave").val("Update");
             $("#ContentPlaceHolder1_hfUpdateId").val(result.Id);
             
@@ -514,5 +617,44 @@
 
         }
 
+        function CheckedTransfer(Id) {
+            if (confirm("Do You Want to Check? ")) {
+                PageMethods.CheckedTransfer(Id, OnCheckedSucceed, OnCheckedFailed);
+                return false;
+            }
+        }
+        function OnCheckedSucceed(result) {
+            if (result.IsSuccess) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                SearchTransaction();
+                PerformClearAction();
+            }
+            else {
+                CommonHelper.AlertMessage(result.AlertMessage);
+            }
+        }
+        function OnCheckedFailed(error) {
+            toastr.error(error.get_message());
+        }
+
+        function ApprovedTransfer(Id) {
+            if (confirm("Do You Want to Approve? ")) {
+                PageMethods.ApprovedTransfer(Id, OnApprovedSucceed, OnApprovedFailed);
+                return false;
+            }
+        }
+        function OnApprovedSucceed(result) {
+            if (result.IsSuccess) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                SearchTransaction();
+                PerformClearAction();
+            }
+            else {
+                CommonHelper.AlertMessage(result.AlertMessage);
+            }
+        }
+        function OnApprovedFailed(error) {
+            toastr.error(error.get_message());
+        }
     </script>
 </asp:Content>

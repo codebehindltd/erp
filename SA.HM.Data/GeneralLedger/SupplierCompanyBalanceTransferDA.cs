@@ -22,15 +22,17 @@ namespace HotelManagement.Data.GeneralLedger
                     dbSmartAspects.AddInParameter(command, "@FromTransactionId", DbType.Int32, SCBalanceTransferInfo.FromTransactionId);
                     dbSmartAspects.AddInParameter(command, "@ToTransactionId", DbType.Int32, SCBalanceTransferInfo.ToTransactionId);
                     dbSmartAspects.AddInParameter(command, "@Amount", DbType.Decimal, SCBalanceTransferInfo.Amount);
+                    dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, SCBalanceTransferInfo.Remarks);
+                    dbSmartAspects.AddInParameter(command, "@ApprovedStatus", DbType.String, SCBalanceTransferInfo.ApprovedStatus);
                     dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, SCBalanceTransferInfo.CreatedBy);
                     status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
                 }
             }
             return status;
         }
-        public List<SupplierCompanyBalanceTransferBO> GetTransactionsBySearch(string transactionTypeSearch, int fromTransaction, int toTransaction, DateTime? dateFrom, DateTime? dateTo)
+        public List<SupplierCompanyBalanceTransferBO> GetTransactionsBySearch(string transactionTypeSearch, int fromTransaction, int toTransaction, DateTime? dateFrom, DateTime? dateTo, int userInfoId)
         {
-            List<SupplierCompanyBalanceTransferBO> transactionInfo = new List<SupplierCompanyBalanceTransferBO>();
+            List<SupplierCompanyBalanceTransferBO> transactionInfoList = new List<SupplierCompanyBalanceTransferBO>();
 
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
@@ -58,23 +60,36 @@ namespace HotelManagement.Data.GeneralLedger
                     else
                         dbSmartAspects.AddInParameter(cmd, "@DateTo", DbType.DateTime, DBNull.Value);
 
-                    IDataReader reader = dbSmartAspects.ExecuteReader(cmd);
-                    while (reader.Read())
+                    dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int32, userInfoId);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "TransactionInfo");
+                    DataTable Table = ds.Tables["TransactionInfo"];
+
+                    transactionInfoList = Table.AsEnumerable().Select(r => new SupplierCompanyBalanceTransferBO
                     {
-                        SupplierCompanyBalanceTransferBO bo = new SupplierCompanyBalanceTransferBO();
-                        bo.Id = Int32.Parse(reader["Id"].ToString());
-                        bo.TransactionType = reader["TransactionType"].ToString();
-                        bo.FromTransactionId = Int32.Parse(reader["FromTransactionId"].ToString());
-                        bo.FromTransactionText = reader["FromTransactionText"].ToString();
-                        bo.ToTransactionId = Int32.Parse(reader["ToTransactionId"].ToString());
-                        bo.ToTransactionText = reader["ToTransactionText"].ToString();
-                        bo.Amount = Decimal.Parse(reader["Amount"].ToString());
-                        transactionInfo.Add(bo);
-                    }
+                        Id = r.Field<Int64>("Id"),
+                        TransactionType = r.Field<string>("TransactionType"),
+                        FromTransactionId = r.Field<Int32>("FromTransactionId"),
+                        FromTransactionText = r.Field<string>("FromTransactionText"),
+                        ToTransactionId = r.Field<Int32>("ToTransactionId"),
+                        ToTransactionText = r.Field<string>("ToTransactionText"),
+                        Amount = r.Field<decimal>("Amount"),
+                        Remarks = r.Field<string>("Remarks"),
+                        ApprovedStatus = r.Field<string>("ApprovedStatus"),
+                        CreatedBy = r.Field<Int32>("CreatedBy"),
+                        CheckedBy = r.Field<Int32>("CheckedBy"),
+                        ApprovedBy = r.Field<Int32>("ApprovedBy"),
+                        IsCanEdit = r.Field<bool>("IsCanEdit"),
+                        IsCanDelete = r.Field<bool>("IsCanDelete"),
+                        IsCanChecked = r.Field<bool>("IsCanChecked"),
+                        IsCanApproved = r.Field<bool>("IsCanApproved")
+
+                    }).ToList();     
                 }
             }
 
-            return transactionInfo;
+            return transactionInfoList;
         }
 
         public SupplierCompanyBalanceTransferBO GetCurrentSupplierCompanyInfoForEdit(int Id)
@@ -95,6 +110,7 @@ namespace HotelManagement.Data.GeneralLedger
                         infoForEdit.FromTransactionId = Int32.Parse(reader["FromTransactionId"].ToString());
                         infoForEdit.ToTransactionId = Int32.Parse(reader["ToTransactionId"].ToString());
                         infoForEdit.Amount = Decimal.Parse(reader["Amount"].ToString());
+                        infoForEdit.Remarks = reader["Remarks"].ToString();
                     }
                 }
             }
@@ -116,6 +132,82 @@ namespace HotelManagement.Data.GeneralLedger
             }
 
             return status;
+        }
+
+        public bool CheckedTransfer(Int64 transferId, int checkedBy)
+        {
+            int status = 0;
+            Int64 supplierIdCompanyId = 0;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand command = dbSmartAspects.GetStoredProcCommand("CheckedSupplierCompanyBalanceTransfer_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(command, "@TransferId", DbType.String, transferId);
+                            dbSmartAspects.AddInParameter(command, "@CheckedBy", DbType.String, checkedBy);
+
+                            status = dbSmartAspects.ExecuteNonQuery(command, transaction);
+                            supplierIdCompanyId = Convert.ToInt32(command.Parameters["@TransferId"].Value);
+                        }
+
+                        if (status > 0)
+                        {
+                            transaction.Commit();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        status = 0;
+                        transaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+
+            return status > 0 ? true : false;
+        }
+
+        public bool ApprovedTransfer(Int64 transferId, int approvedBy)
+        {
+            int status = 0;
+            Int64 supplierIdCompanyId = 0;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand command = dbSmartAspects.GetStoredProcCommand("ApprovedSupplierCompanyBalanceTransfer_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(command, "@TransferId", DbType.String, transferId);
+                            dbSmartAspects.AddInParameter(command, "@ApprovedBy", DbType.String, approvedBy);
+
+                            status = dbSmartAspects.ExecuteNonQuery(command, transaction);
+                            supplierIdCompanyId = Convert.ToInt32(command.Parameters["@TransferId"].Value);
+                        }
+
+                        if (status > 0)
+                        {
+                            transaction.Commit();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        status = 0;
+                        transaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+
+            return status > 0 ? true : false;
         }
     }
 }
