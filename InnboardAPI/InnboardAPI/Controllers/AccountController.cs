@@ -160,7 +160,7 @@ namespace InnboardAPI.Controllers
                 {
                     string root = AppDomain.CurrentDomain.BaseDirectory;
                     var physicalFileSystem = new PhysicalFileSystem(Path.Combine(root, "wwwroot"));
-                    var folderPath = Path.Combine(physicalFileSystem.Root, "images");
+                    var folderPath = Path.Combine(physicalFileSystem.Root, "AttendanceImages");
                     if (!Directory.Exists(folderPath))
                     {
                         Directory.CreateDirectory(folderPath);
@@ -176,7 +176,7 @@ namespace InnboardAPI.Controllers
                         //fs.CopyTo(fileName);
 
                     }
-                    uniqFileName= Path.Combine("images", uniqFileName);
+                    uniqFileName= Path.Combine("AttendanceImages", uniqFileName);
                 }
                 
                 return uniqFileName;
