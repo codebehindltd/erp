@@ -95,8 +95,8 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
             GridViewDataNPaging<PMProductReceivedBO, GridPaging> myGridData = new GridViewDataNPaging<PMProductReceivedBO, GridPaging>(userInformationBO.GridViewPageSize, userInformationBO.GridViewPageLink, isCurrentOrPreviousPage);
             pageNumber = myGridData.PageNumberCalculation(gridRecordsCount, pageNumber);
 
-            if (fromDate == null) fromDate = DateTime.Now;
-            if (toDate == null) toDate = DateTime.Now;
+            //if (fromDate == null) fromDate = DateTime.Now;
+            //if (toDate == null) toDate = DateTime.Now;
 
             PMProductReceivedDA receiveDA = new PMProductReceivedDA();
             List<PMProductReceivedBO> orderList = new List<PMProductReceivedBO>();

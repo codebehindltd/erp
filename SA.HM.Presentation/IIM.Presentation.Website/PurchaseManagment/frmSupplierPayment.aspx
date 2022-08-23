@@ -282,24 +282,26 @@
                 $("#myTabs").tabs();
             });
 
-            $('#ContentPlaceHolder1_txtFromDate').datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: innBoarDateFormat,
-                onClose: function (selectedDate) {
-                    $('#ContentPlaceHolder1_txtToDate').datepicker("option", "minDate", selectedDate);
-                }
-            }).datepicker("setDate", DayOpenDate);
+            var txtFromDate = '<%=txtFromDate.ClientID%>'
+            var txtToDate = '<%=txtToDate.ClientID%>'
 
-            $('#ContentPlaceHolder1_txtToDate').datepicker({
+            $('#' + txtFromDate).datepicker({
                 changeMonth: true,
                 changeYear: true,
-                defaultDate: DayOpenDate,
                 dateFormat: innBoarDateFormat,
                 onClose: function (selectedDate) {
-                    $('#ContentPlaceHolder1_txtFromDate').datepicker("option", "maxDate", selectedDate);
+                    $('#' + txtToDate).datepicker("option", "minDate", selectedDate);
                 }
-            }).datepicker("setDate", DayOpenDate);
+            });
+
+            $('#' + txtToDate).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $('#' + txtFromDate).datepicker("option", "maxDate", selectedDate);
+                }
+            });
 
             $('#ContentPlaceHolder1_txtPaymentDate2').datepicker({
                 changeMonth: true,
@@ -906,15 +908,21 @@
         }
         function SearchPayment(pageNumber, IsCurrentOrPreviousPage) {
             var gridRecordsCount = $("#BillInfoSearch tbody tr").length;
-            var dateFrom, dateTo, supplierId = 0;
-            dateFrom = CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtFromDate").val(), '/');
-            dateTo = CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtToDate").val(), '/');
+            var dateFrom = null, dateTo = null, supplierId = 0;
+
+            if ($("#ContentPlaceHolder1_txtFromDate").val() != "") {
+                dateFrom = CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtFromDate").val(), '/')
+            }
+            if ($("#ContentPlaceHolder1_txtToDate").val() != "") {
+                dateTo = CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtToDate").val(), '/')
+            }
+
             var transactionType = $("#ContentPlaceHolder1_ddlSrcTransactionType").val();
             supplierId = $("#ContentPlaceHolder1_ddlSupplier").val();
 
             $("#GridPagingContainer ul").html("");
             $("#BillInfoSearch tbody").html("");
-
+            debugger;
             PageMethods.GetSupplierPaymentBySearch(transactionType, supplierId, dateFrom, dateTo, gridRecordsCount, pageNumber, IsCurrentOrPreviousPage, OnSearchPaymentSucceeded, OnSearchPaymentFailed);
 
             return false;

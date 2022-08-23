@@ -219,23 +219,44 @@
                 $("#myTabs").tabs();
             });
 
-            $('#ContentPlaceHolder1_txtFromDate').datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: innBoarDateFormat,
-                onClose: function (selectedDate) {
-                    $('#ContentPlaceHolder1_txtToDate').datepicker("option", "minDate", selectedDate);
-                }
-            }).datepicker("setDate", DayOpenDate);
+            var txtFromDate = '<%=txtFromDate.ClientID%>'
+            var txtToDate = '<%=txtToDate.ClientID%>'
 
-            $('#ContentPlaceHolder1_txtToDate').datepicker({
+            $('#' + txtFromDate).datepicker({
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: innBoarDateFormat,
                 onClose: function (selectedDate) {
-                    $('#ContentPlaceHolder1_txtFromDate').datepicker("option", "maxDate", selectedDate);
+                    $('#' + txtToDate).datepicker("option", "minDate", selectedDate);
                 }
-            }).datepicker("setDate", DayOpenDate);
+            });
+
+            $('#' + txtToDate).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $('#' + txtFromDate).datepicker("option", "maxDate", selectedDate);
+                }
+            });
+
+            //$('#ContentPlaceHolder1_txtFromDate').datepicker({
+            //    changeMonth: true,
+            //    changeYear: true,
+            //    dateFormat: innBoarDateFormat,
+            //    onClose: function (selectedDate) {
+            //        $('#ContentPlaceHolder1_txtToDate').datepicker("option", "minDate", selectedDate);
+            //    }
+            //}).datepicker("setDate", DayOpenDate);
+
+            //$('#ContentPlaceHolder1_txtToDate').datepicker({
+            //    changeMonth: true,
+            //    changeYear: true,
+            //    dateFormat: innBoarDateFormat,
+            //    onClose: function (selectedDate) {
+            //        $('#ContentPlaceHolder1_txtFromDate').datepicker("option", "maxDate", selectedDate);
+            //    }
+            //}).datepicker("setDate", DayOpenDate);
 
             $('#ContentPlaceHolder1_txtPaymentDate2').datepicker({
                 changeMonth: true,
@@ -432,33 +453,55 @@
             $("#ContentPlaceHolder1_ddlCurrency").change(function () {
                 CurrencyConvertion();
             });
-            $("#ContentPlaceHolder1_txtToDate").blur(function () {
-                var date = $("#ContentPlaceHolder1_txtToDate").val();
-                if (date != "") {
-                    date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
-                    var isValid = CommonHelper.IsVaildDate(date);
-                    if (!isValid) {
-                        toastr.warning("Invalid Date");
-                        $("#ContentPlaceHolder1_txtToDate").focus();
-                        $("#ContentPlaceHolder1_txtToDate").val(DayOpenDate);
-                        return false;
-                    }
-                }
 
-            });
-            $("#ContentPlaceHolder1_txtFromDate").blur(function () {
-                var date = $("#ContentPlaceHolder1_txtFromDate").val();
-                if (date != "") {
-                    date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
-                    var isValid = CommonHelper.IsVaildDate(date);
-                    if (!isValid) {
-                        toastr.warning("Invalid Date");
-                        $("#ContentPlaceHolder1_txtFromDate").focus();
-                        $("#ContentPlaceHolder1_txtFromDate").val(DayOpenDate);
-                        return false;
-                    }
+            var txtFromDate = '<%=txtFromDate.ClientID%>'
+            var txtToDate = '<%=txtToDate.ClientID%>'
+
+            $('#' + txtFromDate).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $('#' + txtToDate).datepicker("option", "minDate", selectedDate);
                 }
             });
+
+            $('#' + txtToDate).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $('#' + txtFromDate).datepicker("option", "maxDate", selectedDate);
+                }
+            });
+
+            //$("#ContentPlaceHolder1_txtToDate").blur(function () {
+            //    var date = $("#ContentPlaceHolder1_txtToDate").val();
+            //    if (date != "") {
+            //        date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
+            //        var isValid = CommonHelper.IsVaildDate(date);
+            //        if (!isValid) {
+            //            toastr.warning("Invalid Date");
+            //            $("#ContentPlaceHolder1_txtToDate").focus();
+            //            $("#ContentPlaceHolder1_txtToDate").val(DayOpenDate);
+            //            return false;
+            //        }
+            //    }
+
+            //});
+            //$("#ContentPlaceHolder1_txtFromDate").blur(function () {
+            //    var date = $("#ContentPlaceHolder1_txtFromDate").val();
+            //    if (date != "") {
+            //        date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
+            //        var isValid = CommonHelper.IsVaildDate(date);
+            //        if (!isValid) {
+            //            toastr.warning("Invalid Date");
+            //            $("#ContentPlaceHolder1_txtFromDate").focus();
+            //            $("#ContentPlaceHolder1_txtFromDate").val(DayOpenDate);
+            //            return false;
+            //        }
+            //    }
+            //});
         });
 
         function CurrencyRateInfoEnable() {

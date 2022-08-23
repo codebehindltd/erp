@@ -290,23 +290,18 @@
                     <div class="form-horizontal">
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="From Date"></asp:Label>
-                            </div>
-                            <div class="col-md-4">
-                                <asp:TextBox ID="txtFromDate" CssClass="form-control" runat="server"></asp:TextBox>
+                                <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="Date"></asp:Label>
                             </div>
                             <div class="col-md-2">
-                                <asp:Label ID="lblToDate" runat="server" class="control-label" Text="To Date"></asp:Label>
+                                <asp:TextBox ID="txtFromDate" CssClass="form-control" runat="server" placeholder="From Date"></asp:TextBox>
                             </div>
-                            <div class="col-md-4">
-                                <asp:TextBox ID="txtToDate" CssClass="form-control" runat="server"></asp:TextBox>
+                            <div class="col-md-2">
+                                <asp:TextBox ID="txtToDate" CssClass="form-control" runat="server" placeholder="To Date"></asp:TextBox>
                             </div>
-                        </div>
-                        <div class="form-group">
                             <div class="col-md-2">
                                 <asp:Label ID="lblTransactionTypeSearch" runat="server" class="control-label" Text="Transaction Type"></asp:Label>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-4">
                                 <asp:DropDownList ID="ddlTransactionTypeSearch" runat="server" CssClass="form-control"
                                     TabIndex="1">
                                     <asp:ListItem Value="0">--- All ---</asp:ListItem>
@@ -393,53 +388,75 @@
                 $("#TransactionTypeSearchDiv").show();
             }
 
-            $('#ContentPlaceHolder1_txtFromDate').datepicker({
+            //$('#ContentPlaceHolder1_txtFromDate').datepicker({
+            //    changeMonth: true,
+            //    changeYear: true,
+            //    defaultDate: DayOpenDate,
+            //    dateFormat: innBoarDateFormat,
+            //    onClose: function (selectedDate) {
+            //        $('#ContentPlaceHolder1_txtToDate').datepicker("option", "minDate", selectedDate);
+            //    }
+            //}).datepicker("setDate", DayOpenDate);
+
+            //$('#ContentPlaceHolder1_txtToDate').datepicker({
+            //    changeMonth: true,
+            //    changeYear: true,
+            //    defaultDate: DayOpenDate,
+            //    dateFormat: innBoarDateFormat,
+            //    onClose: function (selectedDate) {
+            //        $('#ContentPlaceHolder1_txtFromDate').datepicker("option", "maxDate", selectedDate);
+            //    }
+            //}).datepicker("setDate", DayOpenDate);
+
+            //$("#ContentPlaceHolder1_txtFromDate").blur(function () {
+            //    var date = $("#ContentPlaceHolder1_txtFromDate").val();
+            //    if (date != "") {
+            //        date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
+            //        var isValid = CommonHelper.IsVaildDate(date);
+            //        if (!isValid) {
+            //            toastr.warning("Invalid Date");
+            //            $("#ContentPlaceHolder1_txtFromDate").focus();
+            //            $("#ContentPlaceHolder1_txtFromDate").val(DayOpenDate);
+            //            return false;
+            //        }
+            //    }
+
+            //});
+            //$("#ContentPlaceHolder1_txtToDate").blur(function () {
+            //    var date = $("#ContentPlaceHolder1_txtToDate").val();
+            //    if (date != "") {
+            //        date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
+            //        var isValid = CommonHelper.IsVaildDate(date);
+            //        if (!isValid) {
+            //            toastr.warning("Invalid Date");
+            //            $("#ContentPlaceHolder1_txtToDate").focus();
+            //            $("#ContentPlaceHolder1_txtToDate").val(DayOpenDate);
+            //            return false;
+            //        }
+            //    }
+
+            //});
+
+
+            var txtFromDate = '<%=txtFromDate.ClientID%>'
+            var txtToDate = '<%=txtToDate.ClientID%>'
+
+            $('#' + txtFromDate).datepicker({
                 changeMonth: true,
                 changeYear: true,
-                defaultDate: DayOpenDate,
                 dateFormat: innBoarDateFormat,
                 onClose: function (selectedDate) {
-                    $('#ContentPlaceHolder1_txtToDate').datepicker("option", "minDate", selectedDate);
+                    $('#' + txtToDate).datepicker("option", "minDate", selectedDate);
                 }
-            }).datepicker("setDate", DayOpenDate);
-
-            $('#ContentPlaceHolder1_txtToDate').datepicker({
-                changeMonth: true,
-                changeYear: true,
-                defaultDate: DayOpenDate,
-                dateFormat: innBoarDateFormat,
-                onClose: function (selectedDate) {
-                    $('#ContentPlaceHolder1_txtFromDate').datepicker("option", "maxDate", selectedDate);
-                }
-            }).datepicker("setDate", DayOpenDate);
-
-            $("#ContentPlaceHolder1_txtFromDate").blur(function () {
-                var date = $("#ContentPlaceHolder1_txtFromDate").val();
-                if (date != "") {
-                    date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
-                    var isValid = CommonHelper.IsVaildDate(date);
-                    if (!isValid) {
-                        toastr.warning("Invalid Date");
-                        $("#ContentPlaceHolder1_txtFromDate").focus();
-                        $("#ContentPlaceHolder1_txtFromDate").val(DayOpenDate);
-                        return false;
-                    }
-                }
-
             });
-            $("#ContentPlaceHolder1_txtToDate").blur(function () {
-                var date = $("#ContentPlaceHolder1_txtToDate").val();
-                if (date != "") {
-                    date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
-                    var isValid = CommonHelper.IsVaildDate(date);
-                    if (!isValid) {
-                        toastr.warning("Invalid Date");
-                        $("#ContentPlaceHolder1_txtToDate").focus();
-                        $("#ContentPlaceHolder1_txtToDate").val(DayOpenDate);
-                        return false;
-                    }
-                }
 
+            $('#' + txtToDate).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $('#' + txtFromDate).datepicker("option", "maxDate", selectedDate);
+                }
             });
         });
 

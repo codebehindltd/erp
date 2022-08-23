@@ -34,25 +34,46 @@
                 width: "99.75%"
             });
 
-            $('#ContentPlaceHolder1_txtFromDate').datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: innBoarDateFormat,
-                defaultDate: DayOpenDate,
-                onClose: function (selectedDate) {
-                    $('#ContentPlaceHolder1_txtToDate').datepicker("option", "minDate", selectedDate);
-                }
-            }).datepicker("setDate", DayOpenDate);
+            //$('#ContentPlaceHolder1_txtFromDate').datepicker({
+            //    changeMonth: true,
+            //    changeYear: true,
+            //    dateFormat: innBoarDateFormat,
+            //    defaultDate: DayOpenDate,
+            //    onClose: function (selectedDate) {
+            //        $('#ContentPlaceHolder1_txtToDate').datepicker("option", "minDate", selectedDate);
+            //    }
+            //}).datepicker("setDate", DayOpenDate);
 
-            $('#ContentPlaceHolder1_txtToDate').datepicker({
+            //$('#ContentPlaceHolder1_txtToDate').datepicker({
+            //    changeMonth: true,
+            //    changeYear: true,
+            //    defaultDate: DayOpenDate,
+            //    dateFormat: innBoarDateFormat,
+            //    onClose: function (selectedDate) {
+            //        $('#ContentPlaceHolder1_txtFromDate').datepicker("option", "maxDate", selectedDate);
+            //    }
+            //}).datepicker("setDate", DayOpenDate);
+
+            var txtFromDate = '<%=txtFromDate.ClientID%>'
+            var txtToDate = '<%=txtToDate.ClientID%>'
+
+            $('#' + txtFromDate).datepicker({
                 changeMonth: true,
                 changeYear: true,
-                defaultDate: DayOpenDate,
                 dateFormat: innBoarDateFormat,
                 onClose: function (selectedDate) {
-                    $('#ContentPlaceHolder1_txtFromDate').datepicker("option", "maxDate", selectedDate);
+                    $('#' + txtToDate).datepicker("option", "minDate", selectedDate);
                 }
-            }).datepicker("setDate", DayOpenDate);
+            });
+
+            $('#' + txtToDate).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $('#' + txtFromDate).datepicker("option", "maxDate", selectedDate);
+                }
+            });
 
             if (Cookies.getJSON('recsearchoption') != undefined) {
                 var SearchOption = Cookies.getJSON('recsearchoption');

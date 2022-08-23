@@ -621,8 +621,18 @@ namespace HotelManagement.Data.PurchaseManagment
                     else
                         dbSmartAspects.AddInParameter(cmd, "@ReceiveType", DbType.String, DBNull.Value);
 
-                    dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, fromDate);
-                    dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, toDate);
+                    if (fromDate != null)
+                        dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, fromDate);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, DBNull.Value);
+
+                    if (toDate != null)
+                        dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, toDate);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, DBNull.Value);
+
+                    //dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, fromDate);
+                    //dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, toDate);
 
                     if (!string.IsNullOrEmpty(receiveNumber))
                         dbSmartAspects.AddInParameter(cmd, "@ReceiveNumber", DbType.String, receiveNumber);
