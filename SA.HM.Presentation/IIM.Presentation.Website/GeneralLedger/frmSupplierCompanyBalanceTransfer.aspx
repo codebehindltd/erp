@@ -553,15 +553,15 @@
                 }
 
                 if (gridObject.IsCanDelete && IsCanDelete) {
-                    tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteTransactionInfo(" + gridObject.Id + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                    tr += "&nbsp;&nbsp;<a href='javascript:void();' onclick= 'javascript:return DeleteTransactionInfo(" + gridObject.Id + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
                 }
 
                 if (gridObject.IsCanChecked && IsCanSave) {
-                    tr += "<a href='javascript:void();' onclick= 'javascript:return CheckedTransfer(" + gridObject.Id + ")' ><img alt='Checked' src='../Images/checked.png' /></a>";
+                    tr += "&nbsp;&nbsp;<a href='javascript:void();' onclick= 'javascript:return CheckedTransfer(" + gridObject.Id + ")' ><img alt='Checked' src='../Images/checked.png' /></a>";
                 }
 
                 if (gridObject.IsCanApproved && IsCanSave) {
-                    tr += "<a href='javascript:void();' onclick= 'javascript:return ApprovedTransfer(" + gridObject.Id + ")' ><img alt='approved' src='../Images/approved.png' /></a>";
+                    tr += "&nbsp;&nbsp;<a href='javascript:void();' onclick= 'javascript:return ApprovedTransfer(" + gridObject.Id + ")' ><img alt='approved' src='../Images/approved.png' /></a>";
                 }
 
                 //tr += "&nbsp;&nbsp;";
