@@ -14,6 +14,535 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
+              <Height>0.70208in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Tablix Name="Tablix18">
+                      <TablixBody>
+                        <TablixColumns>
+                          <TablixColumn>
+                            <Width>0.84118in</Width>
+                          </TablixColumn>
+                          <TablixColumn>
+                            <Width>0.15321in</Width>
+                          </TablixColumn>
+                          <TablixColumn>
+                            <Width>5.59381in</Width>
+                          </TablixColumn>
+                          <TablixColumn>
+                            <Width>0.15321in</Width>
+                          </TablixColumn>
+                          <TablixColumn>
+                            <Width>0.82868in</Width>
+                          </TablixColumn>
+                          <TablixColumn>
+                            <Width>0.15321in</Width>
+                          </TablixColumn>
+                        </TablixColumns>
+                        <TablixRows>
+                          <TablixRow>
+                            <Height>0.70208in</Height>
+                            <TablixCells>
+                              <TablixCell>
+                                <CellContents>
+                                  <Image Name="Image2">
+                                    <Source>External</Source>
+                                    <Value>=Parameters!Path.Value</Value>
+                                    <Sizing>FitProportional</Sizing>
+                                    <ZIndex>3</ZIndex>
+                                    <ToolTip>=Parameters!Path.Value</ToolTip>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                      </Border>
+                                    </Style>
+                                  </Image>
+                                </CellContents>
+                              </TablixCell>
+                              <TablixCell>
+                                <CellContents>
+                                  <Textbox Name="Textbox225">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value />
+                                            <Style />
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style />
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>Textbox220</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                      </Border>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>2pt</PaddingRight>
+                                      <PaddingTop>2pt</PaddingTop>
+                                      <PaddingBottom>2pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                </CellContents>
+                              </TablixCell>
+                              <TablixCell>
+                                <CellContents>
+                                  <Tablix Name="Tablix19">
+                                    <TablixBody>
+                                      <TablixColumns>
+                                        <TablixColumn>
+                                          <Width>3.43782in</Width>
+                                        </TablixColumn>
+                                        <TablixColumn>
+                                          <Width>2.15599in</Width>
+                                        </TablixColumn>
+                                      </TablixColumns>
+                                      <TablixRows>
+                                        <TablixRow>
+                                          <Height>0.38823in</Height>
+                                          <TablixCells>
+                                            <TablixCell>
+                                              <CellContents>
+                                                <Textbox Name="Textbox259">
+                                                  <CanGrow>true</CanGrow>
+                                                  <KeepTogether>true</KeepTogether>
+                                                  <Paragraphs>
+                                                    <Paragraph>
+                                                      <TextRuns>
+                                                        <TextRun>
+                                                          <Value>=Parameters!CompanyProfile.Value</Value>
+                                                          <Style>
+                                                            <FontSize>14pt</FontSize>
+                                                            <FontWeight>Bold</FontWeight>
+                                                            <Color>SteelBlue</Color>
+                                                          </Style>
+                                                        </TextRun>
+                                                      </TextRuns>
+                                                      <Style />
+                                                    </Paragraph>
+                                                  </Paragraphs>
+                                                  <rd:DefaultName>Textbox259</rd:DefaultName>
+                                                  <Style>
+                                                    <Border>
+                                                      <Style>None</Style>
+                                                    </Border>
+                                                    <PaddingLeft>2pt</PaddingLeft>
+                                                    <PaddingRight>2pt</PaddingRight>
+                                                    <PaddingTop>2pt</PaddingTop>
+                                                    <PaddingBottom>2pt</PaddingBottom>
+                                                  </Style>
+                                                </Textbox>
+                                                <ColSpan>2</ColSpan>
+                                              </CellContents>
+                                            </TablixCell>
+                                            <TablixCell />
+                                          </TablixCells>
+                                        </TablixRow>
+                                        <TablixRow>
+                                          <Height>0.31385in</Height>
+                                          <TablixCells>
+                                            <TablixCell>
+                                              <CellContents>
+                                                <Textbox Name="Textbox227">
+                                                  <CanGrow>true</CanGrow>
+                                                  <KeepTogether>true</KeepTogether>
+                                                  <Paragraphs>
+                                                    <Paragraph>
+                                                      <TextRuns>
+                                                        <TextRun>
+                                                          <Value>=Parameters!CompanyAddress.Value + Microsoft.VisualBasic.Constants.vbCrLf + Parameters!CompanyWeb.Value</Value>
+                                                          <Style>
+                                                            <Color>SteelBlue</Color>
+                                                          </Style>
+                                                        </TextRun>
+                                                      </TextRuns>
+                                                      <Style />
+                                                    </Paragraph>
+                                                  </Paragraphs>
+                                                  <rd:DefaultName>Textbox220</rd:DefaultName>
+                                                  <Style>
+                                                    <Border>
+                                                      <Style>None</Style>
+                                                    </Border>
+                                                    <PaddingLeft>2pt</PaddingLeft>
+                                                    <PaddingRight>2pt</PaddingRight>
+                                                    <PaddingTop>2pt</PaddingTop>
+                                                    <PaddingBottom>2pt</PaddingBottom>
+                                                  </Style>
+                                                </Textbox>
+                                              </CellContents>
+                                            </TablixCell>
+                                            <TablixCell>
+                                              <CellContents>
+                                                <Textbox Name="Textbox228">
+                                                  <CanGrow>true</CanGrow>
+                                                  <KeepTogether>true</KeepTogether>
+                                                  <Paragraphs>
+                                                    <Paragraph>
+                                                      <TextRuns>
+                                                        <TextRun>
+                                                          <Value>="Print Date : " + Parameters!PrintDateTime.Value</Value>
+                                                          <Style>
+                                                            <Color>SteelBlue</Color>
+                                                          </Style>
+                                                        </TextRun>
+                                                      </TextRuns>
+                                                      <Style />
+                                                    </Paragraph>
+                                                  </Paragraphs>
+                                                  <rd:DefaultName>Textbox220</rd:DefaultName>
+                                                  <Style>
+                                                    <Border>
+                                                      <Style>None</Style>
+                                                    </Border>
+                                                    <PaddingLeft>2pt</PaddingLeft>
+                                                    <PaddingRight>2pt</PaddingRight>
+                                                    <PaddingTop>2pt</PaddingTop>
+                                                    <PaddingBottom>2pt</PaddingBottom>
+                                                  </Style>
+                                                </Textbox>
+                                              </CellContents>
+                                            </TablixCell>
+                                          </TablixCells>
+                                        </TablixRow>
+                                      </TablixRows>
+                                    </TablixBody>
+                                    <TablixColumnHierarchy>
+                                      <TablixMembers>
+                                        <TablixMember />
+                                        <TablixMember />
+                                      </TablixMembers>
+                                    </TablixColumnHierarchy>
+                                    <TablixRowHierarchy>
+                                      <TablixMembers>
+                                        <TablixMember />
+                                        <TablixMember />
+                                      </TablixMembers>
+                                    </TablixRowHierarchy>
+                                    <ZIndex>6</ZIndex>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                      </Border>
+                                    </Style>
+                                  </Tablix>
+                                </CellContents>
+                              </TablixCell>
+                              <TablixCell>
+                                <CellContents>
+                                  <Textbox Name="Textbox250">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value />
+                                            <Style />
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style />
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>Textbox250</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                      </Border>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>2pt</PaddingRight>
+                                      <PaddingTop>2pt</PaddingTop>
+                                      <PaddingBottom>2pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                </CellContents>
+                              </TablixCell>
+                              <TablixCell>
+                                <CellContents>
+                                  <Image Name="Image5">
+                                    <Source>Database</Source>
+                                    <Value>=Fields!QrEmployeeImage.Value</Value>
+                                    <MIMEType>image/png</MIMEType>
+                                    <Sizing>FitProportional</Sizing>
+                                    <ZIndex>2</ZIndex>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                      </Border>
+                                    </Style>
+                                  </Image>
+                                </CellContents>
+                              </TablixCell>
+                              <TablixCell>
+                                <CellContents>
+                                  <Textbox Name="Textbox252">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value />
+                                            <Style />
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style />
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>Textbox252</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Style>None</Style>
+                                      </Border>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>2pt</PaddingRight>
+                                      <PaddingTop>2pt</PaddingTop>
+                                      <PaddingBottom>2pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                </CellContents>
+                              </TablixCell>
+                            </TablixCells>
+                          </TablixRow>
+                        </TablixRows>
+                      </TablixBody>
+                      <TablixColumnHierarchy>
+                        <TablixMembers>
+                          <TablixMember />
+                          <TablixMember />
+                          <TablixMember />
+                          <TablixMember />
+                          <TablixMember />
+                          <TablixMember />
+                        </TablixMembers>
+                      </TablixColumnHierarchy>
+                      <TablixRowHierarchy>
+                        <TablixMembers>
+                          <TablixMember />
+                        </TablixMembers>
+                      </TablixRowHierarchy>
+                      <ZIndex>1</ZIndex>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </Tablix>
+                    <ColSpan>2</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.0375in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>SteelBlue</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                          <Width>0.25pt</Width>
+                        </Border>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>2</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox207">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>SteelBlue</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox206</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>2</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.29167in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox14">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Payslip for the month of </Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>SteelBlue</Color>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Parameters!month.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>SteelBlue</Color>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>/</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>SteelBlue</Color>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Parameters!year.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>SteelBlue</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox7</rd:DefaultName>
+                      <ZIndex>5</ZIndex>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>2</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.09167in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox206">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>SteelBlue</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox206</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>2</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
               <Height>1.70712in</Height>
               <TablixCells>
                 <TablixCell>
@@ -1385,6 +1914,11 @@
               </SortExpressions>
               <TablixMembers>
                 <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
                 <TablixMember>
                   <Group Name="SalaryEffectiveness">
                     <GroupExpressions>
@@ -1428,9 +1962,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Payslip</DataSetName>
-        <Top>0.05083in</Top>
+        <Top>0.0375in</Top>
         <Left>0.02583in</Left>
-        <Height>2.95712in</Height>
+        <Height>4.33004in</Height>
         <Width>7.72329in</Width>
         <Style>
           <Border>
@@ -1439,216 +1973,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.00795in</Height>
+    <Height>4.61129in</Height>
     <Style />
   </Body>
   <Width>7.74996in</Width>
   <Page>
-    <PageHeader>
-      <Height>1.18417in</Height>
-      <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
-      <ReportItems>
-        <Image Name="Image1">
-          <Source>External</Source>
-          <Value>=Parameters!Path.Value</Value>
-          <Sizing>FitProportional</Sizing>
-          <Left>0.00083in</Left>
-          <Height>0.78125in</Height>
-          <Width>0.78298in</Width>
-          <ToolTip>=Parameters!Path.Value</ToolTip>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </Image>
-        <Textbox Name="Textbox1">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=Parameters!CompanyProfile.Value</Value>
-                  <Style>
-                    <FontSize>14pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                    <Color>SteelBlue</Color>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Left>0.82805in</Left>
-          <Height>0.39667in</Height>
-          <Width>6.90773in</Width>
-          <ZIndex>1</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox2">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=Parameters!CompanyAddress.Value + vbCrLf + Parameters!CompanyWeb.Value</Value>
-                  <Style>
-                    <Color>SteelBlue</Color>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.43833in</Top>
-          <Left>0.8212in</Left>
-          <Height>0.34292in</Height>
-          <Width>3.83028in</Width>
-          <ZIndex>2</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox3">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>="Print Date : " + Parameters!PrintDateTime.Value</Value>
-                  <Style>
-                    <Color>SteelBlue</Color>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Right</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox3</rd:DefaultName>
-          <Top>0.43833in</Top>
-          <Left>4.67926in</Left>
-          <Height>0.34292in</Height>
-          <Width>3.05652in</Width>
-          <ZIndex>3</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Line Name="Line1">
-          <Top>0.84444in</Top>
-          <Left>0.01333in</Left>
-          <Height>0in</Height>
-          <Width>7.73579in</Width>
-          <ZIndex>4</ZIndex>
-          <Style>
-            <Border>
-              <Color>SteelBlue</Color>
-              <Style>Solid</Style>
-              <Width>0.25pt</Width>
-            </Border>
-          </Style>
-        </Line>
-        <Textbox Name="Textbox9">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>Payslip for the month of </Value>
-                  <Style>
-                    <FontFamily>Tahoma</FontFamily>
-                    <FontSize>12pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                    <Color>SteelBlue</Color>
-                  </Style>
-                </TextRun>
-                <TextRun>
-                  <Value>=Parameters!month.Value</Value>
-                  <Style>
-                    <FontFamily>Tahoma</FontFamily>
-                    <FontSize>12pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                    <Color>SteelBlue</Color>
-                  </Style>
-                </TextRun>
-                <TextRun>
-                  <Value>/</Value>
-                  <Style>
-                    <FontFamily>Tahoma</FontFamily>
-                    <FontSize>12pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                    <Color>SteelBlue</Color>
-                  </Style>
-                </TextRun>
-                <TextRun>
-                  <Value>=Parameters!year.Value</Value>
-                  <Style>
-                    <FontFamily>Tahoma</FontFamily>
-                    <FontSize>12pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                    <Color>SteelBlue</Color>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox7</rd:DefaultName>
-          <Top>0.87497in</Top>
-          <Left>0.02583in</Left>
-          <Height>0.29166in</Height>
-          <Width>7.70995in</Width>
-          <ZIndex>5</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-      </ReportItems>
-      <Style>
-        <Border>
-          <Style>None</Style>
-        </Border>
-      </Style>
-    </PageHeader>
     <PageFooter>
-      <Height>0.98542in</Height>
+      <Height>1.3625in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1674,7 +2005,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox7</rd:DefaultName>
-          <Top>0.74584in</Top>
+          <Top>1.12084in</Top>
           <Height>0.20833in</Height>
           <Width>5.55654in</Width>
           <Style>
@@ -1706,7 +2037,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.74584in</Top>
+          <Top>1.12084in</Top>
           <Left>6.18867in</Left>
           <Height>0.20833in</Height>
           <Width>0.58412in</Width>
@@ -1742,7 +2073,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox67</rd:DefaultName>
-          <Top>0.74584in</Top>
+          <Top>1.12084in</Top>
           <Left>6.78617in</Left>
           <Height>0.20833in</Height>
           <Width>0.12944in</Width>
@@ -1777,7 +2108,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>RoomNumber</rd:DefaultName>
-          <Top>0.74584in</Top>
+          <Top>1.12084in</Top>
           <Left>6.9309in</Left>
           <Height>0.20833in</Height>
           <Width>0.80488in</Width>
@@ -1815,7 +2146,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox50</rd:DefaultName>
-          <Top>0.53004in</Top>
+          <Top>0.90504in</Top>
           <Left>6.18677in</Left>
           <Height>0.1875in</Height>
           <Width>1.56319in</Width>
@@ -1831,7 +2162,7 @@
           </Style>
         </Textbox>
         <Line Name="Line5">
-          <Top>0.5106in</Top>
+          <Top>0.8856in</Top>
           <Left>6.18677in</Left>
           <Height>0in</Height>
           <Width>1.56319in</Width>
@@ -1864,7 +2195,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox50</rd:DefaultName>
-          <Top>0.53004in</Top>
+          <Top>0.90504in</Top>
           <Left>0.0601in</Left>
           <Height>0.1875in</Height>
           <Width>1.84653in</Width>
@@ -1880,7 +2211,7 @@
           </Style>
         </Textbox>
         <Line Name="Line4">
-          <Top>0.5106in</Top>
+          <Top>0.8856in</Top>
           <Left>0.0601in</Left>
           <Height>0in</Height>
           <Width>1.83334in</Width>
@@ -2072,10 +2403,14 @@
           <DataField>AccountNumber</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="QrEmployeeImage">
+          <DataField>QrEmployeeImage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>InnboardDataSet</rd:DataSetName>
-        <rd:SchemaPath>E:\003 Data Grid Limited\Source Code\Innboard\Trunk\SA.HM.Presentation\IIM.Presentation.Website\InnboardDataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\002 Source Code\ERP\SA.HM.Presentation\IIM.Presentation.Website\InnboardDataSet.xsd</rd:SchemaPath>
         <rd:TableName>EmployeePayslip_SP</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

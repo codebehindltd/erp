@@ -84,5 +84,7 @@ namespace HotelManagement.Entity.Payroll
         //public string CurrencyName { get; set; }
         //public decimal ConvertionRate { get; set; }
         //public decimal BasicAmountInEmployeeCurrency { get; set; }
+        public byte[] QrEmployeeImage { get; set; }
+        
     }
 }

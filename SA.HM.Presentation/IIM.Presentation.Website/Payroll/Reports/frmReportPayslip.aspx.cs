@@ -215,6 +215,20 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                     }
                 }
 
+                //byte[] QrImage;
+                //HMCommonDA hmCommonQrImageDA = new HMCommonDA();
+                //QrImage = hmCommonQrImageDA.GenerateQrCode(reportName + "; " + files[0].CompanyName + "; " + files[0].CompanyAddress + ";");
+                //paramReport.Add(new ReportParameter("QrImage", Convert.ToBase64String(QrImage)));
+
+                HMCommonDA hmCommonQrImageDA = new HMCommonDA();
+                foreach (EmployeePayslipBO row in payslip)
+                {
+                    string strQrCode = string.Empty;
+                    //strQrCode = "Payslip" + "; " + row.EmpCode + "; " + row.EmployeeName + "; " + row.TotalAllowance + "; " + companyName + "; " + companyAddress + "; " + printDate + ";";
+                    strQrCode = "Payslip" + "; " + row.EmpCode + "; " + row.TotalAllowance + "; " + companyName + "; " + printDate + ";";
+                    row.QrEmployeeImage = hmCommonQrImageDA.GenerateQrCode(strQrCode);
+                }
+
                 paramReport.Add(new ReportParameter("CompanyProfile", companyName));
                 paramReport.Add(new ReportParameter("CompanyAddress", companyAddress));
                 paramReport.Add(new ReportParameter("CompanyWeb", webAddress));
