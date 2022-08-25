@@ -2230,7 +2230,7 @@ namespace HotelManagement.Data.Inventory
             }
             return recipeItem;
         }
-        public List<ItemWiseStockReportViewBO> GetItemWiseStockInfoForReport(string reportType, int costCenterId, int locationId, int categoryId, int itemId, int colorId, int sizeId, int styleId, string stockType, string showTransaction,
+        public List<ItemWiseStockReportViewBO> GetItemWiseStockInfoForReport(DateTime stockDate, string reportType, int costCenterId, int locationId, int categoryId, int itemId, int colorId, int sizeId, int styleId, string stockType, string showTransaction,
                                                                             int manufacturerId, int classificationId, string model, int companyId, int projectId)
         {
             List<ItemWiseStockReportViewBO> itemWiseStockList = new List<ItemWiseStockReportViewBO>();
@@ -2240,6 +2240,7 @@ namespace HotelManagement.Data.Inventory
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetItemWiseStockForReport_SP"))
                 {
                     cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@StockDate", DbType.DateTime, stockDate);
                     dbSmartAspects.AddInParameter(cmd, "@ReportType", DbType.String, reportType);
 
                     if (costCenterId != 0)

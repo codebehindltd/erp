@@ -11,7 +11,16 @@
             var moduleName = "<a href='/HMCommon/frmHMHome.aspx' class='inActive'>Inventory</a>";
             var formName = "<span class='divider'>/</span><li class='active'>Item Wise Stock</li>";
             var breadCrumbs = moduleName + formName;
-            $("#ltlBreadCrumbsInformation").html(breadCrumbs);           
+            $("#ltlBreadCrumbsInformation").html(breadCrumbs);
+
+            $('#ContentPlaceHolder1_txtStockDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $('#ContentPlaceHolder1_txtToDate').datepicker("option", "minDate", selectedDate);
+                }
+            });
 
             if ($("#ContentPlaceHolder1_ddlReportType").val() == "ItemWiseStock") {
                 $("#CostcenterWise").hide();
@@ -181,7 +190,7 @@
     <asp:HiddenField ID="hfProjectId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfCompanyName" runat="server" Value=""></asp:HiddenField>
     <asp:HiddenField ID="hfProjectName" runat="server" Value=""></asp:HiddenField>
-    <asp:HiddenField ID="hfIsItemAttributeEnable" runat="server" Value=""></asp:HiddenField>    
+    <asp:HiddenField ID="hfIsItemAttributeEnable" runat="server" Value=""></asp:HiddenField>
     <div id="SearchPanel" class="panel panel-default">
         <div class="panel-body">
             <div class="form-horizontal">
@@ -190,13 +199,19 @@
                     <div class="col-md-2">
                         <asp:Label ID="Label1" runat="server" class="control-label" Text="Report Type"></asp:Label>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-4">
                         <asp:DropDownList ID="ddlReportType" runat="server" CssClass="form-control">
                             <asp:ListItem Value="ItemWiseStock" Text="Item Wise Stock"></asp:ListItem>
                             <asp:ListItem Value="CategoryWiseStock" Text="Category Wise Stock"></asp:ListItem>
                             <asp:ListItem Value="LocationWiseStock" Text="Location Wise Stock"></asp:ListItem>
                             <asp:ListItem Value="ProjectWiseStock" Text="Project Wise Stock"></asp:ListItem>
                         </asp:DropDownList>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="Label6" runat="server" class="control-label" Text="Stock Date"></asp:Label>
+                    </div>
+                    <div class="col-md-4">
+                        <asp:TextBox ID="txtStockDate" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>
                 <div class="form-group">
@@ -317,7 +332,7 @@
                 </div>
                 <%--<div class="form-group" id="CompanyAndProjectDiv" style="display: none;">
                     <div class="col-md-12">--%>
-                        
+
                 <%--    </div>
                 </div>--%>
                 <div class="row">

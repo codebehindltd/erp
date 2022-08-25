@@ -1188,5 +1188,26 @@ namespace HotelManagement.Data.UserInformation
 
             return userInfoBO;
         }
+        public Boolean InvItemStockInformationLogProcess(DateTime processDate, int createdBy)
+        {
+            Boolean status = false;
+            try
+            {
+                using (DbConnection conn = dbSmartAspects.CreateConnection())
+                {
+                    using (DbCommand command = dbSmartAspects.GetStoredProcCommand("InvItemStockInformationLogProcess_SP"))
+                    {
+                        dbSmartAspects.AddInParameter(command, "@LogProcessDate", DbType.DateTime, processDate);
+                        dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, createdBy);
+                        status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return status;
+        }
     }
 }

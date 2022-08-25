@@ -232,6 +232,7 @@
             <TablixMember />
           </TablixMembers>
         </TablixRowHierarchy>
+        <Left>0in</Left>
         <Height>0.78125in</Height>
         <Width>10.48611in</Width>
         <Style>
@@ -2213,8 +2214,7 @@
         </TablixRowHierarchy>
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>LocationWiseItemStockInfo</DataSetName>
-        <Top>1.42583in</Top>
-        <Left>0.0125in</Left>
+        <Top>1.66333in</Top>
         <Height>1.15974in</Height>
         <Width>10.47361in</Width>
         <ZIndex>1</ZIndex>
@@ -2297,6 +2297,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
         <Top>1.12155in</Top>
+        <Left>0in</Left>
         <Height>0.25982in</Height>
         <Width>10.48611in</Width>
         <ZIndex>4</ZIndex>
@@ -2310,8 +2311,45 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Textbox Name="Textbox25">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>="Stock Date: " + Parameters!StockDate.Value</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>SteelBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>1.38753in</Top>
+        <Left>0in</Left>
+        <Height>0.25982in</Height>
+        <Width>10.46944in</Width>
+        <ZIndex>5</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>2.60154in</Height>
+    <Height>2.85154in</Height>
     <Style />
   </Body>
   <Width>10.48611in</Width>
@@ -2641,6 +2679,12 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="CompanyAndProjectInformation">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="StockDate">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>

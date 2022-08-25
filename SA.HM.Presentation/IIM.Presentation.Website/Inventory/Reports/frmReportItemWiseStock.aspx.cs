@@ -390,19 +390,27 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             string ImageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
             rvTransaction.LocalReport.EnableExternalImages = true;
 
+            string showTransaction = ddlShowTransaction.SelectedValue;
+
+            if (string.IsNullOrWhiteSpace(this.txtStockDate.Text))
+            {
+                this.txtStockDate.Text = hmUtility.GetStringFromDateTime(DateTime.Now);
+            }
+
+            DateTime stockDate = hmUtility.GetDateTimeFromString(this.txtStockDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+
             paramReport.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
             paramReport.Add(new ReportParameter("PrintDateTime", printDate));
+            paramReport.Add(new ReportParameter("StockDate", this.txtStockDate.Text));
             paramReport.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
             paramReport.Add(new ReportParameter("IsStockSummaryEnableInStockReport", isStockSummaryEnableInStockReport));
             paramReport.Add(new ReportParameter("IsInventoryReportItemCostRescitionForNonAdminUsers", isInventoryReportItemCostRescitionForNonAdminUsers));
             paramReport.Add(new ReportParameter("CompanyAndProjectInformation", "Company: " + companyName + " and Project: " + projectName));
             rvTransaction.LocalReport.SetParameters(paramReport);
 
-            string showTransaction = ddlShowTransaction.SelectedValue;            
-
             InvItemDA itemWiseStockDA = new InvItemDA();
             List<ItemWiseStockReportViewBO> itemWiseStockBO = new List<ItemWiseStockReportViewBO>();
-            itemWiseStockBO = itemWiseStockDA.GetItemWiseStockInfoForReport(reportType, costCenterId, locationId, categoryId, itemId, colorId, sizeId, styleId, stockType, showTransaction, manufacturerId, classificationId, model, companyId, projectId);
+            itemWiseStockBO = itemWiseStockDA.GetItemWiseStockInfoForReport(stockDate, reportType, costCenterId, locationId, categoryId, itemId, colorId, sizeId, styleId, stockType, showTransaction, manufacturerId, classificationId, model, companyId, projectId);
 
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], itemWiseStockBO));

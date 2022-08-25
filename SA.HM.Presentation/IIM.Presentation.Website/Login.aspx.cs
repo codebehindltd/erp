@@ -28,13 +28,13 @@ namespace HotelManagement.Presentation.Website.UserInformation
                 SiteTitle.InnerText = System.Web.Configuration.WebConfigurationManager.AppSettings["InnboardTitleHead"].ToString();
                 this.txtUserId.Focus();
             }
-        }
+        }        
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             if (!IsValid())
             {
                 return;
-            }
+            }            
 
             Session["IsOnlyRetailPOS"] = null;
             CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
@@ -81,6 +81,8 @@ namespace HotelManagement.Presentation.Website.UserInformation
                     Session.Add("UserAdminAuthorizationBOSession", adminAuthorizationList);
                 }
             }
+
+            InvItemStockInformationLogProcess(userInformation.UserInfoId);
 
             RestaurantBearerDA restaurantBearerDA = new RestaurantBearerDA();
             RestaurantBearerBO restaurantBearerBO = new RestaurantBearerBO();
@@ -346,6 +348,13 @@ namespace HotelManagement.Presentation.Website.UserInformation
             {
                 LoginBackgroudDiv.Style.Add("background-image", "url(/Images/LogInPageDataGrid.jpg)");
             }
+        }
+        private void InvItemStockInformationLogProcess(int userInfoId)
+        {
+            UserInformationDA userInformationDA = new UserInformationDA();
+            Boolean status = userInformationDA.InvItemStockInformationLogProcess(DateTime.Now, userInfoId);
+            if (status)
+                hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(), EntityTypeEnum.EntityType.InventoryItemStockLog.ToString(), 0, ProjectModuleEnum.ProjectModule.FrontOffice.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InventoryItemStockLog));
         }
         public ActivityLogsBO GetActivityLog()
         {

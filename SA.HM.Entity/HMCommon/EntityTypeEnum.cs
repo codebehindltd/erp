@@ -369,6 +369,8 @@ namespace HotelManagement.Entity.HMCommon
             ItemStockAdjustment,
             [Description("Inventory Item Stock Variance")]
             InvItemStockVariance,
+            [Description("Inventory Item Stock Log")]
+            InventoryItemStockLog,
             [Description("Purchase Management Product Output")]
             PMProductOut,
             [Description("Product Out For Room")]
