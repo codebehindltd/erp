@@ -13,6 +13,8 @@ using HotelManagement.Data.HMCommon;
 using HotelManagement.Entity.PurchaseManagment;
 using HotelManagement.Data.PurchaseManagment;
 using HotelManagement.Entity.HMCommon;
+using HotelManagement.Data.GeneralLedger;
+using HotelManagement.Entity.GeneralLedger;
 
 namespace HotelManagement.Presentation.Website.Inventory
 {
@@ -33,6 +35,7 @@ namespace HotelManagement.Presentation.Website.Inventory
                 this.LoadCostCenter();
                 this.LoadCategoryInfo();
                 this.LoadGridInformation();
+                this.LoadAccountHead();
                 this.SetTab("EntryTab");
                 if (Session["FinishProductId"] != null)
                 {
@@ -210,6 +213,21 @@ namespace HotelManagement.Presentation.Website.Inventory
             itemSearch.Text = hmUtility.GetDropDownFirstAllValue();
             this.ddlSearchCostCenter.Items.Insert(0, itemSearch);
         }
+
+        private void LoadAccountHead()
+        {
+            NodeMatrixDA nodeMatrixDA = new NodeMatrixDA();
+            ddlAccountHead.DataSource = nodeMatrixDA.GetNodeMatrixInfo();
+            ddlAccountHead.DataTextField = "NodeHead";
+            ddlAccountHead.DataValueField = "NodeId";
+            ddlAccountHead.DataBind();
+
+            ListItem itemNodeId = new ListItem();
+            itemNodeId.Value = "0";
+            itemNodeId.Text = hmUtility.GetDropDownFirstValue();
+            ddlAccountHead.Items.Insert(0, itemNodeId);
+        }
+
         private void LoadCategoryInfo()
         {
             InvCategoryDA categoryDA = new InvCategoryDA();
@@ -350,7 +368,7 @@ namespace HotelManagement.Presentation.Website.Inventory
             return location;
         }
         [WebMethod]
-        public static ReturnInfo SaveFinishGoods(FinishedProductBO finishedProduct, List<FinishedProductDetailsBO> AddedRMGoods, List<FinishedProductDetailsBO> EditedRMGoods, List<FinishedProductDetailsBO> DeletedRMGoods, List<FinishedProductDetailsBO> AddedFinishGoods, List<FinishedProductDetailsBO> EditedFinishGoods, List<FinishedProductDetailsBO> DeletedFinishGoods)
+        public static ReturnInfo SaveFinishGoods(FinishedProductBO finishedProduct, List<FinishedProductDetailsBO> AddedRMGoods, List<FinishedProductDetailsBO> EditedRMGoods, List<FinishedProductDetailsBO> DeletedRMGoods, List<FinishedProductDetailsBO> AddedFinishGoods, List<FinishedProductDetailsBO> EditedFinishGoods, List<FinishedProductDetailsBO> DeletedFinishGoods, List<OverheadExpensesBO> AddedOverheadExpenses)
         {
             ReturnInfo rtninfo = new ReturnInfo();
             Boolean status = false;
@@ -370,7 +388,7 @@ namespace HotelManagement.Presentation.Website.Inventory
                     finishedProduct.ApprovedStatus = HMConstants.ApprovalStatus.Pending.ToString();
                     finishedProduct.CreatedBy = userInformationBO.UserInfoId;
 
-                    status = finishDa.SaveInventoryProduction(finishedProduct, AddedRMGoods, AddedFinishGoods);
+                    status = finishDa.SaveInventoryProduction(finishedProduct, AddedRMGoods, AddedFinishGoods, AddedOverheadExpenses);
 
                     if (status)
                     {

@@ -494,7 +494,7 @@ namespace HotelManagement.Data.PurchaseManagment
 
             return finishGoods;
         }
-        public bool SaveInventoryProduction(FinishedProductBO finishedProduct, List<FinishedProductDetailsBO> AddedRMGoods, List<FinishedProductDetailsBO> AddedFinishGoods)
+        public bool SaveInventoryProduction(FinishedProductBO finishedProduct, List<FinishedProductDetailsBO> AddedRMGoods, List<FinishedProductDetailsBO> AddedFinishGoods, List<OverheadExpensesBO> AddedOverheadExpenses)
         {
             Int64 status = 0, productionId = 0;
             bool retVal = false;
@@ -566,6 +566,24 @@ namespace HotelManagement.Data.PurchaseManagment
                                     dbSmartAspects.AddInParameter(cmdOutDetails, "@Quantity", DbType.Decimal, fp.Quantity);
 
                                     status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
+                                }
+                            }
+                        }
+                        if(status > 0 && AddedOverheadExpenses.Count > 0)
+                        {
+                            foreach(OverheadExpensesBO oe in AddedOverheadExpenses)
+                            {
+                                using (DbCommand oEDetails = dbSmartAspects.GetStoredProcCommand("SaveInvProductionOEDetails_SP"))
+                                {
+                                    oEDetails.Parameters.Clear();
+
+                                    dbSmartAspects.AddInParameter(oEDetails, "@ProductionId", DbType.Int64, productionId);
+                                    dbSmartAspects.AddInParameter(oEDetails, "@NodeId", DbType.Int32, oe.NodeId);
+                                    dbSmartAspects.AddInParameter(oEDetails, "@Amount", DbType.Decimal, oe.Amount);
+                                    dbSmartAspects.AddInParameter(oEDetails, "@Remarks", DbType.String, oe.Remarks);
+                                    dbSmartAspects.AddInParameter(oEDetails, "@CostCenterId", DbType.Int32, oe.CostCenterId);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(oEDetails, transction);
                                 }
                             }
                         }

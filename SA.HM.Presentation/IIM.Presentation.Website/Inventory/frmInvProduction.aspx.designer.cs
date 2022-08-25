@@ -31,6 +31,15 @@ namespace HotelManagement.Presentation.Website.Inventory {
         protected global::System.Web.UI.WebControls.HiddenField hfFinishProductId;
         
         /// <summary>
+        /// hfAccoutHeadId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfAccoutHeadId;
+        
+        /// <summary>
         /// hfIsEditedFromApprovedForm control.
         /// </summary>
         /// <remarks>
@@ -497,6 +506,78 @@ namespace HotelManagement.Presentation.Website.Inventory {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtBagQuantity;
+        
+        /// <summary>
+        /// lblAccountHead control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAccountHead;
+        
+        /// <summary>
+        /// ddlAccountHead control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAccountHead;
+        
+        /// <summary>
+        /// lblAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAmount;
+        
+        /// <summary>
+        /// txtAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAmount;
+        
+        /// <summary>
+        /// lblOEDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOEDescription;
+        
+        /// <summary>
+        /// txtOEDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOEDescription;
+        
+        /// <summary>
+        /// lbltotalAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbltotalAmount;
+        
+        /// <summary>
+        /// txttotalAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txttotalAmount;
         
         /// <summary>
         /// lblRemarks control.

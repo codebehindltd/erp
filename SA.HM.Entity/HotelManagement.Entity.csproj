@@ -261,6 +261,7 @@
     <Compile Include="Inventory\InvItemAttributeBO.cs" />
     <Compile Include="Inventory\InvItemAttributeViewBO.cs" />
     <Compile Include="Inventory\XYZAnalysisBO.cs" />
+    <Compile Include="PurchaseManagment\OverheadExpensesBO.cs" />
     <Compile Include="SalesAndMarketing\AccountManagerSalesTargetBO.cs" />
     <Compile Include="SalesAndMarketing\AccountManagerSalesTargetDetailsBO.cs" />
     <Compile Include="SalesAndMarketing\AccountManagerSalesTargetVwBO.cs" />

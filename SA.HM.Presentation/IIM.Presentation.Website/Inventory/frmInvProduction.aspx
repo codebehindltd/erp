@@ -7,6 +7,7 @@
         var finisItemEdited = "";
         var DeletedFinishGoods = [];
         var DeletedRMGoods = [];
+        var DeletedAccountHead = [];
 
         $(document).ready(function () {
             var moduleName = "<a href='/HMCommon/frmHMHome.aspx' class='inActive'>Inventory</a>";
@@ -24,6 +25,13 @@
             }
 
             $("#ContentPlaceHolder1_ddlCostCenter").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
+            $("#ContentPlaceHolder1_ddlAccountHead").select2({
                 tags: "true",
                 placeholder: "--- Please Select ---",
                 allowClear: true,
@@ -318,6 +326,62 @@
                 ClearFinishGoodsProduct();
             });
 
+            $("#btnCancelOEAmount").click(function () {
+                ClearOverheadExpenseInfo();
+            });
+
+            $("#btnAddOEAmount").click(function () {
+                
+                var costCenterId = $("#ContentPlaceHolder1_ddlCostCenter").val();
+                var accountHead = $("#ContentPlaceHolder1_ddlAccountHead option:selected").text();
+                var accountHeadId = $("#ContentPlaceHolder1_ddlAccountHead").val();
+                var amount = $.trim($("#ContentPlaceHolder1_txtAmount").val());
+                var oEDescription = $.trim($("#ContentPlaceHolder1_txtOEDescription").val());
+                if (costCenterId == "0") {
+                    toastr.warning("Please Select a Depo Name.");
+                    $("#ContentPlaceHolder1_ddlCostCenter").focus();
+                    return false;
+                }
+                else if (accountHeadId == "0") {
+                    toastr.warning("Please select Account Head.");
+                    $("#ContentPlaceHolder1_ddlAccountHead").focus();
+                    return false;
+                }
+                else if (amount == "") {
+                    toastr.warning("Please give Amount.");
+                    $("#ContentPlaceHolder1_txtAmount").focus();
+                    return false;
+                }
+                else if (oEDescription == "") {
+                    toastr.warning("Please give OverHead Description.");
+                    $("#ContentPlaceHolder1_txtOEDescription").focus();
+                    return false;
+                }
+
+                var AccountHeadDetailsId = "0", isEdited = 0, editedItemId = "0";
+                // accountHeadId = $("#ContentPlaceHolder1_hfAccoutHeadId").val();
+                
+                if (accountHeadId != "0" && finisItemEdited != "") {
+                    AccountHeadDetailsId = $(finisItemEdited).find("td:eq(4)").text();
+                    EditAccountHeadForOE(accountHead, amount, oEDescription, AccountHeadDetailsId, costCenterId, isEdited);
+                    return;
+                }
+                else if (accountHeadId == "0" && finisItemEdited != "") {
+                    AccountHeadDetailsId = $(finisItemEdited).find("td:eq(4)").text();
+                    EditAccountHeadForOE(accountHead, amount, oEDescription, AccountHeadDetailsId, costCenterId, isEdited);
+                    toastr.info("Edit");
+                    return;
+                }
+                if (!IsAccountHeadExistsForOE(costCenterId, accountHeadId)) {
+                    AddAccountHeadForOEInfo(accountHeadId, accountHead, amount, oEDescription, AccountHeadDetailsId, costCenterId, isEdited);
+
+                    $("#ContentPlaceHolder1_txtAmount").val("");
+                    $("#ContentPlaceHolder1_txtOEDescription").val("");
+                    $("#ContentPlaceHolder1_ddlCostCenter").attr("disabled", true);
+                    $("#ContentPlaceHolder1_ddlAccountHead").focus();
+                }
+            });
+
             $("#btnAddItem").click(function () {
 
                 var costCenterId = $("#ContentPlaceHolder1_ddlCostCenter").val();
@@ -592,6 +656,27 @@
                                 IsDuplicate = true;
                                 return true;
                             }
+                        }
+                    }
+                });
+
+                return IsDuplicate;
+            }
+
+            function IsAccountHeadExistsForOE(costCenterId, accountHeadId) {
+                var IsDuplicate = false;
+                $("#OEAmountGrid tr").each(function (index) {
+
+                    if (index !== 0 && !IsDuplicate) {
+                        var costCenterIdValueInTable = $(this).find("td").eq(5).html();
+                        var accountHeadIdValueInTable = $(this).find("td").eq(6).html();
+
+                        var IsCostCenterIdFound = costCenterIdValueInTable.indexOf(costCenterId) > -1;
+                        var IsAccountHeadIdFound = accountHeadIdValueInTable.indexOf(accountHeadId) > -1;
+                        if (IsCostCenterIdFound && IsAccountHeadIdFound) {
+                            toastr.warning('Account Head Already Added.');
+                            IsDuplicate = true;
+                            return true;
                         }
                     }
                 });
@@ -951,6 +1036,43 @@
 
             $("#FinishedProductGrid tbody").append(tr);
         }
+        function AddAccountHeadForOEInfo(accountHeadId, accountHead, amount, OEDescription, AccountHeadDetailsId, costCenterId, isEdited) {
+            var isEdited = "0";
+            var rowLength = $("#OEAmountGrid tbody tr").length;
+
+            var tr = "";
+
+            if (rowLength % 2 == 0) {
+                tr += "<tr style='background-color:#FFFFFF;'>";
+            }
+            else {
+                tr += "<tr style='background-color:#E3EAEB;'>";
+            }
+
+            tr += "<td style='width:30%;'>" + accountHead + "</td>";
+            tr += "<td style='width:10%;'>" + amount + "</td>";
+            tr += "<td style='width:50%;'>" + OEDescription + "</td>";
+            tr += "<td style='width:10%;'><a href='javascript:void();' onclick= 'javascript:return DeleteAccountHeadOfOE(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+
+            tr += "<td style='display:none'>" + AccountHeadDetailsId + "</td>";
+            tr += "<td style='display:none'>" + costCenterId + "</td>";
+            tr += "<td style='display:none'>" + accountHeadId + "</td>";
+            tr += "<td style='display:none'>" + isEdited + "</td>";
+            tr += "</tr>";
+
+            $("#OEAmountGrid tbody").append(tr);
+            var totalAmount = 0;
+            $("#OEAmountGrid tr").each(function () {
+                var amount = $(this).find("td").eq(1).html();
+                if(amount == undefined)
+                {
+                    amount = 0;
+                }
+                totalAmount = parseFloat(totalAmount) + parseFloat(amount);
+            });
+            totalAmount = totalAmount.toFixed(2);
+            $("#ContentPlaceHolder1_txttotalAmount").val(totalAmount);
+        }
         function FIllForEdit(editItem) {
 
             finisItemEdited = $(editItem).parent().parent();
@@ -1020,6 +1142,26 @@
             finisItemEdited = "";
         }
 
+        function EditAccountHeadForOE(accountHead, amount, OEDescription, AccountHeadDetailsId, costCenterId, isEdited) {
+            $(finisItemEdited).find("td:eq(0)").text(accountHead);
+            $(finisItemEdited).find("td:eq(1)").text(amount);
+            $(finisItemEdited).find("td:eq(2)").text(OEDescription);
+
+            $(finisItemEdited).find("td:eq(4)").text(AccountHeadDetailsId);
+            $(finisItemEdited).find("td:eq(5)").text(costCenterId);
+
+            if (AccountHeadDetailsId != "0")
+                $(finisItemEdited).find("td:eq(6)").text("1");
+
+            $(finisItemEdited).find("td:eq(7)").text((costCenterId + "-" + accountHead));
+
+            $("#ContentPlaceHolder1_txtAmount").val("");
+            $("#ContentPlaceHolder1_txtOEDescription").val("");
+
+            $("#btnAdd").val("Add");
+            finisItemEdited = "";
+        }
+
         function DeleteItemDetails(deletedItem) {
 
             if (!confirm("Do you want to delete?"))
@@ -1037,6 +1179,34 @@
             }
 
             $(deletedItem).parent().parent().remove();
+        }
+                
+        function DeleteAccountHeadOfOE(deletedItem) {
+            if (!confirm("Do you want to delete?"))
+                return;
+            var accoutHeadId = $("#ContentPlaceHolder1_hfAccoutHeadId").val();
+
+            if (accoutHeadId != "0") {
+                var tr = $(deletedItem).parent().parent();
+
+                DeletedAccountHead.push({
+                    AccountHeadDetailsId: $(tr).find("td:eq(4)").text(),
+                    AccountHeadId: accoutHeadId
+                });
+            }
+
+            $(deletedItem).parent().parent().remove();
+
+            var amountAfterDeletion = 0;
+            $("#OEAmountGrid tr").each(function (index) {
+                var amount = $(this).find("td").eq(1).html();
+                if (amount == undefined) {
+                    amount = 0;
+                }
+                amountAfterDeletion = parseFloat(amountAfterDeletion) + parseFloat(amount);
+            });
+            amountAfterDeletion = amountAfterDeletion.toFixed(2);
+            $("#ContentPlaceHolder1_txttotalAmount").val(amountAfterDeletion);
         }
 
         function DeleteRMItemDetails(deletedItem) {
@@ -1073,6 +1243,13 @@
                 return false;
             }
 
+            var rowCountOE = $("#OEAmountGrid tbody tr").length;
+            if (rowCountOE == 0) {
+                toastr.warning('Add atleast one Overhead Expense Information.');
+                $("#ContentPlaceHolder1_txtAmount").focus;
+                return false;
+            }
+
             //itemName, stockBy, quantity, finishedProductDetailsId, costCenterId, itemId, stockById
 
             var costCenterId = "0", itemId = "0", colorId = "0", sizeId = "0", styleId = "0", stockById = "0", unitPrice = 0, bagQuantity = 0;
@@ -1082,6 +1259,9 @@
             var itemIdRM = "0", colorIdRM = "0", sizeIdRM = "0", styleIdRM = "0", stockByIdRM = "0";
             var quantityRM = "0", finishedProductDetailsIdRM = "0";
             var isEditRM = "0", finishProductIdRM = "0";
+
+            var accountHeadId = "0", amount = "0", description = "", accoutHeadDetailsId = "0";
+            var isEditOE = "0", finishProductIdOE = "0";
 
             costCenterId = $("#ContentPlaceHolder1_ddlCostCenter").val();
             finishProductId = $("#ContentPlaceHolder1_hfFinishProductId").val();
@@ -1198,7 +1378,26 @@
                 }
             });
 
-            PageMethods.SaveFinishGoods(FinishedProduct, AddedRMGoods, EditedRMGoods, DeletedRMGoods, AddedFinishGoods, EditedFinishGoods, DeletedFinishGoods, OnSaveFinishGoodsSucceeded, OnSaveFinishGoodsFailed);
+            var AddedOverheadExpenses = [], EditedOverheadExpenses = [];
+            $("#OEAmountGrid tbody tr").each(function (index, item) {
+                accoutHeadDetailsId = $.trim($(item).find("td:eq(4)").text());
+                accountHeadId = $(item).find("td:eq(6)").text();
+                amount = $(item).find("td:eq(1)").text();
+                description = $(item).find("td:eq(2)").text();
+                costCenterId = $(item).find("td:eq(5)").text();
+                isEditOE = $(item).find("td:eq(7)").text();
+                if (accoutHeadDetailsId == "0") {
+                    AddedOverheadExpenses.push({
+                        FinishedProductDetailsId: accoutHeadDetailsId,
+                        FinishProductId: finishProductId,
+                        NodeId: accountHeadId,
+                        Amount: amount,
+                        Remarks: description,
+                        CostCenterId: costCenterId
+                    });
+                }
+            });
+            PageMethods.SaveFinishGoods(FinishedProduct, AddedRMGoods, EditedRMGoods, DeletedRMGoods, AddedFinishGoods, EditedFinishGoods, DeletedFinishGoods, AddedOverheadExpenses, OnSaveFinishGoodsSucceeded, OnSaveFinishGoodsFailed);
 
             return false;
         }
@@ -1370,6 +1569,18 @@
             return false;
         }
 
+        function ClearOverheadExpenseInfo() {
+            $("#ContentPlaceHolder1_ddlAccountHead").val("0");
+            $("#ContentPlaceHolder1_txtAmount").val("");
+            $("#ContentPlaceHolder1_txtOEDescription").val("");
+
+            if ($("#OEAmountGrid tbody tr").length == 0 && $("#ContentPlaceHolder1_hfAccoutHeadId").val() == "0") {
+                $("#ContentPlaceHolder1_ddlCostCenter").val("0");
+                $("#ContentPlaceHolder1_ddlCostCenter").attr("disabled", false);
+            }
+            return false;
+        }
+
         function PerformClearAction() {
             $("#RMProductGrid tbody").html("");
             $("#FinishedProductGrid tbody").html("");
@@ -1383,6 +1594,8 @@
 
             $("#ContentPlaceHolder1_hfItemId").val("0");
             $("#ContentPlaceHolder1_hfFinishProductId").val("0");
+            
+            $("#ContentPlaceHolder1_hfAccoutHeadId").val("0");
 
             $("#ContentPlaceHolder1_ddlRMCategory").val("0");
             $("#txtRMItemName").val("");
@@ -1401,6 +1614,12 @@
             return false;
         }
 
+        function ShowDiv1() {
+            console.log("hello from div1");
+        }
+        function showdiv2() {
+            console.log("hello from div222");
+        }
     </script>
     <div id="DetailsFinishProductGridContainer" style="display: none;">
         <table id="DetailsFinishProductGrid" class="table table-bordered table-condensed table-responsive"
@@ -1421,6 +1640,7 @@
     </div>
     <asp:HiddenField ID="hfItemId" runat="server" Value="0" />
     <asp:HiddenField ID="hfFinishProductId" runat="server" Value="0" />
+    <asp:HiddenField ID="hfAccoutHeadId" runat="server" Value="0" />
     <asp:HiddenField ID="hfIsEditedFromApprovedForm" runat="server" Value="0" />
     <asp:HiddenField ID="hfRMItemId" runat="server" Value="0" />
     <asp:HiddenField ID="hfRMProductId" runat="server" Value="0" />
@@ -1719,6 +1939,91 @@
                                                     <tbody>
                                                     </tbody>
                                                 </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div id="OEEntryPanel" class="panel panel-default">
+                            <div class="panel-heading">
+                                Overhead Expense Information
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <asp:Label ID="lblAccountHead" runat="server" class="control-label required-field" Text="Account Head"></asp:Label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <asp:DropDownList ID="ddlAccountHead" runat="server" CssClass="form-control" TabIndex="20">
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <asp:Label ID="lblAmount" runat="server" class="control-label required-field" Text="Amount"></asp:Label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <asp:TextBox ID="txtAmount" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <asp:Label ID="lblOEDescription" runat="server" class="control-label required-field" Text="Description"></asp:Label>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <asp:TextBox ID="txtOEDescription" runat="server" TabIndex="22" CssClass="form-control"
+                                                TextMode="MultiLine"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding: 5px 0 5px 0;">
+                                        <div class="col-md-12">
+                                            <button type="button" id="btnAddOEAmount" tabindex="24" class="TransactionalButton btn btn-primary btn-sm">
+                                                Add</button>
+                                            <button type="button" id="btnCancelOEAmount" tabindex="24" class="TransactionalButton btn btn-primary btn-sm">
+                                                Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="padding: 0px;">
+                                        <div id="OEAmountGridContainer">
+                                            <table id="OEAmountGrid" class="table table-bordered table-condensed table-responsive"
+                                                style="width: 100%;">
+                                                <thead>
+                                                    <tr style="color: White; background-color: #44545E; text-align: left; font-weight: bold;">
+                                                        <th style="width: 30%;">Account Head
+                                                        </th>
+                                                        <th style="width: 10%;">Amount
+                                                        </th>
+                                                        <th style="width: 50%">Description
+                                                        </th>
+                                                        <th style="width: 10%;">Action
+                                                        </th>
+                                                        <th style="display: none">AccountHeadDetailsId
+                                                        </th>
+                                                        <th style="display: none">CostCenterId
+                                                        </th>
+                                                        <th style="display: none">AccountHeadId
+                                                        </th>
+                                                        <th style="display: none">Is Edited
+                                                        </th>
+                                                        <th style="display: none">DuplicateCheck
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                            <div class="row" style="padding: 5px 0 5px 0;">
+                                                <div class="col-md-3">
+
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <asp:Label ID="lbltotalAmount" runat="server" class="control-label" Text="Total Amount :"></asp:Label>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <asp:TextBox ID="txttotalAmount" runat="server" ReadOnly="true" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
