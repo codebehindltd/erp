@@ -3661,6 +3661,7 @@ namespace HotelManagement.Data.Payroll
                         GrossAmount = r.Field<decimal?>("GrossAmount"),
                         HomeTakenAmount = r.Field<decimal?>("HomeTakenAmount"),
                         MedicalAllowance = r.Field<decimal?>("MedicalAllowance"),
+                        NSSFEmployeeContribution = r.Field<decimal?>("NSSFEmployeeContribution"),
                         NSSFCompanyContribution = r.Field<decimal?>("NSSFCompanyContribution"),                        
                         CurrencyExchangeRate = r.Field<decimal?>("CurrencyExchangeRate"),
                         EmployeeRank = r.Field<int>("EmployeeRank"),

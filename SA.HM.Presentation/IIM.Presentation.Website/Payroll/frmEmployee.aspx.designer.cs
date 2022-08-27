@@ -1120,24 +1120,6 @@ namespace HotelManagement.Presentation.Website.Payroll {
         protected global::System.Web.UI.WebControls.DropDownList ddlThana;
         
         /// <summary>
-        /// lblTinNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTinNumber;
-        
-        /// <summary>
-        /// txtTinNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTinNumber;
-        
-        /// <summary>
         /// lblPassportNumber control.
         /// </summary>
         /// <remarks>
@@ -1505,6 +1487,24 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEmergencyContactEmail;
+        
+        /// <summary>
+        /// lblTinNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTinNumber;
+        
+        /// <summary>
+        /// txtTinNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTinNumber;
         
         /// <summary>
         /// lblExamLevel control.

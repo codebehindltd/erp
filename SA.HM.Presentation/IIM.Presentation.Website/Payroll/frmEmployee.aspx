@@ -1651,12 +1651,6 @@
                                     <asp:DropDownList ID="ddlThana" runat="server" CssClass="form-control">
                                     </asp:DropDownList>
                                 </div>
-                                <div class="col-md-2">
-                                    <asp:Label ID="lblTinNumber" runat="server" class="control-label" Text="TIN Number"></asp:Label>
-                                </div>
-                                <div class="col-md-4">
-                                    <asp:TextBox ID="txtTinNumber" CssClass="form-control" runat="server"></asp:TextBox>
-                                </div>
                             </div>
                         </asp:Panel>
                         <div class="form-group">
@@ -1811,6 +1805,13 @@
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtEmergencyContactEmail" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
+                            
+                                <div class="col-md-2">
+                                    <asp:Label ID="lblTinNumber" runat="server" class="control-label" Text="TIN Number"></asp:Label>
+                                </div>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtTinNumber" CssClass="form-control" runat="server"></asp:TextBox>
+                                </div>
                         </div>
                     </div>
                 </div>
