@@ -1243,13 +1243,7 @@
                 return false;
             }
 
-            var rowCountOE = $("#OEAmountGrid tbody tr").length;
-            if (rowCountOE == 0) {
-                toastr.warning('Add atleast one Overhead Expense Information.');
-                $("#ContentPlaceHolder1_txtAmount").focus;
-                return false;
-            }
-
+            
             //itemName, stockBy, quantity, finishedProductDetailsId, costCenterId, itemId, stockById
 
             var costCenterId = "0", itemId = "0", colorId = "0", sizeId = "0", styleId = "0", stockById = "0", unitPrice = 0, bagQuantity = 0;
@@ -1584,7 +1578,9 @@
         function PerformClearAction() {
             $("#RMProductGrid tbody").html("");
             $("#FinishedProductGrid tbody").html("");
+            $("#OEAmountGrid tbody").html("");
             $("#ContentPlaceHolder1_btnSave").val("Save");
+            $("#ContentPlaceHolder1_txttotalAmount").val("0");
 
             $("#ContentPlaceHolder1_ddlCostCenter").val("0");
             $("#ContentPlaceHolder1_ddlCategory").val("0");
@@ -2016,9 +2012,6 @@
                                             </table>
                                             <div class="row" style="padding: 5px 0 5px 0;">
                                                 <div class="col-md-3">
-
-                                                </div>
-                                                <div class="col-md-1">
                                                     <asp:Label ID="lbltotalAmount" runat="server" class="control-label" Text="Total Amount :"></asp:Label>
                                                 </div>
                                                 <div class="col-md-2">
