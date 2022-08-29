@@ -1979,7 +1979,7 @@
   <Width>7.74996in</Width>
   <Page>
     <PageFooter>
-      <Height>1.3625in</Height>
+      <Height>1.4in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -2146,7 +2146,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox50</rd:DefaultName>
-          <Top>0.90504in</Top>
+          <Top>0.65504in</Top>
           <Left>6.18677in</Left>
           <Height>0.1875in</Height>
           <Width>1.56319in</Width>
@@ -2162,7 +2162,7 @@
           </Style>
         </Textbox>
         <Line Name="Line5">
-          <Top>0.8856in</Top>
+          <Top>0.6356in</Top>
           <Left>6.18677in</Left>
           <Height>0in</Height>
           <Width>1.56319in</Width>
@@ -2182,7 +2182,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Finance's Manager Signature</Value>
+                  <Value EvaluationMode="Constant">Authorized Signature</Value>
                   <Style>
                     <FontSize>9pt</FontSize>
                     <FontWeight>Bold</FontWeight>
@@ -2195,7 +2195,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox50</rd:DefaultName>
-          <Top>0.90504in</Top>
+          <Top>0.65504in</Top>
           <Left>0.0601in</Left>
           <Height>0.1875in</Height>
           <Width>1.84653in</Width>
@@ -2211,7 +2211,7 @@
           </Style>
         </Textbox>
         <Line Name="Line4">
-          <Top>0.8856in</Top>
+          <Top>0.6356in</Top>
           <Left>0.0601in</Left>
           <Height>0in</Height>
           <Width>1.83334in</Width>
@@ -2224,6 +2224,41 @@
             </Border>
           </Style>
         </Line>
+        <Textbox Name="Textbox66">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Parameters!CompanyProfile.Value</Value>
+                  <Style>
+                    <FontSize>9pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox50</rd:DefaultName>
+          <Top>0.8625in</Top>
+          <Left>0.0601in</Left>
+          <Height>0.21667in</Height>
+          <Width>4.39794in</Width>
+          <ZIndex>8</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
       </ReportItems>
       <Style>
         <Border>
