@@ -12,7 +12,7 @@ namespace HotelManagement.Data.PurchaseManagment
     public class PMProductReceivedDA : BaseService
     {
         public bool SaveProductReceiveInfo(PMProductReceivedBO receivedProduct, List<PMProductReceivedDetailsBO> addedReceiveItem,
-                                           List<PMProductSerialInfoBO> serialzableProduct, bool isApprovalProcessEnable, out int receivedId, out string TransactionNo, out string TransactionType, out string ApproveStatus)
+                                           List<PMProductSerialInfoBO> serialzableProduct, bool isApprovalProcessEnable, List<OverheadExpensesBO> AddedOverheadExpenses, out int receivedId, out string TransactionNo, out string TransactionType, out string ApproveStatus)
         {
             int status = 0;
             bool retVal = false;
@@ -143,6 +143,24 @@ namespace HotelManagement.Data.PurchaseManagment
                             }
                         }
 
+                        if(status > 0 && AddedOverheadExpenses.Count > 0)
+                        {
+                            using (DbCommand cmdOverheadDetails = dbSmartAspects.GetStoredProcCommand("SaveOverheadExpenseForReceiveId_SP"))
+                            {
+                                foreach (OverheadExpensesBO oe in AddedOverheadExpenses)
+                                {
+                                    cmdOverheadDetails.Parameters.Clear();
+
+                                    dbSmartAspects.AddInParameter(cmdOverheadDetails, "@ReceivedId", DbType.Int32, receivedId);
+                                    dbSmartAspects.AddInParameter(cmdOverheadDetails, "@NodeId", DbType.Int32, oe.NodeId);
+                                    dbSmartAspects.AddInParameter(cmdOverheadDetails, "@Amount", DbType.Decimal, oe.Amount);
+                                    dbSmartAspects.AddInParameter(cmdOverheadDetails, "@Remarks", DbType.String, oe.Remarks);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdOverheadDetails, transction);
+                                }
+                            }
+                        }
+
                         if (status > 0 && isApprovalProcessEnable == true && receivedProduct.ReceiveType != "AdHoc")
                         {
                             using (DbCommand commandDetails = dbSmartAspects.GetStoredProcCommand("UpdateReceiveStatusForPurchaseWiseReceivee_SP"))
@@ -224,6 +242,7 @@ namespace HotelManagement.Data.PurchaseManagment
         }
         public bool UpdateProductReceiveInfo(PMProductReceivedBO receivedProduct, List<PMProductReceivedDetailsBO> AddedReceivedDetails,
                                              List<PMProductReceivedDetailsBO> EditedReceivedDetails,
+                                             List<OverheadExpensesBO> AddedOverheadExpenses,
                                              List<PMProductReceivedDetailsBO> DeletedReceivedDetails,
                                              List<PMProductSerialInfoBO> AddedSerialzableProduct,
                                              List<PMProductSerialInfoBO> DeletedSerialzableProduct, out string TransactionNo, out string TransactionType, out string ApproveStatus
@@ -351,6 +370,30 @@ namespace HotelManagement.Data.PurchaseManagment
                                     dbSmartAspects.AddInParameter(cmdUpdateDetails, "@BonusAmount", DbType.Decimal, rd.BonusAmount);
 
                                     status = dbSmartAspects.ExecuteNonQuery(cmdUpdateDetails, transction);
+                                }
+                            }
+                        }
+
+                        if(status > 0 && AddedOverheadExpenses.Count > 0)
+                        {
+                            using (DbCommand cmdOEDeleteDetails = dbSmartAspects.GetStoredProcCommand("DeleteOverheadExpenseForReceiveId_SP"))
+                            {
+                                cmdOEDeleteDetails.Parameters.Clear();
+                                dbSmartAspects.AddInParameter(cmdOEDeleteDetails, "@ReceivedId", DbType.Int32, receivedId);
+                                status = dbSmartAspects.ExecuteNonQuery(cmdOEDeleteDetails, transction);                                
+                            }
+                            using (DbCommand cmdOEUpdateDetails = dbSmartAspects.GetStoredProcCommand("UpdateOverheadExpenseForReceiveId_SP"))
+                            {
+                                foreach(OverheadExpensesBO oe in AddedOverheadExpenses)
+                                {
+                                    cmdOEUpdateDetails.Parameters.Clear();
+
+                                    dbSmartAspects.AddInParameter(cmdOEUpdateDetails, "@ReceivedId", DbType.Int32, receivedId);
+                                    dbSmartAspects.AddInParameter(cmdOEUpdateDetails, "@NodeId", DbType.Int32, oe.NodeId);
+                                    dbSmartAspects.AddInParameter(cmdOEUpdateDetails, "@Amount", DbType.Decimal, oe.Amount);
+                                    dbSmartAspects.AddInParameter(cmdOEUpdateDetails, "@Remarks", DbType.String, oe.Remarks);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdOEUpdateDetails, transction);
                                 }
                             }
                         }
@@ -1032,6 +1075,35 @@ namespace HotelManagement.Data.PurchaseManagment
                         ReceiveDetailsId = r.Field<Int32>("ReceiveDetailsId"),
                         ItemId = r.Field<Int32>("ItemId"),
                         SerialNumber = r.Field<string>("SerialNumber")
+
+                    }).ToList();
+                }
+            }
+
+            return productReceive;
+        }
+
+        public List<OverheadExpensesBO> GetOverheadExpenseForProductReceiveByReceivedId(int receivedId)
+        {
+            List<OverheadExpensesBO> productReceive = new List<OverheadExpensesBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetOverheadExpenseForProductReceiveByReceivedId_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@ReceivedId", DbType.Int32, receivedId);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "OverheadExpenseOfProductReceived");
+                    DataTable Table = ds.Tables["OverheadExpenseOfProductReceived"];
+
+                    productReceive = Table.AsEnumerable().Select(r => new OverheadExpensesBO
+                    {
+                        ReceivedId = r.Field<Int64>("ReceivedId"),
+                        NodeId = r.Field<Int32>("NodeId"),
+                        AccountHead = r.Field<string>("AccountHead"),
+                        Amount = r.Field<decimal>("OEAmount"),
+                        Remarks = r.Field<string>("OERemarks")
 
                     }).ToList();
                 }

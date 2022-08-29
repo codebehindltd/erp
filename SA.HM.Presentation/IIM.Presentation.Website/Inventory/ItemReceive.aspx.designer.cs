@@ -7,13 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Presentation.Website.Inventory
-{
-
-
-    public partial class ItemReceive
-    {
-
+namespace HotelManagement.Presentation.Website.Inventory {
+    
+    
+    public partial class ItemReceive {
+        
+        /// <summary>
+        /// hfCostCenterId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfCostCenterId;
+        
+        /// <summary>
+        /// hfAccoutHeadId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfAccoutHeadId;
+        
         /// <summary>
         /// hfCompanyId control.
         /// </summary>
@@ -22,7 +38,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfCompanyId;
-
+        
         /// <summary>
         /// hfProjectId control.
         /// </summary>
@@ -31,7 +47,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfProjectId;
-
+        
         /// <summary>
         /// RandomDocId control.
         /// </summary>
@@ -40,7 +56,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField RandomDocId;
-
+        
         /// <summary>
         /// tempDocId control.
         /// </summary>
@@ -49,7 +65,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField tempDocId;
-
+        
         /// <summary>
         /// hfParentDoc control.
         /// </summary>
@@ -58,7 +74,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfParentDoc;
-
+        
         /// <summary>
         /// hfDeletedDoc control.
         /// </summary>
@@ -67,7 +83,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfDeletedDoc;
-
+        
         /// <summary>
         /// hfCurrencyObj control.
         /// </summary>
@@ -76,7 +92,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfCurrencyObj;
-
+        
         /// <summary>
         /// hfPurchaseOrderObj control.
         /// </summary>
@@ -85,7 +101,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfPurchaseOrderObj;
-
+        
         /// <summary>
         /// hfLcInfoObj control.
         /// </summary>
@@ -94,7 +110,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfLcInfoObj;
-
+        
         /// <summary>
         /// hfDefaultCurrencyId control.
         /// </summary>
@@ -103,7 +119,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfDefaultCurrencyId;
-
+        
         /// <summary>
         /// hfItemId control.
         /// </summary>
@@ -112,7 +128,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfItemId;
-
+        
         /// <summary>
         /// hfCategoryId control.
         /// </summary>
@@ -121,7 +137,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfCategoryId;
-
+        
         /// <summary>
         /// hfStockById control.
         /// </summary>
@@ -130,7 +146,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfStockById;
-
+        
         /// <summary>
         /// hfLocationId control.
         /// </summary>
@@ -139,7 +155,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfLocationId;
-
+        
         /// <summary>
         /// hfReceiveOrderId control.
         /// </summary>
@@ -148,7 +164,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfReceiveOrderId;
-
+        
         /// <summary>
         /// hfItemIdForSerial control.
         /// </summary>
@@ -157,7 +173,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfItemIdForSerial;
-
+        
         /// <summary>
         /// hfSerialQuantity control.
         /// </summary>
@@ -166,7 +182,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfSerialQuantity;
-
+        
         /// <summary>
         /// hfSavePermission control.
         /// </summary>
@@ -175,7 +191,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfSavePermission;
-
+        
         /// <summary>
         /// hfEditPermission control.
         /// </summary>
@@ -184,7 +200,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfEditPermission;
-
+        
         /// <summary>
         /// hfDeletePermission control.
         /// </summary>
@@ -193,7 +209,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfDeletePermission;
-
+        
         /// <summary>
         /// hfViewPermission control.
         /// </summary>
@@ -202,7 +218,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfViewPermission;
-
+        
         /// <summary>
         /// hfIsItemAttributeEnable control.
         /// </summary>
@@ -211,7 +227,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfIsItemAttributeEnable;
-
+        
         /// <summary>
         /// A control.
         /// </summary>
@@ -220,7 +236,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl A;
-
+        
         /// <summary>
         /// B control.
         /// </summary>
@@ -229,7 +245,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl B;
-
+        
         /// <summary>
         /// Label3 control.
         /// </summary>
@@ -238,7 +254,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label3;
-
+        
         /// <summary>
         /// ddlReceiveType control.
         /// </summary>
@@ -247,7 +263,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlReceiveType;
-
+        
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -256,7 +272,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-
+        
         /// <summary>
         /// ddlPurchaseOrderNumber control.
         /// </summary>
@@ -265,7 +281,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlPurchaseOrderNumber;
-
+        
         /// <summary>
         /// Label11 control.
         /// </summary>
@@ -274,7 +290,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label11;
-
+        
         /// <summary>
         /// ddlLCNumber control.
         /// </summary>
@@ -283,7 +299,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlLCNumber;
-
+        
         /// <summary>
         /// companyProjectUserControl control.
         /// </summary>
@@ -292,7 +308,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::HotelManagement.Presentation.Website.HMCommon.UserControl.CompanyProjectUserControl companyProjectUserControl;
-
+        
         /// <summary>
         /// lblSupplier control.
         /// </summary>
@@ -301,7 +317,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSupplier;
-
+        
         /// <summary>
         /// ddlSupplier control.
         /// </summary>
@@ -310,7 +326,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSupplier;
-
+        
         /// <summary>
         /// Label2 control.
         /// </summary>
@@ -319,7 +335,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label2;
-
+        
         /// <summary>
         /// ddlCostCentre control.
         /// </summary>
@@ -328,7 +344,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCostCentre;
-
+        
         /// <summary>
         /// ddlCurrency control.
         /// </summary>
@@ -337,7 +353,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCurrency;
-
+        
         /// <summary>
         /// lblConversionRate control.
         /// </summary>
@@ -346,7 +362,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblConversionRate;
-
+        
         /// <summary>
         /// Label9 control.
         /// </summary>
@@ -355,7 +371,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label9;
-
+        
         /// <summary>
         /// ddlReceiveLocation control.
         /// </summary>
@@ -364,7 +380,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlReceiveLocation;
-
+        
         /// <summary>
         /// lblReferenceBill control.
         /// </summary>
@@ -373,7 +389,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblReferenceBill;
-
+        
         /// <summary>
         /// txtReferenceBillNo control.
         /// </summary>
@@ -382,7 +398,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtReferenceBillNo;
-
+        
         /// <summary>
         /// lblBillDate control.
         /// </summary>
@@ -391,7 +407,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblBillDate;
-
+        
         /// <summary>
         /// txtReferenceBillDate control.
         /// </summary>
@@ -400,7 +416,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtReferenceBillDate;
-
+        
         /// <summary>
         /// Label13 control.
         /// </summary>
@@ -409,7 +425,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label13;
-
+        
         /// <summary>
         /// ddlPurchaseOrderCostcenter control.
         /// </summary>
@@ -418,7 +434,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlPurchaseOrderCostcenter;
-
+        
         /// <summary>
         /// lblCategory control.
         /// </summary>
@@ -427,7 +443,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblCategory;
-
+        
         /// <summary>
         /// ddlCategory control.
         /// </summary>
@@ -436,7 +452,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCategory;
-
+        
         /// <summary>
         /// Label4 control.
         /// </summary>
@@ -445,7 +461,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label4;
-
+        
         /// <summary>
         /// txtItem control.
         /// </summary>
@@ -454,7 +470,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtItem;
-
+        
         /// <summary>
         /// Label15 control.
         /// </summary>
@@ -463,7 +479,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label15;
-
+        
         /// <summary>
         /// ddlColorAttribute control.
         /// </summary>
@@ -472,7 +488,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlColorAttribute;
-
+        
         /// <summary>
         /// Label16 control.
         /// </summary>
@@ -481,7 +497,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label16;
-
+        
         /// <summary>
         /// ddlSizeAttribute control.
         /// </summary>
@@ -490,7 +506,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSizeAttribute;
-
+        
         /// <summary>
         /// Label17 control.
         /// </summary>
@@ -499,7 +515,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label17;
-
+        
         /// <summary>
         /// ddlStyleAttribute control.
         /// </summary>
@@ -508,7 +524,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlStyleAttribute;
-
+        
         /// <summary>
         /// Label5 control.
         /// </summary>
@@ -517,7 +533,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label5;
-
+        
         /// <summary>
         /// txtCurrentStock control.
         /// </summary>
@@ -526,7 +542,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCurrentStock;
-
+        
         /// <summary>
         /// Label6 control.
         /// </summary>
@@ -535,7 +551,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label6;
-
+        
         /// <summary>
         /// txtCurrentStockBy control.
         /// </summary>
@@ -544,7 +560,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCurrentStockBy;
-
+        
         /// <summary>
         /// Label7 control.
         /// </summary>
@@ -553,7 +569,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label7;
-
+        
         /// <summary>
         /// txtReceiveQuantity control.
         /// </summary>
@@ -562,7 +578,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtReceiveQuantity;
-
+        
         /// <summary>
         /// Label8 control.
         /// </summary>
@@ -571,7 +587,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label8;
-
+        
         /// <summary>
         /// txtPurchasePrice control.
         /// </summary>
@@ -580,7 +596,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPurchasePrice;
-
+        
         /// <summary>
         /// Label18 control.
         /// </summary>
@@ -589,7 +605,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label18;
-
+        
         /// <summary>
         /// txtBagQuantity control.
         /// </summary>
@@ -598,7 +614,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtBagQuantity;
-
+        
         /// <summary>
         /// Label19 control.
         /// </summary>
@@ -607,7 +623,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label19;
-
+        
         /// <summary>
         /// txtBonusAmount control.
         /// </summary>
@@ -616,7 +632,79 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtBonusAmount;
-
+        
+        /// <summary>
+        /// lblAccountHead control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAccountHead;
+        
+        /// <summary>
+        /// ddlAccountHead control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAccountHead;
+        
+        /// <summary>
+        /// lblAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAmount;
+        
+        /// <summary>
+        /// txtAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAmount;
+        
+        /// <summary>
+        /// lblOEDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOEDescription;
+        
+        /// <summary>
+        /// txtOEDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOEDescription;
+        
+        /// <summary>
+        /// lbltotalAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbltotalAmount;
+        
+        /// <summary>
+        /// txttotalAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txttotalAmount;
+        
         /// <summary>
         /// lblRemarks control.
         /// </summary>
@@ -625,7 +713,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRemarks;
-
+        
         /// <summary>
         /// txtRemarks control.
         /// </summary>
@@ -634,7 +722,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRemarks;
-
+        
         /// <summary>
         /// companyProjectUserControlSrc control.
         /// </summary>
@@ -643,7 +731,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::HotelManagement.Presentation.Website.HMCommon.UserControl.CompanyProjectUserControl companyProjectUserControlSrc;
-
+        
         /// <summary>
         /// Label14 control.
         /// </summary>
@@ -652,7 +740,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label14;
-
+        
         /// <summary>
         /// ddlSearchSupplier control.
         /// </summary>
@@ -661,7 +749,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSearchSupplier;
-
+        
         /// <summary>
         /// lbl1000 control.
         /// </summary>
@@ -670,7 +758,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl1000;
-
+        
         /// <summary>
         /// txtSReceiveNumber control.
         /// </summary>
@@ -679,7 +767,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSReceiveNumber;
-
+        
         /// <summary>
         /// lblStatus control.
         /// </summary>
@@ -688,7 +776,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblStatus;
-
+        
         /// <summary>
         /// ddlStatus control.
         /// </summary>
@@ -697,7 +785,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlStatus;
-
+        
         /// <summary>
         /// Label10 control.
         /// </summary>
@@ -706,7 +794,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label10;
-
+        
         /// <summary>
         /// ddlSearchReceiveType control.
         /// </summary>
@@ -715,7 +803,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSearchReceiveType;
-
+        
         /// <summary>
         /// Label12 control.
         /// </summary>
@@ -724,7 +812,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label12;
-
+        
         /// <summary>
         /// ddlCostCenterSearch control.
         /// </summary>
@@ -733,7 +821,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCostCenterSearch;
-
+        
         /// <summary>
         /// lblFromDate control.
         /// </summary>
@@ -742,7 +830,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFromDate;
-
+        
         /// <summary>
         /// txtFromDate control.
         /// </summary>
@@ -751,7 +839,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFromDate;
-
+        
         /// <summary>
         /// lblToDate control.
         /// </summary>
@@ -760,7 +848,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblToDate;
-
+        
         /// <summary>
         /// txtToDate control.
         /// </summary>
@@ -769,7 +857,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtToDate;
-
+        
         /// <summary>
         /// pnlUpload control.
         /// </summary>
@@ -778,7 +866,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlUpload;
-
+        
         /// <summary>
         /// flashUpload control.
         /// </summary>
@@ -787,7 +875,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::ClientUploader.ClientUploader flashUpload;
-
+        
         /// <summary>
         /// frmPrint control.
         /// </summary>
@@ -796,7 +884,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl frmPrint;
-
+        
         /// <summary>
         /// fileIframe control.
         /// </summary>
