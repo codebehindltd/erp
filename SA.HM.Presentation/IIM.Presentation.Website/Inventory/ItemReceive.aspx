@@ -233,7 +233,6 @@
                     $("#LCNumber").hide();
                     $("#ContentPlaceHolder1_ddlCurrency").attr('disabled', false);
                     $("#ContentPlaceHolder1_ddlSupplier").attr("disabled", false).val('0').trigger('change');
-                    //$("#ContentPlaceHolder1_ddlCostCentre").attr("disabled", false).val('0').trigger('change');
                 }
                 else {
                     $("#AdhocReceive").hide();
@@ -278,25 +277,13 @@
                 }
 
                 var AccountHeadDetailsId = "0", isEdited = 0, editedItemId = "0";
-                // accountHeadId = $("#ContentPlaceHolder1_hfAccoutHeadId").val();
-
-                //if (accountHeadId != "0" && finisItemEdited != "") {
-                //    AccountHeadDetailsId = $(finisItemEdited).find("td:eq(4)").text();
-                //    EditAccountHeadForOE(accountHead, amount, oEDescription, AccountHeadDetailsId, isEdited);
-                //    return;
-                //}
-                //else if (accountHeadId == "0" && finisItemEdited != "") {
-                //    AccountHeadDetailsId = $(finisItemEdited).find("td:eq(4)").text();
-                //    EditAccountHeadForOE(accountHead, amount, oEDescription, AccountHeadDetailsId, isEdited);
-                //    toastr.info("Edit");
-                //    return;
-                //}
                 
                 if (!IsAccountHeadExistsForOE(accountHeadId)) {
                     AddAccountHeadForOEInfo(accountHeadId, accountHead, amount, oEDescription, AccountHeadDetailsId, isEdited);
 
                     $("#ContentPlaceHolder1_txtAmount").val("");
                     $("#ContentPlaceHolder1_txtOEDescription").val("");
+                    $("#ContentPlaceHolder1_ddlAccountHead").val("0").trigger('change');
                     $("#ContentPlaceHolder1_ddlAccountHead").focus();
                 }
             });
@@ -3198,14 +3185,14 @@
                                             <asp:Label ID="lblAccountHead" runat="server" class="control-label required-field" Text="Account Head"></asp:Label>
                                         </div>
                                         <div class="col-md-4">
-                                            <asp:DropDownList ID="ddlAccountHead" runat="server" CssClass="form-control" TabIndex="20">
+                                            <asp:DropDownList ID="ddlAccountHead" runat="server" CssClass="form-control" TabIndex="70">
                                             </asp:DropDownList>
                                         </div>
                                         <div class="col-md-2">
                                             <asp:Label ID="lblAmount" runat="server" class="control-label required-field" Text="Amount"></asp:Label>
                                         </div>
                                         <div class="col-md-4">
-                                            <asp:TextBox ID="txtAmount" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                            <asp:TextBox ID="txtAmount" runat="server" TabIndex="71" CssClass="form-control quantitydecimal"></asp:TextBox>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -3213,15 +3200,15 @@
                                             <asp:Label ID="lblOEDescription" runat="server" class="control-label required-field" Text="Description"></asp:Label>
                                         </div>
                                         <div class="col-md-10">
-                                            <asp:TextBox ID="txtOEDescription" runat="server" TabIndex="22" CssClass="form-control"
+                                            <asp:TextBox ID="txtOEDescription" runat="server" TabIndex="72" CssClass="form-control"
                                                 TextMode="MultiLine"></asp:TextBox>
                                         </div>
                                     </div>
                                     <div class="row" style="padding: 5px 0 5px 0;">
                                         <div class="col-md-12">
-                                            <button type="button" id="btnAddOEAmount" tabindex="24" class="TransactionalButton btn btn-primary btn-sm">
+                                            <button type="button" id="btnAddOEAmount" tabindex="73" class="TransactionalButton btn btn-primary btn-sm">
                                                 Add</button>
-                                            <button type="button" id="btnCancelOEAmount" tabindex="24" class="TransactionalButton btn btn-primary btn-sm">
+                                            <button type="button" id="btnCancelOEAmount" class="TransactionalButton btn btn-primary btn-sm">
                                                 Cancel</button>
                                         </div>
                                     </div>
