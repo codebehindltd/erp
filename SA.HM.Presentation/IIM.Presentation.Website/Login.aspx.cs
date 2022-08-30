@@ -117,6 +117,16 @@ namespace HotelManagement.Presentation.Website.UserInformation
                     }
                 }
 
+                HMCommonSetupBO isItemAverageCostUpdateEnableBO = new HMCommonSetupBO();
+                isItemAverageCostUpdateEnableBO = commonSetupDA.GetCommonConfigurationInfo("IsItemAverageCostUpdateEnable", "IsItemAverageCostUpdateEnable");
+                if (isItemAverageCostUpdateEnableBO != null)
+                {
+                    if (isItemAverageCostUpdateEnableBO.SetupValue != "0")
+                    {
+                        userInformation.IsItemAverageCostUpdateEnable = true;
+                    }
+                }
+
                 if (userInformation.UserGroupId == 1)
                 {
                     userInformation.InnboardHomePage = homePageSetupBO.SetupValue;

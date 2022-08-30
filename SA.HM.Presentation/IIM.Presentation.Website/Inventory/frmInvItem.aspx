@@ -577,7 +577,7 @@
                 return false;
             }
             else if ($("#<%=ddlCategory.ClientID %>").val() != "0") {
-                if ($("#<%=ddlStockType.ClientID %>").val() == "KitchenItem") {
+        if ($("#<%=ddlStockType.ClientID %>").val() == "KitchenItem") {
                     if (rowLength == 0 && saveObj.length == 0 && deleteSalesObj.length == 0) {
                         toastr.warning('Please add at least one recipe item.');
                         return false;
@@ -892,6 +892,7 @@
             });
             return false;
         }
+
         //For ClearForm-------------------------
         function PerformClearAction() {
             $("#<%=lblMessage.ClientID %>").text('');
@@ -899,6 +900,7 @@
             $("#<%=ddlManufacturer.ClientID %>").val(0);
             $("#<%=ddlProductType.ClientID %>").val(0);
             $("#<%=txtPurchasePrice.ClientID %>").val('');
+            $("#<%=txtAverageCost.ClientID %>").val('');
             $("#<%=ddlSellingPriceLocal.ClientID %>").val(45);
             $("#<%=txtSellingPriceLocal.ClientID %>").val('');
             $("#<%=ddlSellingPriceUsd.ClientID %>").val(46);
@@ -913,7 +915,6 @@
             MessagePanelHide();
             return false;
         }
-
 
         //For Delete-------------------------        
 
@@ -1462,7 +1463,7 @@
                                 <asp:Label ID="lblPurchasePrice" runat="server" class="control-label" Text="Purchase Price"></asp:Label>
                             </div>
                             <div class="col-md-4">
-                                <asp:TextBox ID="txtPurchasePrice" runat="server" CssClass="form-control" TabIndex="9"></asp:TextBox>
+                                <asp:TextBox ID="txtPurchasePrice" runat="server" CssClass="form-control quantitydecimal" TabIndex="9"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
@@ -1545,6 +1546,12 @@
                                         <asp:ListItem Value="0">No</asp:ListItem>
                                         <asp:ListItem Value="1">Yes</asp:ListItem>
                                     </asp:DropDownList>
+                                </div>
+                                <div class="col-md-2 label-align" runat="server" id="AverageCostLabel">
+                                    <asp:Label ID="lblAverageCost" runat="server" class="control-label" Text="Average Cost"></asp:Label>
+                                </div>
+                                <div class="col-md-4" runat="server" id="AverageCostControl">
+                                    <asp:TextBox ID="txtAverageCost" runat="server" CssClass="form-control quantitydecimal" TabIndex="9"></asp:TextBox>
                                 </div>
                             </div>
                             <div id="AttributeDiv">

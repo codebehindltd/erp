@@ -939,6 +939,24 @@ namespace HotelManagement.Data.HMCommon
 
             return status;
         }
+
+        public Boolean UpdateItemAverageCostByItemId(long itemId, decimal itemAverageCost)
+        {
+            Boolean status = false;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand commandDocument = dbSmartAspects.GetStoredProcCommand("UpdateItemAverageCostByItemId_SP"))
+                {
+                    commandDocument.Parameters.Clear();
+                    dbSmartAspects.AddInParameter(commandDocument, "@ItemId", DbType.Int64, itemId);
+                    dbSmartAspects.AddInParameter(commandDocument, "@AverageCost", DbType.Decimal, itemAverageCost);
+                    status = dbSmartAspects.ExecuteNonQuery(commandDocument) > 0 ? true : false;
+                }
+            }
+
+            return status;
+        }
         public bool UpdateUploadedDocumentsInformation(string docType, string docPath, int OwnerId)
         {
             bool stauts = true;

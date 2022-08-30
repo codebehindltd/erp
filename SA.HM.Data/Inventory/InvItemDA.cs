@@ -280,6 +280,7 @@ namespace HotelManagement.Data.Inventory
                                 productBO.CategoryName = reader["CategoryName"].ToString();
                                 productBO.ProductType = reader["ProductType"].ToString();
                                 productBO.PurchasePrice = Convert.ToDecimal(reader["PurchasePrice"]);
+                                productBO.AverageCost = Convert.ToDecimal(reader["AverageCost"]);
                                 productBO.SellingLocalCurrencyId = Int32.Parse(reader["SellingLocalCurrencyId"].ToString());
                                 productBO.UnitPriceLocal = Convert.ToDecimal(reader["UnitPriceLocal"]);
                                 productBO.SellingUsdCurrencyId = Int32.Parse(reader["SellingUsdCurrencyId"].ToString());

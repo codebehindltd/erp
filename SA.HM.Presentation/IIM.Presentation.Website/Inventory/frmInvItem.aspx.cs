@@ -45,10 +45,10 @@ namespace HotelManagement.Presentation.Website.Inventory
 
             if (!IsPostBack)
             {
+                IsAdminUser();
                 IsItemOriginHide();
                 InventoryItemStockType();
                 IsInvItemCodeAutoGenerate();
-
                 ShowHideCurrencyInformation();
                 LoadServiceType();
                 LoadCurrency();
@@ -65,11 +65,11 @@ namespace HotelManagement.Presentation.Website.Inventory
                 RandomProductId.Value = seatingId.ToString();
                 tempProductId.Value = seatingId.ToString();
                 LoadCountryList();
-                //LoadAttribute();
                 IsAttributeItemShow();
             }
 
             CheckObjectPermission();
+
         }
         protected void gvProduct_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -105,130 +105,6 @@ namespace HotelManagement.Presentation.Website.Inventory
             }
 
         }
-        //private void LoadAttribute()
-        //{
-        //    InvItemAttributeViewBO attributeViewBO = new InvItemAttributeViewBO();
-        //    InvItemDA DA = new InvItemDA();
-        //    attributeViewBO = DA.GetAllInvItemAttributeAndSetupType();
-        //    string tablestring = "";
-        //    if(attributeViewBO!= null)
-        //    {
-        //        if (attributeViewBO.InvItemAttributeSetupTypeList.Count > 0)
-        //        {
-        //            tablestring += "<div class='col-md-12'> <div class='col-md-4'>";                    
-        //            tablestring += "<table id='" + attributeViewBO.InvItemAttributeSetupTypeList[0].ToString() + "tbl' style='width:100%' class='table table-bordered table-condensed table-responsive'><tr style='color: White; background-color: #44545E; font-weight: bold;'>";
-        //            tablestring += "<th align='left' scope='col'><input id='CheckAll" + attributeViewBO.InvItemAttributeSetupTypeList[0].ToString() + "' type='checkbox'></th><th align='left' scope='col'>" + attributeViewBO.InvItemAttributeSetupTypeList[0].ToString() + "</th></tr>";
-        //            for (int i = 0; i < attributeViewBO.InvItemAttributeBOList.Count; i++)
-        //            {
-        //                if (attributeViewBO.InvItemAttributeBOList[i].SetupType == attributeViewBO.InvItemAttributeSetupTypeList[0])
-        //                {
-        //                    if (i % 2 == 0)
-        //                    {
-        //                        tablestring += "<tr id='trdoc" + i + "' style='background-color:#E3EAEB;'>";
-        //                    }
-        //                    else
-        //                    {
-        //                        tablestring += "<tr id='trdoc" + i + "' style='background-color:White;'>";
-        //                    }
-        //                    tablestring += "<td align='left' style='width: 20%'><input id=\"Check\"" + attributeViewBO.InvItemAttributeBOList[i].Id + "\" type='checkbox'>";
-        //                    tablestring += "<td align='left' style='width: 80%'>" + attributeViewBO.InvItemAttributeBOList[i].Name + "";
-        //                    tablestring += "<td align='left' style='display:none'>" + attributeViewBO.InvItemAttributeBOList[i].Id + "";
-        //                    tablestring += "</td>";
-        //                    tablestring += "</tr>";
-        //                }
-        //            }
-        //            tablestring += "</table>";
-        //            tablestring += "</div>";
-        //            if (attributeViewBO.InvItemAttributeSetupTypeList.Count > 1)
-        //            {
-        //                tablestring += "<div class='col-md-4'>";
-        //                tablestring += "<table id='" + attributeViewBO.InvItemAttributeSetupTypeList[1].ToString() + "tbl' style='width:100%' class='table table-bordered table-condensed table-responsive'><tr style='color: White; background-color: #44545E; font-weight: bold;'>";
-        //                tablestring += "<th align='left' scope='col'><input id='CheckAll" + attributeViewBO.InvItemAttributeSetupTypeList[1].ToString() + "' type='checkbox'></th><th align='left' scope='col'>" + attributeViewBO.InvItemAttributeSetupTypeList[1].ToString() + "</th></tr>"; for (int i = 0; i < attributeViewBO.InvItemAttributeBOList.Count; i++)
-        //                {
-        //                    if (attributeViewBO.InvItemAttributeBOList[i].SetupType == attributeViewBO.InvItemAttributeSetupTypeList[1])
-        //                    {
-        //                        if (i % 2 == 0)
-        //                        {
-        //                            tablestring += "<tr id='trdoc" + i + "' style='background-color:#E3EAEB;'>";
-        //                        }
-        //                        else
-        //                        {
-        //                            tablestring += "<tr id='trdoc" + i + "' style='background-color:White;'>";
-        //                        }
-        //                        tablestring += "<td align='left' style='width: 20%'><input id=\"Check\"" + attributeViewBO.InvItemAttributeBOList[i].Id + "\" type='checkbox'>";
-        //                        tablestring += "<td align='left' style='width: 80%'>" + attributeViewBO.InvItemAttributeBOList[i].Name + "";
-        //                        tablestring += "<td align='left' style='display:none'>" + attributeViewBO.InvItemAttributeBOList[i].Id + "";
-        //                        tablestring += "</td>";
-        //                        tablestring += "</tr>";
-        //                    }
-        //                }
-        //                tablestring += "</table>";
-        //                tablestring += "</div>";
-        //                //tablestring += "</div>";
-        //            }
-
-        //            if (attributeViewBO.InvItemAttributeSetupTypeList.Count > 2)
-        //            {
-        //                tablestring += "<div class='col-md-4'>";
-        //                tablestring += "<table id='" + attributeViewBO.InvItemAttributeSetupTypeList[2].ToString() + "tbl' style='width:100%' class='table table-bordered table-condensed table-responsive'><tr style='color: White; background-color: #44545E; font-weight: bold;'>";
-        //                tablestring += "<th align='left' scope='col'><input id='CheckAll" + attributeViewBO.InvItemAttributeSetupTypeList[2].ToString() + "' type='checkbox'></th><th align='left' scope='col'>" + attributeViewBO.InvItemAttributeSetupTypeList[2].ToString() + "</th></tr>";
-        //                for (int i = 0; i < attributeViewBO.InvItemAttributeBOList.Count; i++)
-        //                {
-        //                    if (attributeViewBO.InvItemAttributeBOList[i].SetupType == attributeViewBO.InvItemAttributeSetupTypeList[2])
-        //                    {
-        //                        if (i % 2 == 0)
-        //                        {
-        //                            tablestring += "<tr id='trdoc" + i + "' style='background-color:#E3EAEB;'>";
-        //                        }
-        //                        else
-        //                        {
-        //                            tablestring += "<tr id='trdoc" + i + "' style='background-color:White;'>";
-        //                        }
-        //                        tablestring += "<td align='left' style='width: 20%'><input id=\"Check\"" + attributeViewBO.InvItemAttributeBOList[i].Id + "\" type='checkbox'>";
-        //                        tablestring += "<td align='left' style='width: 80%'>" + attributeViewBO.InvItemAttributeBOList[i].Name + "";
-        //                        tablestring += "<td align='left' style='display:none'>" + attributeViewBO.InvItemAttributeBOList[i].Id + "";
-        //                        tablestring += "</td>";
-        //                        tablestring += "</tr>";
-        //                    }
-        //                }
-        //                tablestring += "</table>";
-        //                tablestring += "</div>";
-        //                tablestring += "</div>";
-        //            }
-
-        //            //if (attributeViewBO.InvItemAttributeSetupTypeList.Count > 2)
-        //            //{
-        //            //    tablestring += "<div class='col-md-12'> <div class='col-md-12'>";
-        //            //    tablestring += "<table id='" + attributeViewBO.InvItemAttributeSetupTypeList[2].ToString() + "tbl' style='width:100%' class='table table-bordered table-condensed table-responsive'><tr style='color: White; background-color: #44545E; font-weight: bold;'>";
-        //            //    tablestring += "<th align='left' scope='col'><input id='CheckAll" + attributeViewBO.InvItemAttributeSetupTypeList[2].ToString() + "' type='checkbox'></th><th align='left' scope='col'>" + attributeViewBO.InvItemAttributeSetupTypeList[2].ToString() + "</th></tr>";
-        //            //    for (int i = 0; i < attributeViewBO.InvItemAttributeBOList.Count; i++)
-        //            //    {
-        //            //        if (attributeViewBO.InvItemAttributeBOList[i].SetupType == attributeViewBO.InvItemAttributeSetupTypeList[2])
-        //            //        {
-        //            //            if (i % 2 == 0)
-        //            //            {
-        //            //                tablestring += "<tr id='trdoc" + i + "' style='background-color:#E3EAEB;'>";
-        //            //            }
-        //            //            else
-        //            //            {
-        //            //                tablestring += "<tr id='trdoc" + i + "' style='background-color:White;'>";
-        //            //            }
-        //            //            tablestring += "<td align='left' style='width: 20%'><input id=\"Check\"" + attributeViewBO.InvItemAttributeBOList[i].Id + "\" type='checkbox'>";
-        //            //            tablestring += "<td align='left' style='width: 80%'>" + attributeViewBO.InvItemAttributeBOList[i].Name + "";
-        //            //            tablestring += "<td align='left' style='display:none'>" + attributeViewBO.InvItemAttributeBOList[i].Id + "";
-        //            //            tablestring += "</td>";
-        //            //            tablestring += "</tr>";
-        //            //        }
-        //            //    }
-        //            //    tablestring += "</table>";
-        //            //    tablestring += "</div>";
-        //            //    tablestring += "</div>";
-        //            //}
-        //        }
-        //    }
-
-        //    AttributeTableDiv.InnerHtml = tablestring;
-        //}
         private void LoadCountryList()
         {
             HMCommonDA commonDA = new HMCommonDA();
@@ -247,38 +123,6 @@ namespace HotelManagement.Presentation.Website.Inventory
             // ddlOrigin.SelectedValue = bangladesh;
 
         }
-        //protected void btnAddAttribute_Click(object sender, EventArgs e)
-        //{
-
-        //    int dynamicEducationId = 0;
-        //    List<EmpEducationBO> EmpEducationListBO = Session["EmpEducationList"] == null ? new List<EmpEducationBO>() : Session["EmpEducationList"] as List<EmpEducationBO>;
-
-        //    if (!string.IsNullOrWhiteSpace(hfEducationId.Text))
-        //        dynamicEducationId = Convert.ToInt32(hfEducationId.Text);
-
-        //    EmpEducationBO detailBO = dynamicEducationId == 0 ? new EmpEducationBO() : EmpEducationListBO.Where(x => x.EducationId == dynamicEducationId).FirstOrDefault();
-        //    if (EmpEducationListBO.Contains(detailBO))
-        //        EmpEducationListBO.Remove(detailBO);
-
-        //    if (ddlExamLevel.SelectedIndex != 0)
-        //    {
-        //        detailBO.LevelId = Convert.ToInt32(ddlExamLevel.SelectedValue);
-        //    }
-        //    detailBO.ExamName = txtExamName.Text;
-        //    detailBO.InstituteName = txtInstituteName.Text;
-        //    detailBO.SubjectName = txtSubjectName.Text;
-        //    detailBO.PassYear = txtPassYear.Text;
-        //    detailBO.PassClass = txtPassClass.Text;
-        //    detailBO.EducationId = dynamicEducationId == 0 ? EmpEducationListBO.Count + 1 : dynamicEducationId;
-        //    EmpEducationListBO.Add(detailBO);
-        //    Session["EmpEducationList"] = EmpEducationListBO;
-        //    gvEmpEducation.DataSource = Session["EmpEducationList"] as List<EmpEducationBO>;
-        //    gvEmpEducation.DataBind();
-        //    ClearEmpEducation();
-
-        //    txtGoToScrolling.Text = "EducationInformation";
-        //    SetTab("EducationTab");
-        //}
         protected void gvProduct_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int _productId;
@@ -436,21 +280,25 @@ namespace HotelManagement.Presentation.Website.Inventory
                 }
 
                 int OwnerIdForDocuments = 0;
-
+                HMCommonDA hmCommonDA = new HMCommonDA();
                 InvItemBO productBO = new InvItemBO();
                 InvItemDA productDA = new InvItemDA();
 
                 UserInformationBO userInformationBO = new UserInformationBO();
                 userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
                 productBO.ItemAttribute = hfItemAttributeList.Value;
-                //productBO.ItemType = "InventoryItem";
+
                 productBO.Code = txtCode.Text;
                 productBO.Description = txtDescription.Text;
                 productBO.Name = txtName.Text;
                 productBO.DisplayName = txtDisplayName.Text;
                 productBO.RandomItemId = Int32.Parse(RandomProductId.Value);
-                //productBO.MinimumStockLevel = !string.IsNullOrWhiteSpace(txtMinimumStockLevel.Text) ? Convert.ToDecimal(txtMinimumStockLevel.Text) : 0;
+
                 productBO.PurchasePrice = !string.IsNullOrWhiteSpace(txtPurchasePrice.Text) ? Convert.ToDecimal(txtPurchasePrice.Text) : 0;
+                productBO.AverageCost = !string.IsNullOrWhiteSpace(txtAverageCost.Text) ? Convert.ToDecimal(txtAverageCost.Text) : 0;
+
+                decimal itemAverageCost = productBO.AverageCost;
+
                 productBO.SellingLocalCurrencyId = Int32.Parse(ddlSellingPriceLocal.SelectedValue);
                 productBO.UnitPriceLocal = !string.IsNullOrWhiteSpace(txtSellingPriceLocal.Text) ? Convert.ToDecimal(txtSellingPriceLocal.Text) : 0;
                 productBO.SellingUsdCurrencyId = Int32.Parse(ddlSellingPriceUsd.SelectedValue);
@@ -648,11 +496,8 @@ namespace HotelManagement.Presentation.Website.Inventory
                     Boolean status = productDA.SaveInvItemInfo(productBO, supplierList, costCenterList, receipeList, out tmpProductId);
                     if (status)
                     {
-
                         OwnerIdForDocuments = tmpProductId;
                         CommonHelper.AlertInfo(innboardMessage, AlertMessage.Save, AlertType.Success);
-
-                        HMCommonDA hmCommonDA = new HMCommonDA();
 
                         DocumentsDA documentsDA = new DocumentsDA();
                         string s = hfDeletedDoc.Value;
@@ -665,7 +510,8 @@ namespace HotelManagement.Presentation.Website.Inventory
                                 Boolean DeleteStatus = documentsDA.DeleteDocumentsByDocumentId(Convert.ToInt32(DeletedDocList[i]));
                             }
                         }
-                        Boolean updateStatus = hmCommonDA.UpdateUploadedDocumentsInformationByOwnerId(OwnerIdForDocuments, Convert.ToInt32(RandomProductId.Value));
+
+                        Boolean updateStatusUploadedDocuments = hmCommonDA.UpdateUploadedDocumentsInformationByOwnerId(OwnerIdForDocuments, Convert.ToInt32(RandomProductId.Value));
 
                         Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(), EntityTypeEnum.EntityType.InvItem.ToString(), tmpProductId,
                        ProjectModuleEnum.ProjectModule.InventoryManagement.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvItem));
@@ -698,8 +544,6 @@ namespace HotelManagement.Presentation.Website.Inventory
                     {
                         OwnerIdForDocuments = productBO.ItemId;
 
-                        HMCommonDA hmCommonDA = new HMCommonDA();
-
                         DocumentsDA documentsDA = new DocumentsDA();
                         string s = hfDeletedDoc.Value;
                         if (!string.IsNullOrEmpty(s))
@@ -711,7 +555,8 @@ namespace HotelManagement.Presentation.Website.Inventory
                                 Boolean DeleteStatus = documentsDA.DeleteDocumentsByDocumentId(Convert.ToInt32(DeletedDocList[i]));
                             }
                         }
-                        Boolean updateStatus = hmCommonDA.UpdateUploadedDocumentsInformationByOwnerId(OwnerIdForDocuments, Convert.ToInt32(RandomProductId.Value));
+
+                        Boolean updateStatusUploadedDocuments = hmCommonDA.UpdateUploadedDocumentsInformationByOwnerId(OwnerIdForDocuments, Convert.ToInt32(RandomProductId.Value));
 
                         Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(), EntityTypeEnum.EntityType.InvItem.ToString(), productBO.ItemId,
                         ProjectModuleEnum.ProjectModule.InventoryManagement.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvItem));
@@ -732,7 +577,7 @@ namespace HotelManagement.Presentation.Website.Inventory
                     }
                 }
 
-
+                hmCommonDA.UpdateItemAverageCostByItemId(OwnerIdForDocuments, itemAverageCost);
 
             }
             catch (Exception ex)
@@ -746,6 +591,41 @@ namespace HotelManagement.Presentation.Website.Inventory
             }
         }
         //************************ User Defined Function ********************//
+        private void IsAdminUser()
+        {
+            HMUtility hmUtility = new HMUtility();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            // // // ------User Admin Authorization BO Session Information --------------------------------
+            #region User Admin Authorization
+            AverageCostLabel.Visible = false;
+            AverageCostControl.Visible = false;
+            if (userInformationBO.UserInfoId == 1)
+            {
+                if (userInformationBO.IsItemAverageCostUpdateEnable)
+                {
+                    AverageCostLabel.Visible = true;
+                    AverageCostControl.Visible = true;
+                }
+            }
+            else
+            {
+                List<SecurityUserAdminAuthorizationBO> adminAuthorizationList = new List<SecurityUserAdminAuthorizationBO>();
+                adminAuthorizationList = System.Web.HttpContext.Current.Session["UserAdminAuthorizationBOSession"] as List<SecurityUserAdminAuthorizationBO>;
+                if (adminAuthorizationList != null)
+                {
+                    if (adminAuthorizationList.Where(x => x.UserInfoId == userInformationBO.UserInfoId && x.ModuleId == 10).Count() > 0)
+                    {
+                        if (userInformationBO.IsItemAverageCostUpdateEnable)
+                        {
+                            AverageCostLabel.Visible = true;
+                            AverageCostControl.Visible = true;
+                        }
+                    }
+                }
+            }
+            #endregion
+        }
         private void InventoryItemStockType()
         {
             HMCommonDA commonDA = new HMCommonDA();
@@ -870,6 +750,7 @@ namespace HotelManagement.Presentation.Website.Inventory
             txtProductId.Value = string.Empty;
             //txtMinimumStockLevel.Text = string.Empty;
             txtPurchasePrice.Text = string.Empty;
+            txtAverageCost.Text = string.Empty;
             txtSellingPriceLocal.Text = string.Empty;
             txtSellingPriceUsd.Text = string.Empty;
             ddlSellingPriceLocal.SelectedIndex = 0;
@@ -1124,6 +1005,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         }
         public void FillForm(int EditId)
         {
+            IsAdminUser();
             InvItemBO productBO = new InvItemBO();
             InvItemDA productDA = new InvItemDA();
 
@@ -1136,6 +1018,7 @@ namespace HotelManagement.Presentation.Website.Inventory
             ddlStockBy.SelectedValue = productBO.StockBy.ToString();
             ddlSalesStockBy.SelectedValue = productBO.SalesStockBy.ToString();
             txtPurchasePrice.Text = productBO.PurchasePrice.ToString();
+            txtAverageCost.Text = productBO.AverageCost.ToString();
             ddlSellingPriceLocal.SelectedValue = productBO.SellingLocalCurrencyId.ToString();
             txtSellingPriceLocal.Text = productBO.UnitPriceLocal.ToString();
             ddlSellingPriceUsd.SelectedValue = productBO.SellingUsdCurrencyId.ToString();
@@ -1560,21 +1443,6 @@ namespace HotelManagement.Presentation.Website.Inventory
             item.Text = hmUtility.GetDropDownNoneValue();
             ddlManufacturer.Items.Insert(0, item);
         }
-        //private void LoadAttributeName()
-        //{
-        //    InvItemAttributeViewBO attributeViewBO = new InvItemAttributeViewBO();
-        //    InvItemDA DA = new InvItemDA();
-        //    int setupTypeId = Convert.ToInt32(ddlSetupType.SelectedValue);
-        //    attributeViewBO = DA.GetAllInvItemAttributeAndSetupType();
-        //    ddlAttributeName.DataSource = attributeViewBO.InvItemAttributeBOList;
-        //    ddlAttributeName.DataTextField = "Name";
-        //    ddlAttributeName.DataValueField = "Id";
-        //    ddlAttributeName.DataBind();
-        //    ListItem item = new ListItem();
-        //    item.Value = "0";
-        //    item.Text = hmUtility.GetDropDownFirstValue();
-        //    ddlAttributeName.Items.Insert(0, item);
-        //}
         public string GenerateRecipeItemTable(int itemId)
         {
             string strTable = "";
@@ -1880,7 +1748,6 @@ namespace HotelManagement.Presentation.Website.Inventory
 
             return result;
         }
-
         [WebMethod]
         public static List<InvItemAttributeBO> GetAttributeByWebMethod(int EditId)
         {
@@ -1889,7 +1756,6 @@ namespace HotelManagement.Presentation.Website.Inventory
             InvItemAttributeList = productDA.GetItemAttributeByItemId(EditId);
             return InvItemAttributeList;
         }
-
         [WebMethod]
         public static List<InvItemAutoSearchBO> ItemNCategoryAutoSearch(string itemName, int categoryId, int isCustomerItem, string itemType)
         {
