@@ -123,6 +123,8 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 string companyName = string.Empty;
                 string companyAddress = string.Empty;
                 string webAddress = string.Empty;
+                string telephoneNumber = string.Empty;
+                string hotLineNumber = string.Empty;
 
                 CompanyDA companyDA = new CompanyDA();
                 List<CompanyBO> files = companyDA.GetCompanyInfo();
@@ -130,15 +132,9 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 {
                     companyName = files[0].CompanyName;
                     companyAddress = files[0].CompanyAddress;
-
-                    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
-                    {
-                        webAddress = files[0].WebAddress;
-                    }
-                    else
-                    {
-                        webAddress = files[0].ContactNumber;
-                    }
+                    webAddress = files[0].WebAddress;
+                    telephoneNumber = files[0].Telephone;
+                    hotLineNumber = files[0].HotLineNumber;
                 }
 
                 DateTime currentDate = DateTime.Now;
@@ -207,6 +203,14 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                             {
                                 webAddress = glCompanyBO.WebAddress;
                             }
+                            if (!string.IsNullOrWhiteSpace(glCompanyBO.Telephone))
+                            {
+                                telephoneNumber = glCompanyBO.Telephone;
+                            }
+                            if (!string.IsNullOrWhiteSpace(glCompanyBO.HotLineNumber))
+                            {
+                                hotLineNumber = glCompanyBO.HotLineNumber;
+                            }
                             if (!string.IsNullOrWhiteSpace(glCompanyBO.ImageName))
                             {
                                 imageName = glCompanyBO.ImageName;
@@ -232,6 +236,8 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 paramReport.Add(new ReportParameter("CompanyProfile", companyName));
                 paramReport.Add(new ReportParameter("CompanyAddress", companyAddress));
                 paramReport.Add(new ReportParameter("CompanyWeb", webAddress));
+                paramReport.Add(new ReportParameter("TelephoneNumber", telephoneNumber));
+                paramReport.Add(new ReportParameter("HotLineNumber", hotLineNumber));
                 paramReport.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + imageName)));
                 paramReport.Add(new ReportParameter("month", ddlEffectedMonth.SelectedItem.ToString()));
                 paramReport.Add(new ReportParameter("year", ddlYear.SelectedItem.ToString()));

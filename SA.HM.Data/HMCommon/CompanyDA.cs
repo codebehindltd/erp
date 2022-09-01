@@ -38,6 +38,8 @@ namespace HotelManagement.Data.HMCommon
                                 Company.ContactPerson = reader["ContactPerson"].ToString();
                                 Company.VatRegistrationNo = reader["VatRegistrationNo"].ToString();
                                 Company.TinNumber = reader["TinNumber"].ToString();
+                                Company.Telephone = reader["Telephone"].ToString();
+                                Company.HotLineNumber = reader["HotLineNumber"].ToString();
                                 Company.Remarks = reader["Remarks"].ToString();
                                 Company.ImageName = reader["ImageName"].ToString();
                                 Company.ImagePath = reader["ImagePath"].ToString();

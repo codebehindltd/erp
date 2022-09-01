@@ -33,7 +33,7 @@ namespace HotelManagement.Entity.Payroll
         public Nullable<decimal> TotalAllowance { get; set; }
         public Nullable<decimal> TotalDeduction { get; set; }
         public Nullable<decimal> HomeTakenAmount { get; set; }
-        public string ShowJoiningDate { get; set; }        
+        public string ShowJoiningDate { get; set; }
         public Nullable<System.DateTime> ContractEndDate { get; set; }
         public string ShowContractEndDate { get; set; }
         public string EmpType { get; set; }
@@ -78,13 +78,16 @@ namespace HotelManagement.Entity.Payroll
         public decimal? CurrencyExchangeRate { get; set; }
         public int? BankId { get; set; }
         public string BankName { get; set; }
+        public string AccountName { get; set; }
         public string AccountNumber { get; set; }
+        public string AccountType { get; set; }
+        public string BranchName { get; set; }
 
         //public int PayrollCurrencyId { get; set; }
         //public string CurrencyName { get; set; }
         //public decimal ConvertionRate { get; set; }
         //public decimal BasicAmountInEmployeeCurrency { get; set; }
         public byte[] QrEmployeeImage { get; set; }
-        
+
     }
 }

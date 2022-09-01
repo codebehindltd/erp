@@ -202,7 +202,7 @@ namespace HotelManagement.Data.HotelManagement
             }
             return cashInfo;
         }
-        public List<GuestRefReportViewBO> GetGuestRefInfo(int refId, DateTime? fromDate, DateTime? toDate)
+        public List<GuestRefReportViewBO> GetGuestRefInfo(string reportType, int refId, DateTime? fromDate, DateTime? toDate)
         {
             List<GuestRefReportViewBO> cashInfo = new List<GuestRefReportViewBO>();
 
@@ -211,6 +211,7 @@ namespace HotelManagement.Data.HotelManagement
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestReferenceInfoForReport_SP"))
                 {
                     cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@ReportType", DbType.String, reportType);
                     if (fromDate != null)
                         dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, fromDate);
                     else

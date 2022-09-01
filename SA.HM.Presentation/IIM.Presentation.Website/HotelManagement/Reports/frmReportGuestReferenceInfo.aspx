@@ -17,6 +17,13 @@
                 $("#InnboardMessageHiddenField").val("");
             }
 
+            $("#ContentPlaceHolder1_ddlReferenceId").select2({
+                tags: false,
+                allowClear: true,
+                placeholder: "",
+                width: "99.75%"
+            });
+
             $("#ContentPlaceHolder1_txtFromDate").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -69,14 +76,20 @@
                         <div class="col-md-2">
                             <asp:Label ID="lblCode" runat="server" class="control-label" Text="From Date"></asp:Label>                            
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <asp:TextBox ID="txtFromDate" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
                         <div class="col-md-2">
-                            <asp:Label ID="lblShortName" runat="server" class="control-label" Text="To Date"></asp:Label>
+                            <asp:TextBox ID="txtToDate" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="col-md-2">
+                            <asp:Label ID="lblReportType" runat="server" class="control-label" Text="Report Type"></asp:Label>
                         </div>
                         <div class="col-md-4">
-                            <asp:TextBox ID="txtToDate" CssClass="form-control" runat="server"></asp:TextBox>
+                            <asp:DropDownList ID="ddlReportType" runat="server" CssClass="form-control">
+                                <asp:ListItem Value="RoomNightsOnly">Room Nights Only</asp:ListItem>
+                                <asp:ListItem Value="RoomNightsAndOthersOutlet">Room Nights and Others Outlet</asp:ListItem>
+                            </asp:DropDownList>
                         </div>
                     </div>               
                 <div class="row">

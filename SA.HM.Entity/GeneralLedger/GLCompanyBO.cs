@@ -22,6 +22,8 @@ namespace HotelManagement.Entity.GeneralLedger
         public string LastModifiedDate { get; set; }
         public string CompanyAddress { get; set; }
         public string WebAddress { get; set; }
+        public string Telephone { get; set; }
+        public string HotLineNumber { get; set; }
         public string BinNumber { get; set; }
         public string TinNumber { get; set; }
         public string BudgetType { get; set; }

@@ -147,14 +147,17 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
                 reportParam.Add(new ReportParameter("ReferenceName", this.ddlReferenceId.SelectedItem.Text));
                 reportParam.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
                 reportParam.Add(new ReportParameter("PrintDateTime", printDate));
+                reportParam.Add(new ReportParameter("ReportType", ddlReportType.SelectedItem.Text));
+                
 
                 rvTransaction.LocalReport.SetParameters(reportParam);
 
                 int refId = Convert.ToInt32(ddlReferenceId.SelectedValue);
+                string reportType = ddlReportType.SelectedValue;
 
                 AllReportDA reportDA = new AllReportDA();
                 List<GuestRefReportViewBO> guestRefBO = new List<GuestRefReportViewBO>();
-                guestRefBO = reportDA.GetGuestRefInfo(refId, FromDate, ToDate);
+                guestRefBO = reportDA.GetGuestRefInfo(reportType, refId, FromDate, ToDate);
 
                 var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
                 rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], guestRefBO));

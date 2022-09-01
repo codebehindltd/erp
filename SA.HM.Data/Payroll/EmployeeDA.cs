@@ -3481,7 +3481,10 @@ namespace HotelManagement.Data.Payroll
 
                         BankId = r.Field<int?>("BankId"),
                         BankName = r.Field<string>("BankName"),
+                        AccountName = r.Field<string>("AccountName"),
                         AccountNumber = r.Field<string>("AccountNumber"),
+                        AccountType = r.Field<string>("AccountType"),
+                        BranchName = r.Field<string>("BranchName"),
 
                         PayrollCurrencyId = r.Field<int>("PayrollCurrencyId"),
                         CurrencyName = r.Field<string>("CurrencyName"),

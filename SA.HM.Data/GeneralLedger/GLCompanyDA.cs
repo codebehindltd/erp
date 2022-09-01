@@ -195,6 +195,8 @@ namespace HotelManagement.Data.GeneralLedger
                                 companyBO.InterCompanyTransactionHeadId = Convert.ToInt32(reader["InterCompanyTransactionHeadId"]);
                                 companyBO.CompanyAddress = reader["CompanyAddress"].ToString();
                                 companyBO.WebAddress = reader["WebAddress"].ToString();
+                                companyBO.Telephone = reader["Telephone"].ToString();
+                                companyBO.HotLineNumber = reader["HotLineNumber"].ToString();
                                 companyBO.BinNumber = reader["BinNumber"].ToString();
                                 companyBO.TinNumber = reader["TinNumber"].ToString();
                                 companyBO.BudgetType = reader["BudgetType"].ToString();

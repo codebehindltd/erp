@@ -18,6 +18,8 @@ namespace HotelManagement.Entity.HMCommon
         public string ContactPerson { get; set; }
         public string VatRegistrationNo { get; set; }
         public string TinNumber { get; set; }
+        public string Telephone { get; set; }
+        public string HotLineNumber { get; set; }
         public string Remarks { get; set; }
         public string ImageName { get; set; }
         public string ImagePath { get; set; }
