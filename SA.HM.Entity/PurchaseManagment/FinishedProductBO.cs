@@ -8,6 +8,7 @@ namespace HotelManagement.Entity.PurchaseManagment
     public class FinishedProductBO
     {
         public int FinishProductId { get; set; }
+        public long ProductId { get; set; }
         public long Id { get; set; }
         public DateTime ProductionDate { get; set; }
         public string ProductionDateDisplay { get; set; }

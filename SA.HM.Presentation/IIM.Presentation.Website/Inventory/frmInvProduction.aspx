@@ -313,7 +313,7 @@
                         $("#txtRMItemName").val("");
                         $("#ContentPlaceHolder1_ddlRMItemStockBy").val("0");
                     }
-
+                    ClearRMFinishGoodsProduct();
                     $("#ContentPlaceHolder1_txtRMItemUnit").val("");
                     $("#ContentPlaceHolder1_ddlCostCenter").attr("disabled", true);
                     $("#txtRMItemName").focus();
@@ -323,7 +323,7 @@
             });
 
             $("#btnCancelRMOrder").click(function () {
-                ClearFinishGoodsProduct();
+                ClearRMFinishGoodsProduct();
             });
 
             $("#btnCancelOEAmount").click(function () {
@@ -477,7 +477,7 @@
                         $("#txtItemName").val("");
                         $("#ContentPlaceHolder1_ddlItemStockBy").val("0");
                     }
-
+                    ClearFinishGoodsProduct();
                     $("#ContentPlaceHolder1_txtItemUnit").val("");
                     $("#ContentPlaceHolder1_txtUnitPrice").val("");
                     $("#ContentPlaceHolder1_txtBagQuantity").val("");
@@ -1247,7 +1247,7 @@
             //itemName, stockBy, quantity, finishedProductDetailsId, costCenterId, itemId, stockById
 
             var costCenterId = "0", itemId = "0", colorId = "0", sizeId = "0", styleId = "0", stockById = "0", unitPrice = 0, bagQuantity = 0;
-            var quantity = "0", finishedProductDetailsId = "0";
+            var quantity = "0", finishedProductDetailsId = "0"; 
             var isEdit = "0", finishProductId = "0", remarks = "";
 
             var itemIdRM = "0", colorIdRM = "0", sizeIdRM = "0", styleIdRM = "0", stockByIdRM = "0";
@@ -1294,7 +1294,7 @@
 
                     AddedRMGoods.push({
                         FinishedProductDetailsId: finishedProductDetailsIdRM,
-                        FinishProductId: finishProductIdRM,
+                        FinishProductId: finishProductId,
                         LocationId: rmLocationId,
                         ItemId: itemIdRM,
                         ColorId: colorIdRM,
@@ -1307,7 +1307,7 @@
                 else if (finishedProductDetailsIdRM != "0" && isEditRM != "0") {
                     EditedRMGoods.push({
                         FinishedProductDetailsId: finishedProductDetailsIdRM,
-                        FinishProductId: finishProductIdRM,
+                        FinishProductId: finishProductId,
                         LocationId: rmLocationId,
                         ItemId: itemIdRM,
                         ColorId: colorIdRM,
@@ -1397,15 +1397,15 @@
         }
         function OnSaveFinishGoodsSucceeded(result) {
             if (result.IsSuccess) {
-                //CommonHelper.AlertMessage(result.AlertMessage);
-                toastr.success('Save Operation Successful.');
+                CommonHelper.AlertMessage(result.AlertMessage);
+                //toastr.success('Save Operation Successful.');
                 PerformClearAction();
+                GoToProductionPage();
             }
             else {
-                toastr.warning('Save Operation Failed.');
-                //CommonHelper.AlertMessage(result.AlertMessage);
+                //toastr.warning('Save Operation Failed.');
+                CommonHelper.AlertMessage(result.AlertMessage);
             }
-
             return false;
         }
         function OnSaveFinishGoodsFailed(error) { toastr.error(error.get_message()); }
@@ -1424,7 +1424,7 @@
             return false;
         }
         function OnFinishProductApprovalFailed(result) { }
-
+        
         function FinishProductCheck(productionId) {
             PageMethods.FinishProductCheck(productionId, OnFinishProductCheckSucceded, OnFinishProductCheckFailed);
             return false;
@@ -1482,41 +1482,70 @@
                 show: 'slide'
             });
         }
+        function ConfirmDeletion() {
+            if (!confirm("Do You Want To Delete?")) {
+                return false;
+            }
+        }
 
         function FillForm(finishProductId) {
+            if (!confirm("Do You Want To Edit?")) {
+                return false;
+            }
             PageMethods.FillForm(finishProductId, OnFillFormSucceed, OnFillFormFailed);
             return false;
         }
         function OnFillFormSucceed(result) {
             if (result != null) {
                 PerformClearAction();
-                $("#ContentPlaceHolder1_ddlCostCenter").val(result.FinishedProduct.CostCenterId);
-                $("#ContentPlaceHolder1_hfFinishProductId").val(result.FinishedProduct.FinishProductId);
+                $("#ContentPlaceHolder1_ddlCostCenter").val(result.FinishedProduct.CostCenterId).trigger('change');
+                $("#ContentPlaceHolder1_hfFinishProductId").val(result.FinishedProduct.ProductId);
                 $("#ContentPlaceHolder1_txtRemarks").val(result.FinishedProduct.Remarks);
 
                 var ddlCostCenter = '<%=ddlCostCenter.ClientID%>'
                 LoadLocation($('#' + ddlCostCenter).val());
 
                 $("#ContentPlaceHolder1_ddlCostCenter").attr("disabled", true);
+                $("#ContentPlaceHolder1_ddlRMLocationId").attr("disabled", true);
+                $("#ContentPlaceHolder1_ddlFGLocationId").attr("disabled", true);
 
                 var rowLengthRM = result.FinisProductRMDetails.length;
                 var rowRM = 0;
 
                 for (rowRM = 0; rowRM < rowLengthRM; rowRM++) {
+                    var itemName = "";
+                    itemName = result.FinisProductRMDetails[rowRM].ItemCode + " - " + result.FinisProductRMDetails[rowRM].ItemName + " [Color: " + result.FinisProductRMDetails[rowRM].ColorName;
+                    itemName = itemName + ", Size: " + result.FinisProductRMDetails[rowRM].SizeName;
+                    itemName = itemName + ", Style: " + result.FinisProductRMDetails[rowRM].StyleName;
+                    itemName = itemName + "]";
 
-                    AddRMItemForFinishGoods(result.FinisProductRMDetails[rowRM].ProductName, result.FinisProductRMDetails[rowRM].StockBy, result.FinisProductRMDetails[rowRM].Quantity,
-                                    result.FinisProductRMDetails[rowRM].FinishedProductDetailsId, result.FinishedProduct.CostCenterId, result.FinisProductRMDetails[rowRM].LocationId, result.FinisProductRMDetails[rowRM].ProductId,
-                                    result.FinisProductRMDetails[rowRM].StockById);
+                    AddRMItemForFinishGoods(itemName, result.FinisProductRMDetails[rowRM].UnitName, result.FinisProductRMDetails[rowRM].Quantity,
+                                    result.FinisProductRMDetails[rowRM].FinishedProductDetailsId, result.FinishedProduct.CostCenterId, result.FinisProductRMDetails[rowRM].LocationId, result.FinisProductRMDetails[rowRM].ItemId,
+                                    result.FinisProductRMDetails[rowRM].ColorId, result.FinisProductRMDetails[rowRM].SizeId, result.FinisProductRMDetails[rowRM].StyleId, result.FinisProductRMDetails[rowRM].StockById);
                 }
 
                 var rowLength = result.FinisProductDetails.length;
                 var row = 0;
 
                 for (row = 0; row < rowLength; row++) {
+                    var itemName = "";
+                    itemName = result.FinisProductDetails[row].ItemCode + " - " + result.FinisProductDetails[row].ItemName + " [Color: " + result.FinisProductDetails[row].ColorName;
+                    itemName = itemName + ", Size: " + result.FinisProductDetails[row].SizeName;
+                    itemName = itemName + ", Style: " + result.FinisProductDetails[row].StyleName;
+                    itemName = itemName + "]";
+                    
+                    AddItemForFinishGoods(itemName, result.FinisProductDetails[row].UnitName, result.FinisProductDetails[row].Quantity, result.FinisProductDetails[row].FinishedProductDetailsId, 
+                        result.FinishedProduct.CostCenterId, result.FinisProductDetails[row].LocationId, result.FinisProductDetails[row].ItemId, result.FinisProductDetails[row].ColorId, 
+                        result.FinisProductDetails[row].SizeId, result.FinisProductDetails[row].StyleId, result.FinisProductDetails[row].StockById, result.FinisProductDetails[row].UnitPrice, result.FinisProductDetails[row].BagQuantity);
+                }
 
-                    AddItemForFinishGoods(result.FinisProductDetails[row].ProductName, result.FinisProductDetails[row].StockBy, result.FinisProductDetails[row].Quantity,
-                                    result.FinisProductDetails[row].FinishedProductDetailsId, result.FinishedProduct.CostCenterId, result.FinisProductDetails[row].LocationId, result.FinisProductDetails[row].ProductId,
-                                    result.FinisProductDetails[row].StockById);
+                var rowLengthOE = result.FinishProductOEDetails.length;
+                var rowOE = 0;
+
+                for (rowOE = 0; rowOE < rowLengthOE; rowOE++) {
+                    var isEdited = "";
+                    AddAccountHeadForOEInfo(result.FinishProductOEDetails[rowOE].NodeId, result.FinishProductOEDetails[rowOE].AccountHead, result.FinishProductOEDetails[rowOE].Amount, result.FinishProductOEDetails[rowOE].Remarks, 
+                        result.FinishProductOEDetails[rowOE].FinishedProductDetailsId, result.FinishedProduct.CostCenterId, isEdited);
                 }
 
                 $("#ContentPlaceHolder1_btnSave").val("Update");
@@ -1534,13 +1563,16 @@
 
             $("#ContentPlaceHolder1_ddlRMCategory").val("0");
             $("#txtRMItemName").val("");
+            $("#AttributeRMDiv").hide();
             $("#ContentPlaceHolder1_ddlRMItemStockBy").val("");
             $("#ContentPlaceHolder1_txtRMItemUnit").val("");
+            $("#ContentPlaceHolder1_ddlRMLocationId").attr("disabled", false);
+            $("#ContentPlaceHolder1_lblRMCurrentStock").text("0");
 
             $("#ContentPlaceHolder1_hfRMItemId").val("0");
 
             if ($("#RMProductGrid tbody tr").length == 0 && $("#ContentPlaceHolder1_hfRMProductId").val() == "0") {
-                $("#ContentPlaceHolder1_ddlCostCenter").val("0");
+                $("#ContentPlaceHolder1_ddlCostCenter").val("0").trigger('change');
                 $("#ContentPlaceHolder1_ddlCostCenter").attr("disabled", false);
             }
 
@@ -1550,13 +1582,16 @@
             $("#btnAddItem").val("Add");
             $("#ContentPlaceHolder1_ddlCategory").val("0");
             $("#txtItemName").val("");
+            $("#AttributeFGDiv").hide();
             $("#ContentPlaceHolder1_ddlItemStockBy").val("");
             $("#ContentPlaceHolder1_txtItemUnit").val("");
-            $("#ContentPlaceHolder1_lblRMCurrentStock").text("0");
+            $("#ContentPlaceHolder1_txtUnitPrice").val("");
+            $("#ContentPlaceHolder1_lblFGCurrentStock").text("0");
             $("#ContentPlaceHolder1_hfItemId").val("0");
+            $("#ContentPlaceHolder1_ddlFGLocationId").attr("disabled", false);
 
             if ($("#FinishedProductGrid tbody tr").length == 0 && $("#ContentPlaceHolder1_hfFinishProductId").val() == "0") {
-                $("#ContentPlaceHolder1_ddlCostCenter").val("0");
+                $("#ContentPlaceHolder1_ddlCostCenter").val("0").trigger('change');
                 $("#ContentPlaceHolder1_ddlCostCenter").attr("disabled", false);
             }
 
@@ -1581,20 +1616,29 @@
             $("#OEAmountGrid tbody").html("");
             $("#ContentPlaceHolder1_btnSave").val("Save");
             $("#ContentPlaceHolder1_txttotalAmount").val("0");
+            $("#ContentPlaceHolder1_ddlAccountHead").val("0").trigger('change');
+            $("#ContentPlaceHolder1_txtAmount").val("");
+            $("#ContentPlaceHolder1_txtOEDescription").val("");
 
-            $("#ContentPlaceHolder1_ddlCostCenter").val("0");
+            $("#ContentPlaceHolder1_ddlCostCenter").val("0").trigger('change');
             $("#ContentPlaceHolder1_ddlCategory").val("0");
             $("#txtItemName").val("");
+            $("#AttributeFGDiv").hide();
             $("#ContentPlaceHolder1_ddlItemStockBy").val("");
             $("#ContentPlaceHolder1_txtItemUnit").val("");
+            $("#ContentPlaceHolder1_txtUnitPrice").val("");
 
             $("#ContentPlaceHolder1_hfItemId").val("0");
             $("#ContentPlaceHolder1_hfFinishProductId").val("0");
+
+            $("#ContentPlaceHolder1_lblFGCurrentStock").text("0");
+            $("#ContentPlaceHolder1_lblRMCurrentStock").text("0");
             
             $("#ContentPlaceHolder1_hfAccoutHeadId").val("0");
 
             $("#ContentPlaceHolder1_ddlRMCategory").val("0");
             $("#txtRMItemName").val("");
+            $("#AttributeRMDiv").hide();
             $("#ContentPlaceHolder1_ddlRMItemStockBy").val("");
             $("#ContentPlaceHolder1_txtRMItemUnit").val("");
 
@@ -1606,15 +1650,10 @@
             $("#ContentPlaceHolder1_hfIsEditedFromApprovedForm").val("0");
 
             $("#ContentPlaceHolder1_ddlCostCenter").attr("disabled", false);
+            $("#ContentPlaceHolder1_ddlRMLocationId").attr("disabled", false);
+            $("#ContentPlaceHolder1_ddlFGLocationId").attr("disabled", false);
 
             return false;
-        }
-
-        function ShowDiv1() {
-            console.log("hello from div1");
-        }
-        function showdiv2() {
-            console.log("hello from div222");
         }
     </script>
     <div id="DetailsFinishProductGridContainer" style="display: none;">
@@ -2138,15 +2177,18 @@
                             </asp:BoundField>
                             <asp:TemplateField HeaderText="" ShowHeader="False" ItemStyle-Width="15%">
                                 <ItemTemplate>
+                                    &nbsp;<asp:ImageButton ID="ImgEdit" runat="server" CausesValidation="False" CommandName="CmdEdit"
+                                        CommandArgument='<%# bind("Id") %>' OnClientClick='<%#String.Format("return FillForm({0})", Eval("Id")) %>'
+                                        ImageUrl="~/Images/edit.png" Text="" AlternateText="Edit" ToolTip="Edit Order" />
+                                    &nbsp;<asp:ImageButton ID="ImgDelete" runat="server" CausesValidation="False" CommandName="CmdDelete"
+                                        CommandArgument='<%# bind("Id") %>' OnClientClick='<%#String.Format("return ConfirmDeletion()") %>'
+                                        ImageUrl="~/Images/delete.png" Text="" AlternateText="Delete" ToolTip="Delete Order" />
                                     &nbsp;<asp:ImageButton ID="ImgCheck" runat="server" CausesValidation="False"
                                         CommandName="CmdCheck" CommandArgument='<%# bind("OrderDate") %>' OnClientClick='<%#String.Format("return FinishProductCheck({0})", Eval("Id")) %>'
                                         ImageUrl="~/Images/checked.png" Text="" AlternateText="Check" ToolTip="Check" />
                                     &nbsp;<asp:ImageButton ID="ImgApproval" runat="server" CausesValidation="False"
                                         CommandName="CmdApproval" CommandArgument='<%# bind("OrderDate") %>' OnClientClick='<%#String.Format("return FinishProductApproval({0})", Eval("Id")) %>'
-                                        ImageUrl="~/Images/approved.png" Text="" AlternateText="Approval" ToolTip="Approval" />                                
-                                    &nbsp;<asp:ImageButton ID="ImgDelete" runat="server" CausesValidation="False" CommandName="CmdDelete"
-                                        CommandArgument='<%# bind("Id") %>' ImageUrl="~/Images/delete.png"
-                                        Text="" AlternateText="Delete" ToolTip="Delete Order" />
+                                        ImageUrl="~/Images/approved.png" Text="" AlternateText="Approval" ToolTip="Approval" />
                                     &nbsp;&nbsp;<asp:ImageButton ID="ImgReportPO" runat="server" CausesValidation="False"
                                         CommandName="CmdReportRI" CommandArgument='<%# bind("Id") %>' ImageUrl="~/Images/ReportDocument.png"
                                         Text="" AlternateText="Invoice" ToolTip="Production Report" />
