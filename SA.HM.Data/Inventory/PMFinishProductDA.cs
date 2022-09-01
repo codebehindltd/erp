@@ -330,10 +330,8 @@ namespace HotelManagement.Data.PurchaseManagment
 
                     finishGoods = Table.AsEnumerable().Select(r => new FinishedProductBO
                     {
-                        FinishProductId = r.Field<Int32>("FinishProductId"),
+                        ProductId = r.Field<Int64>("FinishProductId"),
                         CostCenterId = r.Field<Int32>("CostCenterId"),
-                        OrderDate = r.Field<DateTime>("OrderDate"),
-                        ApprovedStatus = r.Field<string>("ApprovedStatus"),
                         Remarks = r.Field<string>("Remarks")
 
                     }).FirstOrDefault();
@@ -376,29 +374,36 @@ namespace HotelManagement.Data.PurchaseManagment
         {
             List<FinishedProductDetailsBO> finishGoodsDetails = new List<FinishedProductDetailsBO>();
 
-            //using (DbConnection conn = dbSmartAspects.CreateConnection())
-            //{
-            //    using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetFinishedProductDetails_SP"))
-            //    {
-            //        dbSmartAspects.AddInParameter(cmd, "@FinishProductId", DbType.Int32, finishProductId);
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvProductionFGDetailsById_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@FinishProductId", DbType.Int32, productionId);
 
-            //        DataSet ds = new DataSet();
-            //        dbSmartAspects.LoadDataSet(cmd, ds, "FinishGoods");
-            //        DataTable Table = ds.Tables["FinishGoods"];
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "FinishGoods");
+                    DataTable Table = ds.Tables["FinishGoods"];
 
-            //        finishGoodsDetails = Table.AsEnumerable().Select(r => new FinishedProductDetailsBO
-            //        {
-            //            FinishedProductDetailsId = r.Field<Int32>("FinishedProductDetailsId"),
-            //            FinishProductId = r.Field<Int32>("FinishProductId"),
-            //            ProductId = r.Field<Int32>("ProductId"),
-            //            ProductName = r.Field<string>("ProductName"),
-            //            StockById = r.Field<Int32>("StockById"),
-            //            StockBy = r.Field<string>("StockBy"),
-            //            Quantity = r.Field<decimal>("Quantity")
+                    finishGoodsDetails = Table.AsEnumerable().Select(r => new FinishedProductDetailsBO
+                    {
+                        LocationId = r.Field<Int32>("LocationId"),
+                        LocationName = r.Field<string>("LocationName"),
+                        ItemId = r.Field<Int32>("ItemId"),
+                        ItemCode = r.Field<string>("ItemCode"),
+                        ItemName = r.Field<string>("ItemName"),
+                        ColorId = r.Field<Int32>("ColorId"),
+                        ColorName = r.Field<string>("ColorName"),
+                        SizeId = r.Field<Int32>("SizeId"),
+                        SizeName = r.Field<string>("SizeName"),
+                        StyleId = r.Field<Int32>("StyleId"),
+                        StyleName = r.Field<string>("StyleName"),
+                        StockById = r.Field<Int32>("StockById"),
+                        UnitName = r.Field<string>("UnitName"),
+                        Quantity = r.Field<decimal>("Quantity")
 
-            //        }).ToList();
-            //    }
-            //}
+                    }).ToList();
+                }
+            }
 
             return finishGoodsDetails;
         }
@@ -406,32 +411,67 @@ namespace HotelManagement.Data.PurchaseManagment
         {
             List<FinishedProductDetailsBO> finishGoodsDetails = new List<FinishedProductDetailsBO>();
 
-            //using (DbConnection conn = dbSmartAspects.CreateConnection())
-            //{
-            //    using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetFinishedProductRMDetails_SP"))
-            //    {
-            //        dbSmartAspects.AddInParameter(cmd, "@FinishProductId", DbType.Int32, finishProductId);
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetFinishedProductRMDetails_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@FinishProductId", DbType.Int32, productionId);
 
-            //        DataSet ds = new DataSet();
-            //        dbSmartAspects.LoadDataSet(cmd, ds, "FinishGoods");
-            //        DataTable Table = ds.Tables["FinishGoods"];
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "FinishGoods");
+                    DataTable Table = ds.Tables["FinishGoods"];
 
-            //        finishGoodsDetails = Table.AsEnumerable().Select(r => new FinishedProductDetailsBO
-            //        {
-            //            FinishedProductDetailsId = r.Field<Int32>("FinishedProductDetailsId"),
-            //            FinishProductId = r.Field<Int32>("FinishProductId"),
-            //            ProductId = r.Field<Int32>("ProductId"),
-            //            ProductName = r.Field<string>("ProductName"),
-            //            StockById = r.Field<Int32>("StockById"),
-            //            StockBy = r.Field<string>("StockBy"),
-            //            Quantity = r.Field<decimal>("Quantity")
+                    finishGoodsDetails = Table.AsEnumerable().Select(r => new FinishedProductDetailsBO
+                    {
+                        LocationId = r.Field<Int32>("LocationId"),
+                        LocationName = r.Field<string>("LocationName"),
+                        ItemId = r.Field<Int32>("ItemId"),
+                        ItemCode = r.Field<string>("ItemCode"),
+                        ItemName = r.Field<string>("ItemName"),
+                        ColorId = r.Field<Int32>("ColorId"),
+                        ColorName = r.Field<string>("ColorName"),
+                        SizeId = r.Field<Int32>("SizeId"),
+                        SizeName = r.Field<string>("SizeName"),
+                        StyleId= r.Field<Int32>("StyleId"),
+                        StyleName = r.Field<string>("StyleName"),
+                        StockById = r.Field<Int32>("StockById"),
+                        UnitName = r.Field<string>("UnitName"),
+                        Quantity = r.Field<decimal>("Quantity")
 
-            //        }).ToList();
-            //    }
-            //}
+                    }).ToList();
+                }
+            }
 
             return finishGoodsDetails;
         }
+
+        public List<OverheadExpensesBO> GetInvProductionOEDetailsById(int productionId)
+        {
+            List<OverheadExpensesBO> overheadDetails = new List<OverheadExpensesBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvProductionOEDetails_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@FinishProductId", DbType.Int32, productionId);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "FinishGoods");
+                    DataTable Table = ds.Tables["FinishGoods"];
+
+                    overheadDetails = Table.AsEnumerable().Select(r => new OverheadExpensesBO
+                    {
+                        NodeId = r.Field<Int32>("NodeId"),
+                        AccountHead = r.Field<string>("AccountHead"),
+                        Amount = r.Field<decimal>("OEAmount"),
+                        Remarks = r.Field<string>("OERemarks")
+
+                    }).ToList();
+                }
+            }
+            return overheadDetails;
+        }
+
         public List<FinishedProductBO> GetInventoryProductionSearch(int costCenterId, DateTime? dateFrom, DateTime? dateTo, string productionId, string status, int userInfoId)
         {
             List<FinishedProductBO> finishGoods = new List<FinishedProductBO>();
@@ -581,7 +621,6 @@ namespace HotelManagement.Data.PurchaseManagment
                                     dbSmartAspects.AddInParameter(oEDetails, "@NodeId", DbType.Int32, oe.NodeId);
                                     dbSmartAspects.AddInParameter(oEDetails, "@Amount", DbType.Decimal, oe.Amount);
                                     dbSmartAspects.AddInParameter(oEDetails, "@Remarks", DbType.String, oe.Remarks);
-                                    dbSmartAspects.AddInParameter(oEDetails, "@CostCenterId", DbType.Int32, oe.CostCenterId);
 
                                     status = dbSmartAspects.ExecuteNonQuery(oEDetails, transction);
                                 }
@@ -619,164 +658,208 @@ namespace HotelManagement.Data.PurchaseManagment
 
             return retVal;
         }
-        //public bool UpdateInventoryProduction(FinishedProductBO finishedProduct, List<FinishedProductDetailsBO> AddedFinishGoods, List<FinishedProductDetailsBO> EditedFinishGoods, List<FinishedProductDetailsBO> DeletedFinishGoods, List<FinishedProductDetailsBO> AddedRMGoods, List<FinishedProductDetailsBO> EditedRMGoods, List<FinishedProductDetailsBO> DeletedRMGoods)
-        //{
-        //    int status = 0;
-        //    bool retVal = false;
+        public bool UpdateInventoryProduction(FinishedProductBO finishedProduct, List<FinishedProductDetailsBO> AddedFinishGoods, List<FinishedProductDetailsBO> EditedFinishGoods, List<FinishedProductDetailsBO> DeletedFinishGoods, List<FinishedProductDetailsBO> AddedRMGoods, List<FinishedProductDetailsBO> EditedRMGoods, List<FinishedProductDetailsBO> DeletedRMGoods, List<OverheadExpensesBO> AddedOverheadExpenses)
+        {
+            int status = 0;
+            bool retVal = false;
 
-        //    using (DbConnection conn = dbSmartAspects.CreateConnection())
-        //    {
-        //        conn.Open();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
 
-        //        using (DbTransaction transction = conn.BeginTransaction())
-        //        {
-        //            try
-        //            {
-        //                using (DbCommand commandOut = dbSmartAspects.GetStoredProcCommand("UpdateFinishGoods_SP"))
-        //                {
-        //                    commandOut.Parameters.Clear();
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand commandOut = dbSmartAspects.GetStoredProcCommand("UpdateInvProduction_SP"))
+                        {
+                            commandOut.Parameters.Clear();
 
-        //                    dbSmartAspects.AddInParameter(commandOut, "@FinishProductId", DbType.Int32, finishedProduct.FinishProductId);
-        //                    dbSmartAspects.AddInParameter(commandOut, "@OrderDate", DbType.DateTime, finishedProduct.OrderDate);
-        //                    dbSmartAspects.AddInParameter(commandOut, "@CostCenterId", DbType.Int32, finishedProduct.CostCenterId);
-        //                    dbSmartAspects.AddInParameter(commandOut, "@Remarks", DbType.String, finishedProduct.Remarks);
-        //                    dbSmartAspects.AddInParameter(commandOut, "@LastModifiedBy", DbType.Int32, finishedProduct.LastModifiedBy);
+                            dbSmartAspects.AddInParameter(commandOut, "@FinishProductId", DbType.Int32, finishedProduct.FinishProductId);
+                            dbSmartAspects.AddInParameter(commandOut, "@OrderDate", DbType.DateTime, finishedProduct.OrderDate);
+                            dbSmartAspects.AddInParameter(commandOut, "@CostCenterId", DbType.Int32, finishedProduct.CostCenterId);
+                            dbSmartAspects.AddInParameter(commandOut, "@Remarks", DbType.String, finishedProduct.Remarks);
+                            dbSmartAspects.AddInParameter(commandOut, "@LastModifiedBy", DbType.Int32, finishedProduct.LastModifiedBy);
 
-        //                    status = dbSmartAspects.ExecuteNonQuery(commandOut, transction);
-        //                }
+                            status = dbSmartAspects.ExecuteNonQuery(commandOut, transction);
+                        }
 
-        //                if (status > 0 && AddedFinishGoods.Count > 0)
-        //                {
-        //                    foreach (FinishedProductDetailsBO fp in AddedFinishGoods)
-        //                    {
-        //                        using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("SaveFinishGoodsFGDetails_SP"))
-        //                        {
-        //                            cmdOutDetails.Parameters.Clear();
+                        if (status > 0 && AddedFinishGoods.Count > 0)
+                        {
+                            using (DbCommand cmdFGDeleteDetails = dbSmartAspects.GetStoredProcCommand("DeleteProductionFGDetailsByProductionId_SP"))
+                            {
+                                cmdFGDeleteDetails.Parameters.Clear();
+                                dbSmartAspects.AddInParameter(cmdFGDeleteDetails, "@FinishProductId", DbType.Int32, finishedProduct.FinishProductId);
+                                status = dbSmartAspects.ExecuteNonQuery(cmdFGDeleteDetails, transction);
+                            }
+                            foreach (FinishedProductDetailsBO fp in AddedFinishGoods)
+                            {
+                                using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("SaveInvProductionFGDetails_SP"))
+                                {
+                                    cmdOutDetails.Parameters.Clear();
 
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishProductId", DbType.Int32, finishedProduct.FinishProductId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@LocationId", DbType.Int32, fp.LocationId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@ProductId", DbType.Int32, fp.ProductId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@StockById", DbType.Int32, fp.StockById);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@Quantity", DbType.Decimal, fp.Quantity);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@ProductionId", DbType.Int32, finishedProduct.FinishProductId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@LocationId", DbType.Int32, fp.LocationId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@ItemId", DbType.Int32, fp.ItemId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@ColorId", DbType.Int32, fp.ColorId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@SizeId", DbType.Int32, fp.SizeId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@StyleId", DbType.Int32, fp.StyleId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@StockById", DbType.Int32, fp.StockById);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@Quantity", DbType.Decimal, fp.Quantity);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@UnitPrice", DbType.Decimal, fp.UnitPrice);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@BagQuantity", DbType.Int32, fp.BagQuantity);
 
-        //                            status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
-        //                        }
-        //                    }
-        //                }
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
+                                }
+                            }
+                        }
 
-        //                if (status > 0 && EditedFinishGoods.Count > 0)
-        //                {
-        //                    foreach (FinishedProductDetailsBO fp in EditedFinishGoods)
-        //                    {
-        //                        using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("UpdateFinishGoodsFGDetails_SP"))
-        //                        {
-        //                            cmdOutDetails.Parameters.Clear();
+                        if (status > 0 && EditedFinishGoods.Count > 0)
+                        {
+                            foreach (FinishedProductDetailsBO fp in EditedFinishGoods)
+                            {
+                                using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("UpdateFinishGoodsFGDetails_SP"))
+                                {
+                                    cmdOutDetails.Parameters.Clear();
 
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishedProductDetailsId", DbType.Int32, fp.FinishedProductDetailsId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishProductId", DbType.Int32, fp.FinishProductId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@LocationId", DbType.Int32, fp.LocationId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@ProductId", DbType.Int32, fp.ProductId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@StockById", DbType.Int32, fp.StockById);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@Quantity", DbType.Decimal, fp.Quantity);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishedProductDetailsId", DbType.Int32, fp.FinishedProductDetailsId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishProductId", DbType.Int32, fp.FinishProductId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@LocationId", DbType.Int32, fp.LocationId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@ProductId", DbType.Int32, fp.ProductId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@StockById", DbType.Int32, fp.StockById);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@Quantity", DbType.Decimal, fp.Quantity);
 
-        //                            status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
-        //                        }
-        //                    }
-        //                }
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
+                                }
+                            }
+                        }
 
-        //                if (status > 0 && DeletedFinishGoods.Count > 0)
-        //                {
-        //                    foreach (FinishedProductDetailsBO fp in DeletedFinishGoods)
-        //                    {
-        //                        using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("DeleteFinishGoodsFGDetails_SP"))
-        //                        {
-        //                            cmdOutDetails.Parameters.Clear();
+                        if (status > 0 && DeletedFinishGoods.Count > 0)
+                        {
+                            foreach (FinishedProductDetailsBO fp in DeletedFinishGoods)
+                            {
+                                using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("DeleteFinishGoodsFGDetails_SP"))
+                                {
+                                    cmdOutDetails.Parameters.Clear();
 
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishedProductDetailsId", DbType.Int32, fp.FinishedProductDetailsId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishProductId", DbType.Int32, fp.FinishProductId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishedProductDetailsId", DbType.Int32, fp.FinishedProductDetailsId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishProductId", DbType.Int32, fp.FinishProductId);
 
-        //                            status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
-        //                        }
-        //                    }
-        //                }
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
+                                }
+                            }
+                        }
 
-        //                if (status > 0 && AddedRMGoods.Count > 0)
-        //                {
-        //                    foreach (FinishedProductDetailsBO fp in AddedRMGoods)
-        //                    {
-        //                        using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("SaveFinishGoodsRMDetails_SP"))
-        //                        {
-        //                            cmdOutDetails.Parameters.Clear();
+                        if (status > 0 && AddedRMGoods.Count > 0)
+                        {
+                            using (DbCommand cmdRMDeleteDetails = dbSmartAspects.GetStoredProcCommand("DeleteProductionRMDetailsByProductionId_SP"))
+                            {
+                                cmdRMDeleteDetails.Parameters.Clear();
+                                dbSmartAspects.AddInParameter(cmdRMDeleteDetails, "@FinishProductId", DbType.Int32, finishedProduct.FinishProductId);
+                                status = dbSmartAspects.ExecuteNonQuery(cmdRMDeleteDetails, transction);
+                            }
+                            foreach (FinishedProductDetailsBO fp in AddedRMGoods)
+                            {
+                                using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("SaveInvProductionRMDetails_SP"))
+                                {
+                                    cmdOutDetails.Parameters.Clear();
 
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishProductId", DbType.Int32, finishedProduct.FinishProductId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@LocationId", DbType.Int32, fp.LocationId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@ProductId", DbType.Int32, fp.ProductId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@StockById", DbType.Int32, fp.StockById);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@Quantity", DbType.Decimal, fp.Quantity);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@ProductionId", DbType.Int32, finishedProduct.FinishProductId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@LocationId", DbType.Int32, fp.LocationId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@ItemId", DbType.Int32, fp.ItemId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@ColorId", DbType.Int32, fp.ColorId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@SizeId", DbType.Int32, fp.SizeId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@StyleId", DbType.Int32, fp.StyleId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@StockById", DbType.Int32, fp.StockById);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@Quantity", DbType.Decimal, fp.Quantity);
 
-        //                            status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
-        //                        }
-        //                    }
-        //                }
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
+                                }
+                            }
+                        }
 
-        //                if (status > 0 && EditedRMGoods.Count > 0)
-        //                {
-        //                    foreach (FinishedProductDetailsBO fp in EditedRMGoods)
-        //                    {
-        //                        using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("UpdateFinishGoodsRMDetails_SP"))
-        //                        {
-        //                            cmdOutDetails.Parameters.Clear();
+                        if (status > 0 && EditedRMGoods.Count > 0)
+                        {
+                            foreach (FinishedProductDetailsBO fp in EditedRMGoods)
+                            {
+                                using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("UpdateFinishGoodsRMDetails_SP"))
+                                {
+                                    cmdOutDetails.Parameters.Clear();
 
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishedProductDetailsId", DbType.Int32, fp.FinishedProductDetailsId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishProductId", DbType.Int32, fp.FinishProductId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@LocationId", DbType.Int32, fp.LocationId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@ProductId", DbType.Int32, fp.ProductId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@StockById", DbType.Int32, fp.StockById);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@Quantity", DbType.Decimal, fp.Quantity);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishedProductDetailsId", DbType.Int32, fp.FinishedProductDetailsId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishProductId", DbType.Int32, fp.FinishProductId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@LocationId", DbType.Int32, fp.LocationId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@ProductId", DbType.Int32, fp.ProductId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@StockById", DbType.Int32, fp.StockById);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@Quantity", DbType.Decimal, fp.Quantity);
 
-        //                            status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
-        //                        }
-        //                    }
-        //                }
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
+                                }
+                            }
+                        }
 
-        //                if (status > 0 && DeletedRMGoods.Count > 0)
-        //                {
-        //                    foreach (FinishedProductDetailsBO fp in DeletedRMGoods)
-        //                    {
-        //                        using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("DeleteFinishGoodsRMDetails_SP"))
-        //                        {
-        //                            cmdOutDetails.Parameters.Clear();
+                        if (status > 0 && DeletedRMGoods.Count > 0)
+                        {
+                            foreach (FinishedProductDetailsBO fp in DeletedRMGoods)
+                            {
+                                using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("DeleteFinishGoodsRMDetails_SP"))
+                                {
+                                    cmdOutDetails.Parameters.Clear();
 
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishedProductDetailsId", DbType.Int32, fp.FinishedProductDetailsId);
-        //                            dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishProductId", DbType.Int32, fp.FinishProductId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishedProductDetailsId", DbType.Int32, fp.FinishedProductDetailsId);
+                                    dbSmartAspects.AddInParameter(cmdOutDetails, "@FinishProductId", DbType.Int32, fp.FinishProductId);
 
-        //                            status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
-        //                        }
-        //                    }
-        //                }
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
+                                }
+                            }
+                        }
 
-        //                if (status > 0)
-        //                {
-        //                    retVal = true;
-        //                    transction.Commit();
-        //                }
-        //                else
-        //                {
-        //                    retVal = false;
-        //                    transction.Rollback();
-        //                }
-        //            }
-        //            catch
-        //            {
-        //                retVal = false;
-        //                transction.Rollback();
-        //            }
-        //        }
-        //    }
+                        if (status > 0 && AddedOverheadExpenses.Count > 0)
+                        {
+                            using (DbCommand cmdOEDeleteDetails = dbSmartAspects.GetStoredProcCommand("DeleteProductionOEDetailsByProductionId_SP"))
+                            {
+                                cmdOEDeleteDetails.Parameters.Clear();
+                                dbSmartAspects.AddInParameter(cmdOEDeleteDetails, "@FinishProductId", DbType.Int32, finishedProduct.FinishProductId);
+                                status = dbSmartAspects.ExecuteNonQuery(cmdOEDeleteDetails, transction);
+                            }
+                            foreach (OverheadExpensesBO oe in AddedOverheadExpenses)
+                            {
+                                using (DbCommand oEDetails = dbSmartAspects.GetStoredProcCommand("SaveInvProductionOEDetails_SP"))
+                                {
+                                    oEDetails.Parameters.Clear();
 
-        //    return retVal;
-        //}
-        
+                                    dbSmartAspects.AddInParameter(oEDetails, "@ProductionId", DbType.Int64, finishedProduct.FinishProductId);
+                                    dbSmartAspects.AddInParameter(oEDetails, "@NodeId", DbType.Int32, oe.NodeId);
+                                    dbSmartAspects.AddInParameter(oEDetails, "@Amount", DbType.Decimal, oe.Amount);
+                                    dbSmartAspects.AddInParameter(oEDetails, "@Remarks", DbType.String, oe.Remarks);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(oEDetails, transction);
+                                }
+                            }
+                        }
+
+                        if (status > 0)
+                        {
+                            retVal = true;
+                            transction.Commit();
+                        }
+                        else
+                        {
+                            retVal = false;
+                            transction.Rollback();
+                        }
+                    }
+                    catch
+                    {
+                        retVal = false;
+                        transction.Rollback();
+                    }
+                }
+            }
+
+            return retVal;
+        }
+
         public bool DeleteInventoryProduction(int productionId)
         {
             int status = 0;

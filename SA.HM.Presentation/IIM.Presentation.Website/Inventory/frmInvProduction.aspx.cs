@@ -306,6 +306,7 @@ namespace HotelManagement.Presentation.Website.Inventory
             }            
         }
         //************************ User Defined Web Method ********************//
+        
         [WebMethod]
         public static List<InvItemAutoSearchBO> ItemNCategoryAutoSearchForRMGoods(int costCenterId, string itemName, int categoryId, int locationId)
         {
@@ -349,6 +350,7 @@ namespace HotelManagement.Presentation.Website.Inventory
             viewBo.FinishedProduct = goodsDA.GetFinishedProductById(productionId);
             viewBo.FinisProductRMDetails = goodsDA.GetInvProductionRMDetailsById(productionId);
             viewBo.FinisProductDetails = goodsDA.GetInvProductionFGDetailsById(productionId);
+            viewBo.FinishProductOEDetails = goodsDA.GetInvProductionOEDetailsById(productionId);
 
             return viewBo;
         }
@@ -398,14 +400,14 @@ namespace HotelManagement.Presentation.Website.Inventory
                 }
                 else
                 {
-                    //finishedProduct.LastModifiedBy = userInformationBO.UserInfoId;
-                    //status = finishDa.UpdateInventoryProduction(finishedProduct, AddedFinishGoods, EditedFinishGoods, DeletedFinishGoods, AddedRMGoods, EditedRMGoods, DeletedRMGoods);
+                    finishedProduct.LastModifiedBy = userInformationBO.UserInfoId;
+                    status = finishDa.UpdateInventoryProduction(finishedProduct, AddedFinishGoods, EditedFinishGoods, DeletedFinishGoods, AddedRMGoods, EditedRMGoods, DeletedRMGoods, AddedOverheadExpenses);
 
-                    //if (status)
-                    //{
-                    //    rtninfo.IsSuccess = true;
-                    //    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
-                    //}
+                    if (status)
+                    {
+                        rtninfo.IsSuccess = true;
+                        rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
+                    }
                 }
 
                 if (!status)

@@ -10,5 +10,6 @@ namespace HotelManagement.Entity.PurchaseManagment
         public FinishedProductBO FinishedProduct { get; set; }
         public List<FinishedProductDetailsBO> FinisProductDetails { get; set; }
         public List<FinishedProductDetailsBO> FinisProductRMDetails { get; set; }
+        public List<OverheadExpensesBO> FinishProductOEDetails { get; set; }
     }
 }
