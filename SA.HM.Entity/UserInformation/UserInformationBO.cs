@@ -58,5 +58,7 @@ namespace HotelManagement.Entity.UserInformation
         public int IsPaymentBillInfoHideInCompanyBillReceive { get; set; }
         public int IsReceiveBillInfoHideInSupplierBillPayment { get; set; }
         public bool IsItemAverageCostUpdateEnable { get; set; }
+        public byte[] PoweredByQrCode { get; set; }
+        public byte[] CompanyQrCode { get; set; }
     }
 }

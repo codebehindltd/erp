@@ -149,6 +149,29 @@ namespace HotelManagement.Presentation.Website.UserInformation
                 commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("InnboardReportFooterPoweredByInfo", "InnboardReportFooterPoweredByInfo");
                 userInformation.FooterPoweredByInfo = commonSetupBO.SetupValue;
 
+                HMCommonDA hmCommonQrImageDA = new HMCommonDA();
+                commonSetupBO.SetupValue.Replace("Powered by: ", "");
+                userInformation.PoweredByQrCode = hmCommonQrImageDA.GenerateQrCode(commonSetupBO.SetupValue.Replace("Powered by: ", ""));
+
+                string companyName = string.Empty;
+                string companyAddress = string.Empty;
+                string webAddress = string.Empty;
+                string telephoneNumber = string.Empty;
+                string hotLineNumber = string.Empty;
+
+                CompanyDA companyDA = new CompanyDA();
+                List<CompanyBO> fileCompany = companyDA.GetCompanyInfo();
+                if (fileCompany[0].CompanyId > 0)
+                {
+                    companyName = fileCompany[0].CompanyName;
+                    companyAddress = fileCompany[0].CompanyAddress;
+                    webAddress = fileCompany[0].WebAddress;
+                    telephoneNumber = fileCompany[0].Telephone;
+                    hotLineNumber = fileCompany[0].HotLineNumber;
+                    string companyQrCode = companyName + "; " + webAddress + "; " + telephoneNumber + ";";
+                    userInformation.CompanyQrCode = hmCommonQrImageDA.GenerateQrCode(companyQrCode);
+                }
+
                 commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("InnboardGridView", "GridViewPageSize");
                 userInformation.GridViewPageSize = Convert.ToInt32(commonSetupBO.SetupValue);
 
@@ -226,20 +249,11 @@ namespace HotelManagement.Presentation.Website.UserInformation
                 Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Login.ToString(), EntityTypeEnum.EntityType.Login.ToString(), userInformation.UserInfoId,
                 "", hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.Login));
 
-                CompanyDA companyDA = new CompanyDA();
-                List<CompanyBO> files = companyDA.GetCompanyInfo();
-                if (files.Count > 0)
+                //CompanyDA companyDA = new CompanyDA();
+                //List<CompanyBO> files = companyDA.GetCompanyInfo();
+                if (fileCompany.Count > 0)
                 {
-                    //userInformation.CompanyType = files[0].CompanyType;
-                    //Session.Add("UserInformationBOSession", userInformation);
-                    //Session.Add("UserEmployeeMapId", userInformation.EmpId);
-
-                    //ActivityLogsBO activityLogBO = new ActivityLogsBO();
-                    //ActivityLogsDA activityLogDA = new ActivityLogsDA();
-                    //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Login.ToString(), EntityTypeEnum.EntityType.Login.ToString(), userInformation.UserInfoId,
-                    //"", hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.Login));
-
-                    if (files[0].CompanyId > 0)
+                    if (fileCompany[0].CompanyId > 0)
                     {
                         Response.Redirect("/HMCommon/frmHMHome.aspx");
                     }

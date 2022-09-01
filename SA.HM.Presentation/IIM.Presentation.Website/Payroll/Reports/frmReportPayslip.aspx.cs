@@ -144,6 +144,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 footerPoweredByInfo = userInformationBO.FooterPoweredByInfo;
 
                 paramReport.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
+                paramReport.Add(new ReportParameter("PoweredByQrCode", Convert.ToBase64String(userInformationBO.PoweredByQrCode)));
                 paramReport.Add(new ReportParameter("PrintDateTime", printDate));
 
                 string imageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
