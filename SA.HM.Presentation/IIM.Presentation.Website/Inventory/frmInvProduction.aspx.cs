@@ -52,7 +52,7 @@ namespace HotelManagement.Presentation.Website.Inventory
             {
                 var item = (FinishedProductBO)e.Row.DataItem;
 
-                //ImageButton imgUpdate = (ImageButton)e.Row.FindControl("ImgUpdate");
+                ImageButton ImgEdit = (ImageButton)e.Row.FindControl("ImgEdit");
                 ImageButton imgDelete = (ImageButton)e.Row.FindControl("ImgDelete");
                 ImageButton imgApproval = (ImageButton)e.Row.FindControl("ImgApproval");
                 ImageButton imgCheck = (ImageButton)e.Row.FindControl("ImgCheck");
@@ -71,11 +71,12 @@ namespace HotelManagement.Presentation.Website.Inventory
                         imgCheck.Visible = false;
                     }
                     imgDelete.Visible = true;
+                    ImgEdit.Visible = true;
                     // imgApproval.Visible = true;
                 }
                 else
                 {
-                    //imgUpdate.Visible = false;
+                    ImgEdit.Visible = false;
                     imgDelete.Visible = false;
                     imgApproval.Visible = false;
                     imgCheck.Visible = false;

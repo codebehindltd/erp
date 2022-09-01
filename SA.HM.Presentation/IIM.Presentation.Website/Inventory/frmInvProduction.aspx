@@ -216,6 +216,10 @@
                 PageMethods.GetItemNameForAutoSearch(ProductName, costCentreId, OnLoadProductInfoSucceeded, OnLoadProductInfoFailed);
             });--%>
 
+            $("#btnCancel").click(function () {
+                return false;
+            });
+
             $("#btnAddRMItem").click(function () {
 
                 var costCenterId = $("#ContentPlaceHolder1_ddlCostCenter").val();
@@ -1608,6 +1612,15 @@
                 $("#ContentPlaceHolder1_ddlCostCenter").attr("disabled", false);
             }
             return false;
+        
+        }
+
+        function PerformClearForSearchTab() {
+            $("#ContentPlaceHolder1_ddlSearchCostCenter").val("0").trigger('change');
+            $("#ContentPlaceHolder1_txtFromDate").val("");
+            $("#ContentPlaceHolder1_txtToDate").val("");
+            $("#ContentPlaceHolder1_txtProductionId").val("");
+            $("#ContentPlaceHolder1_ddlStatus").val("0").trigger('change');
         }
 
         function PerformClearAction() {
@@ -2136,7 +2149,7 @@
                                 <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click"
                                     CssClass="TransactionalButton btn btn-primary btn-sm" TabIndex="5" />
                                 <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="TransactionalButton btn btn-primary btn-sm"
-                                    OnClientClick="javascript: return PerformClearAction();" TabIndex="6" />
+                                    OnClientClick="javascript: return PerformClearForSearchTab();" TabIndex="6" />
                             </div>
                         </div>
                     </div>
