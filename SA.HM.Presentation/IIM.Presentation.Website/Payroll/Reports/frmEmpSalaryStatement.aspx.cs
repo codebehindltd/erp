@@ -37,7 +37,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             _IsReportPanelEnable = 1;
 
             DateTime processDateFrom = DateTime.Now, processDateTo = DateTime.Now;
-            int departmentId = 0, gradeId = 0, employeeId = 0, branchId = 0;
+            int departmentId = 0, designationId = 0, gradeId = 0, employeeId = 0, branchId = 0;
 
             HMCommonDA hmCommonDA = new HMCommonDA();
             UserInformationBO userInformationBO = new UserInformationBO();
@@ -74,7 +74,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             EmpSalaryProcessDA salaryProcessDA = new EmpSalaryProcessDA();
 
             List<SalarySheetBO> salarystatementList = new List<SalarySheetBO>();
-            salarystatementList = salaryProcessDA.EmployeeSalarySheets(0, "SalaryStatement", employeeId, departmentId, gradeId, branchId, processDateFrom, processDateTo, 0, string.Empty);
+            salarystatementList = salaryProcessDA.EmployeeSalarySheets(0, "SalaryStatement", employeeId, departmentId, designationId, gradeId, branchId, processDateFrom, processDateTo, 0, string.Empty);
 
             if (salarystatementList != null)
             {

@@ -42,6 +42,8 @@ namespace HotelManagement.Presentation.Website.POS
 
             if (!IsPostBack)
             {
+                LoadBillingType();
+                LoadIsBillingTypeEnable();
                 getPOSRefundConfiguration();
                 getIsMembershipPaymentEnable();
                 GetBillingConfiguration();
@@ -76,7 +78,39 @@ namespace HotelManagement.Presentation.Website.POS
             }
         }
 
+        private void LoadBillingType()
+        {
+            HMCommonDA commonDA = new HMCommonDA();
+            CustomFieldBO customField = new CustomFieldBO();
+            List<CustomFieldBO> fields = new List<CustomFieldBO>();
+            fields = commonDA.GetCustomField("BillingType", hmUtility.GetDropDownFirstValue());
 
+            ddlBillingType.DataSource = fields;
+            ddlBillingType.DataTextField = "FieldValue";
+            ddlBillingType.DataValueField = "FieldValue";
+            ddlBillingType.DataBind();
+        }
+        private void LoadIsBillingTypeEnable()
+        {
+            BillingTypeUpperDividerDiv.Visible = false;
+            BillingTypeDiv.Visible = false;
+            BillingTypeBottomDividerDiv.Visible = false;
+            HMCommonSetupBO setUpBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsBillingTypeEnable", "IsBillingTypeEnable");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
+            {
+                hfIsBillingTypeEnable.Value = setUpBO.SetupValue;
+                if (setUpBO.SetupValue == "1")
+                {
+                    BillingTypeUpperDividerDiv.Visible = true;
+                    BillingTypeDiv.Visible = true;
+                    BillingTypeBottomDividerDiv.Visible = true;
+                }
+            }
+        }
         private void getPOSRefundConfiguration()
         {
             HMCommonSetupBO setUpBO = new HMCommonSetupBO();
@@ -875,8 +909,6 @@ namespace HotelManagement.Presentation.Website.POS
             InvCategoryDA catDa = new InvCategoryDA();
             RestaurentPosDA posDa = new RestaurentPosDA();
 
-
-
             kotBillMaster = kotBillMaster = kotDa.GetKotBillMasterInfoByKotIdNSourceName(Convert.ToInt32(kotId), sourceName);
             kotBill = billDa.GetRestaurantBillByKotId(kotBillMaster.KotId, kotBillMaster.SourceName);
             kotBillPayment = billDa.GetBillPaymentByBillId(kotBill.BillId, "Restaurant");
@@ -889,15 +921,6 @@ namespace HotelManagement.Presentation.Website.POS
 
             if (billDetailList.Count > 0)
             {
-                //hfAddedTableIdForBill.Value = Newtonsoft.Json.JsonConvert.SerializeObject((from b in billDetailList
-                //                                                                           select new
-                //                                                                           {
-                //                                                                               TableId = b.TableId,
-                //                                                                               KotId = b.KotId,
-                //                                                                               DetailId = b.DetailId,
-                //                                                                               BillId = b.BillId
-                //                                                                           }));
-
                 foreach (RestaurantBillDetailBO bd in billDetailList)
                 {
                     if (!string.IsNullOrEmpty(kotIdList))
@@ -912,18 +935,7 @@ namespace HotelManagement.Presentation.Website.POS
                     }
                 }
             }
-
-            if (classificationLst.Count > 0)
-            {
-                //hfAddedClassificationId.Value = Newtonsoft.Json.JsonConvert.SerializeObject((from b in classificationLst
-                //                                                                             select new
-                //                                                                             {
-                //                                                                                 ClassificationId = b.ClassificationId,
-                //                                                                                 DiscountId = b.DiscountId,
-                //                                                                                 DiscountAmount = b.DiscountAmount
-                //                                                                             }));
-            }
-
+            
             if (!string.IsNullOrEmpty(kotIdList))
             {
                 kotIdList += "," + kotBillMaster.KotId.ToString();

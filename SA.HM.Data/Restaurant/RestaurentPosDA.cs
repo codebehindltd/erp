@@ -551,7 +551,6 @@ namespace HotelManagement.Data.Restaurant
                                 dbSmartAspects.AddInParameter(command, "@TableId", DbType.Int32, restaurentBillBO.TableId);
                                 dbSmartAspects.AddInParameter(command, "@CostCenterId", DbType.Int32, restaurentBillBO.CostCenterId);
                                 dbSmartAspects.AddInParameter(command, "@BillDate", DbType.DateTime, restaurentBillBO.BillDate);
-                                //dbSmartAspects.AddInParameter(command, "@BillPaymentDate", DbType.DateTime, restaurentBillBO.BillPaymentDate);
                                 dbSmartAspects.AddInParameter(command, "@PaxQuantity", DbType.Int32, restaurentBillBO.PaxQuantity);
                                 dbSmartAspects.AddInParameter(command, "@CustomerName", DbType.String, restaurentBillBO.CustomerName);
                                 dbSmartAspects.AddInParameter(command, "@CustomerMobile", DbType.String, restaurentBillBO.CustomerMobile);
@@ -629,6 +628,11 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@BillType", DbType.String, restaurentBillBO.BillType);
                                 else
                                     dbSmartAspects.AddInParameter(command, "@BillType", DbType.String, DBNull.Value);
+
+                                if (!string.IsNullOrEmpty(restaurentBillBO.BillingType))
+                                    dbSmartAspects.AddInParameter(command, "@BillingType", DbType.String, restaurentBillBO.BillingType);
+                                else
+                                    dbSmartAspects.AddInParameter(command, "@BillingType", DbType.String, DBNull.Value);
 
                                 dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, restaurentBillBO.CreatedBy);
 
@@ -1635,11 +1639,8 @@ namespace HotelManagement.Data.Restaurant
                             dbSmartAspects.AddInParameter(command, "@TableId", DbType.Int32, restaurentBillBO.TableId);
                             dbSmartAspects.AddInParameter(command, "@CostCenterId", DbType.Int32, restaurentBillBO.CostCenterId);
                             dbSmartAspects.AddInParameter(command, "@BillDate", DbType.DateTime, restaurentBillBO.BillDate);
-                            //dbSmartAspects.AddInParameter(command, "@BillPaymentDate", DbType.DateTime, restaurentBillBO.BillPaymentDate);
                             dbSmartAspects.AddInParameter(command, "@PaxQuantity", DbType.Int32, restaurentBillBO.PaxQuantity);
                             dbSmartAspects.AddInParameter(command, "@CustomerName", DbType.String, restaurentBillBO.CustomerName);
-                            //dbSmartAspects.AddInParameter(command, "@BearerId", DbType.Int32, restaurentBillBO.BearerId);
-
                             dbSmartAspects.AddInParameter(command, "@RegistrationId", DbType.Int32, restaurentBillBO.RegistrationId);
                             dbSmartAspects.AddInParameter(command, "@SalesAmount", DbType.Decimal, restaurentBillBO.SalesAmount);
                             dbSmartAspects.AddInParameter(command, "@IsComplementary", DbType.Boolean, restaurentBillBO.IsComplementary);
@@ -1690,10 +1691,16 @@ namespace HotelManagement.Data.Restaurant
                                 dbSmartAspects.AddInParameter(command, "@Subject", DbType.String, restaurentBillBO.Subject);
                             else
                                 dbSmartAspects.AddInParameter(command, "@Subject", DbType.String, DBNull.Value);
+
                             if (!string.IsNullOrEmpty(restaurentBillBO.BillType))
                                 dbSmartAspects.AddInParameter(command, "@BillType", DbType.String, restaurentBillBO.BillType);
                             else
                                 dbSmartAspects.AddInParameter(command, "@BillType", DbType.String, DBNull.Value);
+
+                            if (!string.IsNullOrEmpty(restaurentBillBO.BillingType))
+                                dbSmartAspects.AddInParameter(command, "@BillingType", DbType.String, restaurentBillBO.BillingType);
+                            else
+                                dbSmartAspects.AddInParameter(command, "@BillingType", DbType.String, DBNull.Value);
 
                             dbSmartAspects.AddInParameter(command, "@BillPaidBySourceId", DbType.Int32, kotId);
                             dbSmartAspects.AddInParameter(command, "@KotId", DbType.Int32, kotId);

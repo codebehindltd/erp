@@ -112,22 +112,22 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         protected global::System.Web.UI.WebControls.DropDownList ddlDepartmentId;
         
         /// <summary>
-        /// Label2 control.
+        /// lblDesignationId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lblDesignationId;
         
         /// <summary>
-        /// ddlGrade control.
+        /// ddlDesignationId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlGrade;
+        protected global::System.Web.UI.WebControls.DropDownList ddlDesignationId;
         
         /// <summary>
         /// lblWorkStation control.
@@ -146,6 +146,24 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlWorkStation;
+        
+        /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
+        /// ddlGrade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlGrade;
         
         /// <summary>
         /// Label4 control.

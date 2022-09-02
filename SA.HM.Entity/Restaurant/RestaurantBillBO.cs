@@ -98,6 +98,7 @@ namespace HotelManagement.Entity.Restaurant
         public string KotStatus { get; set; }
         public string PaymentRemarks { get; set; }
         public string BillType { get; set; }
+        public string BillingType { get; set; }
         public string BillRemarks { get; set; }
         public decimal TotalQuantity { get; set; }
         public decimal TotalPrice { get; set; }

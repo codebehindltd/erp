@@ -1840,9 +1840,9 @@
             //    discount = 0.00;
             //}
 
-            
+
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
-                $("#AddedItem tbody tr").each(function () {                
+                $("#AddedItem tbody tr").each(function () {
                     if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
                         amount = parseFloat($(this).find("td:eq(9)").text());
                     }
@@ -2262,7 +2262,7 @@
             PaymentCalculation(0);
 
             if ($("#ContentPlaceHolder1_ddlProject").val() == "0") {
-                toastr.info("Please Select Project.");
+                toastr.warning("Please Select Project.");
                 $("#ContentPlaceHolder1_ddlProject").focus();
                 return false;
             }
@@ -2273,13 +2273,6 @@
                     return false;
                 }
             }
-
-            //if ($("#ContentPlaceHolder1_hfIsDeliveredByEnable").val() == "1") {
-            //    if ($("#ContentPlaceHolder1_ddlDeliveredBy").val() == "0") {
-            //        toastr.warning("Please Select Delivered By.");
-            //        return false;
-            //    }
-            //}
 
             var estimatedDoneDate = $("#txtEstimatedTaskDoneDate").val();
             var isTaskAutoGenarate = $("#ContentPlaceHolder1_hfIsTaskAutoGenarate").val();
@@ -2298,10 +2291,10 @@
             isBillExchange = $("#ContentPlaceHolder1_hfIsBillExchange").val() == "0" ? false : true;
             if (!isBillExchange) {
                 if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
-                    if ($("#AddedItem tbody tr").length == 0) { toastr.info("Please Add Item For Settlement."); return false; }
+                    if ($("#AddedItem tbody tr").length == 0) { toastr.warning("Please Add Item For Settlement."); return false; }
                 }
                 else {
-                    if ($("#AddedRiceMillBillingItem tbody tr").length == 0) { toastr.info("Please Add Item For Settlement."); return false; }
+                    if ($("#AddedRiceMillBillingItem tbody tr").length == 0) { toastr.warning("Please Add Item For Settlement."); return false; }
                 }
             }
             if ($.trim($("#DueRChnageAmount").text()) == "Due/Change") { toastr.warning("Please Payment For The Bill."); return false; }
@@ -2650,7 +2643,6 @@
                 calculatedDiscountAmount = parseFloat(totalSales) - parseFloat(afterDiscountAmount);
 
             var projectId = $("#ContentPlaceHolder1_ddlProject").val();
-
             var billType = $("#ContentPlaceHolder1_ddlInclusiveOrExclusive").val();
 
             var IsVatEnable = true;
@@ -2668,6 +2660,17 @@
             var deliveredBy = 0;
             if ($("#ContentPlaceHolder1_hfIsDeliveredByEnable").val() == "1") {
                 deliveredBy = $("#ContentPlaceHolder1_ddlDeliveredBy").val();
+            }
+
+            var billingType = "";
+            if ($("#ContentPlaceHolder1_hfIsBillingTypeEnable").val() == "1") {
+
+                if ($("#ContentPlaceHolder1_ddlBillingType").val() == "--- Please Select ---") {
+                    toastr.warning("Please Select Billing Type.");
+                    return false;
+                }
+
+                billingType = $("#ContentPlaceHolder1_ddlBillingType").val();
             }
 
             var RestaurantBill = {
@@ -2710,7 +2713,8 @@
                 RefundRemarks: refundRemarks,
                 ProjectId: projectId,
                 BillType: billType,
-                DeliveredBy: deliveredBy
+                DeliveredBy: deliveredBy,
+                BillingType: billingType
             };
 
             if (companyId != "0") {
@@ -3701,7 +3705,7 @@
             var tr = $(control).parent().parent();
 
             if ($("#ContentPlaceHolder1_ddlProject").val() == "0") {
-                toastr.info("Please Select Project.");
+                toastr.warning("Please Select Project.");
                 $("#ContentPlaceHolder1_ddlProject").focus();
                 return false;
             }
@@ -3898,6 +3902,7 @@
     <asp:HiddenField ID="hfIsVatEnable" runat="server" />
     <asp:HiddenField ID="hfIsMembershipPaymentEnable" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfPOSRefundConfiguration" runat="server"></asp:HiddenField>
+    <asp:HiddenField ID="hfIsBillingTypeEnable" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfRestaurantVatAmount" runat="server" />
     <asp:HiddenField ID="hfIsRestaurantBillInclusive" runat="server" />
     <asp:HiddenField ID="hfIsRestaurantBillAmountWillRound" runat="server" />
@@ -4149,7 +4154,7 @@
                         <div id="SalesCalculationArea">
                             <div id="ProjectDiv" class="form-group no-gutter">
                                 <div class="col-md-2">
-                                    <label for="TotalSales">
+                                    <label for="TotalSales" class="required-field">
                                         Project</label>
                                 </div>
                                 <div class="col-md-10">
@@ -4543,6 +4548,32 @@
                                 <input type="text" class="form-control" id="txtEstimatedTaskDoneDate" />
                             </div>
                         </div>
+
+                        <div id="BillingTypeUpperDividerDiv" runat="server" class="form-group no-gutter">
+                            <div class="col-md-12">
+                                <div class="PosDivider">
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="BillingTypeDiv" runat="server" class="form-group no-gutter">
+                            <div class="col-md-4">
+                                <label for="TotalSales" class="required-field">
+                                    Billing Type</label>
+                            </div>
+                            <div class="col-md-8">
+                                <asp:DropDownList ID="ddlBillingType" runat="server" CssClass="form-control">
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div id="BillingTypeBottomDividerDiv" runat="server" class="form-group no-gutter">
+                            <div class="col-md-12">
+                                <div class="PosDivider">
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group no-gutter" id="DeliveredByDiv" runat="server">
                             <div class="col-md-5">
                                 <label id="DeliveredBy" for="Delivered By">

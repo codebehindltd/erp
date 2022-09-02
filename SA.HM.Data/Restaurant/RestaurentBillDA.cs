@@ -2952,16 +2952,15 @@ namespace HotelManagement.Data.Restaurant
                     kotBill = Table.AsEnumerable().Select(r => new RestaurantBillBO
                     {
                         BillId = r.Field<Int32>("BillId"),
-
                         RoundedAmount = r.Field<decimal>("RoundedAmount"),
                         RoundedGrandTotal = r.Field<decimal>("RoundedGrandTotal"),
                         ProjectId = r.Field<Int32>("ProjectId"),
                         PaymentInstructionId = r.Field<Int32>("PaymentInstructionId"),
                         ContactId = r.Field<Int32>("ContactId"),
                         BillType = r.Field<string>("BillType"),
+                        BillingType = r.Field<string>("BillingType"),
                         Remarks = r.Field<string>("Remarks"),
                         Subject = r.Field<string>("Subject"),
-
                         BillDate = r.Field<DateTime>("BillDate"),
                         BillNumber = r.Field<string>("BillNumber"),
                         IsBillSettlement = r.Field<bool>("IsBillSettlement"),
@@ -2987,19 +2986,15 @@ namespace HotelManagement.Data.Restaurant
                         ServiceCharge = r.Field<decimal>("ServiceCharge"),
                         IsInvoiceVatAmountEnable = r.Field<bool>("IsInvoiceVatAmountEnable"),
                         VatAmount = r.Field<decimal>("VatAmount"),
-
                         IsInvoiceCitySDChargeEnable = r.Field<bool>("IsInvoiceCitySDChargeEnable"),
                         CitySDCharge = r.Field<decimal>("CitySDCharge"),
                         IsInvoiceAdditionalChargeEnable = r.Field<bool>("IsInvoiceAdditionalChargeEnable"),
                         AdditionalCharge = r.Field<decimal>("AdditionalCharge"),
                         AdditionalChargeType = r.Field<string>("AdditionalChargeType"),
-
                         GrandTotal = r.Field<decimal>("GrandTotal"),
                         IsBillPreviewButtonEnable = r.Field<bool>("IsBillPreviewButtonEnable"),
-
                         TransactionType = r.Field<string>("TransactionType"),
                         TransactionId = r.Field<Int64?>("TransactionId")
-
                     }).FirstOrDefault();
                 }
             }

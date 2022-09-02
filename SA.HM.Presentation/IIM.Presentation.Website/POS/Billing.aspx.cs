@@ -45,6 +45,8 @@ namespace HotelManagement.Presentation.Website.POS
 
             if (!IsPostBack)
             {
+                LoadBillingType();
+                LoadIsBillingTypeEnable();
                 LoadIsItemAttributeEnable();
                 getPOSRefundConfiguration();
                 getIsMembershipPaymentEnable();
@@ -78,8 +80,40 @@ namespace HotelManagement.Presentation.Website.POS
                     LoadNSetBasicInfo(0);
                 }
             }
-        }
+        }        
+        private void LoadBillingType()
+        {
+            HMCommonDA commonDA = new HMCommonDA();
+            CustomFieldBO customField = new CustomFieldBO();
+            List<CustomFieldBO> fields = new List<CustomFieldBO>();
+            fields = commonDA.GetCustomField("BillingType", hmUtility.GetDropDownFirstValue());
 
+            ddlBillingType.DataSource = fields;
+            ddlBillingType.DataTextField = "FieldValue";
+            ddlBillingType.DataValueField = "FieldValue";
+            ddlBillingType.DataBind();
+        }
+        private void LoadIsBillingTypeEnable()
+        {
+            BillingTypeUpperDividerDiv.Visible = false;
+            BillingTypeDiv.Visible = false;
+            BillingTypeBottomDividerDiv.Visible = false;
+            HMCommonSetupBO setUpBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsBillingTypeEnable", "IsBillingTypeEnable");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
+            {
+                hfIsBillingTypeEnable.Value = setUpBO.SetupValue;
+                if (setUpBO.SetupValue == "1")
+                {
+                    BillingTypeUpperDividerDiv.Visible = true;
+                    BillingTypeDiv.Visible = true;
+                    BillingTypeBottomDividerDiv.Visible = true;
+                }
+            }
+        }
         private void LoadIsItemAttributeEnable()
         {
             HMCommonSetupBO setUpBO = new HMCommonSetupBO();

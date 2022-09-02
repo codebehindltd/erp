@@ -238,6 +238,15 @@ namespace HotelManagement.Presentation.Website.POS {
         protected global::System.Web.UI.WebControls.HiddenField hfPOSRefundConfiguration;
         
         /// <summary>
+        /// hfIsBillingTypeEnable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsBillingTypeEnable;
+        
+        /// <summary>
         /// hfRestaurantVatAmount control.
         /// </summary>
         /// <remarks>
@@ -713,6 +722,42 @@ namespace HotelManagement.Presentation.Website.POS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblEstimatedTaskDoneDate;
+        
+        /// <summary>
+        /// BillingTypeUpperDividerDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl BillingTypeUpperDividerDiv;
+        
+        /// <summary>
+        /// BillingTypeDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl BillingTypeDiv;
+        
+        /// <summary>
+        /// ddlBillingType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlBillingType;
+        
+        /// <summary>
+        /// BillingTypeBottomDividerDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl BillingTypeBottomDividerDiv;
         
         /// <summary>
         /// DeliveredByDiv control.

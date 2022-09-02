@@ -32,6 +32,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 LoadEmployeeCompany();
                 LoadGLCompany();
                 LoadDepartment();
+                LoadDesignation();
                 LoadGrade();
                 LoadYearList();
                 LoadSalaryProcessMonth();
@@ -70,7 +71,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
         {
             _RoomStatusInfoByDate = 1;
             DateTime processDateFrom = DateTime.Now, processDateTo = DateTime.Now;
-            int departmentId = 0, gradeId = 0, employeeId = 0, branchId = 0;
+            int departmentId = 0, designationId = 0, gradeId = 0, employeeId = 0, branchId = 0;
 
             HMCommonDA hmCommonDA = new HMCommonDA();
             UserInformationBO userInformationBO = new UserInformationBO();
@@ -232,6 +233,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
 
             employeeId = Convert.ToInt32(hfEmployeeId.Value);
             departmentId = Convert.ToInt32(ddlDepartmentId.SelectedValue);
+            designationId = Convert.ToInt32(ddlDesignationId.SelectedValue);
             gradeId = Convert.ToInt32(ddlGrade.SelectedValue);
             branchId = Convert.ToInt32(ddlWorkStation.SelectedValue);
 
@@ -240,19 +242,19 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
 
             if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.Regular)
             {
-                salarySheetList = salaryProcessDA.EmployeeSalarySheets(glCompanyId, "SalarySheet", employeeId, departmentId, gradeId, branchId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue), currencyType);
+                salarySheetList = salaryProcessDA.EmployeeSalarySheets(glCompanyId, "SalarySheet", employeeId, departmentId, designationId, gradeId, branchId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue), currencyType);
             }
             else if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.RedCross)
             {
-                salarySheetList = salaryProcessDA.EmployeeSalarySheetForRedcross(glCompanyId, "SalarySheet", employeeId, departmentId, gradeId, branchId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue));
+                salarySheetList = salaryProcessDA.EmployeeSalarySheetForRedcross(glCompanyId, "SalarySheet", employeeId, departmentId, designationId, gradeId, branchId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue));
             }
             else if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.IPTech)
             {
-                salarySheetList = salaryProcessDA.EmployeeSalarySheetForIPTech(glCompanyId, employeeId, departmentId, gradeId, branchId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue), currencyType);
+                salarySheetList = salaryProcessDA.EmployeeSalarySheetForIPTech(glCompanyId, employeeId, departmentId, designationId, gradeId, branchId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue), currencyType);
             }
             else if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.SouthSudan)
             {
-                salarySheetList = salaryProcessDA.EmployeeSalarySheetForSouthSudan(glCompanyId, "SalarySheet", employeeId, departmentId, gradeId, branchId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue));
+                salarySheetList = salaryProcessDA.EmployeeSalarySheetForSouthSudan(glCompanyId, "SalarySheet", employeeId, departmentId, designationId, gradeId, branchId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue));
             }
 
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
@@ -329,6 +331,19 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             this.ddlDepartmentId.DataBind();
 
             ddlDepartmentId.Items.Insert(0, new ListItem { Text = hmUtility.GetDropDownFirstAllValue(), Value = "0" });
+        }
+        private void LoadDesignation()
+        {
+            DesignationDA entityDA = new DesignationDA();
+            ddlDesignationId.DataSource = entityDA.GetActiveDesignationInfo();
+            ddlDesignationId.DataTextField = "Name";
+            ddlDesignationId.DataValueField = "DesignationId";
+            ddlDesignationId.DataBind();
+
+            ListItem item = new ListItem();
+            item.Value = "0";
+            item.Text = hmUtility.GetDropDownFirstAllValue();
+            ddlDesignationId.Items.Insert(0, item);
         }
         private void LoadWorkStation()
         {

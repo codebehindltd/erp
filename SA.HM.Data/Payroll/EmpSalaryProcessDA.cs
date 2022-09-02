@@ -602,7 +602,7 @@ namespace HotelManagement.Data.Payroll
             return salarySheetList;
         }
 
-        public List<SalarySheetBO> EmployeeSalarySheets(int glCompanyId, string reportType, int employeeId, int departmentId, int gradeId, int branchId, DateTime processDateFrom, DateTime processDateTo, short processYear, string currencyType)
+        public List<SalarySheetBO> EmployeeSalarySheets(int glCompanyId, string reportType, int employeeId, int departmentId, int designationId, int gradeId, int branchId, DateTime processDateFrom, DateTime processDateTo, short processYear, string currencyType)
         {
             List<SalarySheetBO> salarySheetList = new List<SalarySheetBO>();
 
@@ -626,6 +626,11 @@ namespace HotelManagement.Data.Payroll
                         dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, departmentId);
                     else
                         dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, DBNull.Value);
+
+                    if (designationId != 0)
+                        dbSmartAspects.AddInParameter(cmd, "@DesignationId", DbType.Int32, designationId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@DesignationId", DbType.Int32, DBNull.Value);
 
                     if (gradeId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@Grade", DbType.Int32, gradeId);
@@ -693,7 +698,7 @@ namespace HotelManagement.Data.Payroll
             return salarySheetList;
         }
 
-        public List<SalarySheetBO> EmployeeSalarySheetForRedcross(int glCompanyId, string reportType, int employeeId, int departmentId, int gradeId, int branchId, DateTime processDateFrom, DateTime processDateTo, short processYear)
+        public List<SalarySheetBO> EmployeeSalarySheetForRedcross(int glCompanyId, string reportType, int employeeId, int departmentId, int designationId, int gradeId, int branchId, DateTime processDateFrom, DateTime processDateTo, short processYear)
         {
             List<SalarySheetBO> salarySheetList = new List<SalarySheetBO>();
 
@@ -717,6 +722,11 @@ namespace HotelManagement.Data.Payroll
                         dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, departmentId);
                     else
                         dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, DBNull.Value);
+
+                    if (designationId != 0)
+                        dbSmartAspects.AddInParameter(cmd, "@DesignationId", DbType.Int32, designationId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@DesignationId", DbType.Int32, DBNull.Value);
 
                     if (gradeId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@Grade", DbType.Int32, gradeId);
@@ -787,7 +797,7 @@ namespace HotelManagement.Data.Payroll
             }
             return salarySheetList;
         }
-        public List<SalarySheetBO> EmployeeSalarySheetForSouthSudan(int glCompanyId, string reportType, int employeeId, int departmentId, int gradeId, int branchId, DateTime processDateFrom, DateTime processDateTo, short processYear)
+        public List<SalarySheetBO> EmployeeSalarySheetForSouthSudan(int glCompanyId, string reportType, int employeeId, int departmentId, int designationId, int gradeId, int branchId, DateTime processDateFrom, DateTime processDateTo, short processYear)
         {
             List<SalarySheetBO> salarySheetList = new List<SalarySheetBO>();
 
@@ -811,6 +821,11 @@ namespace HotelManagement.Data.Payroll
                         dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, departmentId);
                     else
                         dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, DBNull.Value);
+
+                    if (designationId != 0)
+                        dbSmartAspects.AddInParameter(cmd, "@DesignationId", DbType.Int32, designationId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@DesignationId", DbType.Int32, DBNull.Value);
 
                     if (gradeId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@Grade", DbType.Int32, gradeId);
@@ -884,7 +899,7 @@ namespace HotelManagement.Data.Payroll
             return salarySheetList;
         }
 
-        public List<SalarySheetBO> EmployeeSalarySheetForIPTech(int glCompanyId, int employeeId, int departmentId, int gradeId, int branchId, DateTime processDateFrom, DateTime processDateTo, short processYear, string currencyType)
+        public List<SalarySheetBO> EmployeeSalarySheetForIPTech(int glCompanyId, int employeeId, int departmentId, int designationId, int gradeId, int branchId, DateTime processDateFrom, DateTime processDateTo, short processYear, string currencyType)
         {
             List<SalarySheetBO> salarySheetList = new List<SalarySheetBO>();
 
@@ -906,6 +921,11 @@ namespace HotelManagement.Data.Payroll
                         dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, departmentId);
                     else
                         dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, DBNull.Value);
+
+                    if (designationId != 0)
+                        dbSmartAspects.AddInParameter(cmd, "@DesignationId", DbType.Int32, designationId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@DesignationId", DbType.Int32, DBNull.Value);
 
                     if (gradeId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@Grade", DbType.Int32, gradeId);

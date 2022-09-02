@@ -19,6 +19,27 @@
                 width: "99.75%"
             });
 
+            $("#ContentPlaceHolder1_ddlDepartmentId").select2({
+                tags: false,
+                allowClear: true,
+                placeholder: "",
+                width: "99.75%"
+            });
+
+            $("#ContentPlaceHolder1_ddlDesignationId").select2({
+                tags: false,
+                allowClear: true,
+                placeholder: "",
+                width: "99.75%"
+            });
+
+            $("#ContentPlaceHolder1_ddlGradeId").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             var single = $("#ContentPlaceHolder1_hfIsSingle").val();
             if (single == "1") {
                 $('#glCompanyDiv').hide();
@@ -36,11 +57,11 @@
                 var id = $("#ContentPlaceHolder1_EmployeeSearchControl_hfEmployeeId").val();
                 if (name == "") {
                     toastr.warning("Please select an Employee");
-                    return false; 
+                    return false;
                 }
                 else if (id == "0") {
                     toastr.warning("Please select a Valid Employee");
-                    return false; 
+                    return false;
                 }
             }
 
@@ -69,7 +90,7 @@
     <div id="SearchPanel" class="panel panel-default">
         <div class="panel-body">
             <div class="form-horizontal">
-                <div class="form-group" style="display:none;">
+                <div class="form-group" style="display: none;">
                     <div class="col-md-2">
                         <asp:Label ID="Label3" runat="server" class="control-label required-field" Text="Process Month"></asp:Label>
                     </div>
@@ -105,17 +126,16 @@
                     <div class="col-md-2">
                         <asp:Label ID="Label1" runat="server" class="control-label" Text="Department"></asp:Label>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-4">
                         <asp:DropDownList ID="ddlDepartmentId" runat="server" CssClass="form-control">
                         </asp:DropDownList>
                     </div>
-                </div>
-                <div class="form-group">
                     <div class="col-md-2">
-                        <asp:Label ID="Label2" runat="server" class="control-label" Text="Grade"></asp:Label>
+                        <asp:Label ID="lblDesignationId" runat="server" class="control-label"
+                            Text="Designation"></asp:Label>
                     </div>
-                    <div class="col-md-10">
-                        <asp:DropDownList ID="ddlGrade" runat="server" CssClass="form-control">
+                    <div class="col-md-4">
+                        <asp:DropDownList ID="ddlDesignationId" runat="server" CssClass="form-control">
                         </asp:DropDownList>
                     </div>
                 </div>
@@ -123,8 +143,15 @@
                     <div class="col-md-2">
                         <asp:Label ID="lblWorkStation" runat="server" class="control-label" Text="Work Station"></asp:Label>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-4">
                         <asp:DropDownList ID="ddlWorkStation" runat="server" CssClass="form-control">
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="Label2" runat="server" class="control-label" Text="Grade"></asp:Label>
+                    </div>
+                    <div class="col-md-4">
+                        <asp:DropDownList ID="ddlGrade" runat="server" CssClass="form-control">
                         </asp:DropDownList>
                     </div>
                 </div>
