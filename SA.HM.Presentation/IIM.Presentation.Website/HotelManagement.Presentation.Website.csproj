@@ -839,6 +839,8 @@
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptCashRequisitionNAdjustment.rdlc" />
+    <EmbeddedResource Include="Payroll\Reports\Rdlc\RptDepartmentWiseEmployeeSalarySheets.rdlc" />
+    <EmbeddedResource Include="Payroll\Reports\Rdlc\RptDesignationWiseEmployeeSalarySheets.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptEmpJoiningAgreement.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptEmpJoiningAgreementWTHF.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpPromotionLetter.rdlc" />
@@ -857,6 +859,7 @@
     <Content Include="Payroll\Reports\Rdlc\rptLeaveInformationType.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptLeaveInformationTypeIndividual.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptLeaveYearlyInformationIndividual.rdlc" />
+    <EmbeddedResource Include="Payroll\Reports\Rdlc\RptWorkStationWiseEmployeeSalarySheets.rdlc" />
     <EmbeddedResource Include="POS\Reports\Rdlc\rptKotBill02.rdlc" />
     <Content Include="SMSTemplates\ReservationAmedmentSms.txt" />
     <Content Include="SMSTemplates\ReservationCancelSms.txt" />

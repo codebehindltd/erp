@@ -181,8 +181,8 @@ namespace HotelManagement.Presentation.Website.Restaurant.Reports
                 
                 
                 GHServiceBillDA rda = new GHServiceBillDA();
-                List<RestaurantBillReportBO> restaurantBill = new List<RestaurantBillReportBO>();
-                restaurantBill = rda.GetGuestHouseServiceBillInfoByServiceBillIdForReport(billID);
+                List<RestaurantBillReportBO> serviceBillInfoBOList = new List<RestaurantBillReportBO>();
+                serviceBillInfoBOList = rda.GetGuestHouseServiceBillInfoByServiceBillIdForReport(billID);
 
                 if (queryIsSdcEnable == "1")
                 {
@@ -192,16 +192,18 @@ namespace HotelManagement.Presentation.Website.Restaurant.Reports
                     SdcInvoiceHandler sdcInvHandler = new SdcInvoiceHandler("ServiceBill");
 
                     List<SdcBillReportBO> billReportsBo = new List<SdcBillReportBO>();
-                    foreach(RestaurantBillReportBO reportBo in restaurantBill)
+                    foreach(RestaurantBillReportBO reportBo in serviceBillInfoBOList)
                     {
                         SdcBillReportBO bo = new SdcBillReportBO();
                         bo.ItemId = reportBo.ItemId;
                         bo.ItemCode = reportBo.ItemCode;
                         bo.HsCode = "";
                         bo.ItemName = reportBo.ItemName;
-                        bo.UnitRate = reportBo.UnitRate;
-                        bo.PaxQuantity = reportBo.PaxQuantity;
-                        
+                        //bo.UnitRate = reportBo.UnitRate;
+                        //bo.PaxQuantity = reportBo.PaxQuantity;
+                        bo.UnitRate = reportBo.Amount;
+                        bo.PaxQuantity = 1;
+
                         if (reportBo.CitySDCharge > 0)
                         {
                             bo.SdCategory = "13701";
@@ -265,7 +267,7 @@ namespace HotelManagement.Presentation.Website.Restaurant.Reports
                 rvTransaction.LocalReport.SetParameters(reportParam);
 
                 var dataSet = rvTransaction.LocalReport.GetDataSourceNames();
-                rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(dataSet[0], restaurantBill));
+                rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(dataSet[0], serviceBillInfoBOList));
 
                 rvTransaction.LocalReport.DisplayName = "Service Bill";
                 rvTransaction.LocalReport.Refresh();

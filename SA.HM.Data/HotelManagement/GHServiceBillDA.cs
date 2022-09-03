@@ -1055,44 +1055,11 @@ namespace HotelManagement.Data.HotelManagement
                     DataTable Table = ds.Tables["RestaurantBill"];
                     restaurantBill = Table.AsEnumerable().Select(r => new RestaurantBillReportBO
                     {
-
-                        //CostCenter = r.Field<string>("CostCenter"),
-                        //CustomerName = r.Field<string>("CustomerName"),
-                        //PayMode = r.Field<string>("PayMode"),
-                        //BankId = r.Field<int?>("BankId"),
-                        //CardNumber = r.Field<string>("CardNumber"),
-                        //TotalSales = r.Field<decimal?>("TotalSales"),
-                        //DiscountAmount = r.Field<decimal?>("DiscountAmount"),
-                        //DiscountedAmount = r.Field<decimal?>("DiscountedAmount"),
-                        //NetAmount = r.Field<decimal?>("NetAmount"),
-                        //ServiceCharge = r.Field<decimal?>("ServiceCharge"),
-                        //VatAmount = r.Field<decimal?>("VatAmount"),
-                        //CitySDCharge = r.Field<decimal?>("CitySDCharge"),
-                        //AdditionalCharge = r.Field<decimal?>("AdditionalCharge"),
-                        //GrandTotal = r.Field<decimal?>("GrandTotal"),
-                        //KotDetailId = r.Field<int?>("KotDetailId"),
-                        //KotId = r.Field<int?>("KotId"),
-                        //ItemType = r.Field<string>("ItemType"),
-                        //ItemId = r.Field<int?>("ItemId"),
-                        //ItemName = r.Field<string>("ItemName"),
-                        //ItemCode = r.Field<string>("ItemCode"),
-                        //Category = r.Field<string>("Category"),
-                        //ItemUnit = r.Field<decimal?>("ItemUnit"),
-                        //UnitRate = r.Field<decimal?>("UnitRate"),
-                        //Amount = r.Field<decimal?>("Amount"),
-                        //UserName = r.Field<string>("UserName"),
-                        //WaiterName = r.Field<string>("WaiterName"),
-                        //IsInclusiveBill = r.Field<int?>("IsInclusiveBill"),
-                        //IsVatServiceChargeEnable = r.Field<int?>("IsVatServiceChargeEnable")
-
-
                         BillId = r.Field<int?>("BillId"),
                         BillDate = r.Field<string>("BillDate"),
                         BillNumber = r.Field<string>("BillNumber"),
-                        //SourceName = r.Field<string>("SourceName"),
                         TableNumber = r.Field<string>("TableNumber"),
                         PaxQuantity = r.Field<int?>("PaxQuantity"),
-                        //CostCenterId = r.Field<int>("CostCenterId"),
                         CostCenter = r.Field<string>("CostCenter"),
                         CustomerName = r.Field<string>("CustomerName"),
                         PayMode = r.Field<string>("PayMode"),
@@ -1102,15 +1069,10 @@ namespace HotelManagement.Data.HotelManagement
                         DiscountAmount = r.Field<decimal?>("DiscountAmount"),
                         DiscountedAmount = r.Field<decimal?>("DiscountedAmount"),
                         NetAmount = r.Field<decimal?>("NetAmount"),
-
                         ServiceCharge = r.Field<decimal?>("ServiceCharge"),
                         VatAmount = r.Field<decimal?>("VatAmount"),
                         CitySDCharge = r.Field<decimal?>("CitySDCharge"),
                         AdditionalCharge = r.Field<decimal?>("AdditionalCharge"),
-                        //AdditionalChargeType = r.Field<string>("AdditionalChargeType"),
-                        //RestaurantSDCharge = r.Field<string>("RestaurantSDCharge"),
-                        //RestaurantAdditionalCharge = r.Field<string>("RestaurantAdditionalCharge"),
-
                         GrandTotal = r.Field<decimal?>("GrandTotal"),
                         GuestTotalPaymentAmount = r.Field<decimal?>("GuestTotalPaymentAmount"),
                         GuestTotalRefundAmount = r.Field<decimal?>("GuestTotalRefundAmount"),
@@ -1128,16 +1090,8 @@ namespace HotelManagement.Data.HotelManagement
                         WaiterName = r.Field<string>("WaiterName"),
                         IsInclusiveBill = r.Field<int?>("IsInclusiveBill"),
                         IsVatServiceChargeEnable = r.Field<int?>("IsVatServiceChargeEnable"),
-                        //PaymentInformation = r.Field<string>("PaymentInformation"),
-                        //RestaurantVatString = r.Field<string>("RestaurantVatString"),
-                        //RestaurantServiceChargeString = r.Field<string>("RestaurantServiceChargeString"),
                         TransactionType = r.Field<string>("TransactionType"),
-                        //DiscountTitle = r.Field<string>("DiscountTitle"),
-                        //MultipleTableAddedNumbers = r.Field<string>("MultipleTableAddedNumbers"),
-                        //ClassificationWiseDiscount = r.Field<string>("ClassificationWiseDiscount")
                         Remarks = r.Field<string>("Remarks")
-
-
                     }).ToList();
                 }
             }

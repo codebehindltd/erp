@@ -144,9 +144,12 @@ namespace HotelManagement.Presentation.Website.Banquet.Reports
                         bo.ItemCode = "" + reportBo.ItemUnit;
                         bo.HsCode = "";
                         bo.ItemName = reportBo.ItemName;
-                        bo.UnitRate = reportBo.UnitPrice;
-                        bo.PaxQuantity = reportBo.NumberOfPersonAdult;
-                        
+                        //bo.UnitRate = reportBo.UnitPrice;
+                        //bo.PaxQuantity = reportBo.NumberOfPersonAdult;
+
+                        bo.UnitRate = reportBo.TotalPrice;
+                        bo.PaxQuantity = 1;
+
                         if (reportBo.CitySDCharge > 0)
                         {
                             bo.SdCategory = "13701";

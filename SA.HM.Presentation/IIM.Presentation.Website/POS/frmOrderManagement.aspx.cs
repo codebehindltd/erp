@@ -778,9 +778,12 @@ namespace HotelManagement.Presentation.Website.POS
                             reportBo.ItemCode = bo.ItemCode;
                             reportBo.HsCode = "";
                             reportBo.ItemName = bo.ItemName;
-                            reportBo.UnitRate = ((decimal)bo.Amount + (decimal)bo.ServiceCharge);
+                            //reportBo.UnitRate = ((decimal)bo.Amount + (decimal)bo.ServiceCharge);
                             //reportBo.PaxQuantity = bo.PaxQuantity;
+
+                            reportBo.UnitRate = ((decimal)bo.Amount);
                             reportBo.PaxQuantity = 1;
+
                             if (bo.CitySDCharge > 0)
                             {
                                 reportBo.SdCategory = "13751";

@@ -96,7 +96,22 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                         }
                         else
                         {
-                            reportName = "RptEmployeeSalarySheets";
+                            if (ddlReportFormat.SelectedValue == "Regular")
+                            {
+                                reportName = "RptEmployeeSalarySheets";
+                            }
+                            else if (ddlReportFormat.SelectedValue == "DepartmentWise")
+                            {
+                                reportName = "RptDepartmentWiseEmployeeSalarySheets";
+                            }
+                            else if (ddlReportFormat.SelectedValue == "DesignationWise")
+                            {
+                                reportName = "RptDesignationWiseEmployeeSalarySheets";
+                            }                            
+                            else if (ddlReportFormat.SelectedValue == "WorkStationWise")
+                            {
+                                reportName = "RptWorkStationWiseEmployeeSalarySheets";
+                            }
                         }
                     }
                     else

@@ -12,7 +12,7 @@
             var formName = "<span class='divider'>/</span><li class='active'>Employee Payslip</li>";
             var breadCrumbs = moduleName + formName;
             $("#ltlBreadCrumbsInformation").html(breadCrumbs);
-            
+
             if ($("#ContentPlaceHolder1_EmployeeSearchControl_ddlEmployee").val() == "0") {
                 $("#AllEmpField").show();
             }
@@ -70,18 +70,28 @@
             <div class="form-horizontal">
                 <div class="form-group">
                     <div class="col-md-2">
-                        <asp:Label ID="lblProcessDate" runat="server" class="control-label required-field" Text="Process Month"></asp:Label>
+                        <asp:Label ID="lblProcessDate" runat="server" class="control-label required-field" Text="Report Month"></asp:Label>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <asp:DropDownList ID="ddlEffectedMonth" CssClass="form-control" runat="server">
                         </asp:DropDownList>
                     </div>
                     <div class="col-md-2">
-                        <asp:Label ID="lblYear" runat="server" class="control-label" Text="Year"></asp:Label>
-                    </div>
-                    <div class="col-md-4">
                         <asp:DropDownList ID="ddlYear" CssClass="form-control" runat="server">
                         </asp:DropDownList>
+                    </div>
+                    <div id="glCompanyDiv" style="display: none">
+                        <div class="col-md-2">
+                            <asp:HiddenField ID="hfIsSingle" runat="server"></asp:HiddenField>
+                            <asp:HiddenField ID="hfGLCompanyId" runat="server" Value="0" />
+                            <asp:HiddenField ID="hfGLProjectId" runat="server" Value="0" />
+                            <asp:Label ID="lblGLCompany" runat="server" class="control-label"
+                                Text="Company"></asp:Label>
+                        </div>
+                        <div class="col-md-4">
+                            <asp:DropDownList ID="ddlGLCompany" runat="server" CssClass="form-control">
+                            </asp:DropDownList>
+                        </div>
                     </div>
                 </div>
                 <UserControl:EmpSearch ID="EmployeeSearchControl" runat="server" />
@@ -99,16 +109,14 @@
                         <div class="col-md-2">
                             <asp:Label ID="Label2" runat="server" class="control-label" Text="Grade"></asp:Label>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-md-4">
                             <asp:DropDownList ID="ddlGrade" runat="server" CssClass="form-control">
                             </asp:DropDownList>
                         </div>
-                    </div>
-                    <div class="form-group">
                         <div class="col-md-2">
                             <asp:Label ID="lblWorkStation" runat="server" class="control-label" Text="Work Station"></asp:Label>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-md-4">
                             <asp:DropDownList ID="ddlWorkStation" runat="server" CssClass="form-control">
                             </asp:DropDownList>
                         </div>
@@ -123,19 +131,6 @@
                                 <asp:ListItem Text="Individual Currency" Value="IndividualCurrency"></asp:ListItem>
                             </asp:DropDownList>
                         </div>
-                        <div id="glCompanyDiv" style="display: none">
-                            <div class="col-md-2">
-                                <asp:HiddenField ID="hfIsSingle" runat="server"></asp:HiddenField>
-                                <asp:HiddenField ID="hfGLCompanyId" runat="server" Value="0" />
-                                <asp:HiddenField ID="hfGLProjectId" runat="server" Value="0" />
-                                <asp:Label ID="lblGLCompany" runat="server" class="control-label"
-                                    Text="Company"></asp:Label>
-                            </div>
-                            <div class="col-md-4">
-                                <asp:DropDownList ID="ddlGLCompany" runat="server" CssClass="form-control">
-                                </asp:DropDownList>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -147,16 +142,6 @@
             </div>
         </div>
     </div>
-    <%--<div class="row">
-        <div class="columnRight">
-            <asp:TextBox ID="txtCompanyName" runat="server" Visible="False"></asp:TextBox>
-            <asp:TextBox ID="txtCompanyAddress" runat="server" Visible="False"></asp:TextBox>
-            <asp:TextBox ID="txtCompanyWeb" runat="server" Visible="False"></asp:TextBox>
-        </div>
-        <div class="clear">
-        </div>
-    </div>--%>
-    <%--</div>--%>
     <div style="display: none;">
         <asp:Button ID="btnPrintReportFromClient" runat="server" Text="Button" OnClick="btnPrintReportFromClient_Click"
             ClientIDMode="Static" />
