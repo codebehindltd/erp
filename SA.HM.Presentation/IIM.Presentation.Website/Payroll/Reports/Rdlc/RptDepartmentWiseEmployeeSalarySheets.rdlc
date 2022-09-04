@@ -1552,7 +1552,7 @@
               </Group>
               <SortExpressions>
                 <SortExpression>
-                  <Value>=Fields!Designation.Value</Value>
+                  <Value>=Fields!DepartmentName.Value</Value>
                 </SortExpression>
               </SortExpressions>
               <TablixMembers>
