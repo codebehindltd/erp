@@ -1244,11 +1244,11 @@ function OnProjectsPopulated(response) {
                     tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteCompanyPayment(" + gridObject.PaymentId + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
                 }
 
-                if (gridObject.IsCanChecked && IsCanSave) {
+                if (gridObject.IsCanChecked) {
                     tr += "<a href='javascript:void();' onclick= 'javascript:return CheckedPayment(" + gridObject.PaymentId + ")' ><img alt='Checked' src='../Images/checked.png' /></a>";
                 }
 
-                if (gridObject.IsCanApproved && IsCanSave) {
+                if (gridObject.IsCanApproved) {
                     tr += "<a href='javascript:void();' onclick= 'javascript:return ApprovedPayment(" + gridObject.PaymentId + ")' ><img alt='approved' src='../Images/approved.png' /></a>";
                 }
 

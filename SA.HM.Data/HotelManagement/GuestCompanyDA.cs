@@ -2313,17 +2313,18 @@ namespace HotelManagement.Data.HotelManagement
                     {
                         using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveCompanyPayment_SP"))
                         {
-                            dbSmartAspects.AddInParameter(command, "@CompanyBillId", DbType.String, companyPayment.CompanyBillId);
+                            dbSmartAspects.AddInParameter(command, "@CompanyBillId", DbType.Int64, companyPayment.CompanyBillId);
                             dbSmartAspects.AddInParameter(command, "@PaymentFor", DbType.String, companyPayment.PaymentFor);
                             dbSmartAspects.AddInParameter(command, "@AdjustmentType", DbType.String, companyPayment.AdjustmentType);
-                            dbSmartAspects.AddInParameter(command, "@CompanyPaymentAdvanceId", DbType.String, companyPayment.CompanyPaymentAdvanceId);
-                            dbSmartAspects.AddInParameter(command, "@CompanyId", DbType.String, companyPayment.CompanyId);
+                            dbSmartAspects.AddInParameter(command, "@CompanyPaymentAdvanceId", DbType.Int64, companyPayment.CompanyPaymentAdvanceId);
+                            dbSmartAspects.AddInParameter(command, "@CompanyId", DbType.Int32, companyPayment.CompanyId);
                             dbSmartAspects.AddInParameter(command, "@PaymentDate", DbType.DateTime, companyPayment.PaymentDate);
                             dbSmartAspects.AddInParameter(command, "@AdvanceAmount", DbType.Decimal, companyPayment.AdvanceAmount);
                             dbSmartAspects.AddInParameter(command, "@AdjustmentAmount", DbType.Decimal, companyPayment.AdjustmentAmount);
 
                             dbSmartAspects.AddInParameter(command, "@PaymentType", DbType.String, companyPayment.PaymentType);
                             dbSmartAspects.AddInParameter(command, "@AccountingPostingHeadId", DbType.Int32, companyPayment.AccountingPostingHeadId);
+                            dbSmartAspects.AddInParameter(command, "@ApprovedStatus", DbType.String, companyPayment.ApprovedStatus);
 
                             if (!string.IsNullOrEmpty(companyPayment.Remarks))
                                 dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, companyPayment.Remarks);
@@ -2343,7 +2344,7 @@ namespace HotelManagement.Data.HotelManagement
                             if (companyPayment.ConvertionRate != null)
                                 dbSmartAspects.AddInParameter(command, "@ConvertionRate", DbType.Decimal, companyPayment.ConvertionRate);
                             else
-                                dbSmartAspects.AddInParameter(command, "@ConvertionRate", DbType.Int32, DBNull.Value);
+                                dbSmartAspects.AddInParameter(command, "@ConvertionRate", DbType.Decimal, DBNull.Value);
 
                             if (companyPayment.AdjustmentAccountHeadId != null)
                                 dbSmartAspects.AddInParameter(command, "@AdjustmentAccountHeadId", DbType.Int32, companyPayment.AdjustmentAccountHeadId);
@@ -2353,7 +2354,7 @@ namespace HotelManagement.Data.HotelManagement
                             if (companyPayment.PaymentAdjustmentAmount != null)
                                 dbSmartAspects.AddInParameter(command, "@PaymentAdjustmentAmount", DbType.Decimal, companyPayment.PaymentAdjustmentAmount);
                             else
-                                dbSmartAspects.AddInParameter(command, "@PaymentAdjustmentAmount", DbType.Int32, DBNull.Value);
+                                dbSmartAspects.AddInParameter(command, "@PaymentAdjustmentAmount", DbType.Decimal, DBNull.Value);
 
                             if (companyPayment.ChequeDate != null)
                                 dbSmartAspects.AddInParameter(command, "@ChequeDate", DbType.DateTime, companyPayment.ChequeDate);
@@ -2416,18 +2417,18 @@ namespace HotelManagement.Data.HotelManagement
                     {
                         using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveCompanyPayment_SP"))
                         {
-                            dbSmartAspects.AddInParameter(command, "@CompanyBillId", DbType.String, companyPayment.CompanyBillId);
+                            dbSmartAspects.AddInParameter(command, "@CompanyBillId", DbType.Int64, companyPayment.CompanyBillId);
                             dbSmartAspects.AddInParameter(command, "@PaymentFor", DbType.String, companyPayment.PaymentFor);
                             dbSmartAspects.AddInParameter(command, "@AdjustmentType", DbType.String, companyPayment.AdjustmentType);
-                            dbSmartAspects.AddInParameter(command, "@CompanyPaymentAdvanceId", DbType.String, companyPayment.CompanyPaymentAdvanceId);
-                            dbSmartAspects.AddInParameter(command, "@CompanyId", DbType.String, companyPayment.CompanyId);
+                            dbSmartAspects.AddInParameter(command, "@CompanyPaymentAdvanceId", DbType.Int64, companyPayment.CompanyPaymentAdvanceId);
+                            dbSmartAspects.AddInParameter(command, "@CompanyId", DbType.Int32, companyPayment.CompanyId);
                             dbSmartAspects.AddInParameter(command, "@PaymentDate", DbType.DateTime, companyPayment.PaymentDate);
                             dbSmartAspects.AddInParameter(command, "@AdvanceAmount", DbType.Decimal, companyPayment.AdvanceAmount);
                             dbSmartAspects.AddInParameter(command, "@AdjustmentAmount", DbType.Decimal, companyPayment.AdjustmentAmount);
 
                             dbSmartAspects.AddInParameter(command, "@PaymentType", DbType.String, companyPayment.PaymentType);
                             dbSmartAspects.AddInParameter(command, "@AccountingPostingHeadId", DbType.Int32, companyPayment.AccountingPostingHeadId);
-                            dbSmartAspects.AddInParameter(command, "@ApprovedStatus", DbType.Int32, companyPayment.ApprovedStatus);
+                            dbSmartAspects.AddInParameter(command, "@ApprovedStatus", DbType.String, companyPayment.ApprovedStatus);
 
                             if (!string.IsNullOrEmpty(companyPayment.Remarks))
                                 dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, companyPayment.Remarks);
@@ -2447,7 +2448,7 @@ namespace HotelManagement.Data.HotelManagement
                             if (companyPayment.ConvertionRate != null)
                                 dbSmartAspects.AddInParameter(command, "@ConvertionRate", DbType.Decimal, companyPayment.ConvertionRate);
                             else
-                                dbSmartAspects.AddInParameter(command, "@ConvertionRate", DbType.Int32, DBNull.Value);
+                                dbSmartAspects.AddInParameter(command, "@ConvertionRate", DbType.Decimal, DBNull.Value);
 
                             if (companyPayment.AdjustmentAccountHeadId != null)
                                 dbSmartAspects.AddInParameter(command, "@AdjustmentAccountHeadId", DbType.Int32, companyPayment.AdjustmentAccountHeadId);
@@ -2457,7 +2458,7 @@ namespace HotelManagement.Data.HotelManagement
                             if (companyPayment.PaymentAdjustmentAmount != null)
                                 dbSmartAspects.AddInParameter(command, "@PaymentAdjustmentAmount", DbType.Decimal, companyPayment.PaymentAdjustmentAmount);
                             else
-                                dbSmartAspects.AddInParameter(command, "@PaymentAdjustmentAmount", DbType.Int32, DBNull.Value);
+                                dbSmartAspects.AddInParameter(command, "@PaymentAdjustmentAmount", DbType.Decimal, DBNull.Value);
 
                             if (companyPayment.ChequeDate != null)
                                 dbSmartAspects.AddInParameter(command, "@ChequeDate", DbType.DateTime, companyPayment.ChequeDate);
