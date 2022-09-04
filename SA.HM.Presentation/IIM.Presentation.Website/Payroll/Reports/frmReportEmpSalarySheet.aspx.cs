@@ -92,7 +92,23 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                     {
                         if (hfIsSingle.Value == "1")
                         {
-                            reportName = "RptEmployeeSalarySheetsForSingleCompany";
+                            //reportName = "RptEmployeeSalarySheetsForSingleCompany";
+                            if (ddlReportFormat.SelectedValue == "Regular")
+                            {
+                                reportName = "RptEmployeeSalarySheetsForSingleCompany";
+                            }
+                            else if (ddlReportFormat.SelectedValue == "DepartmentWise")
+                            {
+                                reportName = "RptDepartmentWiseEmployeeSalarySheetsForSingleCompany";
+                            }
+                            else if (ddlReportFormat.SelectedValue == "DesignationWise")
+                            {
+                                reportName = "RptDesignationWiseEmployeeSalarySheetsForSingleCompany";
+                            }
+                            else if (ddlReportFormat.SelectedValue == "WorkStationWise")
+                            {
+                                reportName = "RptWorkStationWiseEmployeeSalarySheetsForSingleCompany";
+                            }
                         }
                         else
                         {
