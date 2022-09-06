@@ -876,7 +876,7 @@ function OnProjectsPopulated(response) {
             $("#ContentPlaceHolder1_txtAdjustmentAmount").val(result.CompanyPayment.PaymentAdjustmentAmount);
             $("#ContentPlaceHolder1_ddlAdjustmentNodeHead").val(result.CompanyPayment.AdjustmentAccountHeadId + '').trigger('change');
 
-            if ($("#ContentPlaceHolder1_hfIsUpdatePermission").val() == "1")
+            if ($("#ContentPlaceHolder1_hfEditPermission").val() == "1")
                 $("#ContentPlaceHolder1_btnSave").val("Update").show();
             else
                 $("#ContentPlaceHolder1_btnSave").hide();
@@ -2288,6 +2288,8 @@ function OnProjectsPopulated(response) {
     }
 
     function ClearBillContainer() {
+        $("#ContentPlaceHolder1_txtAdvanceAmount").val("");
+        $("#ContentPlaceHolder1_txtTotalAmount").val("");
         $("#ContentPlaceHolder1_ddlPaymentMode").val("0").change();
         $("#txtBankPayment").val("");
         $("#ContentPlaceHolder1_ddlBankPayment").val("");
@@ -2987,10 +2989,10 @@ function OnProjectsPopulated(response) {
                                 <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="Transaction Date"></asp:Label>
                             </div>
                             <div class="col-md-2">
-                                <asp:TextBox ID="txtFromDate" CssClass="form-control" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtFromDate" placeholder="From Date" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-md-2">
-                                <asp:TextBox ID="txtToDate" CssClass="form-control" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtToDate" placeholder="To Date" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-md-2">
                                 <asp:Label ID="Label18" runat="server" class="control-label" Text="Transaction Type"></asp:Label>

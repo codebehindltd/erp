@@ -133,6 +133,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             //    gvGuestHouseService.DataBind();
             //}
         }
+
+        
         protected void btnSave_Click(object sender, EventArgs e)
         {
             LoadLocalCurrencyId();
@@ -690,9 +692,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         }
         private void CheckPermission()
         {
-            hfIsSavePermission.Value = isSavePermission ? "1" : "0";
-            hfIsUpdatePermission.Value = isUpdatePermission ? "1" : "0";
-            hfIsDeletePermission.Value = isDeletePermission ? "1" : "0";
+            hfSavePermission.Value = isSavePermission ? "1" : "0";
+            hfEditPermission.Value = isUpdatePermission ? "1" : "0";
+            hfDeletePermission.Value = isDeletePermission ? "1" : "0";
+            hfViewPermission.Value = isViewPermission ? "1" : "0";
 
         }
         private bool IsFrmValid()
