@@ -41,6 +41,13 @@
                 width: "99.75%"
             });
 
+            $("#ContentPlaceHolder1_ddlPMAccountHead").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             if (IsCanSave) {
 
                 $('#btnSave').show();
@@ -123,13 +130,22 @@
             }
             
             if ($("#ContentPlaceHolder1_ddlReceiveType").val() == "AdHoc") {
+                $("#PurchaseType").show();
                 $("#AdhocReceive").show();
                 $("#AdhocReceiveItem").show();
                 $("#ReceiveOrderItemContainer").hide();
                 $("#PurchaseOrderCostCenterContainer").hide();
                 $("#ContentPlaceHolder1_ddlCurrency").attr('disabled', false);
+                if ($("#ContentPlaceHolder1_ddlPurchaseType").val() == "CashNBank") {
+                    $("#PMEntryPanel").show();
+                    $("#SupplierPanel").hide();
+                } else {
+                    $("#PMEntryPanel").hide();
+                    $("#SupplierPanel").show();
+                }
             }
             else {
+                $("#PurchaseType").hide();
                 $("#AdhocReceive").hide();
                 $("#AdhocReceiveItem").hide();
                 $("#ReceiveOrderItemContainer").show();
@@ -222,9 +238,20 @@
                 }
             }).datepicker("setDate", DayOpenDate);
 
+            $("#ContentPlaceHolder1_ddlPurchaseType").change(function () {
+                if ($("#ContentPlaceHolder1_ddlPurchaseType").val() == "CashNBank") {
+                    $("#PMEntryPanel").show();
+                    $("#SupplierPanel").hide();
+                } else {
+                    $("#PMEntryPanel").hide();
+                    $("#SupplierPanel").show();
+                }
+            });
+
             $("#ContentPlaceHolder1_ddlReceiveType").change(function () {
                 var id = $(this).val();
                 if (id == "AdHoc") {
+                    $("#PurchaseType").show();
                     $("#AdhocReceive").show();
                     $("#AdhocReceiveItem").show();
                     $("#ReceiveOrderItemContainer").hide();
@@ -233,8 +260,18 @@
                     $("#LCNumber").hide();
                     $("#ContentPlaceHolder1_ddlCurrency").attr('disabled', false);
                     $("#ContentPlaceHolder1_ddlSupplier").attr("disabled", false).val('0').trigger('change');
+                    $("#ContentPlaceHolder1_ddlPurchaseType").change(function () {
+                        if ($("#ContentPlaceHolder1_ddlPurchaseType").val() == "CashNBank") {
+                            $("#PMEntryPanel").show();
+                            $("#SupplierPanel").hide();
+                        } else {
+                            $("#PMEntryPanel").hide();
+                            $("#SupplierPanel").show();
+                        }
+                    });
                 }
                 else {
+                    $("#PurchaseType").hide();
                     $("#AdhocReceive").hide();
                     $("#AdhocReceiveItem").hide();
                     $("#ReceiveOrderItemContainer").show();
@@ -307,6 +344,62 @@
                 return IsDuplicate;
             }
 
+            $("#btnCancelPMAmount").click(function () {
+                ClearPaymentMethodInfo();
+            });
+
+            $("#btnAddPMAmount").click(function () {
+                var accountHeadPM = $("#ContentPlaceHolder1_ddlPMAccountHead option:selected").text();
+                var accountHeadPMId = $("#ContentPlaceHolder1_ddlPMAccountHead").val();
+                var amountPM = $.trim($("#ContentPlaceHolder1_txtPMAmount").val());
+                var pMDescription = $.trim($("#ContentPlaceHolder1_txtPMDescription").val());
+                if (accountHeadPMId == "0") {
+                    toastr.warning("Please select Payment Method Account Head.");
+                    $("#ContentPlaceHolder1_ddlPMAccountHead").focus();
+                    return false;
+                }
+                else if (amountPM == "") {
+                    toastr.warning("Please give Amount from Payment Method.");
+                    $("#ContentPlaceHolder1_txtPMAmount").focus();
+                    return false;
+                }
+                else if (pMDescription == "") {
+                    toastr.warning("Please Give Payment Method Description.");
+                    $("#ContentPlaceHolder1_txtPMDescription").focus();
+                    return false;
+                }
+
+                var AccountHeadPMDetailsId = "0", isEditedPM = 0, editedItemIdPM = "0";
+
+                if (!IsAccountHeadExistsForPM(accountHeadPMId)) {
+                    AddAccountHeadForPMInfo(accountHeadPMId, accountHeadPM, amountPM, pMDescription, AccountHeadPMDetailsId, isEditedPM);
+
+                    $("#ContentPlaceHolder1_txtPMAmount").val("");
+                    $("#ContentPlaceHolder1_txtPMDescription").val("");
+                    $("#ContentPlaceHolder1_ddlPMAccountHead").val("0").trigger('change');
+                    $("#ContentPlaceHolder1_ddlPMAccountHead").focus();
+                }
+            });
+
+            function IsAccountHeadExistsForPM(accountHeadPMId) {
+                var IsDuplicate = false;
+                $("#PMAmountGrid tr").each(function (index) {
+
+                    if (index !== 0 && !IsDuplicate) {
+                        var accountHeadIdValueInTable = $(this).find("td").eq(5).html();
+
+                        var IsAccountHeadIdFound = accountHeadIdValueInTable.indexOf(accountHeadPMId) > -1;
+                        if (IsAccountHeadIdFound) {
+                            toastr.warning('Account Head Already Added.');
+                            IsDuplicate = true;
+                            return true;
+                        }
+                    }
+                });
+
+                return IsDuplicate;
+            }
+
 
             $("#ContentPlaceHolder1_ddlPurchaseOrderNumber").change(function () {
 
@@ -332,6 +425,7 @@
                     var locationId = $("#ContentPlaceHolder1_ddlReceiveLocation").val();
                     var categoryId = $("#ContentPlaceHolder1_ddlCategory").val();
                     var supplierId = $("#ContentPlaceHolder1_ddlSupplier").val();
+                    var purchaseType = $("#ContentPlaceHolder1_ddlPurchaseType").val();
 
                     if (companyId == "0") {
                         toastr.warning("Please Select Company.");
@@ -353,7 +447,7 @@
                         $("#ContentPlaceHolder1_ddlReceiveLocation").focus();
                         return false;
                     }
-                    else if (supplierId == "0") {
+                    else if (supplierId == "0" && purchaseType == "Credit") {
                         toastr.warning("Please Select Supplier");
                         $("#ContentPlaceHolder1_ddlSupplier").focus();
                         return false;
@@ -447,18 +541,25 @@
 
 
         function ClearOverheadExpenseInfo() {
-            $("#ContentPlaceHolder1_ddlAccountHead").val("0");
+            $("#ContentPlaceHolder1_ddlAccountHead").val("0").trigger('change');
             $("#ContentPlaceHolder1_txtAmount").val("");
             $("#ContentPlaceHolder1_txtOEDescription").val("");
+            return false;
+        }
+
+        function ClearPaymentMethodInfo() {
+            $("#ContentPlaceHolder1_ddlPMAccountHead").val("0").trigger('change');
+            $("#ContentPlaceHolder1_txtPMAmount").val("");
+            $("#ContentPlaceHolder1_txtPMDescription").val("");
             return false;
         }
 
         function DeleteAccountHeadOfOE(deletedItem) {
             if (!confirm("Do you want to delete?"))
                 return;
-            var accoutHeadId = $("#ContentPlaceHolder1_hfAccoutHeadId").val();
+            var accoutHeadPMId = $("#ContentPlaceHolder1_hfAccoutHeadId").val();
 
-            if (accoutHeadId != "0") {
+            if (accoutHeadPMId != "0") {
                 var tr = $(deletedItem).parent().parent();
 
                 DeletedAccountHead.push({
@@ -479,6 +580,35 @@
             });
             amountAfterDeletion = amountAfterDeletion.toFixed(2);
             $("#ContentPlaceHolder1_txttotalAmount").val(amountAfterDeletion);
+        }
+
+        function DeleteAccountHeadOfPM(deletedItem) {
+            if (!confirm("Do you want to delete?"))
+                return;
+            var accoutHeadPMId = $("#ContentPlaceHolder1_hfAccoutHeadPMId").val();
+
+            if (accoutHeadPMId != "0") {
+                var tr = $(deletedItem).parent().parent();
+
+                DeletedAccountHeadPM.push({
+                    AccountHeadDetailsIdPM: $(tr).find("td:eq(4)").text(),
+                    AccoutHeadPMId: accoutHeadPMId
+                });
+            }
+
+            $(deletedItem).parent().parent().remove();
+
+            var amountAfterDeletion = 0;
+            $("#PMAmountGrid tr").each(function (index) {
+                var amount = $(this).find("td").eq(1).html();
+                if (amount == undefined) {
+                    amount = 0;
+                }
+                amountAfterDeletion = parseFloat(amountAfterDeletion) + parseFloat(amount);
+            });
+            amountAfterDeletion = amountAfterDeletion.toFixed(2);
+            $("#ContentPlaceHolder1_txtPMTotalAmount").val(amountAfterDeletion);
+            $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(amountAfterDeletion);
         }
 
         function AddAccountHeadForOEInfo(accountHeadId, accountHead, amount, OEDescription, AccountHeadDetailsId, isEdited) {
@@ -515,6 +645,43 @@
             });
             totalAmount = totalAmount.toFixed(2);
             $("#ContentPlaceHolder1_txttotalAmount").val(totalAmount);
+        }
+
+        function AddAccountHeadForPMInfo(accountHeadPMId, accountHeadPM, amountPM, pMDescription, AccountHeadPMDetailsId, isEditedPM) {
+            var isEdited = "0";
+            var rowLength = $("#PMAmountGrid tbody tr").length;
+
+            var tr = "";
+
+            if (rowLength % 2 == 0) {
+                tr += "<tr style='background-color:#FFFFFF;'>";
+            }
+            else {
+                tr += "<tr style='background-color:#E3EAEB;'>";
+            }
+
+            tr += "<td style='width:30%;'>" + accountHeadPM + "</td>";
+            tr += "<td style='width:10%;'>" + amountPM + "</td>";
+            tr += "<td style='width:50%;'>" + pMDescription + "</td>";
+            tr += "<td style='width:10%;'><a href='javascript:void();' onclick= 'javascript:return DeleteAccountHeadOfPM(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+
+            tr += "<td style='display:none'>" + AccountHeadPMDetailsId + "</td>";
+            tr += "<td style='display:none'>" + accountHeadPMId + "</td>";
+            tr += "<td style='display:none'>" + isEditedPM + "</td>";
+            tr += "</tr>";
+
+            $("#PMAmountGrid tbody").append(tr);
+            var totalAmount = 0;
+            $("#PMAmountGrid tr").each(function () {
+                var amount = $(this).find("td").eq(1).html();
+                if (amount == undefined) {
+                    amount = 0;
+                }
+                totalAmount = parseFloat(totalAmount) + parseFloat(amount);
+            });
+            totalAmount = totalAmount.toFixed(2);
+            $("#ContentPlaceHolder1_txtPMTotalAmount").val(totalAmount);
+            $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(totalAmount);
         }
 
         function GetInvItemStockInfoByItemAndAttributeId() {
@@ -777,7 +944,7 @@
         }
 
         function AddItemForReceive() {
-            if ($("#ContentPlaceHolder1_ddlSupplier").val() == "0") {
+            if ($("#ContentPlaceHolder1_ddlSupplier").val() == "0" && $("#ContentPlaceHolder1_ddlPurchaseType").val() == "Credit") {
                 toastr.warning("Please Select Supplier.");
                 return false;
             }
@@ -942,6 +1109,7 @@
             $("#ItemForReceiveTbl tbody tr").each(function () {
                 total += toFixed(parseFloat($(this).find("td:eq(7)").text()), 2);
             });
+            $("#ContentPlaceHolder1_hfTotalForItems").val(total);
             $("#ItemForReceiveTbl tfoot").find("tr:eq(0)").remove();
             tr += "<tr>";
             tr += "<td style='width:25%;'> </td>";
@@ -1566,7 +1734,7 @@
             $("#ContentPlaceHolder1_hfCompanyId").val(companyId);
             $("#ContentPlaceHolder1_hfProjectId").val(projectId);
 
-            if ($("#ContentPlaceHolder1_ddlSupplier").val() == "0") {
+            if ($("#ContentPlaceHolder1_ddlSupplier").val() == "0" && $("#ContentPlaceHolder1_ddlPurchaseType").val() == "Credit") {
                 toastr.warning("Please Select Supplier.");
                 return false;
             }
@@ -1756,7 +1924,6 @@
                     });
                 }
                 else if (receiveDetailsId != "0") {
-                    debugger;
                     EditedOverheadExpenses.push({
                         ReceiveDetailsId: receiveDetailsId,
                         ReceivedId: parseInt(receiveOrderId),
@@ -1767,10 +1934,48 @@
                 }
             });
 
+            var accountHeadPMId = "0", amountPM = "0", descriptionPM = "", accoutHeadDetailsIdPM = "0";
+            var isEditPM = "0", finishProductIdPM = "0";
+
+            var AddedPaymentMethodInfos = [], EditedPaymentMethodInfos = [];
+            $("#PMAmountGrid tbody tr").each(function (index, item) {
+                accoutHeadDetailsIdPM = $.trim($(item).find("td:eq(4)").text());
+                accountHeadPMId = $(item).find("td:eq(5)").text();
+                amountPM = $(item).find("td:eq(1)").text();
+                descriptionPM = $(item).find("td:eq(2)").text();
+                isEditPM = $(item).find("td:eq(6)").text();
+                if (receiveDetailsId == "0") {
+                    AddedPaymentMethodInfos.push({
+                        ReceiveDetailsId: receiveDetailsId,
+                        ReceivedId: parseInt(receiveOrderId),
+                        NodeId: accountHeadPMId,
+                        Amount: amountPM,
+                        Remarks: descriptionPM
+                    });
+                }
+                else if (receiveDetailsId != "0") {
+                    EditedOverheadExpenses.push({
+                        ReceiveDetailsId: receiveDetailsId,
+                        ReceivedId: parseInt(receiveOrderId),
+                        NodeId: accountHeadPMId,
+                        Amount: amountPM,
+                        Remarks: descriptionPM
+                    });
+                }
+            });
+
             var randomDocId = $("#ContentPlaceHolder1_RandomDocId").val();
             var deletedDoc = $("#ContentPlaceHolder1_hfDeletedDoc").val();
+            debugger;
+            if ($("#ContentPlaceHolder1_ddlPurchaseType").val() == "CashNBank") {
+                if ($("#ContentPlaceHolder1_hfTotalForItems").val() != $("#ContentPlaceHolder1_hftotalForPaymentInfos").val()) {
+                    toastr.warning("Total item price & Total Payment are not same.");
+                    $("#ContentPlaceHolder1_txtPMAmount").focus();
+                    return false;
+                }
+            }
 
-            PageMethods.SavePurchaseWiseReceiveOrder(ProductReceived, ReceiveOrderItem, ReceiveOrderItemDeleted, AddedSerialzableProduct, DeletedSerialzableProduct, parseInt(randomDocId), deletedDoc, AddedOverheadExpenses, EditedOverheadExpenses, OnSavePurchaseOrderSucceed, OnSavePurchaseOrderFailed);
+            PageMethods.SavePurchaseWiseReceiveOrder(ProductReceived, ReceiveOrderItem, ReceiveOrderItemDeleted, AddedSerialzableProduct, DeletedSerialzableProduct, parseInt(randomDocId), deletedDoc, AddedOverheadExpenses, EditedOverheadExpenses, AddedPaymentMethodInfos, EditedPaymentMethodInfos, OnSavePurchaseOrderSucceed, OnSavePurchaseOrderFailed);
 
             return false;
         }
@@ -1836,17 +2041,23 @@
             $("#ContentPlaceHolder1_hfLocationId").val("0").trigger('change');
 
             $("#OEAmountGrid tbody").html("");
+            $("#PMAmountGrid tbody").html("");
             $("#ItemForReceiveTbl tbody").html("");
             $("#ItemForReceiveTbl tfoot").html("");
             $("#PurchaseOrderItemTbl tbody").html("");
             $("#PurchaseItemForPReceiveTbl tbody").html("");
             $("#DocumentInfo").html("");
+            $("#ContentPlaceHolder1_txtPMAmount").val("");
+            $("#ContentPlaceHolder1_txtPMDescription").val("");
             $("#ContentPlaceHolder1_ddlAccountHead").val("0").trigger('change');
+            $("#ContentPlaceHolder1_ddlPMAccountHead").val("0").trigger('change');
             $("#ContentPlaceHolder1_txttotalAmount").val("0");
+            $("#ContentPlaceHolder1_txtPMTotalAmount").val("0");
+            $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(0);
             $("#ContentPlaceHolder1_ddlSupplier").val("0").trigger('change');
             $("#ContentPlaceHolder1_ddlPurchaseOrderNumber").val("0").trigger('change');
             $("#ContentPlaceHolder1_ddlLCNumber").val("0").trigger('change');
-            $("#ContentPlaceHolder1_ddlReceiveType").val("AdHoc").trigger('change');
+            $("#ContentPlaceHolder1_ddlReceiveType").val("All").trigger('change');
             $("#ContentPlaceHolder1_ddlCostCentre").val("0").trigger('change');
             $("#ContentPlaceHolder1_ddlReceiveLocation").val("0").trigger('change');
 
@@ -1857,6 +2068,7 @@
             $("#ContentPlaceHolder1_txtReceiveQuantity").val("");
             $("#ContentPlaceHolder1_txtPurchasePrice").val("");
             $("#ContentPlaceHolder1_txtRemarks").val("");
+            $("#ContentPlaceHolder1_ddlPurchaseType").val("All").trigger('change');
 
             $("#ContentPlaceHolder1_ddlSupplier").attr("disabled", false);
             $("#ContentPlaceHolder1_ddlPurchaseOrderNumber").attr("disabled", false);
@@ -2145,7 +2357,6 @@
             ReceiveOrderEdit(ReceiveType, ReceivedId, SupplierId, CostCenterId, POrderId);
         }
         function OnEditPurchaseOrderSucceed(result) {
-            debugger;
             $("#SerialItemTable tbody").html("");
             $("#OEAmountGrid tbody").html("");
             AddedSerialzableProduct = new Array();
@@ -2162,6 +2373,8 @@
             if (result.ProductReceived.ReceiveType == "AdHoc" || result.ProductReceived.ReceiveType == "Purchase") {
                 OverheadExpenseEdit(result.OverheadExpenseInfoList);
             }
+
+            PaymentMethodInformationEdit(result.PaymentInformationList);
 
             $("ContentPlaceHolder1_ddlReceiveType").val(result.ProductReceived.ReceiveType);
             $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val(result.ProductReceived.CompanyId).trigger('change');
@@ -2243,6 +2456,45 @@
                 });
                 totalAmount = totalAmount.toFixed(2);
                 $("#ContentPlaceHolder1_txttotalAmount").val(totalAmount);
+            });
+        }
+
+        function PaymentMethodInformationEdit(result) {
+            $.each(result, function (count, obj) {
+                var isEdited = "0";
+                var rowLength = $("#PMAmountGrid tbody tr").length;
+
+                var tr = "";
+
+                if (rowLength % 2 == 0) {
+                    tr += "<tr style='background-color:#FFFFFF;'>";
+                }
+                else {
+                    tr += "<tr style='background-color:#E3EAEB;'>";
+                }
+
+                tr += "<td style='width:30%;'>" + obj.AccountHead + "</td>";
+                tr += "<td style='width:10%;'>" + obj.Amount + "</td>";
+                tr += "<td style='width:50%;'>" + obj.Remarks + "</td>";
+                tr += "<td style='width:10%;'><a href='javascript:void();' onclick= 'javascript:return DeleteAccountHeadOfPM(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+
+                tr += "<td style='display:none'>" + obj.ReceivedId + "</td>";
+                tr += "<td style='display:none'>" + obj.NodeId + "</td>";
+                tr += "<td style='display:none'>" + isEdited + "</td>";
+                tr += "</tr>";
+
+                $("#PMAmountGrid tbody").append(tr);
+                var totalAmount = 0;
+                $("#PMAmountGrid tr").each(function () {
+                    var amount = $(this).find("td").eq(1).html();
+                    if (amount == undefined) {
+                        amount = 0;
+                    }
+                    totalAmount = parseFloat(totalAmount) + parseFloat(amount);
+                });
+                totalAmount = totalAmount.toFixed(2);
+                $("#ContentPlaceHolder1_txtPMTotalAmount").val(totalAmount);
+                $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(totalAmount);
             });
         }
 
@@ -2882,8 +3134,11 @@
     <div id="dealDocuments" style="display: none;">
         <div id="imageDiv"></div>
     </div>
+    <asp:HiddenField ID="hfTotalForItems" runat="server" Value="0" />
+    <asp:HiddenField ID="hftotalForPaymentInfos" runat="server" Value="0" />
     <asp:HiddenField ID="hfCostCenterId" runat="server" Value="0" />
     <asp:HiddenField ID="hfAccoutHeadId" runat="server" Value="0" />
+    <asp:HiddenField ID ="hfAccoutHeadPMId" runat="server" Value="0" />
     <asp:HiddenField ID="hfCompanyId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfProjectId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="RandomDocId" runat="server"></asp:HiddenField>
@@ -2930,6 +3185,18 @@
                                     <asp:ListItem Text="LC" Value="LC"></asp:ListItem>
                                 </asp:DropDownList>
                             </div>
+                            <div id="PurchaseType">
+                                <div class="col-md-2">
+                                    <asp:Label ID="lblPurchaseType" runat="server" class="control-label required-field" Text="Purchase Type"></asp:Label>
+                                </div>
+                                <div class="col-md-4">
+                                    <asp:DropDownList ID="ddlPurchaseType" runat="server" CssClass="form-control">
+                                        <asp:ListItem Text="--- Please Select ---" Value="All"></asp:ListItem>
+                                        <asp:ListItem Text="Credit Purchase" Value="Credit"></asp:ListItem>
+                                        <asp:ListItem Text="Cash/Bank Purchase" Value="CashNBank"></asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
                             <div id="PONumber">
                                 <div class="col-md-2">
                                     <asp:Label ID="Label1" runat="server" class="control-label required-field" Text="PO Number"></asp:Label>
@@ -2951,12 +3218,14 @@
                         </div>
                         <UserControl:CompanyProjectUserControl ID="companyProjectUserControl" runat="server" />
                         <div class="form-group">
-                            <div class="col-md-2">
-                                <asp:Label ID="lblSupplier" runat="server" class="control-label required-field" Text="Supplier"></asp:Label>
-                            </div>
-                            <div class="col-md-4">
-                                <asp:DropDownList ID="ddlSupplier" runat="server" CssClass="form-control">
-                                </asp:DropDownList>
+                            <div id="SupplierPanel">
+                                <div class="col-md-2">
+                                    <asp:Label ID="lblSupplier" runat="server" class="control-label required-field" Text="Supplier"></asp:Label>
+                                </div>
+                                <div class="col-md-4">
+                                    <asp:DropDownList ID="ddlSupplier" runat="server" CssClass="form-control">
+                                    </asp:DropDownList>
+                                </div>
                             </div>
                             <div class="col-md-2">
                                 <asp:Label ID="Label2" runat="server" class="control-label required-field" Text="Receive Store"></asp:Label>
@@ -3245,6 +3514,87 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <asp:TextBox ID="txttotalAmount" runat="server" ReadOnly="true" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <div id="PMEntryPanel" class="panel panel-default">
+                            <div class="panel-heading">
+                                Payment Method Information
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <asp:Label ID="lblPMAccountHead" runat="server" class="control-label required-field" Text="Account Head"></asp:Label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <asp:DropDownList ID="ddlPMAccountHead" runat="server" CssClass="form-control" TabIndex="74">
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <asp:Label ID="lblPMAmount" runat="server" class="control-label required-field" Text="Amount"></asp:Label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <asp:TextBox ID="txtPMAmount" runat="server" TabIndex="75" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <asp:Label ID="lblPMDescription" runat="server" class="control-label required-field" Text="Description"></asp:Label>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <asp:TextBox ID="txtPMDescription" runat="server" TabIndex="76" CssClass="form-control"
+                                                TextMode="MultiLine"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding: 5px 0 5px 0;">
+                                        <div class="col-md-12">
+                                            <button type="button" id="btnAddPMAmount" tabindex="77" class="TransactionalButton btn btn-primary btn-sm">
+                                                Add</button>
+                                            <button type="button" id="btnCancelPMAmount" class="TransactionalButton btn btn-primary btn-sm">
+                                                Cancel</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="padding: 0px;">
+                                        <div id="PMAmountGridContainer">
+                                            <table id="PMAmountGrid" class="table table-bordered table-condensed table-responsive"
+                                                style="width: 100%;">
+                                                <thead>
+                                                    <tr style="color: White; background-color: #44545E; text-align: left; font-weight: bold;">
+                                                        <th style="width: 30%;">Account Head
+                                                        </th>
+                                                        <th style="width: 10%;">Amount
+                                                        </th>
+                                                        <th style="width: 50%">Description
+                                                        </th>
+                                                        <th style="width: 10%;">Action
+                                                        </th>
+                                                        <th style="display: none">AccountHeadDetailsId
+                                                        </th>
+                                                        <th style="display: none">AccountHeadId
+                                                        </th>
+                                                        <th style="display: none">IsEdited
+                                                        </th>
+                                                        <th style="display: none">DuplicateCheck
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                            <div class="row" style="padding: 5px 0 5px 0;">
+                                                <div class="col-md-3">
+                                                    <asp:Label ID="lblPMTotalAmount" runat="server" class="control-label" Text="Total Amount :"></asp:Label>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <asp:TextBox ID="txtPMTotalAmount" runat="server" ReadOnly="true" CssClass="form-control quantitydecimal"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>

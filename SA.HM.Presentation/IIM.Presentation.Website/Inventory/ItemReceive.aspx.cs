@@ -57,10 +57,17 @@ namespace HotelManagement.Presentation.Website.Inventory
             ddlAccountHead.DataValueField = "NodeId";
             ddlAccountHead.DataBind();
 
+            ddlPMAccountHead.DataSource = nodeMatrixDA.GetNodeMatrixInfoByCustomString("WHERE CHARINDEX('.4.', Hierarchy) = 1 AND IsTransactionalHead = 1");
+            ddlPMAccountHead.DataTextField = "HeadWithCode";
+            ddlPMAccountHead.DataValueField = "NodeId";
+            ddlPMAccountHead.DataBind();
+            
+
             ListItem itemNodeId = new ListItem();
             itemNodeId.Value = "0";
             itemNodeId.Text = hmUtility.GetDropDownFirstValue();
             ddlAccountHead.Items.Insert(0, itemNodeId);
+            ddlPMAccountHead.Items.Insert(0, itemNodeId);
         }
         #region Data Initialize
         private void LoadIsItemAttributeEnable()
@@ -395,7 +402,9 @@ namespace HotelManagement.Presentation.Website.Inventory
                                                               List<PMProductSerialInfoBO> ItemSerialDetails,
                                                               List<PMProductSerialInfoBO> DeletedSerialzableProduct, int randomDocId, string deletedDoc, 
                                                               List<OverheadExpensesBO> AddedOverheadExpenses,
-                                                              List<OverheadExpensesBO> EditedOverheadExpenses
+                                                              List<OverheadExpensesBO> EditedOverheadExpenses,
+                                                              List<OverheadExpensesBO> AddedPaymentMethodInfos,
+                                                              List<OverheadExpensesBO> EditedPaymentMethodInfos
                                                               )
         {
             HMCommonDA hmCommonDA = new HMCommonDA();
@@ -467,7 +476,7 @@ namespace HotelManagement.Presentation.Website.Inventory
                     string ApproveStatus = "";
                     //ProductReceive.Status = HMConstants.ApprovalStatus.Pending.ToString();
 
-                    rtninfo.IsSuccess = receiveDA.SaveProductReceiveInfo(ProductReceive, ReceiveOrderItem, ItemSerialDetails, isApprovalProcessEnable, AddedOverheadExpenses, out receiveId, out TransactionNo, out TransactionType, out ApproveStatus);
+                    rtninfo.IsSuccess = receiveDA.SaveProductReceiveInfo(ProductReceive, ReceiveOrderItem, ItemSerialDetails, isApprovalProcessEnable, AddedOverheadExpenses, AddedPaymentMethodInfos, out receiveId, out TransactionNo, out TransactionType, out ApproveStatus);
 
                     if (rtninfo.IsSuccess)
                     {
@@ -513,7 +522,7 @@ namespace HotelManagement.Presentation.Website.Inventory
                     ReceiveOrderItem = (from pod in ReceiveOrderItem where pod.ReceiveDetailsId == 0 select pod).ToList();
 
                     ItemSerialDetails = (from srl in ItemSerialDetails where srl.SerialId == 0 select srl).ToList();
-                    rtninfo.IsSuccess = receiveDA.UpdateProductReceiveInfo(ProductReceive, ReceiveOrderItem, EditedReceivedDetails, AddedOverheadExpenses, ReceiveOrderItemDeleted, ItemSerialDetails, DeletedSerialzableProduct, out TransactionNo, out TransactionType, out ApproveStatus);
+                    rtninfo.IsSuccess = receiveDA.UpdateProductReceiveInfo(ProductReceive, ReceiveOrderItem, EditedReceivedDetails, AddedOverheadExpenses, AddedPaymentMethodInfos, ReceiveOrderItemDeleted, ItemSerialDetails, DeletedSerialzableProduct, out TransactionNo, out TransactionType, out ApproveStatus);
 
                     if (rtninfo.IsSuccess)
                     {
@@ -602,7 +611,8 @@ namespace HotelManagement.Presentation.Website.Inventory
 
             viewBo.ProductReceivedDetails = orderDetailDA.GetProductReceiveDetailsById(receivedId);
             viewBo.ProductSerialInfo = orderDetailDA.GetProductReceiveSerialById(receivedId);
-            if(viewBo.ProductReceived.ReceiveType == "Purchase" || viewBo.ProductReceived.ReceiveType == "AdHoc")
+            viewBo.PaymentInformationList = orderDetailDA.GetPaymentInformationListByReceiveId(receivedId);
+            if (viewBo.ProductReceived.ReceiveType == "Purchase" || viewBo.ProductReceived.ReceiveType == "AdHoc")
             {
                 viewBo.OverheadExpenseInfoList = orderDetailDA.GetOverheadExpenseForProductReceiveByReceivedId(receivedId);
             }

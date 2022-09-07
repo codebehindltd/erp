@@ -13,6 +13,7 @@ namespace HotelManagement.Entity.Inventory
         public List<PMProductReceivedDetailsBO> ProductReceivedDetailsSummary { get; set; }
         public List<PMProductSerialInfoBO> ProductSerialInfo { get; set; }
         public List<OverheadExpensesBO> OverheadExpenseInfoList { get; set; }
+        public List<OverheadExpensesBO> PaymentInformationList { get; set; }
 
         public string PurchaseOrderGrid { get; set; }
         public int CostCenterId { get; set; }

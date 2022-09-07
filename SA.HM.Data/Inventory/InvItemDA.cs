@@ -1679,7 +1679,11 @@ namespace HotelManagement.Data.Inventory
                         dbSmartAspects.AddInParameter(cmd, "@LocationId", DbType.Int32, DBNull.Value);
 
                     dbSmartAspects.AddInParameter(cmd, "@IsCustomerSupplierItemOrBoth", DbType.String, isCustomerOrSupplierItem);
-                    dbSmartAspects.AddInParameter(cmd, "@SupplierId", DbType.String, supplierId);
+
+                    if (supplierId > 0)
+                        dbSmartAspects.AddInParameter(cmd, "@SupplierId", DbType.String, supplierId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@SupplierId", DbType.String, DBNull.Value);
 
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "ItemInfo");
