@@ -31,6 +31,7 @@ namespace HotelManagement.Data.PurchaseManagment
 
                             dbSmartAspects.AddInParameter(command,  "@ReceivedDate", DbType.DateTime, receivedProduct.ReceivedDate);
                             dbSmartAspects.AddInParameter(command,  "@ReceiveType", DbType.String, receivedProduct.ReceiveType);
+                            dbSmartAspects.AddInParameter(command, "@PaymentType", DbType.String, receivedProduct.PaymentType);
                             dbSmartAspects.AddInParameter(command,  "@POrderId", DbType.Int32, receivedProduct.POrderId);
                             dbSmartAspects.AddInParameter(command,  "@SupplierId", DbType.Int32, receivedProduct.SupplierId);
                             dbSmartAspects.AddInParameter(command,  "@CostCenterId", DbType.Int32, receivedProduct.CostCenterId);
@@ -939,6 +940,7 @@ namespace HotelManagement.Data.PurchaseManagment
                         Status = r.Field<string>("Status"),
                         CreatedBy = r.Field<Int32>("CreatedBy"),
                         ReceiveType = r.Field<string>("ReceiveType"),
+                        PaymentType = r.Field<string>("PaymentType"),
                         CostCenterId = r.Field<Int32>("CostCenterId"),
                         ReferenceNumber = r.Field<string> ("ReferenceNumber"),
                         ReferenceBillDate = r.Field<DateTime?>("ReferenceBillDate"),

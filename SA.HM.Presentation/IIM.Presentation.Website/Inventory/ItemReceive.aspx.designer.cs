@@ -301,13 +301,13 @@ namespace HotelManagement.Presentation.Website.Inventory {
         protected global::System.Web.UI.WebControls.Label lblPurchaseType;
         
         /// <summary>
-        /// ddlPurchaseType control.
+        /// ddlPaymentType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPurchaseType;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPaymentType;
         
         /// <summary>
         /// Label1 control.

@@ -32,6 +32,7 @@ namespace HotelManagement.Entity.Inventory
         public string PONumber { get; set; }
         public decimal PurchasePrice { get; set; }
         public int ReceivedProductTemplate { get; set; }
+        public string PaymentType { get; set; }
 
         public string CostCenter { get; set; }
         public string SupplierName { get; set; }

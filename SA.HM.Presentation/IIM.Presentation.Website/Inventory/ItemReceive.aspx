@@ -136,7 +136,7 @@
                 $("#ReceiveOrderItemContainer").hide();
                 $("#PurchaseOrderCostCenterContainer").hide();
                 $("#ContentPlaceHolder1_ddlCurrency").attr('disabled', false);
-                if ($("#ContentPlaceHolder1_ddlPurchaseType").val() == "CashNBank") {
+                if ($("#ContentPlaceHolder1_ddlPaymentType").val() == "CashNBank") {
                     $("#PMEntryPanel").show();
                     $("#SupplierPanel").hide();
                 } else {
@@ -238,8 +238,8 @@
                 }
             }).datepicker("setDate", DayOpenDate);
 
-            $("#ContentPlaceHolder1_ddlPurchaseType").change(function () {
-                if ($("#ContentPlaceHolder1_ddlPurchaseType").val() == "CashNBank") {
+            $("#ContentPlaceHolder1_ddlPaymentType").change(function () {
+                if ($("#ContentPlaceHolder1_ddlPaymentType").val() == "CashNBank") {
                     $("#PMEntryPanel").show();
                     $("#SupplierPanel").hide();
                 } else {
@@ -260,8 +260,8 @@
                     $("#LCNumber").hide();
                     $("#ContentPlaceHolder1_ddlCurrency").attr('disabled', false);
                     $("#ContentPlaceHolder1_ddlSupplier").attr("disabled", false).val('0').trigger('change');
-                    $("#ContentPlaceHolder1_ddlPurchaseType").change(function () {
-                        if ($("#ContentPlaceHolder1_ddlPurchaseType").val() == "CashNBank") {
+                    $("#ContentPlaceHolder1_ddlPaymentType").change(function () {
+                        if ($("#ContentPlaceHolder1_ddlPaymentType").val() == "CashNBank") {
                             $("#PMEntryPanel").show();
                             $("#SupplierPanel").hide();
                         } else {
@@ -425,7 +425,7 @@
                     var locationId = $("#ContentPlaceHolder1_ddlReceiveLocation").val();
                     var categoryId = $("#ContentPlaceHolder1_ddlCategory").val();
                     var supplierId = $("#ContentPlaceHolder1_ddlSupplier").val();
-                    var purchaseType = $("#ContentPlaceHolder1_ddlPurchaseType").val();
+                    var purchaseType = $("#ContentPlaceHolder1_ddlPaymentType").val();
 
                     if (companyId == "0") {
                         toastr.warning("Please Select Company.");
@@ -944,7 +944,7 @@
         }
 
         function AddItemForReceive() {
-            if ($("#ContentPlaceHolder1_ddlSupplier").val() == "0" && $("#ContentPlaceHolder1_ddlPurchaseType").val() == "Credit") {
+            if ($("#ContentPlaceHolder1_ddlSupplier").val() == "0" && $("#ContentPlaceHolder1_ddlPaymentType").val() == "Credit") {
                 toastr.warning("Please Select Supplier.");
                 return false;
             }
@@ -1316,6 +1316,7 @@
             $("#ItemForReceiveTbl tbody tr").each(function () {
                 total += toFixed(parseFloat($(this).find("td:eq(7)").text()), 2);
             });
+            $("#ContentPlaceHolder1_hfTotalForItems").val(total);
             $("#ItemForReceiveTbl tfoot").find("tr:eq(0)").remove();
             tr += "<tr>";
             tr += "<td style='width:25%;'> </td>";
@@ -1358,6 +1359,7 @@
                 $("#ContentPlaceHolder1_txtCurrentStockBy").val("").prop("disabled", false);
                 ItemSelected = null;
             }
+            $("#ContentPlaceHolder1_txtPurchasePrice").val("");
             $("#ContentPlaceHolder1_txtReceiveQuantity").val("");
             $("#ContentPlaceHolder1_txtBagQuantity").val("");
             $("#ContentPlaceHolder1_txtBonusAmount").val("");
@@ -1734,7 +1736,7 @@
             $("#ContentPlaceHolder1_hfCompanyId").val(companyId);
             $("#ContentPlaceHolder1_hfProjectId").val(projectId);
 
-            if ($("#ContentPlaceHolder1_ddlSupplier").val() == "0" && $("#ContentPlaceHolder1_ddlPurchaseType").val() == "Credit") {
+            if ($("#ContentPlaceHolder1_ddlSupplier").val() == "0" && $("#ContentPlaceHolder1_ddlPaymentType").val() == "Credit") {
                 toastr.warning("Please Select Supplier.");
                 return false;
             }
@@ -1771,9 +1773,10 @@
             var purchaseItem = null;
 
             var receiveOrderId = "0", receiveType = "", receivedByDate = null, supplierId = "0", isEdited = "0",
-                categoryId = "", costCenterId = "", locationId = "", porderId = "0", receiveDetailsId = 0, referenceBillDate = "", referenceBillNo = "";
+                categoryId = "", costCenterId = "", locationId = "", porderId = "0", receiveDetailsId = 0, referenceBillDate = "", referenceBillNo = "", paymentType = "";
 
             receiveType = $("#ContentPlaceHolder1_ddlReceiveType").val();
+            paymentType = $("#ContentPlaceHolder1_ddlPaymentType").val();
             receiveOrderId = $("#ContentPlaceHolder1_hfReceiveOrderId").val();
             supplierId = $("#ContentPlaceHolder1_ddlSupplier").val();
             costCenterId = $("#ContentPlaceHolder1_ddlCostCentre").val();
@@ -1892,6 +1895,7 @@
                 ReceivedId: receiveOrderId,
                 POrderId: porderId,
                 ReceiveType: receiveType,
+                PaymentType: paymentType,
                 CostCenterId: costCenterId,
                 LocationId: locationId,
                 SupplierId: supplierId,
@@ -1967,7 +1971,7 @@
             var randomDocId = $("#ContentPlaceHolder1_RandomDocId").val();
             var deletedDoc = $("#ContentPlaceHolder1_hfDeletedDoc").val();
             debugger;
-            if ($("#ContentPlaceHolder1_ddlPurchaseType").val() == "CashNBank") {
+            if ($("#ContentPlaceHolder1_ddlPaymentType").val() == "CashNBank") {
                 var totalForItems = $("#ContentPlaceHolder1_hfTotalForItems").val();
                 var totalForPayment = $("#ContentPlaceHolder1_hftotalForPaymentInfos").val();
                 totalForItems = parseFloat(totalForItems);
@@ -2075,7 +2079,8 @@
             $("#ContentPlaceHolder1_txtReceiveQuantity").val("");
             $("#ContentPlaceHolder1_txtPurchasePrice").val("");
             $("#ContentPlaceHolder1_txtRemarks").val("");
-            $("#ContentPlaceHolder1_ddlPurchaseType").val("All").trigger('change');
+            $("#ContentPlaceHolder1_ddlPaymentType").val("All").trigger('change');
+            $("#ContentPlaceHolder1_ddlPaymentType").attr("disabled", false);
 
             $("#ContentPlaceHolder1_ddlSupplier").attr("disabled", false);
             $("#ContentPlaceHolder1_ddlPurchaseOrderNumber").attr("disabled", false);
@@ -2364,12 +2369,13 @@
             ReceiveOrderEdit(ReceiveType, ReceivedId, SupplierId, CostCenterId, POrderId);
         }
         function OnEditPurchaseOrderSucceed(result) {
+            debugger;
             $("#SerialItemTable tbody").html("");
             $("#OEAmountGrid tbody").html("");
+            $("#PMAmountGrid tbody").html("");
             AddedSerialzableProduct = new Array();
             DeletedSerialzableProduct = new Array();
             AddedSerialCount = 0;
-
             $("#ContentPlaceHolder1_txtReferenceBillNo").val(result.ProductReceived.ReferenceNumber);
             if (result.ProductReceived.ReferenceBillDate != null) {
                 $("#ContentPlaceHolder1_txtReferenceBillDate").val(GetStringFromDateTime(result.ProductReceived.ReferenceBillDate));
@@ -2383,15 +2389,24 @@
 
             PaymentMethodInformationEdit(result.PaymentInformationList);
 
+            $("#ContentPlaceHolder1_ddlPaymentType").val(result.ProductReceived.PaymentType);
             $("ContentPlaceHolder1_ddlReceiveType").val(result.ProductReceived.ReceiveType);
             $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val(result.ProductReceived.CompanyId).trigger('change');
             $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").val(result.ProductReceived.ProjectId).trigger('change');
 
+            $("#ContentPlaceHolder1_ddlPaymentType").attr("disabled", true);
             $("ContentPlaceHolder1_ddlReceiveType").attr("disabled", true);
             $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").attr("disabled", true);
             $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").attr("disabled", true);
 
             if (result.ProductReceived.ReceiveType == "AdHoc") {
+                if ($("#ContentPlaceHolder1_ddlPaymentType").val() == "CashNBank") {
+                    $("#PMEntryPanel").show();
+                    $("#SupplierPanel").hide();
+                } else {
+                    $("#PMEntryPanel").hide();
+                    $("#SupplierPanel").show();
+                }
 
                 $("#AdhocReceive").show();
                 $("#AdhocReceiveItem").show();
@@ -2506,6 +2521,7 @@
         }
 
         function AdhocReceiveOrderEdit(result) {
+            debugger;
             LoadForEditReceiveOrder(result);
             var tr = "";
 
@@ -2563,10 +2579,72 @@
                 tr = "";
             });
 
+            //ReceiveOrderItem.push({
+            //    ItemId: parseInt(ItemSelected.ItemId, 10),
+            //    ColorId: parseInt(colorId, 10),
+            //    SizeId: parseInt(sizeId, 10),
+            //    StyleId: parseInt(styleId, 10),
+            //    ItemName: ItemSelected.ItemName,
+            //    StockById: parseInt(ItemSelected.StockBy, 10),
+            //    Quantity: parseFloat(quantity),
+            //    PurchasePrice: parseFloat(unitPrice),
+            //    ProductType: ItemSelected.ProductType,
+            //    Remarks: remarks,
+            //    BagQuantity: bagQuantity,
+            //    BonusAmount: bonusAmount,
+            //    DetailId: 0
+            //});
+
+            $("#ContentPlaceHolder1_ddlSupplier").attr("disabled", true);
+            $("#ContentPlaceHolder1_ddlCostCentre").attr("disabled", true);
+            $("#ContentPlaceHolder1_ddlReceiveLocation").attr('disabled', true);
+
             ReceiveOrderItem = result.ProductReceivedDetails;
 
             CommonHelper.ApplyDecimalValidation();
             ClearAfterAdhoqReceiveItemAdded();
+
+            CommonHelper.ApplyDecimalValidation();
+            ClearAfterAdhoqReceiveItemAdded();
+            $("#ContentPlaceHolder1_txtItem").focus();
+            var total = 0;
+            $("#ItemForReceiveTbl tbody tr").each(function () {
+                total += toFixed(parseFloat($(this).find("td:eq(7)").text()), 2);
+            });
+            $("#ContentPlaceHolder1_hfTotalForItems").val(total);
+            $("#ItemForReceiveTbl tfoot").find("tr:eq(0)").remove();
+            tr += "<tr>";
+            tr += "<td style='width:25%;'> </td>";
+
+            if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                tr += "<td style='width:10%;'> </td>";
+                tr += "<td style='width:10%;'> </td>";
+                tr += "<td style='width:10%;'> </td>";
+            }
+            else {
+                tr += "<td style='display:none'></td>";
+                tr += "<td style='display:none'></td>";
+                tr += "<td style='display:none'></td>";
+            }
+
+            tr += "<td style='width:10%;'> </td>";
+            tr += "<td style='width:10%;'> </td>";
+            tr += "<td style='width:10%;font-weight:bold;'> Total </td>";
+            tr += "<td style='width:15%;font-weight:bold;'>" + total + "</td>";
+
+            tr += "<td style='display:none'>" + 0 + "</td>";
+            tr += "<td style='display:none'>" + 0 + "</td>";
+            tr += "<td style='display:none'>" + 0 + "</td>";
+
+            tr += "<td style='display:none'>" + 0 + "</td>";
+            tr += "<td style='display:none'>" + 0 + "</td>";
+
+            tr += "<td style='width:15%;'> </td>";
+            tr += "</tr>";
+
+            $("#ItemForReceiveTbl tfoot").prepend(tr);
+            tr = "";
+
 
             $("#myTabs").tabs({ active: 0 });
         }
@@ -3197,7 +3275,7 @@
                                     <asp:Label ID="lblPurchaseType" runat="server" class="control-label required-field" Text="Payment Type"></asp:Label>
                                 </div>
                                 <div class="col-md-4">
-                                    <asp:DropDownList ID="ddlPurchaseType" runat="server" CssClass="form-control">
+                                    <asp:DropDownList ID="ddlPaymentType" runat="server" CssClass="form-control">
                                         <asp:ListItem Text="--- Please Select ---" Value="All"></asp:ListItem>
                                         <asp:ListItem Text="Credit Payment" Value="Credit"></asp:ListItem>
                                         <asp:ListItem Text="Cash/Bank Payment" Value="CashNBank"></asp:ListItem>
