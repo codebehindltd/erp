@@ -51,13 +51,12 @@ namespace HotelManagement.Presentation.Website.Inventory
         private void LoadAccountHead()
         {
             NodeMatrixDA nodeMatrixDA = new NodeMatrixDA();
-            //ddlAccountHead.DataSource = nodeMatrixDA.GetNodeMatrixInfo();
             ddlAccountHead.DataSource = nodeMatrixDA.GetNodeMatrixInfoByCustomString("WHERE CHARINDEX('.4.', Hierarchy) = 1 AND IsTransactionalHead = 1");
             ddlAccountHead.DataTextField = "HeadWithCode";
             ddlAccountHead.DataValueField = "NodeId";
             ddlAccountHead.DataBind();
 
-            ddlPMAccountHead.DataSource = nodeMatrixDA.GetNodeMatrixInfoByCustomString("WHERE CHARINDEX('.4.', Hierarchy) = 1 AND IsTransactionalHead = 1");
+            ddlPMAccountHead.DataSource = nodeMatrixDA.GetNodeMatrixInfoByCustomString("WHERE CHARINDEX('.1.5.16.', Hierarchy) = 1 AND IsTransactionalHead = 1");
             ddlPMAccountHead.DataTextField = "HeadWithCode";
             ddlPMAccountHead.DataValueField = "NodeId";
             ddlPMAccountHead.DataBind();
@@ -311,7 +310,8 @@ namespace HotelManagement.Presentation.Website.Inventory
             List<InvItemAutoSearchBO> itemInfo = new List<InvItemAutoSearchBO>();
 
             InvItemDA itemDa = new InvItemDA();
-            itemInfo = itemDa.GetCompanyProjectWiseItemDetailsForAutoSearch(searchTerm, companyId, projectId, costCenterId, ConstantHelper.CustomerSupplierAutoSearch.SupplierItem.ToString(), categoryId, supplierId, locationId);
+            //itemInfo = itemDa.GetCompanyProjectWiseItemDetailsForAutoSearch(searchTerm, companyId, projectId, costCenterId, ConstantHelper.CustomerSupplierAutoSearch.SupplierItem.ToString(), categoryId, supplierId, locationId);
+            itemInfo = itemDa.GetCompanyProjectWiseItemDetailsForAutoSearch(searchTerm, companyId, projectId, costCenterId, ConstantHelper.CustomerSupplierAutoSearch.AllItem.ToString(), categoryId, supplierId, locationId);
 
             return itemInfo;
         }

@@ -25,7 +25,8 @@ namespace HotelManagement.Presentation.Website.Common
         {
             CustomerItem,
             SupplierItem,
-            CustomerNSupplierItem
+            CustomerNSupplierItem,
+            AllItem
         }
         public enum KotStatus
         {

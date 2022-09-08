@@ -1968,7 +1968,14 @@
             var deletedDoc = $("#ContentPlaceHolder1_hfDeletedDoc").val();
             debugger;
             if ($("#ContentPlaceHolder1_ddlPurchaseType").val() == "CashNBank") {
-                if ($("#ContentPlaceHolder1_hfTotalForItems").val() != $("#ContentPlaceHolder1_hftotalForPaymentInfos").val()) {
+                var totalForItems = $("#ContentPlaceHolder1_hfTotalForItems").val();
+                var totalForPayment = $("#ContentPlaceHolder1_hftotalForPaymentInfos").val();
+                totalForItems = parseFloat(totalForItems);
+                totalForPayment = parseFloat(totalForPayment);
+                totalForItems = totalForItems.toFixed(2);
+                totalForPayment = totalForPayment.toFixed(2);
+                debugger;
+                if (totalForItems != totalForPayment) {
                     toastr.warning("Total item price & Total Payment are not same.");
                     $("#ContentPlaceHolder1_txtPMAmount").focus();
                     return false;
@@ -3187,13 +3194,13 @@
                             </div>
                             <div id="PurchaseType">
                                 <div class="col-md-2">
-                                    <asp:Label ID="lblPurchaseType" runat="server" class="control-label required-field" Text="Purchase Type"></asp:Label>
+                                    <asp:Label ID="lblPurchaseType" runat="server" class="control-label required-field" Text="Payment Type"></asp:Label>
                                 </div>
                                 <div class="col-md-4">
                                     <asp:DropDownList ID="ddlPurchaseType" runat="server" CssClass="form-control">
                                         <asp:ListItem Text="--- Please Select ---" Value="All"></asp:ListItem>
-                                        <asp:ListItem Text="Credit Purchase" Value="Credit"></asp:ListItem>
-                                        <asp:ListItem Text="Cash/Bank Purchase" Value="CashNBank"></asp:ListItem>
+                                        <asp:ListItem Text="Credit Payment" Value="Credit"></asp:ListItem>
+                                        <asp:ListItem Text="Cash/Bank Payment" Value="CashNBank"></asp:ListItem>
                                     </asp:DropDownList>
                                 </div>
                             </div>
