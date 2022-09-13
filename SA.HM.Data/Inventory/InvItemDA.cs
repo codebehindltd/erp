@@ -1660,6 +1660,7 @@ namespace HotelManagement.Data.Inventory
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyProjectWiseItemDetailsForAutoSearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                     dbSmartAspects.AddInParameter(cmd, "@ProjectId", DbType.Int32, projectId);
                     dbSmartAspects.AddInParameter(cmd, "@ItemName", DbType.String, itemName);

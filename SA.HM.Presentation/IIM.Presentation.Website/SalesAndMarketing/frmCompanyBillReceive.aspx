@@ -1241,18 +1241,18 @@ function OnProjectsPopulated(response) {
                 }
 
                 if (gridObject.IsCanDelete && IsCanDelete) {
-                    tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteCompanyPayment(" + gridObject.PaymentId + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                    tr += "&nbsp;<a href='javascript:void();' onclick= 'javascript:return DeleteCompanyPayment(" + gridObject.PaymentId + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
                 }
 
                 if (gridObject.IsCanChecked) {
-                    tr += "<a href='javascript:void();' onclick= 'javascript:return CheckedPayment(" + gridObject.PaymentId + ")' ><img alt='Checked' src='../Images/checked.png' /></a>";
+                    tr += "&nbsp;<a href='javascript:void();' onclick= 'javascript:return CheckedPayment(" + gridObject.PaymentId + ")' ><img alt='Checked' src='../Images/checked.png' /></a>";
                 }
 
                 if (gridObject.IsCanApproved) {
-                    tr += "<a href='javascript:void();' onclick= 'javascript:return ApprovedPayment(" + gridObject.PaymentId + ")' ><img alt='approved' src='../Images/approved.png' /></a>";
+                    tr += "&nbsp;<a href='javascript:void();' onclick= 'javascript:return ApprovedPayment(" + gridObject.PaymentId + ")' ><img alt='approved' src='../Images/approved.png' /></a>";
                 }
 
-                tr += "&nbsp;&nbsp;";
+                tr += "&nbsp;";
 
                 tr += "<a href='javascript:void();' onclick= 'javascript:return ShowReport(" + gridObject.PaymentId + ")' ><img alt='approved' src='../Images/ReportDocument.png' /></a>";
 
