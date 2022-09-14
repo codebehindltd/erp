@@ -38,6 +38,26 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             return empList;
         }
         [WebMethod]
+        public static ReturnInfo DeleteAccountManager(int Id)
+        {
+            bool status = false;
+            ReturnInfo rtnInfo = new ReturnInfo();
+            rtnInfo.IsSuccess = false;
+            AccountManagerDA aMda = new AccountManagerDA();
+            status = aMda.DeleteAccountManager(Id);
+            if (status)
+            {
+                rtnInfo.IsSuccess = true;
+                rtnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Delete, AlertType.Success);
+            }
+            else
+            {
+                rtnInfo.IsSuccess = false;
+                rtnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+            return rtnInfo;
+        }
+        [WebMethod]
         public static ReturnInfo SaveAccountManagerInformation(AccountManagerBO AccountManagerBO)
         {
             bool status = false;

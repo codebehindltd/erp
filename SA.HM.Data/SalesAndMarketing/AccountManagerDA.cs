@@ -140,6 +140,48 @@ namespace HotelManagement.Data.SalesAndMarketing
             return managerBO;
 
         }
+
+        public Boolean DeleteAccountManager(int Id)
+        {
+            bool retVal = false;
+            int status = 0;
+
+            using(DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+
+                using(DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand commandDel = dbSmartAspects.GetStoredProcCommand("DeleteAccountManagerById_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(commandDel, "@AccountManagerId", DbType.Int32, Id);
+
+                            status = dbSmartAspects.ExecuteNonQuery(commandDel, transction);
+                        }
+
+                        if (status > 0)
+                        {
+                            transction.Commit();
+                            retVal = true;
+                        }
+                        else
+                        {
+                            transction.Rollback();
+                            retVal = false;
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        transction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            return retVal;
+        }
+
         //new account manager
         public Boolean SaveAccountManagerInfo(AccountManagerBO accountManagerBO, out int OutId)
         {

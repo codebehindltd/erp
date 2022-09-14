@@ -233,6 +233,25 @@
             $("#ContentPlaceHolder1_txtSupervisonNameSrc").val('');
             return false;
         }
+        function DeleteAccountManager(Id) {
+            if (!confirm("Do You Want To Delete?"))
+                return false;
+
+            PageMethods.DeleteAccountManager(Id, OnDeleteAccountManagerSucceded, OnDeleteAccountManagerFailed);
+        }
+        function OnDeleteAccountManagerSucceded(result) {
+            if (result.IsSuccess) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                GridPaging(1, 1);
+            }
+            else {
+                CommonHelper.AlertMessage(result.AlertMessage);
+            }
+        }
+        function OnDeleteAccountManagerFailed() {
+
+        }
+
         function FillFormEdit(Id) {
             $("#ContentPlaceHolder1_btnClear").hide();
 
