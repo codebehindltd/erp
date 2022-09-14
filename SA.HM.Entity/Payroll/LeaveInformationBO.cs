@@ -29,6 +29,7 @@ namespace HotelManagement.Entity.Payroll
         public string Designation { get; set; }
         public string ReportingToDesignation { get; set; }
 
+        public string CreatedDateString { get; set; }
         public int CreatedBy { get; set; }
         public int LastModifiedBy { get; set; }
 

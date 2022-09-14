@@ -402,6 +402,7 @@ namespace HotelManagement.Data.Payroll
                         LeaveMode = r.Field<string>("LeaveMode"),
                         LeaveTypeId = r.Field<int>("LeaveTypeId"),
                         TypeName = r.Field<string>("TypeName"),
+                        CreatedDateString = r.Field<string>("CreatedDateString"),
                         FromDate = r.Field<DateTime>("FromDate"),
                         ToDate = r.Field<DateTime>("ToDate"),
                         NoOfDays = r.Field<int>("NoOfDays"),
