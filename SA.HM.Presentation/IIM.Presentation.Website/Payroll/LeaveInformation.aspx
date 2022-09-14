@@ -399,42 +399,22 @@
                         tr = "<tr style='background-color:#E3EAEB;'>";
                     }
 
-                    tr += "<td style='width:15%;'>" + (gridObject.EmployeeName == null ? "" : (gridObject.EmpCode + " - " + gridObject.EmployeeName)) + "</td>";
+                    tr += "<td style='width:20%;'>" + (gridObject.EmployeeName == null ? "" : (gridObject.EmpCode + " - " + gridObject.EmployeeName)) + "</td>";
                     tr += "<td style='width:10%;'>" + (gridObject.TypeName == null ? "" : gridObject.TypeName) + "</td>";
-                    tr += "<td style='width:10%;'>" + gridObject.LeaveMode + "</td>";
-                    tr += "<td style='width:15%;'>" + GetStringFromDateTime(gridObject.FromDate) + "</td>";
-                    tr += "<td style='width:15%;'>" + GetStringFromDateTime(gridObject.ToDate) + "</td>";
-                    tr += "<td style='width:10%;'>" + gridObject.NoOfDays + "</td>";
-                    tr += "<td style='width:10%;'>" + gridObject.LeaveStatus + "</td>";
+                    tr += "<td style='width:10%;'>" + gridObject.LeaveMode + "</td>";                    
+                    tr += "<td style='width:10%;'>" + gridObject.CreatedDateString + "</td>";
+                    tr += "<td style='width:10%;'>" + GetStringFromDateTime(gridObject.FromDate) + "</td>";
+                    tr += "<td style='width:10%;'>" + GetStringFromDateTime(gridObject.ToDate) + "</td>";
+                    tr += "<td style='width:7%;'>" + gridObject.NoOfDays + "</td>";
+                    tr += "<td style='width:8%;'>" + gridObject.LeaveStatus + "</td>";
                     if (gridObject.LeaveStatus == "Pending" && gridObject.IsCanEdit) {
                         editLink = "&nbsp;<a href=\"javascript:void();\" onclick=\"javascript:return FillForm('" + gridObject.LeaveId + "');\"> <img alt=\"Edit\" src=\"../Images/edit.png\" title='Edit' /> </a>";
-                        //deleteLink = "&nbsp;&nbsp;<a href=\"javascript:void();\" onclick=\"javascript:return PerformCancelAction('" + gridObject.LeaveId + "');\"><img alt=\"Cancel\" src=\"../Images/delete.png\" title='Delete' /></a>";
-                        //invoiceLink = "&nbsp;&nbsp;<a href=\"javascript:void();\" onclick=\"javascript:return ViewInvoice('" + gridObject.LeaveId + "');\"><img alt=\"Invoice\" src=\"../Images/ReportDocument.png\" title='Report' /></a>";
-
                     }
                     if (gridObject.IsCanCheck || gridObject.IsCanApprove) {
                         approvalLink = "&nbsp;&nbsp;<a href=\"javascript:void();\" onclick=\"javascript:return ApproveLeaveApp('" + gridObject.LeaveId + "','" + gridObject.LeaveStatus + "');\"><img alt=\"Approve\" src=\"../Images/detailsInfo.png\" title='Details' /></a>";
                     }
                     invoiceLink = "&nbsp;&nbsp;<a href=\"javascript:void();\" onclick=\"javascript:return ViewInvoice('" + gridObject.LeaveId + "');\"><img alt=\"Invoice\" src=\"../Images/ReportDocument.png\" title='Report' /></a>";
 
-
-                    //if (gridObject.IsCanEdit && IsCanEdit)
-                    //    editLink = "&nbsp;<a href=\"javascript:void();\" onclick=\"javascript:return PerformEditWithConfirmation('" + gridObject.RequisitionId + "');\"> <img alt=\"Edit\" src=\"../Images/edit.png\" title='Edit' /> </a>";
-
-                    //if (gridObject.IsCanDelete && IsCanDelete)
-                    //    deleteLink = "&nbsp;&nbsp;<a href=\"javascript:void();\" onclick=\"javascript:return PerformCancelAction('" + gridObject.RequisitionId + "');\"><img alt=\"Cancel\" src=\"../Images/delete.png\" title='Delete' /></a>";
-
-                    //if (gridObject.IsCanChecked && IsCanSave) {
-                    //    $("#btnApprove").val("Check Requisition");
-                    //}
-                    //else if (gridObject.IsCanApproved && IsCanSave) {
-                    //    $("#btnApprove").val("Approve Requisition");
-                    //}
-
-                    //if ((gridObject.IsCanChecked || gridObject.IsCanApproved) && IsCanSave) {
-                    //    approvalLink = "&nbsp;&nbsp;<a href=\"javascript:void();\" onclick=\"javascript:return ApproveLeaveApp('" + gridObject.RequisitionId + "');\"><img alt=\"Approve\" src=\"../Images/detailsInfo.png\" title='Details' /></a>";
-                    //}
-                    //invoiceLink = "&nbsp;&nbsp;<a href=\"javascript:void();\" onclick=\"javascript:return ViewInvoice('" + gridObject.RequisitionId + "');\"><img alt=\"Invoice\" src=\"../Images/ReportDocument.png\" title='Report' /></a>";
                     tr += "<td align='center' style=\"width:15%;\">" + editLink + deleteLink + approvalLink + invoiceLink + "</td>";
                     tr += "</tr>";
 
@@ -561,19 +541,21 @@
                 <table class="table table-bordered table-condensed table-responsive" id='tblLeaveInfo'>
                     <thead>
                         <tr style="color: White; background-color: #44545E; font-weight: bold;">
-                            <td style="width: 15%;">Employee
+                            <td style="width: 20%;">Employee
                             </td>
                             <td style="width: 10%;">Leave Type
                             </td>
                             <td style="width: 10%;">Leave Mode
                             </td>
-                            <td style="width: 15%;">Date From
+                            <td style="width: 10%;">App. Date
                             </td>
-                            <td style="width: 15%;">Date To
+                            <td style="width: 10%;">From Date
                             </td>
-                            <td style="width: 10%;">No of Days
+                            <td style="width: 10%;">To Date
                             </td>
-                            <td style="width: 10%;">Leave Status
+                            <td style="width: 7%;">No of Days
+                            </td>
+                            <td style="width: 8%;">Leave Status
                             </td>
                             <td style="width: 15%; text-align: center;">Action
                             </td>
