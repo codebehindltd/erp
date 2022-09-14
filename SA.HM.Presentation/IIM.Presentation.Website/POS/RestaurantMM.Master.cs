@@ -27,7 +27,7 @@ namespace HotelManagement.Presentation.Website.POS
             SiteTitle.Text = userInformationBO.SiteTitle;
             innBoardDateFormat = userInformationBO.ClientDateFormat;
 
-            lblLoggedInUser.Text = userInformationBO.DisplayName;
+            //lblLoggedInUser.Text = userInformationBO.DisplayName;
             lblDayOpenDate.Text = userInformationBO.DayOpenDate.ToString(userInformationBO.ServerDateFormat);
 
             if (Session["TableInformation"] != null)

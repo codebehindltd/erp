@@ -83,7 +83,7 @@
     <div class="container-fluid" style="padding-left: 5px; padding-right: 5px;">
         <div class="row-fluid restaurantPageHeader" style="margin: 0px; padding: 0px;">
             <div class="span2" style="padding: 10px 20px;">
-                <img src="../StyleSheet/images/Innboard-Logo_White.png" class=" InnBoardIcon" alt="logo" />
+                <%--<img src="../StyleSheet/images/Innboard-Logo_White.png" class=" InnBoardIcon" alt="logo" />--%>
             </div>
             <div class="span6">
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
@@ -120,9 +120,11 @@
         <div class="row-fluid block" style="margin: 0px; padding: 0px; border: 0;">
             <div class="span12" style="margin: 0px; padding: 10px 5px 0px; border-top: 1px solid #ddd">
                 <p class="span6" style="margin: 0px; padding: 0px; padding-left: 5px;">
-                    Developed by <a href="http://datagridbd.com" target="_blank">data grid limited</a></p>
+                    <%--Developed by <a href="#" target="_blank"></a>--%>
+                </p>
                 <p class="span6" style="text-align: right; margin: 0px; padding: 0px; width: 49.718%;">
-                    &copy; 2013 <a href="http://www.innboard.com" target="_blank">innboard.com</a></p>
+                    <%--&copy; 2013 <a href="#" target="_blank"></a>--%>
+                </p>
             </div>
         </div>
     </div>

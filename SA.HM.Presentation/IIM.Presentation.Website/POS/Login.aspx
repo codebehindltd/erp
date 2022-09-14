@@ -5,13 +5,12 @@
 <html lang="en">
 <head>
     <title runat="server" id="SiteTitle"></title>
-
     <link href="/Content/bootstrap.css" type="text/css" rel="stylesheet" />
     <link href="/StyleSheet/lib/font-awesome/css/font-awesome.css" type="text/css" rel="stylesheet" />
     <link href="/StyleSheet/css/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
     <link href="/Scripts/uploadify.css" rel="stylesheet" type="text/css" />
     <link href="/StyleSheet/css/toastr.css" rel="stylesheet" type="text/css" />
-     <link href="/JSLibrary/JqueryTouchKeyBoard/css/keyboard.css" rel="Stylesheet" type="text/css" />
+    <link href="/JSLibrary/JqueryTouchKeyBoard/css/keyboard.css" rel="Stylesheet" type="text/css" />
     <link href="/StyleSheet/menucss/menuStyle.css" rel="stylesheet" type="text/css" />
     <link href="/StyleSheet/css/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link href="/Content/SiteStyle.css" rel="stylesheet" type="text/css" />
@@ -26,12 +25,10 @@
     <link href="/Scripts/JqueryAlert/jquery-confirm.min.css" rel="stylesheet" />
     <script src="/Scripts/JqueryAlert/jquery-confirm.min.js"></script>
     <script src="/Scripts/HMCommonScript.js" type="text/javascript"></script>
-
     <script type="text/javascript">
         var innBoarDateFormat = "";
         $(document).ready(function () {
             $("#txtTouchKeypadResult").val('');
-
             if ($("#hfGroupList").val() != "") {
                 var groupList = new Array();
                 groupList = JSON.parse($("#hfGroupList").val());
@@ -65,14 +62,9 @@
                 }
             }
 
-            //CommonHelper.TouchScreenNumberKeyboardWithoutDotNContainer("numkb");
-            //var keyboard = $('.numkb').getkeyboard();
-            //keyboard.reveal();
-
             CommonHelper.TouchScreenNumberKeyboardWithoutDot("numkbnotdecimalpax", "KeyBoardContainerPassword");
             var keyboard = $('.numkbnotdecimalpax').getkeyboard();
             keyboard.reveal();
-
         });
 
         function LoadUserGroupWise(groupId) {
@@ -80,9 +72,7 @@
             return false;
         }
         function OnSuccessGroupUserLoad(result) {
-
             var row = 0; totalGroup = result.length, count = 1, query = "";
-
             for (row = 0; row < totalGroup; row++) {
 
                 if (count == 1) {
@@ -128,9 +118,7 @@
             return false;
         }
         function OnSuccess(result) {
-
             if (result.IsSuccess) {
-                //CommonHelper.AlertMessage(result.AlertMessage);
                 window.location = result.RedirectUrl;
             }
             else {
@@ -140,38 +128,32 @@
         function OnFail(xhr, err) {
             toastr.error(xhr.responseText);
         }
-
     </script>
 </head>
 <body>
-
     <form id="form1" runat="server" class="BusinessERP">
         <asp:HiddenField ID="hfGroupList" runat="server" Value="" />
         <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
         </asp:ScriptManager>
-
         <div class="container-fluid restaurant-wrapper">
             <header>
                 <div class="row page-header">
                     <div class="col-xs-12 col-sm-2 col-md-2 site-logo">
                         <a class="brand" href="javascript:void()">
-                            <img src="/StyleSheet/images/Innboard-Logo_White.png" class=" InnBoardIcon" alt="logo" /></a>
+                            <%--<img src="/StyleSheet/images/Innboard-Logo_White.png" class=" InnBoardIcon" alt="logo" />--%>
+                        </a>
                     </div>
-
                     <div class="col-xs-12 col-sm-6 col-md-6">
                     </div>
-
                     <div class="col-xs-12 col-sm-4 col-md-4">
                     </div>
                 </div>
             </header>
         </div>
-
         <div class="container-fluid" style="height: 83.3vh;">
             <div id="spinner" class="spinner" style="display: none;">
                 <img id="img-spinner" src="../Images/spinner.gif" alt="Loading ..." />
             </div>
-
             <div class="row">
                 <div class="col-md-7">
                     <div class="panel panel-default">
@@ -181,7 +163,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="panel panel-default">
                         <div class="panel-heading">User Info</div>
                         <div class="panel-body">
@@ -189,11 +170,9 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-md-5">
                     <div class="form-horizontal">
-
                         <div class="panel panel-default">
                             <div class="panel-heading text-center">Login</div>
                             <div class="panel-body">
@@ -223,30 +202,27 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="container-fluid">
             <footer>
                 <div class="row footer">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    <%--<div class="col-xs-12 col-sm-12 col-md-12">
                         <hr />
                         <div class="footer-padding contents-padding">
                             <p class="pull-right">
                                 User:&nbsp; <span style="color: Blue; font-weight: bold;">
                                     <asp:Label ID="lblLoggedInUser" runat="server" Text=""></asp:Label></span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                                    Developed by <a href="http://datagridbd.com" target="_blank"><span style="color: Blue; font-weight: bold;">data grid limited</span></a>
+                                    Developed by <a href="#" target="_blank"><span style="color: Blue; font-weight: bold;"></span></a>
                             </p>
                             <p>
-                                &copy; 2013 <a href="http://www.innboard.com" target="_blank"><span style="color: Blue; font-weight: bold;">innboard.com</span></a>
+                                &copy; 2013 <a href="#" target="_blank"><span style="color: Blue; font-weight: bold;"></span></a>
                             </p>
                         </div>
-                    </div>
+                    </div>--%>
                 </div>
             </footer>
         </div>

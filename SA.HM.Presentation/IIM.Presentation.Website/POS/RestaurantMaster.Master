@@ -83,8 +83,8 @@
                                     <i class="icon-book"></i>Logout</a></li>
                             </ul>
                             <a class="brand" href="#">
-                                <img src="../StyleSheet/images/Innboard-Logo_White.png" class=" InnBoardIcon" alt="logo" /><span
-                                    class="second">Restaurant Management</span></a>
+                                <%--<img src="../StyleSheet/images/Innboard-Logo_White.png" class=" InnBoardIcon" alt="logo" />--%>
+                                <span class="second">Restaurant Management</span></a>
                         </div>
                     </div>
                 </div>
@@ -106,10 +106,10 @@
                             <hr style="margin: 2em 0">
                             <div class="span12" style="margin: 0px; padding: 0px;">
                                 <p class="span6" style="margin: 0px; padding: 0px; padding-left: 5px;">
-                                    Developed by <a href="http://datagridbd.com" target="_blank">data grid limited</a>
+                                    <%--Developed by <a href="#" target="_blank"></a>--%>
                                 </p>
                                 <p class="span6" style="text-align: right; margin: 0px; padding: 0px; width: 49.718%;">
-                                    &copy; 2013 <a href="http://www.innboard.com" target="_blank">innboard.com</a>
+                                    <%--&copy; 2013 <a href="#" target="_blank"></a>--%>
                                 </p>
                             </div>
                         </div>
