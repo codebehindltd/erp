@@ -871,6 +871,7 @@ namespace HotelManagement.Data.PurchaseManagment
                     {
                         SupplierId = r.Field<Int32?>("SupplierId"),
                         PaymentDate = r.Field<DateTime?>("PaymentDate"),
+                        PaymentDateDisplay = r.Field<string>("PaymentDateDisplay"),
                         Narration = r.Field<string>("Narration"),
                         DRAmount = r.Field<decimal?>("DRAmount"),
                         CRAmount = r.Field<decimal?>("CRAmount"),

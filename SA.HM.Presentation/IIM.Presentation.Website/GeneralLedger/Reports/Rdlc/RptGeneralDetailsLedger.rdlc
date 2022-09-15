@@ -507,7 +507,7 @@
                               <Value>=Fields!DRAmount.Value</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
-                                <Format>0.00;(0.00)</Format>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -543,7 +543,7 @@
                               <Value>=Fields!CRAmount.Value</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
-                                <Format>0.00;(0.00)</Format>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -579,7 +579,7 @@
                               <Value>=Fields!CommulativeBalance.Value</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
-                                <Format>0.00;(0.00)</Format>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -662,7 +662,7 @@
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>0.00;(0.00)</Format>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -699,7 +699,7 @@
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>0.00;(0.00)</Format>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>

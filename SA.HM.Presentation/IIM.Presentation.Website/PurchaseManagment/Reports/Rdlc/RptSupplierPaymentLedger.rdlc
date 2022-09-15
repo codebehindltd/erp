@@ -339,14 +339,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="PaymentDate">
+                    <Textbox Name="PaymentDateDisplay">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!PaymentDate.Value</Value>
+                              <Value>=Fields!PaymentDateDisplay.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>MM/dd/yyyy</Format>
@@ -358,7 +358,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>PaymentDate</rd:DefaultName>
+                      <rd:DefaultName>PaymentDateDisplay</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -1121,6 +1121,10 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="RowRank">
+          <DataField>RowRank</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="SupplierId">
           <DataField>SupplierId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
@@ -1145,13 +1149,17 @@
           <DataField>ClosingBalance</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="Rnk">
-          <DataField>Rnk</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="BalanceCommulative">
           <DataField>BalanceCommulative</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="PaymentStatus">
+          <DataField>PaymentStatus</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PaymentDateDisplay">
+          <DataField>PaymentDateDisplay</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="SupplierName">
           <DataField>SupplierName</DataField>
@@ -1159,8 +1167,8 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>SupplierPaymentLedger</rd:DataSetName>
-        <rd:SchemaPath>D:\Datagrid\Innboard\Trunk\SA.HM.Presentation\IIM.Presentation.Website\SupplierPaymentLedger.xsd</rd:SchemaPath>
+        <rd:DataSetName>InnboardDataSet</rd:DataSetName>
+        <rd:SchemaPath>D:\002 Source Code\ERP\SA.HM.Presentation\IIM.Presentation.Website\InnboardDataSet.xsd</rd:SchemaPath>
         <rd:TableName>GetSupplierLedgerReport_SP</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
