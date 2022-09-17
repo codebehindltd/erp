@@ -841,6 +841,8 @@
     <Content Include="Payroll\Reports\Rdlc\rptCashRequisitionNAdjustment.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptDepartmentWiseEmployeeSalarySheets.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptDesignationWiseEmployeeSalarySheets.rdlc" />
+    <EmbeddedResource Include="Payroll\Reports\Rdlc\RptBankSalaryInstruction02.rdlc" />
+    <EmbeddedResource Include="Payroll\Reports\Rdlc\RptBankSalaryInstruction03.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\RptDepartmentWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\RptDesignationWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptEmpJoiningAgreement.rdlc" />

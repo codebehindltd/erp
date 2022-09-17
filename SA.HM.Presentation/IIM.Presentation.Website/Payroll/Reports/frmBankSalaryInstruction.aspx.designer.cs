@@ -31,15 +31,6 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         protected global::System.Web.UI.WebControls.DropDownList ddlProcessMonth;
         
         /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-        
-        /// <summary>
         /// ddlYear control.
         /// </summary>
         /// <remarks>
@@ -49,13 +40,58 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         protected global::System.Web.UI.WebControls.DropDownList ddlYear;
         
         /// <summary>
-        /// lblDepartmentId control.
+        /// hfIsSingle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDepartmentId;
+        protected global::System.Web.UI.WebControls.HiddenField hfIsSingle;
+        
+        /// <summary>
+        /// hfGLCompanyId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfGLCompanyId;
+        
+        /// <summary>
+        /// hfGLProjectId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfGLProjectId;
+        
+        /// <summary>
+        /// lblGLCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblGLCompany;
+        
+        /// <summary>
+        /// ddlGLCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlGLCompany;
+        
+        /// <summary>
+        /// lblBankId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBankId;
         
         /// <summary>
         /// ddlBankId control.

@@ -5382,7 +5382,7 @@ namespace HotelManagement.Data.Payroll
             return serviceCharge;
         }
 
-        public List<BankSalaryAdviceBO> GetBankReconciliationForReport(string bankId, DateTime dateFrom, DateTime dateTo, short salaryYear)
+        public List<BankSalaryAdviceBO> GetBankReconciliationForReport(int companyId, int bankId, DateTime dateFrom, DateTime dateTo, short salaryYear)
         {
             List<BankSalaryAdviceBO> bankSalaryAdvice = new List<BankSalaryAdviceBO>();
 
@@ -5390,12 +5390,17 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetBankReconciliationForReport_SP"))
                 {
+                    if (companyId > 0)
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, DBNull.Value);
+
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateFrom", DbType.DateTime, dateFrom);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateTo", DbType.DateTime, dateTo);
                     dbSmartAspects.AddInParameter(cmd, "@SalaryYear", DbType.Int32, salaryYear);
 
-                    if (!string.IsNullOrEmpty(bankId))
-                        dbSmartAspects.AddInParameter(cmd, "@BankId", DbType.Int32, Convert.ToInt32(bankId));
+                    if (bankId > 0)
+                        dbSmartAspects.AddInParameter(cmd, "@BankId", DbType.Int32, bankId);
                     else
                         dbSmartAspects.AddInParameter(cmd, "@BankId", DbType.Int32, DBNull.Value);
 
