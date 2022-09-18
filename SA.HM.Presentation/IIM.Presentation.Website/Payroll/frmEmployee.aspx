@@ -91,6 +91,13 @@
                 placeholder: "",
                 width: "99.75%"
             });
+            $("#ContentPlaceHolder1_ddlBank").select2({
+                tags: false,
+                allowClear: true,
+                placeholder: "",
+                width: "99.75%"
+            });
+
             single = $("#ContentPlaceHolder1_hfIsSingle").val();
             if (single == "1") {
                 $('#glCompanyDiv').hide();
@@ -103,10 +110,10 @@
             var ctrl = '#<%=chkIsProvisionPeriod.ClientID%>'
             if ($(ctrl).is(':checked')) {
                 $("#<%=txtProvisionPeriod.ClientID %>").attr('disabled', false);
-                }
-                else {
-                    $("#<%=txtProvisionPeriod.ClientID %>").attr('disabled', true);
-                }
+            }
+            else {
+                $("#<%=txtProvisionPeriod.ClientID %>").attr('disabled', true);
+            }
 
             if ($("#InnboardMessageHiddenField").val() != "") {
                 CommonHelper.AlertMessage(JSON.parse($("#InnboardMessageHiddenField").val()));
@@ -132,46 +139,45 @@
                 }
             }
             $("#<%=txtOfficialEmail.ClientID %>").blur(function () {
-                    if ($("#<%=txtOfficialEmail.ClientID %>").val() != "") {
-                        var isValidEmail = CommonHelper.IsValidEmail($("#<%=txtOfficialEmail.ClientID %>").val());
-                    if (!isValidEmail) {
-                        toastr.warning("Invalid Email");
-                        $("#<%=txtOfficialEmail.ClientID %>").focus();
+                if ($("#<%=txtOfficialEmail.ClientID %>").val() != "") {
+                    var isValidEmail = CommonHelper.IsValidEmail($("#<%=txtOfficialEmail.ClientID %>").val());
+                        if (!isValidEmail) {
+                            toastr.warning("Invalid Email");
+                            $("#<%=txtOfficialEmail.ClientID %>").focus();
                         return false;
                     }
                 }
-
-                });
+            });
             $("#<%=txtPersonalEmail.ClientID %>").blur(function () {
                 if ($("#<%=txtPersonalEmail.ClientID %>").val() != "") {
-                        var isValidEmail = CommonHelper.IsValidEmail($("#<%=txtPersonalEmail.ClientID %>").val());
-                        if (!isValidEmail) {
-                            toastr.warning("Invalid Email");
-                            $("#<%=txtPersonalEmail.ClientID %>").focus();
-                        return false;
+                    var isValidEmail = CommonHelper.IsValidEmail($("#<%=txtPersonalEmail.ClientID %>").val());
+                    if (!isValidEmail) {
+                        toastr.warning("Invalid Email");
+                        $("#<%=txtPersonalEmail.ClientID %>").focus();
+                            return false;
+                        }
                     }
-                }
-                });
+            });
             $("#<%=txtAlternativeEmail.ClientID %>").blur(function () {
                 if ($("#<%=txtPersonalEmail.ClientID %>").val() != "") {
-                        var isValidEmail = CommonHelper.IsValidEmail($("#<%=txtAlternativeEmail.ClientID %>").val());
-                        if (!isValidEmail) {
-                            toastr.warning("Invalid Email");
-                            $("#<%=txtAlternativeEmail.ClientID %>").focus();
-                        return false;
+                    var isValidEmail = CommonHelper.IsValidEmail($("#<%=txtAlternativeEmail.ClientID %>").val());
+                    if (!isValidEmail) {
+                        toastr.warning("Invalid Email");
+                        $("#<%=txtAlternativeEmail.ClientID %>").focus();
+                            return false;
+                        }
                     }
-                }
-                });
+            });
             $("#<%=txtEmergencyContactEmail.ClientID %>").blur(function () {
                 if ($("#<%=txtEmergencyContactEmail.ClientID %>").val() != "") {
-                        var isValidEmail = CommonHelper.IsValidEmail($("#<%=txtEmergencyContactEmail.ClientID %>").val());
-                        if (!isValidEmail) {
-                            toastr.warning("Invalid Email");
-                            $("#<%=txtEmergencyContactEmail.ClientID %>").focus();
-                        return false;
+                    var isValidEmail = CommonHelper.IsValidEmail($("#<%=txtEmergencyContactEmail.ClientID %>").val());
+                    if (!isValidEmail) {
+                        toastr.warning("Invalid Email");
+                        $("#<%=txtEmergencyContactEmail.ClientID %>").focus();
+                            return false;
+                        }
                     }
-                }
-                });
+            });
 
             $('#ContentPlaceHolder1_A').click(function () {
                 $('#SubmitButtonDiv').show();
@@ -208,12 +214,11 @@
             });
 
             var txtEmpJoinDate = '<%=txtEmpJoinDate.ClientID%>'
-                var txtEmpDateOfBirth = '<%=txtEmpDateOfBirth.ClientID%>'
+            var txtEmpDateOfBirth = '<%=txtEmpDateOfBirth.ClientID%>'
             UploadComplete();
 
             $("#ContentPlaceHolder1_txtEmpCode").change(function () {
                 if ($("#ContentPlaceHolder1_txtEmpCode").val() != "") {
-
                     if ($("#ContentPlaceHolder1_hfEmpCode").val() == $("#ContentPlaceHolder1_txtEmpCode").val()) {
                         return;
                     }
@@ -224,10 +229,10 @@
             });
 
             $("#<%=ddlEmpCategoryId.ClientID %>").change(function () {
-                    var ddlEmpCategoryId = $("#<%=ddlEmpCategoryId.ClientID %>").val();
-                    PageMethods.GetEmpTypeInfoById(ddlEmpCategoryId, OnPerformForGetEmpTypeInfoByIdSucceeded, OnPerformForGetEmpTypeInfoByIdFailed)
-                    return false;
-                });
+                var ddlEmpCategoryId = $("#<%=ddlEmpCategoryId.ClientID %>").val();
+                PageMethods.GetEmpTypeInfoById(ddlEmpCategoryId, OnPerformForGetEmpTypeInfoByIdSucceeded, OnPerformForGetEmpTypeInfoByIdFailed)
+                return false;
+            });
 
 
             $("#<%=ddlGradeId.ClientID %>").change(function () {
@@ -347,80 +352,80 @@
             });
 
             var benefitGrid = document.getElementById("<%=gvBenefit.ClientID %>");
-                var rows = benefitGrid.getElementsByTagName("tr")
-                for (var i = 0; i < rows.length - 1; i++) {
-                    $("#ContentPlaceHolder1_gvBenefit_txtBenefitEffectiveDate_" + i).datepicker({
-                        changeMonth: true,
-                        changeYear: true,
-                        dateFormat: innBoarDateFormat
-                    });
-                }
-
-                $('#ContentPlaceHolder1_ddlDivision').change(function () {
-                    LoadDistrict();
+            var rows = benefitGrid.getElementsByTagName("tr")
+            for (var i = 0; i < rows.length - 1; i++) {
+                $("#ContentPlaceHolder1_gvBenefit_txtBenefitEffectiveDate_" + i).datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: innBoarDateFormat
                 });
+            }
 
-                $('#ContentPlaceHolder1_ddlDistrict').change(function () {
-                    LoadThana();
-                });
-
-                $('#ContentPlaceHolder1_ddlDistrict').change(function () {
-                    var districtId = $("#<%=ddlDistrict.ClientID %>").val();
-                $("#<%=hfddlDistrictId.ClientID %>").val(districtId);
+            $('#ContentPlaceHolder1_ddlDivision').change(function () {
+                LoadDistrict();
             });
+
+            $('#ContentPlaceHolder1_ddlDistrict').change(function () {
+                LoadThana();
+            });
+
+            $('#ContentPlaceHolder1_ddlDistrict').change(function () {
+                var districtId = $("#<%=ddlDistrict.ClientID %>").val();
+                    $("#<%=hfddlDistrictId.ClientID %>").val(districtId);
+                });
 
             $('#ContentPlaceHolder1_ddlThana').change(function () {
                 var thanaId = $("#<%=ddlThana.ClientID %>").val();
-                    $("#<%=hfddlThanaId.ClientID %>").val(thanaId);
-                });
+                $("#<%=hfddlThanaId.ClientID %>").val(thanaId);
+            });
 
             $("#ContentPlaceHolder1_ddlTitle").change(function () {
                 var title = $("#<%=ddlTitle.ClientID %>").val();
-                    var firstName = $("#<%=txtFirstName.ClientID %>").val();
-                    var lastName = $("#<%=txtLastName.ClientID %>").val();
-                    if (lastName != "") {
-                        $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName + " " + lastName);
-                }
-                else {
-                    $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName);
-                }
-                });
+                var firstName = $("#<%=txtFirstName.ClientID %>").val();
+                var lastName = $("#<%=txtLastName.ClientID %>").val();
+                if (lastName != "") {
+                    $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName + " " + lastName);
+                    }
+                    else {
+                        $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName);
+                    }
+            });
 
             $("#ContentPlaceHolder1_txtLastName").blur(function () {
                 var title = $("#<%=ddlTitle.ClientID %>").val();
-                    var firstName = $("#<%=txtFirstName.ClientID %>").val();
-                    var lastName = $("#<%=txtLastName.ClientID %>").val();
-                    if (lastName != "") {
-                        $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName + " " + lastName);
-                }
-                else {
-                    $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName);
-                }
-                });
+                var firstName = $("#<%=txtFirstName.ClientID %>").val();
+                var lastName = $("#<%=txtLastName.ClientID %>").val();
+                if (lastName != "") {
+                    $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName + " " + lastName);
+                    }
+                    else {
+                        $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName);
+                    }
+            });
 
             $("#ContentPlaceHolder1_txtFirstName").blur(function () {
                 var title = $("#<%=ddlTitle.ClientID %>").val();
-                    var firstName = $("#<%=txtFirstName.ClientID %>").val();
-                    var lastName = $("#<%=txtLastName.ClientID %>").val();
-                    if (lastName != "") {
-                        $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName + " " + lastName);
-                }
-                else {
-                    $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName);
-                }
-                });
+                var firstName = $("#<%=txtFirstName.ClientID %>").val();
+                var lastName = $("#<%=txtLastName.ClientID %>").val();
+                if (lastName != "") {
+                    $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName + " " + lastName);
+                    }
+                    else {
+                        $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName);
+                    }
+            });
 
             $("#ContentPlaceHolder1_ddlTitle").blur(function () {
                 var title = $("#<%=ddlTitle.ClientID %>").val();
-                    var firstName = $("#<%=txtFirstName.ClientID %>").val();
-                    var lastName = $("#<%=txtLastName.ClientID %>").val();
-                    if (lastName != "") {
-                        $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName + " " + lastName);
-                }
-                else {
-                    $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName);
-                }
-                });
+                var firstName = $("#<%=txtFirstName.ClientID %>").val();
+                var lastName = $("#<%=txtLastName.ClientID %>").val();
+                if (lastName != "") {
+                    $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName + " " + lastName);
+                    }
+                    else {
+                        $("#<%=txtDisplayName.ClientID %>").val(title + " " + firstName);
+                    }
+            });
 
 
             var hfIsPayrollCompanyAndEmployeeCompanyDifferent = $("#<%=hfIsPayrollCompanyAndEmployeeCompanyDifferent.ClientID %>").val();
@@ -490,104 +495,104 @@
             $("#<%=txtEmpDateOfBirth.ClientID %>").blur(function () {
 
                 var date = $("#<%=txtEmpDateOfBirth.ClientID %>").val();
-                    if (date != "") {
-                        date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
-                        var isValid = CommonHelper.IsVaildDate(date);
-                        if (!isValid) {
-                            toastr.warning("Invalid Date");
-                            $("#<%=txtEmpDateOfBirth.ClientID %>").focus();
-                        $("#<%=txtEmpDateOfBirth.ClientID %>").val("");
-                        return false;
+                if (date != "") {
+                    date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
+                    var isValid = CommonHelper.IsVaildDate(date);
+                    if (!isValid) {
+                        toastr.warning("Invalid Date");
+                        $("#<%=txtEmpDateOfBirth.ClientID %>").focus();
+                            $("#<%=txtEmpDateOfBirth.ClientID %>").val("");
+                            return false;
+                        }
                     }
-                }
-                });
+            });
             $("#<%=txtJoinDate.ClientID %>").blur(function () {
                 var date = $("#<%=txtJoinDate.ClientID %>").val();
-                    if (date != "") {
-                        date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
-                        var isValid = CommonHelper.IsVaildDate(date);
-                        if (!isValid) {
-                            toastr.warning("Invalid Date");
-                            $("#<%=txtJoinDate.ClientID %>").focus();
-                        $("#<%=txtJoinDate.ClientID %>").val("");
-                        return false;
+                if (date != "") {
+                    date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
+                    var isValid = CommonHelper.IsVaildDate(date);
+                    if (!isValid) {
+                        toastr.warning("Invalid Date");
+                        $("#<%=txtJoinDate.ClientID %>").focus();
+                            $("#<%=txtJoinDate.ClientID %>").val("");
+                            return false;
+                        }
                     }
-                }
-                });
+            });
             $("#<%=txtLeaveDate.ClientID %>").blur(function () {
                 var date = $("#<%=txtLeaveDate.ClientID %>").val();
-                    if (date != "") {
-                        date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
-                        var isValid = CommonHelper.IsVaildDate(date);
-                        if (!isValid) {
-                            toastr.warning("Invalid Date");
-                            $("#<%=txtLeaveDate.ClientID %>").focus();
-                        $("#<%=txtLeaveDate.ClientID %>").val("");
-                        return false;
+                if (date != "") {
+                    date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
+                    var isValid = CommonHelper.IsVaildDate(date);
+                    if (!isValid) {
+                        toastr.warning("Invalid Date");
+                        $("#<%=txtLeaveDate.ClientID %>").focus();
+                            $("#<%=txtLeaveDate.ClientID %>").val("");
+                            return false;
+                        }
                     }
-                }
-                });
+            });
             $("#<%=txtDateOfBirth.ClientID %>").blur(function () {
                 var date = $("#<%=txtDateOfBirth.ClientID %>").val();
-                    if (date != "") {
-                        date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
-                        var isValid = CommonHelper.IsVaildDate(date);
-                        if (!isValid) {
-                            toastr.warning("Invalid Date");
-                            $("#<%=txtDateOfBirth.ClientID %>").focus();
-                        $("#<%=txtDateOfBirth.ClientID %>").val("");
-                        return false;
+                if (date != "") {
+                    date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
+                    var isValid = CommonHelper.IsVaildDate(date);
+                    if (!isValid) {
+                        toastr.warning("Invalid Date");
+                        $("#<%=txtDateOfBirth.ClientID %>").focus();
+                            $("#<%=txtDateOfBirth.ClientID %>").val("");
+                            return false;
+                        }
                     }
-                }
-                });
+            });
             $("#<%=txtContractEndDate.ClientID %>").blur(function () {
                 var date = $("#<%=txtContractEndDate.ClientID %>").val();
-                    if (date != "") {
-                        date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
-                        var isValid = CommonHelper.IsVaildDate(date);
-                        if (!isValid) {
-                            toastr.warning("Invalid Date");
-                            $("#<%=txtContractEndDate.ClientID %>").focus();
-                        $("#<%=txtContractEndDate.ClientID %>").val("");
-                        return false;
+                if (date != "") {
+                    date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
+                    var isValid = CommonHelper.IsVaildDate(date);
+                    if (!isValid) {
+                        toastr.warning("Invalid Date");
+                        $("#<%=txtContractEndDate.ClientID %>").focus();
+                            $("#<%=txtContractEndDate.ClientID %>").val("");
+                            return false;
+                        }
                     }
-                }
-                });
+            });
             $("#<%=txtPIssueDate.ClientID %>").blur(function () {
                 var date = $("#<%=txtPIssueDate.ClientID %>").val();
-                    if (date != "") {
-                        date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
-                        var isValid = CommonHelper.IsVaildDate(date);
-                        if (!isValid) {
-                            toastr.warning("Invalid Date");
-                            $("#<%=txtPIssueDate.ClientID %>").focus();
-                        $("#<%=txtPIssueDate.ClientID %>").val("");
-                        return false;
+                if (date != "") {
+                    date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
+                    var isValid = CommonHelper.IsVaildDate(date);
+                    if (!isValid) {
+                        toastr.warning("Invalid Date");
+                        $("#<%=txtPIssueDate.ClientID %>").focus();
+                            $("#<%=txtPIssueDate.ClientID %>").val("");
+                            return false;
+                        }
                     }
-                }
-                });
+            });
             $("#<%=txtPExpireDate.ClientID %>").blur(function () {
                 var date = $("#<%=txtPExpireDate.ClientID %>").val();
-                    if (date != "") {
-                        date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
-                        var isValid = CommonHelper.IsVaildDate(date);
-                        if (!isValid) {
-                            toastr.warning("Invalid Date");
-                            $("#<%=txtPExpireDate.ClientID %>").focus();
-                        $("#<%=txtPExpireDate.ClientID %>").val("");
-                        return false;
+                if (date != "") {
+                    date = CommonHelper.DateFormatToMMDDYYYY(date, '/');
+                    var isValid = CommonHelper.IsVaildDate(date);
+                    if (!isValid) {
+                        toastr.warning("Invalid Date");
+                        $("#<%=txtPExpireDate.ClientID %>").focus();
+                            $("#<%=txtPExpireDate.ClientID %>").val("");
+                            return false;
+                        }
                     }
-                }
-                });
+            });
         });
 
-        function OnProjectLoadSucceeded(result) {
-            $('#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject').children().remove();
-            $('#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject').append(`<option value="0">--- All ---</option>`);
-            $.each(result, function(index, item) {
-                // access the properties of each user
+            function OnProjectLoadSucceeded(result) {
+                $('#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject').children().remove();
+                $('#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject').append(`<option value="0">--- All ---</option>`);
+                $.each(result, function(index, item) {
+                    // access the properties of each user
                 
-                if(item.ProjectId == <%=_ProjectId%>)
+                    if(item.ProjectId == <%=_ProjectId%>)
                 {
                     $('#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject').append(`<option value="${item.ProjectId}" selected>${item.Name}</option>`);
             }
@@ -602,8 +607,8 @@
             function OnProjectLoadFailed() {
 
             }
-        function LoadDistrict() {
-            var divisionId = $("#<%=ddlDivision.ClientID %>").val();
+            function LoadDistrict() {
+                var divisionId = $("#<%=ddlDivision.ClientID %>").val();
             PageMethods.LoadDistrict(divisionId, OnLoadDivisionSucceeded, OnLoadDivisionFailed);
             return false;
         }
@@ -1289,7 +1294,7 @@
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtGoToScrolling" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
-                        </div>                        
+                        </div>
                         <div class="form-group">
                             <div id="code" runat="server">
                                 <div class="col-md-2">
@@ -1476,8 +1481,15 @@
                                 <asp:Label ID="lblOfficialEmail" runat="server" class="control-label"
                                     Text="Official Email"></asp:Label>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-4">
                                 <asp:TextBox ID="txtOfficialEmail" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="Label23" runat="server" class="control-label"
+                                    Text="PABX Number"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtPABXNumber" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
@@ -1519,7 +1531,7 @@
                                     <asp:ListItem Value="1">Yes</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1593,13 +1605,13 @@
                                 <asp:DropDownList ID="ddlMaritalStatus" runat="server" CssClass="form-control">
                                 </asp:DropDownList>
                             </div>
-                            <div id="marriage" name="marriage" style="display:none">
-                            <%--<div class="col-md-1">
+                            <div id="marriage" name="marriage" style="display: none">
+                                <%--<div class="col-md-1">
                                 <asp:Label ID="Label25" runat="server"  class="control-label required-field" Text="Date Of Marriage"></asp:Label>
                             </div>--%>
-                            <div class="col-md-2">
-                                <asp:TextBox ID="txtDateOfMarriage"  CssClass="form-control" runat="server" placeholder="Date Of Marriage"></asp:TextBox>
-                            </div>
+                                <div class="col-md-2">
+                                    <asp:TextBox ID="txtDateOfMarriage" CssClass="form-control" runat="server" placeholder="Date Of Marriage"></asp:TextBox>
+                                </div>
                             </div>
                         </div>
                         <%--<div class="form-group" id="marriage" name="marriage" style="display:none">
@@ -1805,13 +1817,13 @@
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtEmergencyContactEmail" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
-                            
-                                <div class="col-md-2">
-                                    <asp:Label ID="lblTinNumber" runat="server" class="control-label" Text="TIN Number"></asp:Label>
-                                </div>
-                                <div class="col-md-4">
-                                    <asp:TextBox ID="txtTinNumber" CssClass="form-control" runat="server"></asp:TextBox>
-                                </div>
+
+                            <div class="col-md-2">
+                                <asp:Label ID="lblTinNumber" runat="server" class="control-label" Text="TIN Number"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtTinNumber" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2447,15 +2459,23 @@
                             <div class="col-md-2">
                                 <asp:Label ID="lblBankId" runat="server" class="control-label" Text="Bank Name"></asp:Label>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-10">
                                 <asp:DropDownList ID="ddlBank" runat="server" CssClass="form-control" TabIndex="13">
                                 </asp:DropDownList>
                             </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-md-2">
                                 <asp:Label ID="lblBranchName" runat="server" class="control-label" Text="Branch Name"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtBranchName" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblAccountType" runat="server" class="control-label" Text="Account Type"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtAccountType" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
@@ -2474,10 +2494,10 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblAccountType" runat="server" class="control-label" Text="Account Type"></asp:Label>
+                                <asp:Label ID="lblRouteNumber" runat="server" class="control-label" Text="Route Number"></asp:Label>
                             </div>
                             <div class="col-md-4">
-                                <asp:TextBox ID="txtAccountType" CssClass="form-control" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtRouteNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-md-2">
                                 <asp:Label ID="lblCardNumber" runat="server" class="control-label" Text="Card Number"></asp:Label>
@@ -2488,7 +2508,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="Label7" runat="server" class="control-label" Text="Remarks"></asp:Label>
+                                <asp:Label ID="lblRemarksForBankInfo" runat="server" class="control-label" Text="Remarks"></asp:Label>
                             </div>
                             <div class="col-md-10">
                                 <asp:TextBox ID="txtRemarksForBankInfo" runat="server" CssClass="form-control" TextMode="MultiLine"
@@ -2515,7 +2535,7 @@
                                     TabIndex="12"></asp:TextBox>
                             </div>
                         </div>
-                        <div class="form-group" style="display:none;">
+                        <div class="form-group" style="display: none;">
                             <div class="col-md-2">
                                 <asp:Label ID="Label21" runat="server" class="control-label" Text="Confirmation Letter"></asp:Label>
                             </div>
@@ -2550,7 +2570,7 @@
                                 <asp:TextBox ID="txtDSOAC" runat="server" CssClass="form-control" TextMode="MultiLine"
                                     TabIndex="12"></asp:TextBox>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>

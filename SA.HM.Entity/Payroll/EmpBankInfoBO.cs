@@ -18,6 +18,7 @@ namespace HotelManagement.Entity.Payroll
         public string AccountNumber { get; set; }
         public string AccountType { get; set; }
         public string CardNumber { get; set; }
+        public string RouteNumber { get; set; }
         public string BankRemarks { get; set; }
         public decimal NetSalary { get; set; }
         public string Remarks { get; set; }

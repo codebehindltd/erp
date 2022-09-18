@@ -43,6 +43,7 @@ namespace HotelManagement.Entity.Payroll
         public DateTime? ProbableGratuityEligibilityDate { get; set; }
         public DateTime? GratuityEligibilityDate { get; set; }
         public string OfficialEmail { get; set; }
+        public string PABXNumber { get; set; }
         public string ReferenceBy { get; set; }
         public string Remarks { get; set; }
         public int RepotingTo { get; set; }

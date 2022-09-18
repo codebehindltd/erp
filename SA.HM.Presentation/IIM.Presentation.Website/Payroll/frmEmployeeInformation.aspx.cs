@@ -498,15 +498,6 @@ namespace HotelManagement.Presentation.Website.Payroll
 
             employeeBO.JoinDate = hmUtility.GetDateTimeFromString(txtEmpJoinDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
 
-            //if (!string.IsNullOrWhiteSpace(txtContractEndDate.Text))
-            //{
-            //    employeeBO.ResignationDate = hmUtility.GetDateTimeFromString(txtContractEndDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
-            //}
-            //else
-            //{
-            //    employeeBO.ResignationDate = null;
-            //}
-
             if (!string.IsNullOrWhiteSpace(txtProvisionPeriod.Text))
             {
                 employeeBO.ProvisionPeriod = hmUtility.GetDateTimeFromString(txtProvisionPeriod.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
@@ -521,25 +512,20 @@ namespace HotelManagement.Presentation.Website.Payroll
             employeeBO.DesignationId = Convert.ToInt32(ddlDesignationId.SelectedValue);
             employeeBO.GradeId = Convert.ToInt32(ddlGradeId.SelectedValue);
             employeeBO.OfficialEmail = txtOfficialEmail.Text;
-            
+            employeeBO.PABXNumber = txtPABXNumber.Text;
 
-            //employeeBO.ReferenceBy = txtReferenceBy.Text;
-            
             employeeBO.Remarks = txtRemarks.Text;
             employeeBO.RandomEmpId = Int32.Parse(RandomEmpId.Value);
             employeeBO.RepotingTo = Int32.Parse(ddlReportingTo.SelectedValue);
             employeeBO.RepotingTo2 = Int32.Parse(ddlReportingTo2.SelectedValue);
-            //employeeBO.GlCompanyId = Int32.Parse(ddlGLCompany.SelectedValue);
             employeeBO.PayrollCurrencyId = Convert.ToInt32(ddlPayrollCurrencyId.SelectedValue);
             employeeBO.EmployeeStatusId = Convert.ToInt32(ddlEmployeeStatus.SelectedValue);
-
             employeeBO.IsProvidentFundDeduct = (Convert.ToInt32(ddlIsProvidentFundDeduct.SelectedValue) == 1);
 
             //Details Tab
             employeeBO.TinNumber = txtTinNumber.Text;
             employeeBO.FathersName = txtFathersName.Text;
-            employeeBO.MothersName = txtMothersName.Text;
-            
+            employeeBO.MothersName = txtMothersName.Text;            
 
             if (!string.IsNullOrWhiteSpace(txtEmpDateOfBirth.Text))
             {
@@ -630,7 +616,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             {
                 employeeBO.EmpDateOfMarriage = null;
             }
-            //employeeBO.CurrentLocationId = Convert.ToInt32(ddlCurrentLocation.SelectedValue);
+            
             employeeBO.PresentAddress = txtPresentAddress.Text;
             employeeBO.PresentCity = txtPresentCity.Text;
             employeeBO.PresentZipCode = txtPresentZipCode.Text;
@@ -677,6 +663,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                     bankInfo.AccountNumber = existingBankInfo.AccountNumber;
                     bankInfo.AccountType = existingBankInfo.AccountType;
                     bankInfo.CardNumber = existingBankInfo.CardNumber;
+                    bankInfo.RouteNumber = existingBankInfo.RouteNumber;
                     bankInfo.BankRemarks = existingBankInfo.BankRemarks;
 
                     ddlBank.SelectedValue = bankInfo.BankId.ToString();
@@ -685,6 +672,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                     txtAccountNumber.Text = bankInfo.AccountNumber;
                     txtAccountType.Text = bankInfo.AccountType;
                     txtCardNumber.Text = bankInfo.CardNumber;
+                    txtRouteNumber.Text = bankInfo.RouteNumber;
                     txtRemarksForBankInfo.Text = bankInfo.BankRemarks;
                 }
             }
@@ -1889,6 +1877,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             ddlDesignationId.SelectedValue = bo.DesignationId.ToString();
             ddlGradeId.SelectedValue = bo.GradeId.ToString();
             txtOfficialEmail.Text = bo.OfficialEmail;
+            txtPABXNumber.Text = bo.PABXNumber;
             ddlReligion.SelectedValue = bo.Religion.ToString();
             ddlMaritalStatus.SelectedValue = bo.MaritalStatus.ToString();
             //txtReferenceBy.Text = bo.ReferenceBy;
@@ -2126,6 +2115,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                     txtAccountNumber.Text = bankInfo.AccountNumber;
                     txtAccountType.Text = bankInfo.AccountType;
                     txtCardNumber.Text = bankInfo.CardNumber;
+                    txtRouteNumber.Text = bankInfo.RouteNumber;
                     txtRemarksForBankInfo.Text = bankInfo.BankRemarks;
                 }
             }
@@ -2188,7 +2178,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             ddlGradeId.SelectedValue = "0";
             ddlTitle.SelectedValue = "";
             txtOfficialEmail.Text = string.Empty;
-            //txtReferenceBy.Text = string.Empty;
+            txtPABXNumber.Text = string.Empty;
             txtTinNumber.Text = string.Empty;
             txtRemarks.Text = string.Empty;
             txtFathersName.Text = string.Empty;
@@ -2446,6 +2436,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             txtBranchName.Text = string.Empty;
             txtAccountNumber.Text = string.Empty;
             txtCardNumber.Text = string.Empty;
+            txtRouteNumber.Text = string.Empty;
             txtRemarksForBankInfo.Text = string.Empty;
         }
         //************************ User Defined Web Method ********************//

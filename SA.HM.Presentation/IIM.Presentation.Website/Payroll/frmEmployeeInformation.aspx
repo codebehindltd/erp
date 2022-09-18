@@ -1321,18 +1321,17 @@
                                 <asp:Label ID="lblOfficialEmail" runat="server" class="control-label"
                                     Text="Official Email"></asp:Label>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-4">
                                 <asp:TextBox ID="txtOfficialEmail" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
                             </div>
-                        </div>
-                        <%--<div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblReferenceBy" runat="server" class="control-label" Text="Reference By"></asp:Label>
+                                <asp:Label ID="Label23" runat="server" class="control-label"
+                                    Text="PABX Number"></asp:Label>
                             </div>
-                            <div class="col-md-10">
-                                <asp:TextBox ID="txtReferenceBy" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtPABXNumber" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
                             </div>
-                        </div>--%>
+                        </div>
                         <div class="form-group">
                             <div class="col-md-2">
                                 <asp:Label ID="lblRemarks" runat="server" class="control-label" Text="Job Description"></asp:Label>
@@ -2290,15 +2289,23 @@
                             <div class="col-md-2">
                                 <asp:Label ID="lblBankId" runat="server" class="control-label" Text="Bank Name"></asp:Label>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-10">
                                 <asp:DropDownList ID="ddlBank" runat="server" CssClass="form-control" TabIndex="13">
                                 </asp:DropDownList>
-                            </div>
-                            <div class="col-md-2">
+                            </div>                            
+                        </div>
+                        <div class="form-group">
+                        <div class="col-md-2">
                                 <asp:Label ID="lblBranchName" runat="server" class="control-label" Text="Branch Name"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtBranchName" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblAccountType" runat="server" class="control-label" Text="Account Type"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtAccountType" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
@@ -2317,10 +2324,10 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblAccountType" runat="server" class="control-label" Text="Account Type"></asp:Label>
+                                <asp:Label ID="lblRouteNumber" runat="server" class="control-label" Text="Route Number"></asp:Label>
                             </div>
                             <div class="col-md-4">
-                                <asp:TextBox ID="txtAccountType" CssClass="form-control" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtRouteNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-md-2">
                                 <asp:Label ID="lblCardNumber" runat="server" class="control-label" Text="Card Number"></asp:Label>

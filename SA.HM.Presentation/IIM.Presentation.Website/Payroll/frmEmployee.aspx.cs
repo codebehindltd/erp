@@ -557,6 +557,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             employeeBO.DesignationId = Convert.ToInt32(ddlDesignationId.SelectedValue);
             employeeBO.GradeId = Convert.ToInt32(ddlGradeId.SelectedValue);
             employeeBO.OfficialEmail = txtOfficialEmail.Text;
+            employeeBO.PABXNumber = txtPABXNumber.Text;
             employeeBO.TinNumber = txtTinNumber.Text;
             employeeBO.Remarks = txtRemarks.Text;
             employeeBO.RandomEmpId = Int32.Parse(RandomEmpId.Value);
@@ -670,7 +671,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             {
                 employeeBO.PExpireDate = null;
             }
-            //employeeBO.CurrentLocationId = Convert.ToInt32(ddlCurrentLocation.SelectedValue);
+            
             employeeBO.PresentAddress = txtPresentAddress.Text;
             employeeBO.PresentCity = txtPresentCity.Text;
             employeeBO.PresentZipCode = txtPresentZipCode.Text;
@@ -708,6 +709,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                 bankInfo.AccountNumber = txtAccountNumber.Text;
                 bankInfo.AccountType = txtAccountType.Text;
                 bankInfo.CardNumber = txtCardNumber.Text;
+                bankInfo.RouteNumber = txtRouteNumber.Text;
                 bankInfo.BankRemarks = txtRemarksForBankInfo.Text;
             }
             else
@@ -1923,7 +1925,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             ddlDesignationId.SelectedValue = bo.DesignationId.ToString();
             ddlGradeId.SelectedValue = bo.GradeId.ToString();
             txtOfficialEmail.Text = bo.OfficialEmail;
-            //txtReferenceBy.Text = bo.ReferenceBy;
+            txtPABXNumber.Text = bo.PABXNumber;
             txtTinNumber.Text = bo.TinNumber;
             txtRemarks.Text = bo.Remarks;
             txtFathersName.Text = bo.FathersName;
@@ -2133,6 +2135,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                     txtAccountNumber.Text = bankInfo.AccountNumber;
                     txtAccountType.Text = bankInfo.AccountType;
                     txtCardNumber.Text = bankInfo.CardNumber;
+                    txtRouteNumber.Text = bankInfo.RouteNumber;
                     txtRemarksForBankInfo.Text = bankInfo.BankRemarks;
                 }
             }
@@ -2198,6 +2201,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             ddlEmployeeStatus.SelectedValue = "0";
             ddlTitle.SelectedValue = "";
             txtOfficialEmail.Text = string.Empty;
+            txtPABXNumber.Text = string.Empty;
             txtTinNumber.Text = string.Empty;
             txtAppoinmentLetter.Text = string.Empty;
             txtJoiningAgreement.Text = string.Empty;
@@ -2475,6 +2479,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             txtBranchName.Text = string.Empty;
             txtAccountNumber.Text = string.Empty;
             txtCardNumber.Text = string.Empty;
+            txtRouteNumber.Text = string.Empty;
             txtRemarksForBankInfo.Text = string.Empty;
         }
         private void ClearBenefitInfo()

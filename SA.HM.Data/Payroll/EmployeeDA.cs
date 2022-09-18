@@ -448,6 +448,7 @@ namespace HotelManagement.Data.Payroll
                         dbSmartAspects.AddInParameter(commandMaster, "@DesignationId", DbType.Int32, employeeBO.DesignationId);
                         dbSmartAspects.AddInParameter(commandMaster, "@GradeId", DbType.Int32, employeeBO.GradeId);
                         dbSmartAspects.AddInParameter(commandMaster, "@OfficialEmail", DbType.String, employeeBO.OfficialEmail);
+                        dbSmartAspects.AddInParameter(commandMaster, "@PABXNumber", DbType.String, employeeBO.PABXNumber);
                         dbSmartAspects.AddInParameter(commandMaster, "@ReferenceBy", DbType.String, employeeBO.ReferenceBy);
 
                         if (employeeBO.ResignationDate != null)
@@ -655,6 +656,7 @@ namespace HotelManagement.Data.Payroll
                                     dbSmartAspects.AddInParameter(commandBankInfo, "@AccountNumber", DbType.String, bankInfo.AccountNumber);
                                     dbSmartAspects.AddInParameter(commandBankInfo, "@AccountType", DbType.String, bankInfo.AccountType);
                                     dbSmartAspects.AddInParameter(commandBankInfo, "@CardNumber", DbType.String, bankInfo.CardNumber);
+                                    dbSmartAspects.AddInParameter(commandBankInfo, "@RouteNumber", DbType.String, bankInfo.RouteNumber);
                                     dbSmartAspects.AddInParameter(commandBankInfo, "@Remarks", DbType.String, bankInfo.BankRemarks);
 
                                     countBank += dbSmartAspects.ExecuteNonQuery(commandBankInfo, transction);
@@ -868,9 +870,9 @@ namespace HotelManagement.Data.Payroll
                         dbSmartAspects.AddInParameter(commandMaster, "@DesignationId", DbType.Int32, employeeBO.DesignationId);
                         dbSmartAspects.AddInParameter(commandMaster, "@GradeId", DbType.Int32, employeeBO.GradeId);
                         dbSmartAspects.AddInParameter(commandMaster, "@OfficialEmail", DbType.String, employeeBO.OfficialEmail);
+                        dbSmartAspects.AddInParameter(commandMaster, "@PABXNumber", DbType.String, employeeBO.PABXNumber);
                         dbSmartAspects.AddInParameter(commandMaster, "@ReferenceBy", DbType.String, employeeBO.ReferenceBy);
-                        //dbSmartAspects.AddInParameter(commandMaster, "@ResignationDate", DbType.String, employeeBO.ResignationDate);
-
+                        
                         if (employeeBO.ResignationDate != null)
                             dbSmartAspects.AddInParameter(commandMaster, "@ResignationDate", DbType.DateTime, employeeBO.ResignationDate);
                         else
@@ -1242,6 +1244,7 @@ namespace HotelManagement.Data.Payroll
                                             dbSmartAspects.AddInParameter(commandBankInfo, "@AccountNumber", DbType.String, bankInfo.AccountNumber);
                                             dbSmartAspects.AddInParameter(commandBankInfo, "@AccountType", DbType.String, bankInfo.AccountType);
                                             dbSmartAspects.AddInParameter(commandBankInfo, "@CardNumber", DbType.String, bankInfo.CardNumber);
+                                            dbSmartAspects.AddInParameter(commandBankInfo, "@RouteNumber", DbType.String, bankInfo.RouteNumber);
                                             dbSmartAspects.AddInParameter(commandBankInfo, "@Remarks", DbType.String, bankInfo.BankRemarks);
 
                                             countBank += dbSmartAspects.ExecuteNonQuery(commandBankInfo, transction);
@@ -1262,6 +1265,7 @@ namespace HotelManagement.Data.Payroll
                                         dbSmartAspects.AddInParameter(commandBankInfo, "@AccountNumber", DbType.String, bankInfo.AccountNumber);
                                         dbSmartAspects.AddInParameter(commandBankInfo, "@AccountType", DbType.String, bankInfo.AccountType);
                                         dbSmartAspects.AddInParameter(commandBankInfo, "@CardNumber", DbType.String, bankInfo.CardNumber);
+                                        dbSmartAspects.AddInParameter(commandBankInfo, "@RouteNumber", DbType.String, bankInfo.RouteNumber);
                                         dbSmartAspects.AddInParameter(commandBankInfo, "@Remarks", DbType.String, bankInfo.BankRemarks);
 
                                         countBank += dbSmartAspects.ExecuteNonQuery(commandBankInfo, transction);
@@ -2551,6 +2555,7 @@ namespace HotelManagement.Data.Payroll
                         GlProjectId = r.Field<int>("GlProjectId"),
                         Designation = r.Field<string>("Designation"),
                         OfficialEmail = r.Field<string>("OfficialEmail"),
+                        PABXNumber = r.Field<string>("PABXNumber"),
                         ReferenceBy = r.Field<string>("ReferenceBy"),
                         Remarks = r.Field<string>("Remarks"),
                         FathersName = r.Field<string>("FathersName"),
@@ -3801,6 +3806,7 @@ namespace HotelManagement.Data.Payroll
                         AccountNumber = r.Field<string>("AccountNumber"),
                         AccountType = r.Field<string>("AccountType"),
                         CardNumber = r.Field<string>("CardNumber"),
+                        RouteNumber = r.Field<string>("RouteNumber"),
                         BankRemarks = r.Field<string>("Remarks")
 
                     }).FirstOrDefault();
@@ -5420,7 +5426,7 @@ namespace HotelManagement.Data.Payroll
                         AccountName = r.Field<string>("AccountName"),
                         AccountNumber = r.Field<string>("AccountNumber"),
                         HomeTakenAmount = r.Field<decimal?>("HomeTakenAmount"),
-
+                        RouteNumber = r.Field<string>("RouteNumber"),
                         Designation = r.Field<string>("Designation"),
                         LocationId = r.Field<int?>("LocationId"),
                         DepartmentId = r.Field<int?>("DepartmentId"),

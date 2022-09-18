@@ -778,6 +778,24 @@ namespace HotelManagement.Presentation.Website.Payroll {
         protected global::System.Web.UI.WebControls.TextBox txtOfficialEmail;
         
         /// <summary>
+        /// Label23 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label23;
+        
+        /// <summary>
+        /// txtPABXNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPABXNumber;
+        
+        /// <summary>
         /// lblRemarks control.
         /// </summary>
         /// <remarks>
@@ -2263,6 +2281,24 @@ namespace HotelManagement.Presentation.Website.Payroll {
         protected global::System.Web.UI.WebControls.TextBox txtBranchName;
         
         /// <summary>
+        /// lblAccountType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAccountType;
+        
+        /// <summary>
+        /// txtAccountType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAccountType;
+        
+        /// <summary>
         /// lblAccountName control.
         /// </summary>
         /// <remarks>
@@ -2299,22 +2335,22 @@ namespace HotelManagement.Presentation.Website.Payroll {
         protected global::System.Web.UI.WebControls.TextBox txtAccountNumber;
         
         /// <summary>
-        /// lblAccountType control.
+        /// lblRouteNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAccountType;
+        protected global::System.Web.UI.WebControls.Label lblRouteNumber;
         
         /// <summary>
-        /// txtAccountType control.
+        /// txtRouteNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAccountType;
+        protected global::System.Web.UI.WebControls.TextBox txtRouteNumber;
         
         /// <summary>
         /// lblCardNumber control.
@@ -2335,13 +2371,13 @@ namespace HotelManagement.Presentation.Website.Payroll {
         protected global::System.Web.UI.WebControls.TextBox txtCardNumber;
         
         /// <summary>
-        /// Label7 control.
+        /// lblRemarksForBankInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
+        protected global::System.Web.UI.WebControls.Label lblRemarksForBankInfo;
         
         /// <summary>
         /// txtRemarksForBankInfo control.

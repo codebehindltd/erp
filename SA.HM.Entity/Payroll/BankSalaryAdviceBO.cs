@@ -13,6 +13,7 @@ namespace HotelManagement.Entity.Payroll
         public string AccountName { get; set; }
         public Nullable<decimal> HomeTakenAmount { get; set; }
         public string AccountNumber { get; set; }
+        public string RouteNumber { get; set; }
         public int? BankId { get; set; }
         public string BankName { get; set; }
         public string Designation { get; set; }
