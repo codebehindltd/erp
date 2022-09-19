@@ -30,6 +30,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 this.LoadLocalCurrencyId();
                 this.pnlBillTransferedInfo.Visible = false;
+                this.pnlBillTransferForReservation.Visible = false;
                 this.CheckObjectPermission();
                 this.lblRegistrationNumberDiv.Visible = false;
                 this.ddlRegistrationId.Visible = false;
@@ -40,12 +41,21 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.lblMessage.Text = string.Empty;
             SearchRoomInformation(this.txtSrcRoomNumber.Text);
         }
+        protected void btnSrcReservationNumber_Click(object sender, EventArgs e)
+        {
+            SearchReservationInformation(this.txtSrcReservationNumber.Text);
+        }
         protected void gvGHServiceBill_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             int registrationId = Convert.ToInt32(this.hfddlRegistrationId.Value);
             this.lblMessage.Text = string.Empty;
             this.gvGHServiceBill.PageIndex = e.NewPageIndex;
             this.LoadGridView(registrationId);
+        }
+        protected void gvReservationInfo_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            this.gvReservationInfo.PageIndex = e.NewPageIndex;
+            this.LoadGridViewByReservationNumber(this.txtSrcReservationNumber.Text);
         }
         protected void btnBillTransfer_Click(object sender, EventArgs e)
         {
@@ -140,6 +150,125 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 this.gvGHServiceBill.Focus();
             }
         }
+        protected void btnReservationBillTransfer_Click(object sender, EventArgs e)
+        {
+            List<RoomReservationBO> roomReservationPaymentTransferList = new List<RoomReservationBO>();
+            foreach(GridViewRow gvRow in gvReservationInfo.Rows)
+            {
+                CheckBox chkItem = (CheckBox)gvRow.FindControl("chkBoxReservation");
+                string id = ((Label)gvRow.FindControl("lblidReservation")).Text.ToString();
+                string transferAmount = ((TextBox)gvRow.FindControl("txtTransferAmountReservation")).Text.ToString();
+                if (transferAmount == "" && chkItem.Checked == true)
+                {
+                    CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Transfered Amount.", AlertType.Warning);
+                    return;
+                }
+                double ta;
+                if(transferAmount == "")
+                {
+                    ta = 0;
+                }
+                else
+                {
+                    ta = Convert.ToDouble(transferAmount);
+                }
+                string highestAmount = gvRow.Cells[6].Text;
+                
+                double ha = Convert.ToDouble(highestAmount);
+                if (ta > ha)
+                {
+                    CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Transfered Amount less than Payment Amount.", AlertType.Warning);
+                    this.ddlReservationId.Focus();
+                    return;
+                }
+                if (chkItem.Checked)
+                {
+                    if (!string.IsNullOrWhiteSpace(transferAmount))
+                    {
+                        RoomReservationBO roomReservationPaymentBO = new RoomReservationBO();
+
+                        roomReservationPaymentBO.PaymentId = Convert.ToInt32(id);
+                        roomReservationPaymentBO.PaymentAmount = Convert.ToDecimal(transferAmount);
+                        roomReservationPaymentBO.Remarks = this.txtTransferReservationRemarks.Text;
+                        roomReservationPaymentTransferList.Add(roomReservationPaymentBO);
+                    }
+                }
+            }
+            if (roomReservationPaymentTransferList != null)
+            {
+                if (roomReservationPaymentTransferList.Count > 0)
+                {
+                    if (this.ddlReservationId.SelectedValue == "0")
+                    {
+                        CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Transfered Reservation Number.", AlertType.Warning);
+                        this.ddlReservationId.Focus();
+                        return;
+                    }
+
+                    if (this.txtTransferReservationRemarks.Text == "")
+                    {
+                        CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Transfered Reservation Description.", AlertType.Warning);
+                        this.txtTransferReservationRemarks.Focus();
+                        return;
+                    }
+
+                    // Firstly Check Transfered Room Already Checked Out or Not..............
+                    //if (!IsFrmValid())
+                    //{
+                    //    return;
+                    //}
+
+                    int transferReservationId = 0;
+                    int fromReservationId = 0;
+
+                    string transferReservationNumber = string.Empty;
+                    string fromReservationNumber = string.Empty;
+
+                    RoomReservationDA roomReservationDa = new RoomReservationDA();
+                    RoomReservationBO roomReservationBO = new RoomReservationBO();
+                    roomReservationBO = roomReservationDa.GetRoomReservationInfoByReservationNumber(this.ddlReservationId.SelectedItem.Text);
+
+                    if (roomReservationBO.ReservationId > 0)
+                    {
+                        transferReservationNumber = roomReservationBO.ReservationNumber;
+                        transferReservationId = roomReservationBO.ReservationId;
+                        roomReservationBO = roomReservationDa.GetRoomReservationInfoByReservationNumber(this.txtSrcReservationNumber.Text);
+                        fromReservationId = roomReservationBO.ReservationId;
+                        fromReservationNumber = roomReservationBO.ReservationNumber;
+
+                        //-----------------------Transferd Information for Save..................
+                        RoomReservationDA roomReservationPaymentDa = new RoomReservationDA();
+                        UserInformationBO userInformationBO = new UserInformationBO();
+                        userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                        Boolean status = roomReservationPaymentDa.TransferReservationBillPaymentInfo(roomReservationPaymentTransferList, fromReservationId, transferReservationId, userInformationBO.UserInfoId);
+                        if (status)
+                        {
+                            CommonHelper.AlertInfo(innboardMessage, "Transfer Operation Successfull.", AlertType.Success);
+                //            Boolean logStatus = hmUtility.CreateActivityLogEntity("Guest Payment Transfer", EntityTypeEnum.EntityType.GuestBillPaymentTransfer.ToString(), 0,
+                //ProjectModuleEnum.ProjectModule.FrontOffice.ToString(), "Guest Payment Transferred (Room# " + fromReservationNumber + " => " + transferReservationNumber + ") and Description: " + txtTransferReservationRemarks.Text);
+                            this.txtSrcRoomNumber.Focus();
+                            ClearReservationForm();
+                        }
+                    }
+                    else
+                    {
+                        CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Transfer Reservation Information.", AlertType.Warning);
+                        this.ddlReservationId.Focus();
+                        return;
+                    }
+                }
+                else
+                {
+                    CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Guest Payment Information.", AlertType.Warning);
+                    this.gvReservationInfo.Focus();
+                }
+            }
+            else
+            {
+                CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Guest Payment Information.", AlertType.Warning);
+                this.gvReservationInfo.Focus();
+            }
+        }
         //************************ User Defined Function ********************//
         private void ClearForm()
         {
@@ -157,9 +286,24 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.ddlCompanyNameHiddenField.Value = "0";
             this.ddlBusinessPromotionIdHiddenField.Value = "0";
             this.pnlBillTransferedInfo.Visible = false;
+            this.pnlBillTransferForReservation.Visible = false;
             gvGHServiceBill.DataSource = null;
             gvGHServiceBill.DataBind();
             this.txtSrcRoomNumber.Focus();
+        }
+        private void ClearReservationForm()
+        {
+            this.ddlTransferType.SelectedValue = "0";
+            txtSrcReservationNumber.Text = string.Empty;
+            DateTime dateTime = DateTime.Now;
+            this.txtReservedGuestName.Text = string.Empty;
+            this.txtArrivalDate.Text = string.Empty;
+            this.txtExpectedDepartureDate.Text = string.Empty;
+            this.pnlBillTransferForReservation.Visible = false;
+            this.GridInformationReservation.Visible = false;
+            gvReservationInfo.DataSource = null;
+            gvReservationInfo.DataBind();
+            this.txtSrcReservationNumber.Focus();
         }
         private void LoadLocalCurrencyId()
         {
@@ -236,6 +380,33 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 this.txtSrcRoomNumber.Focus();
             }
         }
+        private void SearchReservationInformation(string ReservationNo)
+        {
+            if (!string.IsNullOrWhiteSpace(ReservationNo))
+            {
+                RoomReservationBO reservationBO = new RoomReservationBO();
+                RoomReservationDA rrDa = new RoomReservationDA();
+                reservationBO = rrDa.GetOnlineRoomReservationInfoByReservationNumber(ReservationNo);
+
+                this.GridInformationReservation.Visible = true;
+                this.txtReservedGuestName.Text = reservationBO.GuestName;
+                this.txtArrivalDate.Text = reservationBO.ArrivalTime.ToShortDateString();
+                this.txtExpectedDepartureDate.Text = reservationBO.DepartureTime.ToShortDateString();
+                this.LoadGridViewByReservationNumber(reservationBO.ReservationNumber);
+            }
+            else
+            {
+                this.txtReservedGuestName.Text = string.Empty;
+                this.txtArrivalDate.Text = string.Empty;
+                this.txtExpectedDepartureDate.Text = string.Empty;
+                this.GridInformationReservation.Visible = false;
+                this.pnlBillTransferForReservation.Visible = false;
+                gvReservationInfo.DataSource = null;
+                gvReservationInfo.DataBind();
+                CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "a valid Reservation Number.", AlertType.Warning);
+                this.txtSrcReservationNumber.Focus();
+            }
+        }
         private void LoadRegistrationNumber(int roomId)
         {
             RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
@@ -243,6 +414,25 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.ddlRegistrationId.DataTextField = "RegistrationNumber";
             this.ddlRegistrationId.DataValueField = "RegistrationId";
             this.ddlRegistrationId.DataBind();
+        }
+        private void LoadGridViewByReservationNumber(string reservationNumber)
+        {
+            List<RoomReservationBO> reservationBO = new List<RoomReservationBO>();
+            RoomReservationDA reservationDa = new RoomReservationDA();
+            reservationBO = reservationDa.GetOnlineRoomReservationListByReservationNumber(reservationNumber);
+
+            this.gvReservationInfo.DataSource = reservationBO;
+            this.gvReservationInfo.DataBind();
+
+            if(reservationBO.Count > 0)
+            {
+                this.pnlBillTransferForReservation.Visible = true;
+                this.LoadReservationNumber();
+            }
+            else
+            {
+                this.pnlBillTransferForReservation.Visible = false;
+            }
         }
         private void LoadGridView(int registrationId)
         {
@@ -282,6 +472,22 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             itemRoom.Value = "0";
             itemRoom.Text = hmUtility.GetDropDownFirstValue();
             this.ddlRoomId.Items.Insert(0, itemRoom);
+        }
+        private void LoadReservationNumber()
+        {
+            RoomReservationDA roomReservationDa = new RoomReservationDA();
+            List<RoomReservationBO> roomReservationBoList = new List<RoomReservationBO>();
+            roomReservationBoList = roomReservationDa.GetRoomReservationInfoWithReservationNumber();
+
+            this.ddlReservationId.DataSource = roomReservationBoList;
+            this.ddlReservationId.DataTextField = "ReservationNumber";
+            this.ddlReservationId.DataValueField = "ReservationId";
+            this.ddlReservationId.DataBind();
+
+            ListItem itemRoom = new ListItem();
+            itemRoom.Value = "0";
+            itemRoom.Text = hmUtility.GetDropDownFirstValue();
+            this.ddlReservationId.Items.Insert(0, itemRoom);
         }
         private bool IsFrmValid()
         {

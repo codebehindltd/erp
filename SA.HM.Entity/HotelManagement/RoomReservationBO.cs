@@ -7,6 +7,7 @@ namespace HotelManagement.Entity.HotelManagement
 {
     public class RoomReservationBO
     {
+        public int PaymentId { get; set; }
         public int ReservationId { get; set; }
         public int PickUpDropCount { get; set; }
         public int ReservationTempId { get; set; }
@@ -15,6 +16,8 @@ namespace HotelManagement.Entity.HotelManagement
         public DateTime ReservationDate { get; set; }
         public DateTime DateIn { get; set; }
         public DateTime DateOut { get; set; }
+        public string InvoiceNo { get; set; }
+        public string ReceivedBy { get; set; }
         public DateTime ProbableArrivalTime { get; set; }
         public DateTime ProbableDepartureTime { get; set; }
         public DateTime? ConfirmationDate { get; set; }
@@ -49,6 +52,9 @@ namespace HotelManagement.Entity.HotelManagement
         public string PaymentMode { get; set; }
         public int PayFor { get; set; }
         public int CurrencyType { get; set; }
+        public string CurrencyName { get; set; }
+        public decimal PaymentAmount { get; set; }
+        public decimal CurrencyAmount { get; set; }
         public decimal ConversionRate { get; set; }
         public int IsAirportPickupDropExist { get; set; }
         public int APDId { get; set; }

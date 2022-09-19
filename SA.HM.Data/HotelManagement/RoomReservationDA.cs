@@ -55,6 +55,48 @@ namespace HotelManagement.Data.HotelManagement
             }
             return roomReservationList;
         }
+        public List<RoomReservationBO> GetRoomReservationInfoWithReservationNumber()
+        {
+            List<RoomReservationBO> roomReservationList = new List<RoomReservationBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetRoomReservationInfoWithReservationNumber_SP"))
+                {
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                RoomReservationBO roomReservation = new RoomReservationBO();
+
+                                roomReservation.ReservationId = Convert.ToInt32(reader["ReservationId"]);
+                                roomReservation.ReservationNumber = reader["ReservationNumber"].ToString();
+                                roomReservation.ReservationDate = Convert.ToDateTime(reader["ReservationDate"].ToString());
+                                roomReservation.DateIn = Convert.ToDateTime(reader["DateIn"].ToString());
+                                roomReservation.DateOut = Convert.ToDateTime(reader["DateOut"]);
+
+                                if (!string.IsNullOrEmpty(reader["ConfirmationDate"].ToString()))
+                                    roomReservation.ConfirmationDate = Convert.ToDateTime(reader["ConfirmationDate"]);
+
+                                roomReservation.ReservedCompany = reader["ReservedCompany"].ToString();
+                                roomReservation.ContactPerson = reader["ContactPerson"].ToString();
+                                roomReservation.ContactNumber = reader["ContactNumber"].ToString();
+                                roomReservation.GuestId = Int32.Parse(reader["GuestId"].ToString());
+                                roomReservation.Reason = reader["Reason"].ToString();
+                                roomReservation.BusinessPromotionId = Int32.Parse(reader["BusinessPromotionId"].ToString());
+                                roomReservation.TotalRoomNumber = Convert.ToInt32(reader["TotalRoomNumber"]);
+                                roomReservation.ReservedMode = reader["ReservedMode"].ToString();
+                                roomReservation.ReservationType = reader["ReservationType"].ToString();
+                                roomReservation.ReservationMode = reader["ReservationMode"].ToString();
+                                roomReservationList.Add(roomReservation);
+                            }
+                        }
+                    }
+                }
+            }
+            return roomReservationList;
+        }
         public List<RoomReservationBO> GetRoomReservationInfoForRegistration(int IsAllActiveReservation)
         {
             List<RoomReservationBO> roomReservationList = new List<RoomReservationBO>();
@@ -2468,6 +2510,93 @@ namespace HotelManagement.Data.HotelManagement
             }
             return roomReservation;
         }
+        public List<RoomReservationBO> GetOnlineRoomReservationListByReservationNumber(string ReservationNumber)
+        {
+            List<RoomReservationBO> roomReservationList = new List<RoomReservationBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetOnlineRoomReservationInfoByReservationNumber_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@ReservationNumber", DbType.String, ReservationNumber);
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                RoomReservationBO roomReservation = new RoomReservationBO();
+
+                                roomReservation.PaymentId = Convert.ToInt32(reader["PaymentId"]);
+                                roomReservation.ReservationId = Convert.ToInt32(reader["ReservationId"]);
+                                roomReservation.ReservationNumber = reader["ReservationNumber"].ToString();
+                                roomReservation.GuestName = reader["GuestName"].ToString();
+                                if (!string.IsNullOrWhiteSpace(reader["ArrivalTime"].ToString()))
+                                {
+                                    roomReservation.ArrivalTime = Convert.ToDateTime(reader["ArrivalTime"].ToString());
+                                }
+                                if (!string.IsNullOrWhiteSpace(reader["DepartureTime"].ToString()))
+                                {
+                                    roomReservation.DepartureTime = Convert.ToDateTime(reader["DepartureTime"].ToString());
+                                }
+                                if (!string.IsNullOrWhiteSpace(reader["ReservationDate"].ToString()))
+                                {
+                                    roomReservation.ReservationDate = Convert.ToDateTime(reader["ReservationDate"].ToString());
+                                }
+                                roomReservation.InvoiceNo = reader["InvoiceNo"].ToString();
+                                roomReservation.ReceivedBy = reader["ReceivedBy"].ToString();
+                                roomReservation.CurrencyName = reader["CurrencyName"].ToString();
+                                roomReservation.PaymentAmount = Convert.ToDecimal(reader["PaymentAmount"].ToString());
+                                roomReservation.CurrencyAmount = Convert.ToDecimal(reader["CurrencyAmount"].ToString());
+                                roomReservationList.Add(roomReservation);
+                            }
+                        }
+                    }
+                }
+            }
+            return roomReservationList;
+        }
+        public RoomReservationBO GetOnlineRoomReservationInfoByReservationNumber(string ReservationNumber)
+        {
+            RoomReservationBO roomReservation = new RoomReservationBO();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetOnlineRoomReservationInfoByReservationNumber_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@ReservationNumber", DbType.String, ReservationNumber);
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if(reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                roomReservation.ReservationNumber = reader["ReservationNumber"].ToString();
+                                roomReservation.GuestName = reader["GuestName"].ToString();
+                                if (!string.IsNullOrWhiteSpace(reader["ArrivalTime"].ToString()))
+                                {
+                                    roomReservation.ArrivalTime = Convert.ToDateTime(reader["ArrivalTime"].ToString());
+                                }
+                                if (!string.IsNullOrWhiteSpace(reader["DepartureTime"].ToString()))
+                                {
+                                    roomReservation.DepartureTime = Convert.ToDateTime(reader["DepartureTime"].ToString());
+                                }
+                                if (!string.IsNullOrWhiteSpace(reader["ReservationDate"].ToString()))
+                                {
+                                    roomReservation.ReservationDate = Convert.ToDateTime(reader["ReservationDate"].ToString());
+                                }
+                                roomReservation.InvoiceNo = reader["InvoiceNo"].ToString();
+                                roomReservation.ReceivedBy = reader["ReceivedBy"].ToString();
+                                roomReservation.CurrencyName = reader["CurrencyName"].ToString();
+                                roomReservation.PaymentAmount = Convert.ToDecimal(reader["PaymentAmount"].ToString());
+                                roomReservation.CurrencyAmount = Convert.ToDecimal(reader["CurrencyAmount"].ToString());
+                            }
+                        }
+                    }
+                }
+            }
+            return roomReservation;
+        }
         public Boolean DeleteReservationDetailInfoById(int roomReservationId)
         {
             Boolean status = false;
@@ -4164,6 +4293,47 @@ namespace HotelManagement.Data.HotelManagement
             {
                 throw ex;
             }
+            return status;
+        }
+        public Boolean TransferReservationBillPaymentInfo(List<RoomReservationBO> roomReservationPaymentTransferList, int fromReservationId, int transferReservationId, int userInfoId)
+        {
+            Boolean status = false;
+            int transactionCount = 0;
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+
+                using (DbTransaction transaction = conn.BeginTransaction())
+                {
+                    using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("TransferReservationBillPaymentInfo_SP"))
+                    {
+                        foreach (RoomReservationBO roomReservationPaymentTransfer in roomReservationPaymentTransferList)
+                        {
+                            cmd.Parameters.Clear();
+
+                            dbSmartAspects.AddInParameter(cmd, "@PaymentId", DbType.Int32, roomReservationPaymentTransfer.PaymentId);
+                            dbSmartAspects.AddInParameter(cmd, "@PaymentAmount", DbType.Decimal, roomReservationPaymentTransfer.PaymentAmount);
+                            dbSmartAspects.AddInParameter(cmd, "@Remarks", DbType.String, roomReservationPaymentTransfer.Remarks);
+                            dbSmartAspects.AddInParameter(cmd, "@FromReservationId", DbType.Int32, fromReservationId);
+                            dbSmartAspects.AddInParameter(cmd, "@TransferReservationId", DbType.Int32, transferReservationId);
+                            dbSmartAspects.AddInParameter(cmd, "@CreatedBy", DbType.Int32, userInfoId);
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0 ? true : false;
+                            if (status)
+                            {
+                                transactionCount = transactionCount + 1;
+                            }
+                        }
+                    }
+
+
+                    if (roomReservationPaymentTransferList.Count == transactionCount)
+                        transaction.Commit();
+                    else
+                        transaction.Rollback();
+                }
+            }
+
             return status;
         }
     }
