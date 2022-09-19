@@ -193,8 +193,6 @@ namespace HotelManagement.Presentation.Website.Payroll
             List<EmployeeBO> distinctItems = new List<EmployeeBO>();
             distinctItems = empList.GroupBy(test => test.EmpId).Select(group => group.First()).ToList();
 
-            //distinctItems = new HMCommonDA().GetDocumentListWithIcon(docList);
-
             myGridData.GridPagingProcessing(distinctItems, totalRecords);
 
             return myGridData;

@@ -4252,6 +4252,7 @@ namespace HotelManagement.Data.Payroll
                                        DesignationId = r.Field<int>("DesignationId"),
                                        Designation = r.Field<string>("Designation"),
                                        OfficialEmail = r.Field<string>("OfficialEmail"),
+                                       PABXNumber = r.Field<string>("PABXNumber"),
                                        ReferenceBy = r.Field<string>("ReferenceBy"),
                                        PermanentPhone = r.Field<string>("PermanentPhone"),
                                        PresentPhone = r.Field<string>("PresentPhone"),
