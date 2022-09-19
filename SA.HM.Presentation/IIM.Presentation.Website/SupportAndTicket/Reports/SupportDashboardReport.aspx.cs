@@ -94,7 +94,14 @@ namespace HotelManagement.Presentation.Website.SupportAndTicket.Reports
             }
             else
             {
-                reportPath = Server.MapPath(@"~/SupportAndTicket/Reports/Rdlc/rptSupportDetailsReport.rdlc");
+                if (ddlReportFormat.SelectedValue == "Format01")
+                {
+                    reportPath = Server.MapPath(@"~/SupportAndTicket/Reports/Rdlc/rptSupportDetailsReport.rdlc");
+                }
+                else if (ddlReportFormat.SelectedValue == "Format02")
+                {
+                    reportPath = Server.MapPath(@"~/SupportAndTicket/Reports/Rdlc/rptSupportDetailsReportFormat02.rdlc");
+                }
             }
 
             if (!File.Exists(reportPath))
@@ -174,7 +181,7 @@ namespace HotelManagement.Presentation.Website.SupportAndTicket.Reports
                 supportType = Convert.ToInt32(ddlSupportType.SelectedValue);
                 warentyType = Convert.ToInt32(ddlWarrantyType.SelectedValue);
                 companyId = Convert.ToInt32(ddlCompany.SelectedValue);
-                
+
                 int countryId = 0;
                 int stateId = 0;
 
@@ -217,7 +224,15 @@ namespace HotelManagement.Presentation.Website.SupportAndTicket.Reports
                     ToDate = DateTime.Now;
                 }
 
-                SupportNTicketList = DA.GetSupportNTicketDetailsForReport(FromDate, ToDate, ticketNumber, caseId, itemCategory, supportCategory, supportType, warentyType, companyId, countryId, stateId, status, amountFrom, amountTo);
+                if (ddlReportFormat.SelectedValue == "Format01")
+                {
+                    SupportNTicketList = DA.GetSupportNTicketDetailsForReport(FromDate, ToDate, ticketNumber, caseId, itemCategory, supportCategory, supportType, warentyType, companyId, countryId, stateId, status, amountFrom, amountTo);
+                }
+                else if (ddlReportFormat.SelectedValue == "Format02")
+                {
+                    SupportNTicketList = DA.GetSupportNTicketDetailsForReportFormat02(FromDate, ToDate, ticketNumber, caseId, itemCategory, supportCategory, supportType, warentyType, companyId, countryId, stateId, status, amountFrom, amountTo);
+                }
+                
                 rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataSet[0], SupportNTicketList));
                 ddlReportType.SelectedValue = "Details";
             }
