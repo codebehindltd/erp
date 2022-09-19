@@ -98,7 +98,7 @@
             });
 
             $('#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany').change(function () {
-                debugger;                
+                debugger;
                 var CompanyId = $(this).val();
                 if (CompanyId != null) {
 
@@ -128,7 +128,7 @@
             if ($("#ContentPlaceHolder1_hfCurrencyObj").val() !== "") {
                 CurrencyList = JSON.parse($("#ContentPlaceHolder1_hfCurrencyObj").val());
             }
-            
+
             if ($("#ContentPlaceHolder1_ddlReceiveType").val() == "AdHoc") {
                 $("#PurchaseType").show();
                 $("#AdhocReceive").show();
@@ -314,7 +314,7 @@
                 }
 
                 var AccountHeadDetailsId = "0", isEdited = 0, editedItemId = "0";
-                
+
                 if (!IsAccountHeadExistsForOE(accountHeadId)) {
                     AddAccountHeadForOEInfo(accountHeadId, accountHead, amount, oEDescription, AccountHeadDetailsId, isEdited);
 
@@ -530,7 +530,12 @@
 
             $('#ContentPlaceHolder1_ddlReceiveType').change(function () {
                 if ($('#ContentPlaceHolder1_ddlReceiveType').val() == "AdHoc" || $('#ContentPlaceHolder1_ddlReceiveType').val() == "Purchase") {
-                    $("#OEEntryPanel").show();
+                    //$("#OEEntryPanel").show();
+                    if ($("#ContentPlaceHolder1_hfIsItemReceiveOverheadExpenseEnable").val() == "1") {
+                        $("#OEEntryPanel").show();
+                    } else {
+                        $("#OEEntryPanel").hide();
+                    }
                 }
                 else {
                     $("#OEEntryPanel").hide();
@@ -820,11 +825,10 @@
         }
         function OnLoadReceiveStoreByCompanyIdSucceed(result) {
             $("#BagAndBonusDiv").hide();
-            if (result[0].CompanyType == "RiceMill")
-            {
+            if (result[0].CompanyType == "RiceMill") {
                 $("#BagAndBonusDiv").show();
             }
-           
+
             typesList = [];
             $("#ContentPlaceHolder1_ddlCostCentre").empty();
             var i = 0, fieldLength = result.length;
@@ -893,10 +897,7 @@
                 $("#AdhocReceive").hide();
                 $("#AdhocReceiveItem").hide();
                 $("#ReceiveOrderItemContainer").show();
-
                 $("#PurchaseOrderCostCenterContainer").hide();
-
-                //$("#ContentPlaceHolder1_ddlSupplier").attr("disabled", false);
                 $("#ContentPlaceHolder1_ddlCurrency").attr('disabled', true);
                 $("#ContentPlaceHolder1_ddlCostCentre").attr("disabled", true);
 
@@ -1019,8 +1020,7 @@
             bagQuantity = $("#ContentPlaceHolder1_txtBagQuantity").val();
             bonusAmount = $("#ContentPlaceHolder1_txtBonusAmount").val();
 
-            if (bagQuantity == "")
-            {
+            if (bagQuantity == "") {
                 bagQuantity = 0;
             }
 
@@ -2274,7 +2274,7 @@
         //}
 
         //function OnGetUploadedOthersDocumentByWebMethodSucceeded(result) {
-            
+
         //    var totalDoc = result.length;
         //    var row = 0;
         //    var imagePath = "";
@@ -2429,7 +2429,6 @@
                 $("#AdhocReceiveItem").hide();
                 $("#ReceiveOrderItemContainer").show();
                 $("#PurchaseOrderCostCenterContainer").show();
-
                 $("#ItemForReceiveTbl tbody").html("");
                 $("#PurchaseOrderItemTbl tbody").html("");
                 $("#PurchaseItemForPReceiveTbl tbody").html("");
@@ -3192,7 +3191,7 @@
                 DocTable += "</tr>";
             }
             DocTable += "</table>";
-            
+
             docc = DocTable;
 
             $("#DocumentInfo").html(DocTable);
@@ -3223,7 +3222,7 @@
     <asp:HiddenField ID="hftotalForPaymentInfos" runat="server" Value="0" />
     <asp:HiddenField ID="hfCostCenterId" runat="server" Value="0" />
     <asp:HiddenField ID="hfAccoutHeadId" runat="server" Value="0" />
-    <asp:HiddenField ID ="hfAccoutHeadPMId" runat="server" Value="0" />
+    <asp:HiddenField ID="hfAccoutHeadPMId" runat="server" Value="0" />
     <asp:HiddenField ID="hfCompanyId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfProjectId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="RandomDocId" runat="server"></asp:HiddenField>
@@ -3246,6 +3245,7 @@
     <asp:HiddenField ID="hfDeletePermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfViewPermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfIsItemAttributeEnable" runat="server" Value="0"></asp:HiddenField>
+    <asp:HiddenField ID="hfIsItemReceiveOverheadExpenseEnable" runat="server" Value="0" />
     <div id="myTabs">
         <ul id="tabPage" class="ui-style">
             <li id="A" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
@@ -3484,7 +3484,7 @@
                                     <asp:TextBox ID="txtPurchasePrice" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="form-group" id="BagAndBonusDiv" style="display:none;">
+                            <div class="form-group" id="BagAndBonusDiv" style="display: none;">
                                 <div class="col-md-2">
                                     <asp:Label ID="Label18" runat="server" class="control-label required-field" Text="Bag Quantity"></asp:Label>
                                 </div>
@@ -3527,8 +3527,8 @@
                         </div>
                     </div>
                     <hr />
-                    <div class="form-group">
-                        <div id="OEEntryPanel" class="panel panel-default" style="display: none">
+                    <div id="OEEntryPanel" class="form-group" style="display: none">
+                        <div class="panel panel-default">
                             <div class="panel-heading">
                                 Overhead Expense Information
                             </div>
@@ -3608,8 +3608,8 @@
                         </div>
                     </div>
                     <hr />
-                    <div class="form-group">
-                        <div id="PMEntryPanel" class="panel panel-default">
+                    <div id="PMEntryPanel" class="form-group" style="display: none">
+                        <div class="panel panel-default">
                             <div class="panel-heading">
                                 Payment Method Information
                             </div>
@@ -3706,7 +3706,7 @@
                                     class="TransactionalButton btn btn-primary btn-sm" value="Item Receive Doc..." />
                             </div>
                         </div>
-                       <div id="DocumentInfo">
+                        <div id="DocumentInfo">
                         </div>
                         <div class="row" style="padding-top: 10px;">
                             <div class="col-md-12">

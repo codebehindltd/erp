@@ -44,7 +44,7 @@ namespace HotelManagement.Presentation.Website.Inventory
                 LoadPurchaseOrder();
                 CheckPermission();
                 LoadLCNumber();
-                LoadIsItemAttributeEnable();
+                LoadDefaultSettings();
                 LoadAccountHead();
             }
         }
@@ -69,7 +69,7 @@ namespace HotelManagement.Presentation.Website.Inventory
             ddlPMAccountHead.Items.Insert(0, itemNodeId);
         }
         #region Data Initialize
-        private void LoadIsItemAttributeEnable()
+        private void LoadDefaultSettings()
         {
             HMCommonSetupBO setUpBO = new HMCommonSetupBO();
             HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
@@ -83,7 +83,14 @@ namespace HotelManagement.Presentation.Website.Inventory
             {
                 hfIsItemAttributeEnable.Value = setUpBO.SetupValue;
             }
+
+            setUpBO = setUpBOList.Where(x => x.TypeName == "IsItemReceiveOverheadExpenseEnable" && x.SetupName == "IsItemReceiveOverheadExpenseEnable").FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
+            {
+                hfIsItemReceiveOverheadExpenseEnable.Value = setUpBO.SetupValue;
+            }
         }
+        
         private void LoadSupplierInfo()
         {
             PMSupplierDA entityDA = new PMSupplierDA();
@@ -125,7 +132,6 @@ namespace HotelManagement.Presentation.Website.Inventory
             List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
             UserInformationBO userInformationBO = new UserInformationBO();
             userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
-            //costCentreTabBOList = costCentreTabDA.GetCostCentreTabInfo();
             costCentreTabBOList = costCentreTabDA.GetCostCentreTabInfoByUserGroupId(userInformationBO.UserGroupId)
                                     .Where(o => o.OutletType == 2 && o.CostCenterType == "Inventory").ToList();
             ddlPurchaseOrderCostcenter.DataSource = costCentreTabBOList;
@@ -133,18 +139,9 @@ namespace HotelManagement.Presentation.Website.Inventory
             ddlPurchaseOrderCostcenter.DataValueField = "CostCenterId";
             ddlPurchaseOrderCostcenter.DataBind();
 
-            //costCentreTabBOList = costCentreTabBOList.Where(o => o.OutletType == 2).ToList();
-
-            //ddlCostCentre.DataSource = costCentreTabBOList;
-            //ddlCostCentre.DataTextField = "CostCenter";
-            //ddlCostCentre.DataValueField = "CostCenterId";
-            //ddlCostCentre.DataBind();
-
             ListItem item = new ListItem();
             item.Value = "0";
             item.Text = hmUtility.GetDropDownFirstValue();
-
-
 
             ddlCostCenterSearch.DataSource = costCentreTabBOList;
             ddlCostCenterSearch.DataTextField = "CostCenter";
@@ -152,7 +149,6 @@ namespace HotelManagement.Presentation.Website.Inventory
             ddlCostCenterSearch.DataBind();
             if (costCentreTabBOList.Count > 1)
             {
-                //ddlCostCentre.Items.Insert(0, item);
                 ddlCostCenterSearch.Items.Insert(0, item);
             }
         }

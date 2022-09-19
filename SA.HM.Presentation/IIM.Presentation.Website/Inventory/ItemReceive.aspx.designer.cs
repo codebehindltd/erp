@@ -256,6 +256,15 @@ namespace HotelManagement.Presentation.Website.Inventory {
         protected global::System.Web.UI.WebControls.HiddenField hfIsItemAttributeEnable;
         
         /// <summary>
+        /// hfIsItemReceiveOverheadExpenseEnable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsItemReceiveOverheadExpenseEnable;
+        
+        /// <summary>
         /// A control.
         /// </summary>
         /// <remarks>
