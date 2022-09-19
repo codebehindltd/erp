@@ -473,6 +473,7 @@ namespace HotelManagement.Data.SupportAndTicket
                                     SupportNTicketView.UnitQuantity = Convert.ToDecimal(reader["UnitQuantity"]);
                                     SupportNTicketView.UnitPrice = Convert.ToDecimal(reader["UnitPrice"]);
                                     SupportNTicketView.LineTotal = Convert.ToDecimal(reader["LineTotal"]);
+                                    SupportNTicketView.VatPercent = Convert.ToDecimal(reader["VatPercent"]);
                                     SupportNTicketView.VatAmount = Convert.ToDecimal(reader["VatAmount"]);
                                     SupportNTicketView.TotalAmount = Convert.ToDecimal(reader["TotalAmount"]);
                                     SupportNTicketView.SupportStatus = reader["SupportStatus"].ToString();

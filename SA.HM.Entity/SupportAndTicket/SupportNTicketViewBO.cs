@@ -23,6 +23,7 @@ namespace HotelManagement.Entity.SupportAndTicket
         public decimal UnitPrice { get; set; }
         public decimal LineTotal { get; set; }
         public decimal VatAmount { get; set; }
+        public decimal VatPercent { get; set; }
         public decimal TotalAmount { get; set; }
         public string SupportType { get; set; }
         public string SupportStatus { get; set; }

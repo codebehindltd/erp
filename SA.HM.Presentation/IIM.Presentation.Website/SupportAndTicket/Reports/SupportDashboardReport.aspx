@@ -31,15 +31,34 @@
                     $('#ContentPlaceHolder1_txtSearchFromDate');
                 }
             }).datepicker();
+
+            var reportType = $('#ContentPlaceHolder1_ddlReportType').val();
+            if (reportType == 'Details') {
+                $("#divDetails").show();
+                $("#divTicketNumber").show();
+                $("#ReportFormatLabel").show();
+                $("#ReportFormatControl").show();
+            }
+            else {
+                $("#divDetails").hide();
+                $("#divTicketNumber").hide();
+                $("#ReportFormatLabel").hide();
+                $("#ReportFormatControl").hide();
+            }
+
             $('#ContentPlaceHolder1_ddlReportType').change(function () {
                 var reportType = $('#ContentPlaceHolder1_ddlReportType').val();
                 if (reportType == 'Details') {
                     $("#divDetails").show();
                     $("#divTicketNumber").show();
+                    $("#ReportFormatLabel").show();
+                    $("#ReportFormatControl").show();
                 }
                 else {
                     $("#divDetails").hide();
                     $("#divTicketNumber").hide();
+                    $("#ReportFormatLabel").hide();
+                    $("#ReportFormatControl").hide();
                 }
             });
             $("#ContentPlaceHolder1_ddlCase").select2({
@@ -85,7 +104,6 @@
                 allowClear: true,
                 width: "99.75%",
             });
-
 
             $("#ContentPlaceHolder1_txtBillingCountry").blur(function () {
                 if ($("#ContentPlaceHolder1_txtBillingCountry").val() == "") {
@@ -225,10 +243,10 @@
                             <asp:ListItem Text="Details" Value="Details"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
-                    <div class="col-md-2" id="ReportFormatLabel">
+                    <div class="col-md-2" id="ReportFormatLabel" style="display:none;">
                         <label class="control-label">Report Format</label>
                     </div>
-                    <div class="col-md-4" id="ReportFormatControl">
+                    <div class="col-md-4" id="ReportFormatControl" style="display:none;">
                         <asp:DropDownList ID="ddlReportFormat" runat="server" CssClass="form-control">
                             <asp:ListItem Text="Format 01" Value="Format01"></asp:ListItem>
                             <asp:ListItem Text="Format 02" Value="Format02"></asp:ListItem>
