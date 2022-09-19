@@ -378,6 +378,120 @@ namespace HotelManagement.Data.SupportAndTicket
             }
             return SupportNTicketViewList;
         }
+        public List<SupportNTicketViewBO> GetSupportNTicketDetailsForReportFormat02(DateTime fromDate, DateTime toDate, string TicketNumber,
+                                            int Case, int ItemCategory, int SupportCategory, int SupportType, int WarentyType,
+                                            int Company, int Country, int State, string Status, decimal BillClaimedFrom, decimal BillClaimedTo)
+        {
+            List<SupportNTicketViewBO> SupportNTicketViewList = new List<SupportNTicketViewBO>();
+            try
+            {
+                using (DbConnection conn = dbSmartAspects.CreateConnection())
+                {
+                    using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetSupportNTicketDetailsForReportFormat02_SP"))
+                    {
+
+                        if (fromDate == DateTime.MinValue || toDate == DateTime.MinValue)
+                        {
+                            dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, DBNull.Value);
+                            dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, DBNull.Value);
+                        }
+                        else
+                        {
+                            dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, Convert.ToDateTime(fromDate));
+                            dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, Convert.ToDateTime(toDate));
+                        }
+
+                        if (!string.IsNullOrEmpty(TicketNumber))
+                            dbSmartAspects.AddInParameter(cmd, "@TicketNumber", DbType.String, Convert.ToString(TicketNumber));
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@TicketNumber", DbType.String, DBNull.Value);
+                        if (!string.IsNullOrEmpty(Status))
+                            dbSmartAspects.AddInParameter(cmd, "@Status", DbType.String, Convert.ToString(Status));
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@Status", DbType.String, DBNull.Value);
+
+                        if (Case != 0)
+                            dbSmartAspects.AddInParameter(cmd, "@Case", DbType.Int32, Convert.ToInt32(Case));
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@Case", DbType.Int32, DBNull.Value);
+                        if (ItemCategory != 0)
+                            dbSmartAspects.AddInParameter(cmd, "@ItemCategory", DbType.Int32, Convert.ToInt32(ItemCategory));
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@ItemCategory", DbType.Int32, DBNull.Value);
+                        if (SupportCategory != 0)
+                            dbSmartAspects.AddInParameter(cmd, "@SupportCategory", DbType.Int32, Convert.ToInt32(SupportCategory));
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@SupportCategory", DbType.Int32, DBNull.Value);
+                        if (SupportType != 0)
+                            dbSmartAspects.AddInParameter(cmd, "@SupportType", DbType.Int32, Convert.ToInt32(SupportType));
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@SupportType", DbType.Int32, DBNull.Value);
+                        if (WarentyType != 0)
+                            dbSmartAspects.AddInParameter(cmd, "@WarentyType", DbType.Int32, Convert.ToInt32(WarentyType));
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@WarentyType", DbType.Int32, DBNull.Value);
+                        if (Company != 0)
+                            dbSmartAspects.AddInParameter(cmd, "@Company", DbType.Int32, Convert.ToInt32(Company));
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@Company", DbType.Int32, DBNull.Value);
+
+                        if (Country != 0)
+                            dbSmartAspects.AddInParameter(cmd, "@Country", DbType.Int32, Convert.ToInt32(Country));
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@Country", DbType.Int32, DBNull.Value);
+
+                        if (State != 0)
+                            dbSmartAspects.AddInParameter(cmd, "@State", DbType.Int32, Convert.ToInt32(State));
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@State", DbType.Int32, DBNull.Value);
+
+                        if (BillClaimedFrom != 0)
+                            dbSmartAspects.AddInParameter(cmd, "@BillClaimedFrom", DbType.Decimal, Convert.ToDecimal(BillClaimedFrom));
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@BillClaimedFrom", DbType.Decimal, DBNull.Value);
+                        if (BillClaimedTo != 0)
+                            dbSmartAspects.AddInParameter(cmd, "@BillClaimedTo", DbType.Decimal, Convert.ToDecimal(BillClaimedTo));
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@BillClaimedTo", DbType.Decimal, DBNull.Value);
+
+                        using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                        {
+                            if (reader != null)
+                            {
+                                while (reader.Read())
+                                {
+                                    SupportNTicketViewBO SupportNTicketView = new SupportNTicketViewBO();
+                                    SupportNTicketView.BranchCode = reader["BranchCode"].ToString();
+                                    SupportNTicketView.CompanyName = reader["CompanyName"].ToString();
+                                    SupportNTicketView.BillingAddress = reader["BillingAddress"].ToString();
+                                    SupportNTicketView.CityName = reader["CityName"].ToString();
+                                    SupportNTicketView.CreatedDateDisplay = reader["CreatedDateDisplay"].ToString();
+                                    SupportNTicketView.CaseNumber = reader["CaseNumber"].ToString();
+                                    SupportNTicketView.CaseName = reader["CaseName"].ToString();
+                                    SupportNTicketView.CaseDeltails = reader["CaseDeltails"].ToString();
+                                    SupportNTicketView.ItemName = reader["ItemName"].ToString();
+                                    SupportNTicketView.UnitQuantity = Convert.ToDecimal(reader["UnitQuantity"]);
+                                    SupportNTicketView.UnitPrice = Convert.ToDecimal(reader["UnitPrice"]);
+                                    SupportNTicketView.LineTotal = Convert.ToDecimal(reader["LineTotal"]);
+                                    SupportNTicketView.VatAmount = Convert.ToDecimal(reader["VatAmount"]);
+                                    SupportNTicketView.TotalAmount = Convert.ToDecimal(reader["TotalAmount"]);
+                                    SupportNTicketView.SupportStatus = reader["SupportStatus"].ToString();
+                                    SupportNTicketView.BillStatus = reader["BillStatus"].ToString();
+                                    SupportNTicketView.PassDay = Convert.ToInt16(reader["PassDay"]);                                    
+                                    SupportNTicketViewList.Add(SupportNTicketView);
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return SupportNTicketViewList;
+        }
 
     }
 }

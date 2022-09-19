@@ -225,6 +225,15 @@
                             <asp:ListItem Text="Details" Value="Details"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
+                    <div class="col-md-2" id="ReportFormatLabel">
+                        <label class="control-label">Report Format</label>
+                    </div>
+                    <div class="col-md-4" id="ReportFormatControl">
+                        <asp:DropDownList ID="ddlReportFormat" runat="server" CssClass="form-control">
+                            <asp:ListItem Text="Format 01" Value="Format01"></asp:ListItem>
+                            <asp:ListItem Text="Format 02" Value="Format02"></asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
                 </div>
                 <div id="dvSearchDateTime" class="form-group">
                     <div class="col-md-2">

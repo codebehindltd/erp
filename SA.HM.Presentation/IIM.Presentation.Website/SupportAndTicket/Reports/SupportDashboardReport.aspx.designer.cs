@@ -67,6 +67,15 @@ namespace HotelManagement.Presentation.Website.SupportAndTicket.Reports {
         protected global::System.Web.UI.WebControls.DropDownList ddlReportType;
         
         /// <summary>
+        /// ddlReportFormat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlReportFormat;
+        
+        /// <summary>
         /// txtSearchFromDate control.
         /// </summary>
         /// <remarks>

@@ -9,14 +9,21 @@ namespace HotelManagement.Entity.SupportAndTicket
     {
         public long Id { get; set; }
         public string SupportCategory { get; set; }
+        public string BranchCode { get; set; }
         public string CompanyName { get; set; }
         public string BillingAddress { get; set; }
         public string CityName { get; set; }
         public string CaseName { get; set; }
-        public string WarrantyType { get; set; }
-        public decimal UnitPrice { get; set; }
-        public string CaseNumber { get; set; }        
+        public string WarrantyType { get; set; }        
+        public string CaseNumber { get; set; }
+        public string CaseDeltails { get; set; }
         public string ItemCategory { get; set; }
+        public string ItemName { get; set; }
+        public decimal UnitQuantity { get; set; }
+        public decimal UnitPrice { get; set; }
+        public decimal LineTotal { get; set; }
+        public decimal VatAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public string SupportType { get; set; }
         public string SupportStatus { get; set; }
         public string BillStatus { get; set; }
