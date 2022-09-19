@@ -843,8 +843,8 @@
     <Content Include="Payroll\Reports\Rdlc\RptDesignationWiseEmployeeSalarySheets.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptBankSalaryInstruction02.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptBankSalaryInstruction03.rdlc" />
-    <EmbeddedResource Include="Payroll\Reports\Rdlc\RptDepartmentWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
-    <EmbeddedResource Include="Payroll\Reports\Rdlc\RptDesignationWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptDepartmentWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptDesignationWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptEmpJoiningAgreement.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptEmpJoiningAgreementWTHF.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpPromotionLetter.rdlc" />
@@ -864,7 +864,7 @@
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptLeaveInformationTypeIndividual.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptLeaveYearlyInformationIndividual.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptWorkStationWiseEmployeeSalarySheets.rdlc" />
-    <EmbeddedResource Include="Payroll\Reports\Rdlc\RptWorkStationWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptWorkStationWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
     <EmbeddedResource Include="POS\Reports\Rdlc\rptKotBill02.rdlc" />
     <Content Include="SMSTemplates\ReservationAmedmentSms.txt" />
     <Content Include="SMSTemplates\ReservationCancelSms.txt" />
