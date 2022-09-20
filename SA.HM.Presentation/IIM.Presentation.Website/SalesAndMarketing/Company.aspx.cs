@@ -139,6 +139,17 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
                 }
             }
 
+            BranchCodeDiv.Visible = false;
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsCRMCompanyBranchCodeEnable", "IsCRMCompanyBranchCodeEnable");
+            if (setUpBO.SetupId > 0)
+            {
+                if (setUpBO.SetupValue == "1")
+                {
+                    BranchCodeDiv.Visible = true;
+                }
+            }
+
+
             hfIsGLCompanyWiseCRMCompanyDifferent.Value = "0";
             DivCRMCompany.Visible = false;
             setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsGLCompanyWiseCRMCompanyDifferent", "IsGLCompanyWiseCRMCompanyDifferent");

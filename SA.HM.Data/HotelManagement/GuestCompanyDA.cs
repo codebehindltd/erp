@@ -162,6 +162,7 @@ namespace HotelManagement.Data.HotelManagement
                         //dbSmartAspects.AddInParameter(command, "@TelephoneNumber", DbType.String, guestCompany.TelephoneNumber);
                         //dbSmartAspects.AddInParameter(command, "@ContactPerson", DbType.String, guestCompany.ContactPerson);
                         dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, guestCompany.Remarks);
+                        dbSmartAspects.AddInParameter(command, "@BranchCode", DbType.String, guestCompany.BranchCode);
                         //dbSmartAspects.AddInParameter(command, "@SignupStatusId", DbType.String, guestCompany.SignupStatusId);
                         //dbSmartAspects.AddInParameter(command, "@AffiliatedDate", DbType.DateTime, guestCompany.AffiliatedDate);
                         dbSmartAspects.AddInParameter(command, "@DiscountPercent", DbType.Decimal, guestCompany.DiscountPercent);
@@ -320,6 +321,7 @@ namespace HotelManagement.Data.HotelManagement
                         //dbSmartAspects.AddInParameter(command, "@TelephoneNumber", DbType.String, guestCompany.TelephoneNumber);
                         //dbSmartAspects.AddInParameter(command, "@ContactPerson", DbType.String, guestCompany.ContactPerson);
                         dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, guestCompany.Remarks);
+                        dbSmartAspects.AddInParameter(command, "@BranchCode", DbType.String, guestCompany.BranchCode);
                         dbSmartAspects.AddInParameter(command, "@Fax", DbType.String, guestCompany.Fax);
 
                         //dbSmartAspects.AddInParameter(command, "@SignupStatusId", DbType.String, guestCompany.SignupStatusId);
@@ -445,6 +447,7 @@ namespace HotelManagement.Data.HotelManagement
                                 //guestCompany.TelephoneNumber = reader["TelephoneNumber"].ToString();
                                 guestCompany.ContactPerson = reader["ContactPerson"].ToString();
                                 guestCompany.Remarks = reader["Remarks"].ToString();
+                                guestCompany.BranchCode = reader["BranchCode"].ToString();
                                 //guestCompany.SignupStatus = reader["SignupStatus"].ToString();
 
                                 guestCompany.SignupStatusId = Convert.ToInt32(reader["SignupStatusId"]);

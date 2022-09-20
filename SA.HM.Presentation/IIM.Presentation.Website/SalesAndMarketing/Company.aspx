@@ -982,6 +982,7 @@
             var fax = $("#<%=txtFax.ClientID %>").val();
             var web = $("#<%=txtWebsite.ClientID %>").val();
             var remarks = $("#<%=txtRemarks.ClientID %>").val();
+            var branchCode = $("#<%=txtBranchCode.ClientID %>").val();
             billStreet = $("#<%=txtBillingLocation.ClientID %>").val();
             billPost = $("#<%=txtBillingPostCode.ClientID %>").val();
             billCityId = $("#<%=hfBillingCityId.ClientID %>").val();
@@ -1050,6 +1051,7 @@
                 WebAddress: web,
                 Fax: fax,
                 Remarks: remarks,
+                BranchCode: branchCode,
                 BillingLocationId: billingLocationId,
                 BillingStreet: billStreet,
                 BillingPostCode: billPost,
@@ -1308,6 +1310,7 @@
                 $("#<%=txtDiscountPercent.ClientID %>").val(companyInfo.DiscountPercent);
                 $("#<%=txtCreditLimit.ClientID %>").val(companyInfo.CreditLimit);
                 $("#<%=txtRemarks.ClientID %>").val(companyInfo.Remarks);
+                $("#<%=txtBranchCode.ClientID %>").val(companyInfo.BranchCode);
                 $("#<%=hfBillingLocationId.ClientID %>").val(companyInfo.BillingLocationId);
                 $("#<%=txtBillingLocation.ClientID %>").val(companyInfo.BillingStreet);
                 $("#<%=txtBillingPostCode.ClientID %>").val(companyInfo.BillingPostCode);
@@ -1394,6 +1397,7 @@
                 $("#<%=txtFax.ClientID %>").val("");
                 $("#<%=txtWebsite.ClientID %>").val("");
                 $("#<%=txtRemarks.ClientID %>").val("");
+                $("#<%=txtBranchCode.ClientID %>").val("");
                 $("#<%=txtBillingLocation.ClientID %>").val("");
                 $("#<%=txtBillingPostCode.ClientID %>").val("");
                 $("#<%=hfBillingCityId.ClientID %>").val("0");
@@ -1907,10 +1911,18 @@
                     </fieldset>
                 </div>
                 <div class="form-group">
+                    <div id="BranchCodeDiv" runat="server">
+                        <label for="BranchCode" class="control-label col-md-2">Branch Code</label>
+                        <div class="col-sm-4">
+                            <asp:TextBox ID="txtBranchCode" runat="server" CssClass="form-control" TabIndex="31"></asp:TextBox>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="Remarks" class="control-label col-md-2">Remarks</label>
                     <div class="col-sm-10">
                         <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control" TextMode="MultiLine"
-                            TabIndex="9"></asp:TextBox>
+                            TabIndex="32"></asp:TextBox>
                     </div>
                 </div>
                 <div class="form-group">

@@ -20,6 +20,7 @@ namespace HotelManagement.Entity.HotelManagement
         public string TelephoneNumber { get; set; }
         public string ContactPerson { get; set; }
         public string Remarks { get; set; }
+        public string BranchCode { get; set; }
         public string SignupStatus { get; set; }
         public DateTime? AffiliatedDate { get; set; }
         public int? CompanyOwnerId { get; set; }
