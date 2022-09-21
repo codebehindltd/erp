@@ -466,6 +466,7 @@ namespace HotelManagement.Data.SupportAndTicket
                                     SupportNTicketView.BillingAddress = reader["BillingAddress"].ToString();
                                     SupportNTicketView.CityName = reader["CityName"].ToString();
                                     SupportNTicketView.CreatedDateDisplay = reader["CreatedDateDisplay"].ToString();
+                                    SupportNTicketView.BillGenerateDateDisplay = reader["BillGenerateDateDisplay"].ToString();
                                     SupportNTicketView.CaseNumber = reader["CaseNumber"].ToString();
                                     SupportNTicketView.CaseName = reader["CaseName"].ToString();
                                     SupportNTicketView.CaseDeltails = reader["CaseDeltails"].ToString();

@@ -31,6 +31,7 @@ namespace HotelManagement.Entity.SupportAndTicket
         public string FeedbackStatus { get; set; }
         public string CreatedByName { get; set; }
         public string CreatedDateDisplay { get; set; }
+        public string BillGenerateDateDisplay { get; set; }        
         public string AssignedTo { get; set; }
         public string CaseCloseByName { get; set; }
         public string CaseCloseDateDisplay { get; set; }

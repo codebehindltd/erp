@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Innboard.Master" AutoEventWireup="true" CodeBehind="SupportDashboardReport.aspx.cs" Inherits="HotelManagement.Presentation.Website.SupportAndTicket.Reports.SupportDashboardReport" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Innboard.Master" AutoEventWireup="true" EnableEventValidation="true" CodeBehind="SupportDashboardReport.aspx.cs" Inherits="HotelManagement.Presentation.Website.SupportAndTicket.Reports.SupportDashboardReport" %>
 
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
     Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>

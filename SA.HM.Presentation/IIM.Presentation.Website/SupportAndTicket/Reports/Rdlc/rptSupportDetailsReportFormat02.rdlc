@@ -1011,7 +1011,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>Ticket Date</Value>
+                                                <Value>Bill Date</Value>
                                                 <Style>
                                                   <FontSize>8pt</FontSize>
                                                   <FontWeight>Bold</FontWeight>
@@ -1314,7 +1314,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!CreatedDateDisplay.Value</Value>
+                                                    <Value>=Fields!BillGenerateDateDisplay.Value</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
@@ -1402,7 +1402,7 @@
         <DataSetName>SupportNTicketDetails</DataSetName>
         <Top>1.09667in</Top>
         <Height>0.5in</Height>
-        <Width>10.47222in</Width>
+        <Width>10.47224in</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -1414,7 +1414,7 @@
     <Height>1.62583in</Height>
     <Style />
   </Body>
-  <Width>10.47222in</Width>
+  <Width>10.47224in</Width>
   <Page>
     <PageFooter>
       <Height>0.22917in</Height>
@@ -1611,6 +1611,10 @@
         </Field>
         <Field Name="CreatedDateDisplay">
           <DataField>CreatedDateDisplay</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BillGenerateDateDisplay">
+          <DataField>BillGenerateDateDisplay</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="CaseNumber">
