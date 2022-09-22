@@ -158,9 +158,10 @@ namespace InnboardAPI.Controllers
                 string uniqFileName = null;
                 if(byteArray!=null && byteArray.Length > 0)
                 {
-                    string root = AppDomain.CurrentDomain.BaseDirectory;
-                    var physicalFileSystem = new PhysicalFileSystem(Path.Combine(root, "wwwroot"));
-                    var folderPath = Path.Combine(physicalFileSystem.Root, "AttendanceImages");
+                    //string root = AppDomain.CurrentDomain.BaseDirectory;
+                    var rootPath=HttpContext.Current.Server.MapPath("~/wwwroot");
+                    //var physicalFileSystem = new PhysicalFileSystem(Path.Combine(root, "wwwroot"));
+                    var folderPath = Path.Combine(rootPath, "AttendanceImages");
                     if (!Directory.Exists(folderPath))
                     {
                         Directory.CreateDirectory(folderPath);
