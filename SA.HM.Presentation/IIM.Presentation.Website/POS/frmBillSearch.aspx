@@ -14,29 +14,12 @@
 
         //Bread Crumbs Information-------------
         $(document).ready(function () {
-            /*var moduleName = "<a href='/HMCommon/frmHMHome.aspx' class='inActive'>Restaurant</a>";
-            var formName = "<span class='divider'>/</span><li class='active'>Bill Search</li>";
-            var breadCrumbs = moduleName + formName;
-            $("#ltlBreadCrumbsInformation").html(breadCrumbs);*/
-
             CommonHelper.AutoSearchClientDataSource("txtBankId", "ContentPlaceHolder1_ddlBankId", "ContentPlaceHolder1_ddlBankId");
 
             if ($("#InnboardMessageHiddenField").val() != "") {
                 CommonHelper.AlertMessage(JSON.parse($("#InnboardMessageHiddenField").val()));
                 $("#InnboardMessageHiddenField").val("");
             }
-
-            <%--var txtSearchDate = '<%=txtSearchDate.ClientID%>'
-            $('#ContentPlaceHolder1_txtSearchDate').datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: innBoarDateFormat
-            });
-            $('#ContentPlaceHolder1_txtExpireDate').datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: innBoarDateFormat
-            });--%>
 
             $('#ContentPlaceHolder1_txtSrcFromDate').datepicker({
                 changeMonth: true,
