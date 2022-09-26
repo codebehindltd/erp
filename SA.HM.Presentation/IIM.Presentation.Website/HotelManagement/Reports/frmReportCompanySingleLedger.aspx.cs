@@ -116,7 +116,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             GuestCompanyDA commonReportDa = new GuestCompanyDA();
             List<CompanyPaymentLedgerReportVwBo> companyLedger = new List<CompanyPaymentLedgerReportVwBo>();
 
-            companyLedger = commonReportDa.GetCompanyLedger(userInformationBO.UserInfoId, glCompanyId, companyId, FromDate, ToDate, null, null);
+            companyLedger = commonReportDa.GetCompanyLedger(userInformationBO.UserInfoId, glCompanyId, companyId, FromDate, ToDate, null, null, string.Empty, string.Empty, string.Empty);
             
             var reportDataSet = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataSet[0], companyLedger));

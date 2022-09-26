@@ -101,6 +101,10 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment.Reports
             paymentStatus = ddlPaymentStatus.SelectedValue;
             reportType = ddlReportType.SelectedValue;
 
+            string searchNarration = txtSearchNarration.Text;
+            string fromAmount = txtFromAmount.Text;
+            string toAmount = txtToAmount.Text;
+
             DateTime currentDate = DateTime.Now;
             string printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);
             string footerPoweredByInfo = string.Empty;
@@ -121,8 +125,9 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment.Reports
             PMSupplierDA commonReportDa = new PMSupplierDA();
             List<SupplierPaymentLedgerVwBO> supplierLedger = new List<SupplierPaymentLedgerVwBO>();
 
-            supplierLedger = commonReportDa.GetSupllierLedger(userInformationBO.UserInfoId, companyId, supplierId, FromDate, ToDate, paymentStatus, reportType);
-            
+            supplierLedger = commonReportDa.GetSupllierLedger(userInformationBO.UserInfoId, companyId, supplierId, FromDate, ToDate, paymentStatus, reportType, searchNarration, fromAmount, toAmount);
+
+
             var reportDataSet = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataSet[0], supplierLedger));
 

@@ -362,13 +362,6 @@ namespace HotelManagement.Data.Payroll
                     else
                         dbSmartAspects.AddInParameter(cmd, "@AssignEmployeeId", DbType.Int32, DBNull.Value);
 
-                    //if (AccountHeadId != 0)
-                    //    dbSmartAspects.AddInParameter(cmd, "@AccountHeadId", DbType.Int32, AccountHeadId);
-                    //else
-                    //    dbSmartAspects.AddInParameter(cmd, "@AccountHeadId", DbType.Int32, DBNull.Value);
-
-
-
                     if (!string.IsNullOrEmpty(transactionType))
                         dbSmartAspects.AddInParameter(cmd, "@transactionType", DbType.String, transactionType);
                     else
@@ -383,6 +376,7 @@ namespace HotelManagement.Data.Payroll
                         dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, Convert.ToDateTime(toDate));
                     else
                         dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, DBNull.Value);
+
                     if (!string.IsNullOrEmpty(fromAmount))
                         dbSmartAspects.AddInParameter(cmd, "@FromAmount", DbType.Decimal, Convert.ToDecimal(fromAmount));
                     else

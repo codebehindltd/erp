@@ -121,6 +121,15 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports {
         protected global::System.Web.UI.WebControls.TextBox txtDateFrom;
         
         /// <summary>
+        /// txtEndDateTo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEndDateTo;
+        
+        /// <summary>
         /// lblToDate control.
         /// </summary>
         /// <remarks>
@@ -130,13 +139,40 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports {
         protected global::System.Web.UI.WebControls.Label lblToDate;
         
         /// <summary>
-        /// txtEndDateTo control.
+        /// txtFromAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEndDateTo;
+        protected global::System.Web.UI.WebControls.TextBox txtFromAmount;
+        
+        /// <summary>
+        /// txtToAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtToAmount;
+        
+        /// <summary>
+        /// Label4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label4;
+        
+        /// <summary>
+        /// txtSearchNarration control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSearchNarration;
         
         /// <summary>
         /// btnGenarate control.

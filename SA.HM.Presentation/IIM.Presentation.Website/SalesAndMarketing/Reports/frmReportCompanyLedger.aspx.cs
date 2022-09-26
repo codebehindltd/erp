@@ -111,6 +111,10 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
             reportParam.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
             reportParam.Add(new ReportParameter("PrintDateTime", printDate));
 
+            string searchNarration = txtSearchNarration.Text;
+            string fromAmount = txtFromAmount.Text;
+            string toAmount = txtToAmount.Text;
+
             HMCommonDA hmCommonDA = new HMCommonDA();
             string ImageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
             reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
@@ -120,7 +124,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
             GuestCompanyDA commonReportDa = new GuestCompanyDA();
             List<CompanyPaymentLedgerReportVwBo> companyLedger = new List<CompanyPaymentLedgerReportVwBo>();
 
-            companyLedger = commonReportDa.GetCompanyLedger(userInformationBO.UserInfoId, glCompanyId, companyId, FromDate, ToDate, paymentStatus, reportType);
+            companyLedger = commonReportDa.GetCompanyLedger(userInformationBO.UserInfoId, glCompanyId, companyId, FromDate, ToDate, paymentStatus, reportType, searchNarration, fromAmount, toAmount);
 
             var reportDataSet = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataSet[0], companyLedger));

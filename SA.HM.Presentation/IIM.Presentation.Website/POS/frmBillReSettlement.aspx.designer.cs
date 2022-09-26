@@ -337,6 +337,51 @@ namespace HotelManagement.Presentation.Website.POS {
         protected global::System.Web.UI.WebControls.HiddenField hfPromotionalDiscountType;
         
         /// <summary>
+        /// hfAmexCardId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfAmexCardId;
+        
+        /// <summary>
+        /// hfMasterCardId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfMasterCardId;
+        
+        /// <summary>
+        /// hfVisaCardId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfVisaCardId;
+        
+        /// <summary>
+        /// hfDiscoverCardId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfDiscoverCardId;
+        
+        /// <summary>
+        /// hfMBankId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfMBankId;
+        
+        /// <summary>
         /// hfCompanyId control.
         /// </summary>
         /// <remarks>
@@ -841,6 +886,15 @@ namespace HotelManagement.Presentation.Website.POS {
         protected global::System.Web.UI.WebControls.TextBox txtAmexCard;
         
         /// <summary>
+        /// lblAmexCardBankName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAmexCardBankName;
+        
+        /// <summary>
         /// txtMasterCard control.
         /// </summary>
         /// <remarks>
@@ -848,6 +902,15 @@ namespace HotelManagement.Presentation.Website.POS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMasterCard;
+        
+        /// <summary>
+        /// lblMasterCardBankName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMasterCardBankName;
         
         /// <summary>
         /// txtVisaCard control.
@@ -859,6 +922,15 @@ namespace HotelManagement.Presentation.Website.POS {
         protected global::System.Web.UI.WebControls.TextBox txtVisaCard;
         
         /// <summary>
+        /// lblVisaCardBankName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVisaCardBankName;
+        
+        /// <summary>
         /// txtDiscoverCard control.
         /// </summary>
         /// <remarks>
@@ -866,6 +938,33 @@ namespace HotelManagement.Presentation.Website.POS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDiscoverCard;
+        
+        /// <summary>
+        /// lblDiscoverCardBankName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDiscoverCardBankName;
+        
+        /// <summary>
+        /// txtMBankingPayment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMBankingPayment;
+        
+        /// <summary>
+        /// lblMBankName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMBankName;
         
         /// <summary>
         /// txtRoomPayment control.
@@ -1163,6 +1262,51 @@ namespace HotelManagement.Presentation.Website.POS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btnSave;
+        
+        /// <summary>
+        /// Label20 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label20;
+        
+        /// <summary>
+        /// Label21 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label21;
+        
+        /// <summary>
+        /// Label22 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label22;
+        
+        /// <summary>
+        /// Label23 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label23;
+        
+        /// <summary>
+        /// Label19 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label19;
         
         /// <summary>
         /// Label13 control.

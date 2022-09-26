@@ -73,13 +73,6 @@
 
             $("#myTabs").tabs();
 
-            //$("#ContentPlaceHolder1_ddlIngredient").select2({
-            //    tags: "true",
-            //    placeholder: "--- Please Select ---",
-            //    allowClear: true,
-            //    width: "99.75%"
-            //});
-
             var sourceType = $.trim(CommonHelper.GetParameterByName("st"));
             if (sourceType == "tkn") {
                 $(".tblOrder").hide();
@@ -277,16 +270,10 @@
             });
 
             $("#ContentPlaceHolder1_ddlIngredient").change(function () {
-
-                //debugger;
                 var IngredientId = parseInt($("#ContentPlaceHolder1_ddlIngredient").val().trim());
                 var itemId = $("#ContentPlaceHolder1_hfItemId").val();
-
                 PageMethods.GetPreviousRecipeModifierTypes(IngredientId, itemId, OnLoadGetPreviousRecipeModifierTypesSucceed, OnLoadGetPreviousRecipeModifierTypesFailed);
-
-
                 return false;
-
             });
 
             NewRecipeTable = $("#tblNewRecipe").DataTable({
@@ -302,10 +289,8 @@
                 ],
                 columnDefs: [
 
-
                 ],
                 fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-
                     if (iDisplayIndex % 2 == 0) {
                         $('td', nRow).css('background-color', '#E3EAEB');
                     }
@@ -355,13 +340,11 @@
                             }
                             dropDownString += '</select > ';
 
-
                             return dropDownString;
                         }
                     }
                 ],
                 fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-
                     if (iDisplayIndex % 2 == 0) {
                         $('td', nRow).css('background-color', '#E3EAEB');
                     }
@@ -407,17 +390,13 @@
                 $("#ItemWiseRecipeList").show();
                 PageMethods.GetItemRecipeList(itemId, kotId, OnGetItemRecipeDetailsSucceed, OnGetItemRecipeDetailsFailed);
                 return false;
-
             });
 
             $("#btnDeleteTableInfo").click(function () {
-
                 $("#ItemWiseSpecialRemarks").hide();
                 $("#OpenItemNameChangeDialog").hide();
                 $("#QuantityEditDialog").hide();
-
                 $("#ContentPlaceHolder1_hfIsItemEditOrDelete").val("DeleteItem");
-
                 var kotDetailsId = $("#ContentPlaceHolder1_hfKotDetailId").val();
                 var kotId = $("#ContentPlaceHolder1_hfKotId").val();
                 var itemId = $("#ContentPlaceHolder1_hfItemId").val();
@@ -428,18 +407,15 @@
                         $("#btnDeleteTableInfo").attr("disabled", false);
                     }
                     else {
-
                         if ($("#ContentPlaceHolder1_hfIsAccessVarified").val() == "0") {
 
                             $("#txtUserId").val("");
                             $("#txtUserPassword").val("");
-
                             CommonHelper.TouchScreenUserKeyboard("accessvarification", "KeyBoardVarificationContainer");
                             var keyboard = $('.accessvarification').getkeyboard();
                             keyboard.reveal();
 
                             $("#txtUserId_keyboard").css("top", "0px");
-
                             $("#AccessPermissionForEditDelete").dialog({
                                 width: 900,
                                 height: 500,
@@ -452,15 +428,11 @@
                                 title: "Access Varification",
                                 show: 'slide'
                             });
-
-                            //toastr.info("Delete -->  " + $("#ContentPlaceHolder1_hfIsAccessVarified").val());
                             return false;
                         }
                     }
                 }
-
-                //toastr.info("Delete Access Varified-->  " + $("#ContentPlaceHolder1_hfIsAccessVarified").val());
-
+                                
                 CommonHelper.SpinnerOpen();
 
                 $.confirm({
@@ -531,7 +503,6 @@
                     }
 
                     if ($("#ContentPlaceHolder1_txtTPDiscountAmount").val() != "" && $("#ContentPlaceHolder1_txtTPDiscountAmount").val() != "0") {
-                        //$("#ContentPlaceHolder1_txtTPDiscountAmount").val("0");
                         CalculateDiscountAmount();
                         $("#ContentPlaceHolder1_txtTPDiscountAmount").attr("disabled", false);
                     }
@@ -544,13 +515,11 @@
                     if (AddedClassificationList.length > 0) {
                         $("#ContentPlaceHolder1_rbTPPercentageDiscount").prop("checked", true);
                         toastr.info("Please Remove Catgory Wise Discount First and Try Then.");
-
                         return false;
                     }
 
                     $("#ContentPlaceHolder1_txtTPDiscountAmount").attr("disabled", false);
                     if ($("#ContentPlaceHolder1_txtTPDiscountAmount").val() != "" && $("#ContentPlaceHolder1_txtTPDiscountAmount").val() != "0") {
-                        //$("#ContentPlaceHolder1_txtTPDiscountAmount").val("0");
                         CalculateDiscountAmount();
                     }
                 }
@@ -591,13 +560,10 @@
             $("#ContentPlaceHolder1_rbTpNonChargeable").click(function () {
                 if ($(this).is(":checked")) {
 
-
                     if (AddedClassificationList.length > 0) {
                         $("#ContentPlaceHolder1_rbTPComplementaryDiscount").prop("checked", false);
                         $("#ContentPlaceHolder1_rbTPPercentageDiscount").prop("checked", true);
-
                         toastr.info("Please Remove Catgory Wise Discount First and Try Then.");
-
                         return false;
                     }
 
@@ -605,7 +571,6 @@
                     $("#ContentPlaceHolder1_txtTPDiscountAmount").attr("disabled", true);
 
                     if ($("#ContentPlaceHolder1_txtTPDiscountAmount").val() != "" && $("#ContentPlaceHolder1_txtTPDiscountAmount").val() != "0") {
-
                         $("#ContentPlaceHolder1_txtRoomPayment").val("");
                         $("#ContentPlaceHolder1_txtCompanyPayment").val("");
                         $("#ContentPlaceHolder1_txtEmployeePayment").val("");
@@ -615,14 +580,12 @@
                         $("#ContentPlaceHolder1_txtMasterCard").val("");
                         $("#ContentPlaceHolder1_txtVisaCard").val("");
                         $("#ContentPlaceHolder1_txtDiscoverCard").val("");
-
                         CalculateDiscountAmount();
                     }
                 }
             });
 
             $("#btnCategoryWiseDiscountOK").click(function () {
-
                 AddedClassificationList = new Array();
                 UpdatedClassificationList = new Array();
                 DeletedClassificationList = new Array();
@@ -634,7 +597,6 @@
 
                 $('#TableClassificationWiseDiscount tbody tr').each(function () {
                     if ($(this).find("td:eq(0)").find("input").is(':checked')) {
-
                         discountAmount = $.trim($(this).find("td:eq(2)").find("input").val());
                         discountAmount = (discountAmount == null || discountAmount == "") ? "0" : parseInt(discountAmount);
 
@@ -647,14 +609,12 @@
                 discountAmount = 0;
 
                 $('#TableClassificationWiseDiscount tbody tr').each(function () {
-
                     discountId = parseInt($.trim($(this).find("td:eq(4)").text()), 10);
                     discountAmount = $.trim($(this).find("td:eq(2)").find("input").val());
 
                     discountAmount = (discountAmount == null || discountAmount == "") ? "0" : parseInt(discountAmount);
 
                     if ($(this).find("td:eq(0)").find("input").is(':checked')) {
-
                         AddedClassificationList.push({
                             DiscountAmount: discountAmount,
                             ClassificationId: parseInt($.trim($(this).find("td:eq(3)").text()), 10),
@@ -683,7 +643,6 @@
                     $("#ContentPlaceHolder1_txtTPDiscountAmount").attr("disabled", true);
                 }
                 else if (AddedClassificationList.length == 0) {
-                    //$("#ContentPlaceHolder1_txtTPDiscountAmount").val("0");
                     $("#ContentPlaceHolder1_txtTPDiscountAmount").attr("disabled", false);
                 }
 
@@ -704,16 +663,13 @@
             });
 
             $("#btnPromotionalDiscountOK").click(function () {
-
-                AddedPromotionalDiscountList = new Array();
-                DeletedPromotionalDiscountList = new Array();
-
                 var totalDiscount = 0.00;
+                AddedPromotionalDiscountList = new Array();
+                DeletedPromotionalDiscountList = new Array();                
 
                 $('#TablePromotionalDiscount tbody tr').each(function () {
 
                     if ($(this).find("td:eq(0)").find("input").is(':checked')) {
-
                         AddedPromotionalDiscountList.push({
                             BusinessPromotionId: parseInt($.trim($(this).find("td:eq(3)").text()), 10),
                             DiscountId: parseInt($.trim($(this).find("td:eq(4)").text()), 10)
@@ -733,11 +689,8 @@
 
                 $("#ContentPlaceHolder1_rbTPPercentageDiscount").prop("checked", true);
                 $("#ContentPlaceHolder1_txtTPDiscountAmount").val(totalDiscount);
-
                 $("#PromotionalDiscountDialog").dialog("close");
-
                 $("#ContentPlaceHolder1_hfPromotionalDiscountType").val("BusinessPromotion");
-
                 CalculateDiscountAmount();
                 return false;
             });
@@ -779,7 +732,6 @@
                 window.open(url, popup_window, "width=770,height=680,left=300,top=50,resizable=yes");
 
                 LoadGridInformation();
-
                 return false;
             });
 
@@ -817,7 +769,6 @@
                         data: "{'itemName':'" + request.term + "','costCenterId':'" + hfCostCenterIdVal + "'}",
                         dataType: "json",
                         success: function (data) {
-
                             var searchData = data.error ? [] : $.map(data.d, function (m) {
                                 return {
                                     ImagePath: m.ImageName,
@@ -856,7 +807,6 @@
                 source: function (request, response) {
 
                     var hfCostCenterIdVal = $("#ContentPlaceHolder1_hfCostCenterId").val()
-
                     $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
@@ -923,10 +873,7 @@
         });
 
         function OnDeleteRecipeDetailsAndUpdateDefaultPriceSucceeded(result) {
-
         }
-
-
 
         function OnDeleteRecipeDetailsAndUpdateDefaultPriceFailed(xhr, err) {
             toastr.error(xhr.responseText);
@@ -957,14 +904,10 @@
         }
 
         function ExistingRecipeModifierTypesChange(result) {
-            //debugger;
-
             var modifierId = result.value;
             var row = $(result).parents('tr');
             var itemId = RecipeTable.row(row).data().ItemId;
-
             var itemObject = _.findWhere(previousRecipeTypesList, { ItemId: parseInt(itemId) });
-
             var typeObject = _.findWhere(itemObject.RecipeModifierTypes, { TypeId: parseInt(modifierId) });
             RecipeTable.cell(row, 2).data(typeObject.TotalCost);
             var selectedValue = RecipeTable.cell(row, 1).nodes().to$().find('select').val();
@@ -973,7 +916,6 @@
         }
 
         function UpdateOrderInfo(changeType) {
-            //$("#TableInfoActionDecider").dialog("close");
             $("#ItemWiseRecipeList").hide();
             $("#ContentPlaceHolder1_hfChangeType").val(changeType);
             $("#ContentPlaceHolder1_hfIsItemEditOrDelete").val(changeType);
@@ -1008,21 +950,16 @@
                             title: "Access Varification",
                             show: 'slide'
                         });
-
-                        //toastr.info("Edit -->  " + $("#ContentPlaceHolder1_hfIsAccessVarified").val());
                         return false;
                     }
                 }
             }
-
-            //toastr.info("Edit Access Varified-->  " + $("#ContentPlaceHolder1_hfIsAccessVarified").val());
 
             CommonHelper.TouchScreenNumberKeyboard("numkbnotdecimal", "KeyBoardContainerQuantityChange");
             var keyboard = $('.numkbnotdecimal').getkeyboard();
             keyboard.reveal();
 
             $("#ContentPlaceHolder1_txtTouchKeypadResult_keyboard").css("top", "0px");
-
             $("#ItemWiseSpecialRemarks").hide();
             $("#OpenItemNameChangeDialog").hide();
             $("#QuantityEditDialog").show();
@@ -1030,11 +967,8 @@
         }
 
         function UpdateOpenItemName() {
-
             CommonHelper.ExactMatch();
-
             var itemId = $("#ContentPlaceHolder1_hfItemId").val();
-
             var tr = $("#TableWiseItemInformation tbody tr").find("td:eq(5):textEquals('" + itemId + "')").parent();
             var selectedItemQty = "0", itemName = "";
 
@@ -1045,7 +979,6 @@
             $("#OpenItemNameChangeDialog").show();
             $("#QuantityEditDialog").hide();
             $("#ContentPlaceHolder1_hfIsAccessVarified").val("0");
-
             return false;
         }
 
@@ -1472,12 +1405,10 @@
             }
 
             var PaymentMode = new Array();
-
             var amexCardBankName = $("#lblAmexCardBankName").text();
             var masterCardBankName = $("#lblMasterCardBankName").text();
             var visaCardBankName = $("#lblVisaCardBankName").text();
             var discoverCardBankName = $("#lblDiscoverCardBankName").text();
-
             var mBankName = $("#lblMBankName").text();
             var companyName = $("#lblCompanyName").text();
             var employeeName = $("#lblEmployeeName").text();
@@ -4505,14 +4436,14 @@
             var txtDiscoverCardVal = $("#ContentPlaceHolder1_txtDiscoverCard").val();
             var discoverCardBankName = $("#lblDiscoverCardBankName").text();
             var discoverCardBankId = $("#ContentPlaceHolder1_hfDiscoverCardId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfDiscoverCardId").val();
-
-            var txtTPDiscountAmountVal = $("#ContentPlaceHolder1_txtTPDiscountAmount").val();
-            var guestRoomPayment = $("#ContentPlaceHolder1_txtRoomPayment").val();
                         
             var mBankAmount = $("#ContentPlaceHolder1_txtMBankingPayment").val();
             var mBankName = $("#lblMBankName").text();
             var mBankId = $("#ContentPlaceHolder1_hfMBankId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfMBankId").val();
             
+            var txtTPDiscountAmountVal = $("#ContentPlaceHolder1_txtTPDiscountAmount").val();
+            var guestRoomPayment = $("#ContentPlaceHolder1_txtRoomPayment").val();
+
             var companyAmount = $("#ContentPlaceHolder1_txtCompanyPayment").val();
             var companyName = $("#lblCompanyName").text();
             var companyId = $("#ContentPlaceHolder1_hfCompanyId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfCompanyId").val();
@@ -4549,6 +4480,12 @@
                 RestaurantBill.CustomerName = 'Discover Card ('+ discoverCardBankName + ')';
                 RestaurantBill.CustomerName = '';
             }
+            else if (mBankId != "0") {
+                RestaurantBill.TransactionType = 'M-Banking';
+                RestaurantBill.TransactionId = mBankId;
+                RestaurantBill.CustomerName = 'M-Banking ('+ mBankName + ')';
+                //RestaurantBill.CustomerName = '';
+            }
             else if (employeeId != "0") {
                 RestaurantBill.TransactionType = 'Employee';
                 RestaurantBill.TransactionId = employeeId;
@@ -4563,13 +4500,7 @@
                 RestaurantBill.TransactionType = 'Company';
                 RestaurantBill.TransactionId = companyId;
                 RestaurantBill.CustomerName = companyName;
-            }
-            else if (mBankId != "0") {
-                RestaurantBill.TransactionType = 'M-Banking';
-                RestaurantBill.TransactionId = mBankId;
-                RestaurantBill.CustomerName = 'M-Banking ('+ mBankName + ')';
-                //RestaurantBill.CustomerName = '';
-            }
+            }            
             else {
                 RestaurantBill.TransactionType = null;
                 RestaurantBill.TransactionId = null;
@@ -4679,126 +4610,6 @@
                             paymentCounter = paymentCounter + 1;
                         }
                     }
-                    //else if (amexCardBankId != "0") {
-                    //    if ($.trim(paymentAmount) == "" || $.trim(paymentAmount) == "0") {
-                    //        paymentAmount = $.trim(paymentAmount) == "" ? "0" : paymentAmount;
-                            
-                    //        GuestBillPayment.push({
-                    //            NodeId: 0,
-                    //            PaymentType: PaymentMode[row].PaymentType,
-                    //            AccountsPostingHeadId: 0,
-                    //            BillPaidBy: 0,
-                    //            BankId: paymentById,
-                    //            RegistrationId: paymentById,
-                    //            FieldId: hfLocalCurrencyIdVal,
-                    //            ConvertionRate: 1,
-                    //            CurrencyAmount: paymentAmount,
-                    //            PaymentAmount: paymentAmount,
-                    //            ChecqueDate: new Date(),
-                    //            PaymentMode: PaymentMode[row].PaymentMode,
-                    //            PaymentId: 1,
-                    //            CardNumber: "",
-                    //            CardType: PaymentMode[row].CardType,
-                    //            ExpireDate: null,
-                    //            ChecqueNumber: "",
-                    //            CardHolderName: "",
-                    //            PaymentDescription: PaymentMode[row].PaymentDescription,
-                    //            CompanyId: 0
-                    //        });
-
-                    //        paymentCounter = paymentCounter + 1;
-                    //    }
-                    //}
-                    //else if (masterCardBankId != "0") {
-                    //    if ($.trim(paymentAmount) == "" || $.trim(paymentAmount) == "0") {
-                    //        paymentAmount = $.trim(paymentAmount) == "" ? "0" : paymentAmount;
-                            
-                    //        GuestBillPayment.push({
-                    //            NodeId: 0,
-                    //            PaymentType: PaymentMode[row].PaymentType,
-                    //            AccountsPostingHeadId: 0,
-                    //            BillPaidBy: 0,
-                    //            BankId: paymentById,
-                    //            RegistrationId: paymentById,
-                    //            FieldId: hfLocalCurrencyIdVal,
-                    //            ConvertionRate: 1,
-                    //            CurrencyAmount: paymentAmount,
-                    //            PaymentAmount: paymentAmount,
-                    //            ChecqueDate: new Date(),
-                    //            PaymentMode: PaymentMode[row].PaymentMode,
-                    //            PaymentId: 1,
-                    //            CardNumber: "",
-                    //            CardType: PaymentMode[row].CardType,
-                    //            ExpireDate: null,
-                    //            ChecqueNumber: "",
-                    //            CardHolderName: "",
-                    //            PaymentDescription: PaymentMode[row].PaymentDescription,
-                    //            CompanyId: 0
-                    //        });
-
-                    //        paymentCounter = paymentCounter + 1;
-                    //    }
-                    //}
-                    //else if (visaCardBankId != "0") {
-                    //    if ($.trim(paymentAmount) == "" || $.trim(paymentAmount) == "0") {
-                    //        paymentAmount = $.trim(paymentAmount) == "" ? "0" : paymentAmount;
-                            
-                    //        GuestBillPayment.push({
-                    //            NodeId: 0,
-                    //            PaymentType: PaymentMode[row].PaymentType,
-                    //            AccountsPostingHeadId: 0,
-                    //            BillPaidBy: 0,
-                    //            BankId: paymentById,
-                    //            RegistrationId: paymentById,
-                    //            FieldId: hfLocalCurrencyIdVal,
-                    //            ConvertionRate: 1,
-                    //            CurrencyAmount: paymentAmount,
-                    //            PaymentAmount: paymentAmount,
-                    //            ChecqueDate: new Date(),
-                    //            PaymentMode: PaymentMode[row].PaymentMode,
-                    //            PaymentId: 1,
-                    //            CardNumber: "",
-                    //            CardType: PaymentMode[row].CardType,
-                    //            ExpireDate: null,
-                    //            ChecqueNumber: "",
-                    //            CardHolderName: "",
-                    //            PaymentDescription: PaymentMode[row].PaymentDescription,
-                    //            CompanyId: 0
-                    //        });
-
-                    //        paymentCounter = paymentCounter + 1;
-                    //    }
-                    //}
-                    //else if (discoverCardBankId != "0") {
-                    //    if ($.trim(paymentAmount) == "" || $.trim(paymentAmount) == "0") {
-                    //        paymentAmount = $.trim(paymentAmount) == "" ? "0" : paymentAmount;
-                            
-                    //        GuestBillPayment.push({
-                    //            NodeId: 0,
-                    //            PaymentType: PaymentMode[row].PaymentType,
-                    //            AccountsPostingHeadId: 0,
-                    //            BillPaidBy: 0,
-                    //            BankId: paymentById,
-                    //            RegistrationId: paymentById,
-                    //            FieldId: hfLocalCurrencyIdVal,
-                    //            ConvertionRate: 1,
-                    //            CurrencyAmount: paymentAmount,
-                    //            PaymentAmount: paymentAmount,
-                    //            ChecqueDate: new Date(),
-                    //            PaymentMode: PaymentMode[row].PaymentMode,
-                    //            PaymentId: 1,
-                    //            CardNumber: "",
-                    //            CardType: PaymentMode[row].CardType,
-                    //            ExpireDate: null,
-                    //            ChecqueNumber: "",
-                    //            CardHolderName: "",
-                    //            PaymentDescription: PaymentMode[row].PaymentDescription,
-                    //            CompanyId: 0
-                    //        });
-
-                    //        paymentCounter = paymentCounter + 1;
-                    //    }
-                    //}
                     else if (memberId != "0") {
                         if ($.trim(paymentAmount) == "" || $.trim(paymentAmount) == "0") {
                             paymentAmount = $.trim(paymentAmount) == "" ? "0" : paymentAmount;
@@ -5214,34 +5025,9 @@
                 IsBillOnProcess = "0";
 
                 if (result.IsDirectPrint == false) {
-
                     $("#ContentPlaceHolder1_hfBillId").val(result.Pk);
                     $('#btnPrintPreview').trigger('click');
                     $("#ContentPlaceHolder1_btnSave").attr("disabled", true);
-
-
-                    //                    var iframeid = 'printDoc';
-                    //                    var url = "/Restaurant/Reports/frmReportTPRestaurantBillInfo.aspx?billID=" + result.Pk;
-                    //                    parent.document.getElementById(iframeid).src = url;
-
-                    //setTimeout(PrintAfterSometimes, 5000);
-
-                    //                    ClearWithPopUpInvoicePreview();
-
-                    //                    $("#LoadReport").dialog({
-                    //                        autoOpen: true,
-                    //                        modal: true,
-                    //                        minWidth: 500,
-                    //                        minHeight: 555,
-                    //                        width: 'auto',
-                    //                        closeOnEscape: false,
-                    //                        resizable: false,
-                    //                        height: 'auto',
-                    //                        fluid: true,
-                    //                        title: "Invoice Preview",
-                    //                        show: 'slide',
-                    //                        close: ClosePrintDialog
-                    //                    });
                 }
                 else {
                     window.location = result.RedirectUrl;
@@ -5393,11 +5179,6 @@
                         }
 
                         if ($("#ContentPlaceHolder1_hfsourceType").val() == "RestaurantToken") {
-                            // ValidateFormBeforeSettlement('holdup');
-                            //if ($("#TableWiseItemInformation tbody tr").length > 0) {
-
-                            //}
-                            //else
                             window.location = "frmCostCenterSelectionForAll.aspx";
                         }
                         else if ($("#ContentPlaceHolder1_hfsourceType").val() == "RestaurantTable") {
@@ -5582,206 +5363,206 @@
             });
         }
 
-            function LoadMasterCardInfo() {
+        function LoadMasterCardInfo() {
 
-                var companyName = "";
+            var companyName = "";
 
-                $("#MasterCardInfoDialog").dialog({
-                    width: 600,
-                    height: 280,
-                    autoOpen: true,
-                    modal: true,
-                    closeOnEscape: false,
-                    resizable: false,
-                    fluid: true,
-                    title: "Bank Search",
-                    show: 'slide',
-                    open: function (event, ui) {
-                        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
-                    }
-                });
-
-                $("#txtSearchMasterCard").autocomplete({
-                    source: function (request, response) {
-                        $.ajax({
-                            type: "POST",
-                            contentType: "application/json; charset=utf-8",
-                            url: '../POS/frmOrderManagement.aspx/GetBankInfoForAutoComplete',
-                            data: "{'bankName':'" + request.term + "'}",
-                            dataType: "json",
-                            success: function (data) {
-
-                                var searchData = data.error ? [] : $.map(data.d, function (m) {
-                                    return {
-                                        AccountName: m.AccountName,
-                                        BranchName: m.BranchName,
-                                        AccountNumber: m.AccountNumber,
-                                        AccountType: m.AccountType,
-                                        Description: m.Description,
-                                        label: m.BankName,
-                                        value: m.BankId
-                                    };
-                                });
-                                response(searchData);
-                            },
-                            error: function (xhr, err) {
-                                toastr.error(xhr.responseText);
-                            }
-                        });
-                    },
-                    focus: function (event, ui) {
-                        // prevent autocomplete from updating the textbox
-                        event.preventDefault();
-                        // manually update the textbox
-                        //$(this).val(ui.item.label);
-                    },
-                    select: function (event, ui) {
-                        // prevent autocomplete from updating the textbox
-                        event.preventDefault();
-                        // manually update the textbox and hidden field
-                        $(this).val(ui.item.label);
-
-                        $("#ContentPlaceHolder1_hfMasterCardId").val(ui.item.value);
-                        //$("#txtCompanyAddress").val(ui.item.CompanyAddress);
-                        //$("#txtContactNumber").val(ui.item.ContactNumber);
-                        //$("#txtBalance").val(ui.item.Balance);
-                    }
-                });
-            }
-
-                function LoadVisaCardInfo() {
-
-                    var companyName = "";
-
-                    $("#VisaCardInfoDialog").dialog({
-                        width: 600,
-                        height: 280,
-                        autoOpen: true,
-                        modal: true,
-                        closeOnEscape: false,
-                        resizable: false,
-                        fluid: true,
-                        title: "Bank Search",
-                        show: 'slide',
-                        open: function (event, ui) {
-                            $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
-                        }
-                    });
-
-                    $("#txtSearchVisaCard").autocomplete({
-                        source: function (request, response) {
-                            $.ajax({
-                                type: "POST",
-                                contentType: "application/json; charset=utf-8",
-                                url: '../POS/frmOrderManagement.aspx/GetBankInfoForAutoComplete',
-                                data: "{'bankName':'" + request.term + "'}",
-                                dataType: "json",
-                                success: function (data) {
-
-                                    var searchData = data.error ? [] : $.map(data.d, function (m) {
-                                        return {
-                                            AccountName: m.AccountName,
-                                            BranchName: m.BranchName,
-                                            AccountNumber: m.AccountNumber,
-                                            AccountType: m.AccountType,
-                                            Description: m.Description,
-                                            label: m.BankName,
-                                            value: m.BankId
-                                        };
-                                    });
-                                    response(searchData);
-                                },
-                                error: function (xhr, err) {
-                                    toastr.error(xhr.responseText);
-                                }
-                            });
-                        },
-                        focus: function (event, ui) {
-                            // prevent autocomplete from updating the textbox
-                            event.preventDefault();
-                            // manually update the textbox
-                            //$(this).val(ui.item.label);
-                        },
-                        select: function (event, ui) {
-                            // prevent autocomplete from updating the textbox
-                            event.preventDefault();
-                            // manually update the textbox and hidden field
-                            $(this).val(ui.item.label);
-
-                            $("#ContentPlaceHolder1_hfVisaCardId").val(ui.item.value);
-                            //$("#txtCompanyAddress").val(ui.item.CompanyAddress);
-                            //$("#txtContactNumber").val(ui.item.ContactNumber);
-                            //$("#txtBalance").val(ui.item.Balance);
-                        }
-                    });
+            $("#MasterCardInfoDialog").dialog({
+                width: 600,
+                height: 280,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: false,
+                resizable: false,
+                fluid: true,
+                title: "Bank Search",
+                show: 'slide',
+                open: function (event, ui) {
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
                 }
+            });
 
-                    function LoadDiscoverCardInfo() {
+            $("#txtSearchMasterCard").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: '../POS/frmOrderManagement.aspx/GetBankInfoForAutoComplete',
+                        data: "{'bankName':'" + request.term + "'}",
+                        dataType: "json",
+                        success: function (data) {
 
-                        var companyName = "";
+                            var searchData = data.error ? [] : $.map(data.d, function (m) {
+                                return {
+                                    AccountName: m.AccountName,
+                                    BranchName: m.BranchName,
+                                    AccountNumber: m.AccountNumber,
+                                    AccountType: m.AccountType,
+                                    Description: m.Description,
+                                    label: m.BankName,
+                                    value: m.BankId
+                                };
+                            });
+                            response(searchData);
+                        },
+                        error: function (xhr, err) {
+                            toastr.error(xhr.responseText);
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox
+                    //$(this).val(ui.item.label);
+                },
+                select: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox and hidden field
+                    $(this).val(ui.item.label);
 
-                        $("#DiscoverCardInfoDialog").dialog({
-                            width: 600,
-                            height: 280,
-                            autoOpen: true,
-                            modal: true,
-                            closeOnEscape: false,
-                            resizable: false,
-                            fluid: true,
-                            title: "Bank Search",
-                            show: 'slide',
-                            open: function (event, ui) {
-                                $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
-                            }
-                        });
+                    $("#ContentPlaceHolder1_hfMasterCardId").val(ui.item.value);
+                    //$("#txtCompanyAddress").val(ui.item.CompanyAddress);
+                    //$("#txtContactNumber").val(ui.item.ContactNumber);
+                    //$("#txtBalance").val(ui.item.Balance);
+                }
+            });
+        }
 
-                        $("#txtSearchDiscoverCard").autocomplete({
-                            source: function (request, response) {
-                                $.ajax({
-                                    type: "POST",
-                                    contentType: "application/json; charset=utf-8",
-                                    url: '../POS/frmOrderManagement.aspx/GetBankInfoForAutoComplete',
-                                    data: "{'bankName':'" + request.term + "'}",
-                                    dataType: "json",
-                                    success: function (data) {
+        function LoadVisaCardInfo() {
 
-                                        var searchData = data.error ? [] : $.map(data.d, function (m) {
-                                            return {
-                                                AccountName: m.AccountName,
-                                                BranchName: m.BranchName,
-                                                AccountNumber: m.AccountNumber,
-                                                AccountType: m.AccountType,
-                                                Description: m.Description,
-                                                label: m.BankName,
-                                                value: m.BankId
-                                            };
-                                        });
-                                        response(searchData);
-                                    },
-                                    error: function (xhr, err) {
-                                        toastr.error(xhr.responseText);
-                                    }
-                                });
-                            },
-                            focus: function (event, ui) {
-                                // prevent autocomplete from updating the textbox
-                                event.preventDefault();
-                                // manually update the textbox
-                                //$(this).val(ui.item.label);
-                            },
-                            select: function (event, ui) {
-                                // prevent autocomplete from updating the textbox
-                                event.preventDefault();
-                                // manually update the textbox and hidden field
-                                $(this).val(ui.item.label);
+            var companyName = "";
 
-                                $("#ContentPlaceHolder1_hfDiscoverCardId").val(ui.item.value);
-                                //$("#txtCompanyAddress").val(ui.item.CompanyAddress);
-                                //$("#txtContactNumber").val(ui.item.ContactNumber);
-                                //$("#txtBalance").val(ui.item.Balance);
-                            }
-                        });
-                    }
+            $("#VisaCardInfoDialog").dialog({
+                width: 600,
+                height: 280,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: false,
+                resizable: false,
+                fluid: true,
+                title: "Bank Search",
+                show: 'slide',
+                open: function (event, ui) {
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                }
+            });
+
+            $("#txtSearchVisaCard").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: '../POS/frmOrderManagement.aspx/GetBankInfoForAutoComplete',
+                        data: "{'bankName':'" + request.term + "'}",
+                        dataType: "json",
+                        success: function (data) {
+
+                            var searchData = data.error ? [] : $.map(data.d, function (m) {
+                                return {
+                                    AccountName: m.AccountName,
+                                    BranchName: m.BranchName,
+                                    AccountNumber: m.AccountNumber,
+                                    AccountType: m.AccountType,
+                                    Description: m.Description,
+                                    label: m.BankName,
+                                    value: m.BankId
+                                };
+                            });
+                            response(searchData);
+                        },
+                        error: function (xhr, err) {
+                            toastr.error(xhr.responseText);
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox
+                    //$(this).val(ui.item.label);
+                },
+                select: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox and hidden field
+                    $(this).val(ui.item.label);
+
+                    $("#ContentPlaceHolder1_hfVisaCardId").val(ui.item.value);
+                    //$("#txtCompanyAddress").val(ui.item.CompanyAddress);
+                    //$("#txtContactNumber").val(ui.item.ContactNumber);
+                    //$("#txtBalance").val(ui.item.Balance);
+                }
+            });
+        }
+
+        function LoadDiscoverCardInfo() {
+
+            var companyName = "";
+
+            $("#DiscoverCardInfoDialog").dialog({
+                width: 600,
+                height: 280,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: false,
+                resizable: false,
+                fluid: true,
+                title: "Bank Search",
+                show: 'slide',
+                open: function (event, ui) {
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                }
+            });
+
+            $("#txtSearchDiscoverCard").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: '../POS/frmOrderManagement.aspx/GetBankInfoForAutoComplete',
+                        data: "{'bankName':'" + request.term + "'}",
+                        dataType: "json",
+                        success: function (data) {
+
+                            var searchData = data.error ? [] : $.map(data.d, function (m) {
+                                return {
+                                    AccountName: m.AccountName,
+                                    BranchName: m.BranchName,
+                                    AccountNumber: m.AccountNumber,
+                                    AccountType: m.AccountType,
+                                    Description: m.Description,
+                                    label: m.BankName,
+                                    value: m.BankId
+                                };
+                            });
+                            response(searchData);
+                        },
+                        error: function (xhr, err) {
+                            toastr.error(xhr.responseText);
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox
+                    //$(this).val(ui.item.label);
+                },
+                select: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox and hidden field
+                    $(this).val(ui.item.label);
+
+                    $("#ContentPlaceHolder1_hfDiscoverCardId").val(ui.item.value);
+                    //$("#txtCompanyAddress").val(ui.item.CompanyAddress);
+                    //$("#txtContactNumber").val(ui.item.ContactNumber);
+                    //$("#txtBalance").val(ui.item.Balance);
+                }
+            });
+        }
 
         function LoadMBankingInfo() {
 

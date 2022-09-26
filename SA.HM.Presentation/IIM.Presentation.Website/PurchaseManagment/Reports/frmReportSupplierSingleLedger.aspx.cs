@@ -139,7 +139,7 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment.Reports
             PMSupplierDA commonReportDa = new PMSupplierDA();
             List<SupplierPaymentLedgerVwBO> supplierLedger = new List<SupplierPaymentLedgerVwBO>();
 
-            supplierLedger = commonReportDa.GetSupllierLedger(userInformationBO.UserInfoId, companyId, supplierId, FromDate, ToDate, null, null);
+            supplierLedger = commonReportDa.GetSupllierLedger(userInformationBO.UserInfoId, companyId, supplierId, FromDate, ToDate, null, null, string.Empty, string.Empty, string.Empty);
             
             var reportDataSet = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataSet[0], supplierLedger));

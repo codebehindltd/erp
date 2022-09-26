@@ -1236,7 +1236,7 @@ namespace HotelManagement.Data.HotelManagement
             return paymentInfo;
         }
         //--** Company Ledger
-        public List<CompanyPaymentLedgerReportVwBo> GetCompanyLedger(int userInfoId, int glCompanyId, int companyId, DateTime dateFrom, DateTime dateTo, string paymentStatus, string reportType)
+        public List<CompanyPaymentLedgerReportVwBo> GetCompanyLedger(int userInfoId, int glCompanyId, int companyId, DateTime dateFrom, DateTime dateTo, string paymentStatus, string reportType, string searchNarration, string fromAmount, string toAmount)
         {
             List<CompanyPaymentLedgerReportVwBo> supplierInfo = new List<CompanyPaymentLedgerReportVwBo>();
             using (DbConnection conn = dbSmartAspects.CreateConnection())
@@ -1262,6 +1262,21 @@ namespace HotelManagement.Data.HotelManagement
                         dbSmartAspects.AddInParameter(cmd, "@PaymentStatus", DbType.String, paymentStatus);
                     else
                         dbSmartAspects.AddInParameter(cmd, "@PaymentStatus", DbType.String, DBNull.Value);
+
+                    if (searchNarration != "")
+                        dbSmartAspects.AddInParameter(cmd, "@SearchNarration", DbType.String, searchNarration);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@SearchNarration", DbType.String, DBNull.Value);
+
+                    if (!string.IsNullOrEmpty(fromAmount))
+                        dbSmartAspects.AddInParameter(cmd, "@FromAmount", DbType.Decimal, Convert.ToDecimal(fromAmount));
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@FromAmount", DbType.Decimal, DBNull.Value);
+
+                    if (!string.IsNullOrEmpty(toAmount))
+                        dbSmartAspects.AddInParameter(cmd, "@ToAmount", DbType.Decimal, Convert.ToDecimal(toAmount));
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@ToAmount", DbType.Decimal, DBNull.Value);
 
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "ItemInfo");

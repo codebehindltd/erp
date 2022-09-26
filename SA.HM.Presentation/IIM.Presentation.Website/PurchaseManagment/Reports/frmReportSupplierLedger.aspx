@@ -184,38 +184,55 @@
                         </asp:DropDownList>
                     </div>
                 </div>
-            <div class="form-group" id="companysearch">
-                <div class="col-md-2">
-                    <asp:Label ID="Label1" runat="server" class="control-label required-field" Text="Supplier"></asp:Label>
+                <div class="form-group" id="companysearch">
+                    <div class="col-md-2">
+                        <asp:Label ID="Label1" runat="server" class="control-label required-field" Text="Supplier"></asp:Label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" id="txtSearch" class="form-control" tabindex="6" />
+                    </div>
                 </div>
-                <div class="col-md-10">
-                    <input type="text" id="txtSearch" class="form-control" tabindex="6" />
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="From Date"></asp:Label>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:TextBox ID="txtDateFrom" placeholder="From Date" CssClass="form-control" runat="server" TabIndex="7"></asp:TextBox><input
+                            type="hidden" id="hidFromDate" />
+                    </div>
+                    <div class="col-md-2">
+                        <asp:TextBox ID="txtEndDateTo" placeholder="To From" CssClass="form-control" runat="server" TabIndex="8"></asp:TextBox><input
+                            type="hidden" id="hidToDate" />
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="lblToDate" runat="server" class="control-label" Text="Amount"></asp:Label>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:TextBox ID="txtFromAmount" placeholder="From Amount" CssClass="form-control" runat="server" TabIndex="7"></asp:TextBox><input
+                            type="hidden" />
+                    </div>
+                    <div class="col-md-2">
+                        <asp:TextBox ID="txtToAmount" placeholder="To Amount" CssClass="form-control" runat="server" TabIndex="8"></asp:TextBox><input
+                            type="hidden" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-2">
-                    <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="From Date"></asp:Label>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <asp:Label ID="Label4" runat="server" class="control-label" Text="Narration"></asp:Label>
+                    </div>
+                    <div class="col-md-10">
+                        <asp:TextBox ID="txtSearchNarration" CssClass="form-control" runat="server" TabIndex="7"></asp:TextBox><input
+                            type="hidden" />
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <asp:TextBox ID="txtDateFrom" CssClass="form-control" runat="server" TabIndex="7"></asp:TextBox><input
-                        type="hidden" id="hidFromDate" />
-                </div>
-                <div class="col-md-2">
-                    <asp:Label ID="lblToDate" runat="server" class="control-label" Text="To Date"></asp:Label>
-                </div>
-                <div class="col-md-4">
-                    <asp:TextBox ID="txtEndDateTo" CssClass="form-control" runat="server" TabIndex="8"></asp:TextBox><input
-                        type="hidden" id="hidToDate" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12" id="divGenerate">
-                    <asp:Button ID="btnGenarate" runat="server" Text="Generate" CssClass="btn btn-primary btn-sm"
-                        TabIndex="10" OnClientClick="javascript: return ValidationSearch();" OnClick="btnGenarate_Click" />
+                <div class="row">
+                    <div class="col-md-12" id="divGenerate">
+                        <asp:Button ID="btnGenarate" runat="server" Text="Generate" CssClass="btn btn-primary btn-sm"
+                            TabIndex="10" OnClientClick="javascript: return ValidationSearch();" OnClick="btnGenarate_Click" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <div style="display: none;">
         <asp:Button ID="btnPrintReportFromClient" runat="server" Text="Button" OnClick="btnPrintReportFromClient_Click"

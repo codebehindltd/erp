@@ -1245,6 +1245,36 @@
 
             var sourceType = $.trim(CommonHelper.GetParameterByName("st"));
 
+            if ($("#ContentPlaceHolder1_txtAmexCard").val() != "") {
+                if ($("#ContentPlaceHolder1_hfAmexCardId").val() == "" || $("#ContentPlaceHolder1_hfAmexCardId").val() == "0") {
+                    toastr.warning("Please Select Amex Card To Give Mobile Bank Payment.");
+                    return false;
+                }
+            }
+            if ($("#ContentPlaceHolder1_txtMasterCard").val() != "") {
+                if ($("#ContentPlaceHolder1_hfMasterCardId").val() == "" || $("#ContentPlaceHolder1_hfMasterCardId").val() == "0") {
+                    toastr.warning("Please Select Master Card To Give Mobile Bank Payment.");
+                    return false;
+                }
+            }
+            if ($("#ContentPlaceHolder1_txtVisaCard").val() != "") {
+                if ($("#ContentPlaceHolder1_hfVisaCardId").val() == "" || $("#ContentPlaceHolder1_hfVisaCardId").val() == "0") {
+                    toastr.warning("Please Select Visa Card To Give Mobile Bank Payment.");
+                    return false;
+                }
+            }
+            if ($("#ContentPlaceHolder1_txtDiscoverCard").val() != "") {
+                if ($("#ContentPlaceHolder1_hfDiscoverCardId").val() == "" || $("#ContentPlaceHolder1_hfDiscoverCardId").val() == "0") {
+                    toastr.warning("Please Select Discover Card To Give Mobile Bank Payment.");
+                    return false;
+                }
+            }
+            if ($("#ContentPlaceHolder1_txtMBankingPayment").val() != "") { // && $("#ContentPlaceHolder1_txtMBankingPayment").val() != "0"
+                if ($("#ContentPlaceHolder1_hfMBankId").val() == "" || $("#ContentPlaceHolder1_hfMBankId").val() == "0") {
+                    toastr.warning("Please Select M-Banking To Give Mobile Bank Payment.");
+                    return false;
+                }
+            }
             if ($("#ContentPlaceHolder1_txtCompanyPayment").val() != "") { // && $("#ContentPlaceHolder1_txtCompanyPayment").val() != "0"
                 if ($("#ContentPlaceHolder1_hfCompanyId").val() == "" || $("#ContentPlaceHolder1_hfCompanyId").val() == "0") {
                     toastr.warning("Please Select Compnay To Give Company Payment.");
@@ -1270,17 +1300,22 @@
                 }
             }
 
-
             var PaymentMode = new Array();
+            var amexCardBankName = $("#lblAmexCardBankName").text();
+            var masterCardBankName = $("#lblMasterCardBankName").text();
+            var visaCardBankName = $("#lblVisaCardBankName").text();
+            var discoverCardBankName = $("#lblDiscoverCardBankName").text();
+            var mBankName = $("#lblMBankName").text();
             var companyName = $("#lblCompanyName").text();
             var employeeName = $("#lblEmployeeName").text();
             var memberName = $("#txtMemberName").val();
 
             PaymentMode.push({ CardType: '', PaymentType: 'Advance', PaymentDescription: '', PaymentMode: 'Cash', PaymentById: '', Control: "ContentPlaceHolder1_txtCash", AlertMassage: "Cash" });
-            PaymentMode.push({ CardType: 'a', PaymentType: 'Advance', PaymentDescription: 'American Express', PaymentMode: 'Card', PaymentById: '', Control: "ContentPlaceHolder1_txtAmexCard", AlertMassage: "Card" });
-            PaymentMode.push({ CardType: 'm', PaymentType: 'Advance', PaymentDescription: 'Master Card', PaymentMode: 'Card', PaymentById: '', Control: "ContentPlaceHolder1_txtMasterCard", AlertMassage: "Card" });
-            PaymentMode.push({ CardType: 'v', PaymentType: 'Advance', PaymentDescription: 'Visa Card', PaymentMode: 'Card', PaymentById: '', Control: "ContentPlaceHolder1_txtVisaCard", AlertMassage: "Card" });
-            PaymentMode.push({ CardType: 'd', PaymentType: 'Advance', PaymentDescription: 'Discover Card', PaymentMode: 'Card', PaymentById: '', Control: "ContentPlaceHolder1_txtDiscoverCard", AlertMassage: "Card" });
+            PaymentMode.push({ CardType: 'a', PaymentType: 'Advance', PaymentDescription: 'American Express', PaymentMode: 'Card', PaymentById: $("#ContentPlaceHolder1_hfAmexCardId").val(), Control: "ContentPlaceHolder1_txtAmexCard", AlertMassage: "Card" });
+            PaymentMode.push({ CardType: 'm', PaymentType: 'Advance', PaymentDescription: 'Master Card', PaymentMode: 'Card', PaymentById: $("#ContentPlaceHolder1_hfMasterCardId").val(), Control: "ContentPlaceHolder1_txtMasterCard", AlertMassage: "Card" });
+            PaymentMode.push({ CardType: 'v', PaymentType: 'Advance', PaymentDescription: 'Visa Card', PaymentMode: 'Card', PaymentById: $("#ContentPlaceHolder1_hfVisaCardId").val(), Control: "ContentPlaceHolder1_txtVisaCard", AlertMassage: "Card" });
+            PaymentMode.push({ CardType: 'd', PaymentType: 'Advance', PaymentDescription: 'Discover Card', PaymentMode: 'Card', PaymentById: $("#ContentPlaceHolder1_hfDiscoverCardId").val(), Control: "ContentPlaceHolder1_txtDiscoverCard", AlertMassage: "Card" });
+            PaymentMode.push({ CardType: '', PaymentType: 'Advance', PaymentDescription: mBankName, PaymentMode: 'M-Banking', PaymentById: $("#ContentPlaceHolder1_hfMBankId").val(), Control: "ContentPlaceHolder1_txtMBankingPayment", AlertMassage: "M-Banking" });
             PaymentMode.push({ CardType: '', PaymentType: 'Company', PaymentDescription: companyName, PaymentMode: 'Company', PaymentById: $("#ContentPlaceHolder1_hfCompanyId").val(), Control: "ContentPlaceHolder1_txtCompanyPayment", AlertMassage: "Company" });
             PaymentMode.push({ CardType: '', PaymentType: 'GuestRoom', PaymentDescription: 'GuestRoom', PaymentMode: 'Other Room', PaymentById: $("#ContentPlaceHolder1_hfRoomId").val(), Control: "ContentPlaceHolder1_txtRoomPayment", AlertMassage: "Room" });
             PaymentMode.push({ CardType: '', PaymentType: 'Employee', PaymentDescription: employeeName, PaymentMode: 'Employee', PaymentById: $("#ContentPlaceHolder1_hfEmployeeId").val(), Control: "ContentPlaceHolder1_txtEmployeePayment", AlertMassage: "Employee" });
@@ -3867,10 +3902,31 @@
             var txtTPDiscountedAmountHiddenFieldVal = $("#ContentPlaceHolder1_txtTPDiscountedAmount").val();
 
             var txtCashVal = $("#ContentPlaceHolder1_txtCash").val();
+            //var txtAmexCardVal = $("#ContentPlaceHolder1_txtAmexCard").val();
+            //var txtMasterCardVal = $("#ContentPlaceHolder1_txtMasterCard").val();
+            //var txtVisaCardVal = $("#ContentPlaceHolder1_txtVisaCard").val();
+            //var txtDiscoverCardVal = $("#ContentPlaceHolder1_txtDiscoverCard").val();
+
             var txtAmexCardVal = $("#ContentPlaceHolder1_txtAmexCard").val();
+            var amexCardBankName = $("#lblAmexCardBankName").text();
+            var amexCardBankId = $("#ContentPlaceHolder1_hfAmexCardId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfAmexCardId").val();
+
             var txtMasterCardVal = $("#ContentPlaceHolder1_txtMasterCard").val();
+            var masterCardBankName = $("#lblMasterCardBankName").text();
+            var masterCardBankId = $("#ContentPlaceHolder1_hfMasterCardId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfMasterCardId").val();
+
             var txtVisaCardVal = $("#ContentPlaceHolder1_txtVisaCard").val();
+            var visaCardBankName = $("#lblVisaCardBankName").text();
+            var visaCardBankId = $("#ContentPlaceHolder1_hfVisaCardId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfVisaCardId").val();
+
             var txtDiscoverCardVal = $("#ContentPlaceHolder1_txtDiscoverCard").val();
+            var discoverCardBankName = $("#lblDiscoverCardBankName").text();
+            var discoverCardBankId = $("#ContentPlaceHolder1_hfDiscoverCardId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfDiscoverCardId").val();
+
+            var mBankAmount = $("#ContentPlaceHolder1_txtMBankingPayment").val();
+            var mBankName = $("#lblMBankName").text();
+            var mBankId = $("#ContentPlaceHolder1_hfMBankId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfMBankId").val();
+
             var txtTPDiscountAmountVal = $("#ContentPlaceHolder1_txtTPDiscountAmount").val();
             var guestRoomPayment = $("#ContentPlaceHolder1_txtRoomPayment").val();
 
@@ -3886,7 +3942,37 @@
             var memberName = $("#lblMemberName").text();
             var memberId = $("#ContentPlaceHolder1_hfMemberId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfMemberId").val();
 
-            if (employeeId != "0") {
+            if (amexCardBankId != "0") {
+                RestaurantBill.TransactionType = 'Card';
+                RestaurantBill.TransactionId = amexCardBankId;
+                RestaurantBill.CustomerName = 'Amex Card ('+ amexCardBankName + ')';
+                RestaurantBill.CustomerName = '';
+            }
+            else if (masterCardBankId != "0") {
+                RestaurantBill.TransactionType = 'Card';
+                RestaurantBill.TransactionId = masterCardBankId;
+                RestaurantBill.CustomerName = 'Master Card ('+ masterCardBankName + ')';
+                RestaurantBill.CustomerName = '';
+            }
+            else if (visaCardBankId != "0") {
+                RestaurantBill.TransactionType = 'Card';
+                RestaurantBill.TransactionId = visaCardBankId;
+                RestaurantBill.CustomerName = 'Visa Card ('+ visaCardBankName + ')';
+                RestaurantBill.CustomerName = '';
+            }
+            else if (discoverCardBankId != "0") {
+                RestaurantBill.TransactionType = 'Card';
+                RestaurantBill.TransactionId = discoverCardBankId;
+                RestaurantBill.CustomerName = 'Discover Card ('+ discoverCardBankName + ')';
+                RestaurantBill.CustomerName = '';
+            }
+            else if (mBankId != "0") {
+                RestaurantBill.TransactionType = 'M-Banking';
+                RestaurantBill.TransactionId = mBankId;
+                RestaurantBill.CustomerName = 'M-Banking ('+ mBankName + ')';
+                //RestaurantBill.CustomerName = '';
+            }
+            else if (employeeId != "0") {
                 RestaurantBill.TransactionType = 'Employee';
                 RestaurantBill.TransactionId = employeeId;
                 RestaurantBill.CustomerName = employeeName;
@@ -3919,11 +4005,19 @@
             }
 
             var PaymentMode = new Array();
-            PaymentMode.push({ CardType: '', PaymentType: 'Advance', PaymentDescription: '', PaymentMode: 'Cash', PaymentById: '', Control: "ContentPlaceHolder1_txtCash" });
-            PaymentMode.push({ CardType: 'a', PaymentType: 'Advance', PaymentDescription: 'American Express', PaymentMode: 'Card', PaymentById: '', Control: "ContentPlaceHolder1_txtAmexCard" });
-            PaymentMode.push({ CardType: 'm', PaymentType: 'Advance', PaymentDescription: 'Master Card', PaymentMode: 'Card', PaymentById: '', Control: "ContentPlaceHolder1_txtMasterCard" });
-            PaymentMode.push({ CardType: 'v', PaymentType: 'Advance', PaymentDescription: 'Visa Card', PaymentMode: 'Card', PaymentById: '', Control: "ContentPlaceHolder1_txtVisaCard" });
-            PaymentMode.push({ CardType: 'd', PaymentType: 'Advance', PaymentDescription: 'Discover Card', PaymentMode: 'Card', PaymentById: '', Control: "ContentPlaceHolder1_txtDiscoverCard" });
+            PaymentMode.push({ CardType: '', PaymentType: 'Advance', PaymentDescription: '', PaymentMode: 'Cash', PaymentById: 0, Control: "ContentPlaceHolder1_txtCash" });
+            PaymentMode.push({ CardType: 'a', PaymentType: 'Advance', PaymentDescription: 'American Express', PaymentMode: 'Card', PaymentById: $("#ContentPlaceHolder1_hfAmexCardId").val(), Control: "ContentPlaceHolder1_txtAmexCard" });
+            PaymentMode.push({ CardType: 'm', PaymentType: 'Advance', PaymentDescription: 'Master Card', PaymentMode: 'Card', PaymentById: $("#ContentPlaceHolder1_hfMasterCardId").val(), Control: "ContentPlaceHolder1_txtMasterCard" });
+            PaymentMode.push({ CardType: 'v', PaymentType: 'Advance', PaymentDescription: 'Visa Card', PaymentMode: 'Card', PaymentById: $("#ContentPlaceHolder1_hfVisaCardId").val(), Control: "ContentPlaceHolder1_txtVisaCard" });
+            PaymentMode.push({ CardType: 'd', PaymentType: 'Advance', PaymentDescription: 'Discover Card', PaymentMode: 'Card', PaymentById: $("#ContentPlaceHolder1_hfDiscoverCardId").val(), Control: "ContentPlaceHolder1_txtDiscoverCard" });
+
+            //PaymentMode.push({ CardType: '', PaymentType: 'Advance', PaymentDescription: '', PaymentMode: 'Cash', PaymentById: 1, Control: "ContentPlaceHolder1_txtCash" });
+            //PaymentMode.push({ CardType: 'a', PaymentType: 'Advance', PaymentDescription: 'American Express', PaymentMode: 'Card', PaymentById: 2, Control: "ContentPlaceHolder1_txtAmexCard" });
+            //PaymentMode.push({ CardType: 'm', PaymentType: 'Advance', PaymentDescription: 'Master Card', PaymentMode: 'Card', PaymentById: 3, Control: "ContentPlaceHolder1_txtMasterCard" });
+            //PaymentMode.push({ CardType: 'v', PaymentType: 'Advance', PaymentDescription: 'Visa Card', PaymentMode: 'Card', PaymentById: 4, Control: "ContentPlaceHolder1_txtVisaCard" });
+            //PaymentMode.push({ CardType: 'd', PaymentType: 'Advance', PaymentDescription: 'Discover Card', PaymentMode: 'Card', PaymentById: 5, Control: "ContentPlaceHolder1_txtDiscoverCard" });
+
+            PaymentMode.push({ CardType: '', PaymentType: 'Advance', PaymentDescription: mBankName, PaymentMode: 'M-Banking', PaymentById: $("#ContentPlaceHolder1_hfMBankId").val(), Control: "ContentPlaceHolder1_txtMBankingPayment" });
             PaymentMode.push({ CardType: '', PaymentType: 'Company', PaymentDescription: companyName, PaymentMode: 'Company', PaymentById: $("#ContentPlaceHolder1_hfCompanyId").val(), Control: "ContentPlaceHolder1_txtCompanyPayment" });
             PaymentMode.push({ CardType: '', PaymentType: 'GuestRoom', PaymentDescription: 'GuestRoom', PaymentMode: 'Other Room', PaymentById: $("#ContentPlaceHolder1_hfRoomId").val(), Control: "ContentPlaceHolder1_txtRoomPayment" });
             PaymentMode.push({ CardType: '', PaymentType: 'Employee', PaymentDescription: employeeName, PaymentMode: 'Employee', PaymentById: $("#ContentPlaceHolder1_hfEmployeeId").val(), Control: "ContentPlaceHolder1_txtEmployeePayment" });
@@ -3950,7 +4044,8 @@
                         PaymentType: PaymentMode[row].PaymentType,
                         AccountsPostingHeadId: 0,
                         BillPaidBy: 0,
-                        BankId: 0,
+                        //BankId: 0,
+                        BankId: PaymentMode[row].PaymentById,
                         RegistrationId: paymentById,
                         FieldId: hfLocalCurrencyIdVal,
                         ConvertionRate: 1,
@@ -4026,6 +4121,36 @@
                                 CardHolderName: "",
                                 PaymentDescription: PaymentMode[row].PaymentDescription,
                                 CompanyId: companyId
+                            });
+
+                            paymentCounter = paymentCounter + 1;
+                        }
+                    }
+                    else if (mBankId != "0") {
+                        if ($.trim(paymentAmount) == "" || $.trim(paymentAmount) == "0") {
+                            paymentAmount = $.trim(paymentAmount) == "" ? "0" : paymentAmount;
+                            
+                            GuestBillPayment.push({
+                                NodeId: 0,
+                                PaymentType: PaymentMode[row].PaymentType,
+                                AccountsPostingHeadId: 0,
+                                BillPaidBy: 0,
+                                BankId: paymentById,
+                                RegistrationId: paymentById,
+                                FieldId: hfLocalCurrencyIdVal,
+                                ConvertionRate: 1,
+                                CurrencyAmount: paymentAmount,
+                                PaymentAmount: paymentAmount,
+                                ChecqueDate: new Date(),
+                                PaymentMode: 'M-Banking',
+                                PaymentId: 1,
+                                CardNumber: "",
+                                CardType: PaymentMode[row].CardType,
+                                ExpireDate: null,
+                                ChecqueNumber: "",
+                                CardHolderName: "",
+                                PaymentDescription: PaymentMode[row].PaymentDescription,
+                                CompanyId: 0
                             });
 
                             paymentCounter = paymentCounter + 1;
@@ -4678,7 +4803,376 @@
             });
 
         }
+        function LoadAmexCardInfo() {
 
+            var companyName = "";
+
+            $("#AmexCardInfoDialog").dialog({
+                width: 600,
+                height: 280,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: false,
+                resizable: false,
+                fluid: true,
+                title: "Bank Search",
+                show: 'slide',
+                open: function (event, ui) {
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                }
+            });
+
+            $("#txtSearchAmexCard").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: '../POS/frmOrderManagement.aspx/GetBankInfoForAutoComplete',
+                        data: "{'bankName':'" + request.term + "'}",
+                        dataType: "json",
+                        success: function (data) {
+
+                            var searchData = data.error ? [] : $.map(data.d, function (m) {
+                                return {
+                                    AccountName: m.AccountName,
+                                    BranchName: m.BranchName,
+                                    AccountNumber: m.AccountNumber,
+                                    AccountType: m.AccountType,
+                                    Description: m.Description,
+                                    label: m.BankName,
+                                    value: m.BankId
+                                };
+                            });
+                            response(searchData);
+                        },
+                        error: function (xhr, err) {
+                            toastr.error(xhr.responseText);
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox
+                    //$(this).val(ui.item.label);
+                },
+                select: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox and hidden field
+                    $(this).val(ui.item.label);
+
+                    $("#ContentPlaceHolder1_hfAmexCardId").val(ui.item.value);
+                    //$("#txtCompanyAddress").val(ui.item.CompanyAddress);
+                    //$("#txtContactNumber").val(ui.item.ContactNumber);
+                    //$("#txtBalance").val(ui.item.Balance);
+                }
+            });
+        }
+
+        function LoadMasterCardInfo() {
+
+            var companyName = "";
+
+            $("#MasterCardInfoDialog").dialog({
+                width: 600,
+                height: 280,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: false,
+                resizable: false,
+                fluid: true,
+                title: "Bank Search",
+                show: 'slide',
+                open: function (event, ui) {
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                }
+            });
+
+            $("#txtSearchMasterCard").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: '../POS/frmOrderManagement.aspx/GetBankInfoForAutoComplete',
+                        data: "{'bankName':'" + request.term + "'}",
+                        dataType: "json",
+                        success: function (data) {
+
+                            var searchData = data.error ? [] : $.map(data.d, function (m) {
+                                return {
+                                    AccountName: m.AccountName,
+                                    BranchName: m.BranchName,
+                                    AccountNumber: m.AccountNumber,
+                                    AccountType: m.AccountType,
+                                    Description: m.Description,
+                                    label: m.BankName,
+                                    value: m.BankId
+                                };
+                            });
+                            response(searchData);
+                        },
+                        error: function (xhr, err) {
+                            toastr.error(xhr.responseText);
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox
+                    //$(this).val(ui.item.label);
+                },
+                select: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox and hidden field
+                    $(this).val(ui.item.label);
+
+                    $("#ContentPlaceHolder1_hfMasterCardId").val(ui.item.value);
+                    //$("#txtCompanyAddress").val(ui.item.CompanyAddress);
+                    //$("#txtContactNumber").val(ui.item.ContactNumber);
+                    //$("#txtBalance").val(ui.item.Balance);
+                }
+            });
+        }
+
+        function LoadVisaCardInfo() {
+
+            var companyName = "";
+
+            $("#VisaCardInfoDialog").dialog({
+                width: 600,
+                height: 280,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: false,
+                resizable: false,
+                fluid: true,
+                title: "Bank Search",
+                show: 'slide',
+                open: function (event, ui) {
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                }
+            });
+
+            $("#txtSearchVisaCard").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: '../POS/frmOrderManagement.aspx/GetBankInfoForAutoComplete',
+                        data: "{'bankName':'" + request.term + "'}",
+                        dataType: "json",
+                        success: function (data) {
+
+                            var searchData = data.error ? [] : $.map(data.d, function (m) {
+                                return {
+                                    AccountName: m.AccountName,
+                                    BranchName: m.BranchName,
+                                    AccountNumber: m.AccountNumber,
+                                    AccountType: m.AccountType,
+                                    Description: m.Description,
+                                    label: m.BankName,
+                                    value: m.BankId
+                                };
+                            });
+                            response(searchData);
+                        },
+                        error: function (xhr, err) {
+                            toastr.error(xhr.responseText);
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox
+                    //$(this).val(ui.item.label);
+                },
+                select: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox and hidden field
+                    $(this).val(ui.item.label);
+
+                    $("#ContentPlaceHolder1_hfVisaCardId").val(ui.item.value);
+                    //$("#txtCompanyAddress").val(ui.item.CompanyAddress);
+                    //$("#txtContactNumber").val(ui.item.ContactNumber);
+                    //$("#txtBalance").val(ui.item.Balance);
+                }
+            });
+        }
+
+        function LoadDiscoverCardInfo() {
+
+            var companyName = "";
+
+            $("#DiscoverCardInfoDialog").dialog({
+                width: 600,
+                height: 280,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: false,
+                resizable: false,
+                fluid: true,
+                title: "Bank Search",
+                show: 'slide',
+                open: function (event, ui) {
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                }
+            });
+
+            $("#txtSearchDiscoverCard").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: '../POS/frmOrderManagement.aspx/GetBankInfoForAutoComplete',
+                        data: "{'bankName':'" + request.term + "'}",
+                        dataType: "json",
+                        success: function (data) {
+
+                            var searchData = data.error ? [] : $.map(data.d, function (m) {
+                                return {
+                                    AccountName: m.AccountName,
+                                    BranchName: m.BranchName,
+                                    AccountNumber: m.AccountNumber,
+                                    AccountType: m.AccountType,
+                                    Description: m.Description,
+                                    label: m.BankName,
+                                    value: m.BankId
+                                };
+                            });
+                            response(searchData);
+                        },
+                        error: function (xhr, err) {
+                            toastr.error(xhr.responseText);
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox
+                    //$(this).val(ui.item.label);
+                },
+                select: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox and hidden field
+                    $(this).val(ui.item.label);
+
+                    $("#ContentPlaceHolder1_hfDiscoverCardId").val(ui.item.value);
+                    //$("#txtCompanyAddress").val(ui.item.CompanyAddress);
+                    //$("#txtContactNumber").val(ui.item.ContactNumber);
+                    //$("#txtBalance").val(ui.item.Balance);
+                }
+            });
+        }
+
+        function LoadMBankingInfo() {
+
+            var companyName = "";
+
+            $("#MBankingInfoDialog").dialog({
+                width: 600,
+                height: 280,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: false,
+                resizable: false,
+                fluid: true,
+                title: "Bank Search",
+                show: 'slide',
+                open: function (event, ui) {
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                }
+            });
+
+            $("#txtSearchMBanking").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: '../POS/frmOrderManagement.aspx/GetBankInfoForAutoComplete',
+                        data: "{'bankName':'" + request.term + "'}",
+                        dataType: "json",
+                        success: function (data) {
+
+                            var searchData = data.error ? [] : $.map(data.d, function (m) {
+                                return {
+                                    AccountName: m.AccountName,
+                                    BranchName: m.BranchName,
+                                    AccountNumber: m.AccountNumber,
+                                    AccountType: m.AccountType,
+                                    Description: m.Description,
+                                    label: m.BankName,
+                                    value: m.BankId
+                                };
+                            });
+                            response(searchData);
+                        },
+                        error: function (xhr, err) {
+                            toastr.error(xhr.responseText);
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox
+                    //$(this).val(ui.item.label);
+                },
+                select: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox and hidden field
+                    $(this).val(ui.item.label);
+
+                    $("#ContentPlaceHolder1_hfMBankId").val(ui.item.value);
+                    //$("#txtCompanyAddress").val(ui.item.CompanyAddress);
+                    //$("#txtContactNumber").val(ui.item.ContactNumber);
+                    //$("#txtBalance").val(ui.item.Balance);
+                }
+            });
+
+        }
+        function AmexCardPayment() {
+            if ($("#ContentPlaceHolder1_hfAmexCardId").val() != "") {                
+                $("#lblAmexCardBankName").text($("#txtSearchAmexCard").val());
+            }
+            $("#AmexCardInfoDialog").dialog('close');
+            $("#ContentPlaceHolder1_txtAmexCard").focus();
+        }
+        function MasterCardPayment() {
+            if ($("#ContentPlaceHolder1_hfMasterCardId").val() != "") {                
+                $("#lblMasterCardBankName").text($("#txtSearchMasterCard").val());
+            }
+            $("#MasterCardInfoDialog").dialog('close');
+            $("#ContentPlaceHolder1_txtMasterCard").focus();
+        }
+        function VisaCardPayment() {
+            if ($("#ContentPlaceHolder1_hfVisaCardId").val() != "") {                
+                $("#lblVisaCardBankName").text($("#txtSearchVisaCard").val());
+            }
+            $("#VisaCardInfoDialog").dialog('close');
+            $("#ContentPlaceHolder1_txtVisaCard").focus();
+        }
+        function DiscoverCardPayment() {
+            if ($("#ContentPlaceHolder1_hfDiscoverCardId").val() != "") {                
+                $("#lblDiscoverCardBankName").text($("#txtSearchDiscoverCard").val());
+            }
+            $("#DiscoverCardInfoDialog").dialog('close');
+            $("#ContentPlaceHolder1_txtDiscoverCard").focus();
+        }
+        function MBankingPayment() {
+            if ($("#ContentPlaceHolder1_hfMBankId").val() != "") {
+                $("#lblMBankName").text($("#txtSearchMBanking").val());
+            }
+            $("#MBankingInfoDialog").dialog('close');
+            $("#ContentPlaceHolder1_txtMBankingPayment").focus();
+        }
         function CompanyPayment() {
             //toastr.info($("#ContentPlaceHolder1_hfCompanyId").val());
             if ($("#ContentPlaceHolder1_hfCompanyId").val() != "") {
@@ -5107,8 +5601,67 @@
         }
 
         function ClearPayment(options) {
+            if (options == "AmexCard") {
+                $("#ContentPlaceHolder1_hfAmexCardId").val("");
+                $("#lblAmexCardBankName").text("");
 
-            if (options == "Guest") {
+                //$("#txtSearchCompany").val("");
+                //$("#txtCompanyAddress").val("");
+                //$("#txtContactNumber").val("");
+                //$("#txtBalance").val("");
+                //$("#ContentPlaceHolder1_txtCompanyPayment").val("");
+                //$("#ContentPlaceHolder1_txtRemarks").val("");
+
+                if ($("#AmexCardInfoDialog").is(":visible")) {
+                    $("#AmexCardInfoDialog").dialog("close");
+                }
+            }
+            else if (options == "MasterCard") {
+                $("#ContentPlaceHolder1_hfMasterCardId").val("");
+                $("#lblMasterCardBankName").text("");
+
+                //$("#txtSearchCompany").val("");
+                //$("#txtCompanyAddress").val("");
+                //$("#txtContactNumber").val("");
+                //$("#txtBalance").val("");
+                //$("#ContentPlaceHolder1_txtCompanyPayment").val("");
+                //$("#ContentPlaceHolder1_txtRemarks").val("");
+
+                if ($("#MasterCardInfoDialog").is(":visible")) {
+                    $("#MasterCardInfoDialog").dialog("close");
+                }
+            }
+            else if (options == "VisaCard") {
+                $("#ContentPlaceHolder1_hfVisaCardId").val("");
+                $("#lblVisaCardBankName").text("");
+
+                //$("#txtSearchCompany").val("");
+                //$("#txtCompanyAddress").val("");
+                //$("#txtContactNumber").val("");
+                //$("#txtBalance").val("");
+                //$("#ContentPlaceHolder1_txtCompanyPayment").val("");
+                //$("#ContentPlaceHolder1_txtRemarks").val("");
+
+                if ($("#VisaCardInfoDialog").is(":visible")) {
+                    $("#VisaCardInfoDialog").dialog("close");
+                }
+            }
+            else if (options == "DiscoverCard") {
+                $("#ContentPlaceHolder1_hfDiscoverCardId").val("");
+                $("#lblDiscoverCardBankName").text("");
+
+                //$("#txtSearchCompany").val("");
+                //$("#txtCompanyAddress").val("");
+                //$("#txtContactNumber").val("");
+                //$("#txtBalance").val("");
+                //$("#ContentPlaceHolder1_txtCompanyPayment").val("");
+                //$("#ContentPlaceHolder1_txtRemarks").val("");
+
+                if ($("#DiscoverCardInfoDialog").is(":visible")) {
+                    $("#DiscoverCardInfoDialog").dialog("close");
+                }
+            }
+            else if (options == "Guest") {
                 $("#ContentPlaceHolder1_hfRoomId").val("");
                 $("#ContentPlaceHolder1_hfIsRoomIsSelectForPayment").val("");
                 $("#lblGuestRoom").text("Room Payment");
@@ -5124,23 +5677,36 @@
             else if (options == "Company") {
                 $("#ContentPlaceHolder1_hfCompanyId").val("");
                 $("#lblCompanyName").text("");
-                $("#ContentPlaceHolder1_txtRemarks").val("");
 
                 $("#txtSearchCompany").val("");
                 $("#txtCompanyAddress").val("");
                 $("#txtContactNumber").val("");
                 $("#txtBalance").val("");
                 $("#ContentPlaceHolder1_txtCompanyPayment").val("");
+                $("#ContentPlaceHolder1_txtRemarks").val("");
 
                 if ($("#CompanyInfoDialog").is(":visible")) {
                     $("#CompanyInfoDialog").dialog("close");
                 }
+            }
+            else if (options == "M-Banking") {
+                $("#ContentPlaceHolder1_hfCompanyId").val("");
+                $("#lblMBankName").text("");
 
+                $("#txtSearchCompany").val("");
+                $("#txtCompanyAddress").val("");
+                $("#txtContactNumber").val("");
+                $("#txtBalance").val("");
+                $("#ContentPlaceHolder1_txtCompanyPayment").val("");
+                $("#ContentPlaceHolder1_txtRemarks").val("");
+
+                if ($("#MBankingInfoDialog").is(":visible")) {
+                    $("#MBankingInfoDialog").dialog("close");
+                }
             }
             else if (options == "Employee") {
                 $("#lblEmployeeName").text("");
                 $("#ContentPlaceHolder1_hfEmployeeId").val("");
-                $("#ContentPlaceHolder1_txtRemarks").val("");
 
                 $("#txtEmployeeCode").val("");
                 $("#txtEmployeeNameSearch").val("");
@@ -5148,6 +5714,7 @@
                 $("#txtDepartment").val("");
                 $("#txtDesignation").val("");
                 $("#ContentPlaceHolder1_txtEmployeePayment").val("");
+                $("#ContentPlaceHolder1_txtRemarks").val("");
 
                 if ($("#EmployeeInfoDialog").is(":visible")) {
                     $("#EmployeeInfoDialog").dialog("close");
@@ -5214,6 +5781,11 @@
     <asp:HiddenField ID="hfBillTemplate" runat="server" />
     <asp:HiddenField ID="hfValuePath" runat="server" Value=""></asp:HiddenField>
     <asp:HiddenField ID="hfPromotionalDiscountType" runat="server" Value=""></asp:HiddenField>
+    <asp:HiddenField ID="hfAmexCardId" runat="server" Value=""></asp:HiddenField>
+    <asp:HiddenField ID="hfMasterCardId" runat="server" Value=""></asp:HiddenField>
+    <asp:HiddenField ID="hfVisaCardId" runat="server" Value=""></asp:HiddenField>
+    <asp:HiddenField ID="hfDiscoverCardId" runat="server" Value=""></asp:HiddenField>
+    <asp:HiddenField ID="hfMBankId" runat="server" Value=""></asp:HiddenField>
     <asp:HiddenField ID="hfCompanyId" runat="server" Value=""></asp:HiddenField>
     <asp:HiddenField ID="hfEmployeeId" runat="server" Value=""></asp:HiddenField>
     <asp:HiddenField ID="hfMemberId" runat="server" Value=""></asp:HiddenField>
@@ -5643,32 +6215,142 @@
                             <asp:TextBox ID="txtCash" TabIndex="1" runat="server" CssClass="quantitydecimal numkb form-control"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <%--<div class="form-group">
                         <label class="control-label col-sm-3">
                             Amex Card</label>
                         <div class="col-sm-9">
                             <asp:TextBox ID="txtAmexCard" TabIndex="2" runat="server" CssClass="quantitydecimal numkb form-control"></asp:TextBox>
                         </div>
+                    </div>--%>
+                    <div class="form-group" id="AmexCardPaymentContainer">
+                        <label class="control-label col-sm-3" id="lblAmexCard">
+                            Amex Card</label>
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <asp:TextBox ID="txtAmexCard" TabIndex="5" runat="server" CssClass="quantitydecimal numkb form-control"></asp:TextBox>
+                                </div>
+                                <div class="col-sm-4">
+                                    <img border="0" alt="Amex Card Search" onclick="javascript:return LoadAmexCardInfo()"
+                                        style="cursor: pointer; display: inline;" title="Amex Card Search" src="../Images/quotation.png" />
+                                    <img border="0" id="imgClearAmexCardPayment" alt="Clear" onclick="javascript:return ClearPayment('AmexCard')"
+                                        style="cursor: pointer; display: inline;" title="Clear Payment" src="../Images/clear.png" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <asp:Label ID="lblAmexCardBankName" runat="server" Text="" CssClass="control-label" ClientIDMode="Static"></asp:Label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
+                    <%--<div class="form-group">
                         <label class="control-label col-sm-3" id="lblMasterCard">
                             Master Card</label>
                         <div class="col-sm-9">
                             <asp:TextBox ID="txtMasterCard" TabIndex="3" runat="server" CssClass="quantitydecimal numkb form-control"></asp:TextBox>
                         </div>
+                    </div>--%>
+                    <div class="form-group" id="MasterCardPaymentContainer">
+                        <label class="control-label col-sm-3" id="lblMasterCard">
+                            Master Card</label>
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <asp:TextBox ID="txtMasterCard" TabIndex="5" runat="server" CssClass="quantitydecimal numkb form-control"></asp:TextBox>
+                                </div>
+                                <div class="col-sm-4">
+                                    <img border="0" alt="Master Card Search" onclick="javascript:return LoadMasterCardInfo()"
+                                        style="cursor: pointer; display: inline;" title="Master Card Search" src="../Images/quotation.png" />
+                                    <img border="0" id="imgClearMasterCardPayment" alt="Clear" onclick="javascript:return ClearPayment('MasterCard')"
+                                        style="cursor: pointer; display: inline;" title="Clear Payment" src="../Images/clear.png" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <asp:Label ID="lblMasterCardBankName" runat="server" Text="" CssClass="control-label" ClientIDMode="Static"></asp:Label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
+                    <%--<div class="form-group">
                         <label class="control-label col-sm-3" id="lblVisaCard">
                             Visa Card</label>
                         <div class="col-sm-9">
                             <asp:TextBox ID="txtVisaCard" TabIndex="4" runat="server" CssClass="quantitydecimal numkb form-control"></asp:TextBox>
                         </div>
+                    </div>--%>
+                    <div class="form-group" id="VisaCardPaymentContainer">
+                        <label class="control-label col-sm-3" id="lblVisaCard">
+                            Visa Card</label>
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <asp:TextBox ID="txtVisaCard" TabIndex="5" runat="server" CssClass="quantitydecimal numkb form-control"></asp:TextBox>
+                                </div>
+                                <div class="col-sm-4">
+                                    <img border="0" alt="Visa Card Search" onclick="javascript:return LoadVisaCardInfo()"
+                                        style="cursor: pointer; display: inline;" title="Visa Card Search" src="../Images/quotation.png" />
+                                    <img border="0" id="imgClearVisaCardPayment" alt="Clear" onclick="javascript:return ClearPayment('VisaCard')"
+                                        style="cursor: pointer; display: inline;" title="Clear Payment" src="../Images/clear.png" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <asp:Label ID="lblVisaCardBankName" runat="server" Text="" CssClass="control-label" ClientIDMode="Static"></asp:Label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
+                    <%--<div class="form-group">
                         <label class="control-label col-sm-3" id="lblDiscoverCard">
                             Discover Card</label>
                         <div class="col-sm-9">
                             <asp:TextBox ID="txtDiscoverCard" TabIndex="4" runat="server" CssClass="quantitydecimal numkb form-control"></asp:TextBox>
+                        </div>
+                    </div>--%>
+                    <div class="form-group" id="DiscoverCardPaymentContainer">
+                        <label class="control-label col-sm-3" id="lblDiscoverCard">
+                            Discover Card</label>
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <asp:TextBox ID="txtDiscoverCard" TabIndex="5" runat="server" CssClass="quantitydecimal numkb form-control"></asp:TextBox>
+                                </div>
+                                <div class="col-sm-4">
+                                    <img border="0" alt="Discover Card Search" onclick="javascript:return LoadDiscoverCardInfo()"
+                                        style="cursor: pointer; display: inline;" title="M-Banking Search" src="../Images/quotation.png" />
+                                    <img border="0" id="imgClearDiscoverCardPayment" alt="Clear" onclick="javascript:return ClearPayment('DiscoverCard')"
+                                        style="cursor: pointer; display: inline;" title="Clear Payment" src="../Images/clear.png" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <asp:Label ID="lblDiscoverCardBankName" runat="server" Text="" CssClass="control-label" ClientIDMode="Static"></asp:Label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="MBankingPaymentContainer">
+                        <label class="control-label col-sm-3" id="lblMBanking">
+                            M-Banking</label>
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <asp:TextBox ID="txtMBankingPayment" TabIndex="5" runat="server" CssClass="quantitydecimal numkb form-control"></asp:TextBox>
+                                </div>
+                                <div class="col-sm-4">
+                                    <img border="0" alt="M-Banking Search" onclick="javascript:return LoadMBankingInfo()"
+                                        style="cursor: pointer; display: inline;" title="M-Banking Search" src="../Images/quotation.png" />
+                                    <img border="0" id="imgClearMBankingPayment" alt="Clear" onclick="javascript:return ClearPayment('M-Banking')"
+                                        style="cursor: pointer; display: inline;" title="Clear Payment" src="../Images/clear.png" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <asp:Label ID="lblMBankName" runat="server" Text="" CssClass="control-label" ClientIDMode="Static"></asp:Label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group" id="RoomPaymentDiv">
@@ -6112,7 +6794,116 @@
             </div>
         </div>
     </div>
-
+    <div id="AmexCardInfoDialog" style="display: none;">
+        <div class="row no-gutters">
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <asp:Label ID="Label20" runat="server" Text="Bank Name" CssClass="control-label col-sm-3"></asp:Label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="txtSearchAmexCard" />
+                        </div>
+                    </div>
+                    <div class="row pull-right">
+                        <div class="col-sm-12">
+                            <input type="button" class="btn btn-primary btn-large" style="width: 145px; height: 40px;"
+                                id="btnClearAmexCardInformationSubmit" value="Cancel" onclick="ClearPayment('AmexCard')" />
+                            <input type="button" class="btn btn-primary btn-large" style="width: 145px; height: 40px;"
+                                id="btnAmexCardInformationSubmit" value="Ok" onclick="AmexCardPayment()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="MasterCardInfoDialog" style="display: none;">
+        <div class="row no-gutters">
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <asp:Label ID="Label21" runat="server" Text="Bank Name" CssClass="control-label col-sm-3"></asp:Label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="txtSearchMasterCard" />
+                        </div>
+                    </div>
+                    <div class="row pull-right">
+                        <div class="col-sm-12">
+                            <input type="button" class="btn btn-primary btn-large" style="width: 145px; height: 40px;"
+                                id="btnClearMasterCardInformationSubmit" value="Cancel" onclick="ClearPayment('MasterCard')" />
+                            <input type="button" class="btn btn-primary btn-large" style="width: 145px; height: 40px;"
+                                id="btnMasterCardInformationSubmit" value="Ok" onclick="MasterCardPayment()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="VisaCardInfoDialog" style="display: none;">
+        <div class="row no-gutters">
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <asp:Label ID="Label22" runat="server" Text="Bank Name" CssClass="control-label col-sm-3"></asp:Label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="txtSearchVisaCard" />
+                        </div>
+                    </div>
+                    <div class="row pull-right">
+                        <div class="col-sm-12">
+                            <input type="button" class="btn btn-primary btn-large" style="width: 145px; height: 40px;"
+                                id="btnClearVisaCardInformationSubmit" value="Cancel" onclick="ClearPayment('VisaCard')" />
+                            <input type="button" class="btn btn-primary btn-large" style="width: 145px; height: 40px;"
+                                id="btnVisaCardInformationSubmit" value="Ok" onclick="VisaCardPayment()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="DiscoverCardInfoDialog" style="display: none;">
+        <div class="row no-gutters">
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <asp:Label ID="Label23" runat="server" Text="Bank Name" CssClass="control-label col-sm-3"></asp:Label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="txtSearchDiscoverCard" />
+                        </div>
+                    </div>
+                    <div class="row pull-right">
+                        <div class="col-sm-12">
+                            <input type="button" class="btn btn-primary btn-large" style="width: 145px; height: 40px;"
+                                id="btnClearDiscoverCardInformationSubmit" value="Cancel" onclick="ClearPayment('DiscoverCard')" />
+                            <input type="button" class="btn btn-primary btn-large" style="width: 145px; height: 40px;"
+                                id="btnDiscoverCardInformationSubmit" value="Ok" onclick="DiscoverCardPayment()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="MBankingInfoDialog" style="display: none;">
+        <div class="row no-gutters">
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <asp:Label ID="Label19" runat="server" Text="Bank Name" CssClass="control-label col-sm-3"></asp:Label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="txtSearchMBanking" />
+                        </div>
+                    </div>
+                    <div class="row pull-right">
+                        <div class="col-sm-12">
+                            <input type="button" class="btn btn-primary btn-large" style="width: 145px; height: 40px;"
+                                id="btnClearMBankingInformationSubmit" value="Cancel" onclick="ClearPayment('M-Banking')" />
+                            <input type="button" class="btn btn-primary btn-large" style="width: 145px; height: 40px;"
+                                id="btnMBankingInformationSubmit" value="Ok" onclick="MBankingPayment()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="CompanyInfoDialog" style="display: none;">
         <div class="row no-gutters">
             <div class="col-sm-12">
