@@ -38,5 +38,17 @@ namespace HotelManagement.Entity.PurchaseManagment
         public Int64 ProductDetailsId { get; set; }
         public Int64 ProductionId { get; set; }
         public decimal PercentageValue { get; set; }
+        public decimal SalesRatio { get; set; }
+        public decimal TotalSales { get; set; }
+        public decimal SalesWiseFGCost { get; set; }
+        public decimal SalesWiseCOGSCost { get; set; }
+        public decimal TotalFGCost { get; set; }
+        public decimal ProfitAndLoss { get; set; }
+        public decimal ProfitRatio { get; set; }
+        public decimal ItemAverageCost { get; set; }
+        public decimal ProductionRatio { get; set; }
+        public decimal TotalProduction { get; set; }
+        public decimal ProductionWiseFGCost { get; set; }
+        public decimal ProductionWiseCOGSCost { get; set; }
     }
 }

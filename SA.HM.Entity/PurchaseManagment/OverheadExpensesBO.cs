@@ -9,8 +9,10 @@ namespace HotelManagement.Entity.PurchaseManagment
     {
         public int FinishedProductDetailsId { get; set; }
         public int FinishProductId { get; set; }
+        public long ProductionId { get; set; }
         public long ReceivedId { get; set; }
         public int NodeId { get; set; }
+        public string OverheadName   { get; set; }
         public string AccountHead { get; set; }
         public decimal Amount { get; set; }
         public string Remarks { get; set; }

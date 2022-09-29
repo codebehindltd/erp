@@ -164,10 +164,11 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             List<FinishedProductDetailsBO> finishedGoodsInfo = new List<FinishedProductDetailsBO>();
             List<FinishedProductDetailsBO> rmInfo = new List<FinishedProductDetailsBO>();
             List<FinishedProductDetailsBO> fgInfo = new List<FinishedProductDetailsBO>();
+            List<OverheadExpensesBO> oeInfo = new List<OverheadExpensesBO>();
 
-            finishedGoodsInfo = purchaseDa.GetInvProductionInformation(iFGId);
-            rmInfo = finishedGoodsInfo.Where(x => x.ProductType == "RM").ToList();
-            fgInfo = finishedGoodsInfo.Where(x => x.ProductType == "FG").ToList();
+            rmInfo = purchaseDa.GetInvProductionRMInformation(iFGId);
+            oeInfo = purchaseDa.GetInvProductionOEInformation(iFGId);
+            fgInfo = purchaseDa.GetInvProductionInformation(iFGId);
 
             if (fgInfo != null)
             {
@@ -193,6 +194,7 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
 
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataSet[0], rmInfo));
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataSet[1], fgInfo));
+            rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataSet[2], oeInfo));
             rvTransaction.LocalReport.DisplayName = "Production Information";
             rvTransaction.LocalReport.Refresh();
         }

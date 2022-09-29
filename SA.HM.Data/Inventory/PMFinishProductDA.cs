@@ -948,6 +948,43 @@ namespace HotelManagement.Data.PurchaseManagment
 
             return retVal;
         }
+        public List<FinishedProductDetailsBO> GetInvProductionRMInformation(int productionId)
+        {
+            List<FinishedProductDetailsBO> finishGoodsDetails = new List<FinishedProductDetailsBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvProductionRMInformation_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@ProductionId", DbType.Int32, productionId);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "RawMaterials");
+                    DataTable Table = ds.Tables["RawMaterials"];
+
+                    finishGoodsDetails = Table.AsEnumerable().Select(r => new FinishedProductDetailsBO
+                    {
+                        ProductDetailsId = r.Field<Int64>("ProductDetailsId"),
+                        CostCenter = r.Field<string>("CostCenter"),
+                        ProductionId = r.Field<Int64>("ProductionId"),
+                        ProductionDate = r.Field<DateTime>("ProductionDate"),
+                        ProductionDateString = r.Field<string>("ProductionDateString"),
+                        ItemId = r.Field<Int32>("ItemId"),
+                        ItemName = r.Field<string>("ItemName"),
+                        StockById = r.Field<Int32>("StockById"),
+                        StockBy = r.Field<string>("StockBy"),
+                        Quantity = r.Field<decimal>("Quantity"),
+                        UnitCost = r.Field<decimal>("UnitCost"),
+                        TotalCost = r.Field<decimal>("TotalCost"),
+                        ProductType = r.Field<string>("ProductType"),
+                        Remarks = r.Field<string>("Remarks"),
+                        PercentageValue = r.Field<decimal>("PercentageValue")
+                    }).ToList();
+                }
+            }
+
+            return finishGoodsDetails;
+        }
         public List<FinishedProductDetailsBO> GetInvProductionInformation(int productionId)
         {
             List<FinishedProductDetailsBO> finishGoodsDetails = new List<FinishedProductDetailsBO>();
@@ -978,12 +1015,55 @@ namespace HotelManagement.Data.PurchaseManagment
                         TotalCost = r.Field<decimal>("TotalCost"),
                         ProductType = r.Field<string>("ProductType"),
                         Remarks = r.Field<string>("Remarks"),
-                        PercentageValue = r.Field<decimal>("PercentageValue")
+                        PercentageValue = r.Field<decimal>("PercentageValue"),
+                        LocationId = r.Field<Int32>("LocationId"),
+                        ColorId = r.Field<Int32>("ColorId"),
+                        SizeId = r.Field<Int32>("SizeId"),
+                        StyleId = r.Field<Int32>("StyleId"),
+                        SalesRatio = r.Field<decimal>("SalesRatio"),
+                        TotalSales = r.Field<decimal>("TotalSales"),
+                        SalesWiseFGCost = r.Field<decimal>("SalesWiseFGCost"),
+                        SalesWiseCOGSCost = r.Field<decimal>("SalesWiseCOGSCost"),
+                        TotalFGCost = r.Field<decimal>("TotalFGCost"),
+                        ProfitAndLoss = r.Field<decimal>("ProfitAndLoss"),
+                        ProfitRatio = r.Field<decimal>("ProfitRatio"),
+                        ItemAverageCost = r.Field<decimal>("ItemAverageCost"),
+                        ProductionRatio = r.Field<decimal>("ProductionRatio"),
+                        TotalProduction = r.Field<decimal>("TotalProduction"),
+                        ProductionWiseFGCost = r.Field<decimal>("ProductionWiseFGCost"),
+                        ProductionWiseCOGSCost = r.Field<decimal>("ProductionWiseCOGSCost")
                     }).ToList();
                 }
             }
 
             return finishGoodsDetails;
+        }
+        public List<OverheadExpensesBO> GetInvProductionOEInformation(int productionId)
+        {
+            List<OverheadExpensesBO> OverheadExpenseDetails = new List<OverheadExpensesBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvProductionOEInformation_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@ProductionId", DbType.Int32, productionId);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "OverheadExpense");
+                    DataTable Table = ds.Tables["OverheadExpense"];
+
+                    OverheadExpenseDetails = Table.AsEnumerable().Select(r => new OverheadExpensesBO
+                    {
+                        ProductionId = r.Field<Int64>("ProductionId"),
+                        NodeId = r.Field<Int32>("NodeId"),
+                        OverheadName = r.Field<string>("OverheadName"),
+                        Amount = r.Field<decimal>("Amount"),
+                        Remarks = r.Field<string>("Remarks")
+                    }).ToList();
+                }
+            }
+
+            return OverheadExpenseDetails;
         }
     }
 }
