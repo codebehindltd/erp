@@ -923,7 +923,7 @@ function OnProjectsPopulated(response) {
 
                 tr += "<td style='width:5%;'>";
                 tr += "<a href='javascript:void()' onclick= 'EditAdhoqItem(this)' ><img alt='Delete' src='../Images/edit.png' /></a>";
-                tr += "<a href='javascript:void()' onclick= 'DeleteAdhoqItem(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                tr += "&nbsp;<a href='javascript:void()' onclick= 'DeleteAdhoqItem(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
                 tr += "</td>";
                 tr += "<td style='display:none;'>" + result.CompanyPaymentTransactionDetails[i].PaymentHeadId + "</td>";
                 tr += "<td style='display:none;'>" + result.CompanyPaymentTransactionDetails[i].CurrencyTypeId + "</td>";
@@ -2289,7 +2289,7 @@ function OnProjectsPopulated(response) {
 
     function ClearBillContainer() {
         $("#ContentPlaceHolder1_txtAdvanceAmount").val("");
-        $("#ContentPlaceHolder1_txtTotalAmount").val("");
+        //$("#ContentPlaceHolder1_txtTotalAmount").val("");
         $("#ContentPlaceHolder1_ddlPaymentMode").val("0").change();
         $("#txtBankPayment").val("");
         $("#ContentPlaceHolder1_ddlBankPayment").val("");

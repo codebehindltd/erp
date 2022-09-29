@@ -25,16 +25,19 @@ namespace HotelManagement.Entity.HotelManagement
         public string ChequeNumber { get; set; }
         public int? CurrencyId { get; set; }
         public decimal? ConvertionRate { get; set; }
+        public decimal PaymentTotal { get; set; }
         public string ApprovedStatus { get; set; }
         public string CurrencyType { get; set; }
         public string BillNumber { get; set; }
         public string CompanyAddress { get; set; }
-        public string PaymentDisplayDate { get; set; }
+        public string PaymentDateDisplay { get; set; }
+        public string PaymentMode { get; set; }
+        public string NodeHead { get; set; }
         public decimal? PaymentAmount { get; set; }
-
         public int? AdjustmentAccountHeadId { get; set; }
         public decimal? PaymentAdjustmentAmount { get; set; }
         public DateTime? ChequeDate { get; set; }
+        public string ChequeDateDisplay { get; set; }
         public int CreatedBy { get; set; }
         public string CreatedDate { get; set; }
         public int LastModifiedBy { get; set; }

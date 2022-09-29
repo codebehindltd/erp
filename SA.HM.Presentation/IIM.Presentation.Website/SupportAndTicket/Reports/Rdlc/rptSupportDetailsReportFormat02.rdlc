@@ -1097,7 +1097,7 @@
               <KeepWithGroup>After</KeepWithGroup>
             </TablixMember>
             <TablixMember>
-              <Group Name="CompanyName1">
+              <Group Name="CompanyName">
                 <GroupExpressions>
                   <GroupExpression>=Fields!CompanyName.Value</GroupExpression>
                 </GroupExpressions>
@@ -1117,7 +1117,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=RowNumber(nothing)</Value>
+                            <Value>=RunningValue(Fields!CompanyName.Value, Countdistinct, nothing)</Value>
                             <Style>
                               <FontSize>8pt</FontSize>
                             </Style>

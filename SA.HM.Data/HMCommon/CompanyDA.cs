@@ -109,25 +109,22 @@ namespace HotelManagement.Data.HMCommon
                             while (reader.Read())
                             {
                                 CompanyPaymentBO Company = new CompanyPaymentBO();
-                                Company.ChequeNumber = reader["ChequeNumber"].ToString();
-                                Company.Remarks = reader["Remarks"].ToString();
-                                Company.CurrencyType = reader["CurrencyType"].ToString();
-                                Company.CurrencyName = reader["CurrencyName"].ToString();
-
-                                if (reader["ChequeDate"] != DBNull.Value)
-                                {
-                                    Company.ChequeDate = Convert.ToDateTime(reader["ChequeDate"]);
-                                }
-
-                                //Company.PaymentDate = Convert.ToDateTime(reader["PaymentDate"]);
-                                Company.PaymentDisplayDate = reader["PaymentDisplayDate"].ToString();
-                                Company.BillNumber = reader["BillNumber"].ToString();
+                                Company.LedgerNumber = reader["LedgerNumber"].ToString();
+                                Company.PaymentFor = reader["PaymentFor"].ToString();
                                 Company.CompanyName = reader["CompanyName"].ToString();
                                 Company.CompanyAddress = reader["CompanyAddress"].ToString();
-                                Company.LedgerNumber = reader["LedgerNumber"].ToString();
-                                Company.AdjustmentAmount = Convert.ToDecimal(reader["AdjustmentAmount"].ToString());
-                                Company.AdvanceAmount = Convert.ToDecimal(reader["AdvanceAmount"].ToString());
+                                Company.PaymentDateDisplay = reader["PaymentDateDisplay"].ToString();
+                                Company.PaymentMode = reader["PaymentMode"].ToString();
+                                Company.NodeHead = reader["NodeHead"].ToString();
+                                Company.CurrencyType = reader["CurrencyType"].ToString();
+                                Company.CurrencyName = reader["CurrencyName"].ToString();
                                 Company.PaymentAmount = Convert.ToDecimal(reader["PaymentAmount"].ToString());
+                                Company.ConvertionRate = Convert.ToDecimal(reader["ConvertionRate"].ToString());
+                                Company.PaymentTotal = Convert.ToDecimal(reader["PaymentTotal"].ToString());
+                                Company.ChequeNumber = reader["ChequeNumber"].ToString();
+                                Company.ChequeDateDisplay = reader["ChequeDateDisplay"].ToString();
+                                Company.Remarks = reader["Remarks"].ToString();
+                                Company.ApprovedStatus = reader["ApprovedStatus"].ToString();
                                 CompanyList.Add(Company);
                             }
                         }

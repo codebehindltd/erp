@@ -1351,25 +1351,25 @@
 
             if ($("#ContentPlaceHolder1_txtAmexCard").val() != "") {
                 if ($("#ContentPlaceHolder1_hfAmexCardId").val() == "" || $("#ContentPlaceHolder1_hfAmexCardId").val() == "0") {
-                    toastr.warning("Please Select Amex Card To Give Mobile Bank Payment.");
+                    toastr.warning("Please Select Amex Card Bank To Give Amex Card Payment.");
                     return false;
                 }
             }
             if ($("#ContentPlaceHolder1_txtMasterCard").val() != "") {
                 if ($("#ContentPlaceHolder1_hfMasterCardId").val() == "" || $("#ContentPlaceHolder1_hfMasterCardId").val() == "0") {
-                    toastr.warning("Please Select Master Card To Give Mobile Bank Payment.");
+                    toastr.warning("Please Select Master Card Bank To Give Master Card Payment.");
                     return false;
                 }
             }
             if ($("#ContentPlaceHolder1_txtVisaCard").val() != "") {
                 if ($("#ContentPlaceHolder1_hfVisaCardId").val() == "" || $("#ContentPlaceHolder1_hfVisaCardId").val() == "0") {
-                    toastr.warning("Please Select Visa Card To Give Mobile Bank Payment.");
+                    toastr.warning("Please Select Visa Card Bank To Give Visa Card Payment.");
                     return false;
                 }
             }
             if ($("#ContentPlaceHolder1_txtDiscoverCard").val() != "") {
                 if ($("#ContentPlaceHolder1_hfDiscoverCardId").val() == "" || $("#ContentPlaceHolder1_hfDiscoverCardId").val() == "0") {
-                    toastr.warning("Please Select Discover Card To Give Mobile Bank Payment.");
+                    toastr.warning("Please Select Discover Card Bank To Give Discover Card Payment.");
                     return false;
                 }
             }
@@ -1447,44 +1447,7 @@
                 return false;
             }
 
-            //if ($("#ContentPlaceHolder1_rbTPComplementaryDiscount").is(":checked") || $("#ContentPlaceHolder1_rbTpNonChargeable").is(":checked")) {
-
-            //    if ($("#ContentPlaceHolder1_txtRoomPayment").val() == "" && $("#ContentPlaceHolder1_txtCompanyPayment").val() == ""
-            //        && $("#ContentPlaceHolder1_txtEmployeePayment").val() == "" && $("#ContentPlaceHolder1_txtMemberPayment").val() == ""
-            //        && $("#ContentPlaceHolder1_txtCash").val() == "" && $("#ContentPlaceHolder1_txtAmexCard").val() == ""
-            //        && $("#ContentPlaceHolder1_txtMasterCard").val() == "" && $("#ContentPlaceHolder1_txtVisaCard").val() == ""
-            //        && $("#ContentPlaceHolder1_txtDiscoverCard").val() == ""
-            //        ) {
-            //        toastr.info("Please Enter Zero(0) For Complementary/Non Chargeable Payment.");
-            //        return false;
-            //    }
-            //}
-
             var dueAmountText = $.trim($("#ContentPlaceHolder1_lblTPChangeAmount").text());
-
-            //if ($("#ContentPlaceHolder1_cbTPVatAmount").is(":checked"))
-            //    $("#ContentPlaceHolder1_hfIsVatEnable").val("1");
-            //else
-            //    $("#ContentPlaceHolder1_hfIsVatEnable").val("0");
-
-            //if ($("#ContentPlaceHolder1_cbTPServiceCharge").is(":checked"))
-            //    $("#ContentPlaceHolder1_hfIsServiceChargeEnable").val("1");
-            //else
-            //    $("#ContentPlaceHolder1_hfIsServiceChargeEnable").val("0");
-
-            //if ($("#ContentPlaceHolder1_cbTPSDCharge").is(":checked")) {
-            //    $("#ContentPlaceHolder1_hfIsSDChargeEnable").val("1");
-            //}
-            //else {
-            //    $("#ContentPlaceHolder1_hfIsSDChargeEnable").val("0");
-            //}
-
-            //if ($("#ContentPlaceHolder1_cbTPAdditionalCharge").is(":checked")) {
-            //    $("#ContentPlaceHolder1_hfIsAdditionalChargeEnable").val("1");
-            //}
-            //else {
-            //    $("#ContentPlaceHolder1_hfIsAdditionalChargeEnable").val("0");
-            //}
 
             if (dueAmount == "")
                 dueAmount = "0";
@@ -1508,8 +1471,6 @@
                 kb.switchInput(true, kb.options.autoAccept);
                 kb.close();
             }
-
-            //CalculateDiscountAmount();
         }
 
         function OnLoadPaymentInformationInSessionSucceeded(result) {
