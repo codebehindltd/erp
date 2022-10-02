@@ -167,12 +167,9 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             paramReport.Add(new ReportParameter("ReportDateFrom", FromDate.ToString("dd-MMM-yyyy")));
             paramReport.Add(new ReportParameter("ReportDateTo", ToDate.ToString("dd-MMM-yyyy")));
 
-            
             //-- Company Logo ------------------End----------
-
             GLCommonReportDA commonReportDa = new GLCommonReportDA();
             List<LedgerBookReportBO> generalLedger = new List<LedgerBookReportBO>();
-
             generalLedger = commonReportDa.GetNotesBreakdownReport(FromDate, ToDate, nodeId, companyId, projectId, donorId, notesNodeId, withOrWithoutOpening);
 
             string companyName = string.Empty, companyProject = string.Empty, reportCurrency = string.Empty, printDateTime = string.Empty;

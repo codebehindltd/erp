@@ -166,6 +166,9 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             List<FinishedProductDetailsBO> fgInfo = new List<FinishedProductDetailsBO>();
             List<OverheadExpensesBO> oeInfo = new List<OverheadExpensesBO>();
 
+            PMFinishProductDA goodsDA = new PMFinishProductDA();
+            bool status = goodsDA.ByProductProductionCalculation(iFGId);
+
             rmInfo = purchaseDa.GetInvProductionRMInformation(iFGId);
             oeInfo = purchaseDa.GetInvProductionOEInformation(iFGId);
             fgInfo = purchaseDa.GetInvProductionInformation(iFGId);

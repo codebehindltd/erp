@@ -357,7 +357,7 @@
                     <div class="col-md-4">
                         <asp:DropDownList ID="dllWithOrWithoutOpening" CssClass="form-control" runat="server">
                             <asp:ListItem Value="WithOpening">With Opening Balance</asp:ListItem>
-                            <asp:ListItem Value="WithoutOpening">Without Opening Balance</asp:ListItem>
+                            <%--<asp:ListItem Value="WithoutOpening">Without Opening Balance</asp:ListItem>--%>
                         </asp:DropDownList>
                     </div>
                     <div class="col-md-2" style="display: none;">

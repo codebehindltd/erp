@@ -151,6 +151,20 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
             reportParam.Add(new ReportParameter("ReportDateFrom", startDate));
             reportParam.Add(new ReportParameter("ReportDateTo", endDate));
+            
+            int isAccountNodesBreakdownDetailsLedgerEnable = 0;
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+            HMCommonSetupBO isAccountNodesBreakdownDetailsLedgerEnableBO = new HMCommonSetupBO();
+            isAccountNodesBreakdownDetailsLedgerEnableBO = commonSetupDA.GetCommonConfigurationInfo("IsAccountNodesBreakdownDetailsLedgerEnable", "IsAccountNodesBreakdownDetailsLedgerEnable");
+            if (isAccountNodesBreakdownDetailsLedgerEnableBO != null)
+            {
+                if (isAccountNodesBreakdownDetailsLedgerEnableBO.SetupValue != "0")
+                {
+                    isAccountNodesBreakdownDetailsLedgerEnable = 1;
+                }
+            }
 
             GLCommonReportDA commonReportDa = new GLCommonReportDA();
             List<LedgerBookReportBO> generalLedger = new List<LedgerBookReportBO>();
@@ -174,7 +188,14 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                 }
                 else if (!isIndividualLedger)
                 {
-                    generalLedger = commonReportDa.GetGroupLedgerBookReportDateRangeWise(FromDate, ToDate, nodeId, companyId, projectId, donorId, withOrWithoutOpening);
+                    if (isAccountNodesBreakdownDetailsLedgerEnable == 0)
+                    {
+                        generalLedger = commonReportDa.GetIndividualGroupLedgerBookReportDateRangeWise(FromDate, ToDate, nodeId, companyId, projectId, donorId, withOrWithoutOpening);
+                    }
+                    else
+                    {
+                        generalLedger = commonReportDa.GetGroupLedgerBookReportDateRangeWise(FromDate, ToDate, nodeId, companyId, projectId, donorId, withOrWithoutOpening);
+                    }                    
                 }
             }
 

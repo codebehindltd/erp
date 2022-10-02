@@ -444,7 +444,6 @@ namespace HotelManagement.Data.PurchaseManagment
 
             return finishGoodsDetails;
         }
-
         public List<OverheadExpensesBO> GetInvProductionOEDetailsById(int productionId)
         {
             List<OverheadExpensesBO> overheadDetails = new List<OverheadExpensesBO>();
@@ -471,7 +470,6 @@ namespace HotelManagement.Data.PurchaseManagment
             }
             return overheadDetails;
         }
-
         public List<FinishedProductBO> GetInventoryProductionSearch(int costCenterId, DateTime? dateFrom, DateTime? dateTo, string productionId, string status, int userInfoId)
         {
             List<FinishedProductBO> finishGoods = new List<FinishedProductBO>();
@@ -859,7 +857,6 @@ namespace HotelManagement.Data.PurchaseManagment
 
             return retVal;
         }
-
         public bool DeleteInventoryProduction(int productionId)
         {
             int status = 0;
@@ -1064,6 +1061,50 @@ namespace HotelManagement.Data.PurchaseManagment
             }
 
             return OverheadExpenseDetails;
+        }
+        public bool ByProductProductionCalculation(int productionId)
+        {
+            int status = 0;
+            bool retVal = false;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("ByProductProductionCalculation_SP"))
+                        {
+                            cmdOutDetails.Parameters.Clear();
+
+                            dbSmartAspects.AddInParameter(cmdOutDetails, "@ProductionId", DbType.Int64, productionId);
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
+                        }
+
+                        if (status > 0)
+                        {
+                            retVal = true;
+                            transction.Commit();
+                        }
+                        else
+                        {
+                            retVal = false;
+                            transction.Rollback();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        retVal = false;
+                        transction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+
+            return retVal;
         }
     }
 }
