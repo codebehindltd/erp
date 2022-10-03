@@ -345,23 +345,20 @@
                     <div class="col-md-2">
                         <asp:Label ID="lblFromDate" runat="server" class="control-label required-field" Text="From Date"></asp:Label>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <asp:TextBox ID="txtStartDate" CssClass="form-control" runat="server"></asp:TextBox><input
                             type="hidden" id="hidFromDate" />
                     </div>
                     <div class="col-md-2">
-                        <asp:Label ID="lblToDate" runat="server" class="control-label required-field" Text="To Date"></asp:Label>
-                    </div>
-                    <div class="col-md-4">
                         <asp:TextBox ID="txtEndDate" CssClass="form-control" runat="server"></asp:TextBox><input
                             type="hidden" id="hidToDate" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-2">
+                    <div class="col-md-2" style="display:none;">
                         <asp:Label ID="Label4" runat="server" class="control-label" Text="With/Without Opening"></asp:Label>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" style="display:none;">
                         <asp:DropDownList ID="dllWithOrWithoutOpening" CssClass="form-control" runat="server">
                             <asp:ListItem Value="WithOpening">With Opening Balance</asp:ListItem>
                             <%--<asp:ListItem Value="WithoutOpening">Without Opening Balance</asp:ListItem>--%>

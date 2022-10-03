@@ -321,8 +321,8 @@
                 <asp:HiddenField ID="LiabilitiesAmountHiddenField" runat="server"></asp:HiddenField>
                 <asp:HiddenField ID="AssetsAmountHiddenField" runat="server"></asp:HiddenField>
                 <div>
-                    <UserControl:CompanyProjectUserControl ID="companyProjectUserControl" runat="server" />
-                    <div class="form-group" id="DonorContainer" style="display:none;">
+                    <usercontrol:companyprojectusercontrol id="companyProjectUserControl" runat="server" />
+                    <div class="form-group" id="DonorContainer" style="display: none;">
                         <div class="col-md-2">
                             <asp:Label ID="Label2" runat="server" class="control-label" Text="Donor"></asp:Label>
                         </div>
@@ -356,21 +356,18 @@
                             </asp:DropDownList>
                         </div>
                     </div>
-                </div>
-                <div class="form-group" id="DateRangePanel" style="display: none;">
-                    <div class="col-md-2">
-                        <asp:Label ID="lblFromDate" runat="server" class="control-label required-field" Text="From Date"></asp:Label>
-                    </div>
-                    <div class="col-md-4">
-                        <asp:TextBox ID="txtStartDate" CssClass="form-control" runat="server"></asp:TextBox><input
-                            type="hidden" id="hidFromDate" />
-                    </div>
-                    <div class="col-md-2">
-                        <asp:Label ID="lblToDate" runat="server" class="control-label required-field" Text="To Date"></asp:Label>
-                    </div>
-                    <div class="col-md-4">
-                        <asp:TextBox ID="txtEndDate" CssClass="form-control" runat="server"></asp:TextBox><input
-                            type="hidden" id="hidToDate" />
+                    <div id="DateRangePanel" style="display: none;">
+                        <div class="col-md-2">
+                            <asp:Label ID="lblFromDate" runat="server" class="control-label required-field" Text="Date"></asp:Label>
+                        </div>
+                        <div class="col-md-2">
+                            <asp:TextBox ID="txtStartDate" CssClass="form-control" runat="server"></asp:TextBox><input
+                                type="hidden" id="hidFromDate" />
+                        </div>
+                        <div class="col-md-2">
+                            <asp:TextBox ID="txtEndDate" CssClass="form-control" runat="server"></asp:TextBox><input
+                                type="hidden" id="hidToDate" />
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -383,7 +380,16 @@
                             <asp:ListItem Value="WithZero">With Zero Balance</asp:ListItem>
                         </asp:DropDownList>
                     </div>
-
+                    <div class="col-md-2">
+                        <asp:Label ID="Label3" runat="server" class="control-label" Text="Report Currency"></asp:Label>
+                    </div>
+                    <div class="col-md-4">
+                        <asp:HiddenField ID="hflocalCurrencyId" runat="server" Value=""></asp:HiddenField>
+                        <asp:DropDownList ID="ddlCurrencyId" runat="server" CssClass="form-control" TabIndex="2">
+                        </asp:DropDownList>
+                    </div>                    
+                </div>
+                <div class="form-group" style="display:none;">
                     <div class="col-md-2">
                         <asp:Label ID="Label4" runat="server" class="control-label" Text="With/Without Opening"></asp:Label>
                     </div>
@@ -391,16 +397,6 @@
                         <asp:DropDownList ID="dllWithOrWithoutOpening" CssClass="form-control" runat="server">
                             <asp:ListItem Value="WithOpening">With Opening Balance</asp:ListItem>
                             <%--<asp:ListItem Value="WithoutOpening">Without Opening Balance</asp:ListItem>--%>
-                        </asp:DropDownList>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-2">
-                        <asp:Label ID="Label3" runat="server" class="control-label" Text="Report Currency"></asp:Label>
-                    </div>
-                    <div class="col-md-4">
-                        <asp:HiddenField ID="hflocalCurrencyId" runat="server" Value=""></asp:HiddenField>
-                        <asp:DropDownList ID="ddlCurrencyId" runat="server" CssClass="form-control" TabIndex="2">
                         </asp:DropDownList>
                     </div>
                 </div>
@@ -436,11 +432,11 @@
         </div>
         <div class="panel-body">
             <asp:Panel ID="pnlReporContainer" runat="server" ScrollBars="Both" Height="700px">
-                <rsweb:ReportViewer ShowFindControls="false" ShowWaitControlCancelLink="false" ID="rvTransaction"
-                    PageCountMode="Actual" SizeToReportContent="true" ShowPrintButton="true" runat="server"
-                    Font-Names="Verdana" Font-Size="8pt" InteractiveDeviceInfos="(Collection)" WaitMessageFont-Names="Verdana"
-                    WaitMessageFont-Size="14pt" Height="820px">
-                </rsweb:ReportViewer>
+                <rsweb:reportviewer showfindcontrols="false" showwaitcontrolcancellink="false" id="rvTransaction"
+                    pagecountmode="Actual" sizetoreportcontent="true" showprintbutton="true" runat="server"
+                    font-names="Verdana" font-size="8pt" interactivedeviceinfos="(Collection)" waitmessagefont-names="Verdana"
+                    waitmessagefont-size="14pt" height="820px">
+                </rsweb:reportviewer>
             </asp:Panel>
         </div>
     </div>

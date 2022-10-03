@@ -418,7 +418,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="display:none;">
                     <div class="col-md-2">
                         <asp:Label ID="Label7" runat="server" class="control-label" Text="With/Without Opening"></asp:Label>
                     </div>
