@@ -1,35 +1,34 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frmCompanyPaymentReceipt.aspx.cs"  MasterPageFile="~/Common/ReportViewer.Master"Inherits="HotelManagement.Presentation.Website.SalesAndMarketing.Reports.frmCompanyPaymentReceipt" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frmCompanyPaymentReceipt.aspx.cs" MasterPageFile="~/Common/ReportViewer.Master" Inherits="HotelManagement.Presentation.Website.SalesAndMarketing.Reports.frmCompanyPaymentReceipt" %>
 
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
     Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
-
         $(document).ready(function () {
             var moduleName = "<a href='/HMCommon/frmHMHome.aspx' class='inActive'>Purchase</a>";
             var formName = "<span class='divider'>/</span><li class='active'>Purchase Order Information</li>";
             var breadCrumbs = moduleName + formName;
             $("#ltlBreadCrumbsInformation").html(breadCrumbs);
-
         });
-        
-    </script>
 
-     
-    <iframe id="frmPrint" name="IframeName" width="0" height="0" runat="server" style="left: -1000;
-        top: 2000;" clientidmode="static"></iframe>
+    </script>
+    <iframe id="frmPrint" name="IframeName" width="0" height="0" runat="server" style="left: -1000; top: 2000;"
+        clientidmode="static"></iframe>
     <div class="block-body collapse in" style="height: 680; overflow-y: auto;">
-        <rsweb:ReportViewer ID="rvTransaction" runat="server" ShowFindControls="false" ShowWaitControlCancelLink="false"
-            PageCountMode="Actual" SizeToReportContent="true" ShowPrintButton="true" Font-Names="Verdana"
-            Font-Size="8pt" InteractiveDeviceInfos="(Collection)" WaitMessageFont-Names="Verdana"
-            WaitMessageFont-Size="14pt" Width="950px" Height="820px">
-        </rsweb:ReportViewer>
+        <rsweb:reportviewer id="rvTransaction" runat="server" showfindcontrols="false" showwaitcontrolcancellink="false"
+            pagecountmode="Actual" sizetoreportcontent="true" showprintbutton="true" font-names="Verdana"
+            font-size="8pt" interactivedeviceinfos="(Collection)" waitmessagefont-names="Verdana"
+            waitmessagefont-size="14pt" width="950px" height="820px">
+        </rsweb:reportviewer>
+    </div>
+    <div style="display: none;">
+        <asp:Button ID="btnPrintReportFromClient" runat="server" Text="Button" OnClick="btnPrintReportFromClient_Click"
+            ClientIDMode="Static" />
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
             if (CommonHelper.BrowserType().mozilla || CommonHelper.BrowserType().chrome) {
-
                 var barControlId2 = CommonHelper.GetReportViewerControlId($("#<%=rvTransaction.ClientID %>"));
 
                 var innerTbody = '<tbody><tr><td><input type="image" style="border-width: 0px; padding: 2px; height: 16px; width: 16px;" alt="Print" src="/Reserved.ReportViewerWebControl.axd?OpType=Resource&amp;Version=9.0.30729.1&amp;Name=Microsoft.Reporting.WebForms.Icons.Print.gif" title="Print"></td></tr></tbody>';
@@ -40,15 +39,10 @@
             }
         });
 
-        //function SendEmail(ss) {
-        //    $('#btnEmailSend').trigger('click');
-        //    return true;
-        //}
-
-        //function PrintDocumentFunc(ss) {
-        //    $('#btnPrintReportFromClient').trigger('click');
-        //    return true;
-        //}       
+        function PrintDocumentFunc(ss) {
+            $('#btnPrintReportFromClient').trigger('click');
+            return true;
+        }
     </script>
 
 </asp:Content>

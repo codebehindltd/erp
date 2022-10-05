@@ -413,8 +413,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
                                     bo.ItemCode = "" + reportBo.ServiceId.ToString();
                                     bo.HsCode = "";
                                     bo.ItemName = reportBo.GuestService;
-                                    //bo.UnitRate = reportBo.TotalRoomCharge;
-                                    bo.UnitRate = reportBo.ServiceRate;
+                                    bo.UnitRate = reportBo.TotalRoomCharge;
                                     bo.PaxQuantity = 1;
 
                                     if (reportBo.CitySDCharge > 0)

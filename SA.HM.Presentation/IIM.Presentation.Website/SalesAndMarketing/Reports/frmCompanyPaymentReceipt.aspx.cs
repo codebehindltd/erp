@@ -5,6 +5,8 @@ using HotelManagement.Entity.HotelManagement;
 using HotelManagement.Entity.PurchaseManagment;
 using HotelManagement.Entity.UserInformation;
 using HotelManagement.Presentation.Website.Common;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
@@ -96,6 +98,74 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
 
             rvTransaction.LocalReport.Refresh();
             rvTransaction.LocalReport.DisplayName = "Company Transaction";
+        }
+        protected void btnPrintReportFromClient_Click(object sender, EventArgs e)
+        {
+            HMUtility hmUtility = new HMUtility();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+            try
+            {
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType;
+                string encoding;
+                string extension;
+
+                byte[] bytes = rvTransaction.LocalReport.Render("PDF", null, out mimeType,
+                               out encoding, out extension, out streamids, out warnings);
+
+                string fileName = string.Empty, fileNamePrint = string.Empty;
+                DateTime dateTime = DateTime.Now;
+                fileName = "OutPut" + String.Format("{0:ddMMMyyyyHHmmssffff}", dateTime) + (userInformationBO == null ? "0" : userInformationBO.UserInfoId.ToString()) + ".pdf";
+                fileNamePrint = "Print" + String.Format("{0:ddMMMyyyyHHmmssffff}", dateTime) + (userInformationBO == null ? "0" : userInformationBO.UserInfoId.ToString()) + ".pdf";
+
+                FileStream fs = new FileStream(HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileName), FileMode.Create);
+                fs.Write(bytes, 0, bytes.Length);
+                fs.Close();
+
+                //Open exsisting pdf
+                Document document = new Document(PageSize.LETTER);
+                PdfReader reader = new PdfReader(HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileName));
+                //Getting a instance of new pdf wrtiter
+                PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(
+                   HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileNamePrint), FileMode.Create));
+                document.Open();
+                PdfContentByte cb = writer.DirectContent;
+
+                int i = 0;
+                int p = 0;
+                int n = reader.NumberOfPages;
+                Rectangle psize = reader.GetPageSize(1);
+
+                float width = psize.Width;
+                float height = psize.Height;
+
+                //Add Page to new document
+                while (i < n)
+                {
+                    document.NewPage();
+                    p++;
+                    i++;
+
+                    PdfImportedPage page1 = writer.GetImportedPage(reader, i);
+                    cb.AddTemplate(page1, 0, 0);
+                }
+
+                //Attach javascript to the document
+                PdfAction jAction = PdfAction.JavaScript("this.print(true);\r", writer);
+                //PdfAction jAction = PdfAction.JavaScript("var pp = getPrintParams();pp.interactive = pp.constants.interactionLevel.automatic;pp.printerName = getPrintParams().printerName;print(pp);\r", writer);
+                writer.AddJavaScript(jAction);
+
+                document.Close();
+
+                frmPrint.Attributes["src"] = "../../PrintDocument/" + fileNamePrint;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

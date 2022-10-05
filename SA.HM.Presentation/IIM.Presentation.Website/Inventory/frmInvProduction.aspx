@@ -431,7 +431,7 @@
                 var bagQuantity = $("#ContentPlaceHolder1_txtBagQuantity").val();
 
                 if (unitPrice == "") {
-                    toastr.warning("Please Enter MRP.");
+                    toastr.warning("Please Enter S. Price.");
                     $("#ContentPlaceHolder1_txtUnitPrice").focus();
                     return false;
                 }
@@ -1936,7 +1936,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-2">
-                                                <asp:Label ID="Label18" runat="server" class="control-label required-field" Text="MRP"></asp:Label>
+                                                <asp:Label ID="Label18" runat="server" class="control-label required-field" Text="S. Price"></asp:Label>
                                             </div>
                                             <div class="col-md-4">
                                                 <asp:TextBox ID="txtUnitPrice" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
