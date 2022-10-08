@@ -373,7 +373,8 @@ namespace HotelManagement.Presentation.Website.Common
             string[] splitStr;
             splitStr = registrationIdList.Split(',');
 
-            if (splitStr.Length == 1)
+            //if (splitStr.Length == 1)
+            if (splitStr.Length >= 1)
             {
                 string strBillTransferStringParamer = string.Empty;
                 List<GuestServiceBillApprovedBO> entityBillTransferListBO = new List<GuestServiceBillApprovedBO>();
