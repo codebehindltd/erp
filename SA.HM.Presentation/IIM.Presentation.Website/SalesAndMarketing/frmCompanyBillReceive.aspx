@@ -2288,7 +2288,7 @@ function OnProjectsPopulated(response) {
     }
 
     function ClearBillContainer() {
-        $("#ContentPlaceHolder1_txtAdvanceAmount").val("");
+        //$("#ContentPlaceHolder1_txtAdvanceAmount").val("");
         //$("#ContentPlaceHolder1_txtTotalAmount").val("");
         $("#ContentPlaceHolder1_ddlPaymentMode").val("0").change();
         $("#txtBankPayment").val("");
