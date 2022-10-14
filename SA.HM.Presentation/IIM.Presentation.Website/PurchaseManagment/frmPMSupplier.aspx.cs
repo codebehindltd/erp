@@ -467,7 +467,6 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
             companyList = companyDA.GetAllGLCompanyInfo();
             glCompany.DataSource = companyList;
             glCompany.DataBind();
-
         }
 
         private void LoadCompanyInfo(int EditId)
@@ -566,7 +565,6 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
             docList.RemoveAll(x => delete.Contains(Convert.ToInt32(x.DocumentId)));
             foreach (DocumentsBO dc in docList)
             {
-
                 if (dc.DocumentType == "Image")
                     dc.Path = (dc.Path + dc.Name);
 
@@ -619,6 +617,7 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
                 int rowsCompany = glCompany.Rows.Count;
                 CheckBox ChkBoxHeader = (CheckBox)glCompany.HeaderRow.FindControl("ChkCreate");
                 ChkBoxHeader.Checked = false;
+                
                 //Clear up all the check boxes.
                 for (int i = 0; i < rowsCompany; i++)
                 {
@@ -676,52 +675,12 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
         private bool IsFrmValid()
         {
             bool flag = true;
-            //bool isContactEmail = false;
             if (string.IsNullOrEmpty(txtName.Text))
             {
                 CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Supplier Name.", AlertType.Warning);
                 txtName.Focus();
                 flag = false;
             }
-            //else if (string.IsNullOrEmpty(txtEmail.Text))
-            //{
-            //    CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Email Id.", AlertType.Warning);
-            //    flag = false;
-            //}
-            //try
-            //{
-            //    if (!string.IsNullOrWhiteSpace(txtEmail.Text))
-            //    {
-            //        string address = new MailAddress(txtEmail.Text).Address;
-            //    }
-            //    else
-            //    {
-            //        CommonHelper.AlertInfo(innboardMessage, "Email is not in correct format.", AlertType.Warning);
-            //        txtEmail.Focus();
-            //        flag = false;
-            //    }
-
-            //    if (!string.IsNullOrWhiteSpace(txtContactEmail.Text))
-            //    {
-            //        isContactEmail = true;
-            //        string cAddress = new MailAddress(txtContactEmail.Text).Address;
-            //    }
-            //}
-            //catch (FormatException)
-            //{
-            //    if (isContactEmail)
-            //    {
-            //        CommonHelper.AlertInfo(innboardMessage, "Contact Email is not in correct format.", AlertType.Warning);
-            //        txtContactEmail.Focus();
-            //        flag = false;
-            //    }
-            //    else
-            //    {
-            //        CommonHelper.AlertInfo(innboardMessage, "Email is not in correct format.", AlertType.Warning);
-            //        txtEmail.Focus();
-            //        flag = false;
-            //    }
-            //}
             return flag;
         }
         private void FillForm(PMSupplierBO supplierBO)
@@ -741,7 +700,6 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
             txtRemarks.Text = supplierBO.Remarks;
             txtContactPerson.Text = supplierBO.ContactPerson;
             txtContactPhone.Text = supplierBO.ContactPhone;
-
         }
         private void CreadeNodeMatrixAccountHeadInfo(int AncestorId, out int NodeId)
         {

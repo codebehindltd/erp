@@ -4,7 +4,6 @@
 <%@ Register Assembly="FlashUpload" Namespace="ClientUploader" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
-
         var ContactPersonsForSupplier = new Array();
         var ContactPersonsForSupplierDeleted = new Array();
         //Bread Crumbs Information-------------
@@ -19,15 +18,13 @@
                     FillContactsInForm(persons);
                 }
             }
-            if ($("#ContentPlaceHolder1_hfClearContactForSupplierTbl").val() == '1') {
 
+            if ($("#ContentPlaceHolder1_hfClearContactForSupplierTbl").val() == '1') {
                 $("#ContactForSupplierTbl > tbody").html("");
                 $("#ContentPlaceHolder1_hfClearContactForSupplierTbl").val('0');
-
             }
 
             if ($("#ContentPlaceHolder1_hfIsSupplierCodeAutoGenerate").val() == '1') {
-
                 $("#CodeDiv").hide();
             }
             else {
@@ -42,25 +39,15 @@
                 $("#userPanal").show();
             }
 
-
-
             $("#ltlBreadCrumbsInformation").html(breadCrumbs);
             var editing = $("#<%=hfIsEdit.ClientID %>").val();
             if (editing != "0") {
                 UploadComplete();
-                <%--ShowUploadedDocument($("#<%=RandomDocId.ClientID %>").val());--%>
             }
             if ($("#InnboardMessageHiddenField").val() != "") {
                 CommonHelper.AlertMessage(JSON.parse($("#InnboardMessageHiddenField").val()));
                 $("#InnboardMessageHiddenField").val("");
             }
-
-            <%--$("#<%=txtEmail.ClientID %>").blur(function () {
-                var isValid = IsEmail($("#<%=txtEmail.ClientID %>").val());
-                if (isValid != true) {
-                    toastr.warning("Email is not in correct format.");
-                }
-            });--%>
 
             $("#<%=txtContactEmail.ClientID %>").blur(function () {
                 var contactEmailValue = $("#<%=txtContactEmail.ClientID %>").val().length;
@@ -74,7 +61,6 @@
         });
 
         $(document).ready(function () {
-
             $("[id=ContentPlaceHolder1_glCompany_ChkCreate]").on("click", function () {
                 var topCheckBox = $(this);
 
@@ -85,25 +71,11 @@
                     $("#ContentPlaceHolder1_glCompany tbody tr").find("td:eq(0) > span").find("input").prop("checked", false);
                 }
             });
-
-            //$("[id=ContentPlaceHolder1_supplierInfo_ChkCreate]").on("click", function () {
-            //    var topCheckBox = $(this);
-
-            //    if ($(topCheckBox).is(":checked") == true) {
-            //        $("#ContentPlaceHolder1_supplierInfo tbody tr").find("td:eq(0) > span").find("input").prop("checked", true);
-            //    }
-            //    else {
-            //        $("#ContentPlaceHolder1_supplierInfo tbody tr").find("td:eq(0) > span").find("input").prop("checked", false);
-            //    }
-            //});
-
         });
 
         $(function () {
             $("#myTabs").tabs();
         });
-
-
 
         function IsEmail(email) {
             var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -115,18 +87,17 @@
             return String(e).search(filter) != -1;
         }
 
-
         function PerformClearActionOnButtonClick() {
             if (!confirm("Do you want To clear?")) {
                 return false;
             }
             PerformClearAction();
         }
+
         function SaveValidation() {
             var supplierName = $("#<%=txtName.ClientID %>").val();
             if (supplierName == "") {
                 toastr.warning("Please Insert Supplier Name.");
-
 
                 $("#ContentPlaceHolder1_txtName").focus();
                 return false;
@@ -134,7 +105,6 @@
             var suppliertype = $("#<%=ddlSupplierType.ClientID %>").val();
             if (suppliertype == "0") {
                 toastr.warning("Please Select Supplier Type.");
-
 
                 $("#ContentPlaceHolder1_ddlSupplierType").focus();
                 return false;
@@ -169,31 +139,16 @@
                 }
             }
 
-
-            <%--var email = $("#<%=txtEmail.ClientID %>").val();
-            if (email == "") {
-                toastr.warning("Please Insert Supplier Email Id.");
-
-                $("#ContentPlaceHolder1_txtEmail").focus();
-                return false;
-            }--%>
-
-            <%--var userName = "Shekhar Shete";
-            //'<%Session["ContactPersonsForSupplier"] = "' + userName + '"; %>';
-
-            '<%Session["ContactPersonsForSupplier"] = ContactPersonsForSupplier; %>';
-            '<%Session["ContactPersonsForSupplierDeleted"] = "' + ContactPersonsForSupplierDeleted + '"; %>';--%>
             $("#<%=hfContactPersons.ClientID %>").val(JSON.stringify(ContactPersonsForSupplier));
             $("#<%=hfContactPersonsDeleted.ClientID %>").val(JSON.stringify(ContactPersonsForSupplierDeleted));
-
             return true;
         }
+
         function PerformClearAction() {
             $('#doctablelist tbody tr').each(function (i, row) {
                 $(this).find("td:eq(2) img").trigger('click')
             });
             $.ajax({
-
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 url: './frmPMSupplier.aspx/ChangeRandomId',
@@ -205,6 +160,7 @@
                 error: function (error) {
                 }
             });
+
             $("#DocumentInfo").html("");
             $("#<%=txtSearchName.ClientID %>").val('');
             $("#<%=txtSearchCode.ClientID %>").val('');
@@ -218,13 +174,9 @@
             $("#<%=txtSupplierUserInfoId.ClientID %>").val('');
             $("#<%=txtEmail.ClientID %>").val('');
             $("#<%=txtAddress.ClientID %>").val('');
-            //$("#<%=txtContactPerson.ClientID %>").val('');
             $("#<%=txtPhone.ClientID %>").val('');
-
             $("#<%=txtFax.ClientID %>").val('');
-
             clearGridViewCheckboxes();
-
             $("#<%=txtRemarks.ClientID %>").val('');
             $("#ContentPlaceHolder1_hfContactPersons").val('');
             ClearContactContainer();
@@ -247,15 +199,14 @@
             $("#<%=txtContactAddress.ClientID %>").val('');
             $("#<%=txtContactEmail.ClientID %>").val('');
             $("#<%=txtContactPhone.ClientID %>").val('');
-
             $("#ContentPlaceHolder1_ddlContactType").val("0").change();
         }
+
         function LoadDocUploader() {
             var randomId = +$("#ContentPlaceHolder1_RandomDocId").val();
             var path = "/PurchaseManagment/Images/Supplier/";
             var category = "SupplierDocuments";
             var iframeid = 'frmPrint';
-            //var url = "/HMCommon/FileUploadTest.aspx?Path=" + path + "&OwnerId=" + randomId + "&Category=" + category;
             var url = "/Common/FileUpload.aspx?Path=" + path + "&OwnerId=" + randomId + "&Category=" + category;
             document.getElementById(iframeid).src = url;
 
@@ -277,11 +228,9 @@
             var deletedDoc = $("#ContentPlaceHolder1_hfDeletedDoc").val();
             PageMethods.GetUploadedDocByWebMethod(randomId, id, deletedDoc, OnGetUploadedDocByWebMethodSucceeded, OnGetUploadedDocByWebMethodFailed);
             return false;
-            //ShowUploadedDocument(randomId);
         }
 
         function ShowUploadedDocument(Id) {
-            //var id = $("#ContentPlaceHolder1_hfSupplierId").val();
             PageMethods.GetDocumentsByUserTypeAndUserId(Id, OnLoadImagesSucceeded, OnLoadImagesFailed);
             return false;
         }
@@ -305,42 +254,6 @@
             toastr.error(error.get_message());
         }
         function OnGetUploadedDocByWebMethodSucceeded(result) {
-            //var totalDoc = result.length;
-            //var row = 0;
-            //var imagePath = "";
-            //DocTable = "";
-
-            //DocTable += "<table id='DocTableList' style='width:100%' class='table table-bordered table-condensed table-responsive' id='TableWiseItemInformation'><tr style='color: White; background-color: #44545E; font-weight: bold;'>";
-            //DocTable += "<th align='left' scope='col'>Doc Name</th><th align='left' scope='col'>Display</th> <th align='left' scope='col'>Action</th></tr>";
-
-            //for (row = 0; row < totalDoc; row++) {
-            //    if (row % 2 == 0) {
-            //        DocTable += "<tr id='trdoc" + row + "' style='background-color:#E3EAEB;'>";
-            //    }
-            //    else {
-            //        DocTable += "<tr id='trdoc" + row + "' style='background-color:White;'>";
-            //    }
-
-            //    DocTable += "<td align='left' style='width: 50%'>" + result[row].Name + "</td>";
-
-            //    if (result[row].Path != "") {
-            //        imagePath = "<img src='" + result[row].Path + "' style=\"width:40px; height: 40px; cursor: pointer; cursor: hand;\"  alt='Document Image' border='0' /> ";
-            //    }
-            //    else
-            //        imagePath = "";
-
-            //    DocTable += "<td align='left' style='width: 30%'>" + imagePath + "</td>";
-
-            //    DocTable += "<td align='left' style='width: 20%'>";
-            //    DocTable += "&nbsp;<img src='../Images/delete.png' style=\"cursor: pointer; cursor: hand;\" onClick=\"javascript:return DeleteDoc('" + result[row].DocumentId + "', '" + row + "')\" alt='Delete Information' border='0' />";
-            //    DocTable += "</td>";
-            //    DocTable += "</tr>";
-            //}
-            //DocTable += "</table>";
-
-            //docc = DocTable;
-
-            //$("#DocumentInfo").html(DocTable);
             var guestDoc = result;
             var totalDoc = result.length;
             var row = 0;
@@ -378,8 +291,6 @@
             }
             guestDocumentTable += "</table>";
 
-            // docc = guestDocumentTable;
-
             $("#DocumentInfo").html(guestDocumentTable);
 
             return false;
@@ -402,7 +313,6 @@
 
         function AddItem() {
             debugger;
-
 
             var contactPerson = $("#ContentPlaceHolder1_txtContactPerson").val();
             if (contactPerson == "") {
@@ -432,7 +342,6 @@
                 return false;
             }
 
-
             var contactEmailValue = $("#<%=txtContactEmail.ClientID %>").val().length;
             if (contactEmailValue > 0) {
                 isCEmailValid = IsEmail($("#<%=txtContactEmail.ClientID %>").val());
@@ -441,6 +350,7 @@
                     return false;
                 }
             }
+
             //ContentPlaceHolder1_txtWebAddress
             var contactAddress = $("#ContentPlaceHolder1_txtContactAddress").val();
             var contactEmail = $("#ContentPlaceHolder1_txtContactEmail").val();
@@ -495,7 +405,6 @@
             }
         }
         function FillContactsInForm(Result) {
-
             var tr = "";
             for (var i = 0; i < Result.length; i++) {
                 tr += "<tr>";
@@ -518,10 +427,7 @@
                 tr += "</td>";
                 tr += "<td style='display:none;'>" + Result[i].ContactType + "</td>";
                 tr += "<td style='display:none;'>" + Result[i].SupplierDetailsId + "</td>";
-
                 tr += "</tr>";
-
-
 
                 ContactPersonsForSupplier.push({
                     ContactPerson: Result[i].ContactPerson,
@@ -535,23 +441,19 @@
             }
             $("#ContactForSupplierTbl tbody").prepend(tr);
             return false;
-
         }
 
         function CalculateTotalForAdhoq(control) {
-
             debugger;
             var tr = $(control).parent().parent();
 
             var contactAddress = $.trim($(tr).find("td:eq(1)").find("input").val());
             var contactEmail = $.trim($(tr).find("td:eq(2)").find("input").val());
-            var contactPhone = $.trim($(tr).find("td:eq(3)").find("input").val());
-            // debugger;
+            var contactPhone = $.trim($(tr).find("td:eq(3)").find("input").val());            
             var contactPerson = ($.trim($(tr).find("td:eq(0)").text()));
 
             var ContactPersonOBJ = _.findWhere(ContactPersonsForSupplier, { ContactPerson: contactPerson });
             var index = _.indexOf(ContactPersonsForSupplier, ContactPersonOBJ);
-
 
             var contactEmailValue = contactEmail.length;
             if (contactEmailValue > 0) {
@@ -562,19 +464,15 @@
                     return false;
                 }
             }
+
             ContactPersonsForSupplier[index].ContactAddress = contactAddress;
             ContactPersonsForSupplier[index].ContactEmail = (contactEmail);
             ContactPersonsForSupplier[index].ContactPhone = (contactPhone);
         }
 
         function DeleteAdhoqItem(control) {
-
             if (!confirm("Do you want to delete?")) { return false; }
-
-            //debugger;
-
             var tr = $(control).parent().parent();
-
             var contactPerson = ($.trim($(tr).find("td:eq(0)").text()));
             var detailsId = parseInt($.trim($(tr).find("td:eq(7)").text()), 10);
 
@@ -586,7 +484,6 @@
 
             ContactPersonsForSupplier.splice(index, 1);
             $(tr).remove();
-
         }
     </script>
     <div id="supplierDocuments" style="display: none;">
@@ -623,9 +520,7 @@
                             <div class="col-md-2 label-align">
                                 <asp:HiddenField ID="txtNodeId" runat="server"></asp:HiddenField>
                                 <asp:HiddenField ID="txtSupplierId" runat="server"></asp:HiddenField>
-
                                 <asp:HiddenField ID="txtSupplierUserInfoId" runat="server"></asp:HiddenField>
-
                                 <asp:Label ID="lblName" runat="server" class="control-label required-field" Text="Supplier Name"></asp:Label>
                             </div>
                             <div class="col-md-10">
@@ -680,7 +575,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-
                             <div class="col-md-2 label-align">
                                 <asp:Label ID="lblPhone" runat="server" class="control-label" Text="Phone"></asp:Label>
                             </div>
@@ -695,7 +589,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-
                             <div class="col-md-2 label-align">
                                 <asp:Label ID="lblEmail" runat="server" class="control-label" Text="Email"></asp:Label>
                             </div>
@@ -712,7 +605,6 @@
                                     TabIndex="6"></asp:TextBox>
                             </div>
                         </div>
-
                         <div id="ContactContainer">
                             <hr />
                             <div class="form-group">
@@ -746,15 +638,11 @@
                                 <div class="col-md-4">
                                     <asp:TextBox ID="txtContactPhone" runat="server" CssClass="form-control" TabIndex="10"></asp:TextBox>
                                 </div>
-
                                 <div class="col-md-2 label-align">
                                     <asp:Label ID="lblContactType" runat="server" class="control-label required-field" Text="Contact Type"></asp:Label>
                                 </div>
                                 <div class="col-md-4">
                                     <asp:DropDownList runat="server" ID="ddlContactType" CssClass="form-control">
-                                        <%--<asp:ListItem Text="--- Please Select ---" Value="0"></asp:ListItem>
-                                        <asp:ListItem Text="Support" Value="Support"></asp:ListItem>
-                                        <asp:ListItem Text="Development" Value="Development"></asp:ListItem>--%>
                                     </asp:DropDownList>
                                 </div>
                             </div>
@@ -765,7 +653,6 @@
                                         class="TransactionalButton btn btn-primary btn-sm" />
                                 </div>
                             </div>
-
                             <div style="height: 250px; overflow-y: scroll;">
                                 <table id="ContactForSupplierTbl" class="table table-bordered table-condensed table-hover">
                                     <thead>
@@ -780,11 +667,9 @@
                                     </thead>
                                     <tbody></tbody>
                                 </table>
-
                             </div>
                         </div>
                         <hr />
-
                         <div id="CompanyInformationDiv" class="panel panel-default col-md-12" runat="server">
                             <div class="panel-body">
                                 <asp:GridView ID="glCompany" Width="100%" runat="server" AllowPaging="True"
@@ -813,8 +698,7 @@
                                             </ItemTemplate>
                                             <HeaderStyle HorizontalAlign="Left" />
                                             <ItemStyle HorizontalAlign="Left" />
-                                        </asp:TemplateField>
-                                       
+                                        </asp:TemplateField>                                       
                                     </Columns>
                                     <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
                                     <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
@@ -828,53 +712,6 @@
                                 </asp:GridView>
                             </div>
                         </div>
-
-
-                        <%-- <div id="SupplierInformationDiv" class="panel panel-default col-md-6">
-                         <div class="panel-body">
-                                <asp:GridView ID="supplierInfo" Width="100%" runat="server" AllowPaging="True"
-                                    AutoGenerateColumns="False" CellPadding="4" GridLines="None" AllowSorting="True"
-                                    ForeColor="#333333" PageSize="500000" CssClass="table table-bordered table-condensed table-responsive">
-                                    <RowStyle BackColor="#E3EAEB" />
-                                    <Columns>
-                                        <asp:TemplateField HeaderText="IDNO" Visible="False">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblSupplierId" runat="server" Text='<%#Eval("SupplierId") %>'></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Create/Update" ItemStyle-Width="05%">
-                                            <HeaderTemplate>
-                                                <asp:CheckBox ID="ChkCreate" CssClass="ChkCreate" runat="server" />
-                                            </HeaderTemplate>
-                                            <ItemTemplate>
-                                                <asp:CheckBox ID="chkIsSavePermission" CssClass="Chk_Create" runat="server" />
-                                            </ItemTemplate>
-                                            <HeaderStyle HorizontalAlign="Left" />
-                                            <ItemStyle HorizontalAlign="Left" />
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Supplier" ItemStyle-Width="15%">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblSupplier" runat="server" Text='<%# Bind("Name") %>'></asp:Label>
-                                            </ItemTemplate>
-                                            <HeaderStyle HorizontalAlign="Left" />
-                                            <ItemStyle HorizontalAlign="Left" />
-                                        </asp:TemplateField>
-                                        
-                                    </Columns>
-                                    <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
-                                    <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
-                                    <EmptyDataTemplate>
-                                        <asp:Label ID="lblRecordNotFound" runat="server" Text="Record Not Found."></asp:Label>
-                                    </EmptyDataTemplate>
-                                    <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
-                                    <HeaderStyle BackColor="#44545E" Font-Bold="True" ForeColor="White" />
-                                    <EditRowStyle BackColor="#7C6F57" />
-                                    <AlternatingRowStyle BackColor="White" />
-                                </asp:GridView>
-                            </div>
-                             </div>--%>
-
-                        
                         <div class="form-group">
                             <div class="col-md-2 label-align">
                                 <asp:Label ID="lblRemarks" runat="server" class="control-label" Text="Description"></asp:Label>
@@ -893,15 +730,6 @@
                                     class="TransactionalButton btn btn-primary btn-sm" value="Others Document..." />
                             </div>
                         </div>
-                        <%--<div class="form-group">
-                            <div class="col-md-2 label-align">
-                                <asp:Label ID="Label3" runat="server" class="control-label" Text="Attachment"></asp:Label>
-                            </div>
-                            <div class="col-md-4">
-                                <input id="btnImageUp" type="button" onclick="javascript: return LoadDocUploader();"
-                                    class="TransactionalButton btn btn-primary btn-sm" value="Supplier Documents..." />
-                            </div>
-                        </div>--%>
                         <div id="DocumentInfo">
                         </div>
                         <div class="row">
@@ -972,7 +800,6 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <%--Right Left--%>
                                 <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click"
                                     CssClass="btn btn-primary btn-sm" TabIndex="6" />
                                 <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn btn-primary btn-sm"
@@ -1044,12 +871,10 @@
                     </asp:GridView>
                 </div>
             </div>
-
         </div>
         <div id="DocumentDialouge" style="display: none;">
             <iframe id="frmPrint" name="IframeName" width="100%" height="100%" runat="server"
                 clientidmode="static" scrolling="yes"></iframe>
         </div>
     </div>
-
 </asp:Content>
