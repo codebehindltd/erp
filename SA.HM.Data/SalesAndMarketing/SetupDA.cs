@@ -238,6 +238,7 @@ namespace HotelManagement.Data.SalesAndMarketing
                         else
                             dbSmartAspects.AddInParameter(command, "@Description", DbType.String, DBNull.Value);
 
+                        dbSmartAspects.AddInParameter(command, "@IsLocalOrForeign", DbType.Int32, SMCompanyTypeInformationBO.IsLocalOrForeign);
                         dbSmartAspects.AddInParameter(command, "@Status", DbType.String, SMCompanyTypeInformationBO.Status);
 
                         if (SMCompanyTypeInformationBO.Id == 0)
@@ -323,10 +324,10 @@ namespace HotelManagement.Data.SalesAndMarketing
                             {
                                 while (reader.Read())
                                 {
-
                                     TypeInformation.Id = Convert.ToInt64(reader["Id"]);
                                     TypeInformation.TypeName = (reader["TypeName"].ToString());
                                     TypeInformation.Description = (reader["Description"].ToString());
+                                    TypeInformation.IsLocalOrForeign = Convert.ToInt32(reader["IsLocalOrForeign"]);
                                     if (reader["Status"] != DBNull.Value)
                                     {
                                         TypeInformation.Status = Convert.ToBoolean(reader["Status"]);

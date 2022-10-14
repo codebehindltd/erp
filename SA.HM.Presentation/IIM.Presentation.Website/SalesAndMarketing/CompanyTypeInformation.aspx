@@ -26,12 +26,12 @@
             $("#ContentPlaceHolder1_txtTypeName").val("");
             $("#ContentPlaceHolder1_txtDescription").val("");
             $("#ContentPlaceHolder1_ddlStatus").val("Active");
+            $("#ContentPlaceHolder1_ddlIsLocalOrForeign").val("0");
             $("#btnClear").show();
             $("#btnSave").val("Save & Close");
             $("#btnSaveNContinue").val("Save & Continue").show();
         }
         function SaveOrUpdateTypeInformation() {
-
             var id = $("#ContentPlaceHolder1_hfId").val()
             var typeName = $("#ContentPlaceHolder1_txtTypeName").val();
             if (id == 0) {
@@ -45,6 +45,14 @@
                 $("#ContentPlaceHolder1_txtTypeName").focus();
                 return false;
             }
+
+            isLocalOrForeign = $("#ContentPlaceHolder1_ddlIsLocalOrForeign").val();
+            if (isLocalOrForeign == 0) {
+                toastr.warning("Please Select Local/ Foreign Type");
+                $("#ContentPlaceHolder1_ddlIsLocalOrForeign").focus();
+                return false;
+            }
+
             PageMethods.DuplicateCheckDynamicaly("TypeName", typeName, IsUpdate, id, DuplicateCheckDynamicalySucceed, DuplicateCheckDynamicalyFailed);
             return false;
 
@@ -60,10 +68,13 @@
                 typeName = $("#ContentPlaceHolder1_txtTypeName").val();
                 description = $("#ContentPlaceHolder1_txtDescription").val();
                 status = $("#ContentPlaceHolder1_ddlStatus").val() == "Active" ? true : false;
+                isLocalOrForeign = $("#ContentPlaceHolder1_ddlIsLocalOrForeign").val();
+
                 var SMCompanyTypeInformationBO = {
                     Id: id,
                     TypeName: typeName,
                     Description: description,
+                    IsLocalOrForeign: isLocalOrForeign,
                     Status: status,
                 }
                 $.ajax({
@@ -173,13 +184,14 @@
                         return false;
                     }
                     CreateNew();
-                    $("#btnSave").val("Update And Close");                    
+                    $("#btnSave").val("Update And Close");
                     $("#btnClear").hide();
                     $("#btnSaveNContinue").hide();
                     $("#CreateNewDialog").dialog({ title: "Update Company type - " + data.d.TypeName + " " });
                     $("#ContentPlaceHolder1_hfId").val(data.d.Id)
                     $("#ContentPlaceHolder1_txtTypeName").val(data.d.TypeName);
                     $("#ContentPlaceHolder1_txtDescription").val(data.d.Description);
+                    $("#ContentPlaceHolder1_ddlIsLocalOrForeign").val(data.d.IsLocalOrForeign);
                     var status = data.d.Status == true ? "Active" : "Inactive"
                     $("#ContentPlaceHolder1_ddlStatus").val(status);
 
@@ -311,7 +323,18 @@
             </div>
             <div class="form-group">
                 <div class="col-md-2">
-                    <label class="control-label required-field">Status</label>
+                    <asp:Label ID="Label1" runat="server" class="control-label required-field" Text="Local/ Foreign Type"></asp:Label>
+                </div>
+                <div class="col-md-4">
+                    <asp:DropDownList runat="server" ID="ddlIsLocalOrForeign" CssClass="form-control">
+                        <asp:ListItem Text="--- Please Select ---" Value="0"></asp:ListItem>
+                        <asp:ListItem Text="Local" Value="1"></asp:ListItem>
+                        <asp:ListItem Text="Foreign" Value="2"></asp:ListItem>
+                        <asp:ListItem Text="Both (Local & Foreign)" Value="3"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label">Status</label>
                 </div>
                 <div class="col-md-4">
                     <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control" TabIndex="4">

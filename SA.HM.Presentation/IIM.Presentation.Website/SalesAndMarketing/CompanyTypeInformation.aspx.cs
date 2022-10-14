@@ -46,7 +46,6 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             {
                 if (sMCompanyTypeInformationBO.Id == 0)
                 {
-
                     rtninfo.IsSuccess = true;
                     rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
 

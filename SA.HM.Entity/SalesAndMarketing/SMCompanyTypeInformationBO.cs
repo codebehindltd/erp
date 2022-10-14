@@ -10,6 +10,7 @@ namespace HotelManagement.Entity.SalesAndMarketing
         public long Id { get; set; }
         public string TypeName { get; set; }
         public string Description { get; set; }
+        public int IsLocalOrForeign { get; set; }
         public bool Status { get; set; }
         public bool IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }

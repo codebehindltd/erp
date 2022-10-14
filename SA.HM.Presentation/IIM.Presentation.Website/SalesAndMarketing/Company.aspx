@@ -962,7 +962,7 @@
                 parentComId = -1;
             }
             companyOwner = $("#<%=ddlCompanyOwner.ClientID %>").find(":selected").text();
-            comTypeId = $("#<%=ddlCompanyType.ClientID %>").val();
+            
             ownershipId = $("#<%=ddlOwnership.ClientID %>").val();
             industryId = $("#<%=ddlIndustry.ClientID %>").val();
             lifeCycleStId = $("#<%=ddlLifeCycleStageId.ClientID %>").val();
@@ -971,6 +971,14 @@
                 flag = 0;
                 toastr.warning("Please Select Life Cycle Stage");
                 $("#<%=ddlLifeCycleStageId.ClientID %>").focus();
+                return false;
+            }
+
+            comTypeId = $("#<%=ddlCompanyType.ClientID %>").val();
+            if (comTypeId == 0) {
+                flag = 0;
+                toastr.warning("Please Select Company Type");
+                $("#<%=ddlCompanyType.ClientID %>").focus();
                 return false;
             }
 
@@ -1534,22 +1542,10 @@
         <iframe id="frmPrint" name="IframeName" width="100%" height="100%" runat="server"
             clientidmode="static" scrolling="yes"></iframe>
     </div>
-    <%--<div id="contactdocuments" style="display: none;">
-        <label for="Attachment" class="control-label col-md-2">
-            Attachment</label>
-        <div class="col-md-4">
-            <asp:Panel ID="pnlUpload" runat="server" Style="text-align: center;">
-                <cc1:ClientUploader ID="flashUpload" runat="server" UploadPage="Upload.axd" OnUploadComplete="UploadComplete()"
-                    FileTypeDescription="Images" FileTypes="" UploadFileSizeLimit="0" TotalUploadSizeLimit="0" />
-            </asp:Panel>
-        </div>
-    </div>--%>
     <div id="EntryPanel" class="panel panel-default">
         <div class="panel-body">
             <div class="form-horizontal">
-
                 <div class="form-group">
-
                     <label class="control-label col-md-2">Account Manager</label>
                     <div class="col-sm-10">
                         <asp:DropDownList ID="ddlCompanyOwner" runat="server" CssClass="form-control" TabIndex="1">
@@ -1557,7 +1553,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-
                     <label class="control-label col-md-2">Parent Company</label>
                     <div class="col-sm-10">
                         <asp:DropDownList ID="ddlParentCompany" runat="server" CssClass="form-control" TabIndex="1">
@@ -1583,7 +1578,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-2">Company Type</label>
+                    <label class="control-label col-md-2 required-field">Company Type</label>
                     <div class="col-sm-4">
                         <asp:DropDownList ID="ddlCompanyType" runat="server" CssClass="form-control" TabIndex="1">
                         </asp:DropDownList>
