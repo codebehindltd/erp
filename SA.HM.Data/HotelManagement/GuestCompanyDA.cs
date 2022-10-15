@@ -931,7 +931,7 @@ namespace HotelManagement.Data.HotelManagement
             }
             return roomTypeList;
         }
-        public List<GuestCompanyBO> GetGLCompanyWiseGuestCompanyInfo(int userInfoId, string companyName)
+        public List<GuestCompanyBO> GetGLCompanyWiseGuestCompanyInfo(int userInfoId, string companyName, int costcenterId)
         {
             List<GuestCompanyBO> roomTypeList = new List<GuestCompanyBO>();
             using (DbConnection conn = dbSmartAspects.CreateConnection())
@@ -940,6 +940,7 @@ namespace HotelManagement.Data.HotelManagement
                 {
                     cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int32, userInfoId);
+                    dbSmartAspects.AddInParameter(cmd, "@CostcenterId", DbType.Int32, costcenterId);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyName", DbType.String, companyName);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -949,7 +950,6 @@ namespace HotelManagement.Data.HotelManagement
                             while (reader.Read())
                             {
                                 GuestCompanyBO guestCompany = new GuestCompanyBO();
-
                                 guestCompany.CompanyId = Convert.ToInt32(reader["CompanyId"]);
                                 guestCompany.CompanyName = reader["CompanyName"].ToString();
                                 guestCompany.EmailAddress = reader["EmailAddress"].ToString();

@@ -1159,14 +1159,14 @@
 
             $("#txtSearchCompany").autocomplete({
                 source: function (request, response) {
+                    var costcenterId = $("#ContentPlaceHolder1_hfCostcenterId").val();
                     $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
                         url: 'Billing.aspx/GetGLCompanyWiseGuestCompanyInfo',
-                        data: "{'companyName':'" + request.term.replace("'", "\\'") + "'}",
+                        data: "{'companyName':'" + request.term.replace("'", "\\'") + "', 'costcenterId':'" + costcenterId + "'}",
                         dataType: "json",
                         success: function (data) {
-
                             var searchData = data.error ? [] : $.map(data.d, function (m) {
                                 return {
                                     Balance: m.Balance,

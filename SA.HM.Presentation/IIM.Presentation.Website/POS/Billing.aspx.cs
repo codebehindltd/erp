@@ -1528,13 +1528,13 @@ namespace HotelManagement.Presentation.Website.POS
         }
 
         [WebMethod]
-        public static List<GuestCompanyBO> GetGLCompanyWiseGuestCompanyInfo(string companyName)
+        public static List<GuestCompanyBO> GetGLCompanyWiseGuestCompanyInfo(string companyName, int costcenterId)
         {
             HMUtility hmUtility = new HMUtility();
             GuestCompanyDA bpDA = new GuestCompanyDA();
             UserInformationBO userInformationBO = new UserInformationBO();
             userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
-            return bpDA.GetGLCompanyWiseGuestCompanyInfo(userInformationBO.UserInfoId, companyName);
+            return bpDA.GetGLCompanyWiseGuestCompanyInfo(userInformationBO.UserInfoId, companyName, costcenterId);
         }
         protected void btnPrintReportTemplate2_Click1(object sender, EventArgs e)
         {
