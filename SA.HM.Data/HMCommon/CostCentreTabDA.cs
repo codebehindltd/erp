@@ -631,6 +631,7 @@ namespace HotelManagement.Data.HMCommon
                                 costCentreTabBO.IsRestaurant = Convert.ToBoolean(reader["IsRestaurant"]);
                                 costCentreTabBO.DefaultView = reader["DefaultView"].ToString();
                                 costCentreTabBO.InvoiceTemplate = Convert.ToInt32(reader["InvoiceTemplate"]);
+                                costCentreTabBO.IsCostCenterNameShowOnInvoice = Convert.ToBoolean(reader["IsCostCenterNameShowOnInvoice"]);
                                 costCentreTabBO.BillingStartTime = Convert.ToInt32(reader["BillingStartTime"]);
                             }
                         }

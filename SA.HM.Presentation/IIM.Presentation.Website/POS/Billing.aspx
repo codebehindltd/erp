@@ -214,45 +214,15 @@
 
 
             if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
-                //$("#AttributeDiv").show();
-
-
-                //document.getElementById("itemColorInputNameCol").style.display = "none";
-                //    //document.getElementById("itemSizeInputNameCol").style.display = "none";
-                //    //document.getElementById("itemStyleInputNameCol").style.display = "none";
-
-                //    //document.getElementById("itemColorInputCol").style.display = "none";
-                //    //document.getElementById("itemSizeInputCol").style.display = "none";
-                //    //document.getElementById("itemStyleInputCol").style.display = "none";
-
-
-
-                //$("#cId").show();
-                //$("#sId").show();
-                //$("#stId").show();
-                //$("#cIdd").show();
-                //$("#sIdd").show();
-                //$("#stIdd").show();
             }
             else {
                 document.getElementById("itemColorInputNameCol").style.display = "none";
                 document.getElementById("itemSizeInputNameCol").style.display = "none";
                 document.getElementById("itemStyleInputNameCol").style.display = "none";
-
                 document.getElementById("itemColorInputCol").style.display = "none";
                 document.getElementById("itemSizeInputCol").style.display = "none";
                 document.getElementById("itemStyleInputCol").style.display = "none";
-
-                //$("#AttributeDiv").hide();
-                //$("#cId").hide();
-                //$("#sId").hide();
-                //$("#stId").hide();
-                //$("#cIdd").hide();
-                //$("#sIdd").hide();
-                //$("#stIdd").hide();
             }
-
-            //$("#companyInfo").hide();
 
             IsMembershipPaymentEnableFlag = ($("#ContentPlaceHolder1_hfIsMembershipPaymentEnable").val() == "1") ? true : false;
 
@@ -293,25 +263,6 @@
                     //alert("Error");
                 }
             });
-
-
-
-            //$("#PointsInAmounts").keypress(function (event) {
-
-            //    var keycode = event.keyCode || event.which;
-            //    if (keycode == '13') {
-            //        var Amount = parseFloat($('#PointsInAmounts').val());
-            //        var point = parseFloat($('#PointWiseMoney').val());
-            //        $('#txtPointAmount').val("");
-            //        debugger;
-            //        if(Amount > point )
-            //            toastr.info("Amount can not be grater than Point.")
-            //        else
-            //        {
-            //            $('#txtPointAmount').val(Amount);
-            //        }
-            //    }
-            //});
 
             $('#ContentPlaceHolder1_ddlSizeAttribute').change(function () {
 
@@ -635,29 +586,6 @@
                     });
                 }
             });
-
-            //$("#ItemCode").keypress(function (event) {
-            //    debugger;
-            //    var keycode = event.keyCode || event.which;
-            //    if (keycode == '13') {
-
-            //        var barCode = $.trim($("#ItemCode").val());
-
-            //        if ($.trim(barCode) == "") { return false; }
-
-            //        var alreadyAddedItem = _.findWhere(AddedItemList, { Code: barCode });
-
-            //        if (alreadyAddedItem == null) {
-            //            AdditemByCodeOrBarCode();
-            //        }
-            //        else {
-            //            ItemDetails = alreadyAddedItem;
-            //            AddItem();
-            //        }
-            //        setTimeout(function () { $("#ItemCode").focus(); }, 50);
-
-            //    }
-            //});
 
             $("#AddedItem").delegate(':input', 'keyup', function (event) {
                 var keycode = event.keyCode || event.which;

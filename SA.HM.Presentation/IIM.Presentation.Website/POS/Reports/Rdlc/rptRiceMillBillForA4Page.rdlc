@@ -93,7 +93,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Fields!CostCenter.Value</Value>
+                                            <Value>=Parameters!CompanyProfile.Value</Value>
                                             <Style>
                                               <FontFamily>Franklin Gothic Medium Cond</FontFamily>
                                               <FontSize>11pt</FontSize>

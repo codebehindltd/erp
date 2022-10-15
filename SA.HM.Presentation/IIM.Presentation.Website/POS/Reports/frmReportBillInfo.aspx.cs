@@ -178,11 +178,14 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                             }
                         }
 
-                        companyName = costCentreTabBO.CostCenter;
-                        if (!string.IsNullOrWhiteSpace(costCentreTabBO.CompanyAddress))
+                        if (costCentreTabBO.IsCostCenterNameShowOnInvoice)
                         {
-                            companyAddress = costCentreTabBO.CompanyAddress;
-                        }
+                            companyName = costCentreTabBO.CostCenter;
+                            if (!string.IsNullOrWhiteSpace(costCentreTabBO.CompanyAddress))
+                            {
+                                companyAddress = costCentreTabBO.CompanyAddress;
+                            }
+                        }                        
                     }
                 }
 
