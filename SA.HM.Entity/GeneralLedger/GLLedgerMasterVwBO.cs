@@ -20,5 +20,6 @@ namespace HotelManagement.Entity.GeneralLedger
         public bool IsCanCheck { get; set; }
         public bool IsCanApprove { get; set; }
         public decimal VoucherTotalAmount { get; set; }
+        public bool IsModulesTransaction { get; set; }
     }
 }

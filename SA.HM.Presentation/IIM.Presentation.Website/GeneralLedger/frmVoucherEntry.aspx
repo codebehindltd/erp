@@ -697,7 +697,7 @@
             convertionrate = $("#ContentPlaceHolder1_txtConversionRate").val();
             payerOrPayee = $("#ContentPlaceHolder1_txtPayerOrPayee").val();
             referenceNumber = $("#ContentPlaceHolder1_txtReferenceNumber").val();
-            
+
 
             if (companyId == "0") {
                 $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").focus();
@@ -993,36 +993,48 @@
             var tr = "", totalRow = 0, editLink = "", deleteLink = "";
 
             $.each(result.GridData, function (count, gridObject) {
-
                 tr += "<tr>";
-
-                //tr += "<td style=\"width:15%;\">" + new Date(gridObject.VoucherDate).format(innBoarDateFormat) + "</td>";
                 tr += "<td style=\"width:10%;\">" + gridObject.VoucherDateString + "</td>";
                 tr += "<td style=\"width:12%;\">" + gridObject.VoucherNo + "</td>";
                 tr += "<td style=\"width:40%;\">" + gridObject.Narration + "</td>";
                 tr += "<td style=\"width:15%;\">" + gridObject.VoucherTotalAmount + "</td>";
                 tr += "<td style=\"width:10%;\">" + gridObject.GLStatus + "</td>";
                 tr += "<td style=\"text-align: center; width:20%; cursor:pointer;\">";
-                if (gridObject.GLStatus == 'Submit' || gridObject.GLStatus == 'Pending') {
-                    if (gridObject.IsCanEdit)
-                        tr += "<img src='../Images/edit.png' onClick= \"javascript:return VoucherEdit('" + gridObject.LedgerMasterId + "')\" alt='Edit'  title='Edit' border='0' />";
-                    if (gridObject.IsCanDelete)
-                        tr += "&nbsp;&nbsp;<img src='../Images/delete.png'  onClick= \"javascript:return VoucherDelete('" + gridObject.LedgerMasterId + "')\" alt='Delete' title='Delete' border='0' />";
 
+                if (gridObject.GLStatus == 'Submit' || gridObject.GLStatus == 'Pending') {
+                    if ($("#ContentPlaceHolder1_hfIsAdminUser").val() == "1") {
+                        if (gridObject.IsCanEdit)
+                            tr += "<img src='../Images/edit.png' onClick= \"javascript:return VoucherEdit('" + gridObject.LedgerMasterId + "')\" alt='Edit'  title='Edit' border='0' />";
+                        if (gridObject.IsCanDelete)
+                            tr += "&nbsp;&nbsp;<img src='../Images/delete.png'  onClick= \"javascript:return VoucherDelete('" + gridObject.LedgerMasterId + "')\" alt='Delete' title='Delete' border='0' />";
+                    }
+                    else {
+                        if (gridObject.IsModulesTransaction) {
+                            if (gridObject.IsCanEdit)
+                                tr += "<img src='../Images/edit.png' onClick= \"javascript:return VoucherEdit('" + gridObject.LedgerMasterId + "')\" alt='Edit'  title='Edit' border='0' />";
+                            if (gridObject.IsCanDelete)
+                                tr += "&nbsp;&nbsp;<img src='../Images/delete.png'  onClick= \"javascript:return VoucherDelete('" + gridObject.LedgerMasterId + "')\" alt='Delete' title='Delete' border='0' />";
+                        }
+                    }
                 }
                 else if (result.UserGroupId != 0 && gridObject.CanEditDeleteAfterApproved == 1) {
-                    tr += "<img src='../Images/edit.png' onClick= \"javascript:return VoucherEdit('" + gridObject.LedgerMasterId + "')\" alt='Edit'  title='Edit' border='0' />";
-                    tr += "&nbsp;&nbsp;<img src='../Images/delete.png'  onClick= \"javascript:return VoucherDelete('" + gridObject.LedgerMasterId + "')\" alt='Delete' title='Delete' border='0' />";
-
+                    if ($("#ContentPlaceHolder1_hfIsAdminUser").val() == "1") {
+                        tr += "<img src='../Images/edit.png' onClick= \"javascript:return VoucherEdit('" + gridObject.LedgerMasterId + "')\" alt='Edit'  title='Edit' border='0' />";
+                        tr += "&nbsp;&nbsp;<img src='../Images/delete.png'  onClick= \"javascript:return VoucherDelete('" + gridObject.LedgerMasterId + "')\" alt='Delete' title='Delete' border='0' />";
+                    }
+                    else {
+                        if (gridObject.IsModulesTransaction) {
+                            tr += "<img src='../Images/edit.png' onClick= \"javascript:return VoucherEdit('" + gridObject.LedgerMasterId + "')\" alt='Edit'  title='Edit' border='0' />";
+                            tr += "&nbsp;&nbsp;<img src='../Images/delete.png'  onClick= \"javascript:return VoucherDelete('" + gridObject.LedgerMasterId + "')\" alt='Delete' title='Delete' border='0' />";
+                        }
+                    }
                 }
+
                 tr += "&nbsp;&nbsp;<img src='../Images/detailsInfo.png'  onClick= \"javascript:return VoucherDetails('" + gridObject.LedgerMasterId + "')\" alt='Details' title='Details' border='0' />";
                 tr += "&nbsp;&nbsp;<img src='../Images/ReportDocument.png'  onClick= \"javascript:return VoucherPreviewOption('" + gridObject.LedgerMasterId + "')\" alt='Voucher' title='Voucher' border='0' />";
-
-
                 tr += '&nbsp;&nbsp;<a href="javascript:void();" onclick= "javascript:return ShowDocuments(' + gridObject.LedgerMasterId + ');" title="Documents"><img style="width:16px;height:16px;" alt="Documents" src="../Images/document.png" /></a>';
                 tr += "</td>";
                 tr += "<td align='right' style=\"display:none;\">" + gridObject.LedgerMasterId + "</td>";
-
                 tr += "</tr>"
 
                 $("#VoucherSearchGrid tbody ").append(tr);
@@ -1482,6 +1494,7 @@
     <asp:HiddenField ID="hfCurrencyAll" runat="server" />
     <asp:HiddenField ID="hfCompanyAll" runat="server" />
     <asp:HiddenField ID="hfGuestDeletedDoc" runat="server" />
+    <asp:HiddenField ID="hfIsAdminUser" runat="server" />
     <div id="voucherDocuments" style="display: none;">
         <div id="imageDiv"></div>
     </div>
@@ -1494,8 +1507,8 @@
             Attachment</label>
         <div class="col-md-4">
             <asp:Panel ID="pnlUpload" runat="server" Style="text-align: center;">
-                <cc1:ClientUploader ID="flashUpload" runat="server" UploadPage="Upload.axd" OnUploadComplete="UploadComplete()"
-                    FileTypeDescription="Images" FileTypes="" UploadFileSizeLimit="0" TotalUploadSizeLimit="0" />
+                <cc1:clientuploader id="flashUpload" runat="server" uploadpage="Upload.axd" onuploadcomplete="UploadComplete()"
+                    filetypedescription="Images" filetypes="" uploadfilesizelimit="0" totaluploadsizelimit="0" />
             </asp:Panel>
         </div>
     </div>
@@ -1536,7 +1549,7 @@
                     <div class="form-horizontal">
                         <fieldset>
                             <legend>Company/Project</legend>
-                            <UserControl:CompanyProjectUserControl ID="companyProjectUserControl" runat="server" />
+                            <usercontrol:companyprojectusercontrol id="companyProjectUserControl" runat="server" />
                             <div class="form-group" id="DonorContainer" style="display: none;">
                                 <label for="" class="control-label col-md-2">
                                     Donor</label>
@@ -1758,7 +1771,7 @@
         </div>
         <div id="tab-2">
             <div id="CompanyProjectSearchPanel" class="form-group">
-                <UserControl:CompanyProjectUserControl ID="companyProjectSearchUserControl" runat="server" />
+                <usercontrol:companyprojectusercontrol id="companyProjectSearchUserControl" runat="server" />
             </div>
             <div class="form-horizontal">
                 <div class="form-group">
@@ -1767,7 +1780,7 @@
                     <div class="col-md-2">
                         <asp:TextBox ID="txtFromDate" CssClass="form-control" placeholder="From Date" runat="server" TabIndex="1"></asp:TextBox>
                     </div>
-                    
+
                     <div class="col-md-2">
                         <asp:TextBox ID="txtToDate" CssClass="form-control" placeholder="To Date" runat="server"></asp:TextBox>
                     </div>
@@ -1778,7 +1791,7 @@
                             <asp:ListItem Value="">--- All Status ---</asp:ListItem>
                             <asp:ListItem Value="Pending">Pending </asp:ListItem>
                             <asp:ListItem Value="Checked">Checked</asp:ListItem>
-                            <asp:ListItem Value="Approved">Approved</asp:ListItem>                            
+                            <asp:ListItem Value="Approved">Approved</asp:ListItem>
                         </asp:DropDownList>
                     </div>
                 </div>

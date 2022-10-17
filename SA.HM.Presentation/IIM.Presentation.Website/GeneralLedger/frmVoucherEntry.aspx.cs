@@ -29,7 +29,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
 
             if (!IsPostBack)
             {
-                
+                IsAdminUser();
                 companyProjectUserControl.ddlFirstValueVar = "select";
                 companyProjectSearchUserControl.ddlFirstValueVar = "all";
                 LoadCurrentDate();
@@ -47,6 +47,32 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             }
         }
         //************************ User Defined Function ********************//
+        private void IsAdminUser()
+        {
+            HMUtility hmUtility = new HMUtility();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            // // // ------User Admin Authorization BO Session Information --------------------------------
+            #region User Admin Authorization
+            hfIsAdminUser.Value = "0";
+            if (userInformationBO.UserInfoId == 1)
+            {
+                hfIsAdminUser.Value = "1";
+            }
+            else
+            {
+                List<SecurityUserAdminAuthorizationBO> adminAuthorizationList = new List<SecurityUserAdminAuthorizationBO>();
+                adminAuthorizationList = System.Web.HttpContext.Current.Session["UserAdminAuthorizationBOSession"] as List<SecurityUserAdminAuthorizationBO>;
+                if (adminAuthorizationList != null)
+                {
+                    if (adminAuthorizationList.Where(x => x.UserInfoId == userInformationBO.UserInfoId && x.ModuleId == 2).Count() > 0)
+                    {
+                        hfIsAdminUser.Value = "1";
+                    }
+                }
+            }
+            #endregion
+        }
         private void LoadCurrentDate()
         {
             DateTime dateTime = DateTime.Now;
@@ -99,7 +125,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             string jscript = "function UploadComplete(){ };";
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "FileCompleteUpload", jscript, true);
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "LoadDetailGridInformation", jscript, true);
-            //flashUpload.QueryParameters = "LedgerMasterId=" + Server.UrlEncode("1");
         }
         private void LoadCommonDropDownHiddenField()
         {
@@ -111,7 +136,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
 
             setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsShowReferenceVoucherNumber", "IsShowReferenceVoucherNumber");
-
             if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
             {
                 hfIsShowReferenceVoucherNumber.Value = setUpBO.SetupValue.ToString();

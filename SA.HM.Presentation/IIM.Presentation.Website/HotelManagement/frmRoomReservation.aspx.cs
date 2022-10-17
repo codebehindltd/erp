@@ -51,25 +51,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             if (!IsPostBack)
             {
-                //SearchOrdering = "2";
-                //string hfPageNumber = string.Empty;
-                //string hfGridRecordCounts = string.Empty;
-                //string hfIsCurrentRPreviouss = string.Empty;
-
-                //if (Request.QueryString["pn"] != null)
-                //{
-                //    hfPageNumber = Request.QueryString["pn"];
-                //    hfGridRecordCounts = Request.QueryString["grc"];
-                //    hfIsCurrentRPreviouss = Request.QueryString["icp"];
-
-                //    if (System.Web.HttpContext.Current.Session["SrcReservationOrdering"] != null)
-                //    {
-                //        SearchOrdering = System.Web.HttpContext.Current.Session["SrcReservationOrdering"].ToString();
-                //    }
-
-                //    LoadGridView(Convert.ToInt32(hfPageNumber), Convert.ToInt32(hfIsCurrentRPreviouss), Convert.ToInt32(hfGridRecordCounts));
-                //}
-
                 HttpContext.Current.Session["ReservationDetailListForGrid"] = null;
                 Random rd = new Random();
 
@@ -147,10 +128,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             Session["ReservationDetailListForGrid"] = reservationDetailListBOForGrid;
 
-
             string[] Rooms = RoomNumber.Split(',');
             string[] Id = RoomId.Split(',');
-
 
             if (!ValidateDetails())
             {
@@ -164,12 +143,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 }
                 return;
             }
+
             int dynamicDetailId = 0;
             List<ReservationDetailBO> reservationDetailListBO = Session["ReservationDetailList"] == null ? new List<ReservationDetailBO>() : Session["ReservationDetailList"] as List<ReservationDetailBO>;
 
             if (!string.IsNullOrWhiteSpace(lblHiddenId.Text))
                 dynamicDetailId = Convert.ToInt32(lblHiddenId.Text);
-
 
             if (Rooms[0].Length == 0)
             {
@@ -188,12 +167,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                 for (int i = 0; i < roomQuantity; i++)
                 {
-
-
-                    //ReservationDetailBO detailBO = dynamicDetailId == 0 ? new ReservationDetailBO() : reservationDetailListBO.Where(x => x.ReservationDetailId == dynamicDetailId).FirstOrDefault();
-                    //if (reservationDetailListBO.Contains(detailBO))
-                    //    reservationDetailListBO.Remove(detailBO);
-
                     detailBO.RoomTypeId = Convert.ToInt32(ddlRoomTypeId.SelectedValue);
                     detailBO.RoomType = ddlRoomTypeId.SelectedItem.Text;
                     detailBO.RoomId = 0;
@@ -232,7 +205,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             }
             CheckObjectPermission();
             Session["ReservationDetailList"] = reservationDetailListBO;
-            // LoadDetailGridView();
+            
             ClearDetailPart();
             SetTab("EntryTab");
             if (ddlReservedMode.SelectedItem.Text == "Company")
@@ -259,37 +232,11 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     lblAddedRoomNumber.Text = reservationDetail.RoomNumberList;
                     hfSelectedRoomId.Value = reservationDetail.RoomNumberIdList;
                     ddlRoomTypeId.SelectedValue = reservationDetail.RoomTypeId.ToString();
-                    //txtRoomId.Text = reservationDetail.RoomQuantity;
                     txtRoomRate.Text = reservationDetail.RoomRate.ToString();
                     txtDiscountAmount.Text = reservationDetail.DiscountAmount.ToString();
                     txtUnitPrice.Text = reservationDetail.UnitPrice.ToString();
                     ddlDiscountType.SelectedValue = reservationDetail.DiscountType.ToString();
-                    //btnAddDetailGuest.Text = "Edit";
                 }
-                else
-                {
-                    //btnAddDetailGuest.Text = "Add";
-                }
-
-                //_RoomTypeId = Convert.ToInt32(e.CommandArgument.ToString());
-                //lblHiddenId.Text = _RoomTypeId.ToString();
-                //var reservationDetailBO = (List<ReservationDetailBO>)Session["ReservationDetailList"];
-                //var reservationDetail = reservationDetailBO.Where(x => x.ReservationDetailId == _RoomTypeId).FirstOrDefault();
-                //if (reservationDetail != null && reservationDetail.ReservationDetailId > 0)
-                //{
-                //    ddlRoomTypeId.SelectedValue = reservationDetail.RoomTypeId.ToString();
-                //    txtRoomId.Text = reservationDetail.RoomId.ToString();
-                //    txtRoomRate.Text = reservationDetail.RoomRate.ToString();
-                //    txtDiscountAmount.Text = reservationDetail.Discount.ToString();
-                //    ddlCurrency.SelectedValue= reservationDetail.CurrencyType.ToString();
-                //    ddlDiscountType.SelectedValue = reservationDetail.DiscountType.ToString();
-                //    btnAddDetailGuest.Text = "Edit";
-                //}
-                //else
-                //{
-                //    btnAddDetailGuest.Text = "Add";
-                //}
-
             }
             else if (e.CommandName == "CmdDelete")
             {
@@ -299,10 +246,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 reservationDetailBO.Remove(reservationDetail);
                 Session["ReservationDetailListForGrid"] = reservationDetailBO;
                 arrayDelete.Add(_RoomTypeId);
-
             }
-            //LoadDetailGridView();
-
         }
         private bool IsRegistered(int ReservationId)
         {
@@ -321,21 +265,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         private void SetRegisterdStatus(bool registered)
         {
             ddlReservationStatus.Items.Remove(ddlReservationStatus.Items.FindByValue("Registered"));
-            //ddlReservationMode.Items.Remove(ddlReservationMode.Items.FindByValue("Cancel"));
             if (registered == true)
             {
-                //ddlReservationMode.Items.Remove(ddlReservationMode.Items.FindByValue("Cancel"));
                 ListItem registeredItem = new ListItem("Registered", "Registered", true);
                 ddlReservationStatus.Items.Add(registeredItem);
-            }
-            else
-            {
-                //ddlReservationMode.Items.Remove(ddlReservationMode.Items.FindByValue("Registered"));
-                //ListItem noShowItem = new ListItem("No Show", "NoShow", true);
-                //ddlReservationMode.Items.Add(noShowItem);
-
-                //ListItem cancelItem = new ListItem("Cancel", "Cancel", true);
-                //ddlReservationMode.Items.Add(cancelItem);
             }
         }
         protected void gvRoomRegistration_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -345,12 +278,9 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 _RoomReservationId = Convert.ToInt32(e.CommandArgument.ToString());
                 Session["_RoomReservationId"] = _RoomReservationId;
                 SetTab("EntryTab");
-                //UpdateLoadDropdown();
                 FillForm(_RoomReservationId);
                 hfIsPaidServiceAlreadyLoded.Value = "0";
                 bool registered = IsRegistered(_RoomReservationId);
-                //SetRegisterdStatus(registered);
-
             }
             else if (e.CommandName == "CmdDelete")
             {
@@ -385,7 +315,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         protected void btnNewReservation_Click(object sender, EventArgs e)
         {
             Cancel();
-
             isNewAddButtonEnable = -1;
             _RoomReservationId = 1;
         }
@@ -396,9 +325,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 ImageButton imgUpdate = (ImageButton)e.Row.FindControl("ImgUpdate");
                 ImageButton imgDelete = (ImageButton)e.Row.FindControl("ImgDelete");
                 imgUpdate.Visible = isSavePermission;
-                //imgDelete.Visible = isDeletePermission;
                 imgDelete.Visible = false;
-
 
                 Label lblReservationStatusInfo = (Label)e.Row.FindControl("lblReservationStatusInfo");
                 if (lblReservationStatusInfo.Text == "Registered")
@@ -476,9 +403,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 RoomReservationBO roomReservationBO = new RoomReservationBO();
 
                 roomReservationBO.ReservedMode = ddlReservedMode.SelectedItem.Text;
-                // int pMin = !string.IsNullOrWhiteSpace(txtProbableMinute.Text) ? Convert.ToInt32(txtProbableMinute.Text) : 0;
-                //int pHour = ddlProbableAMPM.SelectedIndex == 0 ? (Convert.ToInt32(txtProbableHour.Text) % 12) : ((Convert.ToInt32(txtProbableHour.Text) % 12) + 12);
-                //roomReservationBO.DateIn = hmUtility.GetDateTimeFromString(txtDateIn.Text, userInformationBO.ServerDateFormat).AddHours(pHour).AddMinutes(pMin);
                 roomReservationBO.Remarks = txtRemarks.Text;
 
                 if (ddlReservationStatus.SelectedValue == "Pending")
@@ -491,16 +415,13 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 {
                     roomReservationBO.ConfirmationDate = DateTime.Now;
                 }
-                //roomReservationBO.DateIn = hmUtility.GetDateTimeFromString(txtDateIn.Text, userInformationBO.ServerDateFormat).AddHours(pHour).AddMinutes(pMin);
-                roomReservationBO.DateOut = hmUtility.GetDateTimeFromString(txtDateOut.Text, userInformationBO.ServerDateFormat);
 
+                roomReservationBO.DateOut = hmUtility.GetDateTimeFromString(txtDateOut.Text, userInformationBO.ServerDateFormat);
                 roomReservationBO.ReservationType = ddlReservationType.SelectedItem.Text;
                 roomReservationBO.ContactAddress = txtContactAddress.Text;
                 roomReservationBO.ContactPerson = txtContactPerson.Text;
-
                 roomReservationBO.MobileNumber = txtMobileNumber.Text;
                 roomReservationBO.FaxNumber = txtFaxNumber.Text;
-
                 roomReservationBO.ContactNumber = txtContactNumber.Text;
                 roomReservationBO.ContactEmail = txtContactEmail.Text;
                 roomReservationBO.PayFor = Convert.ToInt32(ddlPayFor.SelectedValue);
@@ -536,9 +457,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 {
                     roomReservationBO.GuestId = Int32.Parse(hiddenGuestId.Value);
                 }
+
                 roomReservationBO.Reason = txtReason.Text;
-                //roomReservationBO.PersonPhone = txtPersonPhone.Text;
-                //roomReservationBO.PersonEmail = txtPersonEmail.Text;
                 roomReservationBO.BusinessPromotionId = Int32.Parse(ddlBusinessPromotionId.SelectedValue);
                 roomReservationBO.ReferenceId = Int32.Parse(ddlReferenceId.SelectedValue);
                 roomReservationBO.ReservationMode = ddlReservationStatus.SelectedValue;
@@ -587,19 +507,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 roomReservationBO.IsAirportPickupDropExist = isAirportPickupDropExist;
                 roomReservationBO.ArrivalFlightName = txtArrivalFlightName.Text;
                 roomReservationBO.ArrivalFlightNumber = txtArrivalFlightNumber.Text;
-                // roomReservationBO.ArrivalTime = !string.IsNullOrWhiteSpace(txtArrivalTime.Text) ? hmUtility.ParseDateTime(txtArrivalTime.Text) : date;
-                //int AMin = !string.IsNullOrWhiteSpace(txtArrivalMin.Text) ? Convert.ToInt32(txtArrivalMin.Text) : 0;
-                //int AHour = ddlArrivalAmPm.SelectedIndex == 0 ? (Convert.ToInt32(txtArrivalHour.Text) % 12) : ((Convert.ToInt32(txtArrivalHour.Text) % 12) + 12);
+
                 DateTime currentDate = DateTime.Today;
-                //roomReservationBO.ArrivalTime = currentDate.AddHours(AHour).AddMinutes(AMin);
-
-                //int DMin = !string.IsNullOrWhiteSpace(txtDepartureMin.Text) ? Convert.ToInt32(txtDepartureMin.Text) : 0;
-                // int DHour = ddlDepartureAmPm.SelectedIndex == 0 ? (Convert.ToInt32(txtDepartureHour.Text) % 12) : ((Convert.ToInt32(txtDepartureHour.Text) % 12) + 12);
-                //roomReservationBO.DepartureTime = currentDate.AddHours(DHour).AddMinutes(DMin);
-
                 roomReservationBO.DepartureFlightName = txtDepartureFlightName.Text;
                 roomReservationBO.DepartureFlightNumber = txtDepartureFlightNumber.Text;
-                // roomReservationBO.DepartureTime = !string.IsNullOrWhiteSpace(txtDepartureTime.Text) ? hmUtility.ParseDateTime(txtDepartureTime.Text) : date;
                 // -- Airport Pickup and Drop Information------------------------------------End----
 
                 //--------** Paid Service Save, Update **-------------------------
@@ -625,7 +536,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
                         EntityTypeEnum.EntityType.RoomReservation.ToString(), tmpReservationId,
                         ProjectModuleEnum.ProjectModule.FrontOffice.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.RoomReservation));
-                        //SendMail(tmpRoomTypeId);
                         Cancel();
                     }
                     else
@@ -648,7 +558,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         retriveReservationDetailListBO = reservationDetailDA.GetReservationDetailByReservationId(roomReservationBO.ReservationId);
                         reservationDetailListBO = Session["ReservationDetailList"] as List<ReservationDetailBO>;
 
-
                         foreach (ReservationDetailBO reservationDetailBO in retriveReservationDetailListBO)
                         {
                             ReservationDetailBO detailBODelete;
@@ -665,7 +574,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                             }
                         }
 
-                        //Session["ReservationDetailList"] = reservationDetailListBO;
                         if (deletedReservationDetailListBO != null)
                         {
                             HttpContext.Current.Session["AssignedDetailRoomDelete"] = deletedReservationDetailListBO;
@@ -693,7 +601,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                             complementaryItem.ComplementaryItemId = cmitm.ComplementaryItemId;
                             complementaryItem.ReservationId = roomReservationBO.ReservationId;
                             complementaryItem.RCItemId = cmitm.RCItemId;
-
                             deletedComplementaryItem.Add(complementaryItem);
                         }
                     }
@@ -707,34 +614,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                             complementaryItem = new ReservationComplementaryItemBO();
                             complementaryItem.ComplementaryItemId = cmitm.ComplementaryItemId;
                             complementaryItem.ReservationId = roomReservationBO.ReservationId;
-
                             newlyAddedComplementaryItem.Add(complementaryItem);
                         }
                     }
 
                     //-------------------------------------------------------
-
-
                     string currentReservationNumber = String.Empty;
                     roomReservationBO.LastModifiedBy = userInformationBO.UserInfoId;
-
-                    //Boolean status = roomReservationDA.UpdateRoomReservationInfo(roomReservationBO, retriveReservationDetailListBOForUpdate, Session["ReservationDetailList"] as List<ReservationDetailBO>, complementaryItemBOList, Session["AssignedDetailRoomDelete"] as List<ReservationDetailBO>, Session["UnassignedDetailRoomDelete"] as List<ReservationDetailBO>, Session["DeletedReservationDetailListByRoomType"] as List<ReservationDetailBO>, Session["GuestPaymentDetailListForNoShow"] as List<GuestBillPaymentBO>, out currentReservationNumber);
-                    //if (status)
-                    //{
-                    //    isMessageBoxEnable = 2;
-                    //    lblMessage.Text = "Reservation No: " + currentReservationNumber + " Update Successfully.";
-                    //    Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
-                    //    EntityTypeEnum.EntityType.RoomReservation.ToString(), roomReservationBO.ReservationId,
-                    //     ProjectModuleEnum.ProjectModule.HotelManagement.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.RoomReservation));
-                    //    SaveLoadDropdown();
-                    //    Cancel();
-                    //}
-
-                    // Boolean status = roomReservationDA.UpdateRoomReservationInfo(roomReservationBO, retriveReservationDetailListBOForUpdate, Session["ReservationDetailList"] as List<ReservationDetailBO>, complementaryItemBOList, Session["AssignedDetailRoomDelete"] as List<ReservationDetailBO>, Session["UnassignedDetailRoomDelete"] as List<ReservationDetailBO>, Session["DeletedReservationDetailListByRoomType"] as List<ReservationDetailBO>, out currentReservationNumber);
                     Boolean status = roomReservationDA.UpdateRoomReservationInfo(roomReservationBO, retriveReservationDetailListBOForUpdate, Session["ReservationDetailList"] as List<ReservationDetailBO>, newlyAddedComplementaryItem, deletedComplementaryItem, Session["AssignedDetailRoomDelete"] as List<ReservationDetailBO>, Session["UnassignedDetailRoomDelete"] as List<ReservationDetailBO>, Session["DeletedReservationDetailListByRoomType"] as List<ReservationDetailBO>, out currentReservationNumber, paidServiceDetails, paidServiceDeleted);
-
-                    // Boolean status = roomReservationDA.UpdateRoomReservationInfo(roomReservationBO, retriveReservationDetailListBOForUpdate, Session["ReservationDetailList"] as List<ReservationDetailBO>, newlyAddedComplementaryItem, deletedComplementaryItem, Session["AssignedDetailRoomDelete"] as List<ReservationDetailBO>, Session["UnassignedDetailRoomDelete"] as List<ReservationDetailBO>, Session["DeletedReservationDetailListByRoomType"] as List<ReservationDetailBO>, out currentReservationNumber);
-
                     if (status)
                     {
                         Session["NewReservationDetailList"] = null;
@@ -744,7 +631,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         EntityTypeEnum.EntityType.RoomReservation.ToString(), roomReservationBO.ReservationId,
                          ProjectModuleEnum.ProjectModule.FrontOffice.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.RoomReservation));
                         SaveLoadDropdown();
-
 
                         // //// -----------------Grid View Load Related Information------------------------
                         int pageNumber = 1, isCurrentOrPreviousPage = 1, gridRecordsCount = 0;
@@ -764,7 +650,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         }
 
                         LoadGridView(pageNumber, isCurrentOrPreviousPage, gridRecordsCount);
-
                         Cancel();
                     }
                     else
@@ -788,8 +673,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             ddlGuestCountry.DataTextField = "CountryName";
             ddlGuestCountry.DataValueField = "CountryId";
             ddlGuestCountry.DataBind();
-            //string bangladesh = "19";
-            //ddlGuestCountry.SelectedValue = bangladesh;
 
             ListItem itemGuestCountry = new ListItem();
             itemGuestCountry.Value = "0";
@@ -831,11 +714,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.ddlCurrency.DataTextField = "CurrencyName";
             this.ddlCurrency.DataValueField = "CurrencyId";
             this.ddlCurrency.DataBind();
-
-            //ListItem item = new ListItem();
-            //item.Value = "0";
-            //item.Text = hmUtility.GetDropDownFirstValue();
-            //this.ddlCurrency.Items.Insert(0, item);
         }
         private void LoadIsRoomOverbookingEnable()
         {
@@ -862,11 +740,9 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         {
             string RoomNumber = hfSelectedRoomNumbers.Value;
             string RoomId = hfSelectedRoomId.Value;
-
             string[] Rooms = RoomNumber.Split(',');
             string[] Id = RoomId.Split(',');
             string A = "";
-
         }
         private void LoadBusinessPromotion()
         {
@@ -892,7 +768,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             isSavePermission = objectPermissionBO.IsSavePermission;
             isDeletePermission = objectPermissionBO.IsDeletePermission;
             btnSave.Visible = isSavePermission;
-            //btnAddDetailGuest.Visible = isSavePermission;
             if (!isSavePermission)
             {
                 isNewAddButtonEnable = -1;
@@ -983,7 +858,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             chkComplementaryItem.DataTextField = "ItemName";
             chkComplementaryItem.DataValueField = "ComplementaryItemId";
             chkComplementaryItem.DataBind();
-            //SetTab("SearchTab");
         }
         private void SetDefaultComplementaryItem()
         {
@@ -1045,7 +919,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             listReservationDetailBO = Session["ReservationDetailList"] as List<ReservationDetailBO>;
             List<GuestInformationBO> guestInformationList = new List<GuestInformationBO>();
             GuestInformationDA guestInformationDA = new GuestInformationDA();
-            //guestInformationList = guestInformationDA.GetGuestInformationDetailByResId(480458);
 
             if (!string.IsNullOrWhiteSpace(txtContactNumber.Text.Trim()))
             {
@@ -1077,25 +950,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     return status = false;
                 }
             }
-
-            //int probableHour;
-            //bool resultProbableHour = Int32.TryParse(txtProbableHour.Text, out probableHour);
-            //if (true != resultProbableHour)
-            //{
-            //    CommonHelper.AlertInfo(innboardMessage, "Please Provide Valid Probable Hour.", AlertType.Warning);
-            //    txtProbableHour.Focus();
-
-            //    return status = false;
-            //}
-
-            //int probableMinute;
-            //bool resultProbableMinute = Int32.TryParse(txtProbableMinute.Text, out probableMinute);
-            //if (true != resultProbableMinute)
-            //{
-            //    txtProbableMinute.Focus();
-            //    CommonHelper.AlertInfo(innboardMessage, "Please Provide Valid Probable Minute.", AlertType.Warning);
-            //    return status = false;
-            //}
 
             if (string.IsNullOrWhiteSpace(txtContactPerson.Text))
             {
@@ -1158,7 +1012,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 status = false;
             }
 
-
             if (ddlReservationStatus.SelectedIndex != 0)
             {
                 if (string.IsNullOrWhiteSpace(txtConfirmationDate.Text))
@@ -1167,18 +1020,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     txtConfirmationDate.Focus();
                     status = false;
                 }
-                //else if (string.IsNullOrWhiteSpace(txtPendingDeadlineHour.Text))
-                //{
-                //    CommonHelper.AlertInfo(innboardMessage, "Please Provide Probable Hour.", AlertType.Warning);
-                //    txtPendingDeadlineHour.Focus();
-                //    status = false;
-                //}
-                //else if (string.IsNullOrWhiteSpace(txtPendingDeadlineMin.Text))
-                //{
-                //    CommonHelper.AlertInfo(innboardMessage, "Please Provide Probable Minute.", AlertType.Warning);
-                //    txtPendingDeadlineMin.Focus();
-                //    status = false;
-                //}
             }
 
             if (string.IsNullOrWhiteSpace(txtMobileNumber.Text) && string.IsNullOrWhiteSpace(txtContactNumber.Text) && string.IsNullOrWhiteSpace(txtContactEmail.Text) && string.IsNullOrWhiteSpace(txtFaxNumber.Text))
@@ -1195,7 +1036,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 if (!re.IsMatch(txtContactEmail.Text.Trim()))
                 {
                     CommonHelper.AlertInfo(innboardMessage, "Please Provide Valid Email Address.", AlertType.Warning);
-                    //txtPendingDeadlineHour.Focus();
                     status = false;
                 }
             }
@@ -1310,7 +1150,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         }
         private void ClearDetailPart()
         {
-            //btnAddDetailGuest.Text = "Add";
             ddlRoomTypeId.SelectedIndex = -1;
             txtRoomId.Text = string.Empty;
             lblHiddenId.Text = string.Empty;
@@ -1319,7 +1158,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         private void Cancel()
         {
             string isSaveRUpdate = hfIsSaveRUpdate.Value, saveRUpdate = btnSave.Text;
-
             CommonHelper.ClearControl(Master.FindControl("ContentPlaceHolder1"));
             btnSave.Text = "Save";
 
@@ -1329,8 +1167,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             LoadProbableCheckInTime();
 
             _RoomReservationId = -1;
-            //txtConversionRate.Text = "81";
-
             Session["_RoomReservationId"] = null;
             Session["ReservationDetailList"] = null;
             Session["ReservationDetailListForGrid"] = null;
@@ -1350,66 +1186,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 CommonHelper.AlertInfo(innboardMessage, "Reservation No: " + isSaveRUpdate + " " + saveRUpdate + " Successfully.", AlertType.Success);
             }
-
-            //----------------------------
-
-            //ddlReservedMode.SelectedIndex = 0;
-            //txtDateIn.Text = string.Empty;
-            //txtDateOut.Text = string.Empty;
-            //txtRemarks.Text = string.Empty;
-
-            //ddlReservationType.SelectedIndex = 0;
-            //txtReservedCompany.Text = string.Empty;
-            //txtContactAddress.Text = string.Empty;
-            //txtContactPerson.Text = string.Empty;
-
-            //txtMobileNumber.Text = string.Empty;
-            //txtFaxNumber.Text = string.Empty;
-
-            //chkIsLitedCompany.Checked = false;
-            //ddlCompanyName.SelectedValue = "0";
-
-            //ddlAirportPickUp.SelectedValue = "NO";
-            //ddlAirportDrop.SelectedValue = "NO";
-
-            //txtContactNumber.Text = string.Empty;
-            //txtContactEmail.Text = string.Empty;
-
-            //hiddenGuestId.Value = string.Empty;
-            //txtReason.Text = string.Empty;
-            //txtReservationDuration.Text = string.Empty;
-            //ddlReservationStatus.SelectedIndex = 0;
-            //btnSave.Text = "Save";
-
-            //ClearDetailPart();
-
-            //// -- Complementary Item Information-------------------------------------------------
-            ///*   foreach (GridViewRow row in gvComplemetaryItem.Rows)
-            //   {
-            //       ((CheckBox)row.FindControl("chkIsSelected")).Checked = false;
-            //   }*/
-            //// -- Aireport Pickup/ Drop Information-------------------------------------------------
-
-            //txtArrivalFlightName.Text = string.Empty;
-            //txtArrivalFlightNumber.Text = string.Empty;
-
-            //txtDepartureFlightName.Text = string.Empty;
-            //txtDepartureFlightNumber.Text = string.Empty;
-
-            //txtDiscountAmount.Text = "0";
-            //txtRoomRate.Text = "0";
-            //ddlDiscountType.SelectedValue = "Fixed";
-
-            //cbFamilyOrCouple.Checked = false;
-            //txtNumberOfPersonAdult.Text = "1";
-            //txtNumberOfPersonChild.Text = string.Empty;
-
-            //hfPaidServiceSaveObj.Value = string.Empty;
-            //hfPaidServiceDeleteObj.Value = string.Empty;
-            //hfIsPaidServiceAlreadyLoded.Value = "0";
-            //hfIsPaidServiceAlreadySavedDb.Value = "0";
-
-
         }
         private void SetDefaulTime()
         {
@@ -1427,7 +1203,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             ReservationId = reservationId;
             hfReservationIdTemp.Value = reservationId.ToString();
             hfReservationId.Value = reservationId.ToString();
-            //hfReservationEditId.Value = reservationId.ToString();
 
             //Master Information------------------------
             RoomReservationBO roomReservationBO = new RoomReservationBO();
@@ -1440,20 +1215,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             ddlReservedMode.Text = roomReservationBO.ReservedMode;
 
             txtDateIn.Text = hmUtility.GetStringFromDateTime(roomReservationBO.DateIn);
-            //hfMinCheckInDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now.Date);//txtDateIn.Text;
             hfMinCheckInDate.Value = txtDateIn.Text;
             DateInHiddenFieldEdit.Value = roomReservationBO.DateIn.ToString();
-            //DateInHiddenFieldEdit.Value = txtDateIn.Text;
             txtProbableArrivalTime.Text = roomReservationBO.DateIn.ToString(userInformationBO.TimeFormat);
-
-            //txtProbableHour.Text = Convert.ToInt32(roomReservationBO.DateIn.ToString("%h")) == 0 ? "12" : roomReservationBO.DateIn.ToString("%h");
-            //txtProbableMinute.Text = roomReservationBO.DateIn.ToString("mm");
-            //ddlProbableAMPM.SelectedIndex = Convert.ToInt32(roomReservationBO.DateIn.ToString("HH")) == 0 ? 0 : 1;
 
             DateTime CheackInDateTime = Convert.ToDateTime(roomReservationBO.DateIn);
             string S = CheackInDateTime.ToString("tt");
-            //ddlProbableAMPM.SelectedIndex = S == "AM" ? 0 : 1;
-
             txtRemarks.Text = roomReservationBO.Remarks;
 
             if (roomReservationBO.ConfirmationDate != null)
@@ -1463,30 +1230,23 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             double dateDiffDateInAndDateOut = (roomReservationBO.DateOut.Date - roomReservationBO.DateIn.Date).TotalDays;
             txtReservationDuration.Text = dateDiffDateInAndDateOut.ToString();
-
             ddlReservationType.Text = roomReservationBO.ReservationType;
             txtReservedCompany.Text = roomReservationBO.ReservedCompany;
             txtContactAddress.Text = roomReservationBO.ContactAddress;
             txtContactNumber.Text = roomReservationBO.ContactNumber;
-
             txtMobileNumber.Text = roomReservationBO.MobileNumber;
             txtFaxNumber.Text = roomReservationBO.FaxNumber;
-
             txtContactPerson.Text = roomReservationBO.ContactPerson;
             txtContactEmail.Text = roomReservationBO.ContactEmail;
             hiddenGuestId.Value = roomReservationBO.GuestId.ToString();
             txtReason.Text = roomReservationBO.Reason;
             ddlBusinessPromotionId.SelectedValue = roomReservationBO.BusinessPromotionId.ToString();
             ddlCurrency.SelectedValue = roomReservationBO.CurrencyType.ToString();
-            //txtConversionRate.Text = !string.IsNullOrWhiteSpace(roomReservationBO.ConversionRate.ToString()) ? roomReservationBO.ConversionRate.ToString() : "81";
             txtConversionRate.Text = roomReservationBO.ConversionRate.ToString();
             ddlReferenceId.SelectedValue = roomReservationBO.ReferenceId.ToString();
-
             txtNumberOfPersonAdult.Text = roomReservationBO.NumberOfPersonAdult.ToString();
             txtNumberOfPersonChild.Text = roomReservationBO.NumberOfPersonChild.ToString();
-
             cbFamilyOrCouple.Checked = roomReservationBO.IsFamilyOrCouple;
-
             chkIsLitedCompany.Checked = Convert.ToBoolean(roomReservationBO.IsListedCompany);
             ddlCompanyName.SelectedValue = roomReservationBO.CompanyId.ToString();
 
@@ -1496,20 +1256,9 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             txtArrivalFlightName.Text = roomReservationBO.ArrivalFlightName;
             txtArrivalFlightNumber.Text = roomReservationBO.ArrivalFlightNumber;
             txtArrivalTime.Text = roomReservationBO.ArrivalTime.ToString(userInformationBO.TimeFormat);
-
-            //txtArrivalHour.Text = Convert.ToInt32(roomReservationBO.ArrivalTime.ToString("%h")) == 0 ? "12" : roomReservationBO.ArrivalTime.ToString("%h");
-            //txtArrivalMin.Text = roomReservationBO.ArrivalTime.ToString("mm");
-            //ddlArrivalAmPm.SelectedIndex = Convert.ToInt32(roomReservationBO.ArrivalTime.ToString("HH")) == 0 ? 0 : 1;
-
             txtDepartureFlightName.Text = roomReservationBO.DepartureFlightName;
             txtDepartureFlightNumber.Text = roomReservationBO.DepartureFlightNumber;
             txtDepartureTime.Text = roomReservationBO.DepartureTime.ToString(userInformationBO.TimeFormat);
-
-            //txtDepartureHour.Text = Convert.ToInt32(roomReservationBO.DepartureTime.ToString("%h")) == 0 ? "12" : roomReservationBO.DepartureTime.ToString("%h");
-            //txtDepartureMin.Text = roomReservationBO.DepartureTime.ToString("mm");
-            //ddlDepartureAmPm.SelectedIndex = Convert.ToInt32(roomReservationBO.DepartureTime.ToString("HH")) == 0 ? 0 : 1;
-
-
             ddlPayFor.SelectedValue = roomReservationBO.PayFor.ToString();
             ddlPaymentMode.SelectedValue = roomReservationBO.PaymentMode;
 
@@ -1533,14 +1282,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             txtDiscountAmount.Text = roomReservationBO.DiscountAmount.ToString();
             decimal unitPrice = !string.IsNullOrWhiteSpace(txtUnitPriceHiddenField.Value) ? Convert.ToDecimal(txtUnitPriceHiddenField.Value) : 0;
             decimal discountAmount = !string.IsNullOrWhiteSpace(txtDiscountAmount.Text) ? Convert.ToDecimal(txtDiscountAmount.Text) : 1;
-            //if (ddlDiscountType.SelectedIndex == 0)
-            //{
-            //    txtRoomRate.Text = (unitPrice + discountAmount).ToString();
-            //}
-            //else
-            //{
-            //    txtRoomRate.Text = (unitPrice - (unitPrice * (discountAmount / 100))).ToString();
-            //}
             List<ReservationDetailBO> reservationDetailListBOForGrid = new List<ReservationDetailBO>();
             ReservationDetailDA reservationDetailDA = new ReservationDetailDA();
 
@@ -1548,18 +1289,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             Session["ReservationDetailListForGrid"] = reservationDetailListBOForGrid;
 
             ReservationRoomDetailGrid(reservationDetailListBOForGrid);
-
-            //--Remove Cancel option from Reservation Status List----------------------------------------------
-            //if (ddlReservationStatus.SelectedIndex != -1)
-            //{
-            //    ddlReservationStatus.Items.Remove(ddlReservationStatus.Items.FindByValue("Cancel"));
-
-            //    ListItem itemBank = new ListItem();
-            //    itemBank.Value = "Cancel";
-            //    itemBank.Text = "Cancel";
-            //    ddlReservationStatus.Items.Insert(0, itemBank);
-            //}
-
             if (roomReservationBO.ReservationMode != "Registered")
             {
                 ddlReservationStatus.SelectedValue = roomReservationBO.ReservationMode;
@@ -1577,10 +1306,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             guestInformationList = guestInformationDA.GetGuestInformationDetailByResId(Convert.ToInt32(reservationId), true);
             GetUserDetailHtml(guestInformationList);
 
-            //UpdateLoadDropdown();
             bool registered = IsRegistered(reservationId);
             SetRegisterdStatus(registered);
-
         }
         public void ReservationRoomDetailGrid(List<ReservationDetailBO> detailRoomList)
         {
@@ -1617,7 +1344,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 grid += "<td align='left' style='display:none;'>" + dr.RoomRate + "</td>";
 
                 grid += "</tr>";
-
                 counter++;
             }
 
@@ -1625,7 +1351,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         }
         protected string GetStringFromDateTime(DateTime dateTime)
         {
-
             return dateTime.ToString(hmUtility.GetFormat(true));
         }
         private void DeleteData(int pkId)
@@ -1645,7 +1370,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         }
         private void SetTab(string TabName)
         {
-
             if (TabName == "SearchTab")
             {
                 E.Attributes.Add("class", "ui-state-default ui-corner-top ui-tabs-active ui-state-active");
@@ -1657,12 +1381,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 A.Attributes.Add("class", "ui-state-default ui-corner-top ui-tabs-active ui-state-active");
                 E.Attributes.Add("class", "ui-state-default ui-corner-top");
             }
-
         }
         private void LoadGridView(int pageNumber, int isCurrentOrPreviousPage, int gridRecordsCount)
         {
             int ordering = 0;
-
             string startDate = string.Empty;
             string endDate = string.Empty;
             string serviceIdList = string.Empty;
@@ -1747,7 +1469,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             }
 
             CheckObjectPermission();
-            //HMUtility hmUtility = new HMUtility();
             UserInformationBO userInformationBO = new UserInformationBO();
             userInformationBO = System.Web.HttpContext.Current.Session["UserInformationBOSession"] as UserInformationBO;
             int totalRecords = 0;
@@ -1766,18 +1487,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             if (reservationInfoList != null)
             {
-                //gvRoomRegistration.DataSource = roomAllocationBOList;
                 gvRoomRegistration.DataSource = distinctItems;
                 gvRoomRegistration.DataBind();
-
                 gridPaging.Text = myGridData.GridPageLinks.PreviousButton + myGridData.GridPageLinks.Pagination + myGridData.GridPageLinks.NextButton;
             }
             else
             {
                 gvRoomRegistration.DataSource = null;
                 gvRoomRegistration.DataBind();
-                //txtSrcRoomNumber.Focus();
-
                 CommonHelper.AlertInfo(innboardMessage, "Please provide a valid Room Number.", AlertType.Warning);
             }
         }
@@ -1819,12 +1536,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 }
 
                 strTable += "<td align='center' style='width: 82px'>";
-                // strTable += "&nbsp;<img src='../Images/delete.png' onClick='javascript:return PerformDeleteAction(" + dr.RoomId + ")' alt='Delete Information' border='0' />";
                 strTable += "&nbsp;<input type='checkbox'  id='" + dr.RoomId + "' name='" + dr.RoomNumber + "' value='" + dr.RoomId + "' >";
                 strTable += "</td><td align='left' style='width: 138px'>" + dr.RoomNumber + "</td>";
 
                 var v = (from rs in reservationDetailList where rs.RoomId == dr.RoomId select rs).FirstOrDefault();
-
                 if (v != null)
                 {
                     strTable += "<td style='display:none;'>" + v.ReservationDetailId + "</td></tr>";
@@ -2026,14 +1741,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             string ul = "";
             ul += "<ul>";
 
-
             foreach (HMComplementaryItemBO dr in itemList)
             {
                 ul += "<li style='font-size: medium'>";
                 ul += dr.ItemName.ToString();
                 ul += "</li>";
             }
-
 
             ul += "</ul>";
 
@@ -2055,16 +1768,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                       {"ReferencePersonDesignation",detailList[0].ReferenceDesignation},
                       {"ContactPersonOrganization",detailList[0].GuestCompanyName +", "+detailList[0].GuestCompanyAddress+" ."},
                       {"ReferencePersonOrganization",detailList[0].ReferenceOrganization},
-
                       {"ContactPersonTelephone",detailList[0].TelephoneNumber},
                       {"ReferencePersonTelephone",detailList[0].ReferenceTelephone},
-
                       {"ContactPersonCell",detailList[0].ContactNumber},
                       {"ReferencePersonCell",detailList[0].ReferenceCellNumber},
-
                       {"ContactPersonFax",detailList[0].FaxNumber},
                       {"ReferencePersonFax",detailList[0].FaxNumber},
-
                       {"ContactPersonEmail",detailList[0].ContactEmail},
                       {"ReferencePersonEmail",detailList[0].ReferenceEmail},
                       {"RoomDetails",table}, 
@@ -2101,8 +1810,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     mail.Subject = "Online Room Reservation On Inn-Board";
 
                     StringBuilder sb = new StringBuilder();
-
-
                     //Get Design Data
                     //Script Name  [GetOnlineRoomReservationBillGenerate]
                     int ReservationId = Id;
@@ -2124,11 +1831,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                     RoomReservationDA onlineReservationDA = new RoomReservationDA();
                     List<RoomReservationBO> List = new List<RoomReservationBO>();
-                    //ReservationId = 4;
-
-                    //Data Genaration
-
-
                     //Mail Design End                
                     mail.Body = MailBody.ToString();
                     mail.IsBodyHtml = true;
@@ -2147,89 +1849,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         {
             string text = System.IO.File.ReadAllText(System.Web.HttpContext.Current.Request.MapPath(string.Format("~/EmailTemplates/{0}", templateName)));
             return tokens.Aggregate(text, (current, token) => current.Replace(string.Format("##{0}##", token.Key), token.Value));
-        }
-        /*
-        private void SenEmailWithAttachment(int reservationId)
-        {
-            LoadReport(reservationId);
-        }
-        private void LoadReport(int reservationId)
-        {
-            HMCommonDA hmCommonDA = new HMCommonDA();
-            string ReservationNumber = string.Empty;
-            string CompanyName = string.Empty;
-            string CompanyAddress = string.Empty;
-            string CompanyWeb = string.Empty;
-
-            //Session["CurrentRegistrationId"] = null;
-            //string queryStringId = Request.QueryString["GuestBillInfo"];
-            if (!string.IsNullOrEmpty(reservationId.ToString()))
-            {
-                ReservationNumber = reservationId.ToString();
-
-                CompanyDA companyDA = new CompanyDA();
-                List<CompanyBO> files = companyDA.GetCompanyInfo();
-                if (files[0].CompanyId > 0)
-                {
-                    CompanyName = files[0].CompanyName;
-                    CompanyAddress = files[0].CompanyAddress;
-                    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
-                    {
-                        CompanyWeb = files[0].WebAddress;
-                    }
-                    else
-                    {
-                        CompanyWeb = files[0].ContactNumber;
-                    }
-
-                }
-
-
-                string ImageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
-                rvTransaction.LocalReport.EnableExternalImages = true;
-
-                List<ReportParameter> paramImagePath = new List<ReportParameter>();
-                List<ReportParameter> paramAppreciationMessege = new List<ReportParameter>();
-                List<ReportParameter> paramAdditionalServiceMessege = new List<ReportParameter>();
-                List<ReportParameter> paramCancellationPolicyMessege = new List<ReportParameter>();
-                List<ReportParameter> paramRegardsMessege = new List<ReportParameter>();
-                List<ReportParameter> paramFooterImagePath = new List<ReportParameter>();
-                List<ReportParameter> paramFooterAddress = new List<ReportParameter>();
-
-                paramImagePath.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderMiddleImagePath"))));
-                paramAppreciationMessege.Add(new ReportParameter("AppreciationMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramCLAppreciationMessege")));
-                paramAdditionalServiceMessege.Add(new ReportParameter("AdditionalServiceMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramCLAdditionalServiceMessege")));
-                paramCancellationPolicyMessege.Add(new ReportParameter("CancellationPolicyMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramCLCancellationPolicyMessege")));
-                paramRegardsMessege.Add(new ReportParameter("RegardsMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramCLRegardsMessege")));
-                paramFooterImagePath.Add(new ReportParameter("FooterImagePath", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + hmCommonDA.GetCustomFieldValueByFieldName("paramFooterMiddleImagePath"))));
-                paramFooterAddress.Add(new ReportParameter("FooterAddress", hmCommonDA.GetCustomFieldValueByFieldName("paramCLFooterAddress")));
-
-                rvTransaction.LocalReport.SetParameters(paramImagePath);
-                rvTransaction.LocalReport.SetParameters(paramAppreciationMessege);
-                rvTransaction.LocalReport.SetParameters(paramAdditionalServiceMessege);
-                rvTransaction.LocalReport.SetParameters(paramCancellationPolicyMessege);
-                rvTransaction.LocalReport.SetParameters(paramRegardsMessege);
-                rvTransaction.LocalReport.SetParameters(paramFooterImagePath);
-                rvTransaction.LocalReport.SetParameters(paramFooterAddress);
-
-
-                TransactionDataSource.SelectParameters[0].DefaultValue = txtReservationNumber.Text;
-                TransactionDataSource.SelectParameters[1].DefaultValue = txtCompanyName.Text;
-                TransactionDataSource.SelectParameters[2].DefaultValue = txtCompanyAddress.Text;
-                TransactionDataSource.SelectParameters[3].DefaultValue = txtCompanyWeb.Text;
-                rvTransaction.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SubReportProcessingForInvoiceDetail);
-                rvTransaction.LocalReport.Refresh();
-            }
-        }
-        private void SubReportProcessingForInvoiceDetail(object sender, SubreportProcessingEventArgs e)
-        {
-            int ReservationId = Convert.ToInt32(txtReservationNumber.Text);
-            //--Service Bill Information----------------
-            HMComplementaryItemDA entityDA = new HMComplementaryItemDA();
-            List<HMComplementaryItemBO> entityBOList = entityDA.GetComplementaryItemInfoByReservationId(ReservationId);
-            e.DataSources.Add(new ReportDataSource("ReservationComplementaryItem", entityBOList));
-        }
-        */
+        }        
         //************************ User Defined WebMethod ********************//
         [WebMethod]
         public static GridViewDataNPaging<GuestInformationBO, GridPaging> SearchGuestAndLoadGridInformation(string companyName, string DateOfBirth, string EmailAddress, string FromDate, string ToDate, string GuestName, string MobileNumber, string NationalId, string PassportNumber, string RegistrationNumber, string RoomNumber, int gridRecordsCount, int pageNumber, int isCurrentOrPreviousPage)
@@ -2238,7 +1858,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             userInformationBO = System.Web.HttpContext.Current.Session["UserInformationBOSession"] as UserInformationBO;
 
             int totalRecords = 0;
-
             GridViewDataNPaging<GuestInformationBO, GridPaging> myGridData = new GridViewDataNPaging<GuestInformationBO, GridPaging>(userInformationBO.GridViewPageSize, userInformationBO.GridViewPageLink, isCurrentOrPreviousPage);
             pageNumber = myGridData.PageNumberCalculation(gridRecordsCount, pageNumber);
 
@@ -2249,7 +1868,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             DateTime? toDate = DateTime.Now;
 
             HMUtility hmUtility = new HMUtility();
-
             fromDate = hmUtility.GetDateTimeFromString(FromDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             toDate = hmUtility.GetDateTimeFromString(ToDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
 
@@ -2259,11 +1877,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             List<GuestInformationBO> distinctItems = new List<GuestInformationBO>();
 
             distinctItems = guestInfoList.GroupBy(test => test.GuestName).Select(group => group.First()).ToList();
-
-
-            //myGridData.GridPagingProcessing(guestInfoList, totalRecords);
             myGridData.GridPagingProcessing(distinctItems, totalRecords);
-
             return myGridData;
         }
         [WebMethod]
@@ -2293,12 +1907,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             DateTime? toDate = null;
             if (!string.IsNullOrWhiteSpace(strFromDate))
             {
-                //fromDate = hmUtility.GetDateTimeFromString(strFromDate);
                 fromDate = hmUtility.GetDateTimeFromString(strFromDate, userInformationBO.ServerDateFormat);
             }
             if (!string.IsNullOrWhiteSpace(strToDate))
             {
-                //toDate = hmUtility.GetDateTimeFromString(strToDate);
                 toDate = hmUtility.GetDateTimeFromString(strToDate, userInformationBO.ServerDateFormat);
             }
 
@@ -2324,7 +1936,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             distinctItems = reservationInfoList.GroupBy(test => test.ReservationNumber).Select(group => group.First()).ToList();
 
             myGridData.GridPagingProcessing(distinctItems, totalRecords, "GridPagingForSearchReservation");
-
             return myGridData;
         }
         [WebMethod]
@@ -2366,7 +1977,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             List<RoomNumberBO> list = new List<RoomNumberBO>();
             List<ReservationDetailBO> reservationDetailListBO = new List<ReservationDetailBO>();
 
-            //list = roomNumberDA.GetRoomNumberInfoByRoomType(Int32.Parse(RoomTypeId));
             int _reservationId = 0;
             if (HttpContext.Current.Session["_RoomReservationId"] != null)
             {
@@ -2399,7 +2009,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             string HTML = string.Empty;
             if (_reservationId == 0)
             {
-                //List<RoomNumberBO> list2 = list.Where(p => p.StatusId == 1 && p.RoomTypeId == Convert.ToInt32(RoomTypeId)).ToList();
                 List<RoomNumberBO> list2 = list.Where(p => p.RoomTypeId == Convert.ToInt32(RoomTypeId)).ToList();
                 HTML = GetHTMLRoomGridView(list2, reservationDetailListBO);
             }
@@ -2407,7 +2016,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 ReservationDetailDA reservationDetailDA = new ReservationDetailDA();
                 reservationDetailListBO = reservationDetailDA.GetReservationDetailByReservationId(_reservationId);
-
                 List<RoomNumberBO> list2 = list.Where(p => p.RoomTypeId == Convert.ToInt32(RoomTypeId)).ToList();
                 HTML = GetHTMLRoomGridView(list2, reservationDetailListBO);
             }
@@ -2441,7 +2049,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             }
 
             return strTable;
-
         }
         [WebMethod]
         public static RoomTypeBO RoomDetailsByRoomTypeId(int roomtypeId)
@@ -2458,7 +2065,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             CompanyWiseDiscountPolicyBO discountPolicy = new CompanyWiseDiscountPolicyBO();
 
             discountPolicy = discountDa.GetDiscountPolicyByCompanyNRoomType(companyId, roomTypeId, true);
-
             return discountPolicy;
         }
         [WebMethod(EnableSession = true)]
@@ -2488,13 +2094,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 else
                 {
                     DateTime yeasterDayDateTime = DateTime.Now.Date.AddDays(-1);
-                    //DateTime CheckInDate = Convert.ToDateTime(hmUtility.GetUnivarsalDateTimeFromString(RoomReservation.DateInStr, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat));
                     DateTime CheckInDate = RoomReservation.DateIn;
 
                     if (RoomReservation.ReservationId != 0)
                     {
-                        //DateTime CheckInSavedDate = hmUtility.GetDateTimeFromString(RoomReservation.DateInFieldEdit, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
-
                         if (!string.IsNullOrWhiteSpace(RoomReservation.DateInFieldEdit))
                         {
                             DateTime CheckInSavedDate = Convert.ToDateTime(RoomReservation.DateInFieldEdit);
@@ -2507,9 +2110,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                                     rtnInfo.IsSuccess = false;
                                     rtnInfo.IsReservationCheckInDateValidation = false;
                                     return rtnInfo;
-
-                                    //CommonHelper.AlertInfo(innboardMessage, "Check-In date must be current date or edit date.", AlertType.Warning);
-                                    // txtDateIn.Focus();
                                 }
                             }
                             else if (CheckInDate < CheckInSavedDate && CheckInDate < DateTime.Now.Date)
@@ -2517,11 +2117,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                                 rtnInfo.AlertMessage = CommonHelper.AlertInfo("Check-In Date can not previous date.", AlertType.Warning);
                                 rtnInfo.IsSuccess = false;
                                 rtnInfo.IsReservationCheckInDateValidation = false;
-
                                 return rtnInfo;
-
-                                // CommonHelper.AlertInfo(innboardMessage, "Check-In Date can not previous date.", AlertType.Warning);
-                                //txtDateIn.Focus();
                             }
                         }
                     }
@@ -2530,12 +2126,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         rtnInfo.AlertMessage = CommonHelper.AlertInfo("Please Provide valid Check In Date.", AlertType.Warning);
                         rtnInfo.IsSuccess = false;
                         rtnInfo.IsReservationCheckInDateValidation = false;
-
                         return rtnInfo;
-
-                        //CommonHelper.AlertInfo(innboardMessage, "Please Provide valid Check In Date.", AlertType.Warning);
-                        //txtDateIn.Focus();
-                        //hfMinCheckInDate.Value = DateInHiddenField.Value;
                     }
                     else
                     {
@@ -2563,7 +2154,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                             complementaryItem.ComplementaryItemId = cmitm.ComplementaryItemId;
                             complementaryItem.ReservationId = RoomReservation.ReservationId;
                             complementaryItem.RCItemId = cmitm.RCItemId;
-
                             deletedComplementaryItem.Add(complementaryItem);
                         }
                     }
@@ -2581,7 +2171,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                             newlyAddedComplementaryItem.Add(complementaryItem);
                         }
                     }
-
 
                     List<ReservationDetailBO> reservationDetailList = new List<ReservationDetailBO>();
                     reservationDetailList = (List<ReservationDetailBO>)HttpContext.Current.Session["ReservationDetailList"];
@@ -2655,18 +2244,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             RoomReservationDA resDA = new RoomReservationDA();
             GuestInformationBO detailBO = new GuestInformationBO();
             detailBO.tempOwnerId = Int32.Parse(reservationId);
-            detailBO.GuestAddress1 = txtGuestAddress1;//
-            detailBO.GuestAddress2 = txtGuestAddress2;//
-            detailBO.GuestAuthentication = ""; // ddlGuestAuthentication.Text;
-
+            detailBO.GuestAddress1 = txtGuestAddress1;
+            detailBO.GuestAddress2 = txtGuestAddress2;
+            detailBO.GuestAuthentication = "";
             detailBO.ProfessionId = Int32.Parse(ddlProfessionId);
-            detailBO.GuestCity = txtGuestCity;//
-
-            //detailBO.GuestCountryId = Int32.Parse(ddlGuestCountry);//
-
+            detailBO.GuestCity = txtGuestCity;
             detailBO.GuestCountryId = !string.IsNullOrWhiteSpace(ddlGuestCountry) ? Convert.ToInt32(ddlGuestCountry) : 0;
 
-            if (!string.IsNullOrWhiteSpace(txtGuestDOB))//
+            if (!string.IsNullOrWhiteSpace(txtGuestDOB))
             {
                 detailBO.GuestDOB = hmUtility.GetDateTimeFromString(txtGuestDOB, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             }
@@ -2674,27 +2259,25 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 detailBO.GuestDOB = null;
             }
-            detailBO.GuestDrivinlgLicense = txtGuestDrivinlgLicense;//
-            detailBO.GuestEmail = txtGuestEmail;//
-            detailBO.GuestName = txtGuestName;//
+            detailBO.GuestDrivinlgLicense = txtGuestDrivinlgLicense;
+            detailBO.GuestEmail = txtGuestEmail;
+            detailBO.GuestName = txtGuestName;
             if (string.IsNullOrEmpty(hiddenGuestId))
             {
                 detailBO.GuestId = 0;
-                //   documentBO.GuestId = 0;
             }
             else
             {
-                detailBO.GuestId = Int32.Parse(hiddenGuestId);//
-                // documentBO.GuestId = Int32.Parse(hiddenGuestId);
+                detailBO.GuestId = Int32.Parse(hiddenGuestId);
             }
+
             detailBO.GuestNationality = txtGuestNationality;
             detailBO.GuestPhone = txtGuestPhone;
-
             detailBO.GuestSex = ddlGuestSex;
             detailBO.GuestZipCode = txtGuestZipCode;
             detailBO.NationalId = txtNationalId;
             detailBO.PassportNumber = txtPassportNumber;
-            if (!string.IsNullOrWhiteSpace(txtPExpireDate))//
+            if (!string.IsNullOrWhiteSpace(txtPExpireDate))
             {
                 detailBO.PExpireDate = hmUtility.GetDateTimeFromString(txtPExpireDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             }
@@ -2702,7 +2285,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 detailBO.PExpireDate = null;
             }
-            if (!string.IsNullOrWhiteSpace(txtPIssueDate))//
+            if (!string.IsNullOrWhiteSpace(txtPIssueDate))
             {
                 detailBO.PIssueDate = hmUtility.GetDateTimeFromString(txtPIssueDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             }
@@ -2711,7 +2294,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 detailBO.PIssueDate = null;
             }
             detailBO.PIssuePlace = txtPIssuePlace;
-            if (!string.IsNullOrWhiteSpace(txtVExpireDate))//
+            if (!string.IsNullOrWhiteSpace(txtVExpireDate))
             {
                 detailBO.VExpireDate = hmUtility.GetDateTimeFromString(txtVExpireDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             }
@@ -2720,7 +2303,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 detailBO.VExpireDate = null;
             }
             detailBO.VisaNumber = txtVisaNumber;
-            if (!string.IsNullOrWhiteSpace(txtVIssueDate))//
+            if (!string.IsNullOrWhiteSpace(txtVIssueDate))
             {
                 detailBO.VIssueDate = hmUtility.GetDateTimeFromString(txtVIssueDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             }
@@ -2728,11 +2311,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 detailBO.VIssueDate = null;
             }
-            //detailBO.GuestPreferences = gstPreferences;
-            //  detailBO.Document = documentBO;
 
             List<GuestPreferenceMappingBO> preferenList = new List<GuestPreferenceMappingBO>();
-
             long prfId = 0;
             if (!string.IsNullOrEmpty(selectedPreferenceId))
             {
@@ -2817,12 +2397,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             companyBO = companyDA.GetGuestCompanyInfoById(companyId);
             promBO = promDA.GetBusinessPromotionInfoById(promId);
 
-            //decimal max = promBO.PercentAmount;
             if (promBO.PercentAmount > companyBO.DiscountPercent)
             {
                 companyBO.DiscountPercent = promBO.PercentAmount;
             }
-            //return max.ToString();
 
             return companyBO;
         }
@@ -2932,7 +2510,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     singleEntityBO.RoomNumber = singleEntityBO.RoomNumber + "," + RoomNumber;
                 }
 
-                //singleEntityBO.RoomNumberList = !string.IsNullOrWhiteSpace(RoomNumber) ? RoomNumber : "( Unassigned )";
                 singleEntityBO.RoomNumberListInfoWithCount = FormatedRoom(singleEntityBO.RoomNumber, singleEntityBO.RoomQuantity);
                 for (int i = 0; i < reservationDetailListBOForGrid.Count; i++)
                 {
@@ -2941,7 +2518,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         reservationDetailListBOForGrid[i] = singleEntityBO;
                     }
                 }
-
             }
             else
             {
@@ -2974,30 +2550,20 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     singleEntityBO.Discount = percantAmount;
                     singleEntityBO.DiscountAmount = percantAmount;
                 }
-
-                //singleEntityBO.Discount = !string.IsNullOrWhiteSpace(txtDiscountAmount) ? Convert.ToDecimal(txtDiscountAmount) : 0;
-                //singleEntityBO.DiscountAmount = !string.IsNullOrWhiteSpace(txtDiscountAmount) ? Convert.ToDecimal(txtDiscountAmount) : 0;
-
                 reservationDetailListBOForGrid.Add(singleEntityBO);
             }
 
-
-
             HttpContext.Current.Session["ReservationDetailListForGrid"] = reservationDetailListBOForGrid;
-
 
             string[] Rooms = RoomNumber.Split(',');
             string[] Id = RoomId.Split(',');
 
             int dynamicDetailId = 0;
-            //List<ReservationDetailBO> retriveReservationDetailListBO = HttpContext.Current.Session["ReservationDetailList"] == null ? new List<ReservationDetailBO>() : HttpContext.Current.Session["ReservationDetailList"] as List<ReservationDetailBO>;
-
 
             if (!string.IsNullOrWhiteSpace(lblHiddenId))
                 dynamicDetailId = Convert.ToInt32(lblHiddenId);
 
             List<ReservationDetailBO> reservationDetailListBOAddedList = new List<ReservationDetailBO>();
-            //List<ReservationDetailBO> reservationDetailListBO = new List<ReservationDetailBO>();
             List<ReservationDetailBO> reservationDetailListBO = HttpContext.Current.Session["ReservationDetailList"] == null ? new List<ReservationDetailBO>() : HttpContext.Current.Session["ReservationDetailList"] as List<ReservationDetailBO>;
 
             if (Rooms[0].Length == 0)
@@ -3011,11 +2577,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     //txtRoomId.Focus();
                     //return;
                 }
-
-                //if (retriveReservationDetailListBO != null)
-                //{
-                //    HttpContext.Current.Session["UnassignedDetailRoomDelete"] = retriveReservationDetailListBO;
-                //}
 
                 for (int i = 0; i < roomQuantity; i++)
                 {
@@ -3086,28 +2647,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                     detailBO.ReservationDetailId = dynamicDetailId == 0 ? reservationDetailListBO.Count + 1 : dynamicDetailId;
                     reservationDetailListBO.Add(detailBO);
-                    //reservationDetailListBOAddedList.Add(detailBO);
                 }
-
-                //foreach (ReservationDetailBO reservationDetailBO in retriveReservationDetailListBO)
-                //{
-                //    ReservationDetailBO detailBODelete;
-                //    detailBODelete = reservationDetailListBO.Where(x => x.RoomId == reservationDetailBO.RoomId).FirstOrDefault();
-                //    if (detailBODelete != null)
-                //    {
-                //        retriveReservationDetailListBO.Remove(detailBODelete);
-                //        reservationDetailListBO.Remove(detailBODelete);
-                //    }
-                //}
-
-                //if (retriveReservationDetailListBO != null)
-                //{
-                //    HttpContext.Current.Session["AssignedDetailRoomDelete"] = retriveReservationDetailListBO;
-                //}
             }
 
             HttpContext.Current.Session["ReservationDetailList"] = reservationDetailListBO;
-
             return LoadDetailGridViewByWM();
         }
         [WebMethod(EnableSession = true)]
@@ -3189,7 +2732,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 }
                 strTable += "</tr>";
             }
-
 
             strTable += "</table>";
             if (strTable == "")
@@ -3284,114 +2826,23 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                                                        }).ToList();
                         }
-                    }
-                    else if (crType.CurrencyType == Convert.ToInt32(currencyId))
-                    {
-                        //if (currencyType != "45")
-                        //{
-                        //    registrationPaidService = (from d in registrationPaidService
-                        //                               from p in paidServiceLst
-                        //                               where d.PaidServiceId == p.PaidServiceId
-                        //                               select new RegistrationServiceInfoBO
-                        //                               {
-                        //                                   DetailPaidServiceId = d.DetailPaidServiceId,
-                        //                                   RegistrationId = d.RegistrationId,
-                        //                                   PaidServiceId = d.PaidServiceId,
-                        //                                   ServiceName = d.ServiceName,
-                        //                                   PaidServicePrice = d.PaidServicePrice,
-                        //                                   UnitPrice = p.UnitPriceUsd,
-                        //                                   ConversionRate = d.ConversionRate,
-                        //                                   IsAchieved = d.IsAchieved
-
-                        //                               }).ToList();
-                        //}
-                        //else
-                        //{
-                        //    registrationPaidService = (from d in registrationPaidService
-                        //                               from p in paidServiceLst
-                        //                               where d.PaidServiceId == p.PaidServiceId
-                        //                               select new RegistrationServiceInfoBO
-                        //                               {
-                        //                                   DetailPaidServiceId = d.DetailPaidServiceId,
-                        //                                   RegistrationId = d.RegistrationId,
-                        //                                   PaidServiceId = d.PaidServiceId,
-                        //                                   ServiceName = d.ServiceName,
-                        //                                   PaidServicePrice = d.PaidServicePrice,
-                        //                                   UnitPrice = p.UnitPriceLocal,
-                        //                                   ConversionRate = d.ConversionRate,
-                        //                                   IsAchieved = d.IsAchieved
-
-                        //                               }).ToList();
-                        //}
-                    }
-
-                    //if (currencyType != "45")
-                    //{
-                    //    var v = registrationPaidService.Where(c => c.ConversionRate != 0).FirstOrDefault();
-
-                    //    if (v == null)
-                    //    {
-                    //        registrationPaidService = (from d in registrationPaidService
-                    //                                   from p in paidServiceLst
-                    //                                   where d.PaidServiceId == p.PaidServiceId
-                    //                                   select new RegistrationServiceInfoBO
-                    //                                   {
-                    //                                       DetailPaidServiceId = d.DetailPaidServiceId,
-                    //                                       RegistrationId = d.RegistrationId,
-                    //                                       PaidServiceId = d.PaidServiceId,
-                    //                                       ServiceName = d.ServiceName,
-                    //                                       PaidServicePrice = d.PaidServicePrice,
-                    //                                       UnitPrice = p.UnitPriceUsd,
-                    //                                       ConversionRate = d.ConversionRate,
-                    //                                       IsAchieved = d.IsAchieved
-
-                    //                                   }).ToList();
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    if (!string.IsNullOrEmpty(convertionRate) && currencyType != "45")
-                    //    {
-                    //        registrationPaidService = (from d in registrationPaidService
-                    //                                   from p in paidServiceLst
-                    //                                   where d.PaidServiceId == p.PaidServiceId
-                    //                                   select new RegistrationServiceInfoBO
-                    //                                   {
-                    //                                       DetailPaidServiceId = d.DetailPaidServiceId,
-                    //                                       RegistrationId = d.RegistrationId,
-                    //                                       PaidServiceId = d.PaidServiceId,
-                    //                                       ServiceName = d.ServiceName,
-                    //                                       PaidServicePrice = d.PaidServicePrice,
-                    //                                       UnitPrice = p.UnitPriceUsd, // (d.UnitPrice / Convert.ToDecimal(convertionRate)),
-                    //                                       ConversionRate = d.ConversionRate,
-                    //                                       IsAchieved = d.IsAchieved
-
-                    //                                   }).ToList();
-                    //    }
-                    //    else
-                    //    {
-
-                    //    }
-                    //}
+                    }                    
                 }
             }
 
             PaidServiceViewBO viewBo = new PaidServiceViewBO();
             viewBo.PaidService = paidServiceLst;
             viewBo.RegistrationPaidService = registrationPaidService;
-
             return viewBo;
         }
         [WebMethod]
         public static string GetNationality(int countryId)
         {
             CountriesBO country = new CountriesBO();
-
             try
             {
                 HMCommonDA commonDa = new HMCommonDA();
                 country = commonDa.GetCountriesById(countryId);
-
             }
             catch (Exception ex)
             {
@@ -3431,7 +2882,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 endDate = hmUtility.GetDateTimeFromString(toDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1);
             }
 
-
             List<RoomAvailableStatusBO> avalibleRoomList = new List<RoomAvailableStatusBO>();
             HMCommonDA hmCommonDA = new HMCommonDA();
             avalibleRoomList = hmCommonDA.GetRoomWithAvailableStatusByDate(startDate, endDate, "Availability").Where(x => x.RoomTypeId == Convert.ToInt32(RoomTypeId)).ToList();
@@ -3446,68 +2896,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 {
                     availableRoomQty = row.TotalAvailable;
                 }
-
             }
-
-
-
-            /*
-             * string availableRoomQty = "";
-            HMUtility hmUtility = new HMUtility();
-            RoomNumberBO roomBO = new RoomNumberBO();
-            RoomNumberDA roomDA = new RoomNumberDA();
-
-            DateTime dateTime = DateTime.Now;
-            DateTime StartDate = dateTime;
-            DateTime EndDate = dateTime;
-            if (!string.IsNullOrWhiteSpace(fromDate))
-            {
-                StartDate = hmUtility.GetDateTimeFromString(fromDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
-            }
-            else
-            {
-                fromDate = hmUtility.GetStringFromDateTime(dateTime);
-                StartDate = hmUtility.GetDateTimeFromString(fromDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
-            }
-
-            if (!string.IsNullOrWhiteSpace(toDate))
-            {
-                EndDate = hmUtility.GetDateTimeFromString(toDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
-            }
-            else
-            {
-                toDate = hmUtility.GetStringFromDateTime(dateTime);
-                EndDate = hmUtility.GetDateTimeFromString(toDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1);
-            }
-             
-            List<RoomNumberBO> RoomNumberBOList = roomDA.GetRoomNumberInfoForCalender(StartDate, EndDate);
-
-
-            List<RoomNumberBO> typeWiseRoomNumberBOList = RoomNumberBOList.Where(x => x.RoomTypeId == Convert.ToInt32(RoomTypeId)).ToList();
-
-            RoomNumberDA roomNumberDA = new RoomNumberDA();
-            List<RoomNumberBO> typeWiseAssignedRoomNumberBOList = new List<RoomNumberBO>();
-
-            int _reservationId = 0;
-            if (HttpContext.Current.Session["_RoomReservationId"] != null)
-            {
-                _reservationId = Int32.Parse(HttpContext.Current.Session["_RoomReservationId"].ToString());
-            }
-
-            typeWiseAssignedRoomNumberBOList = roomNumberDA.GetAvailableRoomNumberInformation(Convert.ToInt32(RoomTypeId), 0, StartDate, EndDate, _reservationId);
-
-            List<RoomNumberBO> typeWiseUnassignedRoomNumberBOList = typeWiseRoomNumberBOList.Where(x => x.RoomId > 5000).ToList();
-
-            if (_reservationId > 0)
-            {
-                availableRoomQty = (typeWiseAssignedRoomNumberBOList.Count).ToString(); 
-            }
-            else
-            {
-                availableRoomQty = (typeWiseAssignedRoomNumberBOList.Count - typeWiseUnassignedRoomNumberBOList.Count).ToString();
-            }
-
-             */
             return availableRoomQty.ToString();
         }
         [WebMethod]

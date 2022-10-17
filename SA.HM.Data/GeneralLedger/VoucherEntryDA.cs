@@ -184,7 +184,6 @@ namespace HotelManagement.Data.GeneralLedger
                         using (DbCommand commandMaster = dbSmartAspects.GetStoredProcCommand("UpdateLedgerMaster_SP"))
                         {
                             dbSmartAspects.AddInParameter(commandMaster, "@LedgerMasterId", DbType.Int64, ledgerMaster.LedgerMasterId);
-
                             dbSmartAspects.AddInParameter(commandMaster, "@CompanyId", DbType.Int32, ledgerMaster.CompanyId);
                             dbSmartAspects.AddInParameter(commandMaster, "@ProjectId", DbType.Int32, ledgerMaster.ProjectId);
 
@@ -194,12 +193,9 @@ namespace HotelManagement.Data.GeneralLedger
                                 dbSmartAspects.AddInParameter(commandMaster, "@DonorId", DbType.Int32, DBNull.Value);
 
                             dbSmartAspects.AddInParameter(commandMaster, "@VoucherType", DbType.String, ledgerMaster.VoucherType);
-                            //dbSmartAspects.AddInParameter(commandMaster, "@VoucherNo", DbType.String, ledgerMaster.VoucherNo);
-
                             dbSmartAspects.AddInParameter(commandMaster, "@IsBankExist", DbType.Boolean, ledgerMaster.IsBankExist);
                             dbSmartAspects.AddInParameter(commandMaster, "@VoucherDate", DbType.DateTime, ledgerMaster.VoucherDate);
                             dbSmartAspects.AddInParameter(commandMaster, "@Narration", DbType.String, ledgerMaster.Narration);
-
                             dbSmartAspects.AddInParameter(commandMaster, "@CurrencyId", DbType.Int32, ledgerMaster.CurrencyId);
                             dbSmartAspects.AddInParameter(commandMaster, "@ConvertionRate", DbType.Decimal, ledgerMaster.ConvertionRate);
 
@@ -226,7 +222,6 @@ namespace HotelManagement.Data.GeneralLedger
                                 foreach (GLLedgerDetailsBO DetailBO in newLedgerDetails)
                                 {
                                     commandDetails.Parameters.Clear();
-
                                     dbSmartAspects.AddInParameter(commandDetails, "@LedgerMasterId", DbType.Int64, ledgerMaster.LedgerMasterId);
                                     dbSmartAspects.AddInParameter(commandDetails, "@NodeId", DbType.Int32, DetailBO.NodeId);
 
@@ -247,9 +242,7 @@ namespace HotelManagement.Data.GeneralLedger
 
                                     dbSmartAspects.AddInParameter(commandDetails, "@DRAmount", DbType.Decimal, DetailBO.DRAmount);
                                     dbSmartAspects.AddInParameter(commandDetails, "@CRAmount", DbType.Decimal, DetailBO.CRAmount);
-
                                     dbSmartAspects.AddInParameter(commandDetails, "@NodeNarration", DbType.String, DetailBO.NodeNarration);
-
                                     dbSmartAspects.AddInParameter(commandDetails, "@CostCenterId", DbType.Int32, DetailBO.CostCenterId);
                                     dbSmartAspects.AddInParameter(commandDetails, "@CurrencyAmount", DbType.Decimal, DetailBO.CurrencyAmount);
                                     dbSmartAspects.AddInParameter(commandDetails, "@NodeType", DbType.String, DetailBO.NodeType);
@@ -266,10 +259,8 @@ namespace HotelManagement.Data.GeneralLedger
                                 foreach (GLLedgerDetailsBO DetailBO in editLedgerDetails)
                                 {
                                     commandDetails.Parameters.Clear();
-
                                     dbSmartAspects.AddInParameter(commandDetails, "@LedgerDetailsId", DbType.Int64, DetailBO.LedgerDetailsId);
                                     dbSmartAspects.AddInParameter(commandDetails, "@LedgerMasterId", DbType.Int64, ledgerMaster.LedgerMasterId);
-
                                     dbSmartAspects.AddInParameter(commandDetails, "@NodeId", DbType.Int32, DetailBO.NodeId);
 
                                     if (DetailBO.ChequeDate != null)
@@ -289,9 +280,7 @@ namespace HotelManagement.Data.GeneralLedger
 
                                     dbSmartAspects.AddInParameter(commandDetails, "@DRAmount", DbType.Decimal, DetailBO.DRAmount);
                                     dbSmartAspects.AddInParameter(commandDetails, "@CRAmount", DbType.Decimal, DetailBO.CRAmount);
-
                                     dbSmartAspects.AddInParameter(commandDetails, "@NodeNarration", DbType.String, DetailBO.NodeNarration);
-
                                     dbSmartAspects.AddInParameter(commandDetails, "@CostCenterId", DbType.Int32, DetailBO.CostCenterId);
                                     dbSmartAspects.AddInParameter(commandDetails, "@CurrencyAmount", DbType.Decimal, DetailBO.CurrencyAmount);
                                     dbSmartAspects.AddInParameter(commandDetails, "@NodeType", DbType.String, DetailBO.NodeType);
@@ -308,10 +297,8 @@ namespace HotelManagement.Data.GeneralLedger
                                 foreach (GLLedgerDetailsBO DetailBO in deleteLedgerDetails)
                                 {
                                     commandDetails.Parameters.Clear();
-
                                     dbSmartAspects.AddInParameter(commandDetails, "@LedgerDetailsId", DbType.Int64, DetailBO.LedgerDetailsId);
                                     dbSmartAspects.AddInParameter(commandDetails, "@LedgerMasterId", DbType.Int64, ledgerMaster.LedgerMasterId);
-
                                     status = dbSmartAspects.ExecuteNonQuery(commandDetails, transction);
                                 }
                             }
@@ -327,7 +314,6 @@ namespace HotelManagement.Data.GeneralLedger
                                     dbSmartAspects.AddInParameter(commandVoucherCheque, "@LedgerMasterId", DbType.Int64, ledgerMaster.LedgerMasterId);
                                     dbSmartAspects.AddInParameter(commandVoucherCheque, "@ChequeNumber", DbType.String, ledgerMaster.ChequeNumber);
                                     dbSmartAspects.AddInParameter(commandVoucherCheque, "@ChequeDate", DbType.Date, ledgerMaster.ChequeDate);
-
                                     status = dbSmartAspects.ExecuteNonQuery(commandVoucherCheque, transction);
                                 }
                             }
@@ -419,11 +405,9 @@ namespace HotelManagement.Data.GeneralLedger
                             foreach (GLVoucherApprovalVwBO vp in VocuherApproval)
                             {
                                 commandMaster.Parameters.Clear();
-
                                 dbSmartAspects.AddInParameter(commandMaster, "@LedgerMasterId", DbType.Int64, vp.LedgerMasterId);
                                 dbSmartAspects.AddInParameter(commandMaster, "@GLStatus", DbType.String, vp.GLStatus);
                                 dbSmartAspects.AddInParameter(commandMaster, "@ApprovedBy", DbType.Int32, vp.ApprovedRCheckedby);
-
                                 status = dbSmartAspects.ExecuteNonQuery(commandMaster, transction);
                             }
                         }
@@ -551,7 +535,8 @@ namespace HotelManagement.Data.GeneralLedger
                         IsCanDelete = r.Field<bool>("IsCanDelete"),
                         IsCanCheck = r.Field<bool>("IsCanCheck"),
                         IsCanApprove = r.Field<bool>("IsCanApprove"),
-                        VoucherTotalAmount = r.Field<decimal>("VoucherTotalAmount")
+                        VoucherTotalAmount = r.Field<decimal>("VoucherTotalAmount"),
+                        IsModulesTransaction = r.Field<bool>("IsModulesTransaction")
                     }).ToList();
 
                     totalRecords = (int)cmd.Parameters["@RecordCount"].Value;
@@ -586,20 +571,16 @@ namespace HotelManagement.Data.GeneralLedger
                         CurrencyId = r.Field<int>("CurrencyId"),
                         ConvertionRate = r.Field<decimal?>("ConvertionRate"),
                         Narration = r.Field<string>("Narration"),
-
                         PayerOrPayee = r.Field<string>("PayerOrPayee"),
                         ReferenceNumber = r.Field<string>("ReferenceNumber"),
-
                         GLStatus = r.Field<string>("GLStatus"),
                         CheckedBy = r.Field<int?>("CheckedBy"),
                         ApprovedBy = r.Field<int?>("ApprovedBy"),
-
                         CompanyName = r.Field<string>("CompanyName"),
                         ProjectName = r.Field<string>("ProjectName"),
                         DonorName = r.Field<string>("DonorName"),
                         CurrencyName = r.Field<string>("CurrencyName"),
                         VoucherTypeName = r.Field<string>("VoucherTypeName")
-
                     }).FirstOrDefault();
                 }
             }
@@ -648,7 +629,6 @@ namespace HotelManagement.Data.GeneralLedger
         public List<GLLedgerMasterVwBO> GetVoucherByCompanyIdNProjectIdNDate(int companyId, int projectId, DateTime? date, int recordPerPage, int pageIndex, out int totalRecords)
         {
             List<GLLedgerMasterVwBO> voucherSearch = new List<GLLedgerMasterVwBO>();
-
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetVoucherByCompanyIdNProjectIdNDate_SP"))
@@ -657,7 +637,6 @@ namespace HotelManagement.Data.GeneralLedger
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                     dbSmartAspects.AddInParameter(cmd, "@ProjectId", DbType.Int32, projectId);
                     dbSmartAspects.AddInParameter(cmd, "@Date", DbType.DateTime, date);
-
                     dbSmartAspects.AddInParameter(cmd, "@RecordPerPage", DbType.Int32, recordPerPage);
                     dbSmartAspects.AddInParameter(cmd, "@PageIndex", DbType.Int32, pageIndex);
                     dbSmartAspects.AddOutParameter(cmd, "@RecordCount", DbType.Int32, sizeof(Int32));
