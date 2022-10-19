@@ -143,7 +143,6 @@ namespace HotelManagement.Data.Inventory
 
             return itemInfo;
         }
-
         public InvItemBO GetInvItemInfoByItemId(int itemId)
         {
             InvItemBO productBO = new InvItemBO();
@@ -151,6 +150,44 @@ namespace HotelManagement.Data.Inventory
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvItemInfoByItemId_SP"))
                 {
+                    dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, itemId);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                productBO.ItemId = Convert.ToInt32(reader["ItemId"]);
+                                productBO.Name = reader["Name"].ToString();
+                                productBO.Code = reader["Code"].ToString();
+                                productBO.Description = reader["Description"].ToString();
+                                productBO.CategoryId = Convert.ToInt32(reader["CategoryId"]);
+                                productBO.ManufacturerId = Convert.ToInt32(reader["ManufacturerId"]);
+                                productBO.ProductType = reader["ProductType"].ToString();
+                                productBO.PurchasePrice = Convert.ToDecimal(reader["PurchasePrice"]);
+                                productBO.SellingLocalCurrencyId = Int32.Parse(reader["SellingLocalCurrencyId"].ToString());
+                                productBO.UnitPriceLocal = Convert.ToDecimal(reader["UnitPriceLocal"]);
+                                productBO.SellingUsdCurrencyId = Int32.Parse(reader["SellingUsdCurrencyId"].ToString());
+                                productBO.UnitPriceUsd = Convert.ToDecimal(reader["UnitPriceUsd"]);
+                                productBO.ServiceWarranty = Int32.Parse(reader["ServiceWarranty"].ToString());
+                                productBO.StockType = reader["StockType"].ToString();
+                                productBO.StockBy = Int32.Parse(reader["StockBy"].ToString());
+                            }
+                        }
+                    }
+                }
+            }
+            return productBO;
+        }
+
+        public InvItemBO GetInvItemInfoByItemNCategoryId(int itemId)
+        {
+            InvItemBO productBO = new InvItemBO();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvItemInfoByItemNCategoryId_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, itemId);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
@@ -4410,6 +4447,10 @@ namespace HotelManagement.Data.Inventory
                                 productBO.CategoryId = Convert.ToInt32(reader["CategoryId"]);
                                 productBO.CategoryName = reader["CategoryName"].ToString();
                                 productBO.Name = reader["Name"].ToString();
+                                productBO.SizeName = reader["SizeName"].ToString();
+                                productBO.ColorName = reader["ColorName"].ToString();
+                                productBO.StyleName = reader["StyleName"].ToString();
+                                productBO.UnitHead = reader["UnitHead"].ToString();
                                 productBO.Code = reader["Code"].ToString();
                                 productBO.ItemNameAndCode = reader["ItemNameAndCode"].ToString();
                                 productBO.ServiceWarranty = Int32.Parse(reader["ServiceWarranty"].ToString());

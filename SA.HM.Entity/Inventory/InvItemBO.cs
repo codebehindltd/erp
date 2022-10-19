@@ -42,6 +42,7 @@ namespace HotelManagement.Entity.Inventory
         public int RandomItemId { get; set; }
         public string StockType { get; set; }
         public int StockBy { get; set; }
+        public string UnitHead { get; set; }
         public int SalesStockBy { get; set; }
         public string HeadName { get; set; }
         public string ImageName { get; set; }
@@ -68,7 +69,8 @@ namespace HotelManagement.Entity.Inventory
 
         public string ItemWiseDiscountType { get; set; }
         public decimal ItemWiseIndividualDiscount { get; set; }
-
-
+        public string SizeName { get; set; }
+        public string ColorName { get; set; }
+        public string StyleName { get; set; }
     }
 }

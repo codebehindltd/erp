@@ -7,6 +7,12 @@
         var TransactionNode = null;
         var Balance = null;
         var AccountOpeningBalance = [];
+        var CompanyDebitCreditList = [];
+        var SupplierDebitCreditList = [];
+        var EmployeeDebitCreditList = [];
+        var MemberDebitCreditList = [];
+        var CNFDebitCreditList = [];
+        var InvOpeningBalanceDetails = [];
         $(document).ready(function () {
             $("#ContentPlaceHolder1_ddlStore").select2({
                 tags: "true",
@@ -15,6 +21,12 @@
                 width: "99.75%"
             });
             $("#ContentPlaceHolder1_ddlLocation").select2({
+                tags: "true",
+                placeholder: $("#<%=CommonDropDownHiddenField.ClientID %>").val(),
+                allowClear: true,
+                width: "99.75%"
+            });
+            $("#ContentPlaceHolder1_ddlCategory").select2({
                 tags: "true",
                 placeholder: $("#<%=CommonDropDownHiddenField.ClientID %>").val(),
                 allowClear: true,
@@ -32,60 +44,60 @@
                 width: "99.75%"
             });
             // txtVoucherDate
-            $("#txtSearch").autocomplete({
+            //$("#txtSearch").autocomplete({
 
-                source: function (request, response) {
-                    let url = 'OpeningBalance.aspx/AutoCompleteTransactionNode';
-                    let transactionType = $("#ContentPlaceHolder1_ddlTransactionType").val();
+            //    source: function (request, response) {
+            //        let url = 'OpeningBalance.aspx/AutoCompleteTransactionNode';
+            //        let transactionType = $("#ContentPlaceHolder1_ddlTransactionType").val();
 
-                    let inventorySearchType = $("#ContentPlaceHolder1_ddlInventorySearchType").val();
-                    let storeId = $("#ContentPlaceHolder1_ddlStore").val();
-                    if (transactionType == "Inventory") {
-                        if (storeId == "0") {
-                            toastr.warning("Please Select Store Name.");
-                            $("#ContentPlaceHolder1_ddlStore").focus();
-                            return false;
-                        }
-                    }
-                    $.ajax({
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        url: url,
-                        data: JSON.stringify({ transactionType: transactionType, searchText: request.term, inventorySearchType: inventorySearchType, storeId: storeId }),
-                        dataType: "json",
-                        success: function (data) {
+            //        let inventorySearchType = $("#ContentPlaceHolder1_ddlInventorySearchType").val();
+            //        let costCenterId = $("#ContentPlaceHolder1_ddlStore").val();
+            //        if (transactionType == "Inventory") {
+            //            if (costCenterId == "0") {
+            //                toastr.warning("Please Select Store Name.");
+            //                $("#ContentPlaceHolder1_ddlStore").focus();
+            //                return false;
+            //            }
+            //        }
+            //        $.ajax({
+            //            type: "POST",
+            //            contentType: "application/json; charset=utf-8",
+            //            url: url,
+            //            data: JSON.stringify({ transactionType: transactionType, searchText: request.term, inventorySearchType: inventorySearchType, costCenterId: costCenterId }),
+            //            dataType: "json",
+            //            success: function (data) {
 
-                            var searchData = data.error ? [] : $.map(data.d, function (m) {
-                                return {
-                                    label: m.NodeName,
-                                    value: m.TransactionNodeId,
-                                    NodeId: m.TransactionNodeId,
-                                    Lvl: m.Lvl,
-                                    Hierarchy: m.Hierarchy
-                                };
-                            });
-                            response(searchData);
-                        },
-                        error: function (result) {
-                            //alert("Error");
-                        }
-                    });
-                },
-                focus: function (event, ui) {
-                    // prevent autocomplete from updating the textbox
-                    event.preventDefault();
-                    // manually update the textbox
-                    //$(this).val(ui.item.label);
-                },
-                select: function (event, ui) {
-                    // prevent autocomplete from updating the textbox
-                    event.preventDefault();
-                    // manually update the textbox and hidden field
-                    $(this).val(ui.item.label);
+            //                var searchData = data.error ? [] : $.map(data.d, function (m) {
+            //                    return {
+            //                        label: m.NodeName,
+            //                        value: m.TransactionNodeId,
+            //                        NodeId: m.TransactionNodeId,
+            //                        Lvl: m.Lvl,
+            //                        Hierarchy: m.Hierarchy
+            //                    };
+            //                });
+            //                response(searchData);
+            //            },
+            //            error: function (result) {
+            //                //alert("Error");
+            //            }
+            //        });
+            //    },
+            //    focus: function (event, ui) {
+            //        // prevent autocomplete from updating the textbox
+            //        event.preventDefault();
+            //        // manually update the textbox
+            //        //$(this).val(ui.item.label);
+            //    },
+            //    select: function (event, ui) {
+            //        // prevent autocomplete from updating the textbox
+            //        event.preventDefault();
+            //        // manually update the textbox and hidden field
+            //        $(this).val(ui.item.label);
 
-                    TransactionNode = ui.item;
-                }
-            });
+            //        TransactionNode = ui.item;
+            //    }
+            //});
 
             $("#ContentPlaceHolder1_ddlStore").change(function () {
                 $("#SaveContent").hide();
@@ -102,8 +114,8 @@
             //});
         });
 
-        function LoadStoreLocationByCostCenter(storeId) {
-            PageMethods.StoreLocationByCostCenter(storeId, OnLoadLocationSucceeded, OnLoadLocationFailed);
+        function LoadStoreLocationByCostCenter(costCenterId) {
+            PageMethods.StoreLocationByCostCenter(costCenterId, OnLoadLocationSucceeded, OnLoadLocationFailed);
             return false;
         }
 
@@ -169,50 +181,50 @@
             });--%>
             }
 
-        function ChangeSearchLabel(control = $("#ContentPlaceHolder1_ddlTransactionType")) {
+        function ChangeSearchLabel(control) {
             TransactionNode = null;
             Balance = null;
             $("#balanceTable").html("");
-            $("#txtSearch").val("");
+            // $("#txtSearch").val("");
             let controlValue = $(control).val();
             $("#dvInventorySearchType").hide();
             $("#InventoryContent").hide();
-            $("#dvSearchType").show();
+            // $("#dvSearchType").show();
 
             if (controlValue == "Accounts") {
                 $("#lblTransaction").text("Account Head");
-                $("#dvSearchType").hide();
-                $("#txtSearch").hide();
+                // $("#dvSearchType").hide();
+                // $("#txtSearch").hide();
                 $("#lblTransaction").hide();
             }
             else if (controlValue == "Company") {
                 $("#lblTransaction").text("Company Name");
-                $("#txtSearch").show();
+                // $("#txtSearch").show();
                 $("#lblTransaction").show();
             }
             else if (controlValue == "Supplier")
             {
                 $("#lblTransaction").text("Supplier Name");
-                $("#txtSearch").show();
+                // $("#txtSearch").show();
                 $("#lblTransaction").show();
             }
             else if (controlValue == "Employee")
             {
                 $("#lblTransaction").text("Employee Name");
-                $("#txtSearch").show();
+                // $("#txtSearch").show();
                 $("#lblTransaction").show();
             }
             else if (controlValue == "Member")
             {
                 $("#lblTransaction").text("Member Name");
-                $("#txtSearch").show();
+                // $("#txtSearch").show();
                 $("#lblTransaction").show();
             }
                 //else if (controlValue == "CNF")
                 // $("#lblTransaction").text("Account Name");
             else if (controlValue == "Inventory") {
-                $("#txtSearch").show();
-                $("#dvSearchType").hide();
+                // $("#txtSearch").show();
+                // $("#dvSearchType").hide();
                 $("#dvInventorySearchType").show();
                 $("#InventoryContent").show();
                 $("#lblTransaction").show();
@@ -222,16 +234,16 @@
 
 
             function Search() {
-
                 let transactionType = $("#ContentPlaceHolder1_ddlTransactionType").val();
                 var glCompanyId = $("#ContentPlaceHolder1_ddlCompany").val();
                 var glProjectId = $("#ContentPlaceHolder1_ddlProject").val();
-                //var fiscalYearId = $("#ContentPlaceHolder1_ddlFiscalYear").val();
+                // var fiscalYearId = $("#ContentPlaceHolder1_ddlFiscalYear").val();
                 var voucherDate = $("#ContentPlaceHolder1_txtVoucherDate").val();
                 let inventorySearchType = $("#ContentPlaceHolder1_ddlInventorySearchType").val();
-                var searchType = $("#ContentPlaceHolder1_ddlSearchType").val();
+                // var searchType = $("#ContentPlaceHolder1_ddlSearchType").val();
+                var categoryId = $("#ContentPlaceHolder1_ddlCategory").val();
 
-                var storeId = "0";
+                var costCenterId = "0";
                 var locationId = "0";
                 var transactionNodeId = 0;
                 var hierarchy = "";
@@ -262,9 +274,9 @@
                 //    return false;
                 //}
                 if (transactionType == "Inventory") {
-                    storeId = $('#ContentPlaceHolder1_ddlStore').val();
+                    costCenterId = $('#ContentPlaceHolder1_ddlStore').val();
                     locationId = $('#ContentPlaceHolder1_ddlLocation').val();
-                    if (storeId == "0") {
+                    if (costCenterId == "0") {
                         toastr.warning("Please Select Store Name.");
                         $("#ContentPlaceHolder1_ddlStore").focus();
                         return false;
@@ -276,24 +288,21 @@
                     }
                 }
 
-                if(transactionType != "Accounts"){
-                    if (TransactionNode == null && searchType == "0") {
-                        var transactionHeadName = $("#lblTransaction").text();
-                        toastr.warning(`Please Search ${transactionHeadName}`);
-                        $("#txtSearch").focus();
-                        return false;
-                    }
-                }
-
+                //if(transactionType != "Accounts"){
+                //    if (TransactionNode == null) {
+                //        var transactionHeadName = $("#lblTransaction").text();
+                //        toastr.warning(`Please Search ${transactionHeadName}`);
+                //        // $("#txtSearch").focus();
+                //        return false;
+                //    }
+                //}
                 transactionNodeId = TransactionNode != null ? TransactionNode.NodeId : 0;
                 hierarchy = TransactionNode != null ? TransactionNode.Hierarchy : "";
-
-                PageMethods.FillForm(transactionType, glCompanyId, glProjectId, voucherDate, inventorySearchType, storeId, locationId, transactionNodeId, hierarchy, OnSucceedResult, OnError);
+                PageMethods.FillForm(transactionType, glCompanyId, glProjectId, voucherDate, categoryId, inventorySearchType, costCenterId, locationId, transactionNodeId, hierarchy, OnSucceedResult, OnError);
                 return false;
             }
 
             function OnSucceedResult(result) {
-
                 let transactionType = $("#ContentPlaceHolder1_ddlTransactionType").val();
 
                 if(transactionType == "Accounts"){
@@ -301,13 +310,31 @@
                     if(result.messageType != null && result.messageType == "Error"){
                         toastr.error( result.message);
                         $("#balanceTable").html("");
-                        $("#txtSearch").val("");
+                        // $("#txtSearch").val("");
                         $("#SaveContent").hide();
                         $("#btnApprove").hide();
                         return false;
                     }
 
                     AccountOpeningBalance  = result.AccountOpeningBalance;
+                }
+                else if (transactionType == "Company") {
+                    CompanyDebitCreditList = result.CompanyDebitCreditList;
+                }
+                else if (transactionType == "Supplier") {
+                    SupplierDebitCreditList = result.SupplierDebitCreditList;
+                }
+                else if (transactionType == "Employee") {
+                    EmployeeDebitCreditList = result.EmployeeDebitCreditList;
+                }
+                else if (transactionType == "Member") {
+                    MemberDebitCreditList = result.MemberDebitCreditList;
+                }
+                else if (transactionType == "CNF") {
+                    CNFDebitCreditList = result.CNFDebitCreditList;
+                }
+                else if (transactionType == "Inventory") {
+                    InvOpeningBalanceDetails = result.InvOpeningBalanceDetails;
                 }
 
                 if (result.OpeningBalance != null)
@@ -318,23 +345,46 @@
                 else
                     Balance = result.InvOpeningBalance;
 
-                if (Balance != null) {
+                //if (Balance != null) {
+                //    $("#btnApprove").show();
+                //    $("#btnSave").val("Update");
+                //}
+                //else {
+                //    $("#btnApprove").hide();
+                //    $("#btnSave").val("Save");
+                //}
+
+                if (Balance != null || result.CompanyDebitCreditList != null || result.SupplierDebitCreditList != null || result.EmployeeDebitCreditList != null || result.MemberDebitCreditList != null || result.CNFDebitCreditList != null || result.OpeningBalanceDetails != null) {
                     $("#btnApprove").show();
                     $("#btnSave").val("Update");
-                }
-                else {
+                } else {
                     $("#btnApprove").hide();
                     $("#btnSave").val("Save");
                 }
+
                 $("#tblSearchItem").html(result.TableString);
                 $("#SaveContent").show();
 
                 CommonHelper.ApplyDecimalValidationWithNegetiveValue();
 
                 if(transactionType == "Accounts"){
-                    setTimeout(function(){ CheckTotal(); }, 1000);
+                    setTimeout(function () { CheckTotal(); }, 1000);
                 }
-
+                else if (transactionType == "Company") {
+                    setTimeout(function () { setCompanyTotal(); }, 1000);
+                }
+                else if (transactionType == "Supplier") {
+                    setTimeout(function () { setSupplierTotal(); }, 1000);
+                }
+                else if (transactionType == "Employee") {
+                    setTimeout(function () { setEmployeeTotal(); }, 1000);
+                }
+                else if (transactionType == "Member") {
+                    setTimeout(function () { setMemberTotal(); }, 1000);
+                }
+                else if (transactionType == "CNF") {
+                    setTimeout(function () { setCNFTotal(); }, 1000);
+                }
                 return false;
             }
 
@@ -345,14 +395,15 @@
 
 
             function SaveBalance() {
-
                 let transactionType = $("#ContentPlaceHolder1_ddlTransactionType").val();
                 var glCompanyId = $("#ContentPlaceHolder1_ddlCompany").val();
                 var glProjectId = $("#ContentPlaceHolder1_ddlProject").val();
                 //var fiscalYearId = $("#ContentPlaceHolder1_ddlFiscalYear").val();
                 var voucherDate = $("#ContentPlaceHolder1_txtVoucherDate").val();
-                var storeId = "0";
+                
+                var costCenterId = "0";
                 var locationId = "0";
+                var categoryId = "0";
                 if (transactionType == "0") {
                     toastr.warning("Please Select Transaction Type.");
                     $("#ContentPlaceHolder1_ddlTransactionType").focus();
@@ -379,9 +430,10 @@
                     return false;
                 }
                 if (transactionType == "Inventory") {
-                    storeId = $('#ContentPlaceHolder1_ddlStore').val();
+                    costCenterId = $('#ContentPlaceHolder1_ddlStore').val();
                     locationId = $('#ContentPlaceHolder1_ddlLocation').val();
-                    if (storeId == "0") {
+                    categoryId = $("#ContentPlaceHolder1_ddlCategory").val();
+                    if (costCenterId == "0") {
                         toastr.warning("Please Select Store Name.");
                         $("#ContentPlaceHolder1_ddlStore").focus();
                         return false;
@@ -391,11 +443,22 @@
                         $("#ContentPlaceHolder1_ddlLocation").focus();
                         return false;
                     }
+                    if (categoryId == "0") {
+                        toastr.warning("Please Select Category Name.");
+                        $("#ContentPlaceHolder1_ddlCategory").focus();
+                        return false;
+                    }
                 }
                 var OpeningBalanceDetails = new Array();
+                var CompanyDebitCreditList = new Array();
+                var SupplierDebitCreditList = new Array();
+                var EmployeeDebitCreditList = new Array();
+                var MemberDebitCreditList = new Array();
+                var CNFDebitCreditList = new Array();
 
                 var transactionNodeId = 0, id = 0, detailsId = 0, debitAmount = 0, creditAmount = 0, unitCost = 0, stockQuantity = 0, totalCost = 0;
-
+                var drAmount = 0, crAmount = 0, quantity = 0;
+                debugger;
                 if (Balance != null) {
                     id = Balance.Id;
                 }
@@ -408,8 +471,9 @@
                     CompanyId: glCompanyId,
                     ProjectId: glProjectId,
                     VoucherDate: voucherDate,
-                    StoreId: storeId,
-                    LocationId: locationId
+                    StoreId: costCenterId,
+                    LocationId: locationId,
+                    CategoryId: categoryId
                 };
 
                 let isInventoryType = transactionType == "Inventory";
@@ -422,18 +486,16 @@
                         detailsId = $(this).find("td:eq(0)").attr("did");
 
                         if (isInventoryType) {
-                            unitCost = $(this).find("td:eq(2) input").val();
-                            stockQuantity = $(this).find("td:eq(3) input").val();
-                            totalCost = $(this).find("td:eq(4) input").val();
-
-                            if (unitCost && stockQuantity) {
+                            quantity = $(this).find("td:eq(4) input").val();
+                            unitHead = $(this).find("td").eq(5).html();
+                            debugger;
+                            if (quantity) {
 
                                 OpeningBalanceDetails.push({
                                     Id: parseInt(detailsId),
                                     TransactionNodeId: parseInt(transactionNodeId),
-                                    UnitCost: unitCost != "" ? parseFloat(unitCost).toFixed(2) : 0.00,
-                                    StockQuantity: stockQuantity != "" ? parseFloat(stockQuantity).toFixed(2) : 0.00,
-                                    Total: totalCost != "" ? parseFloat(totalCost).toFixed(2) : 0.00
+                                    StockQuantity: quantity != "" ? parseInt(quantity) : 0,
+                                    UnitHead: unitHead
                                 });
                                 unitCost = "0";
                                 stockQuantity = "0";
@@ -449,6 +511,86 @@
                     OpeningBalance.OpeningBalanceEquity = $.trim($("#openingBalanceEquity").text()) == "" ? 0.00 : parseFloat($.trim($("#openingBalanceEquity").text()));
                     OpeningBalance.OpeningBalanceDate = voucherDate;
                 }
+                else if (transactionType == "Company") {
+                    $("#balanceTable tbody tr").each(function () {
+                        transactionNodeId = $(this).find("td:eq(0)").attr("tnid");
+                        detailsId = $(this).find("td:eq(0)").attr("did");
+                        drAmount = $(this).find("td:eq(1) input").val();
+                        crAmount = $(this).find("td:eq(2) input").val();
+                        if (drAmount || crAmount) {
+                            CompanyDebitCreditList.push({
+                                Id: parseInt(detailsId),
+                                CompanyId: parseInt(transactionNodeId),
+                                DrAmount: drAmount != "" ? parseFloat(drAmount).toFixed(5) : 0.00000,
+                                CrAmount: crAmount != "" ? parseFloat(crAmount).toFixed(5) : 0.00000
+                            });
+                        }
+                    });
+                }
+                else if (transactionType == "Supplier") {
+                    $("#balanceTable tbody tr").each(function () {
+                        transactionNodeId = $(this).find("td:eq(0)").attr("tnid");
+                        detailsId = $(this).find("td:eq(0)").attr("did");
+                        drAmount = $(this).find("td:eq(1) input").val();
+                        crAmount = $(this).find("td:eq(2) input").val();
+                        if (drAmount || crAmount) {
+                            SupplierDebitCreditList.push({
+                                Id: parseInt(detailsId),
+                                SupplierId: parseInt(transactionNodeId),
+                                DrAmount: drAmount != "" ? parseFloat(drAmount).toFixed(5) : 0.00000,
+                                CrAmount: crAmount != "" ? parseFloat(crAmount).toFixed(5) : 0.00000
+                            });
+                        }
+                    });
+                }
+                else if (transactionType == "Employee") {
+                    $("#balanceTable tbody tr").each(function () {
+                        transactionNodeId = $(this).find("td:eq(0)").attr("tnid");
+                        detailsId = $(this).find("td:eq(0)").attr("did");
+                        drAmount = $(this).find("td:eq(1) input").val();
+                        crAmount = $(this).find("td:eq(2) input").val();
+                        if (drAmount || crAmount) {
+                            EmployeeDebitCreditList.push({
+                                Id: parseInt(detailsId),
+                                EmployeeId: parseInt(transactionNodeId),
+                                DrAmount: drAmount != "" ? parseFloat(drAmount).toFixed(5) : 0.00000,
+                                CrAmount: crAmount != "" ? parseFloat(crAmount).toFixed(5) : 0.00000
+                            });
+                        }
+                    });
+                }
+                else if (transactionType == "Member") {
+                    $("#balanceTable tbody tr").each(function () {
+                        transactionNodeId = $(this).find("td:eq(0)").attr("tnid");
+                        detailsId = $(this).find("td:eq(0)").attr("did");
+                        drAmount = $(this).find("td:eq(1) input").val();
+                        crAmount = $(this).find("td:eq(2) input").val();
+                        if (drAmount || crAmount) {
+                            MemberDebitCreditList.push({
+                                Id: parseInt(detailsId),
+                                MemberId: parseInt(transactionNodeId),
+                                DrAmount: drAmount != "" ? parseFloat(drAmount).toFixed(5) : 0.00000,
+                                CrAmount: crAmount != "" ? parseFloat(crAmount).toFixed(5) : 0.00000
+                            });
+                        }
+                    });
+                }
+                else if (transactionType == "CNF") {
+                    $("#balanceTable tbody tr").each(function () {
+                        transactionNodeId = $(this).find("td:eq(0)").attr("tnid");
+                        detailsId = $(this).find("td:eq(0)").attr("did");
+                        drAmount = $(this).find("td:eq(1) input").val();
+                        crAmount = $(this).find("td:eq(2) input").val();
+                        if (drAmount || crAmount) {
+                            CNFDebitCreditList.push({
+                                Id: parseInt(detailsId),
+                                SupplierId: parseInt(transactionNodeId),
+                                DrAmount: drAmount != "" ? parseFloat(drAmount).toFixed(5) : 0.00000,
+                                CrAmount: crAmount != "" ? parseFloat(crAmount).toFixed(5) : 0.00000
+                            });
+                        }
+                    });
+                }
 
                 if (transactionType == "Inventory" && OpeningBalanceDetails.length == 0) {
                     toastr.warning("Please Give Inventory Opening.");
@@ -463,12 +605,76 @@
                         return false;
                     }                  
                 }
-
                 if (transactionType == "Inventory")
                     PageMethods.SaveInvOpeningBalance(OpeningBalance, OpeningBalanceDetails, OnSucceedSaveOpeningBalance, OnErrorSucceedSaveOpeningBalance);
-                else if(transactionType == "Accounts")
-                    PageMethods.SaveGLOpeningBalance(OpeningBalance, AccountOpeningBalance , OnSucceedSaveOpeningBalance, OnErrorSucceedSaveOpeningBalance);
+                else if (transactionType == "Accounts")
+                    PageMethods.SaveGLOpeningBalance(OpeningBalance, AccountOpeningBalance, OnSucceedSaveOpeningBalance, OnErrorSucceedSaveOpeningBalance);
+                else if (transactionType == "Company")
+                    PageMethods.SaveCompanyOpeningBalance(CompanyDebitCreditList, OnSaveCompanyOpeningBalanceSucceeded, OnSaveCompanyOpeningBalanceFailed);
+                else if (transactionType == "Supplier")
+                    PageMethods.SaveSupplierOpeningBalance(SupplierDebitCreditList, OnSaveSupplierOpeningBalanceSucceeded, OnSaveSupplierOpeningBalanceFailed);
+                else if (transactionType == "Employee")
+                    PageMethods.SaveEmployeeOpeningBalance(EmployeeDebitCreditList, OnSaveEmployeeOpeningBalanceSucceeded, OnSaveEmployeeOpeningBalanceFailed);
+                else if (transactionType == "Member")
+                    PageMethods.SaveMemberOpeningBalance(MemberDebitCreditList, OnSaveMemberOpeningBalanceSucceeded, OnSaveMemberOpeningBalanceFailed);
+                else if (transactionType == "CNF")
+                    PageMethods.SaveCNFOpeningBalance(CNFDebitCreditList, OnSaveCNFOpeningBalanceSucceeded, OnSaveCNFOpeningBalanceFailed);
                 return false;
+            }
+
+            function OnSaveCompanyOpeningBalanceSucceeded(result) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                if (result.IsSuccess) {
+                    ClearAll();
+                }
+            }
+
+            function OnSaveCompanyOpeningBalanceFailed(result) {
+                CommonHelper.AlertMessage(error.AlertMessage);
+            }
+
+            function OnSaveSupplierOpeningBalanceSucceeded(result) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                if (result.IsSuccess) {
+                    ClearAll();
+                }
+            }
+
+            function OnSaveSupplierOpeningBalanceFailed(result) {
+                CommonHelper.AlertMessage(error.AlertMessage);
+            }
+            
+            function OnSaveEmployeeOpeningBalanceSucceeded(result) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                if (result.IsSuccess) {
+                    ClearAll();
+                }
+            }
+
+            function OnSaveEmployeeOpeningBalanceFailed(result) {
+                CommonHelper.AlertMessage(error.AlertMessage);
+            }
+
+            function OnSaveMemberOpeningBalanceSucceeded(result) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                if (result.IsSuccess) {
+                    ClearAll();
+                }
+            }
+
+            function OnSaveMemberOpeningBalanceFailed(result) {
+                CommonHelper.AlertMessage(error.AlertMessage);
+            }
+            
+            function OnSaveCNFOpeningBalanceSucceeded(result) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                if (result.IsSuccess) {
+                    ClearAll();
+                }
+            }
+
+            function OnSaveCNFOpeningBalanceFailed(result) {
+                CommonHelper.AlertMessage(error.AlertMessage);
             }
 
             function OnSucceedSaveOpeningBalance(result) {
@@ -491,9 +697,9 @@
                 $("#ContentPlaceHolder1_txtVoucherDate").val("");
                 $('#ContentPlaceHolder1_ddlStore').val("0").trigger('change');
                 $('#ContentPlaceHolder1_ddlLocation').val("0").trigger('change');
-                $('#ContentPlaceHolder1_ddlSearchType').val("0");
+                // $('#ContentPlaceHolder1_ddlSearchType').val("0");
                 $("#balanceTable").html("");
-                $("#txtSearch").val("");
+                // $("#txtSearch").val("");
                 $("#SaveContent").hide();
                 $("#btnApprove").hide();
             }
@@ -512,7 +718,6 @@
                 var tableRow = $(control).parent().parent();
                 var amount = tableRow.find("td:eq(1) input").val() != "" ? parseFloat(tableRow.find("td:eq(1) input").val()) : 0.00;
                 AccountOpeningBalance[index].AssetAmount = amount;
-
                 CheckTotal();
                 return true;
             }
@@ -522,7 +727,6 @@
 
                 var amount = tableRow.find("td:eq(3) input").val() != "" ? parseFloat(tableRow.find("td:eq(3) input").val()) : 0.00;
                 AccountOpeningBalance[index].LiabilitiesAmount = amount;
-
                 CheckTotal();
                 return true;
             }
@@ -530,7 +734,7 @@
             function CheckTotal(){
                 var count = AccountOpeningBalance.length;
                 var row = 0, sumAsset = 0, liabilitiesAmount = 0;
-
+                debugger;
                 for(row = 0; row< count ; row++){
                     sumAsset = sumAsset + AccountOpeningBalance[row].AssetAmount; 
                     liabilitiesAmount = liabilitiesAmount + AccountOpeningBalance[row].LiabilitiesAmount;
@@ -544,17 +748,202 @@
                 else
                     $("#openingBalanceEquity").text(sumAsset - liabilitiesAmount); 
             }
+            
+            function CheckDebitInputValue(control, index) {
+                let tableRow = $(control).parent().parent();
+                let amount = tableRow.find("td:eq(1) input").val() != "" ? parseFloat(tableRow.find("td:eq(1) input").val()) : 0.00000;
+                CompanyDebitCreditList[index].DrAmount = amount;
+                setCompanyTotal();
+                return true;
+            }
+            
+            function CheckCreditInputValue(control, index) {
+                debugger;
+                let tableRow = $(control).parent().parent();
+                let amount = tableRow.find("td:eq(2) input").val() != "" ? parseFloat(tableRow.find("td:eq(2) input").val()) : 0.00000;
+                CompanyDebitCreditList[index].CrAmount = amount;
+                setCompanyTotal();
+                return true;
+            }
+            
+            function setCompanyTotal() {
+                let count = CompanyDebitCreditList.length;
+                let row = 0, sumDebit = 0, sumCredit = 0;
+                debugger;
+                for (row = 0; row < count; row++) {
+                    sumDebit = sumDebit + CompanyDebitCreditList[row].DrAmount;
+                    sumCredit = sumCredit + CompanyDebitCreditList[row].DrAmount;
+                }
+
+                $("#debitTotal").text(sumDebit);
+                $("#creditTotal").text(sumCredit);
+            }
+
+            function CheckSupplierDebitInputValue(control, index) {
+                let tableRow = $(control).parent().parent();
+                let amount = tableRow.find("td:eq(1) input").val() != "" ? parseFloat(tableRow.find("td:eq(1) input").val()) : 0.00000;
+                SupplierDebitCreditList[index].DrAmount = amount;
+                setSupplierTotal();
+                return true;
+            }
+
+            function CheckSupplierCreditInputValue(control, index) {
+                let tableRow = $(control).parent().parent();
+                let amount = tableRow.find("td:eq(2) input").val() != "" ? parseFloat(tableRow.find("td:eq(2) input").val()) : 0.00000;
+                SupplierDebitCreditList[index].CrAmount = amount;
+                setSupplierTotal();
+                return true;
+            }
+            
+            function setSupplierTotal() {
+                let count = SupplierDebitCreditList.length;
+                let row = 0, sumDebit = 0, sumCredit = 0;
+                debugger;
+                for (row = 0; row < count; row++) {
+                    sumDebit = sumDebit + SupplierDebitCreditList[row].DrAmount;
+                    sumCredit = sumCredit + SupplierDebitCreditList[row].CrAmount;
+                }
+                $("#debitTotal").text(sumDebit);
+                $("#creditTotal").text(sumCredit);
+            }
+
+            function CheckEmployeeDebitInputValue(control, index) {
+                let tableRow = $(control).parent().parent();
+                let amount = tableRow.find("td:eq(1) input").val() != "" ? parseFloat(tableRow.find("td:eq(1) input").val()) : 0.00000;
+                EmployeeDebitCreditList[index].DrAmount = amount;
+                setEmployeeTotal();
+                return true;
+            }
+
+            function CheckEmployeeCreditInputValue(control, index) {
+                let tableRow = $(control).parent().parent();
+                let amount = tableRow.find("td:eq(2) input").val() != "" ? parseFloat(tableRow.find("td:eq(2) input").val()) : 0.00000;
+                EmployeeDebitCreditList[index].CrAmount = amount;
+                setEmployeeTotal();
+                return true;
+            }
+
+            function setEmployeeTotal() {
+                let count = EmployeeDebitCreditList.length;
+                let row = 0, sumDebit = 0, sumCredit = 0;
+                debugger;
+                for (row = 0; row < count; row++) {
+                    sumDebit += EmployeeDebitCreditList[row].DrAmount;
+                    sumCredit += EmployeeDebitCreditList[row].CrAmount;
+                }
+                $("#debitTotal").text(sumDebit);
+                $("#creditTotal").text(sumCredit);
+            }
+
+            function CheckMemberDebitInputValue(control, index) {
+                let tableRow = $(control).parent().parent();
+                let amount = tableRow.find("td:eq(1) input").val() != "" ? parseFloat(tableRow.find("td:eq(1) input").val()) : 0.00000;
+                MemberDebitCreditList[index].DrAmount = amount;
+                setMemberTotal();
+                return true;
+            }
+
+            function CheckMemberCreditInputValue(control, index) {
+                let tableRow = $(control).parent().parent();
+                let amount = tableRow.find("td:eq(2) input").val() != "" ? parseFloat(tableRow.find("td:eq(2) input").val()) : 0.00000;
+                MemberDebitCreditList[index].CrAmount = amount;
+                setMemberTotal();
+                return true;
+            }
+
+            function setMemberTotal() {
+                let count = MemberDebitCreditList.length;
+                let row = 0, sumDebit = 0, sumCredit = 0;
+                debugger;
+                for (row = 0; row < count; row++) {
+                    sumDebit += MemberDebitCreditList[row].DrAmount;
+                    sumCredit += MemberDebitCreditList[row].CrAmount;
+                }
+                $("#debitTotal").text(sumDebit);
+                $("#creditTotal").text(sumCredit);
+            }
+
+            function CheckCNFDebitInputValue(control, index) {
+                let tableRow = $(control).parent().parent();
+                let amount = tableRow.find("td:eq(1) input").val() != "" ? parseFloat(tableRow.find("td:eq(1) input").val()) : 0.00000;
+                CNFDebitCreditList[index].DrAmount = amount;
+                setCNFTotal();
+                return true;
+            }
+
+            function CheckCNFCreditInputValue(control, index) {
+                let tableRow = $(control).parent().parent();
+                let amount = tableRow.find("td:eq(2) input").val() != "" ? parseFloat(tableRow.find("td:eq(2) input").val()) : 0.00000;
+                CNFDebitCreditList[index].CrAmount = amount;
+                setCNFTotal();
+                return true;
+            }
+
+            function setCNFTotal() {
+                let count = CNFDebitCreditList.length;
+                let row = 0, sumDebit = 0, sumCredit = 0;
+                debugger;
+                for (row = 0; row < count; row++) {
+                    sumDebit += CNFDebitCreditList[row].DrAmount;
+                    sumCredit += CNFDebitCreditList[row].CrAmount;
+                }
+                $("#debitTotal").text(sumDebit);
+                $("#creditTotal").text(sumCredit);
+            }
 
             function ApproveBalance() {
                 if (!confirm("Do you want to Approve?"))
                     return false;
                 let isInventoryType = $("#ContentPlaceHolder1_ddlTransactionType").val() == "Inventory";
-                let id = Balance.Id;
+                let id = 0;
+                let transactionType = $("#ContentPlaceHolder1_ddlTransactionType").val();
+                if (transactionType == "Accounts"){
+                    id = Balance.Id;
+                }
+                let companyId, supplierId, employeeId, memberId, itemId;
+                let transactionInfo = [];
+                let transactionId = 0;
+                if (transactionType == "Company") {
+                    transactionInfo = CompanyDebitCreditList;
+                }
+                else if (transactionType == "Supplier") {
+                    transactionInfo = SupplierDebitCreditList;
+                }
+                else if (transactionType == "Employee") {
+                    transactionInfo = SupplierDebitCreditList;
+                }
+                else if (transactionType == "Member") {
+                    transactionInfo = SupplierDebitCreditList;
+                }
+                else if (transactionType == "CNF") {
+                    transactionInfo = SupplierDebitCreditList;
+                }
+                else if (transactionType == "Inventory") {
+                    transactionInfo = SupplierDebitCreditList;
+                }
+                debugger;
+                if (transactionInfo.length > 0) {
+                    PageMethods.ApproveTransactionOpeningBalance(transactionInfo, transactionType, OnApproveTransactionOpeningBalanceSucceeded, OnApproveTransactionOpeningBalanceFailed);
+                    return false;
+                }
+
                 if (id > 0) {
                     PageMethods.ApproveOpeningBalance(isInventoryType, id, OnSucceedApproveOpeningBalance, OnErrorSucceedApproveOpeningBalance);
                     return false;
                 }
             }
+            
+            function OnApproveTransactionOpeningBalanceSucceeded(result) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                if (result.IsSuccess) {
+                    ClearAll();
+                }
+            }
+            
+            function OnApproveTransactionOpeningBalanceFailed() {
+                CommonHelper.AlertMessage(error.AlertMessage);
+            }
+
             function OnSucceedApproveOpeningBalance(result) {
                 CommonHelper.AlertMessage(result.AlertMessage);
                 if (result.IsSuccess) {
@@ -570,7 +959,7 @@
             function ShowHideSearch(control) {
                 TransactionNode = null;
                 $("#balanceTable").html("");
-                $("#txtSearch").val("");
+                // $("#txtSearch").val("");
                 $("#SaveContent").hide();
                 $("#btnApprove").hide();
                 if ($(control).val() == "1")
@@ -619,7 +1008,7 @@
                 </div>
                 <div class="form-group" id="InventoryContent" style="display: none;">
                     <div class="col-md-2">
-                        <label class="control-label required-field">Store Name</label>
+                        <label class="control-label required-field">Cost Center</label>
                     </div>
                     <div class="col-md-4">
                         <asp:DropDownList ID="ddlStore" runat="server" CssClass="form-control" TabIndex="5">
@@ -633,18 +1022,29 @@
                         </asp:DropDownList>
                     </div>
                 </div>
-                <div id="dvInventorySearchType" class="form-group" style="display: none;">
-                    <div class="col-md-2">
-                        <label class="control-label required-field">Search Type</label>
+                <div id="dvInventorySearchType" style="display: none;">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label class="control-label required-field">Search Type</label>
+                        </div>
+                        <div class="col-md-10">
+                            <asp:DropDownList ID="ddlInventorySearchType" runat="server" CssClass="form-control" TabIndex="7">
+                                <asp:ListItem Value="Category">Category</asp:ListItem>
+                                <asp:ListItem Value="Item">Item</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
                     </div>
-                    <div class="col-md-10">
-                        <asp:DropDownList ID="ddlInventorySearchType" runat="server" CssClass="form-control" TabIndex="7" onchange="ChangeSearchLabel()">
-                            <asp:ListItem Value="Category">Category</asp:ListItem>
-                            <asp:ListItem Value="Item">Item</asp:ListItem>
-                        </asp:DropDownList>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label class="control-label required-field">Category</label>
+                        </div>
+                        <div class="col-md-10">
+                            <asp:DropDownList ID="ddlCategory" runat="server" CssClass="form-control" TabIndex="7">
+                            </asp:DropDownList>
+                        </div>
                     </div>
                 </div>
-                <div id="dvSearchType" class="form-group" style="display: none;">
+                <%--<div id="dvSearchType" class="form-group" style="display: none;">
                     <div class="col-md-2">
                         <label class="control-label required-field">Search Type</label>
                     </div>
@@ -654,15 +1054,15 @@
                             <asp:ListItem Value="1">All</asp:ListItem>
                         </asp:DropDownList>
                     </div>
-                </div>
-                <div id="dvSearch" class="form-group">
+                </div>--%>
+                <%--<div id="dvSearch" class="form-group">
                     <div class="col-md-2">
                         <label id="lblTransaction" class="control-label required-field">Account Head</label>
                     </div>
                     <div class="col-md-10">
                         <input type="text" id="txtSearch" class="form-control" tabindex="9" />
                     </div>
-                </div>
+                </div>--%>
                 <div class="row">
                     <div class="col-md-12" id="divGenerate">
                         <input type="button" value="Search" class="TransactionalButton btn btn-primary btn-sm" onclick="Search()" tabindex="10" />

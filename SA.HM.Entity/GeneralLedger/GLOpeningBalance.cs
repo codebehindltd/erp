@@ -10,11 +10,18 @@ namespace HotelManagement.Entity.GeneralLedger
         public long Id { get; set; }
         public string TransactionType { get; set; }
         public int CompanyId { get; set; }
+        public int SupplierId { get; set; }
+        public int EmployeeId { get; set; }
+        public int MemberId { get; set; }
+        public int CNFId { get; set; }
+        public string CompanyName { get; set; }
         public int ProjectId { get; set; }
         public int FiscalYearId { get; set; }
         public Nullable<System.DateTime> OpeningBalanceDate { get; set; }
         public Nullable<System.Decimal> OpeningBalanceEquity { get; set; }
         public bool IsApproved { get; set; }
+        public decimal? DrAmount { get; set; }
+        public decimal? CrAmount { get; set; }
 
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }

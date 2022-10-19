@@ -2,6 +2,7 @@
 using HotelManagement.Data.HMCommon;
 using HotelManagement.Data.HotelManagement;
 using HotelManagement.Data.Inventory;
+using HotelManagement.Data.LCManagement;
 using HotelManagement.Data.Membership;
 using HotelManagement.Data.Payroll;
 using HotelManagement.Data.PurchaseManagment;
@@ -9,6 +10,7 @@ using HotelManagement.Entity.GeneralLedger;
 using HotelManagement.Entity.HMCommon;
 using HotelManagement.Entity.HotelManagement;
 using HotelManagement.Entity.Inventory;
+using HotelManagement.Entity.LCManagement;
 using HotelManagement.Entity.Membership;
 using HotelManagement.Entity.Payroll;
 using HotelManagement.Entity.PurchaseManagment;
@@ -38,6 +40,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 LoadCompany();
                 LoadCommonDropDownHiddenField();
                 LoadStore();
+                LoadCategory();
             }
         }
         private void CheckPermission()
@@ -106,6 +109,28 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 ddlStore.Items.Insert(0, item);
             }
         }
+
+        private void LoadCategory()
+        {
+            List<InvCategoryBO> invCategoryBoList = new List<InvCategoryBO>();
+            InvCategoryDA invCategoryDa = new InvCategoryDA();
+            invCategoryBoList = invCategoryDa.GetInvCatagoryInfo();
+            
+            ddlCategory.DataSource = invCategoryBoList;
+            ddlCategory.DataTextField = "Name";
+            ddlCategory.DataValueField = "CategoryId";
+            ddlCategory.DataBind();
+
+            ListItem item = new ListItem();
+            item.Value = "0";
+            item.Text = hmUtility.GetDropDownFirstValue();
+
+            if (invCategoryBoList.Count > 1)
+            {
+                ddlCategory.Items.Insert(0, item);
+            }
+        }
+
         [WebMethod]
         public static List<GLProjectBO> GetGLProjectByGLCompanyId(int companyId)
         {
@@ -247,7 +272,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
 
         [WebMethod]
         public static GLOpeningBalanceView FillForm(string transactionType, int glCompanyId, int projectcId,
-                                                        string voucherDate, string inventorySearchType, int storeId,
+                                                        string voucherDate, int categoryId, string inventorySearchType, int costCenterId,
                                                                 int locationId, long transactionNodeId = 0, string hierarchy = "")
         {
             List<OpeningBalanceAccountList> chartOfAccountsList = new List<OpeningBalanceAccountList>();
@@ -260,7 +285,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             DateTime VoucherDate = hmUtility.GetDateTimeFromString(voucherDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
 
             bool isInventoryType = transactionType == ConstantHelper.GLTransactionType.Inventory.ToString();
-            openingBalanceView = openingBalanceDA.GetGLOpeningBalanceDetailByTransactionTypeNGLCompanyIdNProjectIdNFiscalYearId(transactionType, glCompanyId, projectcId, VoucherDate, storeId, locationId, isInventoryType);
+            openingBalanceView = openingBalanceDA.GetGLOpeningBalanceDetailByTransactionTypeNGLCompanyIdNProjectIdNFiscalYearId(transactionType, glCompanyId, projectcId, VoucherDate, categoryId, costCenterId, locationId, isInventoryType);
 
             if (transactionType == ConstantHelper.GLTransactionType.Accounts.ToString())
             {
@@ -302,7 +327,8 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 List<GuestCompanyBO> companyList = new List<GuestCompanyBO>();
                 GuestCompanyDA guestCompanyDA = new GuestCompanyDA();
 
-                companyList = guestCompanyDA.GetCompanyInfoByHierarchy((int)transactionNodeId, hierarchy);
+                // companyList = guestCompanyDA.GetCompanyInfoByHierarchy((int)transactionNodeId, hierarchy);
+                companyList = guestCompanyDA.GetGuestCompanyInfo();
                 TableHeader = "Company Name";
                 nodeList = (from n in companyList
                             select new GLOpeningBalanceTransactionNodeAutoComplete()
@@ -321,6 +347,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 else
                     supplierList = entityDA.GetPMSupplierInfo();
 
+                TableHeader = "Supplier Name";
                 nodeList = (from n in supplierList
                             select new GLOpeningBalanceTransactionNodeAutoComplete()
                             {
@@ -339,6 +366,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 else
                     employeeList = entityDA.GetEmployeeInfo();
 
+                TableHeader = "Employee Name";
                 nodeList = (from n in employeeList
                             select new GLOpeningBalanceTransactionNodeAutoComplete()
                             {
@@ -356,12 +384,29 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                     memberList.Add(memberBasicDA.GetMemberInfoById((int)transactionNodeId));
                 else
                     memberList = memberBasicDA.GetMemMemberList();
+
+                TableHeader = "Member Name";
                 nodeList = (from n in memberList
                             select new GLOpeningBalanceTransactionNodeAutoComplete()
                             {
                                 TransactionNodeId = n.MemberId,
                                 NodeName = n.FullName,
                                 Code = n.MembershipNumber
+                            }).ToList();
+            }
+            else if (transactionType == ConstantHelper.GLTransactionType.CNF.ToString())
+            {
+                LcCnfInfoDA cnfInfo = new LcCnfInfoDA();
+                List<LCCnfInfoBO> cnfList = new List<LCCnfInfoBO>();
+
+                cnfList = cnfInfo.GetAllCNFInfoList();
+                TableHeader = "CNF Name";
+                nodeList = (from n in cnfList
+                            select new GLOpeningBalanceTransactionNodeAutoComplete()
+                            {
+                                TransactionNodeId = n.SupplierId,
+                                NodeName = n.Name,
+                                Code = n.Code
                             }).ToList();
             }
             else if (transactionType == ConstantHelper.GLTransactionType.Inventory.ToString())
@@ -371,7 +416,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 {
                     InvItemBO itemInfo = new InvItemBO();
                     InvItemDA itemDA = new InvItemDA();
-                    itemInfo = itemDA.GetInvItemInfoByItemId((int)transactionNodeId);
+                    itemInfo = itemDA.GetInvItemInfoByItemNCategoryId((int)transactionNodeId);
                     if (itemInfo.ItemId > 0)
                         nodeList.Add(new GLOpeningBalanceTransactionNodeAutoComplete()
                         {
@@ -385,13 +430,17 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                     List<InvItemBO> invItems = new List<InvItemBO>();
                     InvItemDA itemDA = new InvItemDA();
 
-                    invItems = itemDA.GetItemByCategoryNCostcenter(storeId, (int)transactionNodeId);
+                    invItems = itemDA.GetItemByCategoryNCostcenter(costCenterId, categoryId);
                     nodeList = (from n in invItems
                                 select new GLOpeningBalanceTransactionNodeAutoComplete()
                                 {
                                     TransactionNodeId = n.ItemId,
                                     NodeName = n.Name,
-                                    Code = n.Code
+                                    Code = n.Code,
+                                    SizeName = n.SizeName,
+                                    ColorName = n.ColorName,
+                                    StyleName = n.StyleName,
+                                    UnitHead = n.UnitHead
                                 }).ToList();
                 }
             }
@@ -400,10 +449,30 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             {
                 openingBalanceView.TableString = GenerateTableForInventory(nodeList, openingBalanceView.InvOpeningBalanceDetails, TableHeader);
             }
-            else
+            else if (transactionType == ConstantHelper.GLTransactionType.Accounts.ToString())
             {
                 openingBalanceView.AccountOpeningBalance = chartOfAccountsList;
                 openingBalanceView.TableString = GenerateTableForAccountsOpening(openingBalanceView, TableHeader);
+            }
+            else if (transactionType == ConstantHelper.GLTransactionType.Company.ToString())
+            {
+                openingBalanceView.TableString = GenerateTableForCompany(nodeList, openingBalanceView, TableHeader);
+            }
+            else if (transactionType == ConstantHelper.GLTransactionType.Supplier.ToString())
+            {
+                openingBalanceView.TableString = GenerateTableForSupplier(nodeList, openingBalanceView, TableHeader);
+            }
+            else if (transactionType == ConstantHelper.GLTransactionType.Employee.ToString())
+            {
+                openingBalanceView.TableString = GenerateTableForEmployee(nodeList, openingBalanceView, TableHeader);
+            }
+            else if (transactionType == ConstantHelper.GLTransactionType.Member.ToString())
+            {
+                openingBalanceView.TableString = GenerateTableForMember(nodeList, openingBalanceView, TableHeader);
+            }
+            else if (transactionType == ConstantHelper.GLTransactionType.CNF.ToString())
+            {
+                openingBalanceView.TableString = GenerateTableForCNF(nodeList, openingBalanceView, TableHeader);
             }
 
             return openingBalanceView;
@@ -428,7 +497,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 OpeningBalance.CreatedBy = userInformation.UserInfoId;
                 OpeningBalance.LastModifiedBy = userInformation.UserInfoId;
 
-                openingBalanceView = openingBalanceDA.GetGLOpeningBalanceDetailByTransactionTypeNGLCompanyIdNProjectIdNFiscalYearId(OpeningBalance.TransactionType, OpeningBalance.CompanyId, OpeningBalance.ProjectId, Convert.ToDateTime(OpeningBalance.VoucherDate), 0, 0, false);
+                openingBalanceView = openingBalanceDA.GetGLOpeningBalanceDetailByTransactionTypeNGLCompanyIdNProjectIdNFiscalYearId(OpeningBalance.TransactionType, OpeningBalance.CompanyId, OpeningBalance.ProjectId, Convert.ToDateTime(OpeningBalance.VoucherDate), 0, 0, 0, false);
 
                 foreach (OpeningBalanceAccountList opb in OpeningBalanceDetails)
                 {
@@ -542,7 +611,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
 
                 if (returnInfo.IsSuccess)
                 {
-                    if (OpeningBalance.Id == 0)
+                    if (OpeningBalanceDetails[0].TransactionNodeId == 0)
                     {
                         Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
                         EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalaceId,
@@ -571,6 +640,211 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         }
 
         [WebMethod]
+        public static ReturnInfo SaveCompanyOpeningBalance(List<GLOpeningBalance> CompanyDebitCreditList)
+        {
+            ReturnInfo returnInfo = new ReturnInfo();
+            HMUtility hmUtility = new HMUtility();
+            GLOpeningBalanceDA openingBalanceDA = new GLOpeningBalanceDA();
+            long OpeningBalaceId = 0;
+            try
+            {
+                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateCompanyOpeningBalance(CompanyDebitCreditList);
+
+                if (returnInfo.IsSuccess)
+                {
+                    if (CompanyDebitCreditList[0].Id == 0)
+                    {
+                        Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
+                        EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalaceId,
+                        ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
+                    }
+                    else
+                    {
+                        //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
+                        //EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
+                        //ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
+                    }
+                }
+                else
+                {
+                    returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                throw ex;
+            }
+            return returnInfo;
+        }
+
+        [WebMethod]
+        public static ReturnInfo SaveSupplierOpeningBalance(List<GLOpeningBalance> SupplierDebitCreditList)
+        {
+            ReturnInfo returnInfo = new ReturnInfo();
+            HMUtility hmUtility = new HMUtility();
+            GLOpeningBalanceDA openingBalanceDA = new GLOpeningBalanceDA();
+            long OpeningBalaceId = 0;
+            try
+            {
+                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateSupplierOpeningBalance(SupplierDebitCreditList);
+
+                if (returnInfo.IsSuccess)
+                {
+                    if (SupplierDebitCreditList[0].Id == 0)
+                    {
+                        Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
+                        EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalaceId,
+                        ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
+                    }
+                    else
+                    {
+                        //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
+                        //EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
+                        //ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
+                    }
+                }
+                else
+                {
+                    returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                throw ex;
+            }
+            return returnInfo;
+        }
+
+        [WebMethod]
+        public static ReturnInfo SaveEmployeeOpeningBalance(List<GLOpeningBalance> EmployeeDebitCreditList)
+        {
+            ReturnInfo returnInfo = new ReturnInfo();
+            HMUtility hmUtility = new HMUtility();
+            GLOpeningBalanceDA openingBalanceDA = new GLOpeningBalanceDA();
+            long OpeningBalaceId = 0;
+            try
+            {
+                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateEmployeeOpeningBalance(EmployeeDebitCreditList);
+
+                if (returnInfo.IsSuccess)
+                {
+                    if (EmployeeDebitCreditList[0].Id == 0)
+                    {
+                        Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
+                        EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalaceId,
+                        ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
+                    }
+                    else
+                    {
+                        //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
+                        //EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
+                        //ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
+                    }
+                }
+                else
+                {
+                    returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                throw ex;
+            }
+            return returnInfo;
+        }
+
+        [WebMethod]
+        public static ReturnInfo SaveMemberOpeningBalance(List<GLOpeningBalance> MemberDebitCreditList)
+        {
+            ReturnInfo returnInfo = new ReturnInfo();
+            HMUtility hmUtility = new HMUtility();
+            GLOpeningBalanceDA openingBalanceDA = new GLOpeningBalanceDA();
+            long OpeningBalaceId = 0;
+            try
+            {
+                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateMemberOpeningBalance(MemberDebitCreditList);
+
+                if (returnInfo.IsSuccess)
+                {
+                    if (MemberDebitCreditList[0].Id == 0)
+                    {
+                        Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
+                        EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalaceId,
+                        ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
+                    }
+                    else
+                    {
+                        //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
+                        //EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
+                        //ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
+                    }
+                }
+                else
+                {
+                    returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                throw ex;
+            }
+            return returnInfo;
+        }
+
+        [WebMethod]
+        public static ReturnInfo SaveCNFOpeningBalance(List<GLOpeningBalance> CNFDebitCreditList)
+        {
+            ReturnInfo returnInfo = new ReturnInfo();
+            HMUtility hmUtility = new HMUtility();
+            GLOpeningBalanceDA openingBalanceDA = new GLOpeningBalanceDA();
+            long OpeningBalaceId = 0;
+            try
+            {
+                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateCNFOpeningBalance(CNFDebitCreditList);
+
+                if (returnInfo.IsSuccess)
+                {
+                    if (CNFDebitCreditList[0].Id == 0)
+                    {
+                        Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
+                        EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalaceId,
+                        ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
+                    }
+                    else
+                    {
+                        //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
+                        //EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
+                        //ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
+                    }
+                }
+                else
+                {
+                    returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                throw ex;
+            }
+            return returnInfo;
+        }
+
+        [WebMethod]
         public static List<InvLocationBO> StoreLocationByCostCenter(int storeId)
         {
             InvLocationDA locationDa = new InvLocationDA();
@@ -578,6 +852,36 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             location = locationDa.GetInvItemLocationByCostCenter(storeId);
 
             return location;
+        }
+        [WebMethod]
+        public static ReturnInfo ApproveTransactionOpeningBalance(List<GLOpeningBalance> transactionInfo, string transactionType)
+        {
+            ReturnInfo returnInfo = new ReturnInfo();
+            HMUtility hmUtility = new HMUtility();
+            GLOpeningBalanceDA openingBalanceDA = new GLOpeningBalanceDA();
+            try
+            {
+                UserInformationBO userInformation = hmUtility.GetCurrentApplicationUserInfo();
+                returnInfo.IsSuccess = openingBalanceDA.ApproveTransactionOpeningBalance(transactionInfo, transactionType, userInformation.UserInfoId);
+
+                if (returnInfo.IsSuccess)
+                {
+                    Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Approve.ToString(),
+                    EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), transactionInfo[0].Id,
+                    ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                    returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Approved, AlertType.Success);
+                }
+                else
+                {
+                    returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                throw ex;
+            }
+            return returnInfo;
         }
 
         [WebMethod]
@@ -680,6 +984,242 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
 
             return (tHead + tBody + tFoot);
         }
+        private static string GenerateTableForCompany(List<GLOpeningBalanceTransactionNodeAutoComplete> nodeList, GLOpeningBalanceView openingBalanceView, string TableHeader)
+        {
+            //List<OpeningBalanceAccountList> nodeList, List<GLOpeningBalanceDetail> OpeningBalanceDetails,
+
+            string tHead = string.Empty, tBody = string.Empty, tFoot = string.Empty;
+            int count = 0;
+
+            tHead = string.Format(@"<table id='balanceTable' class='table table-bordered table-hover' style='width:100%;'>
+                                    <thead>");
+
+            tHead += string.Format(@"<tr> <th style=""width:50%;"">" + TableHeader + "</th>");
+            tHead += string.Format(@"<th style=""width:25%; text-align:left;"">{0}</th>", "Dr. Amount");
+            tHead += string.Format(@"<th style=""width:25%; text-align:left;"">{0}</th>", "Cr. Amount");
+
+            tHead += string.Format(@"</tr></thead>");
+            tBody = string.Format(@"<tbody>");
+
+            foreach (GLOpeningBalanceTransactionNodeAutoComplete obn in nodeList)
+            {
+                var detail = openingBalanceView.CompanyDebitCreditList.Where(i => i.CompanyId == obn.TransactionNodeId).FirstOrDefault();
+                tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:50%;"">{2}</td>", detail == null ? 0 : detail.CompanyId, obn.TransactionNodeId, string.IsNullOrEmpty(obn.NodeName) ? "" : obn.NodeName);
+
+                if (obn.TransactionNodeId > 0)
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
+                else
+                    tBody += "<td style=\"width:25%;\" ></td>";
+                
+                if (obn.TransactionNodeId > 0)
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
+                else
+                    tBody += "<td style=\"width:25%;\" ></td>";
+
+                tBody += string.Format(@"</tr>");
+
+                count++;
+            }
+            tBody += string.Format(@"</tbody>");
+
+            tFoot = "<tfoot>";
+            tFoot += string.Format(@"<tr> <td style=""width:50%; text-align:right;"">Total: </td>");
+            tFoot += string.Format(@"<td id='debitTotal' style=""width:25%; text-align:left;""></td>");
+            tFoot += string.Format(@"<td id='creditTotal' style=""width:25%; text-align:left;""></td>");
+            tFoot += "</tr>";
+            tFoot += "</tfoot> </table>";
+
+            return (tHead + tBody + tFoot);
+        }
+        private static string GenerateTableForSupplier(List<GLOpeningBalanceTransactionNodeAutoComplete> nodeList, GLOpeningBalanceView openingBalanceView, string TableHeader)
+        {
+            //List<OpeningBalanceAccountList> nodeList, List<GLOpeningBalanceDetail> OpeningBalanceDetails,
+
+            string tHead = string.Empty, tBody = string.Empty, tFoot = string.Empty;
+            int count = 0;
+
+            tHead = string.Format(@"<table id='balanceTable' class='table table-bordered table-hover' style='width:100%;'>
+                                    <thead>");
+
+            tHead += string.Format(@"<tr> <th style=""width:50%;"">" + TableHeader + "</th>");
+            tHead += string.Format(@"<th style=""width:25%; text-align:left;"">{0}</th>", "Dr. Amount");
+            tHead += string.Format(@"<th style=""width:25%; text-align:left;"">{0}</th>", "Cr. Amount");
+
+            tHead += string.Format(@"</tr></thead>");
+            tBody = string.Format(@"<tbody>");
+
+            foreach (GLOpeningBalanceTransactionNodeAutoComplete obn in nodeList)
+            {
+                var detail = openingBalanceView.SupplierDebitCreditList.Where(i => i.SupplierId == obn.TransactionNodeId).FirstOrDefault();
+                tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:50%;"">{2}</td>", detail == null ? 0 : detail.SupplierId, obn.TransactionNodeId, string.IsNullOrEmpty(obn.NodeName) ? "" : obn.NodeName);
+
+                if (obn.TransactionNodeId > 0)
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckSupplierDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
+                else
+                    tBody += "<td style=\"width:25%;\" ></td>";
+
+                if (obn.TransactionNodeId > 0)
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckSupplierCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
+                else
+                    tBody += "<td style=\"width:25%;\" ></td>";
+
+                tBody += string.Format(@"</tr>");
+
+                count++;
+            }
+            tBody += string.Format(@"</tbody>");
+
+            tFoot = "<tfoot>";
+            tFoot += string.Format(@"<tr> <td style=""width:50%; text-align:right;"">Total: </td>");
+            tFoot += string.Format(@"<td id='debitTotal' style=""width:25%; text-align:left;""></td>");
+            tFoot += string.Format(@"<td id='creditTotal' style=""width:25%; text-align:left;""></td>");
+            tFoot += "</tr>";
+            tFoot += "</tfoot> </table>";
+
+            return (tHead + tBody + tFoot);
+        }
+        private static string GenerateTableForEmployee(List<GLOpeningBalanceTransactionNodeAutoComplete> nodeList, GLOpeningBalanceView openingBalanceView, string TableHeader)
+        {
+            //List<OpeningBalanceAccountList> nodeList, List<GLOpeningBalanceDetail> OpeningBalanceDetails,
+
+            string tHead = string.Empty, tBody = string.Empty, tFoot = string.Empty;
+            int count = 0;
+
+            tHead = string.Format(@"<table id='balanceTable' class='table table-bordered table-hover' style='width:100%;'>
+                                    <thead>");
+
+            tHead += string.Format(@"<tr> <th style=""width:50%;"">" + TableHeader + "</th>");
+            tHead += string.Format(@"<th style=""width:25%; text-align:left;"">{0}</th>", "Dr. Amount");
+            tHead += string.Format(@"<th style=""width:25%; text-align:left;"">{0}</th>", "Cr. Amount");
+
+            tHead += string.Format(@"</tr></thead>");
+            tBody = string.Format(@"<tbody>");
+
+            foreach (GLOpeningBalanceTransactionNodeAutoComplete obn in nodeList)
+            {
+                var detail = openingBalanceView.EmployeeDebitCreditList.Where(i => i.EmployeeId == obn.TransactionNodeId).FirstOrDefault();
+                tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:50%;"">{2}</td>", detail == null ? 0 : detail.EmployeeId, obn.TransactionNodeId, string.IsNullOrEmpty(obn.NodeName) ? "" : obn.NodeName);
+
+                if (obn.TransactionNodeId > 0)
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckEmployeeDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
+                else
+                    tBody += "<td style=\"width:25%;\" ></td>";
+
+                if (obn.TransactionNodeId > 0)
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckEmployeeCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
+                else
+                    tBody += "<td style=\"width:25%;\" ></td>";
+
+                tBody += string.Format(@"</tr>");
+
+                count++;
+            }
+            tBody += string.Format(@"</tbody>");
+
+            tFoot = "<tfoot>";
+            tFoot += string.Format(@"<tr> <td style=""width:50%; text-align:right;"">Total: </td>");
+            tFoot += string.Format(@"<td id='debitTotal' style=""width:25%; text-align:left;""></td>");
+            tFoot += string.Format(@"<td id='creditTotal' style=""width:25%; text-align:left;""></td>");
+            tFoot += "</tr>";
+            tFoot += "</tfoot> </table>";
+
+            return (tHead + tBody + tFoot);
+        }
+        private static string GenerateTableForMember(List<GLOpeningBalanceTransactionNodeAutoComplete> nodeList, GLOpeningBalanceView openingBalanceView, string TableHeader)
+        {
+            //List<OpeningBalanceAccountList> nodeList, List<GLOpeningBalanceDetail> OpeningBalanceDetails,
+
+            string tHead = string.Empty, tBody = string.Empty, tFoot = string.Empty;
+            int count = 0;
+
+            tHead = string.Format(@"<table id='balanceTable' class='table table-bordered table-hover' style='width:100%;'>
+                                    <thead>");
+
+            tHead += string.Format(@"<tr> <th style=""width:50%;"">" + TableHeader + "</th>");
+            tHead += string.Format(@"<th style=""width:25%; text-align:left;"">{0}</th>", "Dr. Amount");
+            tHead += string.Format(@"<th style=""width:25%; text-align:left;"">{0}</th>", "Cr. Amount");
+
+            tHead += string.Format(@"</tr></thead>");
+            tBody = string.Format(@"<tbody>");
+
+            foreach (GLOpeningBalanceTransactionNodeAutoComplete obn in nodeList)
+            {
+                var detail = openingBalanceView.MemberDebitCreditList.Where(i => i.MemberId == obn.TransactionNodeId).FirstOrDefault();
+                tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:50%;"">{2}</td>", detail == null ? 0 : detail.MemberId, obn.TransactionNodeId, string.IsNullOrEmpty(obn.NodeName) ? "" : obn.NodeName);
+
+                if (obn.TransactionNodeId > 0)
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckMemberDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
+                else
+                    tBody += "<td style=\"width:25%;\" ></td>";
+
+                if (obn.TransactionNodeId > 0)
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckMemberCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
+                else
+                    tBody += "<td style=\"width:25%;\" ></td>";
+
+                tBody += string.Format(@"</tr>");
+
+                count++;
+            }
+            tBody += string.Format(@"</tbody>");
+
+            tFoot = "<tfoot>";
+            tFoot += string.Format(@"<tr> <td style=""width:50%; text-align:right;"">Total: </td>");
+            tFoot += string.Format(@"<td id='debitTotal' style=""width:25%; text-align:left;""></td>");
+            tFoot += string.Format(@"<td id='creditTotal' style=""width:25%; text-align:left;""></td>");
+            tFoot += "</tr>";
+            tFoot += "</tfoot> </table>";
+
+            return (tHead + tBody + tFoot);
+        }
+        
+        private static string GenerateTableForCNF(List<GLOpeningBalanceTransactionNodeAutoComplete> nodeList, GLOpeningBalanceView openingBalanceView, string TableHeader)
+        {
+            //List<OpeningBalanceAccountList> nodeList, List<GLOpeningBalanceDetail> OpeningBalanceDetails,
+
+            string tHead = string.Empty, tBody = string.Empty, tFoot = string.Empty;
+            int count = 0;
+
+            tHead = string.Format(@"<table id='balanceTable' class='table table-bordered table-hover' style='width:100%;'>
+                                    <thead>");
+
+            tHead += string.Format(@"<tr> <th style=""width:50%;"">" + TableHeader + "</th>");
+            tHead += string.Format(@"<th style=""width:25%; text-align:left;"">{0}</th>", "Dr. Amount");
+            tHead += string.Format(@"<th style=""width:25%; text-align:left;"">{0}</th>", "Cr. Amount");
+
+            tHead += string.Format(@"</tr></thead>");
+            tBody = string.Format(@"<tbody>");
+
+            foreach (GLOpeningBalanceTransactionNodeAutoComplete obn in nodeList)
+            {
+                var detail = openingBalanceView.CNFDebitCreditList.Where(i => i.SupplierId == obn.TransactionNodeId).FirstOrDefault();
+                tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:50%;"">{2}</td>", detail == null ? 0 : detail.SupplierId, obn.TransactionNodeId, string.IsNullOrEmpty(obn.NodeName) ? "" : obn.NodeName);
+
+                if (obn.TransactionNodeId > 0)
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckCNFDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
+                else
+                    tBody += "<td style=\"width:25%;\" ></td>";
+
+                if (obn.TransactionNodeId > 0)
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckCNFCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
+                else
+                    tBody += "<td style=\"width:25%;\" ></td>";
+
+                tBody += string.Format(@"</tr>");
+
+                count++;
+            }
+            tBody += string.Format(@"</tbody>");
+
+            tFoot = "<tfoot>";
+            tFoot += string.Format(@"<tr> <td style=""width:50%; text-align:right;"">Total: </td>");
+            tFoot += string.Format(@"<td id='debitTotal' style=""width:25%; text-align:left;""></td>");
+            tFoot += string.Format(@"<td id='creditTotal' style=""width:25%; text-align:left;""></td>");
+            tFoot += "</tr>";
+            tFoot += "</tfoot> </table>";
+
+            return (tHead + tBody + tFoot);
+        }
         private static string GenerateTableForInventory(List<GLOpeningBalanceTransactionNodeAutoComplete> nodeList, List<InvOpeningBalanceDetail> OpeningBalanceDetails, string TableHeader)
         {
             string tHead = string.Empty, tBody = string.Empty, tFoot = string.Empty;
@@ -687,22 +1227,24 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             tHead = string.Format(@"<table id='balanceTable' class='table table-bordered table-hover' style='width:100%;'>
                                     <thead>");
             tHead += string.Format(@"<tr> <th style=""width:30%;"">" + TableHeader + "</th>");
-            tHead += string.Format(@"<th style=""width:10%; text-align:left;"">{0}</th>", "Code");
-            tHead += string.Format(@"<th style=""width:20%; text-align:left;"">{0}</th>", "Unit Cost");
-            tHead += string.Format(@"<th style=""width:20%; text-align:left;"">{0}</th>", "Stock Qunatity");
-            tHead += string.Format(@"<th style=""width:20%; text-align:left;"">{0}</th>", "Total");
+            tHead += string.Format(@"<th style=""width:10%; text-align:left;"">{0}</th>", "Size");
+            tHead += string.Format(@"<th style=""width:10%; text-align:left;"">{0}</th>", "Color");
+            tHead += string.Format(@"<th style=""width:10%; text-align:left;"">{0}</th>", "Style");
+            tHead += string.Format(@"<th style=""width:20%; text-align:left;"">{0}</th>", "Qunatity");
+            tHead += string.Format(@"<th style=""width:20%; text-align:left;"">{0}</th>", "Unit Head");
 
             tHead += string.Format(@"</tr></thead>");
             tBody = string.Format(@"<tbody>");
 
             foreach (GLOpeningBalanceTransactionNodeAutoComplete opd in nodeList)
             {
-                var detail = OpeningBalanceDetails.Where(i => i.TransactionNodeId == opd.TransactionNodeId).FirstOrDefault();
+                var detail = OpeningBalanceDetails.Where(i => i.ItemId == opd.TransactionNodeId).FirstOrDefault();
                 tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:30%;"">{2}</td>", detail == null ? 0 : detail.Id, opd.TransactionNodeId, opd.NodeName);
-                tBody += "<td style=\"width:10%;\" >" + opd.Code + "</td>";
-                tBody += "<td style=\"width:20%;\" > <input type=\"text\" onblur=\"UpdateTotal(this)\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.UnitCost.ToString()) + "> </td>";
+                tBody += "<td style=\"width:10%;\" >" + opd.StyleName + "</td>";
+                tBody += "<td style=\"width:10%;\" >" + opd.ColorName + "</td>";
+                tBody += "<td style=\"width:10%;\" >" + opd.StyleName + "</td>";
                 tBody += "<td style=\"width:20%;\" > <input type=\"text\" onblur=\"UpdateTotal(this)\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.StockQuantity.ToString()) + "> </td>";
-                tBody += "<td style=\"width:20%;\" > <input disabled=\"disabled\" type=\"text\"  class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.Total.ToString()) + "> </td>";
+                tBody += "<td style=\"width:20%;\" >" + opd.UnitHead + "</td>";
 
                 tBody += string.Format(@"</tr>");
             }

@@ -8,6 +8,11 @@ namespace HotelManagement.Entity.GeneralLedger
     public class GLOpeningBalanceView
     {
         public GLOpeningBalance OpeningBalance { get; set; }
+        public List<GLOpeningBalance> CompanyDebitCreditList { get; set; }
+        public List<GLOpeningBalance> SupplierDebitCreditList { get; set; }
+        public List<GLOpeningBalance> EmployeeDebitCreditList { get; set; }
+        public List<GLOpeningBalance> MemberDebitCreditList { get; set; }
+        public List<GLOpeningBalance> CNFDebitCreditList { get; set; }
         public List<GLOpeningBalanceDetail> OpeningBalanceDetails { get; set; }
         public List<OpeningBalanceAccountList> AccountOpeningBalance { get; set; }
         public InvOpeningBalance InvOpeningBalance { get; set; }
