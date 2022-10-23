@@ -304,6 +304,12 @@
 
             function OnSucceedResult(result) {
                 let transactionType = $("#ContentPlaceHolder1_ddlTransactionType").val();
+                CompanyDebitCreditList = [];
+                SupplierDebitCreditList = [];
+                EmployeeDebitCreditList = [];
+                MemberDebitCreditList = [];
+                CNFDebitCreditList = [];
+                InvOpeningBalanceDetails = [];
 
                 if(transactionType == "Accounts"){
 
@@ -354,7 +360,7 @@
                 //    $("#btnSave").val("Save");
                 //}
 
-                if (Balance != null || result.CompanyDebitCreditList != null || result.SupplierDebitCreditList != null || result.EmployeeDebitCreditList != null || result.MemberDebitCreditList != null || result.CNFDebitCreditList != null || result.OpeningBalanceDetails != null) {
+                if (Balance != null || CompanyDebitCreditList.length > 0 || SupplierDebitCreditList.length > 0 || EmployeeDebitCreditList.length > 0 || MemberDebitCreditList.length > 0 || CNFDebitCreditList.length > 0 || InvOpeningBalanceDetails.length > 0) {
                     $("#btnApprove").show();
                     $("#btnSave").val("Update");
                 } else {
@@ -734,9 +740,8 @@
             function CheckTotal(){
                 var count = AccountOpeningBalance.length;
                 var row = 0, sumAsset = 0, liabilitiesAmount = 0;
-                debugger;
                 for(row = 0; row< count ; row++){
-                    sumAsset = sumAsset + AccountOpeningBalance[row].AssetAmount; 
+                    sumAsset = sumAsset + AccountOpeningBalance[row].AssetAmount;
                     liabilitiesAmount = liabilitiesAmount + AccountOpeningBalance[row].LiabilitiesAmount;
                 }
 
@@ -748,6 +753,62 @@
                 else
                     $("#openingBalanceEquity").text(sumAsset - liabilitiesAmount); 
             }
+
+            //function CheckCreditExists(control) {
+            //    let tableRow = $(control).parent().parent();
+            //    debugger;
+            //    if (parseFloat(tableRow.find("td:eq(2) input").val()) > 0) {
+            //        tableRow.find("td:eq(1) input").attr("disabled", true);
+            //    }
+            //    else if (parseFloat(tableRow.find("td:eq(1) input").val()) == 0) {
+            //        tableRow.find("td:eq(2) input").attr("disabled", false);
+            //    }
+            //    else if (tableRow.find("td:eq(1) input").val() == "") {
+            //        tableRow.find("td:eq(2) input").attr("disabled", false);
+            //    }
+        //}
+
+            function CheckCreditExists(control) {
+                let tableRow = $(control).parent().parent();
+                debugger;
+                if (parseFloat(tableRow.find("td:eq(1) input").val()) > 0) {
+                    tableRow.find("td:eq(2) input").attr("disabled", true);
+                }
+                else if (parseFloat(tableRow.find("td:eq(1) input").val()) == 0) {
+                    tableRow.find("td:eq(2) input").attr("disabled", false);
+                }
+                else if (tableRow.find("td:eq(1) input").val() == "") {
+                    tableRow.find("td:eq(2) input").attr("disabled", false);
+                }
+            }
+
+            function OnDebitClick(control) {
+                let tableRow = $(control).parent().parent();
+                if (parseFloat(tableRow.find("td:eq(2) input").val()) > 0) {
+                    tableRow.find("td:eq(1) input").attr("disabled", true);
+                }
+            }
+            
+            function OnCreditClick(control) {
+                let tableRow = $(control).parent().parent();
+                if (parseFloat(tableRow.find("td:eq(1) input").val()) > 0) {
+                    tableRow.find("td:eq(2) input").attr("disabled", true);
+                }
+            }
+            
+            function CheckDebitExists(control) {
+                let tableRow = $(control).parent().parent();
+                debugger;
+                if (parseFloat(tableRow.find("td:eq(2) input").val()) > 0) {
+                    tableRow.find("td:eq(1) input").attr("disabled", true);
+                }
+                else if (parseFloat(tableRow.find("td:eq(2) input").val()) == 0) {
+                    tableRow.find("td:eq(1) input").attr("disabled", false);
+                }
+                else if (tableRow.find("td:eq(2) input").val() == "") {
+                    tableRow.find("td:eq(1) input").attr("disabled", false);
+                }
+            }
             
             function CheckDebitInputValue(control, index) {
                 let tableRow = $(control).parent().parent();
@@ -758,7 +819,6 @@
             }
             
             function CheckCreditInputValue(control, index) {
-                debugger;
                 let tableRow = $(control).parent().parent();
                 let amount = tableRow.find("td:eq(2) input").val() != "" ? parseFloat(tableRow.find("td:eq(2) input").val()) : 0.00000;
                 CompanyDebitCreditList[index].CrAmount = amount;
@@ -769,10 +829,9 @@
             function setCompanyTotal() {
                 let count = CompanyDebitCreditList.length;
                 let row = 0, sumDebit = 0, sumCredit = 0;
-                debugger;
                 for (row = 0; row < count; row++) {
                     sumDebit = sumDebit + CompanyDebitCreditList[row].DrAmount;
-                    sumCredit = sumCredit + CompanyDebitCreditList[row].DrAmount;
+                    sumCredit = sumCredit + CompanyDebitCreditList[row].CrAmount;
                 }
 
                 $("#debitTotal").text(sumDebit);
@@ -798,7 +857,6 @@
             function setSupplierTotal() {
                 let count = SupplierDebitCreditList.length;
                 let row = 0, sumDebit = 0, sumCredit = 0;
-                debugger;
                 for (row = 0; row < count; row++) {
                     sumDebit = sumDebit + SupplierDebitCreditList[row].DrAmount;
                     sumCredit = sumCredit + SupplierDebitCreditList[row].CrAmount;
@@ -826,7 +884,6 @@
             function setEmployeeTotal() {
                 let count = EmployeeDebitCreditList.length;
                 let row = 0, sumDebit = 0, sumCredit = 0;
-                debugger;
                 for (row = 0; row < count; row++) {
                     sumDebit += EmployeeDebitCreditList[row].DrAmount;
                     sumCredit += EmployeeDebitCreditList[row].CrAmount;
@@ -854,7 +911,6 @@
             function setMemberTotal() {
                 let count = MemberDebitCreditList.length;
                 let row = 0, sumDebit = 0, sumCredit = 0;
-                debugger;
                 for (row = 0; row < count; row++) {
                     sumDebit += MemberDebitCreditList[row].DrAmount;
                     sumCredit += MemberDebitCreditList[row].CrAmount;
@@ -882,7 +938,6 @@
             function setCNFTotal() {
                 let count = CNFDebitCreditList.length;
                 let row = 0, sumDebit = 0, sumCredit = 0;
-                debugger;
                 for (row = 0; row < count; row++) {
                     sumDebit += CNFDebitCreditList[row].DrAmount;
                     sumCredit += CNFDebitCreditList[row].CrAmount;

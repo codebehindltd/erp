@@ -1007,12 +1007,12 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:50%;"">{2}</td>", detail == null ? 0 : detail.CompanyId, obn.TransactionNodeId, string.IsNullOrEmpty(obn.NodeName) ? "" : obn.NodeName);
 
                 if (obn.TransactionNodeId > 0)
-                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onclick=\"OnDebitClick(this)\" onkeyup=\"CheckCreditExists(this)\" onblur=\"return CheckDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
                 else
                     tBody += "<td style=\"width:25%;\" ></td>";
                 
                 if (obn.TransactionNodeId > 0)
-                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onclick=\"OnCreditClick(this)\" onkeyup=\"CheckDebitExists(this)\" onblur=\"return CheckCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
                 else
                     tBody += "<td style=\"width:25%;\" ></td>";
 
@@ -1054,12 +1054,12 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:50%;"">{2}</td>", detail == null ? 0 : detail.SupplierId, obn.TransactionNodeId, string.IsNullOrEmpty(obn.NodeName) ? "" : obn.NodeName);
 
                 if (obn.TransactionNodeId > 0)
-                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckSupplierDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onclick=\"OnDebitClick(this)\" onkeyup=\"CheckCreditExists(this)\" onblur=\"return CheckSupplierDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
                 else
                     tBody += "<td style=\"width:25%;\" ></td>";
 
                 if (obn.TransactionNodeId > 0)
-                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckSupplierCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onclick=\"OnCreditClick(this)\" onkeyup=\"CheckDebitExists(this)\" onblur=\"return CheckSupplierCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
                 else
                     tBody += "<td style=\"width:25%;\" ></td>";
 
@@ -1101,12 +1101,12 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:50%;"">{2}</td>", detail == null ? 0 : detail.EmployeeId, obn.TransactionNodeId, string.IsNullOrEmpty(obn.NodeName) ? "" : obn.NodeName);
 
                 if (obn.TransactionNodeId > 0)
-                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckEmployeeDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onclick=\"OnDebitClick(this)\" onkeyup=\"CheckCreditExists(this)\" onblur=\"return CheckEmployeeDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
                 else
                     tBody += "<td style=\"width:25%;\" ></td>";
 
                 if (obn.TransactionNodeId > 0)
-                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckEmployeeCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onclick=\"OnCreditClick(this)\" onkeyup=\"CheckDebitExists(this)\" onblur=\"return CheckEmployeeCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
                 else
                     tBody += "<td style=\"width:25%;\" ></td>";
 
@@ -1148,12 +1148,12 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:50%;"">{2}</td>", detail == null ? 0 : detail.MemberId, obn.TransactionNodeId, string.IsNullOrEmpty(obn.NodeName) ? "" : obn.NodeName);
 
                 if (obn.TransactionNodeId > 0)
-                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckMemberDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onclick=\"OnDebitClick(this)\" onkeyup=\"CheckCreditExists(this)\" onblur=\"return CheckMemberDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
                 else
                     tBody += "<td style=\"width:25%;\" ></td>";
 
                 if (obn.TransactionNodeId > 0)
-                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckMemberCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onclick=\"OnCreditClick(this)\" onkeyup=\"CheckDebitExists(this)\" onblur=\"return CheckMemberCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
                 else
                     tBody += "<td style=\"width:25%;\" ></td>";
 
@@ -1196,12 +1196,12 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:50%;"">{2}</td>", detail == null ? 0 : detail.SupplierId, obn.TransactionNodeId, string.IsNullOrEmpty(obn.NodeName) ? "" : obn.NodeName);
 
                 if (obn.TransactionNodeId > 0)
-                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckCNFDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onclick=\"OnDebitClick(this)\" onkeyup=\"CheckCreditExists(this)\" onblur=\"return CheckCNFDebitInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.DrAmount.ToString()) + "> </td>";
                 else
                     tBody += "<td style=\"width:25%;\" ></td>";
 
                 if (obn.TransactionNodeId > 0)
-                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onblur=\"return CheckCNFCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
+                    tBody += "<td style=\"width:25%;\" > <input type=\"text\" onclick=\"OnCreditClick(this)\" onkeyup=\"CheckDebitExists(this)\" onblur=\"return CheckCNFCreditInputValue(this," + count + ")\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.CrAmount.ToString()) + "> </td>";
                 else
                     tBody += "<td style=\"width:25%;\" ></td>";
 
