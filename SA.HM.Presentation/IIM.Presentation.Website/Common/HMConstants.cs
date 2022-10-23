@@ -88,6 +88,7 @@ namespace HotelManagement.Presentation.Website.Common
             frmEmpLeaveAdjustment,
             frmEmpSalaryProcess,
             frmEmpAttendance,
+            GLProject,
             frmGLProject,
             frmGLDonor,
             frmGLCompany,

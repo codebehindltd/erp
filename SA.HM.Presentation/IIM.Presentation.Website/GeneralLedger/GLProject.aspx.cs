@@ -25,26 +25,26 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             if (!IsPostBack)
             {
                 LoadCompany();
-                CheckPermission();
+                CheckObjectPermission();
             }
         }
-
-        private void CheckPermission()
+        private void CheckObjectPermission()
         {
-            hfViewPermission.Value = isViewPermission ? "1" : "0";
-            hfSavePermission.Value = isSavePermission ? "1" : "0";
-            hfDeletePermission.Value = isDeletePermission ? "1" : "0";
-            hfEditPermission.Value = isUpdatePermission ? "1" : "0";
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+            ObjectPermissionBO objectPermissionBO = new ObjectPermissionBO();
+            objectPermissionBO = hmUtility.ObjectPermission(userInformationBO.UserInfoId, HMConstants.ApplicationFormName.GLProject.ToString());
+
+            hfSavePermission.Value = objectPermissionBO.IsSavePermission ? "1" : "0";
+            hfEditPermission.Value = objectPermissionBO.IsUpdatePermission ? "1" : "0";
+            hfDeletePermission.Value = objectPermissionBO.IsDeletePermission ? "1" : "0";
+            hfViewPermission.Value = objectPermissionBO.IsViewPermission ? "1" : "0";
         }
         private void LoadCompany()
         {
             GLCompanyDA companyDA = new GLCompanyDA();
             var List = companyDA.GetAllGLCompanyInfo();
-            //this.ddlCompanyId.DataSource = List;
-
-            //this.ddlCompanyId.DataTextField = "Name";
-            //this.ddlCompanyId.DataValueField = "CompanyId";
-            //this.ddlCompanyId.DataBind();
 
             ddlSCompanyName.DataSource = List;
             this.ddlSCompanyName.DataTextField = "Name";
@@ -56,11 +56,9 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             item.Text = hmUtility.GetDropDownFirstAllValue();
             ddlSCompanyName.Items.Insert(0, item);
         }
-
         [WebMethod]
         public static GridViewDataNPaging<GLProjectBO, GridPaging> LoadProject(string ProjectName, string ShortName, string CompanyCode, int CompanyId, int gridRecordsCount, int pageNumber, int isCurrentOrPreviousPage)
         {
-
             UserInformationBO userInformationBO = new UserInformationBO();
             userInformationBO = System.Web.HttpContext.Current.Session["UserInformationBOSession"] as UserInformationBO;
 
@@ -108,7 +106,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             }
             return info;
         }
-
         [WebMethod]
         public static string LoadProjectDocument(long id)
         {
@@ -153,6 +150,5 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             return strTable;
 
         }
-
     }
 }

@@ -28,10 +28,13 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         string projectName = string.Empty;
         protected string reportSearchType = "0";
         HMUtility hmUtility = new HMUtility();
+        private Boolean isSavePermission = false;
+        private Boolean isDeletePermission = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                CheckObjectPermission();
                 if (Request.QueryString["pid"] != "")
                 {
                     url = HttpContext.Current.Request.Url.AbsoluteUri;
@@ -621,7 +624,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             string jscript = "function UploadComplete(){ };";
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "FileCompleteUpload", jscript, true);
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "LoadDetailGridInformation", jscript, true);
-            //ClientUploader1.QueryParameters = "ProjectId=" + Server.UrlEncode(projectId);
         }
         private void LoadCommonDropDownHiddenField()
         {
@@ -639,8 +641,27 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             }
 
         }
+        private void CheckObjectPermission()
+        {
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
 
+            ObjectPermissionBO objectPermissionBO = new ObjectPermissionBO();
+            objectPermissionBO = hmUtility.ObjectPermission(userInformationBO.UserInfoId, HMConstants.ApplicationFormName.GLProject.ToString());
 
+            isSavePermission = objectPermissionBO.IsSavePermission;
+            isDeletePermission = objectPermissionBO.IsDeletePermission;
+            hfIsSavePermission.Value = "0";
+            hfIsDeletePermission.Value = "0";
+            if (isSavePermission)
+            {
+                hfIsSavePermission.Value = "1";
+            }
+            if (isDeletePermission)
+            {
+                hfIsDeletePermission.Value = "1";
+            }
+        }
         protected void btnGenerate_Click(object sender, EventArgs e)
         {
             int projectId = Convert.ToInt32(Request.QueryString["pid"]);
@@ -793,7 +814,12 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                     guestDocumentTable += "<td align='left' style='width: 30%'>" + imagePath + "</td>";
                     imagePath = "";
                     guestDocumentTable += "<td align='left' style='width: 20%'>";
-                    guestDocumentTable += "&nbsp;<img src='../Images/delete.png' style=\"cursor: pointer; cursor: hand;\" onClick=\"javascript:return DeleteProjetcDoc('" + guestDoc[row].DocumentId + "', '" + row + "')\" alt='Delete Information' border='0' />";
+                    
+                    if (hfIsDeletePermission.Value == "1")
+                    {
+                        guestDocumentTable += "&nbsp;<img src='../Images/delete.png' style=\"cursor: pointer; cursor: hand;\" onClick=\"javascript:return DeleteProjetcDoc('" + guestDoc[row].DocumentId + "', '" + row + "')\" alt='Delete Information' border='0' />";
+                    }
+                    
                     guestDocumentTable += "</td>";
                     guestDocumentTable += "</tr>";
                 }

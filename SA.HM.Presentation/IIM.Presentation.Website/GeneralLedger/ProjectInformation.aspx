@@ -333,7 +333,10 @@
                     guestDocumentTable += "<td align='left' style='width: 30%'>" + imagePath + "</td>";
 
                     guestDocumentTable += "<td align='left' style='width: 20%'>";
-                    guestDocumentTable += "&nbsp;<img src='../Images/delete.png' style=\"cursor: pointer; cursor: hand;\" onClick=\"javascript:return DeleteProjetcDoc('" + guestDoc[row].DocumentId + "', '" + row + "')\" alt='Delete Information' border='0' />";
+                    if($("#ContentPlaceHolder1_hfIsDeletePermission").val() == "1")
+                    {
+                        guestDocumentTable += "&nbsp;<img src='../Images/delete.png' style=\"cursor: pointer; cursor: hand;\" onClick=\"javascript:return DeleteProjetcDoc('" + guestDoc[row].DocumentId + "', '" + row + "')\" alt='Delete Information' border='0' />";
+                    }
                     guestDocumentTable += "</td>";
                     guestDocumentTable += "</tr>";
                 }
@@ -549,6 +552,8 @@
     </div>
     <asp:HiddenField ID="CommonDropDownHiddenFieldForPleaseSelect" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfDeletedDoc" runat="server" Value="0" />
+    <asp:HiddenField ID="hfIsSavePermission" runat="server" Value="0" />
+    <asp:HiddenField ID="hfIsDeletePermission" runat="server" Value="0" />
     <div id="DocumentDialouge" style="display: none;">
         <iframe id="Iframe1" name="IframeName" width="100%" height="100%" runat="server"
             clientidmode="static" scrolling="yes"></iframe>
