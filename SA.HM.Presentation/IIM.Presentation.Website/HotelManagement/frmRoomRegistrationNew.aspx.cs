@@ -2577,56 +2577,56 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 roomId = Convert.ToInt32(this.ddlRoomIdHiddenField.Value);
             }
 
-            Boolean isChangedRegistrationData = true;
-            if (registrationId > 0)
-            {
-                RoomRegistrationBO roomRegistrationBO = new RoomRegistrationBO();
-                RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
-                roomRegistrationBO = roomRegistrationDA.GetRoomRegistrationInfoById(registrationId);
-                if (roomRegistrationBO != null)
-                {
-                    if (roomRegistrationBO.RegistrationId > 0)
-                    {
-                        isChangedRegistrationData = false;
-                        if (roomRegistrationBO.ArriveDate.Date != StartDate.Date)
-                        {
-                            isChangedRegistrationData = true;
-                        }
+            //Boolean isChangedRegistrationData = true;
+            //if (registrationId > 0)
+            //{
+            //    RoomRegistrationBO roomRegistrationBO = new RoomRegistrationBO();
+            //    RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
+            //    roomRegistrationBO = roomRegistrationDA.GetRoomRegistrationInfoById(registrationId);
+            //    if (roomRegistrationBO != null)
+            //    {
+            //        if (roomRegistrationBO.RegistrationId > 0)
+            //        {
+            //            isChangedRegistrationData = false;
+            //            if (roomRegistrationBO.ArriveDate.Date != StartDate.Date)
+            //            {
+            //                isChangedRegistrationData = true;
+            //            }
 
-                        if (roomRegistrationBO.ExpectedCheckOutDate.Date <= EndDate.Date)
-                        {
-                            isChangedRegistrationData = true;
-                        }
+            //            if (roomRegistrationBO.ExpectedCheckOutDate.Date <= EndDate.Date)
+            //            {
+            //                isChangedRegistrationData = true;
+            //            }
 
-                        if (isChangedRegistrationData)
-                        {
-                            StartDate = roomRegistrationBO.ExpectedCheckOutDate.Date;
-                        }
-                    }
-                }
-            }
+            //            if (isChangedRegistrationData)
+            //            {
+            //                StartDate = roomRegistrationBO.ExpectedCheckOutDate.Date;
+            //            }
+            //        }
+            //    }
+            //}
 
-            if (isChangedRegistrationData)
-            {
-                RoomNumberDA roomNumberDA = new RoomNumberDA();
-                List<RoomNumberBO> list = new List<RoomNumberBO>();
-                list = roomNumberDA.GetAvailableRoomNumberInformation(Convert.ToInt32(ddlRoomType.SelectedValue), isReservation, StartDate, EndDate, reservationId);
-                if (list != null)
-                {
-                    if (list.Count > 0)
-                    {
-                        List<RoomNumberBO> roomExistList = new List<RoomNumberBO>();
-                        bool hasData = list.Any(cus => cus.RoomId == roomId);
-                        if (!hasData)
-                        {
-                            CommonHelper.AlertInfo(innboardMessage, "Your Entered Room is not available between Check-In Date and Departure Date.", AlertType.Warning);
-                            this.ddlRoomId.Focus();
-                            this.SetTab("EntryTab");
-                            flag = false;
-                        }
-                    }
-                }
-            }
+            //if (isChangedRegistrationData)
+            //{
+            //    RoomNumberDA roomNumberDA = new RoomNumberDA();
+            //    List<RoomNumberBO> list = new List<RoomNumberBO>();
+            //    list = roomNumberDA.GetAvailableRoomNumberInformation(Convert.ToInt32(ddlRoomType.SelectedValue), isReservation, StartDate, EndDate, reservationId);
+            //    if (list != null)
+            //    {
+            //        if (list.Count > 0)
+            //        {
+            //            List<RoomNumberBO> roomExistList = new List<RoomNumberBO>();
+            //            bool hasData = list.Any(cus => cus.RoomId == roomId);
+            //            if (!hasData)
+            //            {
+            //                CommonHelper.AlertInfo(innboardMessage, "Your Entered Room is not available between Check-In Date and Departure Date.", AlertType.Warning);
+            //                this.ddlRoomId.Focus();
+            //                this.SetTab("EntryTab");
+            //                flag = false;
+            //            }
+            //        }
+            //    }
+            //}
 
             return flag;
         }

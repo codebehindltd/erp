@@ -2812,6 +2812,556 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             if (!string.IsNullOrWhiteSpace(IsShowMinimumRoomRate.SetupValue))
                 hfIsMinimumRoomRateCheckingEnable.Value = IsShowMinimumRoomRate.SetupValue;
         }
+        public static string GetHTMLGuestReferenceGridView(List<GuestPreferenceBO> List)
+        {
+            string strTable = "";
+            strTable += "<table class='table table-bordered table-condensed table-responsive' id='GuestReferenceInformation' width='100%' border: '1px solid #cccccc'><tr style='color: White; background-color: #44545E; font-weight: bold;'>";
+            strTable += "<th align='center' scope='col'>Select</th><th align='left' scope='col'>Preference</th></tr>";
+            int counter = 0;
+            foreach (GuestPreferenceBO dr in List)
+            {
+                counter++;
+                if (counter % 2 == 0)
+                {
+                    // It's even
+                    strTable += "<tr style='background-color:#E3EAEB;'>";
+                }
+                else
+                {
+                    // It's odd
+                    strTable += "<tr style='background-color:White;'>";
+                }
+
+                strTable += "<td style='display:none;'>" + dr.PreferenceId + "</td>";
+                strTable += "<td align='center' style='width: 20px'>";
+                strTable += "&nbsp;<input type='checkbox'  id='" + dr.PreferenceId + "' name='" + dr.PreferenceName + "' value='" + dr.PreferenceId + "' >";
+                strTable += "</td><td align='left' style='width: 138px'>" + dr.PreferenceName + "</td></tr>";
+            }
+
+            strTable += "</table>";
+            if (strTable == "")
+            {
+                strTable = "<tr><td colspan='4' align='center'>No Preferences Available !</td></tr>";
+            }
+            strTable += "<div style='margin-top:12px;'>";
+            strTable += "<div class=\"form-group\">" +
+                            "<label for=\"Remarks\" class=\"control-label col-md-2\">Additional Remarks</label>" +
+                            "<div class=\"col-md-10\">" +
+                                "<textarea name = \"txtAdditionalRemarks\" rows=\"2\" cols=\"20\" id=\"ContentPlaceHolder1_txtAdditionalRemarks\" class=\"form-control\" runat=\"server\"></textarea>" +
+                            "</div>" +
+                        "</div>";
+            strTable += "    <button type='button' onClick='javascript:return GetCheckedGuestPreference()' id='btnAddRoomId' class='btn btn-primary'> OK</button>";
+            strTable += "</div>";
+            return strTable;
+        }
+        private static bool SendSMSbySSLGatewayUpdate(RoomReservationBO reservationBO, string reservationNumber, int reservationId)
+        {
+            bool status = false;
+            SmsView sms;
+            try
+            {
+                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
+                CommonDA commonDA = new CommonDA();
+                //RoomReservationBO reservationBO = new RoomReservationBO();
+                RoomReservationDA reservationDA = new RoomReservationDA();
+                string mainString = commonSetupBO.Description;
+                string[] dataArray = mainString.Split('~');
+                var smsGetway = dataArray[0];
+                HMUtility hmUtility = new HMUtility();
+
+                // Config Block
+                if (!string.IsNullOrEmpty(mainString))
+                {
+
+                    sms = new SmsView
+                    {
+                        TempleteName = HMConstants.SMSTemplates.ReservationAmedmentSmsTemplate
+                    };
+
+                    var singletoken = new Dictionary<string, string>
+                        {
+                        {"COMPANY", hmUtility.GetHMCompanyProfile()},
+                        {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
+                        {"Name", reservationBO.ContactPerson},
+                        {"ReservationNumber",  reservationNumber},
+                        {"ArrivalDate", reservationBO.DateIn.ToString()},
+                        {"DepartureDate", reservationBO.DateOut.ToString()},
+                        {"RoomNumber", reservationBO.RoomNumber }
+                        };
+                    status = SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, reservationBO.MobileNumber);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return status;
+        }
+        private static bool SendSMSbySSLGateway(RoomReservationBO reservationBO, string reservationNumber, int reservationId)
+        {
+            bool status = false;
+            SmsView sms;
+            try
+            {
+                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
+                CommonDA commonDA = new CommonDA();
+                //RoomReservationBO reservationBO = new RoomReservationBO();
+                RoomReservationDA reservationDA = new RoomReservationDA();
+                string mainString = commonSetupBO.Description;
+                string[] dataArray = mainString.Split('~');
+                var smsGetway = dataArray[0];
+                HMUtility hmUtility = new HMUtility();
+
+                // Config Block
+                if (!string.IsNullOrEmpty(mainString))
+                {
+
+                    sms = new SmsView
+                    {
+                        TempleteName = HMConstants.SMSTemplates.ReservationCancellation
+                    };
+
+                    var singletoken = new Dictionary<string, string>
+                        {
+                        {"COMPANY", hmUtility.GetHMCompanyProfile()},
+                        {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
+                        {"Name", reservationBO.ContactPerson},
+                        {"ReservationNumber",  reservationNumber},
+                        {"ArrivalDate", reservationBO.DateIn.ToString()},
+                        {"DepartureDate", reservationBO.DateOut.ToString()},
+                        {"RoomNumber", reservationBO.RoomNumber }
+                        };
+                    status = SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, reservationBO.MobileNumber);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return status;
+        }
+        private static bool SendSMSbySSLGateway(RoomReservationBO reservationBO, string reservationNumber)
+        {
+            bool status = false;
+            SmsView sms;
+            try
+            {
+                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
+                CommonDA commonDA = new CommonDA();
+                //RoomReservationBO reservationBO = new RoomReservationBO();
+                RoomReservationDA reservationDA = new RoomReservationDA();
+                string mainString = commonSetupBO.Description;
+                string[] dataArray = mainString.Split('~');
+                var smsGetway = dataArray[0];
+                HMUtility hmUtility = new HMUtility();
+
+                // Config Block
+                if (!string.IsNullOrEmpty(mainString))
+                {
+
+                    sms = new SmsView
+                    {
+                        TempleteName = HMConstants.SMSTemplates.ReservationConfirmation
+                    };
+
+                    var singletoken = new Dictionary<string, string>
+                        {
+                        {"COMPANY", hmUtility.GetHMCompanyProfile()},
+                        {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
+                        {"Name", reservationBO.ContactPerson},
+                        {"ReservationNumber",  reservationNumber},
+                        {"ArrivalDate", reservationBO.DateIn.ToString()},
+                        {"DepartureDate", reservationBO.DateOut.ToString()},
+                        {"RoomNumber", reservationBO.RoomNumber }
+                        };
+                    status = SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, reservationBO.ContactNumber);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return status;
+        }
+        public static bool SaveActivityLogDetails(RoomReservationBO RoomReservation, RoomReservationBO PreviousBO, int activityId)
+        {
+            bool status = false;
+            if (RoomReservation.DateIn != PreviousBO.DateIn)
+            {
+
+            }
+
+            return status;
+        }
+        private static void CancelMail(int Id)
+        {
+            HMUtility hmUtility = new HMUtility();
+            //Genarate Mail Body
+            CompanyDA companyInfoDA = new CompanyDA();
+            List<CompanyBO> list = companyInfoDA.GetCompanyInfo();
+            string pComapnyName = "", pCompanyAddress = "", pCompanyWeb = "";
+            if (list != null)
+            {
+                if (list.Count > 0)
+                {
+                    pComapnyName = list[0].CompanyName;
+                    pCompanyAddress = list[0].CompanyAddress;
+                    if (!string.IsNullOrWhiteSpace(list[0].WebAddress))
+                    {
+                        pCompanyWeb = list[0].WebAddress;
+                    }
+                    else
+                    {
+                        pCompanyWeb = list[0].ContactNumber;
+                    }
+                }
+            }
+            List<RoomReservationDetailsForMailBO> detailList = new List<RoomReservationDetailsForMailBO>();
+            RoomReservationDetailsForMailDA detailDA = new RoomReservationDetailsForMailDA();
+            detailList = detailDA.GetOnlineReservationDetailsInformationForMail(Id, pComapnyName, pCompanyAddress, pCompanyWeb);
+
+
+            string table = "<table style='font-size: medium; border: #ccc 1px solid; width: 90%;' cellpadding='0' cellspacing='0'><tr><td rowspan='2'>Guest Name</td><td style='padding: 2px 10px; border: 1px solid #ccc;' rowspan='2'>Room Type</td><td style='padding: 2px 10px; border: 1px solid #ccc;' rowspan='2'>Room Rate</td><td style='padding: 2px 10px; border: 1px solid #ccc;' colspan='2'> Check In</td><td style='padding: 2px 10px; border: 1px solid #ccc;' colspan='2'>Check Out</td></tr><tr><td style='padding: 2px 10px; border: 1px solid #ccc;'>Name</td><td style='padding: 2px 10px; border: 1px solid #ccc;'>Flight</td><td style='padding: 2px 10px; border: 1px solid #ccc;'>Name</td><td style='padding: 2px 10px; border: 1px solid #ccc;'>Flight</td></tr>";
+
+            string ReceivingMail = "";
+            foreach (RoomReservationDetailsForMailBO dr in detailList)
+            {
+                table += "<tr>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += dr.GuestName;
+                table += "</td>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += dr.RoomType;
+                table += "</td>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += dr.RoomRate;
+                table += "</td>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += hmUtility.GetStringFromDateTime(dr.ArrivalDate);
+                table += "</td>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += dr.ArrivalFlightName;
+                table += "</td>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += hmUtility.GetStringFromDateTime(dr.DepartureDate);
+                table += "</td>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += dr.DepartureFlightName;
+                table += "</td>";
+                table += "</tr>";
+            }
+            table += "</table>";
+
+            List<HMComplementaryItemBO> itemList = new List<HMComplementaryItemBO>();
+            HMComplementaryItemDA itemDA = new HMComplementaryItemDA();
+            itemList = itemDA.GetComplementaryItemInfoByReservationId(Id);
+
+            string ul = "";
+            ul += "<ul>";
+
+            foreach (HMComplementaryItemBO dr in itemList)
+            {
+                ul += "<li style='font-size: medium'>";
+                ul += dr.ItemName.ToString();
+                ul += "</li>";
+            }
+
+            ul += "</ul>";
+
+            ReceivingMail = detailList[0].ContactEmail;
+
+            var tokens = new Dictionary<string, string>
+                {
+                      {"CompanyName",detailList[0].CompanyName},
+                      {"CompanyAddress",detailList[0].CompanyAddress},
+                      {"WebAddress",detailList[0].WebAddress},
+                      {"TextWe", "We Accept"},
+                      {"CurrentDate", DateTime.Now.ToString(hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat)},
+                      {"ReservationDate", detailList[0].DepartureDate.ToString(hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat)},
+                      {"GuestNameAndCompany","Mr. "+detailList[0].GuestName +", "+detailList[0].GuestCompanyName +", "+detailList[0].GuestCompanyAddress+" ."},
+                      {"ContactPersonName",detailList[0].ContactPerson},
+                      {"ReferencePersonName",detailList[0].ReferencePerson},
+                      {"ContactPersonDesignation",detailList[0].ContactDesignation},
+                      {"ReservationNumber",detailList[0].ReservationNumber},
+                      {"ReferencePersonDesignation",detailList[0].ReferenceDesignation},
+                      {"ContactPersonOrganization",detailList[0].GuestCompanyName +", "+detailList[0].GuestCompanyAddress+" ."},
+                      {"ReferencePersonOrganization",detailList[0].ReferenceOrganization},
+
+                      {"ContactPersonTelephone",detailList[0].TelephoneNumber},
+                      {"ReferencePersonTelephone",detailList[0].ReferenceTelephone},
+
+                      {"ContactPersonCell",detailList[0].ContactNumber},
+                      {"ReferencePersonCell",detailList[0].ReferenceCellNumber},
+
+                      {"ContactPersonFax",detailList[0].FaxNumber},
+                      {"ReferencePersonFax",detailList[0].FaxNumber},
+                      //{"NAME", detailList[0].GuestName},
+                      {"NAME", detailList[0].ContactPerson},
+                      {"ContactPersonEmail",detailList[0].ContactEmail},
+                      {"ReferencePersonEmail",detailList[0].ReferenceEmail},
+                      {"RoomDetails",table},
+                      {"TotalNumberOfRoom",detailList[0].TotalNumberOfRooms.ToString()},
+                      {"ComplementaryItem",ul},
+                      {"ArrivalDate", detailList[0].ArrivalDate.ToString()},
+                      {"DepartureDate", detailList[0].DepartureDate.ToString()}
+                };
+            string MailBody = GetMailBody("ReservationEmailCancellation.html", tokens);
+            //Genarate Mail Body END
+
+            try
+            {
+                string Mail = "", Password = "", SmtpHost = "", SmtpPort = "";
+                string CompanyName = "", CompanyAddress = "", CompanyWeb = "", ContactNumber = "";
+
+                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendEmailAddress", "SendEmailConfiguration");
+                string mainString = commonSetupBO.SetupValue;
+                if (!string.IsNullOrEmpty(mainString))
+                {
+                    string[] dataArray = mainString.Split('~');
+                    Mail = dataArray[0];
+                    Password = dataArray[1];
+                    SmtpHost = dataArray[2];
+                    SmtpPort = dataArray[3];
+                }
+
+                if (!string.IsNullOrWhiteSpace(ReceivingMail))
+                {
+                    System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
+                    SmtpClient SmtpServer = new SmtpClient(SmtpHost); //smtp.gmail.com
+                    mail.From = new MailAddress(Mail);
+                    mail.To.Add(ReceivingMail);
+                    mail.Subject = "Online Room Reservation On Inn-Board";
+
+                    StringBuilder sb = new StringBuilder();
+
+                    //Get Design Data
+                    //Script Name  [GetOnlineRoomReservationBillGenerate]
+                    int ReservationId = Id;
+                    CompanyDA companyDA = new CompanyDA();
+                    List<CompanyBO> files = companyDA.GetCompanyInfo();
+                    if (files[0].CompanyId > 0)
+                    {
+                        CompanyName = files[0].CompanyName;
+                        CompanyAddress = files[0].CompanyAddress;
+                        if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
+                        {
+                            CompanyWeb = files[0].WebAddress;
+                        }
+                        else
+                        {
+                            CompanyWeb = files[0].ContactNumber;
+                        }
+                    }
+
+                    RoomReservationDA onlineReservationDA = new RoomReservationDA();
+                    List<RoomReservationBO> List = new List<RoomReservationBO>();
+
+                    //Data Genaration
+                    //Mail Design End                
+                    mail.Body = MailBody.ToString();
+                    mail.IsBodyHtml = true;
+                    SmtpServer.Port = Int32.Parse(SmtpPort);// 587;
+                    SmtpServer.Credentials = new System.Net.NetworkCredential(Mail, Password);
+                    SmtpServer.EnableSsl = true;
+                    SmtpServer.Send(mail);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+            }
+        }
+        private static void UpdateMail(int Id)
+        {
+            HMUtility hmUtility = new HMUtility();
+            //Genarate Mail Body
+            CompanyDA companyInfoDA = new CompanyDA();
+            List<CompanyBO> list = companyInfoDA.GetCompanyInfo();
+            string pComapnyName = "", pCompanyAddress = "", pCompanyWeb = "";
+            if (list != null)
+            {
+                if (list.Count > 0)
+                {
+                    pComapnyName = list[0].CompanyName;
+                    pCompanyAddress = list[0].CompanyAddress;
+                    if (!string.IsNullOrWhiteSpace(list[0].WebAddress))
+                    {
+                        pCompanyWeb = list[0].WebAddress;
+                    }
+                    else
+                    {
+                        pCompanyWeb = list[0].ContactNumber;
+                    }
+                }
+            }
+            List<RoomReservationDetailsForMailBO> detailList = new List<RoomReservationDetailsForMailBO>();
+            RoomReservationDetailsForMailDA detailDA = new RoomReservationDetailsForMailDA();
+            detailList = detailDA.GetOnlineReservationDetailsInformationForMail(Id, pComapnyName, pCompanyAddress, pCompanyWeb);
+
+
+            string table = "<table style='font-size: medium; border: #ccc 1px solid; width: 90%;' cellpadding='0' cellspacing='0'><tr><td rowspan='2'>Guest Name</td><td style='padding: 2px 10px; border: 1px solid #ccc;' rowspan='2'>Room Type</td><td style='padding: 2px 10px; border: 1px solid #ccc;' rowspan='2'>Room Rate</td><td style='padding: 2px 10px; border: 1px solid #ccc;' colspan='2'> Check In</td><td style='padding: 2px 10px; border: 1px solid #ccc;' colspan='2'>Check Out</td></tr><tr><td style='padding: 2px 10px; border: 1px solid #ccc;'>Name</td><td style='padding: 2px 10px; border: 1px solid #ccc;'>Flight</td><td style='padding: 2px 10px; border: 1px solid #ccc;'>Name</td><td style='padding: 2px 10px; border: 1px solid #ccc;'>Flight</td></tr>";
+
+            string ReceivingMail = "";
+            foreach (RoomReservationDetailsForMailBO dr in detailList)
+            {
+                table += "<tr>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += dr.GuestName;
+                table += "</td>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += dr.RoomType;
+                table += "</td>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += dr.RoomRate;
+                table += "</td>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += hmUtility.GetStringFromDateTime(dr.ArrivalDate);
+                table += "</td>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += dr.ArrivalFlightName;
+                table += "</td>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += hmUtility.GetStringFromDateTime(dr.DepartureDate);
+                table += "</td>";
+                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
+                table += dr.DepartureFlightName;
+                table += "</td>";
+                table += "</tr>";
+            }
+            table += "</table>";
+
+            List<HMComplementaryItemBO> itemList = new List<HMComplementaryItemBO>();
+            HMComplementaryItemDA itemDA = new HMComplementaryItemDA();
+            itemList = itemDA.GetComplementaryItemInfoByReservationId(Id);
+
+            string ul = "";
+            ul += "<ul>";
+
+            foreach (HMComplementaryItemBO dr in itemList)
+            {
+                ul += "<li style='font-size: medium'>";
+                ul += dr.ItemName.ToString();
+                ul += "</li>";
+            }
+
+            ul += "</ul>";
+
+            ReceivingMail = detailList[0].ContactEmail;
+
+            var tokens = new Dictionary<string, string>
+                {
+                      {"CompanyName",detailList[0].CompanyName},
+                      {"CompanyAddress",detailList[0].CompanyAddress},
+                      {"WebAddress",detailList[0].WebAddress},
+                      {"TextWe", "We Accept"},
+                      {"CurrentDate", DateTime.Now.ToString(hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat)},
+                      {"ReservationDate", detailList[0].DepartureDate.ToString(hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat)},
+                      {"GuestNameAndCompany","Mr. "+detailList[0].GuestName +", "+detailList[0].GuestCompanyName +", "+detailList[0].GuestCompanyAddress+" ."},
+                      {"ContactPersonName",detailList[0].ContactPerson},
+                      {"ReferencePersonName",detailList[0].ReferencePerson},
+                      {"ContactPersonDesignation",detailList[0].ContactDesignation},
+                      {"ReservationNumber",detailList[0].ReservationNumber},
+                      {"ReferencePersonDesignation",detailList[0].ReferenceDesignation},
+                      {"ContactPersonOrganization",detailList[0].GuestCompanyName +", "+detailList[0].GuestCompanyAddress+" ."},
+                      {"ReferencePersonOrganization",detailList[0].ReferenceOrganization},
+
+                      {"ContactPersonTelephone",detailList[0].TelephoneNumber},
+                      {"ReferencePersonTelephone",detailList[0].ReferenceTelephone},
+
+                      {"ContactPersonCell",detailList[0].ContactNumber},
+                      {"ReferencePersonCell",detailList[0].ReferenceCellNumber},
+
+                      {"ContactPersonFax",detailList[0].FaxNumber},
+                      {"ReferencePersonFax",detailList[0].FaxNumber},
+                      //{"NAME", detailList[0].GuestName},
+                      {"NAME", detailList[0].ContactPerson },
+                      {"ContactPersonEmail",detailList[0].ContactEmail},
+                      {"ReferencePersonEmail",detailList[0].ReferenceEmail},
+                      {"RoomDetails",table},
+                      {"TotalNumberOfRoom",detailList[0].TotalNumberOfRooms.ToString()},
+                      {"ComplementaryItem",ul},
+                      {"ArrivalDate", detailList[0].ArrivalDate.ToString()},
+                      {"DepartureDate", detailList[0].DepartureDate.ToString()}
+                };
+            string MailBody = GetMailBody("ReservationAmedment.html", tokens);
+            //Genarate Mail Body END
+
+            try
+            {
+                string Mail = "", Password = "", SmtpHost = "", SmtpPort = "";
+                string CompanyName = "", CompanyAddress = "", CompanyWeb = "", ContactNumber = "";
+
+                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendEmailAddress", "SendEmailConfiguration");
+                string mainString = commonSetupBO.SetupValue;
+                if (!string.IsNullOrEmpty(mainString))
+                {
+                    string[] dataArray = mainString.Split('~');
+                    Mail = dataArray[0];
+                    Password = dataArray[1];
+                    SmtpHost = dataArray[2];
+                    SmtpPort = dataArray[3];
+                }
+
+                if (!string.IsNullOrWhiteSpace(ReceivingMail))
+                {
+                    System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
+                    SmtpClient SmtpServer = new SmtpClient(SmtpHost); //smtp.gmail.com
+                    mail.From = new MailAddress(Mail);
+                    mail.To.Add(ReceivingMail);
+                    mail.Subject = "Online Room Reservation On Inn-Board";
+
+                    StringBuilder sb = new StringBuilder();
+
+                    //Get Design Data
+                    //Script Name  [GetOnlineRoomReservationBillGenerate]
+                    int ReservationId = Id;
+                    CompanyDA companyDA = new CompanyDA();
+                    List<CompanyBO> files = companyDA.GetCompanyInfo();
+                    if (files[0].CompanyId > 0)
+                    {
+                        CompanyName = files[0].CompanyName;
+                        CompanyAddress = files[0].CompanyAddress;
+                        if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
+                        {
+                            CompanyWeb = files[0].WebAddress;
+                        }
+                        else
+                        {
+                            CompanyWeb = files[0].ContactNumber;
+                        }
+                    }
+
+                    RoomReservationDA onlineReservationDA = new RoomReservationDA();
+                    List<RoomReservationBO> List = new List<RoomReservationBO>();
+
+                    //Data Genaration
+                    //Mail Design End                
+                    mail.Body = MailBody.ToString();
+                    mail.IsBodyHtml = true;
+                    SmtpServer.Port = Int32.Parse(SmtpPort);// 587;
+                    SmtpServer.Credentials = new System.Net.NetworkCredential(Mail, Password);
+                    SmtpServer.EnableSsl = true;
+                    SmtpServer.Send(mail);
+                }
+            }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+            }
+        }
         //************************ User Defined WebMethod ********************//
         [WebMethod]
         public static string ShowReservationCurrentRoomStatus(int reservationId)
@@ -3564,6 +4114,9 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                     if (rtnInfo.IsSuccess)
                     {
+                        // // // HotelRoomReservationRoomDetail Table Related Process
+                        roomReservationDA.UpdateHotelRoomReservationRoomDetail(RoomReservation.ReservationId);
+
                         HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
                         HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
                         commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("EmailAutoPosting", "IsRoomReservationEmailAutoPostingEnable");
@@ -3576,25 +4129,16 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         var result = reservationDA.GetRoomReservationInfoById(RoomReservation.ReservationId);
                         commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SMSAutoPosting", "IsRoomReservationSMSAutoPostingEnable");
                         string IsSMSEnable = commonSetupBO.SetupValue;
-                        //SMS UPDATE
-
-                        //if (IsSMSEnable == "1")
-                        //{
-                        //    SendSMSbySSLGatewayUpdate(result, result.ReservationNumber, result.ReservationId);
-                        //}
-
                     }
 
                     SalesMarketingLogType<RoomReservationBO> logDA = new SalesMarketingLogType<RoomReservationBO>();
                     long activityId = 0;
                     if (!rtnInfo.IsSuccess)
                     {
-                        // // // HotelRoomReservationRoomDetail Table Related Process
-                        roomReservationDA.UpdateHotelRoomReservationRoomDetail(RoomReservation.ReservationId);
-
                         Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
                                             EntityTypeEnum.EntityType.RoomReservation.ToString(), RoomReservation.ReservationId,
                                             ProjectModuleEnum.ProjectModule.FrontOffice.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.RoomReservation), out activityId);
+                        
                         // // // activity log details related process
                         logDA.LogDetails(ConstantHelper.FOActivityLogFormName.frmRoomReservationNew, previousData, RoomReservation, activityId);
 
@@ -3638,159 +4182,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             }
 
             return rtnInfo;
-        }
-
-        private static bool SendSMSbySSLGatewayUpdate(RoomReservationBO reservationBO, string reservationNumber, int reservationId)
-        {
-            bool status = false;
-            SmsView sms;
-            try
-            {
-                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
-                CommonDA commonDA = new CommonDA();
-                //RoomReservationBO reservationBO = new RoomReservationBO();
-                RoomReservationDA reservationDA = new RoomReservationDA();
-                string mainString = commonSetupBO.Description;
-                string[] dataArray = mainString.Split('~');
-                var smsGetway = dataArray[0];
-                HMUtility hmUtility = new HMUtility();
-
-                // Config Block
-                if (!string.IsNullOrEmpty(mainString))
-                {
-
-                    sms = new SmsView
-                    {
-                        TempleteName = HMConstants.SMSTemplates.ReservationAmedmentSmsTemplate
-                    };
-
-                    var singletoken = new Dictionary<string, string>
-                        {
-                        {"COMPANY", hmUtility.GetHMCompanyProfile()},
-                        {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
-                        {"Name", reservationBO.ContactPerson},
-                        {"ReservationNumber",  reservationNumber},
-                        {"ArrivalDate", reservationBO.DateIn.ToString()},
-                        {"DepartureDate", reservationBO.DateOut.ToString()},
-                        {"RoomNumber", reservationBO.RoomNumber }
-                        };
-                    status = SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, reservationBO.MobileNumber);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return status;
-        }
-
-        private static bool SendSMSbySSLGateway(RoomReservationBO reservationBO, string reservationNumber, int reservationId)
-        {
-            bool status = false;
-            SmsView sms;
-            try
-            {
-                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
-                CommonDA commonDA = new CommonDA();
-                //RoomReservationBO reservationBO = new RoomReservationBO();
-                RoomReservationDA reservationDA = new RoomReservationDA();
-                string mainString = commonSetupBO.Description;
-                string[] dataArray = mainString.Split('~');
-                var smsGetway = dataArray[0];
-                HMUtility hmUtility = new HMUtility();
-
-                // Config Block
-                if (!string.IsNullOrEmpty(mainString))
-                {
-
-                    sms = new SmsView
-                    {
-                        TempleteName = HMConstants.SMSTemplates.ReservationCancellation
-                    };
-
-                    var singletoken = new Dictionary<string, string>
-                        {
-                        {"COMPANY", hmUtility.GetHMCompanyProfile()},
-                        {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
-                        {"Name", reservationBO.ContactPerson},
-                        {"ReservationNumber",  reservationNumber},
-                        {"ArrivalDate", reservationBO.DateIn.ToString()},
-                        {"DepartureDate", reservationBO.DateOut.ToString()},
-                        {"RoomNumber", reservationBO.RoomNumber }
-                        };
-                    status = SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, reservationBO.MobileNumber);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return status;
-        }
-
-
-        private static bool SendSMSbySSLGateway(RoomReservationBO reservationBO, string reservationNumber)
-        {
-            bool status = false;
-            SmsView sms;
-            try
-            {
-                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
-                CommonDA commonDA = new CommonDA();
-                //RoomReservationBO reservationBO = new RoomReservationBO();
-                RoomReservationDA reservationDA = new RoomReservationDA();
-                string mainString = commonSetupBO.Description;
-                string[] dataArray = mainString.Split('~');
-                var smsGetway = dataArray[0];
-                HMUtility hmUtility = new HMUtility();
-
-                // Config Block
-                if (!string.IsNullOrEmpty(mainString))
-                {
-
-                    sms = new SmsView
-                    {
-                        TempleteName = HMConstants.SMSTemplates.ReservationConfirmation
-                    };
-
-                    var singletoken = new Dictionary<string, string>
-                        {
-                        {"COMPANY", hmUtility.GetHMCompanyProfile()},
-                        {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
-                        {"Name", reservationBO.ContactPerson},
-                        {"ReservationNumber",  reservationNumber},
-                        {"ArrivalDate", reservationBO.DateIn.ToString()},
-                        {"DepartureDate", reservationBO.DateOut.ToString()},
-                        {"RoomNumber", reservationBO.RoomNumber }
-                        };
-                    status = SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, reservationBO.ContactNumber);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return status;
-        }
-        public static bool SaveActivityLogDetails(RoomReservationBO RoomReservation, RoomReservationBO PreviousBO, int activityId)
-        {
-            bool status = false;
-            if (RoomReservation.DateIn != PreviousBO.DateIn)
-            {
-
-            }
-
-            return status;
-        }
+        }       
         [WebMethod(EnableSession = true)]
         public static string SaveGuestInformationAsDetail(string reservationId, int prevGuestId, string isEdit, int IsEditFromAddMore, string title, string firstName, string lastName, string txtGuestName, string txtGuestEmail, string hiddenGuestId, string txtGuestDrivinlgLicense, string txtGuestDOB, string txtGuestAddress1, string txtGuestAddress2, string ddlProfessionId, string txtGuestCity, string ddlGuestCountry, string txtGuestNationality, string txtGuestPhone, string ddlGuestSex, string txtGuestZipCode, string txtNationalId, string txtPassportNumber, string txtPExpireDate, string txtPIssueDate, string txtPIssuePlace, string txtVExpireDate, string txtVisaNumber, string txtVIssueDate, int roomId, string selectedPreferenceId, int classificationId, string additionalRemarks)
         {
@@ -4718,50 +5110,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             HTML = GetHTMLGuestReferenceGridView(guestReferenceList);
 
             return HTML;
-        }
-
-        public static string GetHTMLGuestReferenceGridView(List<GuestPreferenceBO> List)
-        {
-            string strTable = "";
-            strTable += "<table class='table table-bordered table-condensed table-responsive' id='GuestReferenceInformation' width='100%' border: '1px solid #cccccc'><tr style='color: White; background-color: #44545E; font-weight: bold;'>";
-            strTable += "<th align='center' scope='col'>Select</th><th align='left' scope='col'>Preference</th></tr>";
-            int counter = 0;
-            foreach (GuestPreferenceBO dr in List)
-            {
-                counter++;
-                if (counter % 2 == 0)
-                {
-                    // It's even
-                    strTable += "<tr style='background-color:#E3EAEB;'>";
-                }
-                else
-                {
-                    // It's odd
-                    strTable += "<tr style='background-color:White;'>";
-                }
-
-                strTable += "<td style='display:none;'>" + dr.PreferenceId + "</td>";
-                strTable += "<td align='center' style='width: 20px'>";
-                strTable += "&nbsp;<input type='checkbox'  id='" + dr.PreferenceId + "' name='" + dr.PreferenceName + "' value='" + dr.PreferenceId + "' >";
-                strTable += "</td><td align='left' style='width: 138px'>" + dr.PreferenceName + "</td></tr>";
-            }
-
-            strTable += "</table>";
-            if (strTable == "")
-            {
-                strTable = "<tr><td colspan='4' align='center'>No Preferences Available !</td></tr>";
-            }
-            strTable += "<div style='margin-top:12px;'>";
-            strTable += "<div class=\"form-group\">" +
-                            "<label for=\"Remarks\" class=\"control-label col-md-2\">Additional Remarks</label>" +
-                            "<div class=\"col-md-10\">" +
-                                "<textarea name = \"txtAdditionalRemarks\" rows=\"2\" cols=\"20\" id=\"ContentPlaceHolder1_txtAdditionalRemarks\" class=\"form-control\" runat=\"server\"></textarea>" +
-                            "</div>" +
-                        "</div>";
-            strTable += "    <button type='button' onClick='javascript:return GetCheckedGuestPreference()' id='btnAddRoomId' class='btn btn-primary'> OK</button>";
-            strTable += "</div>";
-            return strTable;
-        }
+        }        
         [WebMethod]
         public static string LoadGuestPreferences(int guestId)
         {
@@ -4779,7 +5128,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             roomTypeBO = roomTypeDA.GetRoomTypeInfoById(EditId);
             return roomTypeBO;
         }
-
         [WebMethod]
         public static ReturnInfo CancelOrActiveReservation(int reservationId, string reason, string mode)
         {
@@ -4834,369 +5182,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 throw ex;
             }
             return returnInfo;
-        }
-
-        private static void CancelMail(int Id)
-        {
-            HMUtility hmUtility = new HMUtility();
-            //Genarate Mail Body
-            CompanyDA companyInfoDA = new CompanyDA();
-            List<CompanyBO> list = companyInfoDA.GetCompanyInfo();
-            string pComapnyName = "", pCompanyAddress = "", pCompanyWeb = "";
-            if (list != null)
-            {
-                if (list.Count > 0)
-                {
-                    pComapnyName = list[0].CompanyName;
-                    pCompanyAddress = list[0].CompanyAddress;
-                    if (!string.IsNullOrWhiteSpace(list[0].WebAddress))
-                    {
-                        pCompanyWeb = list[0].WebAddress;
-                    }
-                    else
-                    {
-                        pCompanyWeb = list[0].ContactNumber;
-                    }
-                }
-            }
-            List<RoomReservationDetailsForMailBO> detailList = new List<RoomReservationDetailsForMailBO>();
-            RoomReservationDetailsForMailDA detailDA = new RoomReservationDetailsForMailDA();
-            detailList = detailDA.GetOnlineReservationDetailsInformationForMail(Id, pComapnyName, pCompanyAddress, pCompanyWeb);
-
-
-            string table = "<table style='font-size: medium; border: #ccc 1px solid; width: 90%;' cellpadding='0' cellspacing='0'><tr><td rowspan='2'>Guest Name</td><td style='padding: 2px 10px; border: 1px solid #ccc;' rowspan='2'>Room Type</td><td style='padding: 2px 10px; border: 1px solid #ccc;' rowspan='2'>Room Rate</td><td style='padding: 2px 10px; border: 1px solid #ccc;' colspan='2'> Check In</td><td style='padding: 2px 10px; border: 1px solid #ccc;' colspan='2'>Check Out</td></tr><tr><td style='padding: 2px 10px; border: 1px solid #ccc;'>Name</td><td style='padding: 2px 10px; border: 1px solid #ccc;'>Flight</td><td style='padding: 2px 10px; border: 1px solid #ccc;'>Name</td><td style='padding: 2px 10px; border: 1px solid #ccc;'>Flight</td></tr>";
-
-            string ReceivingMail = "";
-            foreach (RoomReservationDetailsForMailBO dr in detailList)
-            {
-                table += "<tr>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += dr.GuestName;
-                table += "</td>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += dr.RoomType;
-                table += "</td>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += dr.RoomRate;
-                table += "</td>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += hmUtility.GetStringFromDateTime(dr.ArrivalDate);
-                table += "</td>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += dr.ArrivalFlightName;
-                table += "</td>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += hmUtility.GetStringFromDateTime(dr.DepartureDate);
-                table += "</td>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += dr.DepartureFlightName;
-                table += "</td>";
-                table += "</tr>";
-            }
-            table += "</table>";
-
-            List<HMComplementaryItemBO> itemList = new List<HMComplementaryItemBO>();
-            HMComplementaryItemDA itemDA = new HMComplementaryItemDA();
-            itemList = itemDA.GetComplementaryItemInfoByReservationId(Id);
-
-            string ul = "";
-            ul += "<ul>";
-
-            foreach (HMComplementaryItemBO dr in itemList)
-            {
-                ul += "<li style='font-size: medium'>";
-                ul += dr.ItemName.ToString();
-                ul += "</li>";
-            }
-
-            ul += "</ul>";
-
-            ReceivingMail = detailList[0].ContactEmail;
-
-            var tokens = new Dictionary<string, string>
-                {
-                      {"CompanyName",detailList[0].CompanyName},
-                      {"CompanyAddress",detailList[0].CompanyAddress},
-                      {"WebAddress",detailList[0].WebAddress},
-                      {"TextWe", "We Accept"},
-                      {"CurrentDate", DateTime.Now.ToString(hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat)},
-                      {"ReservationDate", detailList[0].DepartureDate.ToString(hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat)},
-                      {"GuestNameAndCompany","Mr. "+detailList[0].GuestName +", "+detailList[0].GuestCompanyName +", "+detailList[0].GuestCompanyAddress+" ."},
-                      {"ContactPersonName",detailList[0].ContactPerson},
-                      {"ReferencePersonName",detailList[0].ReferencePerson},
-                      {"ContactPersonDesignation",detailList[0].ContactDesignation},
-                      {"ReservationNumber",detailList[0].ReservationNumber},
-                      {"ReferencePersonDesignation",detailList[0].ReferenceDesignation},
-                      {"ContactPersonOrganization",detailList[0].GuestCompanyName +", "+detailList[0].GuestCompanyAddress+" ."},
-                      {"ReferencePersonOrganization",detailList[0].ReferenceOrganization},
-
-                      {"ContactPersonTelephone",detailList[0].TelephoneNumber},
-                      {"ReferencePersonTelephone",detailList[0].ReferenceTelephone},
-
-                      {"ContactPersonCell",detailList[0].ContactNumber},
-                      {"ReferencePersonCell",detailList[0].ReferenceCellNumber},
-
-                      {"ContactPersonFax",detailList[0].FaxNumber},
-                      {"ReferencePersonFax",detailList[0].FaxNumber},
-                      //{"NAME", detailList[0].GuestName},
-                      {"NAME", detailList[0].ContactPerson},
-                      {"ContactPersonEmail",detailList[0].ContactEmail},
-                      {"ReferencePersonEmail",detailList[0].ReferenceEmail},
-                      {"RoomDetails",table},
-                      {"TotalNumberOfRoom",detailList[0].TotalNumberOfRooms.ToString()},
-                      {"ComplementaryItem",ul},
-                      {"ArrivalDate", detailList[0].ArrivalDate.ToString()},
-                      {"DepartureDate", detailList[0].DepartureDate.ToString()}
-                };
-            string MailBody = GetMailBody("ReservationEmailCancellation.html", tokens);
-            //Genarate Mail Body END
-
-            try
-            {
-                string Mail = "", Password = "", SmtpHost = "", SmtpPort = "";
-                string CompanyName = "", CompanyAddress = "", CompanyWeb = "", ContactNumber = "";
-
-                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendEmailAddress", "SendEmailConfiguration");
-                string mainString = commonSetupBO.SetupValue;
-                if (!string.IsNullOrEmpty(mainString))
-                {
-                    string[] dataArray = mainString.Split('~');
-                    Mail = dataArray[0];
-                    Password = dataArray[1];
-                    SmtpHost = dataArray[2];
-                    SmtpPort = dataArray[3];
-                }
-
-                if (!string.IsNullOrWhiteSpace(ReceivingMail))
-                {
-                    System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
-                    SmtpClient SmtpServer = new SmtpClient(SmtpHost); //smtp.gmail.com
-                    mail.From = new MailAddress(Mail);
-                    mail.To.Add(ReceivingMail);
-                    mail.Subject = "Online Room Reservation On Inn-Board";
-
-                    StringBuilder sb = new StringBuilder();
-
-                    //Get Design Data
-                    //Script Name  [GetOnlineRoomReservationBillGenerate]
-                    int ReservationId = Id;
-                    CompanyDA companyDA = new CompanyDA();
-                    List<CompanyBO> files = companyDA.GetCompanyInfo();
-                    if (files[0].CompanyId > 0)
-                    {
-                        CompanyName = files[0].CompanyName;
-                        CompanyAddress = files[0].CompanyAddress;
-                        if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
-                        {
-                            CompanyWeb = files[0].WebAddress;
-                        }
-                        else
-                        {
-                            CompanyWeb = files[0].ContactNumber;
-                        }
-                    }
-
-                    RoomReservationDA onlineReservationDA = new RoomReservationDA();
-                    List<RoomReservationBO> List = new List<RoomReservationBO>();
-
-                    //Data Genaration
-                    //Mail Design End                
-                    mail.Body = MailBody.ToString();
-                    mail.IsBodyHtml = true;
-                    SmtpServer.Port = Int32.Parse(SmtpPort);// 587;
-                    SmtpServer.Credentials = new System.Net.NetworkCredential(Mail, Password);
-                    SmtpServer.EnableSsl = true;
-                    SmtpServer.Send(mail);
-                }
-            }
-            catch (Exception ex)
-            {
-                string error = ex.ToString();
-            }
-        }
-
-        private static void UpdateMail(int Id)
-        {
-            HMUtility hmUtility = new HMUtility();
-            //Genarate Mail Body
-            CompanyDA companyInfoDA = new CompanyDA();
-            List<CompanyBO> list = companyInfoDA.GetCompanyInfo();
-            string pComapnyName = "", pCompanyAddress = "", pCompanyWeb = "";
-            if (list != null)
-            {
-                if (list.Count > 0)
-                {
-                    pComapnyName = list[0].CompanyName;
-                    pCompanyAddress = list[0].CompanyAddress;
-                    if (!string.IsNullOrWhiteSpace(list[0].WebAddress))
-                    {
-                        pCompanyWeb = list[0].WebAddress;
-                    }
-                    else
-                    {
-                        pCompanyWeb = list[0].ContactNumber;
-                    }
-                }
-            }
-            List<RoomReservationDetailsForMailBO> detailList = new List<RoomReservationDetailsForMailBO>();
-            RoomReservationDetailsForMailDA detailDA = new RoomReservationDetailsForMailDA();
-            detailList = detailDA.GetOnlineReservationDetailsInformationForMail(Id, pComapnyName, pCompanyAddress, pCompanyWeb);
-
-
-            string table = "<table style='font-size: medium; border: #ccc 1px solid; width: 90%;' cellpadding='0' cellspacing='0'><tr><td rowspan='2'>Guest Name</td><td style='padding: 2px 10px; border: 1px solid #ccc;' rowspan='2'>Room Type</td><td style='padding: 2px 10px; border: 1px solid #ccc;' rowspan='2'>Room Rate</td><td style='padding: 2px 10px; border: 1px solid #ccc;' colspan='2'> Check In</td><td style='padding: 2px 10px; border: 1px solid #ccc;' colspan='2'>Check Out</td></tr><tr><td style='padding: 2px 10px; border: 1px solid #ccc;'>Name</td><td style='padding: 2px 10px; border: 1px solid #ccc;'>Flight</td><td style='padding: 2px 10px; border: 1px solid #ccc;'>Name</td><td style='padding: 2px 10px; border: 1px solid #ccc;'>Flight</td></tr>";
-
-            string ReceivingMail = "";
-            foreach (RoomReservationDetailsForMailBO dr in detailList)
-            {
-                table += "<tr>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += dr.GuestName;
-                table += "</td>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += dr.RoomType;
-                table += "</td>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += dr.RoomRate;
-                table += "</td>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += hmUtility.GetStringFromDateTime(dr.ArrivalDate);
-                table += "</td>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += dr.ArrivalFlightName;
-                table += "</td>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += hmUtility.GetStringFromDateTime(dr.DepartureDate);
-                table += "</td>";
-                table += "<td style='padding: 2px 10px; border: 1px solid #ccc;'>";
-                table += dr.DepartureFlightName;
-                table += "</td>";
-                table += "</tr>";
-            }
-            table += "</table>";
-
-            List<HMComplementaryItemBO> itemList = new List<HMComplementaryItemBO>();
-            HMComplementaryItemDA itemDA = new HMComplementaryItemDA();
-            itemList = itemDA.GetComplementaryItemInfoByReservationId(Id);
-
-            string ul = "";
-            ul += "<ul>";
-
-            foreach (HMComplementaryItemBO dr in itemList)
-            {
-                ul += "<li style='font-size: medium'>";
-                ul += dr.ItemName.ToString();
-                ul += "</li>";
-            }
-
-            ul += "</ul>";
-
-            ReceivingMail = detailList[0].ContactEmail;
-
-            var tokens = new Dictionary<string, string>
-                {
-                      {"CompanyName",detailList[0].CompanyName},
-                      {"CompanyAddress",detailList[0].CompanyAddress},
-                      {"WebAddress",detailList[0].WebAddress},
-                      {"TextWe", "We Accept"},
-                      {"CurrentDate", DateTime.Now.ToString(hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat)},
-                      {"ReservationDate", detailList[0].DepartureDate.ToString(hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat)},
-                      {"GuestNameAndCompany","Mr. "+detailList[0].GuestName +", "+detailList[0].GuestCompanyName +", "+detailList[0].GuestCompanyAddress+" ."},
-                      {"ContactPersonName",detailList[0].ContactPerson},
-                      {"ReferencePersonName",detailList[0].ReferencePerson},
-                      {"ContactPersonDesignation",detailList[0].ContactDesignation},
-                      {"ReservationNumber",detailList[0].ReservationNumber},
-                      {"ReferencePersonDesignation",detailList[0].ReferenceDesignation},
-                      {"ContactPersonOrganization",detailList[0].GuestCompanyName +", "+detailList[0].GuestCompanyAddress+" ."},
-                      {"ReferencePersonOrganization",detailList[0].ReferenceOrganization},
-
-                      {"ContactPersonTelephone",detailList[0].TelephoneNumber},
-                      {"ReferencePersonTelephone",detailList[0].ReferenceTelephone},
-
-                      {"ContactPersonCell",detailList[0].ContactNumber},
-                      {"ReferencePersonCell",detailList[0].ReferenceCellNumber},
-
-                      {"ContactPersonFax",detailList[0].FaxNumber},
-                      {"ReferencePersonFax",detailList[0].FaxNumber},
-                      //{"NAME", detailList[0].GuestName},
-                      {"NAME", detailList[0].ContactPerson },
-                      {"ContactPersonEmail",detailList[0].ContactEmail},
-                      {"ReferencePersonEmail",detailList[0].ReferenceEmail},
-                      {"RoomDetails",table},
-                      {"TotalNumberOfRoom",detailList[0].TotalNumberOfRooms.ToString()},
-                      {"ComplementaryItem",ul},
-                      {"ArrivalDate", detailList[0].ArrivalDate.ToString()},
-                      {"DepartureDate", detailList[0].DepartureDate.ToString()}
-                };
-            string MailBody = GetMailBody("ReservationAmedment.html", tokens);
-            //Genarate Mail Body END
-
-            try
-            {
-                string Mail = "", Password = "", SmtpHost = "", SmtpPort = "";
-                string CompanyName = "", CompanyAddress = "", CompanyWeb = "", ContactNumber = "";
-
-                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendEmailAddress", "SendEmailConfiguration");
-                string mainString = commonSetupBO.SetupValue;
-                if (!string.IsNullOrEmpty(mainString))
-                {
-                    string[] dataArray = mainString.Split('~');
-                    Mail = dataArray[0];
-                    Password = dataArray[1];
-                    SmtpHost = dataArray[2];
-                    SmtpPort = dataArray[3];
-                }
-
-                if (!string.IsNullOrWhiteSpace(ReceivingMail))
-                {
-                    System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
-                    SmtpClient SmtpServer = new SmtpClient(SmtpHost); //smtp.gmail.com
-                    mail.From = new MailAddress(Mail);
-                    mail.To.Add(ReceivingMail);
-                    mail.Subject = "Online Room Reservation On Inn-Board";
-
-                    StringBuilder sb = new StringBuilder();
-
-                    //Get Design Data
-                    //Script Name  [GetOnlineRoomReservationBillGenerate]
-                    int ReservationId = Id;
-                    CompanyDA companyDA = new CompanyDA();
-                    List<CompanyBO> files = companyDA.GetCompanyInfo();
-                    if (files[0].CompanyId > 0)
-                    {
-                        CompanyName = files[0].CompanyName;
-                        CompanyAddress = files[0].CompanyAddress;
-                        if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
-                        {
-                            CompanyWeb = files[0].WebAddress;
-                        }
-                        else
-                        {
-                            CompanyWeb = files[0].ContactNumber;
-                        }
-                    }
-
-                    RoomReservationDA onlineReservationDA = new RoomReservationDA();
-                    List<RoomReservationBO> List = new List<RoomReservationBO>();
-
-                    //Data Genaration
-                    //Mail Design End                
-                    mail.Body = MailBody.ToString();
-                    mail.IsBodyHtml = true;
-                    SmtpServer.Port = Int32.Parse(SmtpPort);// 587;
-                    SmtpServer.Credentials = new System.Net.NetworkCredential(Mail, Password);
-                    SmtpServer.EnableSsl = true;
-                    SmtpServer.Send(mail);
-                }
-            }
-            catch (Exception ex)
-            {
-                string error = ex.ToString();
-            }
-        }
+        }        
         [WebMethod]
         public static bool IsCanCancelReservation(int reservationId)
         {
@@ -5219,6 +5205,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             ContactInformationDA contactInformationDA = new ContactInformationDA();
             contactInformationList = contactInformationDA.GetContactInformationByCompanyIdNSearchTextForAutoComplete(companyId, searchText);
             return contactInformationList;
-        }
+        }        
     }
 }
