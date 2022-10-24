@@ -47,8 +47,12 @@ namespace HotelManagement.Data.GeneralLedger
                         if (ds.Tables[1] != null)
                             openingBalance.InvOpeningBalanceDetails = ds.Tables[1].AsEnumerable().Select(r => new InvOpeningBalanceDetail
                             {
-                                ItemId = r.Field<Int32>("ItemId"),
+                                Id = r.Field<Int64>("Id"),
+                                InvOpeningBalanceId = r.Field<Int64>("InvOpeningBalanceId"),
+                                TransactionNodeId = r.Field<Int64>("TransactionNodeId"),
+                                UnitCost = r.Field<decimal?>("UnitCost"),
                                 StockQuantity = r.Field<decimal?>("StockQuantity"),
+                                Total = r.Field<decimal?>("Total"),
                                 UnitHead = r.Field<string>("UnitHead")
 
                             }).ToList();
@@ -324,21 +328,24 @@ namespace HotelManagement.Data.GeneralLedger
 
                         if (status)
                         {
-                            using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateInvItemOpeningBalance_SP"))
+                            using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateInvOpeningBalanceDetail_SP"))
                             {
                                 foreach (var detail in OpeningBalanceDetails)
                                 {
                                     cmd.Parameters.Clear();
                                     dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, detail.Id);
-                                    dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, detail.TransactionNodeId);
+                                    dbSmartAspects.AddInParameter(cmd, "@InvOpeningBalanceId", DbType.Int64, OpeningBalanceId);
+                                    dbSmartAspects.AddInParameter(cmd, "@TransactionNodeId", DbType.Int64, detail.TransactionNodeId);
+                                    dbSmartAspects.AddInParameter(cmd, "@UnitCost", DbType.Decimal, detail.UnitCost);
                                     dbSmartAspects.AddInParameter(cmd, "@StockQuantity", DbType.Decimal, detail.StockQuantity);
                                     dbSmartAspects.AddInParameter(cmd, "@UnitHead", DbType.String, detail.UnitHead);
+                                    dbSmartAspects.AddInParameter(cmd, "@Total", DbType.Decimal, detail.Total);
 
                                     status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
                                 }
 
                             }
-                        }
+                        }                        
                         if (status)
                         {
                             transaction.Commit();

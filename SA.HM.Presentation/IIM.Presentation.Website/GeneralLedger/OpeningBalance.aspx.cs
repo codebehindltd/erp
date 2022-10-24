@@ -611,7 +611,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
 
                 if (returnInfo.IsSuccess)
                 {
-                    if (OpeningBalanceDetails[0].TransactionNodeId == 0)
+                    if (OpeningBalance.Id == 0)
                     {
                         Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
                         EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalaceId,
@@ -1230,21 +1230,25 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             tHead += string.Format(@"<th style=""width:10%; text-align:left;"">{0}</th>", "Size");
             tHead += string.Format(@"<th style=""width:10%; text-align:left;"">{0}</th>", "Color");
             tHead += string.Format(@"<th style=""width:10%; text-align:left;"">{0}</th>", "Style");
-            tHead += string.Format(@"<th style=""width:20%; text-align:left;"">{0}</th>", "Qunatity");
-            tHead += string.Format(@"<th style=""width:20%; text-align:left;"">{0}</th>", "Unit Head");
+            tHead += string.Format(@"<th style=""width:10%; text-align:left;"">{0}</th>", "Unit Cost");
+            tHead += string.Format(@"<th style=""width:10%; text-align:left;"">{0}</th>", "Stock Qunatity");
+            tHead += string.Format(@"<th style=""width:10%; text-align:left;"">{0}</th>", "Total");
+            tHead += string.Format(@"<th style=""width:10%; text-align:left;"">{0}</th>", "Unit Head");
 
             tHead += string.Format(@"</tr></thead>");
             tBody = string.Format(@"<tbody>");
 
             foreach (GLOpeningBalanceTransactionNodeAutoComplete opd in nodeList)
             {
-                var detail = OpeningBalanceDetails.Where(i => i.ItemId == opd.TransactionNodeId).FirstOrDefault();
+                var detail = OpeningBalanceDetails.Where(i => i.TransactionNodeId == opd.TransactionNodeId).FirstOrDefault();
                 tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:30%;"">{2}</td>", detail == null ? 0 : detail.Id, opd.TransactionNodeId, opd.NodeName);
                 tBody += "<td style=\"width:10%;\" >" + opd.StyleName + "</td>";
                 tBody += "<td style=\"width:10%;\" >" + opd.ColorName + "</td>";
                 tBody += "<td style=\"width:10%;\" >" + opd.StyleName + "</td>";
-                tBody += "<td style=\"width:20%;\" > <input type=\"text\" onblur=\"UpdateTotal(this)\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.StockQuantity.ToString()) + "> </td>";
-                tBody += "<td style=\"width:20%;\" >" + opd.UnitHead + "</td>";
+                tBody += "<td style=\"width:10%;\" > <input type=\"text\" onblur=\"UpdateTotal(this)\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.UnitCost.ToString()) + "> </td>";
+                tBody += "<td style=\"width:10%;\" > <input type=\"text\" onblur=\"UpdateTotal(this)\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.StockQuantity.ToString()) + "> </td>";
+                tBody += "<td style=\"width:10%;\" > <input disabled=\"disabled\" type=\"text\"  class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.Total.ToString()) + "> </td>";
+                tBody += "<td style=\"width:10%;\" >" + opd.UnitHead + "</td>";
 
                 tBody += string.Format(@"</tr>");
             }

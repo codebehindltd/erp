@@ -484,23 +484,26 @@
 
                 let isInventoryType = transactionType == "Inventory";
 
-                if(transactionType == "Inventory")
-                {
+                if (transactionType == "Inventory") {
                     $("#balanceTable tbody tr").each(function () {
 
                         transactionNodeId = $(this).find("td:eq(0)").attr("tnid");
                         detailsId = $(this).find("td:eq(0)").attr("did");
 
                         if (isInventoryType) {
-                            quantity = $(this).find("td:eq(4) input").val();
-                            unitHead = $(this).find("td").eq(5).html();
-                            debugger;
-                            if (quantity) {
+                            unitCost = $(this).find("td:eq(4) input").val();
+                            stockQuantity = $(this).find("td:eq(5) input").val();
+                            totalCost = $(this).find("td:eq(6) input").val();
+                            unitHead = $(this).find("td").eq(7).html();
+
+                            if (unitCost && stockQuantity) {
 
                                 OpeningBalanceDetails.push({
                                     Id: parseInt(detailsId),
                                     TransactionNodeId: parseInt(transactionNodeId),
-                                    StockQuantity: quantity != "" ? parseInt(quantity) : 0,
+                                    UnitCost: unitCost != "" ? parseFloat(unitCost).toFixed(2) : 0.00,
+                                    StockQuantity: stockQuantity != "" ? parseFloat(stockQuantity).toFixed(2) : 0.00,
+                                    Total: totalCost != "" ? parseFloat(totalCost).toFixed(2) : 0.00,
                                     UnitHead: unitHead
                                 });
                                 unitCost = "0";
@@ -508,7 +511,7 @@
                                 totalCost = "0";
                             }
                         }
-                        
+
                         debitAmount = 0;
                         creditAmount = 0;
                     });
@@ -713,10 +716,10 @@
             function UpdateTotal(control) {
                 var tableRow = $(control).parent().parent();
 
-                var unitCost = tableRow.find("td:eq(2) input").val() != "" ? parseFloat(tableRow.find("td:eq(2) input").val()).toFixed(2) : 0.00;
-                var stockQuantity = tableRow.find("td:eq(3) input").val() != "" ? parseFloat(tableRow.find("td:eq(3) input").val()).toFixed(2) : 0.00;
+                var unitCost = tableRow.find("td:eq(4) input").val() != "" ? parseFloat(tableRow.find("td:eq(4) input").val()).toFixed(2) : 0.00;
+                var stockQuantity = tableRow.find("td:eq(5) input").val() != "" ? parseFloat(tableRow.find("td:eq(5) input").val()).toFixed(2) : 0.00;
                 if (!isNaN(unitCost) && !isNaN(stockQuantity))
-                    tableRow.find("td:eq(4) input").val(parseFloat(unitCost * stockQuantity).toFixed(2));
+                    tableRow.find("td:eq(6) input").val(parseFloat(unitCost * stockQuantity).toFixed(2));
 
             }
 
