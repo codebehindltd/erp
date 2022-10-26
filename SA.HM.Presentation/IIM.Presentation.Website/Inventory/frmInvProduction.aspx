@@ -2212,10 +2212,14 @@
                             </asp:TemplateField>
                         </Columns>
                         <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
-                        <%--<PagerSettings Mode="NextPrevious" PageButtonCount="4" PreviousPageText="Previous" NextPageText="Next" />--%>
+                        <%--<PagerSettings Mode="NextPrevious" PageButtonCount="4" PreviousPageText="Previous" NextPageText="Next" 
+                            
+                             BackColor="#666666" ForeColor="White" HorizontalAlign="Center"
+                            
+                            />--%>
                         <PagerSettings Mode="NumericFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="Last"/>
                         <%--<PagerSettings Mode="NextPreviousFirstLast" FirstPageText="First" LastPageText="Last" NextPageText="Next" PreviousPageText="Prev" />--%>
-                        <PagerStyle CssClass="pagination" BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                        <PagerStyle CssClass="ProductionPagination" />
                         <EmptyDataTemplate>
                             <asp:Label ID="lblRecordNotFound" runat="server" Text="Record Not Found."></asp:Label>
                         </EmptyDataTemplate>

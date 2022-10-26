@@ -1,29 +1,55 @@
-﻿.pagination {
+﻿
+.ProductionPagination table {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.ProductionPagination {
             font-size: 80%;
         }
 
-.pagination a {
+.ProductionPagination a {
     text-decoration: none;
-    border: solid 1px #AAE;
-    color: #15B;
+    border: 1px solid #aaa;
+    color: #337ab7 !important;
+}
+.ProductionPagination tr td:first-child a {
+    border-radius: 4px 0 0 4px;
+}
+.ProductionPagination tr td:last-child a {
+    border-radius: 0 4px 4px 0;
+}
+.ProductionPagination td:nth-child(n+2) a {
+    border-left: transparent;
 }
 
-.pagination a, .pagination span {
+.ProductionPagination a, .ProductionPagination span {
     display: block;
     float: left;
-    padding: 0.3em 0.5em;
-    margin-right: 5px;
-    margin-bottom: 5px;
+    padding: 7px 12px;
+    margin-right: 0;
+    margin-bottom: 0;
+    font-size: 12px;
 }
 
-.pagination .current {
+.ProductionPagination span {
+    color: #fff;
+    cursor: default;
+    background-color: #337ab7;
+    border: 1px solid #337ab7;
+}
+
+.ProductionPagination .current {
     background: #26B;
     color: #fff;
     border: solid 1px #AAE;
 }
 
-.pagination .current.prev, .pagination .current.next{
+.ProductionPagination .current.prev, .ProductionPagination .current.next{
     color:#999;
     border-color:#999;
     background:#fff;
 }
+
+
