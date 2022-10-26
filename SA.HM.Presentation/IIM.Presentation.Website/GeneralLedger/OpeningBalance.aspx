@@ -980,6 +980,7 @@
                     transactionInfo = SupplierDebitCreditList;
                 }
                 debugger;
+                
                 if (transactionInfo.length > 0) {
                     PageMethods.ApproveTransactionOpeningBalance(transactionInfo, transactionType, OnApproveTransactionOpeningBalanceSucceeded, OnApproveTransactionOpeningBalanceFailed);
                     return false;

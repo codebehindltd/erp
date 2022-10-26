@@ -1333,31 +1333,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 btnSave.Enabled = true;
                 CommonHelper.AlertInfo(innboardMessage, AlertMessage.Error, AlertType.Error);
             }
-        }
-
-        // Documents //
-        [WebMethod]
-        public static List<DocumentsBO> LoadDocument(long id, int randomId, string deletedDoc)
-        {
-            List<int> delete = new List<int>();
-            if (!(String.IsNullOrEmpty(deletedDoc)))
-            {
-                delete = deletedDoc.Split(',').Select(t => int.Parse(t)).ToList();
-            }
-
-            List<DocumentsBO> docList = new List<DocumentsBO>();
-
-            docList = new DocumentsDA().GetDocumentsByUserTypeAndUserId("Guest", randomId);
-
-            if (id > 0)
-                docList.AddRange(new DocumentsDA().GetDocumentsByUserTypeAndUserId("Guest", id));
-
-            docList.RemoveAll(x => delete.Contains(Convert.ToInt32(x.DocumentId)));
-
-            docList = new HMCommonDA().GetDocumentListWithIcon(docList);
-            return docList;
-        }
-
+        }       
         //************************ User Defined Function ********************//
         private void LoadGuestTitle()
         {
@@ -1420,8 +1396,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         {
             bool flag = true;
             if (Session["MessegePanelEnableForSelectedRoomNumber"] == null)
-            {
-                int availableRoomQty = 0;
+            {                
                 HMUtility hmUtility = new HMUtility();
                 RoomNumberBO roomBO = new RoomNumberBO();
                 RoomNumberDA roomDA = new RoomNumberDA();
@@ -1455,29 +1430,30 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         _reservationId = Int32.Parse(this.ddlReservationId.SelectedValue.Split('~')[0]);
                     }
 
-                    HMCommonDA hmCommonDA = new HMCommonDA();
-                    availableRoomQty = hmCommonDA.GetRoomAvailableQuantity(_reservationId, StartDate, EndDate, roomTypeId.ToString(), "1");
+                    //int availableRoomQty = 0;
+                    //HMCommonDA hmCommonDA = new HMCommonDA();
+                    //availableRoomQty = hmCommonDA.GetRoomAvailableQuantity(_reservationId, StartDate, EndDate, roomTypeId.ToString(), "1");
 
-                    // // // ---------- MAMUN
-                    //List<RoomNumberBO> typeWiseUnassignedRoomNumberBOList = typeWiseRoomNumberBOList.Where(x => x.RoomId > 5000).ToList();
-                    //availableRoomQty = availableRoomQty - typeWiseUnassignedRoomNumberBOList.Count;
+                    //// // // ---------- MAMUN
+                    ////List<RoomNumberBO> typeWiseUnassignedRoomNumberBOList = typeWiseRoomNumberBOList.Where(x => x.RoomId > 5000).ToList();
+                    ////availableRoomQty = availableRoomQty - typeWiseUnassignedRoomNumberBOList.Count;
 
-                    if (availableRoomQty <= 0)
-                    {
-                        if (loadFrom != "btnSave")
-                        {
-                            IsRoomAvailableForRegistrationEnable = 1;
-                            this.isMessageBoxEnable = 1;
-                            this.lblMessage.Text = "This type of room is not available. If you continue then it will overbooking.";
-                            this.SetTab("EntryTab");
-                            flag = false;
-                            return flag;
-                        }
-                        else
-                        {
-                            IsRoomAvailableForRegistrationEnable = -1;
-                        }
-                    }
+                    //if (availableRoomQty <= 0)
+                    //{
+                    //    if (loadFrom != "btnSave")
+                    //    {
+                    //        IsRoomAvailableForRegistrationEnable = 1;
+                    //        this.isMessageBoxEnable = 1;
+                    //        this.lblMessage.Text = "This type of room is not available. If you continue then it will overbooking.";
+                    //        this.SetTab("EntryTab");
+                    //        flag = false;
+                    //        return flag;
+                    //    }
+                    //    else
+                    //    {
+                    //        IsRoomAvailableForRegistrationEnable = -1;
+                    //    }
+                    //}
                 }
             }
             return flag;
@@ -4140,7 +4116,27 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             contactInformationList = contactInformationDA.GetContactInformationByCompanyIdNSearchTextForAutoComplete(companyId, searchText);
             return contactInformationList;
         }
+        [WebMethod]
+        public static List<DocumentsBO> LoadDocument(long id, int randomId, string deletedDoc)
+        {
+            List<int> delete = new List<int>();
+            if (!(String.IsNullOrEmpty(deletedDoc)))
+            {
+                delete = deletedDoc.Split(',').Select(t => int.Parse(t)).ToList();
+            }
 
+            List<DocumentsBO> docList = new List<DocumentsBO>();
+
+            docList = new DocumentsDA().GetDocumentsByUserTypeAndUserId("Guest", randomId);
+
+            if (id > 0)
+                docList.AddRange(new DocumentsDA().GetDocumentsByUserTypeAndUserId("Guest", id));
+
+            docList.RemoveAll(x => delete.Contains(Convert.ToInt32(x.DocumentId)));
+
+            docList = new HMCommonDA().GetDocumentListWithIcon(docList);
+            return docList;
+        }
         [WebMethod]
         public static GridViewDataNPaging<RateChartMaster, GridPaging> GetRateChartListWithPagination(string promotionName, int companyId, string effectFrom, string effectTo, int gridRecordsCount, int pageNumber, int isCurrentOrPreviousPage)
         {
@@ -4165,7 +4161,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             myGridData.GridPagingProcessing(RateChartList, totalRecords, "LoadPackage");
             return myGridData;
         }
-
         [WebMethod]
         public static RateChartMasterEditView GetRateChartById(long id)
         {
