@@ -2156,7 +2156,7 @@
                 </div>
             </div>
             <div id="SearchPanel" class="panel panel-default">
-                <div class="panel-heading" pagersettings-mode="NextPreviousFirstLast">
+                <div class="panel-heading" pagersettings-mode="NumericFirstLast">
                     Search Information
                 </div>
                 <div class="panel-body">
@@ -2212,8 +2212,10 @@
                             </asp:TemplateField>
                         </Columns>
                         <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
-                        <PagerSettings Mode="NextPreviousFirstLast" FirstPageText="First" LastPageText="Last" NextPageText="Next" PreviousPageText="Prev" />
-                        <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                        <%--<PagerSettings Mode="NextPrevious" PageButtonCount="4" PreviousPageText="Previous" NextPageText="Next" />--%>
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="Last"/>
+                        <%--<PagerSettings Mode="NextPreviousFirstLast" FirstPageText="First" LastPageText="Last" NextPageText="Next" PreviousPageText="Prev" />--%>
+                        <PagerStyle CssClass="pagination" BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
                         <EmptyDataTemplate>
                             <asp:Label ID="lblRecordNotFound" runat="server" Text="Record Not Found."></asp:Label>
                         </EmptyDataTemplate>

@@ -16,6 +16,7 @@
     <link href="/StyleSheet/css/toastr.css" rel="stylesheet" type="text/css" />
     <link href="/JSLibrary/JqueryTouchKeyBoard/css/keyboard.css" rel="Stylesheet" type="text/css" />
     <link href="/StyleSheet/menucss/menuStyle.css" rel="stylesheet" type="text/css" />
+    <link href="/StyleSheet/css/ProductionPagination.css" rel="stylesheet" type="text/css" />
 
     <script src="/Scripts/jquery-3.1.0.js" type="text/javascript"></script>
     <script src="/Scripts/bootstrap.min.js" type="text/javascript"></script>

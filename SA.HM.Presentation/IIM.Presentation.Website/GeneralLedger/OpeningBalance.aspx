@@ -968,16 +968,16 @@
                     transactionInfo = SupplierDebitCreditList;
                 }
                 else if (transactionType == "Employee") {
-                    transactionInfo = SupplierDebitCreditList;
+                    transactionInfo = EmployeeDebitCreditList;
                 }
                 else if (transactionType == "Member") {
-                    transactionInfo = SupplierDebitCreditList;
+                    transactionInfo = MemberDebitCreditList;
                 }
                 else if (transactionType == "CNF") {
-                    transactionInfo = SupplierDebitCreditList;
+                    transactionInfo = CNFDebitCreditList;
                 }
                 else if (transactionType == "Inventory") {
-                    transactionInfo = SupplierDebitCreditList;
+                    id = InvOpeningBalanceDetails[0].InvOpeningBalanceId;
                 }
                 debugger;
                 
