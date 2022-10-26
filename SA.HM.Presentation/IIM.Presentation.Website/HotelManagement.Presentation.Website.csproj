@@ -864,6 +864,7 @@
     <Content Include="SMSTemplates\ReservationAmedmentSms.txt" />
     <Content Include="SMSTemplates\ReservationCancelSms.txt" />
     <Content Include="SMSTemplates\ReservationConfirmationSms.txt" />
+    <Content Include="StyleSheet\css\ProductionPagination.css" />
     <Content Include="SupportAndTicket\Reports\Rdlc\rptSupportTicket.rdlc" />
     <Content Include="POS\Reports\Rdlc\rptRiceMillBillForA4Page.rdlc" />
     <Content Include="POS\Reports\Rdlc\rptRiceMillBillForA4PageWithoutHeader.rdlc" />
