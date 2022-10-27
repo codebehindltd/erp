@@ -1250,7 +1250,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>CategoryWiseTransferSummary</DataSetName>
-        <Top>1.05705in</Top>
+        <Top>1.26955in</Top>
         <Height>0.99306in</Height>
         <Width>10.47883in</Width>
         <ZIndex>3</ZIndex>
@@ -1260,11 +1260,48 @@
           </Border>
         </Style>
       </Tablix>
+      <Textbox Name="Textbox9">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>="Date From: " + Parameters!FromDate.Value + " To: " + Parameters!ToDate.Value</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>9pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <Color>SteelBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>1.04693in</Top>
+        <Height>0.19792in</Height>
+        <Width>10.47884in</Width>
+        <ZIndex>4</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Top</VerticalAlign>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>2.07094in</Height>
+    <Height>2.28761in</Height>
     <Style />
   </Body>
-  <Width>10.47883in</Width>
+  <Width>10.47884in</Width>
   <Page>
     <PageFooter>
       <Height>0.22222in</Height>
@@ -1327,7 +1364,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>0.01389in</Top>
-          <Left>5.53in</Left>
+          <Left>8.48in</Left>
           <Height>0.20833in</Height>
           <Width>0.58412in</Width>
           <ZIndex>1</ZIndex>
@@ -1363,7 +1400,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox67</rd:DefaultName>
           <Top>0.01389in</Top>
-          <Left>6.1275in</Left>
+          <Left>9.0775in</Left>
           <Height>0.20833in</Height>
           <Width>0.12944in</Width>
           <ZIndex>2</ZIndex>
@@ -1398,7 +1435,7 @@
           </Paragraphs>
           <rd:DefaultName>RoomNumber</rd:DefaultName>
           <Top>0.01389in</Top>
-          <Left>6.27223in</Left>
+          <Left>9.22223in</Left>
           <Height>0.20833in</Height>
           <Width>1.23471in</Width>
           <ZIndex>3</ZIndex>
@@ -1573,6 +1610,18 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="ItemName">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="FromDate">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ToDate">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>

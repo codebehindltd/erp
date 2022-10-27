@@ -6,7 +6,7 @@
         <Source>External</Source>
         <Value>=Parameters!Path.Value</Value>
         <Sizing>FitProportional</Sizing>
-        <Left>0.01495in</Left>
+        <Left>0.01858in</Left>
         <Height>0.78125in</Height>
         <Width>0.94538in</Width>
         <ToolTip>=Parameters!Path.Value</ToolTip>
@@ -193,7 +193,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <Top>0.01519in</Top>
-        <Left>0.9881in</Left>
+        <Left>0.96673in</Left>
         <Height>0.78125in</Height>
         <Width>9.47922in</Width>
         <ZIndex>1</ZIndex>
@@ -226,7 +226,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
         <Top>0.82292in</Top>
-        <Left>0.01495in</Left>
+        <Left>0in</Left>
         <Height>0.23413in</Height>
         <Width>10.45237in</Width>
         <ZIndex>2</ZIndex>
@@ -1585,8 +1585,7 @@
             <TablixMember />
           </TablixMembers>
         </TablixRowHierarchy>
-        <Top>1.05083in</Top>
-        <Left>0.02646in</Left>
+        <Top>1.30083in</Top>
         <Height>1.75in</Height>
         <Width>10.45239in</Width>
         <ZIndex>3</ZIndex>
@@ -1597,11 +1596,48 @@
           </Border>
         </Style>
       </Tablix>
+      <Textbox Name="Textbox8">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>="Date From: " + Parameters!FromDate.Value + " To: " + Parameters!ToDate.Value</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>9pt</FontSize>
+                  <FontWeight>Normal</FontWeight>
+                  <Color>SteelBlue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>1.07021in</Top>
+        <Height>0.19792in</Height>
+        <Width>10.45602in</Width>
+        <ZIndex>4</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Top</VerticalAlign>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>2.80083in</Height>
+    <Height>3.23833in</Height>
     <Style />
   </Body>
-  <Width>10.47885in</Width>
+  <Width>10.45602in</Width>
   <Page>
     <PageFooter>
       <Height>0.2363in</Height>
@@ -1628,7 +1664,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>0.02797in</Top>
-          <Left>8.50191in</Left>
+          <Left>8.46804in</Left>
           <Height>0.20833in</Height>
           <Width>0.58412in</Width>
           <Style>
@@ -1663,7 +1699,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox67</rd:DefaultName>
           <Top>0.02797in</Top>
-          <Left>9.09941in</Left>
+          <Left>9.06554in</Left>
           <Height>0.20833in</Height>
           <Width>0.12944in</Width>
           <ZIndex>1</ZIndex>
@@ -1698,7 +1734,7 @@
           </Paragraphs>
           <rd:DefaultName>RoomNumber</rd:DefaultName>
           <Top>0.02797in</Top>
-          <Left>9.24414in</Left>
+          <Left>9.21027in</Left>
           <Height>0.20833in</Height>
           <Width>1.23471in</Width>
           <ZIndex>2</ZIndex>
@@ -1735,7 +1771,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox7</rd:DefaultName>
           <Top>0.02797in</Top>
-          <Left>0.01495in</Left>
+          <Left>0.01858in</Left>
           <Height>0.20833in</Height>
           <Width>4.46667in</Width>
           <ZIndex>3</ZIndex>
@@ -1910,6 +1946,18 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="ItemName">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="FromDate">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ToDate">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>

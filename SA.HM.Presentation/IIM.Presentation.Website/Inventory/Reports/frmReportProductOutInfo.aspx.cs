@@ -156,6 +156,30 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
                     }                    
                 }
             }
+            else if (reportFormat == "ItemWiseSummary")
+            {
+                if (reportType == "CostCenterWise")
+                {
+                    reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptProductOutInfoCostCenterWiseItemSummary.rdlc");
+
+                }
+                else if (reportType == "DateWise")
+                {
+                    reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptProductOutInfoDateWiseItemSummary.rdlc");
+                }
+                else if (reportType == "ItemWise")
+                {
+                    reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptProductOutInfoItemWiseItemSummary.rdlc");
+                }
+                else if (reportType == "CategoryWise")
+                {
+                    reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptProductOutInfoCategoryWiseItemSummary.rdlc");
+                }
+                else if (reportType == "TransferNumberWise")
+                {
+                    reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptProductOutInfoTransferNumberWiseItemSummary.rdlc");
+                }
+            }
             else if (reportFormat == "Details")
             {
                 if (reportType == "CostCenterWise")
@@ -220,6 +244,8 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             paramReport.Add(new ReportParameter("PrintDateTime", printDate));
             paramReport.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
             paramReport.Add(new ReportParameter("ItemName", productName));
+            paramReport.Add(new ReportParameter("FromDate", startDate));
+            paramReport.Add(new ReportParameter("ToDate", endDate));
             rvTransaction.LocalReport.SetParameters(paramReport);
 
             PMProductReceivedDA prDA = new PMProductReceivedDA();

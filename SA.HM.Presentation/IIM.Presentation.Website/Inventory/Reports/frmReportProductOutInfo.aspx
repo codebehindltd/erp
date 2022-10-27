@@ -232,7 +232,6 @@
                     </div>
                     <div class="col-md-4">
                         <asp:DropDownList ID="ddlReportType" runat="server" CssClass="form-control" TabIndex="1">
-                            <%--<asp:ListItem Value="0" Text="-- Please Select --"></asp:ListItem>--%>
                             <asp:ListItem Value="DateWise" Text="Date Wise"></asp:ListItem>
                             <asp:ListItem Value="CostCenterWise" Text="Cost Center Wise"></asp:ListItem>
                             <asp:ListItem Value="ItemWise" Text="Item Wise"></asp:ListItem>
@@ -246,7 +245,8 @@
                     </div>
                     <div class="col-md-4">
                         <asp:DropDownList ID="ddlReportFormat" runat="server" CssClass="form-control" TabIndex="1">
-                            <asp:ListItem Value="Summary" Text="Summary"></asp:ListItem>
+                            <asp:ListItem Value="ItemWiseSummary" Text="Item Wise Summary"></asp:ListItem>
+                            <asp:ListItem Value="Summary" Text="Summary"></asp:ListItem>                            
                             <asp:ListItem Value="Details" Text="Details"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
