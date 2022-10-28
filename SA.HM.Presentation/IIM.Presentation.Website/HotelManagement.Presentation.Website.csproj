@@ -830,7 +830,7 @@
     <Content Include="HotelManagement\Reports\Rdlc\rptRoomReservationReport.rdlc">
       <SubType>Designer</SubType>
     </Content>
-    <EmbeddedResource Include="Inventory\Reports\Rdlc\rptProductOutInfoCategoryWiseItemSummary.rdlc" />
+    <Content Include="Inventory\Reports\Rdlc\rptProductOutInfoCategoryWiseItemSummary.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptProductOutInfoCostCenterWiseItemSummary.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptProductOutInfoDateWiseItemSummary.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptProductOutInfoItemWiseItemSummary.rdlc" />
