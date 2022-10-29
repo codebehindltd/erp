@@ -1459,22 +1459,16 @@
         }
 
         function PerformClearAction() {
-
-
             $("#ContentPlaceHolder1_hfOutId").val("0");
             $("#ContentPlaceHolder1_txtRemarks").val("");
             $("#ContentPlaceHolder1_ddlOutFor").val("0").trigger("change");
-
-            $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val("0").trigger("change");
-            $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").val("0").trigger("change");
-
+            //$("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val("0").trigger("change");
+            //$("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").val("0").trigger("change");
             $("#ContentPlaceHolder1_ddlCategory").val("0");
             $("#ContentPlaceHolder1_hfItemId").val("0");
             $("#ContentPlaceHolder1_ddlProduct").val("0");
-
             $("#ContentPlaceHolder1_ddlStockBy").val("0");
             $("#ContentPlaceHolder1_hfStockById").val("0");
-
             $('#ContentPlaceHolder1_ddlCostCenter').val("0").trigger('change');
             $("#ContentPlaceHolder1_hfLocationId").val("0");
             $("#ContentPlaceHolder1_ddlLocation").val("0");
@@ -1482,11 +1476,9 @@
             $("#ContentPlaceHolder1_lblCurrentStock").text("0");
             $("#ContentPlaceHolder1_lblCurrentStockBy").text("");
             $("#ContentPlaceHolder1_txtAverageCost").val("");
-
             $('#ContentPlaceHolder1_ddlAccountExpenseHead').val('0').trigger('change');
             $("#ContentPlaceHolder1_ddlProduct").val("0").trigger('change');
             $("#ContentPlaceHolder1_ddlOutForLocation").val("0");
-
             $("#ProductOutGrid tbody").html("");
 
             outItemEdited = "";
@@ -1494,15 +1486,12 @@
             RequisitionProductDetails = [];
 
             $("#ContentPlaceHolder1_btnSave").val("Save");
-
             $("#ContentPlaceHolder1_ddlSearchCostCenter").val("0");
             $("#ContentPlaceHolder1_ddlSearchLocation").val("0");
-
             $("#ContentPlaceHolder1_ddlIssueType").attr("disabled", false);
             $("#ContentPlaceHolder1_ddlCostCenter").attr("disabled", false);
             $("#ContentPlaceHolder1_ddlLocation").attr("disabled", false);
             $("#ContentPlaceHolder1_ddlOutFor").attr("disabled", false);
-
             $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").attr("disabled", false);
             $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").attr("disabled", false);
             //ContentPlaceHolder1_ddlCostCenter
@@ -1510,7 +1499,6 @@
         }
 
         function CancelOutOrder() {
-
             $("#ContentPlaceHolder1_ddlCostCenter").val("0");
             $("#ContentPlaceHolder1_ddlCategory").val("0");
             $("#ContentPlaceHolder1_hfItemId").val("0");
@@ -1578,11 +1566,9 @@
 
         function GridPagingForSearchProductOut(pageNumber, isCurrentOrPreviousPage) {
             //window.location = "frmItemConsumption.aspx?pn=" + pageNumber + "&grc=" + ($("#ContentPlaceHolder1_gvProductOutInfo tbody tr").length + 1) + "&icp=" + isCurrentOrPreviousPage;
-
         }
 
         function LoadConsumptionList(pageNumber, IsCurrentOrPreviousPage) {
-
             var gridRecordsCount = $("#tbConsumptionList tbody tr").length;
             var fromDate = $("#ContentPlaceHolder1_txtFromDate").val();
             var toDate = $("#ContentPlaceHolder1_txtToDate").val();
@@ -1611,7 +1597,6 @@
         }
 
         function OnsuccessLoading(result) {
-
             $("#tbConsumptionList tbody tr").remove();
             $("#GridPagingContainer ul").html("");
             var tr = "", totalRow = 0, editLink = "", deleteLink = "", invoiceLink = "", approvalLink = "", infoLink = "";
@@ -1622,7 +1607,6 @@
                 $("#tbConsumptionList tbody ").append(emptyTr);
                 return false;
             }
-
 
             $.each(result.GridData, function (count, gridObject) {
                 totalRow = $("#tbConsumptionList tbody tr").length;
@@ -1664,8 +1648,6 @@
                 }
 
                 tr += "<td align='center' style=\"width:15%;\">" + editLink + deleteLink + approvalLink + invoiceLink + infoLink + "</td>";
-
-
                 tr += "</tr>";
 
                 $("#tbConsumptionList tbody").append(tr);
@@ -1699,11 +1681,9 @@
         }
 
         function SearialAddedWindow(itemName, itemId, quantity) {
-
             $("#ContentPlaceHolder1_hfItemIdForSerial").val(itemId);
             $("#lblAddedQuantity").text('0');
             $("#lblItemQuantity").text(quantity);
-
             $("#SerialItemTable tbody tr").remove();
             $("#SerialItemTable tbody").html("");
 
@@ -1750,9 +1730,7 @@
         }
 
         function AddSerialNumber() {
-
             var itemId = $("#ContentPlaceHolder1_hfItemIdForSerial").val();
-
             var addedQuantity = $("#lblAddedQuantity").text();
             var totalQuantity = $("#lblItemQuantity").text();
             var serial = serialNumber;
@@ -1826,9 +1804,7 @@
             NewAddedSerial = new Array();
         }
         function DeleteItemSerial(control) {
-
             var tr = $(control).parent().parent();
-
             var itemId = parseInt($(tr).find("td:eq(2)").text(), 10);
             var outSerialId = parseInt($(tr).find("td:eq(3)").text(), 10);
 
@@ -1858,12 +1834,10 @@
         }
 
         function ClearSearch() {
-            //$("#ContentPlaceHolder1_txtIssueNumber").val("");
             $("#ContentPlaceHolder1_ddlStatus").val("");
             $("#ContentPlaceHolder1_ddlSearchIssueType").val("");
             $("#ContentPlaceHolder1_txtFromDate").val("");
             $("#ContentPlaceHolder1_txtToDate").val("");
-
             return false;
         }
 
@@ -1887,58 +1861,58 @@
                     toastr.error(response.d);
                 }
             });
-            }
-            function GetInvItemAttributeByItemIdAndAttributeType(itemId, type) {
-                return $.ajax({
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    url: '../Inventory/frmItemConsumption.aspx/GetInvItemAttributeByItemIdAndAttributeType',
-                    data: "{'ItemId':'" + itemId + "','attributeType':'" + type + "'}",
-                    dataType: "json",
-                    async: false,
-                    success: function (data) {
-                        if (data.d != null) {
-                            if (type == 'Color')
-                                OnLoadAttributeColorSucceeded(data.d);
-                            if (type == 'Size')
-                                OnLoadAttributeSizeSucceeded(data.d);
-                            if (type == 'Style')
-                                OnLoadAttributeStyleSucceeded(data.d);
-                        }
-                    },
-                    error: function (result) {
-                        toastr.error("Please Contact With Admin");
+        }
+        function GetInvItemAttributeByItemIdAndAttributeType(itemId, type) {
+            return $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: '../Inventory/frmItemConsumption.aspx/GetInvItemAttributeByItemIdAndAttributeType',
+                data: "{'ItemId':'" + itemId + "','attributeType':'" + type + "'}",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    if (data.d != null) {
+                        if (type == 'Color')
+                            OnLoadAttributeColorSucceeded(data.d);
+                        if (type == 'Size')
+                            OnLoadAttributeSizeSucceeded(data.d);
+                        if (type == 'Style')
+                            OnLoadAttributeStyleSucceeded(data.d);
                     }
-                });
-            }
-            function OnLoadAttributeStyleSucceeded(result) {
-                var list = result;
-                var ddlStyleAttributeId = '<%=ddlStyleAttribute.ClientID%>';
-                var control = $('#' + ddlStyleAttributeId);
-                control.empty();
+                },
+                error: function (result) {
+                    toastr.error("Please Contact With Admin");
+                }
+            });
+        }
+        function OnLoadAttributeStyleSucceeded(result) {
+            var list = result;
+            var ddlStyleAttributeId = '<%=ddlStyleAttribute.ClientID%>';
+            var control = $('#' + ddlStyleAttributeId);
+            control.empty();
 
-                if (list != null) {
-                    if (list.length > 0) {
+            if (list != null) {
+                if (list.length > 0) {
 
-                        control.attr("disabled", false);
-                        //control.removeAttr("disabled");
-                        for (i = 0; i < list.length; i++) {
-                            control.append('<option title="' + list[i].Name + '" value="' + list[i].Id + '">' + list[i].Name + '</option>');
-                        }
-                    }
-                    else {
-
-                        control.attr("disabled", true);
-                        //control.removeAttr("disabled");
+                    control.attr("disabled", false);
+                    //control.removeAttr("disabled");
+                    for (i = 0; i < list.length; i++) {
+                        control.append('<option title="' + list[i].Name + '" value="' + list[i].Id + '">' + list[i].Name + '</option>');
                     }
                 }
-                return false;
+                else {
+
+                    control.attr("disabled", true);
+                    //control.removeAttr("disabled");
+                }
             }
-            function OnLoadAttributeStyleFailed(error) {
-            }
-            function OnLoadAttributeSizeSucceeded(result) {
-                var list = result;
-                var ddlSizeAttributeId = '<%=ddlSizeAttribute.ClientID%>';
+            return false;
+        }
+        function OnLoadAttributeStyleFailed(error) {
+        }
+        function OnLoadAttributeSizeSucceeded(result) {
+            var list = result;
+            var ddlSizeAttributeId = '<%=ddlSizeAttribute.ClientID%>';
             var control = $('#' + ddlSizeAttributeId);
             control.empty();
 
@@ -1965,58 +1939,58 @@
         function OnLoadAttributeColorSucceeded(result) {
             var list = result;
             var ddlColorAttributeId = '<%=ddlColorAttribute.ClientID%>';
-            var control = $('#' + ddlColorAttributeId);
-            control.empty();
+        var control = $('#' + ddlColorAttributeId);
+        control.empty();
 
-            if (list != null) {
-                if (list.length > 0) {
-                    control.attr("disabled", false);
-                    //control.removeAttr("disabled");
-                    for (i = 0; i < list.length; i++) {
-                        control.append('<option title="' + list[i].Name + '" value="' + list[i].Id + '">' + list[i].Name + '</option>');
+        if (list != null) {
+            if (list.length > 0) {
+                control.attr("disabled", false);
+                //control.removeAttr("disabled");
+                for (i = 0; i < list.length; i++) {
+                    control.append('<option title="' + list[i].Name + '" value="' + list[i].Id + '">' + list[i].Name + '</option>');
+                }
+            }
+            else {
+
+                control.attr("disabled", true);
+                //control.removeAttr("disabled");
+            }
+        }
+        return false;
+    }
+    function OnLoadAttributeColorFailed(error) {
+    }
+    function GetInvItemStockInfoByItemAndAttributeId(companyId, projectId, itemId, colorId, sizeId, styleId, locationId) {
+        return $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: '../Inventory/frmItemConsumption.aspx/GetInvItemStockInfoByItemAndAttributeId',
+            data: "{'companyId':'" + companyId + "','projectId':'" + projectId + "','itemId':'" + itemId + "','colorId':'" + colorId + "','sizeId':'" + sizeId + "','styleId':'" + styleId + "','locationId':'" + locationId + "'}",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.d != null) {
+                    $("#ContentPlaceHolder1_lblCurrentStock").text(data.d.StockQuantity);//.attr("disabled", true);
+                    if ($("#btnAdd").val() != "Update") {
+                        if ($("#ContentPlaceHolder1_hfIsAverageCostEnableInItemConsumption").val() == "0") {
+                            $("#ContentPlaceHolder1_txtAverageCost").val(data.d.AverageCost).attr("disabled", true);
+                        }
+                        else {
+                            $("#ContentPlaceHolder1_txtAverageCost").val(data.d.AverageCost);
+                        }
                     }
                 }
                 else {
-
-                    control.attr("disabled", true);
-                    //control.removeAttr("disabled");
+                    $("#ContentPlaceHolder1_lblCurrentStock").text("0");//.attr("disabled", true);
+                    $("#ContentPlaceHolder1_txtAverageCost").text("0");
                 }
+            },
+            error: function (result) {
+                toastr.error("Please Contact With Admin");
             }
-            return false;
-        }
-        function OnLoadAttributeColorFailed(error) {
-        }
-        function GetInvItemStockInfoByItemAndAttributeId(companyId, projectId, itemId, colorId, sizeId, styleId, locationId) {
-            return $.ajax({
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                url: '../Inventory/frmItemConsumption.aspx/GetInvItemStockInfoByItemAndAttributeId',
-                data: "{'companyId':'" + companyId + "','projectId':'" + projectId + "','itemId':'" + itemId + "','colorId':'" + colorId + "','sizeId':'" + sizeId + "','styleId':'" + styleId + "','locationId':'" + locationId + "'}",
-                dataType: "json",
-                async: false,
-                success: function (data) {
-                    if (data.d != null) {
-                        $("#ContentPlaceHolder1_lblCurrentStock").text(data.d.StockQuantity);//.attr("disabled", true);
-                        if ($("#btnAdd").val() != "Update") {
-                            if ($("#ContentPlaceHolder1_hfIsAverageCostEnableInItemConsumption").val() == "0") {
-                                $("#ContentPlaceHolder1_txtAverageCost").val(data.d.AverageCost).attr("disabled", true);
-                            }
-                            else {
-                                $("#ContentPlaceHolder1_txtAverageCost").val(data.d.AverageCost);
-                            }
-                        }
-                    }
-                    else {
-                        $("#ContentPlaceHolder1_lblCurrentStock").text("0");//.attr("disabled", true);
-                        $("#ContentPlaceHolder1_txtAverageCost").text("0");
-                    }
-                },
-                error: function (result) {
-                    toastr.error("Please Contact With Admin");
-                }
-            });
-        }
-    </script>
+        });
+    }
+</script>
     <div id="detailsConsumptionDialog" style="display: none;">
         <div id="detailsConsumptionGridContainer">
         </div>
@@ -2215,7 +2189,7 @@
                             </div>
                         </div>
                     </div>
-                    <UserControl:CompanyProjectUserControl ID="companyProjectUserControl" runat="server" />
+                    <usercontrol:companyprojectusercontrol id="companyProjectUserControl" runat="server" />
                 </div>
             </div>
             <div class="panel panel-default">

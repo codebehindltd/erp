@@ -1572,22 +1572,6 @@
                 toastr.warning("Please Select Out Type.");
                 return false;
             }
-            //else if ($("#ContentPlaceHolder1_ddlCostCenterFrom").val() == "0") {
-            //    toastr.warning("Please Select Store From.");
-            //    return false;
-            //}
-            //else if ($("#ContentPlaceHolder1_ddlCostCenterTo").val() == "0") {
-            //    toastr.warning("Please Select Store To.");
-            //    return false;
-            //}
-            //else if ($("#ContentPlaceHolder1_ddlLocationFrom").val() == "0") {
-            //    toastr.warning("Please Select Location From.");
-            //    return false;
-            //}
-            //else if ($("#ContentPlaceHolder1_ddlLocationTo").val() == "0") {
-            //    toastr.warning("Please Select Location To.");
-            //    return false;
-            //}
 
             if ($("#ContentPlaceHolder1_ddlOutType").val() == "StockTransfer") {
                 if ($("#ItemForTransferTbl tbody tr").length == 0) {
@@ -1937,40 +1921,33 @@
         }
 
         function PerformClearAction() {
-
             $("#ContentPlaceHolder1_hfOutId").val("0");
-
             $("#ItemForTransferTbl tbody").html("");
             $("#RequisitionWiseItemTbl tbody").html("");
             $("#SalesOrderItemTbl tbody").html("");
             $("#BillingOrderItemTbl tbody").html("");
-
             $("#ContentPlaceHolder1_ddlCostCenterFrom").val("0").prop('disabled', false).trigger('change');
             $("#ContentPlaceHolder1_ddlLocationFrom").val("0").prop('disabled', false);
             $("#ContentPlaceHolder1_ddlCostCenterTo").val("0").prop('disabled', false).trigger('change');
             $("#ContentPlaceHolder1_ddlLocationTo").val("0").prop('disabled', false);
             $("#ContentPlaceHolder1_ddlRequisition").val("0").trigger('change');
             $("#ContentPlaceHolder1_ddlQuotation").val("0").prop('disabled', false).trigger('change');
-
             $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").prop('disabled', false);
             $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").prop('disabled', false);
             $("#ContentPlaceHolder1_companyProjectUserControlTwo_ddlGLCompany").prop('disabled', false);
             $("#ContentPlaceHolder1_companyProjectUserControlTwo_ddlGLProject").prop('disabled', false);
             $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val("0").trigger("change");
             $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").val("0").trigger("change");
-            $("#ContentPlaceHolder1_companyProjectUserControlTwo_ddlGLCompany").val("0").trigger("change");
-            $("#ContentPlaceHolder1_companyProjectUserControlTwo_ddlGLProject").val("0").trigger("change");
-
+            //$("#ContentPlaceHolder1_companyProjectUserControlTwo_ddlGLCompany").val("0").trigger("change");
+            //$("#ContentPlaceHolder1_companyProjectUserControlTwo_ddlGLProject").val("0").trigger("change");
             $("#ContentPlaceHolder1_txtBillNo").val("");
             $("#ContentPlaceHolder1_hfBillId").val("0");
-
             $("#ContentPlaceHolder1_ddlCategory").val("0").trigger('change');
             $("#ContentPlaceHolder1_txtItem").val("");
             $("#ContentPlaceHolder1_txtCurrentStock").val("").prop("disabled", false);
             $("#ContentPlaceHolder1_txtCurrentStockBy").val("").prop("disabled", false);
             $("#ContentPlaceHolder1_txtTransferQuantity").val("");
             $("#ContentPlaceHolder1_txtRemarks").val("");
-
             $("#ContentPlaceHolder1_ddlOutType").attr("disabled", false);
             $("#ContentPlaceHolder1_ddlRequisition").attr("disabled", false);
             $("#ContentPlaceHolder1_ddlQuotation").attr("disabled", false);
@@ -1995,7 +1972,6 @@
         }
 
         function SearchOutOrder(pageNumber, IsCurrentOrPreviousPage) {
-
             var gridRecordsCount = $("#OutOrderGrid tbody tr").length;
             var issueNumber = "0", status = "", issueType = "", fromDate = null, toDate = null;
 
@@ -2023,13 +1999,10 @@
             return false;
         }
         function OnSearchPurchaseOrderSucceed(result) {
-
             var tr = "";
 
             $.each(result.GridData, function (count, gridObject) {
-
                 tr += "<tr>";
-
                 tr += "<td style='width:10%;'>" + gridObject.IssueNumber + "</td>";
                 tr += "<td style='width:10%;'>" + gridObject.IssueType + "</td>";
 
@@ -2068,10 +2041,7 @@
                     tr += "&nbsp;&nbsp;<img src='../Images/approved.png' onClick= \"javascript:return OutOrderApprovalWithConfirmation('" + gridObject.ProductOutFor + "','" + 'Approved' + "', " + gridObject.OutId + "," + gridObject.RequisitionOrSalesId + ")\" alt='Approved'  title='Approved' border='0' />";
                 }
 
-                //if (gridObject.Status == 'Approved') {
                 tr += "&nbsp;&nbsp;<img src='../Images/ReportDocument.png'  onClick= \"javascript:return ShowReport('" + gridObject.ProductOutFor + "'," + gridObject.OutId + ",'" + gridObject.Status + "'," + gridObject.CreatedBy + ")\" alt='Invoice' title='Item Transfer Info' border='0' />";
-                //}
-
                 tr += "</td>";
 
                 tr += "<td style='display:none;'>" + gridObject.OutId + "</td>";
