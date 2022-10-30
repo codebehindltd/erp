@@ -1009,7 +1009,7 @@
                             tr += "&nbsp;&nbsp;<img src='../Images/delete.png'  onClick= \"javascript:return VoucherDelete('" + gridObject.LedgerMasterId + "')\" alt='Delete' title='Delete' border='0' />";
                     }
                     else {
-                        if (gridObject.IsModulesTransaction) {
+                        if (!gridObject.IsModulesTransaction) {
                             if (gridObject.IsCanEdit)
                                 tr += "<img src='../Images/edit.png' onClick= \"javascript:return VoucherEdit('" + gridObject.LedgerMasterId + "')\" alt='Edit'  title='Edit' border='0' />";
                             if (gridObject.IsCanDelete)
@@ -1023,7 +1023,7 @@
                         tr += "&nbsp;&nbsp;<img src='../Images/delete.png'  onClick= \"javascript:return VoucherDelete('" + gridObject.LedgerMasterId + "')\" alt='Delete' title='Delete' border='0' />";
                     }
                     else {
-                        if (gridObject.IsModulesTransaction) {
+                        if (!gridObject.IsModulesTransaction) {
                             tr += "<img src='../Images/edit.png' onClick= \"javascript:return VoucherEdit('" + gridObject.LedgerMasterId + "')\" alt='Edit'  title='Edit' border='0' />";
                             tr += "&nbsp;&nbsp;<img src='../Images/delete.png'  onClick= \"javascript:return VoucherDelete('" + gridObject.LedgerMasterId + "')\" alt='Delete' title='Delete' border='0' />";
                         }
