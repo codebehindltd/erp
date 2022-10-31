@@ -46,7 +46,7 @@ namespace HotelManagement.Presentation.Website.Payroll
         {
             EmployeeDA empDa = new EmployeeDA();
             List<EmployeeBO> empList = new List<EmployeeBO>();
-            empList = empDa.GetEmployeeInfo();
+            empList = empDa.GetActiveEmployeeInfo();
 
             ListItem FirstItem = new ListItem();
             FirstItem.Value = "0";

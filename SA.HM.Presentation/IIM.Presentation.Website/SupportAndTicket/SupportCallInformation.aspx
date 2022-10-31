@@ -377,12 +377,82 @@
         function OnLoadDocumentByIdFailed(error) {
             toastr.error(error.get_message());
         }
+        function TicketUnapprovalPanel(result) {
+            $("#<%=txtApprovalTransactionNo.ClientID%>").val("");
+
+            $("#AdminApprovalDiv").dialog({
+                autoOpen: true,
+                modal: true,
+                width: 900,
+                closeOnEscape: true,
+                resizable: false,
+                title: "Ticket Unapproval Information",
+                show: 'slide'
+            });
+
+            return false;
+        }
+
+        function CloseDialogTicketUnapprovalPanel() {
+            $("#AdminApprovalDiv").dialog('close');
+            return false;
+        }
+        function AdminApprovalProcess() {
+            var r = confirm("Do you want to continue Voucher Unapproval?");
+            if (r == true) {
+                var transactionNo = $("#<%=txtApprovalTransactionNo.ClientID%>").val();
+                
+                var status = "Pending";
+
+                if (transactionNo == '') {
+                    toastr.warning("Please Enter Ticket Number.");
+                    $("#<%=txtApprovalTransactionNo.ClientID%>").focus();
+                    return false;
+                }
+
+                PageMethods.AdminApprovalStatus(transactionNo, status, OnAdminApprovalProcessSucceed, OnAdminApprovalProcessFailed);
+            }
+
+            return false;
+        }
+
+        function OnAdminApprovalProcessSucceed(result) {
+            toastr.success("Ticket Unapprove Successfull.");
+            return false;
+        }
+
+        function OnAdminApprovalProcessFailed(error) {
+            toastr.error(error.get_message());
+            return false;
+        }
     </script>
     <asp:HiddenField ID="hfSavePermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfEditPermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfDeletePermission" runat="server" Value="0" />
     <div id="voucherDocuments" style="display: none;">
         <div id="imageDiv" style="overflow: auto; height: 500px;"></div>
+    </div>
+    <div id="AdminApprovalDiv" class="panel panel-default" style="display: none;">
+        <div class="panel-body">
+            <div class="form-horizontal">                
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label class="control-label">Ticket Number</label>
+                    </div>
+                    <div class="col-md-4">
+                        <asp:TextBox ID="txtApprovalTransactionNo" runat="server" CssClass="form-control"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <asp:Button ID="Button2" runat="server" TabIndex="3" Text="Unapprove" CssClass="TransactionalButton btn btn-primary btn-sm"
+                        OnClientClick="javascript: return AdminApprovalProcess();" />
+                    <asp:Button ID="Button3" runat="server" TabIndex="4" Text="Close" CssClass="TransactionalButton btn btn-primary btn-sm"
+                        OnClientClick="javascript: return CloseDialogTicketUnapprovalPanel();" />
+                </div>
+            </div>
+        </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -489,7 +559,6 @@
                             <asp:TextBox ID="txtContactEmail" runat="server" CssClass="form-control"></asp:TextBox>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <div class="col-md-2">
                             <label class="control-label">Ticket Owner</label>
@@ -499,13 +568,11 @@
                             </asp:DropDownList>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <div class="col-md-2">
                             <label class="control-label">Support Stage</label>
                         </div>
                         <div class="col-md-4">
-                            <%--<asp:TextBox ID="txtSupportStage" runat="server" CssClass="form-control"></asp:TextBox>--%>
                             <asp:DropDownList runat="server" ID="ddlSupportStage" CssClass="form-control">
                             </asp:DropDownList>
                         </div>
@@ -513,7 +580,6 @@
                             <label class="control-label">Support Category</label>
                         </div>
                         <div class="col-md-4">
-                            <%--<asp:TextBox ID="txtSupportCategory" runat="server" CssClass="form-control"></asp:TextBox>--%>
                             <asp:DropDownList runat="server" ID="ddlSupportCategory" CssClass="form-control">
                             </asp:DropDownList>
                         </div>
@@ -524,18 +590,14 @@
                     <div class="col-md-12">
                         <asp:Button ID="btnSearch" runat="server" TabIndex="3" Text="Search" CssClass="TransactionalButton btn btn-primary btn-sm"
                             OnClientClick="javascript: return SearchInformation(1,1);" />
-
                         <asp:Button ID="btnClear" runat="server" TabIndex="3" Text="Clear" CssClass="TransactionalButton btn btn-primary btn-sm"
                             OnClientClick="javascript: return ClearSupportCallInformation();" />
-
                         <asp:Button ID="btnNewSupportCall" runat="server" TabIndex="4" Text="New Ticket" CssClass="TransactionalButton btn btn-primary btn-sm"
                             OnClientClick="javascript: return CreateNewSupportCall();" />
-
-
+                        <asp:Button ID="btnAdminApproval" runat="server" TabIndex="4" Text="Ticket Unapproval" CssClass="TransactionalButton btn btn-primary btn-sm"
+                        OnClientClick="javascript: return TicketUnapprovalPanel();" />
                     </div>
-
                 </div>
-
                 <div>
                     <table id="tblSupportCallInformation" class="table table-bordered table-condensed table-responsive">
                     </table>

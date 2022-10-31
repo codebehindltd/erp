@@ -1192,7 +1192,47 @@ namespace HotelManagement.Data.SupportAndTicket
 
             return ticketList;
         }
+        public Boolean UpdateTicketStatusByVoucherNo(string ticketNo, string ticketStatus, int userInfoId)
+        {
+            bool retVal = false;
+            int status = 0;
 
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand commandMaster = dbSmartAspects.GetStoredProcCommand("UpdateSupportStatusByTicketNo_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(commandMaster, "@TicketNo", DbType.String, ticketNo);
+                            dbSmartAspects.AddInParameter(commandMaster, "@TicketStatus", DbType.String, ticketStatus);
+                            dbSmartAspects.AddInParameter(commandMaster, "@UserInfoId", DbType.Int32, userInfoId);
+                            status = dbSmartAspects.ExecuteNonQuery(commandMaster, transction);
+                        }
+
+                        if (status > 0)
+                        {
+                            transction.Commit();
+                            retVal = true;
+                        }
+                        else
+                        {
+                            transction.Rollback();
+                            retVal = false;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transction.Rollback();
+                        retVal = false;
+                        throw ex;
+                    }
+                }
+            }
+            return retVal;
+        }
         public STCaseDetailHistoryBO GetSupportCaseInternalNotesDetailsInformationById(long id)
         {
             STCaseDetailHistoryBO BO = new STCaseDetailHistoryBO();

@@ -28,11 +28,38 @@ namespace HotelManagement.Presentation.Website.SupportAndTicket
         {
             if (!IsPostBack)
             {
+                IsAdminUser();
                 LoadSupportDropDown();
                 LoadCaseOwner();
                 CheckAdminUser();
                 CheckPermission();
             }
+        }
+        private void IsAdminUser()
+        {
+            HMUtility hmUtility = new HMUtility();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            // // // ------User Admin Authorization BO Session Information --------------------------------
+            #region User Admin Authorization
+            btnAdminApproval.Visible = false;
+            if (userInformationBO.UserInfoId == 1)
+            {
+                btnAdminApproval.Visible = true;
+            }
+            else
+            {
+                List<SecurityUserAdminAuthorizationBO> adminAuthorizationList = new List<SecurityUserAdminAuthorizationBO>();
+                adminAuthorizationList = System.Web.HttpContext.Current.Session["UserAdminAuthorizationBOSession"] as List<SecurityUserAdminAuthorizationBO>;
+                if (adminAuthorizationList != null)
+                {
+                    if (adminAuthorizationList.Where(x => x.UserInfoId == userInformationBO.UserInfoId && x.ModuleId == 38).Count() > 0)
+                    {
+                        btnAdminApproval.Visible = true;
+                    }
+                }
+            }
+            #endregion
         }
         private void CheckPermission()
         {
@@ -445,6 +472,39 @@ namespace HotelManagement.Presentation.Website.SupportAndTicket
         {
             return File.Exists(Server.MapPath(fileName));
 
+        }
+        [WebMethod]
+        public static ReturnInfo AdminApprovalStatus(string ticketNo, string ticketStatus)
+        {
+            Boolean status = false;
+            ReturnInfo rtninfo = new ReturnInfo();
+            SupportNCaseSetupDA supportDA = new SupportNCaseSetupDA();
+            HMUtility hmUtility = new HMUtility();
+            UserInformationBO userInformationBO = new UserInformationBO();
+
+            try
+            {
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+                status = supportDA.UpdateTicketStatusByVoucherNo(ticketNo, ticketStatus, userInformationBO.UserInfoId);
+                if (status)
+                {
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = "Ticket Unapprove Successfull.";
+                }
+                else
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            return rtninfo;
         }
     }
 }

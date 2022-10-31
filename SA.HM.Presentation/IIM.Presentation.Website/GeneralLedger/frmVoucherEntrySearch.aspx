@@ -359,7 +359,7 @@
         }
 
         function OnAdminApprovalProcessSucceed(result) {
-            toastr.info("Voucher Unapprove Successfull.");
+            toastr.success("Voucher Unapprove Successfull.");
             return false;
         }
 
