@@ -4,6 +4,7 @@ TRUNCATE TABLE PMProductOut
 TRUNCATE TABLE PMProductOutDetails
 TRUNCATE TABLE PMProductReceived
 TRUNCATE TABLE PMProductReceivedDetails
+TRUNCATE TABLE PMProductReceivedPMDetails
 TRUNCATE TABLE PMProductReceivedBillPayment
 TRUNCATE TABLE PMPurchaseOrder
 TRUNCATE TABLE PMPurchaseOrderDetails
