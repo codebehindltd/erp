@@ -22,6 +22,15 @@ namespace HotelManagement.Presentation.Website.Inventory {
         protected global::System.Web.UI.WebControls.HiddenField hfTotalForItems;
         
         /// <summary>
+        /// hfTotalOverheadExpenseAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfTotalOverheadExpenseAmount;
+        
+        /// <summary>
         /// hftotalForPaymentInfos control.
         /// </summary>
         /// <remarks>
@@ -830,6 +839,42 @@ namespace HotelManagement.Presentation.Website.Inventory {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPMTotalAmount;
+        
+        /// <summary>
+        /// lblPaymentAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPaymentAmount;
+        
+        /// <summary>
+        /// txtPaymentAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPaymentAmount;
+        
+        /// <summary>
+        /// lblDueAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDueAmount;
+        
+        /// <summary>
+        /// txtDueAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDueAmount;
         
         /// <summary>
         /// lblRemarks control.

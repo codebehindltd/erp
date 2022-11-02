@@ -584,7 +584,26 @@
                 amountAfterDeletion = parseFloat(amountAfterDeletion) + parseFloat(amount);
             });
             amountAfterDeletion = amountAfterDeletion.toFixed(2);
+            $("#ContentPlaceHolder1_hfTotalOverheadExpenseAmount").val(amountAfterDeletion);
             $("#ContentPlaceHolder1_txttotalAmount").val(amountAfterDeletion);
+
+            var paymentTotal = $("#ContentPlaceHolder1_hftotalForPaymentInfos").val();
+            paymentTotal = parseFloat(paymentTotal);
+            paymentTotal = paymentTotal.toFixed(2);
+            var itemTotal = $("#ContentPlaceHolder1_hfTotalForItems").val();
+            itemTotal = parseFloat(itemTotal);
+            itemTotal = itemTotal.toFixed(2);
+            var totalRM = parseFloat(itemTotal) + parseFloat(amountAfterDeletion);
+            var totalDue = parseFloat(totalRM) - parseFloat(paymentTotal);
+
+            totalRM = totalRM.toFixed(2);
+            totalDue = totalDue.toFixed(2);
+            $("#ContentPlaceHolder1_txtPMTotalAmount").val(totalRM);
+            $("#ContentPlaceHolder1_txtPaymentAmount").val(paymentTotal);
+            $("#ContentPlaceHolder1_txtDueAmount").val(totalDue);
+
+            $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(paymentTotal);
+            $("#ContentPlaceHolder1_hfTotalForItems").val(itemTotal);
         }
 
         function DeleteAccountHeadOfPM(deletedItem) {
@@ -612,7 +631,24 @@
                 amountAfterDeletion = parseFloat(amountAfterDeletion) + parseFloat(amount);
             });
             amountAfterDeletion = amountAfterDeletion.toFixed(2);
-            $("#ContentPlaceHolder1_txtPMTotalAmount").val(amountAfterDeletion);
+
+            var itemTotal = $("#ContentPlaceHolder1_hfTotalForItems").val();
+            itemTotal = parseFloat(itemTotal);
+            itemTotal = itemTotal.toFixed(2);
+            var oeTotal = $("#ContentPlaceHolder1_hfTotalOverheadExpenseAmount").val();
+            oeTotal = parseFloat(oeTotal);
+            oeTotal = oeTotal.toFixed(2);
+            var totalRM = parseFloat(itemTotal) + parseFloat(oeTotal);
+            var totalDue = parseFloat(totalRM) - parseFloat(amountAfterDeletion);
+
+            totalRM = totalRM.toFixed(2);
+            totalDue = totalDue.toFixed(2);
+            $("#ContentPlaceHolder1_txtPMTotalAmount").val(totalRM);
+            $("#ContentPlaceHolder1_txtPaymentAmount").val(amountAfterDeletion);
+            $("#ContentPlaceHolder1_txtDueAmount").val(totalDue);
+
+            $("#ContentPlaceHolder1_hfTotalForItems").val(itemTotal);
+            $("#ContentPlaceHolder1_hfTotalOverheadExpenseAmount").val(oeTotal);
             $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(amountAfterDeletion);
         }
 
@@ -649,7 +685,26 @@
                 totalAmount = parseFloat(totalAmount) + parseFloat(amount);
             });
             totalAmount = totalAmount.toFixed(2);
+            $("#ContentPlaceHolder1_hfTotalOverheadExpenseAmount").val(totalAmount);
             $("#ContentPlaceHolder1_txttotalAmount").val(totalAmount);
+
+            var paymentTotal = $("#ContentPlaceHolder1_hftotalForPaymentInfos").val();
+            paymentTotal = parseFloat(paymentTotal);
+            paymentTotal = paymentTotal.toFixed(2);
+            var itemTotal = $("#ContentPlaceHolder1_hfTotalForItems").val();
+            itemTotal = parseFloat(itemTotal);
+            itemTotal = itemTotal.toFixed(2);
+            var totalRM = parseFloat(itemTotal) + parseFloat(totalAmount);
+            var totalDue = parseFloat(totalRM) - parseFloat(paymentTotal);
+
+            totalRM = totalRM.toFixed(2);
+            totalDue = totalDue.toFixed(2);
+            $("#ContentPlaceHolder1_txtPMTotalAmount").val(totalRM);
+            $("#ContentPlaceHolder1_txtPaymentAmount").val(paymentTotal);
+            $("#ContentPlaceHolder1_txtDueAmount").val(totalDue);
+
+            $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(paymentTotal);
+            $("#ContentPlaceHolder1_hfTotalForItems").val(itemTotal);
         }
 
         function AddAccountHeadForPMInfo(accountHeadPMId, accountHeadPM, amountPM, pMDescription, AccountHeadPMDetailsId, isEditedPM) {
@@ -685,7 +740,23 @@
                 totalAmount = parseFloat(totalAmount) + parseFloat(amount);
             });
             totalAmount = totalAmount.toFixed(2);
-            $("#ContentPlaceHolder1_txtPMTotalAmount").val(totalAmount);
+
+            var itemTotal = $("#ContentPlaceHolder1_hfTotalForItems").val();
+            itemTotal = parseFloat(itemTotal);
+            itemTotal = itemTotal.toFixed(2);
+            var oeTotal = $("#ContentPlaceHolder1_hfTotalOverheadExpenseAmount").val();
+            oeTotal = parseFloat(oeTotal);
+            oeTotal = oeTotal.toFixed(2);
+            var totalRM = parseFloat(itemTotal) + parseFloat(oeTotal);
+            var totalDue = parseFloat(totalRM) - parseFloat(totalAmount);
+            totalRM = totalRM.toFixed(2);
+            totalDue = totalDue.toFixed(2);
+            $("#ContentPlaceHolder1_txtPMTotalAmount").val(totalRM);
+            $("#ContentPlaceHolder1_txtPaymentAmount").val(totalAmount);
+            $("#ContentPlaceHolder1_txtDueAmount").val(totalDue);
+
+            $("#ContentPlaceHolder1_hfTotalForItems").val(itemTotal);
+            $("#ContentPlaceHolder1_hfTotalOverheadExpenseAmount").val(oeTotal);
             $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(totalAmount);
         }
 
@@ -1110,6 +1181,25 @@
                 total += toFixed(parseFloat($(this).find("td:eq(7)").text()), 2);
             });
             $("#ContentPlaceHolder1_hfTotalForItems").val(total);
+
+            var paymentTotal = $("#ContentPlaceHolder1_hftotalForPaymentInfos").val();
+            paymentTotal = parseFloat(paymentTotal);
+            paymentTotal = paymentTotal.toFixed(2);
+            var oeTotal = $("#ContentPlaceHolder1_hfTotalOverheadExpenseAmount").val();
+            oeTotal = parseFloat(oeTotal);
+            oeTotal = oeTotal.toFixed(2);
+            var totalRM = parseFloat(total) + parseFloat(oeTotal);
+            var totalDue = parseFloat(totalRM) - parseFloat(paymentTotal);
+
+            totalRM = totalRM.toFixed(2);
+            totalDue = totalDue.toFixed(2);
+            $("#ContentPlaceHolder1_txtPMTotalAmount").val(totalRM);
+            $("#ContentPlaceHolder1_txtPaymentAmount").val(paymentTotal);
+            $("#ContentPlaceHolder1_txtDueAmount").val(totalDue);
+
+            $("#ContentPlaceHolder1_hfTotalOverheadExpenseAmount").val(oeTotal);
+            $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(paymentTotal);
+
             $("#ItemForReceiveTbl tfoot").find("tr:eq(0)").remove();
             tr += "<tr>";
             tr += "<td style='width:25%;'> </td>";
@@ -1317,6 +1407,28 @@
                 total += toFixed(parseFloat($(this).find("td:eq(7)").text()), 2);
             });
             $("#ContentPlaceHolder1_hfTotalForItems").val(total);
+
+
+            var paymentTotal = $("#ContentPlaceHolder1_hftotalForPaymentInfos").val();
+            paymentTotal = parseFloat(paymentTotal);
+            paymentTotal = paymentTotal.toFixed(2);
+            var oeTotal = $("#ContentPlaceHolder1_hfTotalOverheadExpenseAmount").val();
+            oeTotal = parseFloat(oeTotal);
+            oeTotal = oeTotal.toFixed(2);
+            var totalRM = parseFloat(total) + parseFloat(oeTotal);
+            var totalDue = parseFloat(totalRM) - parseFloat(paymentTotal);
+
+            totalRM = totalRM.toFixed(2);
+            totalDue = totalDue.toFixed(2);
+            $("#ContentPlaceHolder1_txtPMTotalAmount").val(totalRM);
+            $("#ContentPlaceHolder1_txtPaymentAmount").val(paymentTotal);
+            $("#ContentPlaceHolder1_txtDueAmount").val(totalDue);
+
+            $("#ContentPlaceHolder1_hfTotalForItems").val(total);
+            $("#ContentPlaceHolder1_hfTotalOverheadExpenseAmount").val(oeTotal);
+            $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(paymentTotal);
+
+
             $("#ItemForReceiveTbl tfoot").find("tr:eq(0)").remove();
             tr += "<tr>";
             tr += "<td style='width:25%;'> </td>";
@@ -1974,12 +2086,17 @@
             if ($("#ContentPlaceHolder1_ddlPaymentType").val() == "CashNBank") {
                 var totalForItems = $("#ContentPlaceHolder1_hfTotalForItems").val();
                 var totalForPayment = $("#ContentPlaceHolder1_hftotalForPaymentInfos").val();
+                var totalForOE = $("#ContentPlaceHolder1_hfTotalOverheadExpenseAmount").val();
                 totalForItems = parseFloat(totalForItems);
                 totalForPayment = parseFloat(totalForPayment);
+                totalForOE = parseFloat(totalForOE);
                 totalForItems = totalForItems.toFixed(2);
                 totalForPayment = totalForPayment.toFixed(2);
+                totalForOE = totalForOE.toFixed(2);
+                var totalRM = parseFloat(totalForItems) + parseFloat(totalForOE);
+                totalRM = totalRM.toFixed(2);
                 debugger;
-                if (totalForItems != totalForPayment) {
+                if (totalRM != totalForPayment) {
                     toastr.warning("Total item price & Total Payment are not same.");
                     $("#ContentPlaceHolder1_txtPMAmount").focus();
                     return false;
@@ -2065,6 +2182,8 @@
             $("#ContentPlaceHolder1_txttotalAmount").val("0");
             $("#ContentPlaceHolder1_txtPMTotalAmount").val("0");
             $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(0);
+            $("#ContentPlaceHolder1_hfTotalForItems").val(0);
+            $("#ContentPlaceHolder1_hfTotalOverheadExpenseAmount").val(0);
             $("#ContentPlaceHolder1_ddlSupplier").val("0").trigger('change');
             $("#ContentPlaceHolder1_ddlPurchaseOrderNumber").val("0").trigger('change');
             $("#ContentPlaceHolder1_ddlLCNumber").val("0").trigger('change');
@@ -3219,6 +3338,7 @@
         <div id="imageDiv"></div>
     </div>
     <asp:HiddenField ID="hfTotalForItems" runat="server" Value="0" />
+    <asp:HiddenField ID="hfTotalOverheadExpenseAmount" runat="server" Value="0" />
     <asp:HiddenField ID="hftotalForPaymentInfos" runat="server" Value="0" />
     <asp:HiddenField ID="hfCostCenterId" runat="server" Value="0" />
     <asp:HiddenField ID="hfAccoutHeadId" runat="server" Value="0" />
@@ -3486,13 +3606,13 @@
                             </div>
                             <div class="form-group" id="BagAndBonusDiv" style="display: none;">
                                 <div class="col-md-2">
-                                    <asp:Label ID="Label18" runat="server" class="control-label required-field" Text="Bag Quantity"></asp:Label>
+                                    <asp:Label ID="Label18" runat="server" class="control-label" Text="Bag Quantity"></asp:Label>
                                 </div>
                                 <div class="col-md-4">
                                     <asp:TextBox ID="txtBagQuantity" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
                                 </div>
                                 <div class="col-md-2">
-                                    <asp:Label ID="Label19" runat="server" class="control-label required-field" Text="Bonus Amount"></asp:Label>
+                                    <asp:Label ID="Label19" runat="server" class="control-label" Text="Bonus Amount"></asp:Label>
                                 </div>
                                 <div class="col-md-4">
                                     <asp:TextBox ID="txtBonusAmount" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
@@ -3680,6 +3800,20 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <asp:TextBox ID="txtPMTotalAmount" runat="server" ReadOnly="true" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <asp:Label ID="lblPaymentAmount" runat="server" class="control-label" Text="Payment Amount :"></asp:Label>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <asp:TextBox ID="txtPaymentAmount" runat="server" ReadOnly="true" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="padding: 5px 0 5px 0;">
+                                                <div class="col-md-3">
+                                                    <asp:Label ID="lblDueAmount" runat="server" class="control-label" Text="Due Amount :"></asp:Label>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <asp:TextBox ID="txtDueAmount" runat="server" ReadOnly="true" CssClass="form-control quantitydecimal"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
