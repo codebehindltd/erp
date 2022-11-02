@@ -347,24 +347,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group" style="display:none;">
-                    <div class="col-md-2" style="display:none;">
+                <div class="form-group">
+                    <div class="col-md-2">
                         <asp:Label ID="Label4" runat="server" class="control-label" Text="With/Without Opening"></asp:Label>
                     </div>
-                    <div class="col-md-4" style="display:none;">
+                    <div class="col-md-4">
                         <asp:DropDownList ID="dllWithOrWithoutOpening" CssClass="form-control" runat="server">
                             <asp:ListItem Value="WithOpening">With Opening Balance</asp:ListItem>
-                            <%--<asp:ListItem Value="WithoutOpening">Without Opening Balance</asp:ListItem>--%>
+                            <asp:ListItem Value="WithoutOpening">Without Opening Balance</asp:ListItem>
                         </asp:DropDownList>
-                    </div>
-                    <div class="col-md-2" style="display: none;">
-                        <asp:Label ID="Label1" runat="server" class="control-label" Text="Income Tax Percentage"></asp:Label>
-                    </div>
-                    <div class="col-md-4" style="display: none;">
-                        <asp:TextBox ID="txtIncomeTaxPercentage" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                </div>
-                <div class="form-group">
+                    </div>                    
                     <div class="col-md-2">
                         <asp:Label ID="Label5" runat="server" class="control-label" Text="Report Currency"></asp:Label>
                     </div>
@@ -372,6 +364,14 @@
                         <asp:HiddenField ID="hflocalCurrencyId" runat="server" Value=""></asp:HiddenField>
                         <asp:DropDownList ID="ddlCurrencyId" runat="server" CssClass="form-control" TabIndex="2">
                         </asp:DropDownList>
+                    </div>
+                </div>
+                <div class="form-group" style="display:none;">
+                    <div class="col-md-2" style="display: none;">
+                        <asp:Label ID="Label1" runat="server" class="control-label" Text="Income Tax Percentage"></asp:Label>
+                    </div>
+                    <div class="col-md-4" style="display: none;">
+                        <asp:TextBox ID="txtIncomeTaxPercentage" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>
                 <div class="row">
