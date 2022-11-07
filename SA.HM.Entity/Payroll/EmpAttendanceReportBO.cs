@@ -26,6 +26,7 @@ namespace HotelManagement.Entity.Payroll
         public string OutTime { get; set; }
         public string WorkingHour { get; set; }
         public string LateTime { get; set; }
+        public string LateApplicationDateDisplay { get; set; }
         public string OTHour { get; set; }
         public int TimeSlabId { get; set; }
         public string TimeSlabHead { get; set; }

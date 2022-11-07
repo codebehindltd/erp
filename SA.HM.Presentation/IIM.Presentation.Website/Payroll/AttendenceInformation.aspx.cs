@@ -308,7 +308,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                     prevBO.LastModifiedBy = userInformationBO.UserInfoId;
                     prevBO.AttendenceStatus = HMConstants.ApprovalStatus.Pending.ToString();
                     prevBO.Remark = attendanceBO.Remark;
-                    Boolean status = entityDA.UpdateEmpAttendenceInfo(prevBO);
+                    Boolean status = entityDA.UpdateEmpAttendenceInfoForLateAttendenceApplication(prevBO);
                     if (status)
                     {
                         rtninf.AlertMessage = CommonHelper.AlertInfo("Application Submitted", AlertType.Success);

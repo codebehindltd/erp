@@ -334,6 +334,15 @@
                     tr += "<td style='width:7%;'>" + gridObject.OutTime + "</td>";
                 }
 
+                if (gridObject.LateApplicationDateDisplay == "")
+                {
+                    tr += "<td style='width:8%;'>" + "" + "</td>";
+                }
+                else
+                {
+                    tr += "<td style='width:8%;'>" + gridObject.LateApplicationDateDisplay + "</td>";
+                }
+
                 tr += "<td style='width:8%;'>" + status + "</td>";
 
                 if ((gridObject.AttendanceStatus == null) && (splitStr[0] > "0" || splitStr[1] > "0")) {
@@ -725,6 +734,8 @@
                             <td style="width: 5%;">Late
                             </td>
                             <td style="width: 7%;">Out Time
+                            </td>
+                            <td style="width: 7%;">Late App. Date
                             </td>
                             <td style="width: 7%;">Status
                             </td>

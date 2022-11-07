@@ -195,6 +195,9 @@ namespace HotelManagement.Data.Payroll
                                 }
                                 bo.ShowProvisionPeriod = reader["ShowProvisionPeriod"].ToString();
 
+                                bo.RepotingTo = Convert.ToInt32(reader["RepotingTo"]);
+                                bo.RepotingTo2 = Convert.ToInt32(reader["RepotingTo2"]);
+
                                 boList.Add(bo);
                             }
                         }

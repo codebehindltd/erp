@@ -192,6 +192,42 @@ namespace HotelManagement.Data.Payroll
             }
             return status;
         }
+        public bool UpdateEmpAttendenceInfoForLateAttendenceApplication(EmpAttendanceBO attendenceBO)
+        {
+            Boolean status = false;
+            try
+            {
+                using (DbConnection conn = dbSmartAspects.CreateConnection())
+                {
+                    using (DbCommand command = dbSmartAspects.GetStoredProcCommand("UpdateEmpAttendenceInfoForLateAttendenceApplication_SP"))
+                    {
+                        dbSmartAspects.AddInParameter(command, "@AttendanceId", DbType.Int32, attendenceBO.AttendanceId);
+                        dbSmartAspects.AddInParameter(command, "@EmpId", DbType.Int32, attendenceBO.EmpId);
+                        dbSmartAspects.AddInParameter(command, "@AttendenceStatus", DbType.String, attendenceBO.AttendenceStatus);
+
+                        if (attendenceBO.EntryTime != null)
+                            dbSmartAspects.AddInParameter(command, "@EntryTime", DbType.DateTime, attendenceBO.EntryTime);
+                        else
+                            dbSmartAspects.AddInParameter(command, "@EntryTime", DbType.DateTime, DBNull.Value);
+
+                        if (attendenceBO.ExitTime != null)
+                            dbSmartAspects.AddInParameter(command, "@ExitTime", DbType.DateTime, attendenceBO.ExitTime);
+                        else
+                            dbSmartAspects.AddInParameter(command, "@ExitTime", DbType.DateTime, DBNull.Value);
+
+                        dbSmartAspects.AddInParameter(command, "@AttendanceDate", DbType.DateTime, attendenceBO.AttendanceDate);
+                        dbSmartAspects.AddInParameter(command, "@Remark", DbType.String, attendenceBO.Remark);
+                        dbSmartAspects.AddInParameter(command, "@LastModifiedBy", DbType.Int32, attendenceBO.LastModifiedBy);
+                        status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return status;
+        }
         public List<EmpAttendanceReportBO> GetEmpAttendanceInfoByDateRange(int isAdminUser, DateTime rosterDateFrom, DateTime rosterDateTo, int UserInfoId, int employeeId, string searchStatus, int recordPerPage, int pageIndex, out int totalRecords)
         {
             List<EmpAttendanceReportBO> empAttendanceList = new List<EmpAttendanceReportBO>();
@@ -257,7 +293,8 @@ namespace HotelManagement.Data.Payroll
                         IsCanEdit = r.Field<bool>("IsCanEdit"),
                         IsCanCheck = r.Field<bool>("IsCanCheck"),
                         IsCanApprove = r.Field<bool>("IsCanApprove"),
-                        RosterDate = r.Field<DateTime>("AttendanceDate")
+                        RosterDate = r.Field<DateTime>("AttendanceDate"),
+                        LateApplicationDateDisplay = r.Field<string>("LateApplicationDateDisplay"),
                     }).ToList();
                     totalRecords = (int)cmd.Parameters["@RecordCount"].Value;
                 }
