@@ -125,7 +125,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
 
             AllReportDA reportDA = new AllReportDA();
             List<RoomSalesBCReportViewBO> RoomSalesBCBO = new List<RoomSalesBCReportViewBO>();
-            RoomSalesBCBO = reportDA.GetRoomSalesBCInfo(reportYear, durationName, reportFor);
+            RoomSalesBCBO = reportDA.GetRoomSalesBCInfo(reportYear, durationName, reportFor, 999999999);
 
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], RoomSalesBCBO));

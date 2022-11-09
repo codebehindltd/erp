@@ -356,6 +356,32 @@ namespace HotelManagement.Data.HMCommon
 
             return fields;
         }
+        public List<CustomFieldBO> GetRevenueDivisionInformation()
+        {
+            List<CustomFieldBO> fields = new List<CustomFieldBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetRevenueDivisionInformation_SP"))
+                {
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                CustomFieldBO customFieldObject = new CustomFieldBO();
+                                customFieldObject.ServiceId = Convert.ToInt32(reader["ServiceId"]);
+                                customFieldObject.ServiceName = reader["ServiceName"].ToString();
+                                fields.Add(customFieldObject);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return fields;
+        }
         public List<CustomFieldBO> GetCustomField(string FieldName, string dropDownFirstValue = "")
         {
             List<CustomFieldBO> fields = new List<CustomFieldBO>();

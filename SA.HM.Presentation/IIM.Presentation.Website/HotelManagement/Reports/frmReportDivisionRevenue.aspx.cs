@@ -14,6 +14,7 @@ using HotelManagement.Entity.HotelManagement;
 using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using HotelManagement.Entity.HMCommon;
 
 namespace HotelManagement.Presentation.Website.HotelManagement.Reports
 {
@@ -36,6 +37,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
                 txtReportDurationName.Text = "Yearly";
                 txtReportFor.Text = "DivisionRevenue";
                 LoadYearList();
+                LoadRevenueDivisionInfo();
             }
 
         }
@@ -44,13 +46,23 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             ddlYear.DataSource = hmUtility.GetReportYearList();
             ddlYear.DataBind();
         }
+        private void LoadRevenueDivisionInfo()
+        {
+            HMCommonDA commonDA = new HMCommonDA();
+            CustomFieldBO customField = new CustomFieldBO();
+            List<CustomFieldBO> fields = new List<CustomFieldBO>();
+            fields = commonDA.GetRevenueDivisionInformation();
+            ddlServiceName.DataSource = fields;
+            ddlServiceName.DataTextField = "ServiceName";
+            ddlServiceName.DataValueField = "ServiceId";
+            ddlServiceName.DataBind();
+        }
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             HMCommonDA hmCommonDA = new HMCommonDA();
             _RoomStatusInfoByDate = 1;
             string ReportYear = ddlYear.SelectedValue.ToString();
             string Month = ddlMonth.SelectedValue.ToString();
-            string reportType = ddlReportType.SelectedValue.ToString();
             string reportFormat = ddlReportFormat.SelectedValue.ToString();
             string ReportFor = "DivisionRevenue";
             string ReportDurationName = "";
@@ -69,8 +81,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             rvTransaction.LocalReport.DataSources.Clear();
             rvTransaction.ProcessingMode = ProcessingMode.Local;
 
+            int serviceId = Convert.ToInt32(ddlServiceName.SelectedValue);
+
             var reportPath = "";
-            if (reportType == "MonthNameWise")
+            if (serviceId == 0)
             {
                 reportPath = Server.MapPath(@"~/HotelManagement/Reports/Rdlc/rptDivisionRevenueMonthWise.rdlc");
             }
@@ -119,11 +133,11 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             //RoomReservationDataSource.SelectParameters[2].DefaultValue = ReportFor;
             string reportYear = ReportYear.ToString();
             string durationName = ReportDurationName;
-            string reportFor = ReportFor;
+            string reportFor = ReportFor;            
 
             AllReportDA reportDA = new AllReportDA();
             List<RoomSalesBCReportViewBO> RoomSalesBCBO = new List<RoomSalesBCReportViewBO>();
-            RoomSalesBCBO = reportDA.GetRoomSalesBCInfo(reportYear, durationName, reportFor);
+            RoomSalesBCBO = reportDA.GetRoomSalesBCInfo(reportYear, durationName, reportFor, serviceId);
 
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], RoomSalesBCBO));

@@ -1298,7 +1298,6 @@
     <Content Include="HotelManagement\Reports\frmReportSalesInfo.aspx" />
     <Content Include="HotelManagement\Reports\frmReportCanceledReservation.aspx" />
     <Content Include="HotelManagement\Reports\frmReportDiscountVsActualSales.aspx" />
-    <Content Include="HotelManagement\Reports\frmReportBCDivisionRevenue.aspx" />
     <Content Include="HotelManagement\Reports\frmReportCorporateGuestInfo.aspx" />
     <Content Include="HotelManagement\Reports\frmReportGuestCompanyInfo.aspx" />
     <Content Include="HotelManagement\Reports\frmReportGuestHouseInfo.aspx" />
@@ -5898,13 +5897,6 @@
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportDiscountVsActualSales.aspx.designer.cs">
       <DependentUpon>frmReportDiscountVsActualSales.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="HotelManagement\Reports\frmReportBCDivisionRevenue.aspx.cs">
-      <DependentUpon>frmReportBCDivisionRevenue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="HotelManagement\Reports\frmReportBCDivisionRevenue.aspx.designer.cs">
-      <DependentUpon>frmReportBCDivisionRevenue.aspx</DependentUpon>
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportCorporateGuestInfo.aspx.cs">
       <DependentUpon>frmReportCorporateGuestInfo.aspx</DependentUpon>

@@ -321,32 +321,22 @@
                                         <ChartMember>
                                           <Group Name="Chart9_CategoryGroup">
                                             <GroupExpressions>
-                                              <GroupExpression>=Fields!ServiceName.Value</GroupExpression>
+                                              <GroupExpression>=Fields!MonthName.Value</GroupExpression>
                                             </GroupExpressions>
                                           </Group>
                                           <SortExpressions>
                                             <SortExpression>
-                                              <Value>=Fields!ServiceName.Value</Value>
+                                              <Value>=Fields!MonthValue.Value</Value>
                                             </SortExpression>
                                           </SortExpressions>
-                                          <Label>=Fields!ServiceName.Value</Label>
+                                          <Label>=Fields!MonthName.Value</Label>
                                         </ChartMember>
                                       </ChartMembers>
                                     </ChartCategoryHierarchy>
                                     <ChartSeriesHierarchy>
                                       <ChartMembers>
                                         <ChartMember>
-                                          <Group Name="Chart9_SeriesGroup">
-                                            <GroupExpressions>
-                                              <GroupExpression>=Fields!ServiceName.Value</GroupExpression>
-                                            </GroupExpressions>
-                                          </Group>
-                                          <SortExpressions>
-                                            <SortExpression>
-                                              <Value>=Fields!ServiceName.Value</Value>
-                                            </SortExpression>
-                                          </SortExpressions>
-                                          <Label>=Fields!ServiceName.Value</Label>
+                                          <Label>Total Amount</Label>
                                         </ChartMember>
                                       </ChartMembers>
                                     </ChartSeriesHierarchy>
@@ -356,7 +346,7 @@
                                           <ChartDataPoints>
                                             <ChartDataPoint>
                                               <ChartDataPointValues>
-                                                <Y>=Sum(Fields!TotalAmount.Value)</Y>
+                                                <Y>=Fields!TotalAmount.Value</Y>
                                               </ChartDataPointValues>
                                               <ChartDataLabel>
                                                 <Style>
@@ -636,17 +626,7 @@
                                     <ChartSeriesHierarchy>
                                       <ChartMembers>
                                         <ChartMember>
-                                          <Group Name="Chart7_SeriesGroup2">
-                                            <GroupExpressions>
-                                              <GroupExpression>=Fields!ServiceName.Value</GroupExpression>
-                                            </GroupExpressions>
-                                          </Group>
-                                          <SortExpressions>
-                                            <SortExpression>
-                                              <Value>=Fields!ServiceName.Value</Value>
-                                            </SortExpression>
-                                          </SortExpressions>
-                                          <Label>=Fields!ServiceName.Value</Label>
+                                          <Label>Total Amount</Label>
                                         </ChartMember>
                                       </ChartMembers>
                                     </ChartSeriesHierarchy>
@@ -656,7 +636,7 @@
                                           <ChartDataPoints>
                                             <ChartDataPoint>
                                               <ChartDataPointValues>
-                                                <Y>=Sum(Fields!TotalAmount.Value)</Y>
+                                                <Y>=Fields!TotalAmount.Value</Y>
                                               </ChartDataPointValues>
                                               <ChartDataLabel>
                                                 <Style>
@@ -700,7 +680,7 @@
                                               <FontSize>8pt</FontSize>
                                             </Style>
                                             <ChartAxisTitle>
-                                              <Caption>Month</Caption>
+                                              <Caption />
                                               <Style>
                                                 <FontSize>8pt</FontSize>
                                               </Style>
@@ -773,9 +753,10 @@
                                           <ChartAxis Name="Primary">
                                             <Style>
                                               <FontSize>8pt</FontSize>
+                                              <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                             <ChartAxisTitle>
-                                              <Caption>Total Amount</Caption>
+                                              <Caption />
                                               <Style>
                                                 <FontSize>8pt</FontSize>
                                               </Style>
@@ -847,24 +828,6 @@
                                         </Style>
                                       </ChartArea>
                                     </ChartAreas>
-                                    <ChartLegends>
-                                      <ChartLegend Name="Default">
-                                        <Style>
-                                          <BackgroundGradientType>None</BackgroundGradientType>
-                                          <FontSize>8pt</FontSize>
-                                        </Style>
-                                        <ChartLegendTitle>
-                                          <Caption />
-                                          <Style>
-                                            <FontSize>8pt</FontSize>
-                                            <FontWeight>Bold</FontWeight>
-                                            <TextAlign>Center</TextAlign>
-                                          </Style>
-                                        </ChartLegendTitle>
-                                        <HeaderSeparatorColor>Black</HeaderSeparatorColor>
-                                        <ColumnSeparatorColor>Black</ColumnSeparatorColor>
-                                      </ChartLegend>
-                                    </ChartLegends>
                                     <ChartTitles>
                                       <ChartTitle Name="Default">
                                         <Caption xml:space="preserve"> </Caption>
@@ -917,32 +880,22 @@
                                         <ChartMember>
                                           <Group Name="Chart7_CategoryGroup">
                                             <GroupExpressions>
-                                              <GroupExpression>=Fields!ServiceName.Value</GroupExpression>
+                                              <GroupExpression>=Fields!MonthName.Value</GroupExpression>
                                             </GroupExpressions>
                                           </Group>
                                           <SortExpressions>
                                             <SortExpression>
-                                              <Value>=Fields!ServiceName.Value</Value>
+                                              <Value>=Fields!MonthValue.Value</Value>
                                             </SortExpression>
                                           </SortExpressions>
-                                          <Label>=Fields!ServiceName.Value</Label>
+                                          <Label>=Fields!MonthName.Value</Label>
                                         </ChartMember>
                                       </ChartMembers>
                                     </ChartCategoryHierarchy>
                                     <ChartSeriesHierarchy>
                                       <ChartMembers>
                                         <ChartMember>
-                                          <Group Name="Chart7_SeriesGroup">
-                                            <GroupExpressions>
-                                              <GroupExpression>=Fields!ServiceName.Value</GroupExpression>
-                                            </GroupExpressions>
-                                          </Group>
-                                          <SortExpressions>
-                                            <SortExpression>
-                                              <Value>=Fields!ServiceName.Value</Value>
-                                            </SortExpression>
-                                          </SortExpressions>
-                                          <Label>=Fields!ServiceName.Value</Label>
+                                          <Label>Total Amount</Label>
                                         </ChartMember>
                                       </ChartMembers>
                                     </ChartSeriesHierarchy>
@@ -952,7 +905,7 @@
                                           <ChartDataPoints>
                                             <ChartDataPoint>
                                               <ChartDataPointValues>
-                                                <Y>=Sum(Fields!TotalAmount.Value)</Y>
+                                                <Y>=Fields!TotalAmount.Value</Y>
                                               </ChartDataPointValues>
                                               <ChartDataLabel>
                                                 <Style>
@@ -1068,9 +1021,10 @@
                                           <ChartAxis Name="Primary">
                                             <Style>
                                               <FontSize>8pt</FontSize>
+                                              <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                             <ChartAxisTitle>
-                                              <Caption>Total Amount</Caption>
+                                              <Caption />
                                               <Style>
                                                 <FontSize>8pt</FontSize>
                                               </Style>
@@ -1142,24 +1096,6 @@
                                         </Style>
                                       </ChartArea>
                                     </ChartAreas>
-                                    <ChartLegends>
-                                      <ChartLegend Name="Default">
-                                        <Style>
-                                          <BackgroundGradientType>None</BackgroundGradientType>
-                                          <FontSize>8pt</FontSize>
-                                        </Style>
-                                        <ChartLegendTitle>
-                                          <Caption />
-                                          <Style>
-                                            <FontSize>8pt</FontSize>
-                                            <FontWeight>Bold</FontWeight>
-                                            <TextAlign>Center</TextAlign>
-                                          </Style>
-                                        </ChartLegendTitle>
-                                        <HeaderSeparatorColor>Black</HeaderSeparatorColor>
-                                        <ColumnSeparatorColor>Black</ColumnSeparatorColor>
-                                      </ChartLegend>
-                                    </ChartLegends>
                                     <ChartTitles>
                                       <ChartTitle Name="Default">
                                         <Caption xml:space="preserve"> </Caption>
@@ -1187,7 +1123,7 @@
                                         <VerticalAlign>Top</VerticalAlign>
                                       </Style>
                                     </ChartNoDataMessage>
-                                    <ZIndex>4</ZIndex>
+                                    <ZIndex>6</ZIndex>
                                     <Style>
                                       <Border>
                                         <Color>LightGrey</Color>
@@ -1212,32 +1148,22 @@
                                         <ChartMember>
                                           <Group Name="Chart10_CategoryGroup">
                                             <GroupExpressions>
-                                              <GroupExpression>=Fields!ServiceName.Value</GroupExpression>
+                                              <GroupExpression>=Fields!MonthName.Value</GroupExpression>
                                             </GroupExpressions>
                                           </Group>
                                           <SortExpressions>
                                             <SortExpression>
-                                              <Value>=Fields!ServiceName.Value</Value>
+                                              <Value>=Fields!MonthValue.Value</Value>
                                             </SortExpression>
                                           </SortExpressions>
-                                          <Label>=Fields!ServiceName.Value</Label>
+                                          <Label>=Fields!MonthName.Value</Label>
                                         </ChartMember>
                                       </ChartMembers>
                                     </ChartCategoryHierarchy>
                                     <ChartSeriesHierarchy>
                                       <ChartMembers>
                                         <ChartMember>
-                                          <Group Name="Chart7_SeriesGroup4">
-                                            <GroupExpressions>
-                                              <GroupExpression>=Fields!ServiceName.Value</GroupExpression>
-                                            </GroupExpressions>
-                                          </Group>
-                                          <SortExpressions>
-                                            <SortExpression>
-                                              <Value>=Fields!ServiceName.Value</Value>
-                                            </SortExpression>
-                                          </SortExpressions>
-                                          <Label>=Fields!ServiceName.Value</Label>
+                                          <Label>Total Amount</Label>
                                         </ChartMember>
                                       </ChartMembers>
                                     </ChartSeriesHierarchy>
@@ -1247,7 +1173,7 @@
                                           <ChartDataPoints>
                                             <ChartDataPoint>
                                               <ChartDataPointValues>
-                                                <Y>=Sum(Fields!TotalAmount.Value)</Y>
+                                                <Y>=Fields!TotalAmount.Value</Y>
                                               </ChartDataPointValues>
                                               <ChartDataLabel>
                                                 <Style>
@@ -1487,7 +1413,7 @@
                                         <VerticalAlign>Top</VerticalAlign>
                                       </Style>
                                     </ChartNoDataMessage>
-                                    <ZIndex>6</ZIndex>
+                                    <ZIndex>7</ZIndex>
                                     <Style>
                                       <Border>
                                         <Color>LightGrey</Color>
@@ -1585,54 +1511,13 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.42489in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>1.36191in</Width>
+              <Width>1.64768in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
               <Height>0.18229in</Height>
               <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox4">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Service Name</Value>
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                                <Color>White</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Left</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox4</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                          <Width>0.25pt</Width>
-                        </Border>
-                        <BackgroundColor>SteelBlue</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox6">
@@ -1674,120 +1559,8 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.24062in</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="ServiceName">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!ServiceName.Value</Value>
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Left</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>ServiceName</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                          <Width>0.25pt</Width>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="TotalAmount">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!TotalAmount.Value</Value>
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <Format>#,0.00;(#,0.00)</Format>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>TotalAmount</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                          <Width>0.25pt</Width>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-              </TablixCells>
-            </TablixRow>
-            <TablixRow>
               <Height>0.23339in</Height>
               <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox14">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Total Sales</Value>
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox14</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                          <Width>0.25pt</Width>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="TotalAmount1">
@@ -1800,7 +1573,6 @@
                               <Value>=Sum(Fields!TotalAmount.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
                                 <Format>n2</Format>
                               </Style>
                             </TextRun>
@@ -1832,14 +1604,13 @@
         <TablixColumnHierarchy>
           <TablixMembers>
             <TablixMember />
-            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>0.79977in</Size>
+                <Size>2.9331in</Size>
                 <CellContents>
                   <Textbox Name="Textbox1">
                     <CanGrow>true</CanGrow>
@@ -1894,7 +1665,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.79977in</Size>
+                <Size>2.9331in</Size>
                 <CellContents>
                   <Textbox Name="Group1">
                     <CanGrow>true</CanGrow>
@@ -1906,7 +1677,6 @@
                             <Value>=Fields!MonthName.Value</Value>
                             <Style>
                               <FontSize>8pt</FontSize>
-                              <FontWeight>Bold</FontWeight>
                             </Style>
                           </TextRun>
                         </TextRuns>
@@ -1931,12 +1701,7 @@
                 </CellContents>
               </TablixHeader>
               <TablixMembers>
-                <TablixMember>
-                  <Group Name="Details" />
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>Before</KeepWithGroup>
-                </TablixMember>
+                <TablixMember />
               </TablixMembers>
             </TablixMember>
           </TablixMembers>
@@ -1949,8 +1714,8 @@
         </SortExpressions>
         <Top>1.21944in</Top>
         <Left>5.86595in</Left>
-        <Height>0.6563in</Height>
-        <Width>4.58657in</Width>
+        <Height>0.41568in</Height>
+        <Width>4.58078in</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -1959,10 +1724,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>16.44499in</Height>
+    <Height>16.01583in</Height>
     <Style />
   </Body>
-  <Width>10.48075in</Width>
+  <Width>10.47612in</Width>
   <Page>
     <PageFooter>
       <Height>0.26042in</Height>

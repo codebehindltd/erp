@@ -426,7 +426,7 @@ namespace HotelManagement.Data.HotelManagement
             }
             return salesInfo;
         }
-        public List<RoomSalesBCReportViewBO> GetRoomSalesBCInfo(string reportYear, string durationName, string reportFor)
+        public List<RoomSalesBCReportViewBO> GetRoomSalesBCInfo(string reportYear, string durationName, string reportFor, int serviceId)
         {
             List<RoomSalesBCReportViewBO> salesInfo = new List<RoomSalesBCReportViewBO>();
 
@@ -437,6 +437,14 @@ namespace HotelManagement.Data.HotelManagement
                     dbSmartAspects.AddInParameter(cmd, "@ReportYear", DbType.String, reportYear);
                     dbSmartAspects.AddInParameter(cmd, "@ReportDurationName", DbType.String, durationName);
                     dbSmartAspects.AddInParameter(cmd, "@ReportFor", DbType.String, reportFor);
+                    if (serviceId == 0)
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@ServiceId", DbType.Int32, DBNull.Value);
+                    }
+                    else
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@ServiceId", DbType.Int32, serviceId);
+                    }
 
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "RoomSalesBC");

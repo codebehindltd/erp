@@ -45,13 +45,11 @@
         <div class="panel-body">
             <div class="form-horizontal">                
                     <div class="form-group">                        
-                        <div class="col-md-2" style="display:none;">
-                            <asp:Label ID="Label1" runat="server" class="control-label" Text="Report Type"></asp:Label>
+                        <div class="col-md-2">
+                            <asp:Label ID="Label1" runat="server" class="control-label" Text="Service Name"></asp:Label>
                         </div>
-                        <div class="col-md-4" style="display:none;">
-                            <asp:DropDownList ID="ddlReportType" CssClass="form-control" runat="server">
-                                <asp:ListItem Value="MonthNameWise">Month Wise</asp:ListItem>
-                                <asp:ListItem Value="RoomTypeWise">Service Wise</asp:ListItem>                                
+                        <div class="col-md-4">
+                            <asp:DropDownList ID="ddlServiceName" CssClass="form-control" runat="server">                     
                             </asp:DropDownList>
                         </div>
                         <div class="col-md-2">
