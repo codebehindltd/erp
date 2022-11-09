@@ -1,32 +1,35 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Innboard.Master" AutoEventWireup="true"
-    CodeBehind="frmReportRoomSalesRevenue.aspx.cs" Inherits="HotelManagement.Presentation.Website.HotelManagement.Reports.frmReportRoomSalesRevenue" %>
+    CodeBehind="frmReportBCRoomSalesRevenue.aspx.cs" Inherits="HotelManagement.Presentation.Website.HotelManagement.Reports.frmReportRoomSalesRevenue" %>
 
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
     Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-            var ddlReportType = '<%=ddlReportType.ClientID%>';
-            if ($('#' + ddlReportType).val() == "Monthly") {
-                $('#MonthDiv').show();
+            var ddlReportFormat = '<%=ddlReportFormat.ClientID%>';
+            if ($('#' + ddlReportFormat).val() == "Monthly") {
+                $('#MonthLabelDiv').show();
+                $('#MonthControlDiv').show();
             }
             else {
-                $('#MonthDiv').hide();
+                $('#MonthLabelDiv').hide();
+                $('#MonthControlDiv').hide();
             }
-
 
             var moduleName = "<a href='/HMCommon/frmHMHome.aspx' class='inActive'>Front Desk Management</a>";
             var formName = "<span class='divider'>/</span><li class='active'>Room Sales Revenue</li>";
             var breadCrumbs = moduleName + formName;
-            $("#ltlBreadCrumbsInformation").html(breadCrumbs);            
+            $("#ltlBreadCrumbsInformation").html(breadCrumbs);
 
-            var ddlReportType = '<%=ddlReportType.ClientID%>';
-            $('#' + ddlReportType).change(function () {
-                if ($('#' + ddlReportType).val() == "Monthly") {
-                    $('#MonthDiv').show();
+            var ddlReportFormat = '<%=ddlReportFormat.ClientID%>';
+            $('#' + ddlReportFormat).change(function () {
+                if ($('#' + ddlReportFormat).val() == "Monthly") {
+                    $('#MonthLabelDiv').show();
+                    $('#MonthControlDiv').show();
                 }
                 else {
-                    $('#MonthDiv').hide();
+                    $('#MonthLabelDiv').hide();
+                    $('#MonthControlDiv').hide();
                 }
 
             });
@@ -37,66 +40,74 @@
             $('#ReportPanel').show();
         }
     </script>
-    <div id="SearchPanel" class="panel panel-default">
-        <div class="panel-heading">
-            Search Information</div>
+    <div id="SearchPanel" class="panel panel-default">       
+        <div class="panel-heading">Search Information</div>
         <div class="panel-body">
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <div class="col-md-2">
-                        <asp:Label ID="lblYear" runat="server" class="control-label" Text="Year"></asp:Label>
-                    </div>
-                    <div class="col-md-4">
-                        <asp:DropDownList ID="ddlYear" CssClass="form-control" runat="server">
-                        </asp:DropDownList>
-                    </div>
-                    <div class="col-md-2">
-                        <asp:Label ID="lblReportType" runat="server" class="control-label" Text="Report Type"></asp:Label>
-                    </div>
-                    <div class="col-md-4">
-                        <asp:DropDownList ID="ddlReportType" CssClass="form-control" runat="server">
-                            <asp:ListItem Value="Yearly">Yearly</asp:ListItem>
-                            <asp:ListItem Value="Monthly">Monthly</asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
-                </div>
-                <div class="form-group" id="MonthDiv">
-                    <div class="col-md-2">
-                        <asp:Label ID="lblMonth" runat="server" class="control-label" Text="Month"></asp:Label>
-                    </div>
-                    <div class="col-md-4">
-                        <asp:DropDownList ID="ddlMonth" CssClass="form-control" runat="server">
-                            <asp:ListItem Value="January">January</asp:ListItem>
-                            <asp:ListItem Value="February">February</asp:ListItem>
-                            <asp:ListItem Value="March">March</asp:ListItem>
-                            <asp:ListItem Value="April">April</asp:ListItem>
-                            <asp:ListItem Value="May">May</asp:ListItem>
-                            <asp:ListItem Value="June">June</asp:ListItem>
-                            <asp:ListItem Value="July">July</asp:ListItem>
-                            <asp:ListItem Value="August">August</asp:ListItem>
-                            <asp:ListItem Value="September">September</asp:ListItem>
-                            <asp:ListItem Value="October">October</asp:ListItem>
-                            <asp:ListItem Value="November">November</asp:ListItem>
-                            <asp:ListItem Value="December">December</asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
-                </div>
+            <div class="form-horizontal">                
+                    <div class="form-group">                        
+                        <div class="col-md-2">
+                            <asp:Label ID="Label1" runat="server" class="control-label" Text="Report Type"></asp:Label>
+                        </div>
+                        <div class="col-md-4">
+                            <asp:DropDownList ID="ddlReportType" CssClass="form-control" runat="server">
+                                <asp:ListItem Value="MonthNameWise">Month Name Wise</asp:ListItem>
+                                <asp:ListItem Value="RoomTypeWise">Room Type Wise</asp:ListItem>                                
+                            </asp:DropDownList>
+                        </div>
+                        <div class="col-md-2">
+                            <asp:Label ID="lblYear" runat="server" class="control-label" Text="Year"></asp:Label>
+                        </div>
+                        <div class="col-md-4">
+                            <asp:DropDownList ID="ddlYear" CssClass="form-control" runat="server">
+                            </asp:DropDownList>
+                        </div>
+                    </div>                   
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <asp:Label ID="lblReportType" runat="server" class="control-label" Text="Report Format"></asp:Label>
+                        </div>
+                        <div class="col-md-4">
+                            <asp:DropDownList ID="ddlReportFormat" CssClass="form-control" runat="server">
+                                <asp:ListItem Value="Yearly">Yearly</asp:ListItem>
+                                <asp:ListItem Value="Monthly">Monthly</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div class="col-md-2" id="MonthLabelDiv">
+                            <asp:Label ID="lblMonth" runat="server" class="control-label" Text="Month"></asp:Label>
+                        </div>
+                        <div class="col-md-4" id="MonthControlDiv">
+                            <asp:DropDownList ID="ddlMonth" CssClass="form-control" runat="server">
+                                <asp:ListItem Value="January">January</asp:ListItem>
+                                <asp:ListItem Value="February">February</asp:ListItem>
+                                <asp:ListItem Value="March">March</asp:ListItem>
+                                <asp:ListItem Value="April">April</asp:ListItem>
+                                <asp:ListItem Value="May">May</asp:ListItem>
+                                <asp:ListItem Value="June">June</asp:ListItem>
+                                <asp:ListItem Value="July">July</asp:ListItem>
+                                <asp:ListItem Value="August">August</asp:ListItem>
+                                <asp:ListItem Value="September">September</asp:ListItem>
+                                <asp:ListItem Value="October">October</asp:ListItem>
+                                <asp:ListItem Value="November">November</asp:ListItem>
+                                <asp:ListItem Value="December">December</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                    </div>               
                 <div class="row" style="display: none">
                     <div class="columnRight">
                         <asp:TextBox ID="txtReportYear" runat="server"></asp:TextBox>
                         <asp:TextBox ID="txtReportDurationName" runat="server"></asp:TextBox>
                         <asp:TextBox ID="txtReportFor" runat="server"></asp:TextBox>
-                    </div>
+                    </div>                    
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-primary btn-sm"
-                            OnClick="btnSearch_Click" />
-                    </div>
+                    <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-primary btn-sm"
+                        OnClick="btnSearch_Click" />
+                        </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>   
     <div style="display: none;">
         <asp:Button ID="btnPrintReportFromClient" runat="server" Text="Button" OnClick="btnPrintReportFromClient_Click"
             ClientIDMode="Static" />
@@ -105,30 +116,15 @@
         <iframe id="frmPrint" name="frmPrint" width="0" height="0" runat="server" style="left: -1000;
             top: 2000;" clientidmode="static"></iframe>
     </div>
-    <div id="ReportPanel" class="panel panel-default" style="display: none;">
-        <div class="panel-heading">
-            Report:: Room Sales Revenue Information</div>
+    <div id="ReportPanel" class="panel panel-default" style="display: none;">       
+            <div class="panel-heading">Report:: Room Sales Revenue Information</div>
         <div class="panel-body">
             <div class="ReporContainerDiv">
                 <rsweb:ReportViewer ShowFindControls="false" ShowWaitControlCancelLink="false" ID="rvTransaction"
                     PageCountMode="Actual" SizeToReportContent="true" runat="server" Font-Names="Verdana"
-                    DocumentMapWidth="100%" Font-Size="8pt" InteractiveDeviceInfos="(Collection)"
-                    WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt" Width="950px" Height="820px">
-                    <%--<LocalReport ReportPath="HotelManagement\Reports\Rdlc\rptDivisionRevenue.rdlc">
-                    <DataSources>
-                        <rsweb:ReportDataSource DataSourceId="RoomReservationDataSource" Name="DS_RevenueBreakDown" />
-                    </DataSources>
-                </LocalReport>--%>
+                    Font-Size="8pt" InteractiveDeviceInfos="(Collection)" WaitMessageFont-Names="Verdana"
+                    WaitMessageFont-Size="14pt" Width="950px" Height="820px">
                 </rsweb:ReportViewer>
-                <%--<asp:ObjectDataSource ID="RoomReservationDataSource" runat="server" SelectMethod="GetData"
-                TypeName="HotelManagement.Presentation.Website.HotelManagementDBDataSetTableAdapters.GetInnboardRevenueInfoWithinYear_SPTableAdapter"
-                OldValuesParameterFormatString="original_{0}">
-                <SelectParameters>
-                    <asp:FormParameter  FormField="txtReportYear" Name="ReportYear" Type="String"  />
-                    <asp:FormParameter  FormField="txtReportDurationName" Name="ReportDurationName" Type="String" />
-                    <asp:FormParameter FormField="txtReportFor" Name="ReportFor" Type="String"  />
-                </SelectParameters>
-            </asp:ObjectDataSource>--%>
             </div>
         </div>
     </div>

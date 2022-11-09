@@ -30,10 +30,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             {
                 UserInformationBO userInformationBO = new UserInformationBO();
                 userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
-                txtReportYear.Text="2013";
+                txtReportYear.Text = "2013";
                 string CurrentYear = DateTime.Today.Year.ToString();
                 ddlYear.SelectedValue = CurrentYear;
-                txtReportDurationName.Text="Yearly";
+                txtReportDurationName.Text = "Yearly";
                 txtReportFor.Text = "DivisionRevenue";
                 LoadYearList();
             }
@@ -50,10 +50,11 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             _RoomStatusInfoByDate = 1;
             string ReportYear = ddlYear.SelectedValue.ToString();
             string Month = ddlMonth.SelectedValue.ToString();
-            string Type = ddlReportType.SelectedValue.ToString();
+            string reportType = ddlReportType.SelectedValue.ToString();
+            string reportFormat = ddlReportFormat.SelectedValue.ToString();
             string ReportFor = "DivisionRevenue";
             string ReportDurationName = "";
-            if (Type == "Yearly")
+            if (reportFormat == "Yearly")
             {
                 ReportDurationName = "Yearly";
             }
@@ -69,7 +70,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             rvTransaction.ProcessingMode = ProcessingMode.Local;
 
             var reportPath = "";
-            reportPath = Server.MapPath(@"~/HotelManagement/Reports/Rdlc/rptDivisionRevenue.rdlc");
+            if (reportType == "MonthNameWise")
+            {
+                reportPath = Server.MapPath(@"~/HotelManagement/Reports/Rdlc/rptDivisionRevenueMonthWise.rdlc");
+            }
+            else
+            {
+                reportPath = Server.MapPath(@"~/HotelManagement/Reports/Rdlc/rptDivisionRevenue.rdlc");
+            }
 
             if (!File.Exists(reportPath))
                 return;
@@ -132,7 +140,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             LocalReport rpt = rvTransaction.LocalReport;
             var reportSource = print.PrintReport(rpt, HMConstants.PrintPageType.Portrait.ToString());
 
-            frmPrint.Attributes["src"] = reportSource;             
+            frmPrint.Attributes["src"] = reportSource;
         }
     }
 }

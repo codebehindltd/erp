@@ -6,12 +6,17 @@
         <ChartCategoryHierarchy>
           <ChartMembers>
             <ChartMember>
-              <Group Name="Chart1_CategoryGroup1">
+              <Group Name="Chart1_CategoryGroup">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!ServiceName.Value</GroupExpression>
+                  <GroupExpression>=Fields!MonthName.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
-              <Label>=Fields!ServiceName.Value</Label>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!MonthValue.Value</Value>
+                </SortExpression>
+              </SortExpressions>
+              <Label>=Fields!MonthName.Value</Label>
             </ChartMember>
           </ChartMembers>
         </ChartCategoryHierarchy>
@@ -672,7 +677,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Service Name</Value>
+                            <Value>Month Name</Value>
                             <Style>
                               <FontSize>8pt</FontSize>
                               <FontWeight>Bold</FontWeight>
@@ -705,27 +710,27 @@
               <KeepWithGroup>After</KeepWithGroup>
             </TablixMember>
             <TablixMember>
-              <Group Name="ServiceName">
+              <Group Name="MonthName">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!ServiceName.Value</GroupExpression>
+                  <GroupExpression>=Fields!MonthName.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
               <SortExpressions>
                 <SortExpression>
-                  <Value>=Fields!ServiceName.Value</Value>
+                  <Value>=Fields!MonthValue.Value</Value>
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
                 <Size>2.8775in</Size>
                 <CellContents>
-                  <Textbox Name="ServiceName">
+                  <Textbox Name="MonthName">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=Fields!ServiceName.Value</Value>
+                            <Value>=Fields!MonthName.Value</Value>
                             <Style>
                               <FontSize>8pt</FontSize>
                             </Style>
@@ -734,7 +739,7 @@
                         <Style />
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>ServiceName</rd:DefaultName>
+                    <rd:DefaultName>MonthName</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -771,12 +776,17 @@
         <ChartCategoryHierarchy>
           <ChartMembers>
             <ChartMember>
-              <Group Name="Chart1_CategoryGroup2">
+              <Group Name="Chart2_CategoryGroup">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!ServiceName.Value</GroupExpression>
+                  <GroupExpression>=Fields!MonthName.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
-              <Label>=Fields!ServiceName.Value</Label>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!MonthValue.Value</Value>
+                </SortExpression>
+              </SortExpressions>
+              <Label>=Fields!MonthName.Value</Label>
             </ChartMember>
           </ChartMembers>
         </ChartCategoryHierarchy>
@@ -984,17 +994,6 @@
             </Style>
           </ChartArea>
         </ChartAreas>
-        <ChartTitles>
-          <ChartTitle Name="Default">
-            <Caption />
-            <Style>
-              <BackgroundGradientType>None</BackgroundGradientType>
-              <FontWeight>Bold</FontWeight>
-              <TextAlign>General</TextAlign>
-              <VerticalAlign>Top</VerticalAlign>
-            </Style>
-          </ChartTitle>
-        </ChartTitles>
         <Palette>BrightPastel</Palette>
         <ChartBorderSkin>
           <Style>
@@ -1029,12 +1028,17 @@
         <ChartCategoryHierarchy>
           <ChartMembers>
             <ChartMember>
-              <Group Name="Chart1_CategoryGroup3">
+              <Group Name="Chart3_CategoryGroup">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!ServiceName.Value</GroupExpression>
+                  <GroupExpression>=Fields!MonthName.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
-              <Label>=Fields!ServiceName.Value</Label>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!MonthValue.Value</Value>
+                </SortExpression>
+              </SortExpressions>
+              <Label>=Fields!MonthName.Value</Label>
             </ChartMember>
           </ChartMembers>
         </ChartCategoryHierarchy>
@@ -1094,7 +1098,7 @@
                   <FontSize>8pt</FontSize>
                 </Style>
                 <ChartAxisTitle>
-                  <Caption>Axis Title</Caption>
+                  <Caption />
                   <Style>
                     <FontSize>8pt</FontSize>
                   </Style>
@@ -1275,12 +1279,17 @@
         <ChartCategoryHierarchy>
           <ChartMembers>
             <ChartMember>
-              <Group Name="Chart1_CategoryGroup4">
+              <Group Name="Chart4_CategoryGroup">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!ServiceName.Value</GroupExpression>
+                  <GroupExpression>=Fields!MonthName.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
-              <Label>=Fields!ServiceName.Value</Label>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!MonthValue.Value</Value>
+                </SortExpression>
+              </SortExpressions>
+              <Label>=Fields!MonthName.Value</Label>
             </ChartMember>
           </ChartMembers>
         </ChartCategoryHierarchy>

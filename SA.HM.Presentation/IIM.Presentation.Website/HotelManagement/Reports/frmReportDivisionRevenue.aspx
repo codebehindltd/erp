@@ -6,27 +6,30 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-            var ddlReportType = '<%=ddlReportType.ClientID%>';
-            if ($('#' + ddlReportType).val() == "Monthly") {
-                $('#MonthDiv').show();
+            var ddlReportFormat = '<%=ddlReportFormat.ClientID%>';
+            if ($('#' + ddlReportFormat).val() == "Monthly") {
+                $('#MonthLabelDiv').show();
+                $('#MonthControlDiv').show();
             }
             else {
-                $('#MonthDiv').hide();
+                $('#MonthLabelDiv').hide();
+                $('#MonthControlDiv').hide();
             }
 
-
             var moduleName = "<a href='/HMCommon/frmHMHome.aspx' class='inActive'>Front Desk Management</a>";
-            var formName = "<span class='divider'>/</span><li class='active'>Bar Chart Division Revenue</li>";
+            var formName = "<span class='divider'>/</span><li class='active'>Division Revenue</li>";
             var breadCrumbs = moduleName + formName;
             $("#ltlBreadCrumbsInformation").html(breadCrumbs);
 
-            var ddlReportType = '<%=ddlReportType.ClientID%>';
-            $('#' + ddlReportType).change(function () {
-                if ($('#' + ddlReportType).val() == "Monthly") {
-                    $('#MonthDiv').show();
+            var ddlReportFormat = '<%=ddlReportFormat.ClientID%>';
+            $('#' + ddlReportFormat).change(function () {
+                if ($('#' + ddlReportFormat).val() == "Monthly") {
+                    $('#MonthLabelDiv').show();
+                    $('#MonthControlDiv').show();
                 }
                 else {
-                    $('#MonthDiv').hide();
+                    $('#MonthLabelDiv').hide();
+                    $('#MonthControlDiv').hide();
                 }
 
             });
@@ -40,8 +43,17 @@
     <div id="SearchPanel" class="panel panel-default">       
         <div class="panel-heading">Search Information</div>
         <div class="panel-body">
-            <div class="form-horizontal">               
-                    <div class="form-group">
+            <div class="form-horizontal">                
+                    <div class="form-group">                        
+                        <div class="col-md-2" style="display:none;">
+                            <asp:Label ID="Label1" runat="server" class="control-label" Text="Report Type"></asp:Label>
+                        </div>
+                        <div class="col-md-4" style="display:none;">
+                            <asp:DropDownList ID="ddlReportType" CssClass="form-control" runat="server">
+                                <asp:ListItem Value="MonthNameWise">Month Wise</asp:ListItem>
+                                <asp:ListItem Value="RoomTypeWise">Service Wise</asp:ListItem>                                
+                            </asp:DropDownList>
+                        </div>
                         <div class="col-md-2">
                             <asp:Label ID="lblYear" runat="server" class="control-label" Text="Year"></asp:Label>
                         </div>
@@ -49,21 +61,21 @@
                             <asp:DropDownList ID="ddlYear" CssClass="form-control" runat="server">
                             </asp:DropDownList>
                         </div>
+                    </div>                   
+                    <div class="form-group">
                         <div class="col-md-2">
-                            <asp:Label ID="lblReportType" runat="server" class="control-label" Text="Report Type"></asp:Label>
+                            <asp:Label ID="lblReportType" runat="server" class="control-label" Text="Report Format"></asp:Label>
                         </div>
                         <div class="col-md-4">
-                            <asp:DropDownList ID="ddlReportType" CssClass="form-control" runat="server">
+                            <asp:DropDownList ID="ddlReportFormat" CssClass="form-control" runat="server">
                                 <asp:ListItem Value="Yearly">Yearly</asp:ListItem>
                                 <asp:ListItem Value="Monthly">Monthly</asp:ListItem>
                             </asp:DropDownList>
                         </div>
-                    </div>                   
-                    <div class="form-group" id="MonthDiv">
-                        <div class="col-md-2">
+                        <div class="col-md-2" id="MonthLabelDiv">
                             <asp:Label ID="lblMonth" runat="server" class="control-label" Text="Month"></asp:Label>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" id="MonthControlDiv">
                             <asp:DropDownList ID="ddlMonth" CssClass="form-control" runat="server">
                                 <asp:ListItem Value="January">January</asp:ListItem>
                                 <asp:ListItem Value="February">February</asp:ListItem>
@@ -79,7 +91,7 @@
                                 <asp:ListItem Value="December">December</asp:ListItem>
                             </asp:DropDownList>
                         </div>
-                    </div>                
+                    </div>               
                 <div class="row" style="display: none">
                     <div class="columnRight">
                         <asp:TextBox ID="txtReportYear" runat="server"></asp:TextBox>
@@ -105,38 +117,21 @@
             top: 2000;" clientidmode="static"></iframe>
     </div>
     <div id="ReportPanel" class="panel panel-default">        
-            <div class="panel-heading">Report:: Bar Chart
-            Division Revenue Information</div>
+            <div class="panel-heading">Report:: Division Revenue Information</div>
         <div class="panel-body">
             <div class="ReporContainerDiv">
                 <rsweb:ReportViewer ShowFindControls="false" ShowWaitControlCancelLink="false" ID="rvTransaction"
                     PageCountMode="Actual" SizeToReportContent="true" runat="server" Font-Names="Verdana"
                     Font-Size="8pt" InteractiveDeviceInfos="(Collection)" WaitMessageFont-Names="Verdana"
                     WaitMessageFont-Size="14pt" Width="950px" Height="820px">
-                    <%--<LocalReport ReportPath="HotelManagement\Reports\Rdlc\rptBarChartRevenue.rdlc">
-                        <DataSources>
-                            <rsweb:ReportDataSource DataSourceId="RoomReservationDataSource" Name="DSBarchartRevenue" />
-                        </DataSources>
-                    </LocalReport>--%>
                 </rsweb:ReportViewer>
-                <%--<asp:ObjectDataSource ID="RoomReservationDataSource" runat="server" SelectMethod="GetData"
-                    TypeName="HotelManagement.Presentation.Website.HotelManagementDBDataSetTableAdapters.GetInnboardRevenueInfoForBarChartWithinYear_SPTableAdapter"
-                    OldValuesParameterFormatString="original_{0}">
-                    <SelectParameters>
-                        <asp:FormParameter FormField="txtReportYear" Name="ReportYear" Type="String" />
-                        <asp:FormParameter FormField="txtReportDurationName" Name="ReportDurationName" Type="String" />
-                        <asp:FormParameter FormField="txtReportFor" Name="ReportFor" Type="String" />
-                    </SelectParameters>
-                </asp:ObjectDataSource>--%>
             </div>
         </div>
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
             if (CommonHelper.BrowserType().mozilla || CommonHelper.BrowserType().chrome) {
-
                 var barControlId = CommonHelper.GetReportViewerControlId($("#<%=rvTransaction.ClientID %>"));
-
                 var innerTbody = '<tbody><tr><td><input type="image" style="border-width: 0px; padding: 2px; height: 16px; width: 16px;" alt="Print" src="/Reserved.ReportViewerWebControl.axd?OpType=Resource&amp;Version=9.0.30729.1&amp;Name=Microsoft.Reporting.WebForms.Icons.Print.gif" title="Print"></td></tr></tbody>';
                 var innerTable = '<table title="Print" onclick="PrintDocumentFunc(\'' + barControlId + '\'); return false;" id="ff_print" style="cursor: default;">' + innerTbody + '</table>'
                 var outerDiv = '<div style="display: inline-block; font-size: 8pt; height: 30px;" class=" "><table cellspacing="0" cellpadding="0" style="display: inline;"><tbody><tr><td height="28px">' + innerTable + '</td></tr></tbody></table></div>';

@@ -835,6 +835,8 @@
     <Content Include="Inventory\Reports\Rdlc\rptProductOutInfoDateWiseItemSummary.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptProductOutInfoItemWiseItemSummary.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptProductOutInfoTransferNumberWiseItemSummary.rdlc" />
+    <EmbeddedResource Include="HotelManagement\Reports\Rdlc\rptDivisionRevenueMonthWise.rdlc" />
+    <EmbeddedResource Include="HotelManagement\Reports\Rdlc\rptRoomSalesRevenueMonthWise.rdlc" />
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />
@@ -1296,7 +1298,6 @@
     <Content Include="HotelManagement\Reports\frmReportSalesInfo.aspx" />
     <Content Include="HotelManagement\Reports\frmReportCanceledReservation.aspx" />
     <Content Include="HotelManagement\Reports\frmReportDiscountVsActualSales.aspx" />
-    <Content Include="HotelManagement\Reports\frmReportBCRoomSalesRevenue.aspx" />
     <Content Include="HotelManagement\Reports\frmReportBCDivisionRevenue.aspx" />
     <Content Include="HotelManagement\Reports\frmReportCorporateGuestInfo.aspx" />
     <Content Include="HotelManagement\Reports\frmReportGuestCompanyInfo.aspx" />
@@ -5897,13 +5898,6 @@
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportDiscountVsActualSales.aspx.designer.cs">
       <DependentUpon>frmReportDiscountVsActualSales.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="HotelManagement\Reports\frmReportBCRoomSalesRevenue.aspx.cs">
-      <DependentUpon>frmReportBCRoomSalesRevenue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="HotelManagement\Reports\frmReportBCRoomSalesRevenue.aspx.designer.cs">
-      <DependentUpon>frmReportBCRoomSalesRevenue.aspx</DependentUpon>
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportBCDivisionRevenue.aspx.cs">
       <DependentUpon>frmReportBCDivisionRevenue.aspx</DependentUpon>
