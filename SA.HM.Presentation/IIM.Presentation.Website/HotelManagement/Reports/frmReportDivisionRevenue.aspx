@@ -16,6 +16,12 @@
                 $('#MonthControlDiv').hide();
             }
 
+            $("#ContentPlaceHolder1_ddlServiceName").select2({
+                tags: "true",
+                placeholder: "Select an option",
+                allowClear: true,
+                width: "99.75%"
+            });
             var moduleName = "<a href='/HMCommon/frmHMHome.aspx' class='inActive'>Front Desk Management</a>";
             var formName = "<span class='divider'>/</span><li class='active'>Division Revenue</li>";
             var breadCrumbs = moduleName + formName;

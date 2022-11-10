@@ -835,8 +835,8 @@
     <Content Include="Inventory\Reports\Rdlc\rptProductOutInfoDateWiseItemSummary.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptProductOutInfoItemWiseItemSummary.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptProductOutInfoTransferNumberWiseItemSummary.rdlc" />
-    <EmbeddedResource Include="HotelManagement\Reports\Rdlc\rptDivisionRevenueMonthWise.rdlc" />
-    <EmbeddedResource Include="HotelManagement\Reports\Rdlc\rptRoomSalesRevenueMonthWise.rdlc" />
+    <Content Include="HotelManagement\Reports\Rdlc\rptDivisionRevenueMonthWise.rdlc" />
+    <Content Include="HotelManagement\Reports\Rdlc\rptRoomSalesRevenueMonthWise.rdlc" />
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />
