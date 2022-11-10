@@ -640,10 +640,14 @@
 
                         var IsCostCenterIdFound = costCenterIdValueInTable.indexOf(costCenterId) > -1;
                         var IsLocationFound = locationIdValueInTable.indexOf(locationId) > -1;
-                        var IsItemFound = itemIdValueInTable.indexOf(itemId) > -1;
+                        var IsItemFound = false;
+                        if (itemId === itemIdValueInTable) {
+                            IsItemFound = true;
+                        }
+                        //var IsItemFound = itemIdValueInTable.indexOf(itemId) > -1;
 
                         if (colorId === 0 && sizeId === 0 && styleId === 0) {
-
+                            debugger;
                             if (IsCostCenterIdFound && IsLocationFound && IsItemFound) {
                                 toastr.warning('Same Item Already Added.');
                                 IsDuplicate = true;
@@ -1404,7 +1408,7 @@
                 CommonHelper.AlertMessage(result.AlertMessage);
                 //toastr.success('Save Operation Successful.');
                 PerformClearAction();
-                GoToProductionPage();
+                //GoToProductionPage();
             }
             else {
                 //toastr.warning('Save Operation Failed.');
@@ -1590,6 +1594,7 @@
             $("#ContentPlaceHolder1_ddlItemStockBy").val("");
             $("#ContentPlaceHolder1_txtItemUnit").val("");
             $("#ContentPlaceHolder1_txtUnitPrice").val("");
+            $("#ContentPlaceHolder1_txtBagQuantity").val("");
             $("#ContentPlaceHolder1_lblFGCurrentStock").text("0");
             $("#ContentPlaceHolder1_hfItemId").val("0");
             $("#ContentPlaceHolder1_ddlFGLocationId").attr("disabled", false);
