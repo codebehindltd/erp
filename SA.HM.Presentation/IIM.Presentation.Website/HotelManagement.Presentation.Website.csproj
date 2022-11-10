@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="AirTicketing\frmAirlineTicketInfo.aspx" />
     <Content Include="Banquet\frmBanquetCalendar.aspx" />
     <Content Include="Banquet\frmBanquetInformation.aspx" />
     <Content Include="Banquet\frmBanquetRefference.aspx" />
@@ -2352,6 +2353,13 @@
     </Compile>
     <Compile Include="About.aspx.designer.cs">
       <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AirTicketing\frmAirlineTicketInfo.aspx.cs">
+      <DependentUpon>frmAirlineTicketInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AirTicketing\frmAirlineTicketInfo.aspx.designer.cs">
+      <DependentUpon>frmAirlineTicketInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Banquet\Reports\frmReportAdvBanquetReservationForecast.aspx.cs">
       <DependentUpon>frmReportAdvBanquetReservationForecast.aspx</DependentUpon>
@@ -8473,6 +8481,7 @@
     <Content Include="SalesManagment\Reports\Rdlc\SalesInvoice.rdlc" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AirTicketing\Reports\Rdlc\" />
     <Folder Include="App_Readme\" />
     <Folder Include="Banquet\SeatingPlanImage\" />
     <Folder Include="bin\" />
