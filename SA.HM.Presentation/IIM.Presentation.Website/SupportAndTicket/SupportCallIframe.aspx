@@ -632,7 +632,8 @@
                         "<input type='text' value='" + Result.STSupportDetails[i].UnitQuantity + "' id='pi" + Result.STSupportDetails[i].ItemName + "' class='form-control quantitydecimal' onblur='CalculateTotalForAdhoqDetails(this)'  />" +
                         "</td>";
                     tr += "<td style='width:10%;'>" + (Result.STSupportDetails[i].VatAmount) + "</td>";
-                    tr += "<td style='width:15%;'>" + ((parseFloat(Result.STSupportDetails[i].UnitPrice) * parseFloat(Result.STSupportDetails[i].UnitQuantity)) + Result.STSupportDetails[i].VatAmount).toFixed(2) + "</td>";
+                    //tr += "<td style='width:15%;'>" + ((parseFloat(Result.STSupportDetails[i].UnitPrice) * parseFloat(Result.STSupportDetails[i].UnitQuantity)) + Result.STSupportDetails[i].VatAmount).toFixed(2) + "</td>";
+                    tr += "<td style='width:15%;'>" + (parseFloat(Result.STSupportDetails[i].TotalPrice)).toFixed(2) + "</td>";
 
                     tr += "<td style='width:5%;'>";
                     tr += "<a href='javascript:void()' onclick= 'DeleteAdhoqItemForSupportDetails(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
@@ -655,8 +656,8 @@
                         VatRate: parseFloat(Result.STSupportDetails[i].VatRate),
                         VatAmount: parseFloat(Result.STSupportDetails[i].VatAmount),
 
-                        TotalPrice: parseFloat((Result.STSupportDetails[i].UnitPrice * Result.STSupportDetails[i].UnitQuantity) + Result.STSupportDetails[i].VatAmount),
-
+                        //TotalPrice: parseFloat((Result.STSupportDetails[i].UnitPrice * Result.STSupportDetails[i].UnitQuantity) + Result.STSupportDetails[i].VatAmount),
+                        TotalPrice: parseFloat((Result.STSupportDetails[i].TotalPrice)),
                         Type: Result.STSupportDetails[i].Type,
                         STSupportDetailsId: Result.STSupportDetails[i].STSupportDetailsId,
                         STSupportId: Result.STSupportDetails[i].STSupportId

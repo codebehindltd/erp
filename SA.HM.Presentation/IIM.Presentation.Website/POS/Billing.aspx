@@ -522,6 +522,7 @@
                         $("#itemSizeInputCol").hide();
                         $("#itemStyleInputNameCol").hide();
                         $("#itemStyleInputCol").hide();
+                        GetInvItemStockInfoByItemAndAttributeId();
                         $("#ContentPlaceHolder1_hfIsAttributeItem").val('0');
                     }
                 }
