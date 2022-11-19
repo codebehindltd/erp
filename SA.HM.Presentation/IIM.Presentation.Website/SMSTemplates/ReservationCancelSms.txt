@@ -1,1 +1,1 @@
-Dear ##Name##, Your reservation has been cancelled. Resv:  ##ReservationNumber## Arrival: ##ArrivalDate## Departure: ##DepartureDate## Reservation Team HOTEL THE COX TODAY Hotline: 01755598449-50, 09638-999999 bKash: 01844114807 (Merchant)
+Dear ##Name##, Your reservation has been cancelled. Resv:  ##ReservationNumber## Arrival: ##ArrivalDate## Departure: ##DepartureDate## Reservation Team ##COMPANY## Hotline: ##CONTACTNUMBER##

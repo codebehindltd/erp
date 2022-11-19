@@ -612,7 +612,7 @@
                 GetInvItemStockInfoByItemAndAttributeId(companyId, projectId, parseInt($("#ContentPlaceHolder1_hfItemId").val(), 10), colorId, sizeId, styleId, locationId);
             });
             $("#txtSerialAutoComplete").autocomplete({
-                minLength: 1,
+                minLength: 3,
                 source: function (request, response) {
                     var companyId = $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val();
                     var projectId = $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").val();

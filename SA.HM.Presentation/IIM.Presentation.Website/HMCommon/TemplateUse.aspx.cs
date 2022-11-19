@@ -320,6 +320,7 @@ namespace HotelManagement.Presentation.Website.HMCommon
                         {
                         {"COMPANY", hmUtility.GetHMCompanyProfile()},
                         {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
+                        {"CONTACTNUMBER", hmUtility.GetHMCompanyContactNumber()},
                         {"ReservationNumber", reservationBO.ReservationNumber },
                         {"ArrivalDate", reservationBO.ArrivalTime.ToString()},
                         {"DepartureDate", reservationBO.DepartureTime.ToString()},
@@ -355,6 +356,7 @@ namespace HotelManagement.Presentation.Website.HMCommon
                         {
                         {"COMPANY", hmUtility.GetHMCompanyProfile()},
                         {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
+                        {"CONTACTNUMBER", hmUtility.GetHMCompanyContactNumber()},
                         {"ReservationNumber", reservationBO.ReservationNumber },
                         {"ArrivalDate", reservationBO.ArrivalTime.ToString()},
                         {"DepartureDate", reservationBO.DepartureTime.ToString()},

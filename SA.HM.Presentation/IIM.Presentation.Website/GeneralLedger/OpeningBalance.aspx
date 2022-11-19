@@ -43,61 +43,8 @@
                 allowClear: true,
                 width: "99.75%"
             });
-            // txtVoucherDate
-            //$("#txtSearch").autocomplete({
 
-            //    source: function (request, response) {
-            //        let url = 'OpeningBalance.aspx/AutoCompleteTransactionNode';
-            //        let transactionType = $("#ContentPlaceHolder1_ddlTransactionType").val();
-
-            //        let inventorySearchType = $("#ContentPlaceHolder1_ddlInventorySearchType").val();
-            //        let costCenterId = $("#ContentPlaceHolder1_ddlStore").val();
-            //        if (transactionType == "Inventory") {
-            //            if (costCenterId == "0") {
-            //                toastr.warning("Please Select Store Name.");
-            //                $("#ContentPlaceHolder1_ddlStore").focus();
-            //                return false;
-            //            }
-            //        }
-            //        $.ajax({
-            //            type: "POST",
-            //            contentType: "application/json; charset=utf-8",
-            //            url: url,
-            //            data: JSON.stringify({ transactionType: transactionType, searchText: request.term, inventorySearchType: inventorySearchType, costCenterId: costCenterId }),
-            //            dataType: "json",
-            //            success: function (data) {
-
-            //                var searchData = data.error ? [] : $.map(data.d, function (m) {
-            //                    return {
-            //                        label: m.NodeName,
-            //                        value: m.TransactionNodeId,
-            //                        NodeId: m.TransactionNodeId,
-            //                        Lvl: m.Lvl,
-            //                        Hierarchy: m.Hierarchy
-            //                    };
-            //                });
-            //                response(searchData);
-            //            },
-            //            error: function (result) {
-            //                //alert("Error");
-            //            }
-            //        });
-            //    },
-            //    focus: function (event, ui) {
-            //        // prevent autocomplete from updating the textbox
-            //        event.preventDefault();
-            //        // manually update the textbox
-            //        //$(this).val(ui.item.label);
-            //    },
-            //    select: function (event, ui) {
-            //        // prevent autocomplete from updating the textbox
-            //        event.preventDefault();
-            //        // manually update the textbox and hidden field
-            //        $(this).val(ui.item.label);
-
-            //        TransactionNode = ui.item;
-            //    }
-            //});
+            LoadStoreLocationByCostCenter($('#ContentPlaceHolder1_ddlStore').val());
 
             $("#ContentPlaceHolder1_ddlStore").change(function () {
                 $("#SaveContent").hide();
@@ -108,10 +55,6 @@
                 $("#SaveContent").hide();
                 $("#balanceTable").html("");
             });
-            //$("#ContentPlaceHolder1_ddlFiscalYear").change(function () {
-            //    $("#SaveContent").hide();
-            //    $("#balanceTable").html("");
-            //});
         });
 
         function LoadStoreLocationByCostCenter(costCenterId) {
@@ -125,11 +68,6 @@
 
             control.empty();
             PopulateControlWithValueNTextField(result, control, $("#<%=CommonDropDownHiddenField.ClientID %>").val(), "Name", "LocationId");
-
-            //if (list.length == 1 && $("#ContentPlaceHolder1_hfLocationId").val() == "0")
-            //$("#ContentPlaceHolder1_ddlLocation").val($("#ContentPlaceHolder1_ddlReceiveLocation option:first").val());
-            //else
-            //$("#ContentPlaceHolder1_ddlLocation").val($("#ContentPlaceHolder1_hfLocationId").val()).trigger("change");
             return false;
         }
 
@@ -163,68 +101,40 @@
                 let projectId = $(control).val();
                 $("#SaveContent").hide();
                 $("#balanceTable").html("");
-            <%--$('#<%=ddlFiscalYear.ClientID %>').empty().append('<option selected="selected" value="0">Loading...</option>');
-
-            $.ajax({
-                type: "POST",
-                url: "./OpeningBalance.aspx/PopulateFiscalYear",
-                data: JSON.stringify({ projectId: projectId }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,
-                success: function (result) {
-                    PopulateControlWithValueNTextField(result.d, $("#<%=ddlFiscalYear.ClientID %>"), $("#<%=CommonDropDownHiddenField.ClientID %>").val(), "FiscalYearName", "FiscalYearId");
-                },
-                failure: function (response) {
-                    toastr.error(response.d);
-                }
-            });--%>
             }
 
         function ChangeSearchLabel(control) {
             TransactionNode = null;
             Balance = null;
             $("#balanceTable").html("");
-            // $("#txtSearch").val("");
             let controlValue = $(control).val();
             $("#dvInventorySearchType").hide();
             $("#InventoryContent").hide();
-            // $("#dvSearchType").show();
 
             if (controlValue == "Accounts") {
                 $("#lblTransaction").text("Account Head");
-                // $("#dvSearchType").hide();
-                // $("#txtSearch").hide();
                 $("#lblTransaction").hide();
             }
             else if (controlValue == "Company") {
                 $("#lblTransaction").text("Company Name");
-                // $("#txtSearch").show();
                 $("#lblTransaction").show();
             }
             else if (controlValue == "Supplier")
             {
                 $("#lblTransaction").text("Supplier Name");
-                // $("#txtSearch").show();
                 $("#lblTransaction").show();
             }
             else if (controlValue == "Employee")
             {
                 $("#lblTransaction").text("Employee Name");
-                // $("#txtSearch").show();
                 $("#lblTransaction").show();
             }
             else if (controlValue == "Member")
             {
                 $("#lblTransaction").text("Member Name");
-                // $("#txtSearch").show();
                 $("#lblTransaction").show();
             }
-                //else if (controlValue == "CNF")
-                // $("#lblTransaction").text("Account Name");
             else if (controlValue == "Inventory") {
-                // $("#txtSearch").show();
-                // $("#dvSearchType").hide();
                 $("#dvInventorySearchType").show();
                 $("#InventoryContent").show();
                 $("#lblTransaction").show();

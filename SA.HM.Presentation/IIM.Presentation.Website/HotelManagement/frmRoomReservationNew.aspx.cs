@@ -2884,6 +2884,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         {
                         {"COMPANY", hmUtility.GetHMCompanyProfile()},
                         {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
+                        {"CONTACTNUMBER", hmUtility.GetHMCompanyContactNumber()},
                         {"Name", reservationBO.ContactPerson},
                         {"ReservationNumber",  reservationNumber},
                         {"ArrivalDate", reservationBO.DateIn.ToString()},
@@ -2930,6 +2931,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         {
                         {"COMPANY", hmUtility.GetHMCompanyProfile()},
                         {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
+                        {"CONTACTNUMBER", hmUtility.GetHMCompanyContactNumber()},
                         {"Name", reservationBO.ContactPerson},
                         {"ReservationNumber",  reservationNumber},
                         {"ArrivalDate", reservationBO.DateIn.ToString()},
@@ -2976,6 +2978,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         {
                         {"COMPANY", hmUtility.GetHMCompanyProfile()},
                         {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
+                        {"CONTACTNUMBER", hmUtility.GetHMCompanyContactNumber()},
                         {"Name", reservationBO.ContactPerson},
                         {"ReservationNumber",  reservationNumber},
                         {"ArrivalDate", reservationBO.DateIn.ToString()},

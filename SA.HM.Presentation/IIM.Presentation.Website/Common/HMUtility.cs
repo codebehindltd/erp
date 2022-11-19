@@ -419,6 +419,12 @@ namespace HotelManagement.Presentation.Website.Common
             List<CompanyBO> files = companyDA.GetCompanyInfo();
             return files[0].CompanyAddress + "\n" + files[0].WebAddress;
         }
+        public string GetHMCompanyContactNumber()
+        {
+            CompanyDA companyDA = new CompanyDA();
+            List<CompanyBO> files = companyDA.GetCompanyInfo();
+            return files[0].ContactNumber;
+        }
         public string GetPrintDate()
         {
             DateTime Today = DateTime.Now;
