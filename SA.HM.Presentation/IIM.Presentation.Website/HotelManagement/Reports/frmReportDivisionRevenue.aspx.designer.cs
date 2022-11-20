@@ -13,6 +13,24 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
     public partial class frmReportDivisionRevenue {
         
         /// <summary>
+        /// lblFiscalYear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFiscalYear;
+        
+        /// <summary>
+        /// ddlFiscalYear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiscalYear;
+        
+        /// <summary>
         /// Label1 control.
         /// </summary>
         /// <remarks>
@@ -31,24 +49,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
         protected global::System.Web.UI.WebControls.DropDownList ddlServiceName;
         
         /// <summary>
-        /// lblYear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblYear;
-        
-        /// <summary>
-        /// ddlYear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlYear;
-        
-        /// <summary>
         /// lblReportType control.
         /// </summary>
         /// <remarks>
@@ -58,13 +58,13 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
         protected global::System.Web.UI.WebControls.Label lblReportType;
         
         /// <summary>
-        /// ddlReportFormat control.
+        /// ddlReportType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlReportFormat;
+        protected global::System.Web.UI.WebControls.DropDownList ddlReportType;
         
         /// <summary>
         /// lblMonth control.

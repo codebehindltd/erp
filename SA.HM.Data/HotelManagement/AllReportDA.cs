@@ -426,7 +426,7 @@ namespace HotelManagement.Data.HotelManagement
             }
             return salesInfo;
         }
-        public List<RoomSalesBCReportViewBO> GetRoomSalesBCInfo(string reportYear, string durationName, string reportFor, int serviceId)
+        public List<RoomSalesBCReportViewBO> GetRoomSalesBCInfo(int fiscalYearId, string reportDurationName, string reportFor, string serviceName)
         {
             List<RoomSalesBCReportViewBO> salesInfo = new List<RoomSalesBCReportViewBO>();
 
@@ -434,16 +434,16 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInnboardRevenueInfoForBarChartWithinYear_SP"))
                 {
-                    dbSmartAspects.AddInParameter(cmd, "@ReportYear", DbType.String, reportYear);
-                    dbSmartAspects.AddInParameter(cmd, "@ReportDurationName", DbType.String, durationName);
+                    dbSmartAspects.AddInParameter(cmd, "@FiscalYearId", DbType.Int32, fiscalYearId);
+                    dbSmartAspects.AddInParameter(cmd, "@ReportDurationName", DbType.String, reportDurationName);
                     dbSmartAspects.AddInParameter(cmd, "@ReportFor", DbType.String, reportFor);
-                    if (serviceId == 0)
+                    if (serviceName == "--- All ---")
                     {
-                        dbSmartAspects.AddInParameter(cmd, "@ServiceId", DbType.Int32, DBNull.Value);
+                        dbSmartAspects.AddInParameter(cmd, "@ServiceName", DbType.String, DBNull.Value);
                     }
                     else
                     {
-                        dbSmartAspects.AddInParameter(cmd, "@ServiceId", DbType.Int32, serviceId);
+                        dbSmartAspects.AddInParameter(cmd, "@ServiceName", DbType.String, serviceName);
                     }
 
                     DataSet ds = new DataSet();

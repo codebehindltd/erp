@@ -371,7 +371,7 @@ namespace HotelManagement.Data.HMCommon
                             while (reader.Read())
                             {
                                 CustomFieldBO customFieldObject = new CustomFieldBO();
-                                customFieldObject.ServiceId = Convert.ToInt32(reader["ServiceId"]);
+                                //customFieldObject.ServiceId = Convert.ToInt32(reader["ServiceId"]);
                                 customFieldObject.ServiceName = reader["ServiceName"].ToString();
                                 fields.Add(customFieldObject);
                             }

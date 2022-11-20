@@ -328,6 +328,7 @@
                               <Value>=Fields!TotalRoomSale.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -365,6 +366,7 @@
                               <Value>=Fields!MtdTotalRoomSale.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -444,6 +446,7 @@
                               <Value>=Fields!RoomOccupied.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -481,6 +484,7 @@
                               <Value>=Fields!MtdRoomOccupied.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -560,6 +564,7 @@
                               <Value>=Fields!OccupencyPercent.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -597,6 +602,7 @@
                               <Value>=Fields!MtdOccupencyPercent.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -676,6 +682,7 @@
                               <Value>=Fields!DoubleOccupency.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -713,6 +720,7 @@
                               <Value>=Fields!MtdDoubleOccupency.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -910,7 +918,7 @@
                               <Value>=Microsoft.VisualBasic.Interaction.IIF((Microsoft.VisualBasic.Interaction.IIF(Fields!TotalRoomSale.Value = 0, 1, Fields!TotalRoomSale.Value) / Microsoft.VisualBasic.Interaction.IIF(Fields!RoomOccupied.Value = 0, 1, Fields!RoomOccupied.Value)) = 1, 0, (Microsoft.VisualBasic.Interaction.IIF(Fields!TotalRoomSale.Value = 0, 1, Fields!TotalRoomSale.Value) / Microsoft.VisualBasic.Interaction.IIF(Fields!RoomOccupied.Value = 0, 1, Fields!RoomOccupied.Value)))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.00;(0.00)</Format>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -948,7 +956,7 @@
                               <Value>=Microsoft.VisualBasic.Interaction.IIF((Microsoft.VisualBasic.Interaction.IIF(Fields!MtdTotalRoomSale.Value = 0, 1, Fields!MtdTotalRoomSale.Value) / Microsoft.VisualBasic.Interaction.IIF(Fields!MtdRoomOccupied.Value = 0, 1, Fields!MtdRoomOccupied.Value)) = 1, 0, (Microsoft.VisualBasic.Interaction.IIF(Fields!MtdTotalRoomSale.Value = 0, 1, Fields!MtdTotalRoomSale.Value) / Microsoft.VisualBasic.Interaction.IIF(Fields!MtdRoomOccupied.Value = 0, 1, Fields!MtdRoomOccupied.Value)))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.00;(0.00)</Format>
+                                <Format>#,0.00;(#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3960,7 +3968,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>

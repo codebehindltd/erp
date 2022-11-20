@@ -1285,7 +1285,6 @@
     <Content Include="HotelManagement\Reports\frmReportReservationBillPayment.aspx" />
     <Content Include="HotelManagement\Reports\frmReportRoomReservationNoShow.aspx" />
     <Content Include="HotelManagement\Reports\frmReportServiceBillInfo.aspx" />
-    <Content Include="HotelManagement\Reports\frmReportRoomSalesRevenue.aspx" />
     <Content Include="HotelManagement\Reports\frmReportGuestPaymentInvoice.aspx" />
     <Content Include="HotelManagement\Reports\frmReportGuestInformationDetails.aspx" />
     <Content Include="HotelManagement\Reports\frmReportGuestPaymentInfo.aspx" />
@@ -5807,13 +5806,6 @@
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportServiceBillInfo.aspx.designer.cs">
       <DependentUpon>frmReportServiceBillInfo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="HotelManagement\Reports\frmReportRoomSalesRevenue.aspx.cs">
-      <DependentUpon>frmReportRoomSalesRevenue.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="HotelManagement\Reports\frmReportRoomSalesRevenue.aspx.designer.cs">
-      <DependentUpon>frmReportRoomSalesRevenue.aspx</DependentUpon>
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportGuestPaymentInvoice.aspx.cs">
       <DependentUpon>frmReportGuestPaymentInvoice.aspx</DependentUpon>
