@@ -771,6 +771,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductConsumptionForSearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (!string.IsNullOrEmpty(productOutFor))
                         dbSmartAspects.AddInParameter(cmd, "@ProductOutFor", DbType.String, productOutFor);
                     else
@@ -852,6 +853,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductOutBySearchCriteria_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, dateFrom);
                     dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, dateTo);
                     dbSmartAspects.AddInParameter(cmd, "@Status", DbType.String, status);
@@ -921,6 +923,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetSupplierProductReturnForSearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (costCenterIdFrom != 0)
                         dbSmartAspects.AddInParameter(cmd, "@CostCenterIdFrom", DbType.Int32, costCenterIdFrom);
                     else
@@ -966,6 +969,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductOutById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@OutId", DbType.Int32, outId);
 
                     DataSet ds = new DataSet();
@@ -1010,6 +1014,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductOutByIssueNumber_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@IssueNumber", DbType.String, issueNumber);
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "PMProductOut");
@@ -1051,6 +1056,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetSupplierProductReturnById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@ReturnId", DbType.Int32, returnId);
 
                     DataSet ds = new DataSet();
@@ -1076,6 +1082,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductOutDetailsByOutId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@OutId", DbType.Int32, outId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -1150,6 +1157,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductOutDetailsInfoByOutId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@OutId", DbType.Int32, outId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -1225,6 +1233,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductOutDetailsByOutId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@OutId", DbType.Int32, outId);
 
                     DataSet ds = new DataSet();
@@ -1696,6 +1705,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductOutForRoomById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@InventoryOutId", DbType.Int32, outId);
 
                     DataSet ds = new DataSet();
@@ -1724,6 +1734,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductOutForRommDetailsByOutId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@InventoryOutId", DbType.Int32, outId);
 
                     DataSet ds = new DataSet();
@@ -1759,6 +1770,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductOutForRoomSearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (costCenterId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@CostCenterId", DbType.Int32, costCenterId);
                     else
@@ -1814,6 +1826,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductOutForReceive_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "PMProductReceived");
                     DataTable Table = ds.Tables["PMProductReceived"];
@@ -2568,6 +2581,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductOutForSearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (outType != "All")
                         dbSmartAspects.AddInParameter(cmd, "@IssueType", DbType.String, outType);
                     else
@@ -2644,6 +2658,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetItemOutSerialByOutId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@OutId", DbType.Int32, outId);
 
                     DataSet ds = new DataSet();
@@ -2672,6 +2687,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetItemOutDetailsByOutId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@OutId", DbType.Int32, outId);
 
                     DataSet ds = new DataSet();
@@ -2711,6 +2727,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetItemOutDetailsFromRequisitionByOutId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@OutId", DbType.Int32, outId);
                     dbSmartAspects.AddInParameter(cmd, "@RequisitionOrSalesId", DbType.Int32, requisitionOrSalesId);
 
@@ -2755,6 +2772,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetItemOutDetailsFromQuotationByOutId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@OutId", DbType.Int32, outId);
                     dbSmartAspects.AddInParameter(cmd, "@RequisitionOrSalesId", DbType.Int32, requisitionOrSalesId);
 
@@ -2793,6 +2811,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetItemOutDetailsFromBillingByOutId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@OutId", DbType.Int32, outId);
                     dbSmartAspects.AddInParameter(cmd, "@RequisitionOrSalesId", DbType.Int32, requisitionOrSalesId);
 
@@ -3009,6 +3028,7 @@ namespace HotelManagement.Data.PurchaseManagment
                 {
                     using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyProjectWiseAvailableSerialForAutoSearch_SP"))
                     {
+                        cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                         dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int64, companyId);
                         dbSmartAspects.AddInParameter(cmd, "@ProjectId", DbType.Int64, projectId);
                         dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int64, itemId);
@@ -3045,6 +3065,7 @@ namespace HotelManagement.Data.PurchaseManagment
                 {
                     using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCostcenterProjectWiseAvailableSerialForAutoSearch_SP"))
                     {
+                        cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                         dbSmartAspects.AddInParameter(cmd, "@CostcenterId", DbType.Int32, costcenterId);
                         dbSmartAspects.AddInParameter(cmd, "@ProjectId", DbType.Int64, projectId);
                         dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int64, itemId);
@@ -3080,6 +3101,7 @@ namespace HotelManagement.Data.PurchaseManagment
                 {
                     using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetFixedAssetAvailableSerialForAutoSearch_SP"))
                     {
+                        cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                         dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int64, itemId);
                         dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                         dbSmartAspects.AddInParameter(cmd, "@ProjectId", DbType.Int32, projectId);
@@ -3116,6 +3138,7 @@ namespace HotelManagement.Data.PurchaseManagment
                 {
                     using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetAvailableSerialForAutoSearch_SP"))
                     {
+                        cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                         dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int64, itemId);
                         dbSmartAspects.AddInParameter(cmd, "@LocationId", DbType.Int64, locationId);
                         dbSmartAspects.AddInParameter(cmd, "@SerialNumber", DbType.String, serialNumber);
@@ -3150,12 +3173,11 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetTransferOrderForReceive_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CostCenterId", DbType.Int64, costCenterId);
                     dbSmartAspects.AddInParameter(cmd, "@LocationId", DbType.Int64, locationId);
                     dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, fromDate);
                     dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, toDate);
-
-
 
                     if (status != "All")
                         dbSmartAspects.AddInParameter(cmd, "@Status", DbType.String, status);
@@ -3341,6 +3363,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetItemConsumtionForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, _fromDate);
                     dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, _toDate);
 
@@ -3450,6 +3473,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetItemConsumtionInformationForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, _fromDate);
                     dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, _toDate);
                     if (_consumptionFor == 1)
@@ -3521,6 +3545,7 @@ namespace HotelManagement.Data.PurchaseManagment
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProductOutForEmployee_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
 
                     DataSet ds = new DataSet();

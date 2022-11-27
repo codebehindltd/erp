@@ -1315,18 +1315,31 @@ namespace HotelManagement.Presentation.Website.Payroll
             ddlDependsOn.DataValueField = "SalaryHeadId";
             ddlDependsOn.DataBind();
 
-            ddlEmployeeContributionHeadId.DataSource = fields.Where(x => x.ContributionType == "Both").ToList();
+            List<SalaryHeadBO> employeeContributionHeadBO = new List<SalaryHeadBO>();
+            List<SalaryHeadBO> employeeContributionHeadBOEmployee = new List<SalaryHeadBO>();           
+            employeeContributionHeadBOEmployee = fields.Where(x => x.ContributionType == "Employee").ToList();
+            employeeContributionHeadBO.AddRange(employeeContributionHeadBOEmployee);
+
+            List<SalaryHeadBO> employeeContributionHeadBOBoth = new List<SalaryHeadBO>();
+            employeeContributionHeadBOBoth = fields.Where(x => x.ContributionType == "Both").ToList();            
+            employeeContributionHeadBO.AddRange(employeeContributionHeadBOBoth);
+
+            ddlEmployeeContributionHeadId.DataSource = employeeContributionHeadBO;
             ddlEmployeeContributionHeadId.DataTextField = "SalaryHead";
             ddlEmployeeContributionHeadId.DataValueField = "SalaryHeadId";
             ddlEmployeeContributionHeadId.DataBind();
-
             ddlEmployeeContributionHeadId.Items.Insert(0, item1);
 
-            ddlCompanyContributionHeadId.DataSource = fields.Where(x => x.ContributionType == "Both").ToList();
+            List<SalaryHeadBO> companyContributionHeadBO = new List<SalaryHeadBO>();
+            List<SalaryHeadBO> companyContributionHeadBOCompany = new List<SalaryHeadBO>();
+            companyContributionHeadBOCompany = fields.Where(x => x.ContributionType == "Company").ToList();
+            companyContributionHeadBO.AddRange(companyContributionHeadBOCompany);
+            companyContributionHeadBO.AddRange(employeeContributionHeadBOBoth);
+
+            ddlCompanyContributionHeadId.DataSource = companyContributionHeadBO;
             ddlCompanyContributionHeadId.DataTextField = "SalaryHead";
             ddlCompanyContributionHeadId.DataValueField = "SalaryHeadId";
             ddlCompanyContributionHeadId.DataBind();
-
             ddlCompanyContributionHeadId.Items.Insert(0, item1);
         }
         protected void btnBonusHead_Click(object sender, EventArgs e)
@@ -2553,18 +2566,18 @@ namespace HotelManagement.Presentation.Website.Payroll
                 ddlEmployeeContributionHeadId.SelectedValue = commonSetupBO.SetupValue;
 
             }
-            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("PayrollPFCompanyContributionId", "PayrollPFCompanyContributionId");
-            if (!string.IsNullOrEmpty(commonSetupBO.SetupValue))
-            {
-                ddlCompanyContributionHeadId.SelectedValue = commonSetupBO.SetupValue;
-            }
+            //commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("PayrollPFCompanyContributionId", "PayrollPFCompanyContributionId");
+            //if (!string.IsNullOrEmpty(commonSetupBO.SetupValue))
+            //{
+            //    ddlCompanyContributionHeadId.SelectedValue = commonSetupBO.SetupValue;
+            //}
 
-            HMCommonSetupBO commonSetupPFCompanyContributionOnBO = new HMCommonSetupBO();
-            commonSetupPFCompanyContributionOnBO = commonSetupDA.GetCommonConfigurationInfo("PFCompanyContributionOn", "PFCompanyContributionOn");
-            if (!string.IsNullOrEmpty(commonSetupPFCompanyContributionOnBO.SetupValue))
-            {
-                ddlCompanyContributionOn.SelectedValue = commonSetupPFCompanyContributionOnBO.SetupValue;
-            }
+            //HMCommonSetupBO commonSetupPFCompanyContributionOnBO = new HMCommonSetupBO();
+            //commonSetupPFCompanyContributionOnBO = commonSetupDA.GetCommonConfigurationInfo("PFCompanyContributionOn", "PFCompanyContributionOn");
+            //if (!string.IsNullOrEmpty(commonSetupPFCompanyContributionOnBO.SetupValue))
+            //{
+            //    ddlCompanyContributionOn.SelectedValue = commonSetupPFCompanyContributionOnBO.SetupValue;
+            //}
 
             int hiddenId = Convert.ToInt32(txtPFSettingId.Value);
             if (hiddenId > 0)
