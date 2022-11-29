@@ -214,7 +214,6 @@ namespace HotelManagement.Data.HMCommon
             }
             return docList;
         }
-
         public List<DocumentsBO> GetDocumentsInfoByOwnerId(int ownerId)
         {
             List<DocumentsBO> docList = new List<DocumentsBO>();
@@ -247,7 +246,6 @@ namespace HotelManagement.Data.HMCommon
             }
             return docList;
         }
-
         public Boolean UpdateDocumentsInfoByOwnerId(DocumentsBO docBO)
         {
             Boolean status = false;
@@ -268,7 +266,6 @@ namespace HotelManagement.Data.HMCommon
             }
             return status;
         }
-
         public bool UpdateDocumentsInfo(List<DocumentsBO> list)
         {
             Boolean status = false;
@@ -301,7 +298,6 @@ namespace HotelManagement.Data.HMCommon
             }
             return status;
         }
-
         public bool DeleteDocumentsByDocumentTypeNOwnerId(List<DocumentsBO> documentBoList, int guestId)
         {
             Boolean status = false;
@@ -326,7 +322,6 @@ namespace HotelManagement.Data.HMCommon
             }
             return status;
         }
-
         public bool DeleteDocumentsByDocumentId(long documentId)
         {
             Boolean status = false;
@@ -490,7 +485,6 @@ namespace HotelManagement.Data.HMCommon
             }
             return docList;
         }
-
         public bool SavePaymentInstructionInfo(int DocumentId, int OwnerId, string ImagePath, string Instruction, int CreatedBy)
         {
             Boolean status = false;
@@ -507,7 +501,6 @@ namespace HotelManagement.Data.HMCommon
             }
             return status;
         }
-
         public bool UpdatePaymentInstructionInfo(int DocumentId, int OwnerId, string ImagePath, string Instruction, int CreatedBy)
         {
             Boolean status = false;
@@ -524,7 +517,6 @@ namespace HotelManagement.Data.HMCommon
             }
             return status;
         }
-
         public bool DeletePaymentInstructionInfo(int DocumentId)
         {
             Boolean status = false;
