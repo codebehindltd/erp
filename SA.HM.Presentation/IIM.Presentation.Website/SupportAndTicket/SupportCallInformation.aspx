@@ -110,6 +110,7 @@
                 },
             });
             $("#ContentPlaceHolder1_txtClientName").autocomplete({
+                minLength: 3,
                 source: function (request, response) {
                     $.ajax({
                         type: "POST",
