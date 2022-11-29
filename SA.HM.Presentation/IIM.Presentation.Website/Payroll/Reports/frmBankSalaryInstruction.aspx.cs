@@ -262,7 +262,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
         {
             BankDA entityDA = new BankDA();
             ddlBankId.DataSource = entityDA.GetBankInfo();
-            ddlBankId.DataTextField = "BankName";
+            ddlBankId.DataTextField = "BankAccountNameAndNumber";
             ddlBankId.DataValueField = "BankId";
             ddlBankId.DataBind();
 

@@ -93,7 +93,7 @@
                     <div class="col-md-2">
                         <asp:Label ID="lblBankId" runat="server" class="control-label required-field" Text="Bank Name"></asp:Label>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-10">
                         <asp:DropDownList ID="ddlBankId" runat="server" CssClass="form-control">
                         </asp:DropDownList>
                     </div>

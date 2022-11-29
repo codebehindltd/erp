@@ -1251,7 +1251,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             entityBOList = bankDA.GetBankInfo().Where(x => x.ActiveStat == true).ToList();
 
             ddlBank.DataSource = entityBOList;
-            ddlBank.DataTextField = "BankName";
+            ddlBank.DataTextField = "BankAccountNameAndNumber";
             ddlBank.DataValueField = "BankId";
             ddlBank.DataBind();
 

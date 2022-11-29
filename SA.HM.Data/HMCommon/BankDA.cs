@@ -27,6 +27,7 @@ namespace HotelManagement.Data.HMCommon
 
                                 bank.BankId = Convert.ToInt32(reader["BankId"]);
                                 bank.BankName = reader["BankName"].ToString();
+                                bank.BankAccountNameAndNumber = reader["BankAccountNameAndNumber"].ToString();
                                 bank.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
                                 bank.ActiveStatus = reader["ActiveStatus"].ToString();
 

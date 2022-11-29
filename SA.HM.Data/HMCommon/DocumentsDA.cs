@@ -60,6 +60,7 @@ namespace HotelManagement.Data.HMCommon
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetDocumentsInfoByDocCategoryAndOwnerId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@DocumentCategory", DbType.String, Category);
                     dbSmartAspects.AddInParameter(cmd, "@OwnerId", DbType.Int64, ownerId);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -93,6 +94,7 @@ namespace HotelManagement.Data.HMCommon
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetLastOneDocumentsInfoByDocCategoryAndOwnerId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@DocumentCategory", DbType.String, Category);
                     dbSmartAspects.AddInParameter(cmd, "@OwnerId", DbType.Int64, ownerId);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -126,6 +128,7 @@ namespace HotelManagement.Data.HMCommon
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetLeaveEmployeeByDate_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@Date", DbType.DateTime, date);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
@@ -159,6 +162,7 @@ namespace HotelManagement.Data.HMCommon
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetDocumentsInfoByDocumentId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@DocumentId", DbType.Int32, documentId);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
@@ -186,6 +190,7 @@ namespace HotelManagement.Data.HMCommon
             List<DocumentsBO> docList = new List<DocumentsBO>();
             using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetDocumentInfoByCategoryAndOwnerId_SP"))
             {
+                cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                 dbSmartAspects.AddInParameter(cmd, "@OwnerId", DbType.Int64, OwnerId);
                 dbSmartAspects.AddInParameter(cmd, "@DocumentCategory", DbType.String, DocumentCategory);
                 using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -195,13 +200,6 @@ namespace HotelManagement.Data.HMCommon
                         while (reader.Read())
                         {
                             DocumentsBO docs = new DocumentsBO();
-
-                            //docs.DocumentId = Convert.ToInt32(reader["DocumentId"]);
-                            //docs.DocumentType = reader["DocumentType"].ToString();
-                            //docs.DocumentCategory = reader["DocumentCategory"].ToString();
-                            //docs.Name = reader["Name"].ToString();
-                            //docs.Path = reader["Path"].ToString();
-                            //docs.Extention = reader["Extention"].ToString();
                             docs.DocumentId = Convert.ToInt32(reader["DocumentId"]);
                             docs.OwnerId = Convert.ToInt32(reader["OwnerId"]);
                             docs.DocumentType = reader["DocumentType"].ToString();
@@ -224,6 +222,7 @@ namespace HotelManagement.Data.HMCommon
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetDocumentsInfoByOwnerId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@OwnerId", DbType.Int32, ownerId);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
@@ -276,17 +275,13 @@ namespace HotelManagement.Data.HMCommon
             int success = 0;
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
-
-
                 using (DbCommand commandEducation = dbSmartAspects.GetStoredProcCommand("DeleteDataDynamically_SP"))
                 {
                     dbSmartAspects.AddInParameter(commandEducation, "@TableName", DbType.String, "CommonDocuments");
                     dbSmartAspects.AddInParameter(commandEducation, "@TablePKField", DbType.String, "OwnerId");
                     dbSmartAspects.AddInParameter(commandEducation, "@TablePKId", DbType.String, list[0].OwnerId);
-
                     success = dbSmartAspects.ExecuteNonQuery(commandEducation);
                 }
-
 
                 using (DbCommand command = dbSmartAspects.GetStoredProcCommand("UpdateDocumentsInfoByDelete_SP"))
                 {
@@ -470,6 +465,7 @@ namespace HotelManagement.Data.HMCommon
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetPaymentInstuctionInfo_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)

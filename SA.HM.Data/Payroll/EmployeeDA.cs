@@ -21,6 +21,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SearchEmployeeInfoByCategory_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (!string.IsNullOrWhiteSpace(Department))
                     {
                         dbSmartAspects.AddInParameter(cmd, "@Department", DbType.String, Department);
@@ -97,6 +98,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInfo_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)
@@ -155,6 +157,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetActiveEmployeeInfo_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)
@@ -213,6 +216,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInfoForWaiter_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)
@@ -268,6 +272,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInfoByActiveStat_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@ActiveStat", DbType.String, activeStat);
 
                     dbSmartAspects.LoadDataSet(cmd, employeeDS, "EmpInfo");
@@ -292,6 +297,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeByDepartment_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, departmentId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -347,6 +353,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetTaskAssignedEmployeeByDepartment_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, departmentId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -392,6 +399,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetApplicantInfo_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)
@@ -2463,6 +2471,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeePaymentLedgerReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (companyId > 0)
                     {
                         dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
@@ -2524,6 +2533,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInfoById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, pkId);
 
                     DataSet ds = new DataSet();
@@ -2632,6 +2642,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInfoForMonthlySalaryProcess_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@FromProcessDate", DbType.DateTime, fromProcessDate);
                     dbSmartAspects.AddInParameter(cmd, "@ToProcessDate", DbType.DateTime, toProcessDate);
 
@@ -2675,6 +2686,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInfoByCode_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpCode", DbType.String, pEmpCode);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -2794,6 +2806,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInformationForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (empId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
                     else
@@ -2897,6 +2910,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpInformationByEmpCodeNPwd_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@Empcode", DbType.String, empCode);
                     dbSmartAspects.AddInParameter(cmd, "@EmpPassword", DbType.String, empPassword);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -2945,6 +2959,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInfoListForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeStatusId", DbType.Int32, employeeStatusId);
 
                     DataSet ds = new DataSet();
@@ -2992,6 +3007,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInformationListForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@ReportType", DbType.Int32, reportType);
                     dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
 
@@ -3040,6 +3056,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpPromotionLetterForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@PromotionId", DbType.Int32, promotionId);
 
                     DataSet ds = new DataSet();
@@ -3079,6 +3096,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpIncrementLetterForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@IncrementId", DbType.Int32, IncrementId);
 
                     DataSet ds = new DataSet();
@@ -3121,6 +3139,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpAppoinmentLetterForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
 
                     DataSet ds = new DataSet();
@@ -3162,6 +3181,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpConfirmationLetterForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
 
                     DataSet ds = new DataSet();
@@ -3203,6 +3223,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpJoiningAgreementForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
 
                     DataSet ds = new DataSet();
@@ -3241,6 +3262,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpServiceBondLetterForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
 
                     DataSet ds = new DataSet();
@@ -3280,6 +3302,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpDSOACLetterForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
 
                     DataSet ds = new DataSet();
@@ -3318,6 +3341,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInformation_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeStatusId", DbType.Int32, employeeStatusId);
 
                     DataSet ds = new DataSet();
@@ -3790,6 +3814,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeBankInfo_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (empId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
                     else
@@ -3826,6 +3851,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeWorkStation_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "WorkStation");
                     DataTable Table = ds.Tables["WorkStation"];
@@ -3849,6 +3875,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetPayrollDonor_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "Donor");
                     DataTable Table = ds.Tables["Donor"];
@@ -3873,6 +3900,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEducationlevel_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "EducationLevel");
                     DataTable Table = ds.Tables["EducationLevel"];
@@ -3898,6 +3926,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetLastMonthSalaryEmployee_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@SalaryDateFrom", DbType.DateTime, salaryDateFrom);
                     dbSmartAspects.AddInParameter(cmd, "@SalaryDateTo", DbType.DateTime, salaryDateTo);
                     dbSmartAspects.AddInParameter(cmd, "@SalaryYear", DbType.Int16, salaryYear);
@@ -3932,6 +3961,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetLastMonthSalaryEmployeeBenifits_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
                     dbSmartAspects.AddInParameter(cmd, "@SalaryYear", DbType.Int16, salaryYear);
                     dbSmartAspects.AddInParameter(cmd, "@SalaryDateFrom", DbType.DateTime, salaryDateFrom);
@@ -3966,6 +3996,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetLeaveBalanceAmount_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateFrom", DbType.DateTime, processDateFrom);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateTo", DbType.DateTime, processDateTo);
@@ -4052,6 +4083,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInfoForResignationInfoByCode_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -4284,7 +4316,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetUpcomingEmployeeBirthday"))
                 {
-
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.LoadDataSet(cmd, employeeDS, "EmployeeInfo");
                     DataTable table = employeeDS.Tables["EmployeeInfo"];
 
@@ -4316,7 +4348,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetUpcomingEmployeeWorkAnniversary_SP"))
                 {
-
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.LoadDataSet(cmd, employeeDS, "EmployeeInfo");
                     DataTable table = employeeDS.Tables["EmployeeInfo"];
 
@@ -4349,7 +4381,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetUpcomingEmployeeProvisionPeriod_SP"))
                 {
-
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.LoadDataSet(cmd, employeeDS, "EmployeeInfo");
                     DataTable table = employeeDS.Tables["EmployeeInfo"];
 
@@ -4382,7 +4414,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyEmployeeCount_SP"))
                 {
-
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.LoadDataSet(cmd, employeeDS, "EmployeeInfo");
                     DataTable table = employeeDS.Tables["EmployeeInfo"];
 
@@ -4407,6 +4439,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetHolidayInformation_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, fromDate);
                     dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, toDate);
 
@@ -4582,6 +4615,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpTransfer_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@DateFrom", DbType.DateTime, dateFrom);
                     dbSmartAspects.AddInParameter(cmd, "@DateTo", DbType.DateTime, dateTo);
                     dbSmartAspects.AddInParameter(cmd, "@Type", DbType.Int32, type);
@@ -4624,6 +4658,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpTransferById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@TransferId", DbType.Int64, transferId);
 
                     dbSmartAspects.LoadDataSet(cmd, employeeDS, "EmpTransfer");
@@ -4716,6 +4751,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeByIdForLetters_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
                     if (departmentId != 0)
                     {
@@ -4806,6 +4842,7 @@ namespace HotelManagement.Data.Payroll
                 {
                     using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetDivisionSetupInfoBySearchCriteriaForPaging_SP"))
                     {
+                        cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                         if (!string.IsNullOrEmpty(name))
                             dbSmartAspects.AddInParameter(cmd, "@Name", DbType.String, name);
                         else
@@ -5002,6 +5039,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpDivisionList_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "EmpDivision");
                     DataTable Table = ds.Tables["EmpDivision"];
@@ -5024,6 +5062,7 @@ namespace HotelManagement.Data.Payroll
 
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpDivisionById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@DivisionId", DbType.Int32, Id);
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "EmpDivision");
@@ -5047,6 +5086,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpDistrictById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@DistrictId", DbType.Int32, Id);
 
                     DataSet ds = new DataSet();
@@ -5071,6 +5111,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpDistrictList_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@DivisionId", DbType.Int32, divisionId);
 
                     DataSet ds = new DataSet();
@@ -5095,6 +5136,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpThanaListById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@ThanaId", DbType.Int32, Id);
 
                     DataSet ds = new DataSet();
@@ -5119,6 +5161,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpThanaList_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@DistrictId", DbType.Int32, districtId);
 
                     DataSet ds = new DataSet();
@@ -5143,6 +5186,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetDivisionListForShow_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "EmpDivision");
                     DataTable Table = ds.Tables["EmpDivision"];
@@ -5164,6 +5208,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetDistrictListForShow_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "EmpDistrict");
                     DataTable Table = ds.Tables["EmpDistrict"];
@@ -5186,7 +5231,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpThanaListForShow_SP"))
                 {
-
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "EmpThana");
                     DataTable Table = ds.Tables["EmpThana"];
@@ -5209,7 +5254,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpBranchListForShow_SP"))
                 {
-
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "EmpBranch");
                     DataTable Table = ds.Tables["EmpBranch"];
@@ -5232,6 +5277,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpTransferInfoForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (empId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, empId);
                     else
@@ -5309,6 +5355,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeServiceChargeDistributionReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateFrom", DbType.DateTime, dateFrom);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateTo", DbType.DateTime, dateTo);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessYear", DbType.Int16, processYear);
@@ -5349,6 +5396,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeServiceChargeBankAdvice_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateFrom", DbType.DateTime, dateFrom);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateTo", DbType.DateTime, dateTo);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessYear", DbType.Int32, processYear);
@@ -5400,6 +5448,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetBankReconciliationForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (companyId > 0)
                         dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                     else
@@ -5472,6 +5521,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetApplicants_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@JobCircularId", DbType.Int64, jobCircularId);
                     dbSmartAspects.AddInParameter(cmd, "@ReportType", DbType.Int64, reportType);
 
@@ -5552,6 +5602,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetPayrollOvertimeAnalysis_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateFrom", DbType.DateTime, dateFrom);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateTo", DbType.DateTime, dateTo);
 
@@ -5594,6 +5645,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetDepartmentWiseOvertimeAnalysis_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateFrom", DbType.DateTime, dateFrom);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateTo", DbType.DateTime, dateTo);
 
@@ -5627,6 +5679,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpForPFOpeningBalance_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (departmentId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, departmentId);
                     else
@@ -5658,6 +5711,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpForHKTaskAssign_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     DataSet LeaveDS = new DataSet();
 
                     dbSmartAspects.LoadDataSet(cmd, LeaveDS, "HKTaskAssignEmployee");
@@ -5685,6 +5739,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetSqlStringCommand(query))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     DataSet LeaveDS = new DataSet();
 
                     dbSmartAspects.LoadDataSet(cmd, LeaveDS, "EmployeeStatus");
@@ -5737,6 +5792,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmpInformationForAutoSearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmpName", DbType.String, empName);
 
                     dbSmartAspects.LoadDataSet(cmd, employeeDS, "EmployeeInfo");
@@ -5779,6 +5835,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeBillBySearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, employeeId);
 
                     DataSet ds = new DataSet();
@@ -5974,6 +6031,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeBillGenerationBySearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (dateFrom != null)
                         dbSmartAspects.AddInParameter(cmd, "@DateFrom", DbType.DateTime, dateFrom);
                     else
@@ -6020,6 +6078,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeBillGeneration_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeBillId", DbType.Int64, employeeBillId);
 
                     DataSet ds = new DataSet();
@@ -6052,6 +6111,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeBillGenerationDetails_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeBillId", DbType.Int64, employeeBillId);
 
                     DataSet ds = new DataSet();
@@ -6080,6 +6140,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeBillForBillGenerationEdit_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, employeeId);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeBillId", DbType.Int64, employeeBillId);
 
@@ -6119,6 +6180,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("EmployeeBillByEmployeeIdAndBillGenerationFlag_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, employeeId);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeBillId", DbType.Int64, employeeBillId);
 
@@ -6204,6 +6266,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeGeneratedBill_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, employeeId);
 
                     DataSet ds = new DataSet();
@@ -6233,6 +6296,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeBillForReceivedPayment_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, employeeId);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeBillId", DbType.Int64, employeeBillId);
 
@@ -6270,6 +6334,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeGeneratedBillById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, employeeId);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeBillId", DbType.Int64, employeeBillId);
 
@@ -6541,6 +6606,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeePaymentBySearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (employeeId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, employeeId);
                     else
@@ -6593,6 +6659,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeePayment_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@PaymentId", DbType.Int64, paymentId);
 
                     DataSet ds = new DataSet();
@@ -6635,6 +6702,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeePaymentDetails_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@PaymentId", DbType.Int64, paymentId);
 
                     DataSet ds = new DataSet();
@@ -6670,6 +6738,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeAdvanceBillBySearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, employeeId);
 
                     DataSet ds = new DataSet();
@@ -6827,6 +6896,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeBillLedgerForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, employeeId);
 
                     DataSet ds = new DataSet();
@@ -6867,6 +6937,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeGeneratedBillForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int32, employeeId);
                     dbSmartAspects.AddInParameter(cmd, "@ReportType", DbType.String, reportType);
 
@@ -6905,6 +6976,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInfoListForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeStatus", DbType.String, employeeStatus);
                     if (companyId > 0)
                     {
@@ -7007,6 +7079,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInformation_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeStatus", DbType.String, employeeStatus);
 
                     DataSet ds = new DataSet();
@@ -7041,6 +7114,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInformationByCompanyId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, CompanyId);
 
                     DataSet ds = new DataSet();
@@ -7089,6 +7163,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeDashboardAttendanceSummary_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@ReportDate", DbType.DateTime, date);
 
                     DataSet ds = new DataSet();
@@ -7114,6 +7189,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeStatusListByIdList_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@EmployeeStatus", DbType.String, employeeStatus);
 
                     DataSet ds = new DataSet();
@@ -7139,6 +7215,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeTypeWiseListForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (employeeType != 0)
                         dbSmartAspects.AddInParameter(cmd, "@EmployeeType", DbType.Int32, employeeType);
                     else
@@ -7206,6 +7283,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeBirthdayInformationforReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (fromDate != null)
                     {
                         dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, fromDate);
@@ -7253,6 +7331,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeProvisionPeriodforReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (fromDate != null)
                     {
                         dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, fromDate);
@@ -7301,6 +7380,7 @@ namespace HotelManagement.Data.Payroll
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeInfoForAcountManager_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (!string.IsNullOrEmpty(searchText))
                     {
                         dbSmartAspects.AddInParameter(cmd, "@searchText", DbType.String, searchText);
