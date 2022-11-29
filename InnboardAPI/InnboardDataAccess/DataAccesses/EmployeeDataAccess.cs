@@ -41,7 +41,7 @@ namespace InnboardDataAccess.DataAccesses
 
         public async  Task<List<PayrollEmpTracking>> GetEmpTrackingList()
         {
-            string query = string.Format(@"Select * from [dbo].[PayrollEmpLocationTracking] order by [CreatedDate] desc");
+            string query = string.Format(@"Select TOP (50) * from [dbo].[PayrollEmpLocationTracking] order by [CreatedDate] desc");
 
             var data = await InnboardDBContext.Database.SqlQuery<PayrollEmpTracking>(query).ToListAsync();           
 
