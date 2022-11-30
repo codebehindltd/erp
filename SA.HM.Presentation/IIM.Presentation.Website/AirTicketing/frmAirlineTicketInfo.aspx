@@ -517,10 +517,10 @@
                 toastr.warning("Please Select Flight Date.");
                 return false;
             }
-            else if ($("#ContentPlaceHolder1_txtReturnDate").val() == "") {
-                toastr.warning("Please Select Return Date.");
-                return false;
-            }
+            //else if ($("#ContentPlaceHolder1_txtReturnDate").val() == "") {
+            //    toastr.warning("Please Select Return Date.");
+            //    return false;
+            //}
             else if ($("#ContentPlaceHolder1_txtTicketNumber").val() == "") {
                 toastr.warning("Please Give Ticket Number.");
                 return false;

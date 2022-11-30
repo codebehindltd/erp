@@ -37,6 +37,17 @@ namespace HotelManagement.Presentation.Website.AirTicketing
             hfDeletePermission.Value = isDeletePermission ? "1" : "0";
             hfEditPermission.Value = isUpdatePermission ? "1" : "0";
             hfViewPermission.Value = isViewPermission ? "1" : "0";
+
+            CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
+            List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
+            costCentreTabBOList = costCentreTabDA.GetCostCentreTabInfo();
+            if (costCentreTabBOList != null)
+            {
+                if (costCentreTabBOList.Where(x => x.CostCenterType == "FrontOffice").ToList().Count == 0)
+                {
+                    this.ddlTransactionType.Items.Remove(ddlTransactionType.Items.FindByValue("RoomGuest"));
+                }
+            }
         }
 
         private void LoadAirline()
