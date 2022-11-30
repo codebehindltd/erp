@@ -18,6 +18,7 @@ namespace HotelManagement.Entity.HotelManagement
         public DateTime PaymentDate { get; set; }
         public DateTime? TransactionDate { get; set; }
         public int FieldId { get; set; }
+        public int CurrencyTypeId { get; set; }
         public string CurrencyType { get; set; }
         public decimal ConvertionRate { get; set; }
         public decimal CurrencyAmount { get; set; }
@@ -26,11 +27,14 @@ namespace HotelManagement.Entity.HotelManagement
         public int PaymentModeId { get; set; }
         public string TransactionType { get; set; }
         public int BankId { get; set; }
+        public string BankName { get; set; }
         public string BranchName { get; set; }
+        public decimal ReceiveAmount { get; set; }
 
+        public string ChequeNumber { get; set; }
         public string ChecqueNumber { get; set; }
         public DateTime? ChecqueDate { get; set; }
-
+        public int CardTypeId { get; set; }
         public string CardType { get; set; }
         public string CardNumber { get; set; }
         public string CardHolderName { get; set; }

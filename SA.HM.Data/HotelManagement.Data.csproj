@@ -147,6 +147,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirTicketing\AirlineTicketInfoDA.cs" />
     <Compile Include="Banquet\BanquetCancelationDA.cs" />
     <Compile Include="Banquet\BanquetInformationDA.cs" />
     <Compile Include="Banquet\BanquetRefferenceDA.cs" />

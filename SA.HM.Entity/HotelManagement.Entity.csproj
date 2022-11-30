@@ -116,6 +116,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirTicketing\AirlineTicketInfoBO.cs" />
+    <Compile Include="AirTicketing\AirlineTicketMasterBO.cs" />
+    <Compile Include="AirTicketing\ATInformationViewBO.cs" />
     <Compile Include="Banquet\BanquetBillPaymentBO.cs" />
     <Compile Include="Banquet\BanquetClientRevenueReportBO.cs" />
     <Compile Include="Banquet\BanquetInformationBO.cs" />

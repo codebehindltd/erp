@@ -13,22 +13,67 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
     public partial class frmAirlineTicketInfo {
         
         /// <summary>
-        /// hfTotalForItems control.
+        /// hfCompanyId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfTotalForItems;
+        protected global::System.Web.UI.WebControls.HiddenField hfCompanyId;
         
         /// <summary>
-        /// hfTotalOverheadExpenseAmount control.
+        /// hfCompanySearchId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfTotalOverheadExpenseAmount;
+        protected global::System.Web.UI.WebControls.HiddenField hfCompanySearchId;
+        
+        /// <summary>
+        /// hfReferenceIdForCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfReferenceIdForCompany;
+        
+        /// <summary>
+        /// hfReferenceIdForWalkIn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfReferenceIdForWalkIn;
+        
+        /// <summary>
+        /// hfbankId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfbankId;
+        
+        /// <summary>
+        /// hfRegistrationNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfRegistrationNumber;
+        
+        /// <summary>
+        /// hfTicketMasterId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfTicketMasterId;
         
         /// <summary>
         /// hftotalForPaymentInfos control.
@@ -40,184 +85,13 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.HiddenField hftotalForPaymentInfos;
         
         /// <summary>
-        /// hfCostCenterId control.
+        /// hftotalForTicketInfos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfCostCenterId;
-        
-        /// <summary>
-        /// hfAccoutHeadId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfAccoutHeadId;
-        
-        /// <summary>
-        /// hfAccoutHeadPMId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfAccoutHeadPMId;
-        
-        /// <summary>
-        /// hfCompanyId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfCompanyId;
-        
-        /// <summary>
-        /// hfProjectId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfProjectId;
-        
-        /// <summary>
-        /// RandomDocId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField RandomDocId;
-        
-        /// <summary>
-        /// tempDocId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField tempDocId;
-        
-        /// <summary>
-        /// hfParentDoc control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfParentDoc;
-        
-        /// <summary>
-        /// hfDeletedDoc control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfDeletedDoc;
-        
-        /// <summary>
-        /// hfCurrencyObj control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfCurrencyObj;
-        
-        /// <summary>
-        /// hfPurchaseOrderObj control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfPurchaseOrderObj;
-        
-        /// <summary>
-        /// hfLcInfoObj control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfLcInfoObj;
-        
-        /// <summary>
-        /// hfDefaultCurrencyId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfDefaultCurrencyId;
-        
-        /// <summary>
-        /// hfItemId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfItemId;
-        
-        /// <summary>
-        /// hfCategoryId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfCategoryId;
-        
-        /// <summary>
-        /// hfStockById control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfStockById;
-        
-        /// <summary>
-        /// hfLocationId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfLocationId;
-        
-        /// <summary>
-        /// hfReceiveOrderId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfReceiveOrderId;
-        
-        /// <summary>
-        /// hfItemIdForSerial control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfItemIdForSerial;
-        
-        /// <summary>
-        /// hfSerialQuantity control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfSerialQuantity;
+        protected global::System.Web.UI.WebControls.HiddenField hftotalForTicketInfos;
         
         /// <summary>
         /// hfSavePermission control.
@@ -256,24 +130,6 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.HiddenField hfViewPermission;
         
         /// <summary>
-        /// hfIsItemAttributeEnable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfIsItemAttributeEnable;
-        
-        /// <summary>
-        /// hfIsItemReceiveOverheadExpenseEnable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfIsItemReceiveOverheadExpenseEnable;
-        
-        /// <summary>
         /// A control.
         /// </summary>
         /// <remarks>
@@ -290,6 +146,42 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl B;
+        
+        /// <summary>
+        /// lblTransactionType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTransactionType;
+        
+        /// <summary>
+        /// ddlTransactionType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTransactionType;
+        
+        /// <summary>
+        /// lblRegistrationNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRegistrationNumber;
+        
+        /// <summary>
+        /// txtRegistrationNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRegistrationNumber;
         
         /// <summary>
         /// lblCompany control.
@@ -310,6 +202,42 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.TextBox txtCompany;
         
         /// <summary>
+        /// lblReferenceForCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblReferenceForCompany;
+        
+        /// <summary>
+        /// txtReferenceForCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtReferenceForCompany;
+        
+        /// <summary>
+        /// lblCompanyWalkInGuest control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCompanyWalkInGuest;
+        
+        /// <summary>
+        /// txtCompanyWalkInGuest control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCompanyWalkInGuest;
+        
+        /// <summary>
         /// lblReferenceName control.
         /// </summary>
         /// <remarks>
@@ -319,13 +247,13 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.Label lblReferenceName;
         
         /// <summary>
-        /// txtReferenceName control.
+        /// txtReferenceNameForWalkIn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtReferenceName;
+        protected global::System.Web.UI.WebControls.TextBox txtReferenceNameForWalkIn;
         
         /// <summary>
         /// lblClientName control.
@@ -346,6 +274,60 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.TextBox txtClientName;
         
         /// <summary>
+        /// lblMobileNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMobileNo;
+        
+        /// <summary>
+        /// txtMobileNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMobileNo;
+        
+        /// <summary>
+        /// lblEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmail;
+        
+        /// <summary>
+        /// txtEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEmail;
+        
+        /// <summary>
+        /// lblAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAddress;
+        
+        /// <summary>
+        /// txtAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAddress;
+        
+        /// <summary>
         /// lblIssueDate control.
         /// </summary>
         /// <remarks>
@@ -364,22 +346,22 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.TextBox txtIssueDate;
         
         /// <summary>
-        /// lblTransactionType control.
+        /// lblTicketType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTransactionType;
+        protected global::System.Web.UI.WebControls.Label lblTicketType;
         
         /// <summary>
-        /// ddlTransactionType control.
+        /// ddlTicketType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTransactionType;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTicketType;
         
         /// <summary>
         /// lblAirlineName control.
@@ -490,22 +472,22 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.TextBox txtInvoiceAmount;
         
         /// <summary>
-        /// lblIATAAmount control.
+        /// lblAirlineAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIATAAmount;
+        protected global::System.Web.UI.WebControls.Label lblAirlineAmount;
         
         /// <summary>
-        /// txtIATAAmount control.
+        /// txtAirlineAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIATAAmount;
+        protected global::System.Web.UI.WebControls.TextBox txtAirlineAmount;
         
         /// <summary>
         /// lblRoute control.
@@ -562,166 +544,400 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.TextBox txtTotalInvoiceAmount;
         
         /// <summary>
-        /// lblPaymentMode control.
+        /// lblPayMode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPaymentMode;
+        protected global::System.Web.UI.WebControls.Label lblPayMode;
         
         /// <summary>
-        /// ddlPaymentMode control.
+        /// ddlPayMode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPaymentMode;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPayMode;
         
         /// <summary>
-        /// lblCashOrBankHead control.
+        /// lblCurrencyType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCashOrBankHead;
+        protected global::System.Web.UI.WebControls.Label lblCurrencyType;
         
         /// <summary>
-        /// ddlCashOrBankHead control.
+        /// ddlCurrency control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCashOrBankHead;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCurrency;
         
         /// <summary>
-        /// lblChequeNumber control.
+        /// lblDisplayConvertionRate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblChequeNumber;
+        protected global::System.Web.UI.WebControls.Label lblDisplayConvertionRate;
         
         /// <summary>
-        /// txtChequeNumber control.
+        /// ddlCurrencyHiddenField control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtChequeNumber;
+        protected global::System.Web.UI.WebControls.HiddenField ddlCurrencyHiddenField;
         
         /// <summary>
-        /// lblChequeDate control.
+        /// lblReceiveLeadgerAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblChequeDate;
+        protected global::System.Web.UI.WebControls.Label lblReceiveLeadgerAmount;
         
         /// <summary>
-        /// txtChequeDate control.
+        /// txtReceiveLeadgerAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtChequeDate;
+        protected global::System.Web.UI.WebControls.TextBox txtReceiveLeadgerAmount;
         
         /// <summary>
-        /// lblPMAmount control.
+        /// lblConversionRate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPMAmount;
+        protected global::System.Web.UI.WebControls.Label lblConversionRate;
         
         /// <summary>
-        /// txtPMAmount control.
+        /// txtConversionRate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPMAmount;
+        protected global::System.Web.UI.WebControls.TextBox txtConversionRate;
         
         /// <summary>
-        /// lblPMDescription control.
+        /// txtConversionRateHiddenField control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPMDescription;
+        protected global::System.Web.UI.WebControls.HiddenField txtConversionRateHiddenField;
         
         /// <summary>
-        /// txtPMDescription control.
+        /// lblPaymentAccountHead control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPMDescription;
+        protected global::System.Web.UI.WebControls.Label lblPaymentAccountHead;
         
         /// <summary>
-        /// lblPMTotalAmount control.
+        /// ddlCashReceiveAccountsInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPMTotalAmount;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCashReceiveAccountsInfo;
         
         /// <summary>
-        /// txtPMTotalAmount control.
+        /// ddlCardReceiveAccountsInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPMTotalAmount;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCardReceiveAccountsInfo;
         
         /// <summary>
-        /// lblPaymentAmount control.
+        /// ddlCompanyPaymentAccountHead control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPaymentAmount;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCompanyPaymentAccountHead;
         
         /// <summary>
-        /// txtPaymentAmount control.
+        /// ddlMBankingReceiveAccountsInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPaymentAmount;
+        protected global::System.Web.UI.WebControls.DropDownList ddlMBankingReceiveAccountsInfo;
         
         /// <summary>
-        /// lblDueAmount control.
+        /// Label6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDueAmount;
+        protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// txtDueAmount control.
+        /// ddlPaidByRegistrationId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDueAmount;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPaidByRegistrationId;
+        
+        /// <summary>
+        /// lblChecquePaymentAccountHeadId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblChecquePaymentAccountHeadId;
+        
+        /// <summary>
+        /// ddlChecquePaymentAccountHeadId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlChecquePaymentAccountHeadId;
+        
+        /// <summary>
+        /// lblChecqueNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblChecqueNumber;
+        
+        /// <summary>
+        /// txtChecqueNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtChecqueNumber;
+        
+        /// <summary>
+        /// lblCompanyBank control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCompanyBank;
+        
+        /// <summary>
+        /// ddlCompanyBank control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCompanyBank;
+        
+        /// <summary>
+        /// lblCardPaymentAccountHeadId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCardPaymentAccountHeadId;
+        
+        /// <summary>
+        /// ddlCardPaymentAccountHeadId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCardPaymentAccountHeadId;
+        
+        /// <summary>
+        /// Label3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
+        
+        /// <summary>
+        /// ddlCardType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCardType;
+        
+        /// <summary>
+        /// lblCardNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCardNumber;
+        
+        /// <summary>
+        /// txtCardNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCardNumber;
+        
+        /// <summary>
+        /// lblBankId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBankId;
+        
+        /// <summary>
+        /// txtbankName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtbankName;
+        
+        /// <summary>
+        /// Label4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label4;
+        
+        /// <summary>
+        /// txtExpireDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtExpireDate;
+        
+        /// <summary>
+        /// Label5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label5;
+        
+        /// <summary>
+        /// txtCardHolderName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCardHolderName;
+        
+        /// <summary>
+        /// lblMBankingBankName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMBankingBankName;
+        
+        /// <summary>
+        /// ddlMBankingBankId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlMBankingBankId;
+        
+        /// <summary>
+        /// lblRefundAccountHead control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRefundAccountHead;
+        
+        /// <summary>
+        /// ddlRefundAccountHead control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlRefundAccountHead;
+        
+        /// <summary>
+        /// lblHiddenIdDetailGuestPayment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblHiddenIdDetailGuestPayment;
+        
+        /// <summary>
+        /// lblTotalPaymentAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalPaymentAmount;
+        
+        /// <summary>
+        /// txtTotalPaymentAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTotalPaymentAmount;
+        
+        /// <summary>
+        /// AlartMessege control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label AlartMessege;
         
         /// <summary>
         /// lblFromDate control.
@@ -803,41 +1019,5 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRefName;
-        
-        /// <summary>
-        /// pnlUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlUpload;
-        
-        /// <summary>
-        /// flashUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::ClientUploader.ClientUploader flashUpload;
-        
-        /// <summary>
-        /// frmPrint control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl frmPrint;
-        
-        /// <summary>
-        /// fileIframe control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl fileIframe;
     }
 }

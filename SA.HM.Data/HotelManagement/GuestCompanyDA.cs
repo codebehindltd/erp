@@ -46,6 +46,33 @@ namespace HotelManagement.Data.HotelManagement
             }
             return roomTypeList;
         }
+
+        public List<GuestCompanyBO> GetCompanyInfoForAirTicket(string searchTerm)
+        {
+            List<GuestCompanyBO> companyList = new List<GuestCompanyBO>();
+            using(DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using(DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyInfoForAirTicket_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@SearchTerm", DbType.String, searchTerm);
+                    using(IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if(reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                GuestCompanyBO guestCompany = new GuestCompanyBO();
+                                guestCompany.CompanyId = Convert.ToInt32(reader["CompanyId"]);
+                                guestCompany.CompanyName = reader["CompanyName"].ToString();
+                                companyList.Add(guestCompany);
+                            }
+                        }
+                    }
+                }
+            }
+            return companyList;
+        }
+
         public List<GuestCompanyBO> GetGuestCompanyInfoByUserId(int userInfoId)
         {
             List<GuestCompanyBO> roomTypeList = new List<GuestCompanyBO>();
