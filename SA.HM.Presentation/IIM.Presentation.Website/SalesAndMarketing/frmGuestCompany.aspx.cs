@@ -1105,28 +1105,23 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             ddlSrcOwnerId.DataValueField = "UserInfoId";
             ddlSrcOwnerId.DataBind();
 
+            if (accountManagerBOList != null)
+            {
+                if (accountManagerBOList.Count > 0)
+                {
+                    btnAdd.Visible = true;
+                }
+                else
+                {
+                    btnAdd.Visible = false;
+                }
+            }
+
             ListItem item = new ListItem();
             item.Value = "0";
             item.Text = hmUtility.GetDropDownFirstAllValue();
             ddlSrcOwnerId.Items.Insert(0, item);
             ddlCompanyOwner.Items.Insert(0, item);
-
-            //if (accountManagerBOList != null)
-            //{
-            //    if (accountManagerBOList.Count > 1)
-            //    {
-            //        ListItem item = new ListItem();
-            //        item.Value = "0";
-            //        item.Text = hmUtility.GetDropDownFirstAllValue();
-            //        ddlSrcOwnerId.Items.Insert(0, item);
-            //        ddlCompanyOwner.Items.Insert(0, item);
-            //    }
-            //    else
-            //    {
-            //        ddlSrcOwnerId.Enabled = false;
-            //        ddlCompanyOwner.Enabled = false;
-            //    }
-            //}
         }
         private void LoadIndustry()
         {

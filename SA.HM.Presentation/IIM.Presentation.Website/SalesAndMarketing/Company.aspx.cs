@@ -221,6 +221,10 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             ddlCompanyOwner.DataValueField = "UserInfoId";
             ddlCompanyOwner.DataBind();
 
+            btnSaveClose.Visible = true;
+            btnSaveContinue.Visible = true;
+            btnClear.Visible = true;
+
             if (accountManagerBOList != null)
             {
                 if (accountManagerBOList.Count > 1)
@@ -233,6 +237,12 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
                 else
                 {
                     ddlCompanyOwner.Enabled = false;
+                    if (accountManagerBOList.Count == 0)
+                    {
+                        btnSaveClose.Visible = false;
+                        btnSaveContinue.Visible = false;
+                        btnClear.Visible = false;
+                    }
                 }
             }
 
@@ -476,7 +486,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             var websites = detailsBOs.Where(x => x.TransectionType == "Website").ToList();
 
             ArrayList arr = new ArrayList();
-            arr.Add(new { Numbers = numbers, Emails = emails, Fax = fax, Websites = websites, GuestCompany = guestCompanyBO, CRMCompanyIds = CRMCompanyIdList.ToArray()});
+            arr.Add(new { Numbers = numbers, Emails = emails, Fax = fax, Websites = websites, GuestCompany = guestCompanyBO, CRMCompanyIds = CRMCompanyIdList.ToArray() });
 
             return arr;
         }
