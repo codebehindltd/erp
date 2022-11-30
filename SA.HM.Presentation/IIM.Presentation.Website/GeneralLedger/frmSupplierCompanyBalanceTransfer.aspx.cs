@@ -88,7 +88,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         }
 
         [WebMethod]
-        public static Boolean SaveSupplierCompanyBalanceTransfer(string editId, string transactionType, int fromTransactionId, int toTransactionId, decimal amount, string remarks)
+        public static Boolean SaveSupplierCompanyBalanceTransfer(string editId, string transactionType, int fromTransactionId, int toTransactionId, DateTime transactionDate, decimal amount, string remarks)
         {
             HMUtility hmUtility = new HMUtility();
             UserInformationBO userInformationBO = new UserInformationBO();
@@ -102,6 +102,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             SCBalanceTransferInfo.TransactionType = transactionType;
             SCBalanceTransferInfo.FromTransactionId = fromTransactionId;
             SCBalanceTransferInfo.ToTransactionId = toTransactionId;
+            SCBalanceTransferInfo.TransactionDate = transactionDate;
             SCBalanceTransferInfo.Amount = amount;
             SCBalanceTransferInfo.Remarks = remarks;
             SCBalanceTransferInfo.CreatedBy = userInformationBO.UserInfoId;

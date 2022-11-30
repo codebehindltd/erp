@@ -43,6 +43,12 @@
                 width: "99.75%"
             });
 
+            $("#ContentPlaceHolder1_txtTransactionDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat
+            });
+
             if ($("#ContentPlaceHolder1_ddlTransactionType").val() == "0") {
                 $("#SupplierToCompanyDiv").hide();
             } else {
@@ -103,11 +109,12 @@
             $("#ContentPlaceHolder1_ddlFrom").val("1");
             $("#ContentPlaceHolder1_ddlTo").val("1");
             $("#ContentPlaceHolder1_txtAmount").val("");
+            $("#ContentPlaceHolder1_txtTransactionDate").val("");
             $("#ContentPlaceHolder1_txtRemarks").val("");
         }
 
         function SaveTransferInfo() {
-            var transactionType = "", fromTransactionId = "0", toTransactionId = "0", amount = 0.00, editId = "", remarks = "";
+            var transactionType = "", fromTransactionId = "0", toTransactionId = "0", amount = 0.00, editId = "", remarks = "", transactionDate = "";
             transactionType = $("#ContentPlaceHolder1_ddlTransactionType :selected").text();
             transactionTypeId = $("#ContentPlaceHolder1_ddlTransactionType").val();
             fromTransactionId = $("#ContentPlaceHolder1_ddlFrom").val();
@@ -115,6 +122,7 @@
             toTransactionId = $("#ContentPlaceHolder1_ddlTo").val();
             toTransactionText = $("#ContentPlaceHolder1_ddlTo :selected").text();
             amount = $("#ContentPlaceHolder1_txtAmount").val();
+            transactionDate = $("#ContentPlaceHolder1_txtTransactionDate").val();
             remarks = $("#ContentPlaceHolder1_txtRemarks").val();
             if ($("#ContentPlaceHolder1_ddlFrom").val() == "0") {
                 if (transactionTypeId == 1 || transactionTypeId == 3) {
@@ -136,6 +144,10 @@
                 $("#ContentPlaceHolder1_ddlTo").focus();
                 return false;
             }
+            if ($("#ContentPlaceHolder1_txtTransactionDate").val() == "") {
+                toastr.warning("Please Provide Transaction Date.");
+                return false;
+            }
             if ($("#ContentPlaceHolder1_txtAmount").val() == "") {
                 toastr.warning("Please Provide Amount.");
                 $("#ContentPlaceHolder1_txtAmount").focus();
@@ -155,6 +167,9 @@
                 return false;
             }
             editId = $("#ContentPlaceHolder1_hfUpdateId").val();
+            if (transactionDate != '') {
+                transactionDate = CommonHelper.DateFormatMMDDYYYYFromDDMMYYYY(transactionDate, innBoarDateFormat);
+            }
 
             if (fromTransactionText == toTransactionText) {
                 if (transactionTypeId == "3") {
@@ -163,7 +178,7 @@
                     toastr.info("You can't transfer balace to the same Company.");
                 }
             } else {
-                PageMethods.SaveSupplierCompanyBalanceTransfer(editId, transactionType, fromTransactionId, toTransactionId, amount, remarks, OnSaveSupplierCompanyBalanceTransferSucceed, OnSaveSupplierCompanyBalanceTransferFailed);
+                PageMethods.SaveSupplierCompanyBalanceTransfer(editId, transactionType, fromTransactionId, toTransactionId, transactionDate, amount, remarks, OnSaveSupplierCompanyBalanceTransferSucceed, OnSaveSupplierCompanyBalanceTransferFailed);
             }
             return false;
         }
@@ -179,6 +194,7 @@
                 }
                 
                 $("#ContentPlaceHolder1_ddlTransactionType").val("0");
+                $("#ContentPlaceHolder1_txtTransactionDate").val("");
                 $("#ContentPlaceHolder1_txtAmount").val("");
                 if ($("#ContentPlaceHolder1_ddlTransactionType").val() == "0") {
                     $("#SupplierToCompanyDiv").hide();
@@ -253,7 +269,13 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    <asp:Label ID="lblAmount" runat="server" class="control-label required-field" Text="Amount"></asp:Label>
+                                    <asp:Label ID="lblTransactionDate" runat="server" class="control-label required-field" Text="Transaction Date"></asp:Label>
+                                </div>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtTransactionDate" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:Label ID="lblAmount" runat="server" class="control-label required-field" Text="Transaction Amount"></asp:Label>
                                 </div>
                                 <div class="col-md-4">
                                     <asp:TextBox ID="txtAmount" runat="server" CssClass="form-control" TabIndex="4"></asp:TextBox>
@@ -347,10 +369,11 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10%;">Transaction Type</th>
+                                    <th style="width: 10%;">Date</th>
                                     <th style="width: 15%;">From Transaction</th>
                                     <th style="width: 15%;">To Transaction</th>
                                     <th style="width: 10%;">Amount</th>
-                                    <th style="width: 30%">Description</th>
+                                    <th style="width: 20%">Description</th>
                                     <th style="width: 10%">Status</th>
                                     <th style="width: 10%;">Action</th>
                                 </tr>
@@ -538,14 +561,15 @@
                 tr += "<tr>";
 
                 tr += "<td style='width:10%;'>" + gridObject.TransactionType + "</td>";
+                tr += "<td style='width:10%;'>" + GetStringFromDateTime(gridObject.TransactionDate) + "</td>";
                 tr += "<td style='width:15%;'>" + gridObject.FromTransactionText + "</td>";
                 tr += "<td style='width:15%;'>" + gridObject.ToTransactionText + "</td>";
                 tr += "<td style='width:10%;'>" + gridObject.Amount + "</td>";
 
                 if (gridObject.Remarks != null)
-                    tr += "<td style='width:30%;'>" + gridObject.Remarks + "</td>";
+                    tr += "<td style='width:20%;'>" + gridObject.Remarks + "</td>";
                 else
-                    tr += "<td style='width:30%;'></td>";
+                    tr += "<td style='width:20%;'></td>";
                 tr += "<td style='width:10%;'>" + (gridObject.ApprovedStatus == 'Pending' ? 'Pending' : gridObject.ApprovedStatus) + "</td>";
                 tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
                 if (gridObject.IsCanEdit && IsCanEdit) {
@@ -603,6 +627,7 @@
             $("#ContentPlaceHolder1_hfEditToTransaction").val(result.ToTransactionId);
 
             $("#ContentPlaceHolder1_ddlTransactionType").val(editTransactionId).trigger("change");
+            $("#ContentPlaceHolder1_txtTransactionDate").val(GetStringFromDateTime(result.TransactionDate));
             $("#ContentPlaceHolder1_txtAmount").val(result.Amount);
             $("#ContentPlaceHolder1_txtRemarks").val(result.Remarks);
             $("#ContentPlaceHolder1_btnSave").val("Update");
