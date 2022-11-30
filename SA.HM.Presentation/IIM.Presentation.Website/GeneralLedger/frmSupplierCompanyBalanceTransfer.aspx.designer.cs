@@ -175,6 +175,24 @@ namespace HotelManagement.Presentation.Website.GeneralLedger {
         protected global::System.Web.UI.WebControls.DropDownList ddlTo;
         
         /// <summary>
+        /// lblTransactionDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTransactionDate;
+        
+        /// <summary>
+        /// txtTransactionDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTransactionDate;
+        
+        /// <summary>
         /// lblAmount control.
         /// </summary>
         /// <remarks>

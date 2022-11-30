@@ -21,6 +21,7 @@ namespace HotelManagement.Data.GeneralLedger
                     dbSmartAspects.AddInParameter(command, "@TransactionType", DbType.String, SCBalanceTransferInfo.TransactionType);
                     dbSmartAspects.AddInParameter(command, "@FromTransactionId", DbType.Int32, SCBalanceTransferInfo.FromTransactionId);
                     dbSmartAspects.AddInParameter(command, "@ToTransactionId", DbType.Int32, SCBalanceTransferInfo.ToTransactionId);
+                    dbSmartAspects.AddInParameter(command, "@TransactionDate", DbType.DateTime, SCBalanceTransferInfo.TransactionDate);
                     dbSmartAspects.AddInParameter(command, "@Amount", DbType.Decimal, SCBalanceTransferInfo.Amount);
                     dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, SCBalanceTransferInfo.Remarks);
                     dbSmartAspects.AddInParameter(command, "@ApprovedStatus", DbType.String, SCBalanceTransferInfo.ApprovedStatus);
@@ -74,6 +75,7 @@ namespace HotelManagement.Data.GeneralLedger
                         FromTransactionText = r.Field<string>("FromTransactionText"),
                         ToTransactionId = r.Field<Int32>("ToTransactionId"),
                         ToTransactionText = r.Field<string>("ToTransactionText"),
+                        TransactionDate = r.Field<DateTime>("TransactionDate"),
                         Amount = r.Field<decimal>("Amount"),
                         Remarks = r.Field<string>("Remarks"),
                         ApprovedStatus = r.Field<string>("ApprovedStatus"),
@@ -109,6 +111,16 @@ namespace HotelManagement.Data.GeneralLedger
                         infoForEdit.TransactionType = reader["TransactionType"].ToString();
                         infoForEdit.FromTransactionId = Int32.Parse(reader["FromTransactionId"].ToString());
                         infoForEdit.ToTransactionId = Int32.Parse(reader["ToTransactionId"].ToString());
+
+                        if(reader["TransactionDate"] == DBNull.Value)
+                        {
+                            infoForEdit.TransactionDate = null;
+                        }
+                        else
+                        {
+                            infoForEdit.TransactionDate = Convert.ToDateTime(reader["TransactionDate"]);
+                        }
+                        
                         infoForEdit.Amount = Decimal.Parse(reader["Amount"].ToString());
                         infoForEdit.Remarks = reader["Remarks"].ToString();
                     }

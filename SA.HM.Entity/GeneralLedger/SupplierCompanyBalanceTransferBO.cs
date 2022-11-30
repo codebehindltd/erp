@@ -14,6 +14,7 @@ namespace HotelManagement.Entity.GeneralLedger
         public string FromTransactionText { get; set; }
         public int ToTransactionId { get; set; }
         public string ToTransactionText { get; set; }
+        public DateTime? TransactionDate { get; set; }
         public decimal Amount { get; set; }
         public string Remarks { get; set; }
         public int CreatedBy { get; set; }
