@@ -34,6 +34,13 @@
             IsCanDelete = $('#ContentPlaceHolder1_hfDeletePermission').val() == '1' ? true : false;
             IsCanView = $('#ContentPlaceHolder1_hfViewPermission').val() == '1' ? true : false;
 
+            $("#ContentPlaceHolder1_ddlAirlineName").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             $("#ContentPlaceHolder1_ddlTransactionType").change(function () {
                 if ($("#ContentPlaceHolder1_ddlTransactionType").val() == "CorporateCompany") {
                     $("#ReferenceForCorporateCompany").show();
