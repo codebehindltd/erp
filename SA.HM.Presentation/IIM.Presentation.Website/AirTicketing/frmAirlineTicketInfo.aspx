@@ -533,16 +533,12 @@
                 toastr.warning("Please Give Invoice Amount.");
                 return false;
             }
-            else if ($("#ContentPlaceHolder1_txtAirlineAmount").val() == "") {
-                toastr.warning("Please Give a Number or Zero to Airline Amount.");
-                return false;
-            }
+            //else if ($("#ContentPlaceHolder1_txtAirlineAmount").val() == "") {
+            //    toastr.warning("Please Give a Number or Zero to Airline Amount.");
+            //    return false;
+            //}
             else if ($("#ContentPlaceHolder1_txtRoute").val() == "") {
                 toastr.warning("Please Give Route.");
-                return false;
-            }
-            else if ($("#ContentPlaceHolder1_txtRemarks").val() == "") {
-                toastr.warning("Please Give Description.");
                 return false;
             }
 
@@ -567,6 +563,10 @@
             var airlineAmount = $("#ContentPlaceHolder1_txtAirlineAmount").val();
             var routePath = $("#ContentPlaceHolder1_txtRoute").val();
             var remarks = $("#ContentPlaceHolder1_txtRemarks").val();
+            
+            if (airlineAmount == "") {
+                airlineAmount = parseFloat(0);
+            }
 
             var tr = "";
 
@@ -770,6 +770,10 @@
                 registrationNumber = $("#ContentPlaceHolder1_txtRegistrationNumber").val();
             }
 
+            var totalForTicketInfos = $("#ContentPlaceHolder1_hftotalForTicketInfos").val();
+            totalForTicketInfos = parseFloat(totalForTicketInfos);
+            totalForTicketInfos = totalForTicketInfos.toFixed(2);
+
             var AirTicketMasterInfo = {
                 TicketId: ticketId,
                 TransactionType: transactionType,
@@ -777,7 +781,8 @@
                 CompanyName: companyName,
                 ReferenceId: referenceId,
                 ReferenceName: referenceName,
-                RegistrationNumber: registrationNumber
+                RegistrationNumber: registrationNumber,
+                InvoiceAmount: totalForTicketInfos
             }
 
 
@@ -995,12 +1000,14 @@
 
                 tr += "<tr>";
 
-                tr += "<td style='width:20%;'>" + gridObject.BillNumber + "</td>";
-                tr += "<td style='width:40%;'>" + gridObject.CompanyName + "</td>";
+                tr += "<td style='width:10%;'>" + gridObject.BillNumber + "</td>";
+                tr += "<td style='width:20%;'>" + gridObject.TransactionType + "</td>";
+                tr += "<td style='width:30%;'>" + gridObject.CompanyName + "</td>";
+                tr += "<td style='width:20%;'>" + gridObject.InvoiceAmount + "</td>";
 
-                tr += "<td style='width:20%;'>" + gridObject.ReferenceName + "</td>";
+                tr += "<td style='width:10%;'>" + gridObject.Status + "</td>";
 
-                tr += "<td style=\"text-align: center; width:15%; cursor:pointer;\">";
+                tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
 
 
                 tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return TicketInfoEditWithConfirmation(" + gridObject.TicketId + ")\" alt='Edit'  title='Edit' border='0' />";
@@ -1021,7 +1028,6 @@
 
                 tr += "<td style='display:none;'>" + gridObject.TicketId + "</td>";
                 tr += "<td style='display:none;'>" + gridObject.CostCenterId + "</td>";
-                tr += "<td style='display:none;'>" + gridObject.TransactionType + "</td>";
                 tr += "<td style='display:none;'>" + gridObject.TransactionId + "</td>";
                 tr += "<td style='display:none;'>" + gridObject.ReferenceId + "</td>";
 
@@ -1494,7 +1500,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblRemarks" runat="server" class="control-label required-field" Text="Description"></asp:Label>
+                                <asp:Label ID="lblRemarks" runat="server" class="control-label" Text="Description"></asp:Label>
                             </div>
                             <div class="col-md-10">
                                 <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
@@ -1862,13 +1868,17 @@
                     <table id="TicketInformationGrid" class="table table-bordered table-condensed table-responsive" width="100%">
                         <thead>
                             <tr style="color: White; background-color: #44545E; font-weight: bold;">
-                                <th style="width: 20%;">Invoice No.
+                                <th style="width: 10%;">Invoice No.
                                 </th>
-                                <th style="width: 40%;">Company Name
+                                <th style="width: 20%;">Transaction Type
                                 </th>
-                                <th style="width: 20%;">Payment Status
+                                <th style="width: 30%;">Transaction For
                                 </th>
-                                <th style="width: 20%;">Action
+                                <th style="width: 20%;">Invoice Amount
+                                </th>
+                                <th style="width: 10%;">Status
+                                </th>
+                                <th style="width: 10%;">Action
                                 </th>
                             </tr>
                         </thead>

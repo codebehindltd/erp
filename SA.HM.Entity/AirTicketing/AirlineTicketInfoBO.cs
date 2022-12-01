@@ -18,7 +18,7 @@ namespace HotelManagement.Entity.AirTicketing
         public int TicketTypeId { get; set; }
         public string TicketType { get; set; }
         public int AirlineId { get; set; }
-        public DateTime ReturnDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
         public string TicketNumber { get; set; }
         public string PnrNumber { get; set; }
         public decimal AirlineAmount { get; set; }

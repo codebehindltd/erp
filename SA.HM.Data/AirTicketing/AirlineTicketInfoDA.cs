@@ -36,6 +36,7 @@ namespace HotelManagement.Data.AirTicketing
                                 dbSmartAspects.AddInParameter(cmdOut, "@ReferenceId", DbType.Int64, airTicketMasterInfo.ReferenceId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@ReferenceName", DbType.String, airTicketMasterInfo.ReferenceName);
                                 dbSmartAspects.AddInParameter(cmdOut, "@RegistrationNumber", DbType.String, airTicketMasterInfo.RegistrationNumber);
+                                dbSmartAspects.AddInParameter(cmdOut, "@InvoiceAmount", DbType.Decimal, airTicketMasterInfo.InvoiceAmount);
                                 dbSmartAspects.AddInParameter(cmdOut, "@LastModifiedBy", DbType.Int64, airTicketMasterInfo.LastModifiedBy);
                                 
 
@@ -55,6 +56,7 @@ namespace HotelManagement.Data.AirTicketing
                                 dbSmartAspects.AddInParameter(cmdOut, "@ReferenceId", DbType.Int64, airTicketMasterInfo.ReferenceId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@ReferenceName", DbType.String, airTicketMasterInfo.ReferenceName);
                                 dbSmartAspects.AddInParameter(cmdOut, "@RegistrationNumber", DbType.String, airTicketMasterInfo.RegistrationNumber);
+                                dbSmartAspects.AddInParameter(cmdOut, "@InvoiceAmount", DbType.Decimal, airTicketMasterInfo.InvoiceAmount);
                                 dbSmartAspects.AddInParameter(cmdOut, "@Status", DbType.String, airTicketMasterInfo.Status);
                                 dbSmartAspects.AddInParameter(cmdOut, "@CreatedBy", DbType.Int64, airTicketMasterInfo.CreatedBy);
 
@@ -96,7 +98,15 @@ namespace HotelManagement.Data.AirTicketing
                                     dbSmartAspects.AddInParameter(cmdSingle, "@AirlineId", DbType.Int32, at.AirlineId);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@AirlineName", DbType.String, at.AirlineName);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@FlightDate", DbType.DateTime, at.FlightDate);
-                                    dbSmartAspects.AddInParameter(cmdSingle, "@ReturnDate", DbType.DateTime, at.ReturnDate);
+                                    if(at.ReturnDate == null)
+                                    {
+                                        dbSmartAspects.AddInParameter(cmdSingle, "@ReturnDate", DbType.DateTime, DBNull.Value);
+                                    }
+                                    else
+                                    {
+                                        dbSmartAspects.AddInParameter(cmdSingle, "@ReturnDate", DbType.DateTime, at.ReturnDate);
+                                    }
+                                    
                                     dbSmartAspects.AddInParameter(cmdSingle, "@TicketNumber", DbType.String, at.TicketNumber);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@PnrNumber", DbType.String, at.PnrNumber);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@InvoiceAmount", DbType.Decimal, at.InvoiceAmount);
@@ -272,6 +282,8 @@ namespace HotelManagement.Data.AirTicketing
                         ReferenceId = r.Field<Int64>("ReferenceId"),
                         ReferenceName = r.Field<string>("ReferenceName"),
                         RegistrationNumber = r.Field<string>("RegistrationNumber"),
+                        InvoiceAmount = r.Field<Decimal?>("InvoiceAmount"),
+                        Status = r.Field<string>("Status"),
                         CheckedBy = r.Field<Int32>("CheckedBy"),
                         ApprovedBy = r.Field<Int32>("ApprovedBy"),
                         IsCanEdit = r.Field<bool>("IsCanEdit"),
@@ -343,7 +355,7 @@ namespace HotelManagement.Data.AirTicketing
                         AirlineId = r.Field<Int32>("AirlineId"),
                         AirlineName = r.Field<string>("AirlineName"),
                         FlightDate = r.Field<DateTime>("FlightDate"),
-                        ReturnDate = r.Field<DateTime>("ReturnDate"),
+                        ReturnDate = r.Field<DateTime?>("ReturnDate"),
                         TicketNumber = r.Field<string>("TicketNumber"),
                         PnrNumber = r.Field<string>("PNRNumber"),
                         InvoiceAmount = r.Field<decimal>("InvoiceAmount"),

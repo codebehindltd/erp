@@ -17,6 +17,7 @@ namespace HotelManagement.Entity.AirTicketing
         public long ReferenceId { get; set; }
         public string ReferenceName { get; set; }
         public string RegistrationNumber { get; set; }
+        public Decimal? InvoiceAmount { get; set; }
         public int CreatedBy { get; set; }
         public int LastModifiedBy { get; set; }
         public string Status { get; set; }

@@ -142,6 +142,8 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                 {
                     IsUpdate = true;
                 }
+                
+
                 status = atDa.SaveAirlineTicketInfo(AirTicketMasterInfo, AddedSingleTicketInfo, AddedPaymentInfo);
                 if (status)
                 {
