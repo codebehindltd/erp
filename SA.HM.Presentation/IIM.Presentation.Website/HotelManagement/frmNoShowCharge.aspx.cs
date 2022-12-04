@@ -307,10 +307,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             HMCommonDA hmCommonDA = new HMCommonDA();
             NodeMatrixDA entityDA = new NodeMatrixDA();
             this.lblPaymentAccountHead.Text = "Payment Receive In";
-            CustomFieldBO CashReceiveAccountsInfo = new CustomFieldBO();
-            CashReceiveAccountsInfo = hmCommonDA.GetCustomFieldByFieldName("CashReceiveAccountsInfo");
+            //CustomFieldBO CashReceiveAccountsInfo = new CustomFieldBO();
+            //CashReceiveAccountsInfo = hmCommonDA.GetCustomFieldByFieldName("CashReceiveAccountsInfo");
 
-            this.ddlCashReceiveAccountsInfo.DataSource = entityDA.GetNodeMatrixInfoByCustomString("WHERE  NodeId IN(" + CashReceiveAccountsInfo.FieldValue.ToString() + ")");
+            List<CommonPaymentModeBO> commonPaymentModeBOList = new List<CommonPaymentModeBO>();
+            commonPaymentModeBOList = hmCommonDA.GetCommonPaymentModeInfo("All");
+
+            CommonPaymentModeBO cashPaymentModeInfo = commonPaymentModeBOList.Where(x => x.PaymentMode == "Cash").FirstOrDefault();
+            this.ddlCashReceiveAccountsInfo.DataSource = entityDA.GetNodeMatrixInfoByCustomString("WHERE  NodeId IN(" + cashPaymentModeInfo.PaymentAccountsPostingId.ToString() + ")");
             this.ddlCashReceiveAccountsInfo.DataTextField = "NodeHead";
             this.ddlCashReceiveAccountsInfo.DataValueField = "NodeId";
             this.ddlCashReceiveAccountsInfo.DataBind();
