@@ -12,7 +12,6 @@ namespace HotelManagement.Data.HotelManagement
     {
         public GuestReferenceBO GetGuestReferenceInfoById(int _referenceId)
         {
-
             GuestReferenceBO referenceBO = new GuestReferenceBO();
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
@@ -35,6 +34,8 @@ namespace HotelManagement.Data.HotelManagement
                                 referenceBO.Designation = reader["Designation"].ToString();
                                 referenceBO.CellNumber = reader["CellNumber"].ToString();
                                 referenceBO.TelephoneNumber = reader["TelephoneNumber"].ToString();
+                                referenceBO.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
+                                referenceBO.ActiveStatus = reader["ActiveStatus"].ToString();
                             }
                         }
                     }
@@ -68,6 +69,8 @@ namespace HotelManagement.Data.HotelManagement
                                 referenceBO.Designation = reader["Designation"].ToString();
                                 referenceBO.CellNumber = reader["CellNumber"].ToString();
                                 referenceBO.TelephoneNumber = reader["TelephoneNumber"].ToString();
+                                referenceBO.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
+                                referenceBO.ActiveStatus = reader["ActiveStatus"].ToString();
                                 referenceList.Add(referenceBO);
                             }
                         }
@@ -94,6 +97,8 @@ namespace HotelManagement.Data.HotelManagement
                                 referenceBO.Name = reader["Name"].ToString();
                                 referenceBO.Description = reader["Description"].ToString();
                                 referenceBO.SalesCommission = Convert.ToDecimal(reader["SalesCommission"].ToString());
+                                referenceBO.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
+                                referenceBO.ActiveStatus = reader["ActiveStatus"].ToString();
                                 referenceList.Add(referenceBO);
                             }
                         }
@@ -118,9 +123,9 @@ namespace HotelManagement.Data.HotelManagement
                         dbSmartAspects.AddInParameter(command, "@Designation", DbType.String, referenceBO.Designation);
                         dbSmartAspects.AddInParameter(command, "@CellNumber", DbType.String, referenceBO.CellNumber);
                         dbSmartAspects.AddInParameter(command, "@TelephoneNumber", DbType.String, referenceBO.TelephoneNumber);
-
                         dbSmartAspects.AddInParameter(command, "@Description", DbType.String, referenceBO.Description);
                         dbSmartAspects.AddInParameter(command, "@SalesCommission", DbType.Decimal, referenceBO.SalesCommission);
+                        dbSmartAspects.AddInParameter(command, "@ActiveStat", DbType.Boolean, referenceBO.ActiveStat);
                         dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, referenceBO.CreatedBy);
                         dbSmartAspects.AddOutParameter(command, "@ReferenceId", DbType.Int32, sizeof(Int32));
                         status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
@@ -152,6 +157,7 @@ namespace HotelManagement.Data.HotelManagement
                         dbSmartAspects.AddInParameter(command, "@TelephoneNumber", DbType.String, referenceBO.TelephoneNumber);
                         dbSmartAspects.AddInParameter(command, "@Description", DbType.String, referenceBO.Description);
                         dbSmartAspects.AddInParameter(command, "@SalesCommission", DbType.Decimal, referenceBO.SalesCommission);
+                        dbSmartAspects.AddInParameter(command, "@ActiveStat", DbType.Boolean, referenceBO.ActiveStat);
                         dbSmartAspects.AddInParameter(command, "@LastModifiedBy", DbType.Int32, referenceBO.LastModifiedBy);
                         status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
                     }

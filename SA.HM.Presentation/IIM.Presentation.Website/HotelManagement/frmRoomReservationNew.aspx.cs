@@ -1228,7 +1228,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         public void LoadGuestReference()
         {
             GuestReferenceDA entityDA = new GuestReferenceDA();
-            List<GuestReferenceBO> files = entityDA.GetAllGuestRefference();
+            List<GuestReferenceBO> files = entityDA.GetAllGuestRefference().Where(x => x.ActiveStat == true).ToList();
             ddlReferenceId.DataSource = files;
             ddlReferenceId.DataTextField = "Name";
             ddlReferenceId.DataValueField = "ReferenceId";

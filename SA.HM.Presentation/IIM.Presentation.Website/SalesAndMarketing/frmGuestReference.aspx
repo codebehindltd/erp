@@ -206,6 +206,17 @@
                                 <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" TextMode="MultiLine"
                                     TabIndex="4"></asp:TextBox>
                             </div>
+                        </div>                        
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:Label ID="lblActiveStat" runat="server" class="control-label" Text="Status"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:DropDownList ID="ddlActiveStat" runat="server" CssClass="form-control" TabIndex="2">
+                                    <asp:ListItem Value="0">Active</asp:ListItem>
+                                    <asp:ListItem Value="1">Inactive</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -261,15 +272,19 @@
                                     <asp:Label ID="lblid" runat="server" Text='<%#Eval("ReferenceId") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="Name" HeaderText="Reference Name" ItemStyle-Width="60%">
+                            <asp:BoundField DataField="Name" HeaderText="Reference Name" ItemStyle-Width="50%">
                                 <HeaderStyle HorizontalAlign="Left" />
                                 <ItemStyle HorizontalAlign="Left" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="SalesCommission" HeaderText="S. Commission(%)" ItemStyle-Width="25%">
+                            <asp:BoundField DataField="SalesCommission" HeaderText="S. Commission(%)" ItemStyle-Width="20%">
                                 <HeaderStyle HorizontalAlign="Left" />
                                 <ItemStyle HorizontalAlign="Left" />
                             </asp:BoundField>
-                            <asp:TemplateField HeaderText="Action" ShowHeader="False" ItemStyle-Width="15%">
+                            <asp:BoundField DataField="ActiveStatus" HeaderText="Status" ItemStyle-Width="20%">
+                                <HeaderStyle HorizontalAlign="Left" />
+                                <ItemStyle HorizontalAlign="Left" />
+                            </asp:BoundField>
+                            <asp:TemplateField HeaderText="Action" ShowHeader="False" ItemStyle-Width="10%">
                                 <ItemTemplate>
                                     <asp:ImageButton ID="ImgUpdate" runat="server" CausesValidation="False" OnClientClick='<%# string.Format("return ConfirmEdit(\"{0}\");", Eval("Name")) %>' CommandName="CmdEdit"
                                         CommandArgument='<%#bind("ReferenceId") %>' ImageUrl="~/Images/edit.png" Text=""

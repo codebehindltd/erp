@@ -112,6 +112,24 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing {
         protected global::System.Web.UI.WebControls.TextBox txtDescription;
         
         /// <summary>
+        /// lblActiveStat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblActiveStat;
+        
+        /// <summary>
+        /// ddlActiveStat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlActiveStat;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>

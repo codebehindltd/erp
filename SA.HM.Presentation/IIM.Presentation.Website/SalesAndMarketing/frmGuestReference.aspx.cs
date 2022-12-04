@@ -55,6 +55,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
                 referenceBO.TelephoneNumber = txtTelephoneNumber.Text;
                 referenceBO.Description = this.txtDescription.Text;
                 referenceBO.SalesCommission = !string.IsNullOrWhiteSpace(this.txtSalesCommission.Text) ? Convert.ToDecimal(this.txtSalesCommission.Text) : 0;
+                referenceBO.ActiveStat = ddlActiveStat.SelectedIndex == 0 ? true : false;
 
                 if (string.IsNullOrWhiteSpace(txtReferenceId.Value))
                 {
@@ -134,12 +135,11 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             int _referenceId = Convert.ToInt32(e.CommandArgument.ToString());
             if (e.CommandName == "CmdEdit")
             {
-
                 GuestReferenceBO referenceBO = new GuestReferenceBO();
                 GuestReferenceDA referenceDA = new GuestReferenceDA();
                 referenceBO = referenceDA.GetGuestReferenceInfoById(_referenceId);
                 txtDescription.Text = referenceBO.Description;
-
+                ddlActiveStat.SelectedValue = (referenceBO.ActiveStat == true ? 0 : 1).ToString();
                 txtName.Text = referenceBO.Name;
                 txtEmail.Text = referenceBO.Email;
                 txtOrganization.Text = referenceBO.Organization;
@@ -162,7 +162,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
         //************************ User Defined Function ********************//
         private void Cancel()
         {
-
+            this.ddlActiveStat.SelectedIndex = 0;
             txtDescription.Text = "";
             txtName.Text = "";
             txtEmail.Text = string.Empty;

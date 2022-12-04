@@ -19,6 +19,8 @@ namespace HotelManagement.Entity.HotelManagement
         public string Designation { get; set; }
         public string CellNumber { get; set; }
         public string TelephoneNumber { get; set; }
+        public Boolean ActiveStat { get; set; }
+        public string ActiveStatus { get; set; }
     }
 
 }
