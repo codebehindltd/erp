@@ -76,6 +76,24 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.HiddenField hfTicketMasterId;
         
         /// <summary>
+        /// hfEditPayment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfEditPayment;
+        
+        /// <summary>
+        /// hfStopAddingExistingPayment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfStopAddingExistingPayment;
+        
+        /// <summary>
         /// hftotalForPaymentInfos control.
         /// </summary>
         /// <remarks>
@@ -454,22 +472,22 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.TextBox txtPNR;
         
         /// <summary>
-        /// lblInvoiceAmount control.
+        /// lblTicketValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInvoiceAmount;
+        protected global::System.Web.UI.WebControls.Label lblTicketValue;
         
         /// <summary>
-        /// txtInvoiceAmount control.
+        /// txtTicketValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtInvoiceAmount;
+        protected global::System.Web.UI.WebControls.TextBox txtTicketValue;
         
         /// <summary>
         /// lblAirlineAmount control.
@@ -488,6 +506,24 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAirlineAmount;
+        
+        /// <summary>
+        /// lblInvoiceAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblInvoiceAmount;
+        
+        /// <summary>
+        /// txtInvoiceAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtInvoiceAmount;
         
         /// <summary>
         /// lblRoute control.
@@ -742,22 +778,22 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.TextBox txtChecqueNumber;
         
         /// <summary>
-        /// lblCompanyBank control.
+        /// lblBankNameForCheque control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCompanyBank;
+        protected global::System.Web.UI.WebControls.Label lblBankNameForCheque;
         
         /// <summary>
-        /// ddlCompanyBank control.
+        /// txtBankNameForCheque control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCompanyBank;
+        protected global::System.Web.UI.WebControls.TextBox txtBankNameForCheque;
         
         /// <summary>
         /// lblCardPaymentAccountHeadId control.
@@ -868,22 +904,22 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.TextBox txtCardHolderName;
         
         /// <summary>
-        /// lblMBankingBankName control.
+        /// lblBankNameForMBanking control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMBankingBankName;
+        protected global::System.Web.UI.WebControls.Label lblBankNameForMBanking;
         
         /// <summary>
-        /// ddlMBankingBankId control.
+        /// txtBankNameForMBanking control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlMBankingBankId;
+        protected global::System.Web.UI.WebControls.TextBox txtBankNameForMBanking;
         
         /// <summary>
         /// lblRefundAccountHead control.

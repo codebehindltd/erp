@@ -166,7 +166,7 @@
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
                         url: "../AirTicketing/frmAirlineTicketInfo.aspx/GetGuestReferenceInfoForCompany",
-                        data: JSON.stringify({ searchTerm: request.term }),
+                        data: JSON.stringify({ companyId: $("#ContentPlaceHolder1_hfCompanyId").val(), searchTerm: request.term }),
                         dataType: "json",
                         async: false,
                         success: function(data) {
@@ -227,6 +227,72 @@
             //});
             
             $("#ContentPlaceHolder1_txtbankName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "../AirTicketing/frmAirlineTicketInfo.aspx/GetBankInfoForAutoComplete",
+                        data: JSON.stringify({ searchTerm: request.term }),
+                        dataType: "json",
+                        async: false,
+                        success: function (data) {
+                            var searchData = data.error ? [] : $.map(data.d, function (m) {
+                                return {
+                                    label: m.BankName,
+                                    value: m.BankId
+                                }
+                            });
+                            response(searchData);
+                        },
+                        failed: function (result) {
+
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    event.preventDefault();
+                },
+                select: function (event, ui) {
+                    event.preventDefault();
+                    $(this).val(ui.item.label);
+                    $("#ContentPlaceHolder1_hfbankId").val(ui.item.value);
+                }
+            });
+                        
+            $("#ContentPlaceHolder1_txtBankNameForMBanking").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "../AirTicketing/frmAirlineTicketInfo.aspx/GetBankInfoForAutoComplete",
+                        data: JSON.stringify({ searchTerm: request.term }),
+                        dataType: "json",
+                        async: false,
+                        success: function (data) {
+                            var searchData = data.error ? [] : $.map(data.d, function (m) {
+                                return {
+                                    label: m.BankName,
+                                    value: m.BankId
+                                }
+                            });
+                            response(searchData);
+                        },
+                        failed: function (result) {
+
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    event.preventDefault();
+                },
+                select: function (event, ui) {
+                    event.preventDefault();
+                    $(this).val(ui.item.label);
+                    $("#ContentPlaceHolder1_hfbankId").val(ui.item.value);
+                }
+            });
+
+            $("#ContentPlaceHolder1_txtBankNameForCheque").autocomplete({
                 source: function (request, response) {
                     $.ajax({
                         type: "POST",
@@ -536,6 +602,10 @@
                 toastr.warning("Please Give PNR.");
                 return false;
             }
+            else if ($("#ContentPlaceHolder1_txtTicketValue").val() == "") {
+                toastr.warning("Please Give Ticket Value.");
+                return false;
+            }
             else if ($("#ContentPlaceHolder1_txtInvoiceAmount").val() == "") {
                 toastr.warning("Please Give Invoice Amount.");
                 return false;
@@ -566,6 +636,7 @@
             var returnDate = $("#ContentPlaceHolder1_txtReturnDate").val();
             var ticketNumber = $("#ContentPlaceHolder1_txtTicketNumber").val();
             var pnrNumber = $("#ContentPlaceHolder1_txtPNR").val();
+            var ticketValue = $("#ContentPlaceHolder1_txtTicketValue").val();
             var invoiceAmount = $("#ContentPlaceHolder1_txtInvoiceAmount").val();
             var airlineAmount = $("#ContentPlaceHolder1_txtAirlineAmount").val();
             var routePath = $("#ContentPlaceHolder1_txtRoute").val();
@@ -599,6 +670,7 @@
             tr += "<td style='display:none;'>" + airlineAmount + "</td>";
             tr += "<td style='display:none;'>" + routePath + "</td>";
             tr += "<td style='display:none;'>" + remarks + "</td>";
+            tr += "<td style='display:none;'>" + ticketValue + "</td>";
 
             tr += "</tr>";
 
@@ -633,6 +705,7 @@
             $("#ContentPlaceHolder1_txtReturnDate").val("");
             $("#ContentPlaceHolder1_txtTicketNumber").val("");
             $("#ContentPlaceHolder1_txtPNR").val("");
+            $("#ContentPlaceHolder1_txtTicketValue").val("");
             $("#ContentPlaceHolder1_txtInvoiceAmount").val("");
             $("#ContentPlaceHolder1_txtAirlineAmount").val("");
             $("#ContentPlaceHolder1_txtRoute").val("");
@@ -671,51 +744,90 @@
                 bankName = $("#ContentPlaceHolder1_txtbankName").val();
             }
             else if (paymentModeName == "M-Banking") {
-                var bankName = $("#ContentPlaceHolder1_txtbankName").val();
+                bankName = $("#ContentPlaceHolder1_txtBankNameForMBanking").val();
             }
             else if (paymentModeName == "Cheque") {
-                var chequeNumber = $("#ContentPlaceHolder1_txtChecqueNumber").val();
-                var bankName = $("#ContentPlaceHolder1_txtbankName").val();
+                chequeNumber = $("#ContentPlaceHolder1_txtChecqueNumber").val();
+                bankName = $("#ContentPlaceHolder1_txtBankNameForCheque").val();
             }
 
-            var tr = "";
+            if (!IsPaymentHeadExists(paymentModeId)) {
+                if ($("#ContentPlaceHolder1_hfEditPayment").val() == 0) {
+                    var tr = "";
 
-            tr += "<tr>";
-            tr += "<td style='width:35%;'>" + paymentModeName + "</td>";
-            tr += "<td style='width:25%;'>" + bankName + "</td>";
-            tr += "<td style='width:25%;'>" + receiveAmount + "</td>";
-            tr += "<td style='width:15%;'>" +
-                "<a href='javascript:void()' onclick= 'DeletePaymentInfoItem(this)' ><img alt='Delete' src='../Images/delete.png' title='Delete' /></a>";
-            tr += "</td>";
+                    tr += "<tr>";
+                    tr += "<td style='width:35%;'>" + paymentModeName + "</td>";
+                    tr += "<td style='width:25%;'>" + bankName + "</td>";
+                    tr += "<td style='width:25%;'>" + receiveAmount + "</td>";
+                    tr += "<td style=\"width:15%;\">";
+                    tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return EditPaymentInfoItem('" + paymentModeId + "','" + paymentModeName + "','" + bankId + "','" + bankName + "','" + receiveAmount + "','" + currencyTypeId + "','" + currencyType + "','" + cardTypeId + "','" + cardType + "','" + cardNumber + "','" + chequeNumber + "')\" alt='Edit'  title='Edit' border='0' />";
+                    tr += "&nbsp;&nbsp;<a href='javascript:void()' onclick= 'DeletePaymentInfoItem(this)' ><img alt='Delete' src='../Images/delete.png' title='Delete' /></a>";
+                    tr += "</td>";
 
-            tr += "<td style='display:none;'>" + paymentModeId + "</td>";
-            tr += "<td style='display:none;'>" + currencyTypeId + "</td>";
-            tr += "<td style='display:none;'>" + currencyType + "</td>";
-            tr += "<td style='display:none;'>" + cardType + "</td>";
-            tr += "<td style='display:none;'>" + cardTypeId + "</td>";
-            tr += "<td style='display:none;'>" + cardNumber + "</td>";
-            tr += "<td style='display:none;'>" + bankId + "</td>";
-            tr += "<td style='display:none;'>" + chequeNumber + "</td>";
+                    tr += "<td style='display:none;'>" + paymentModeId + "</td>";
+                    tr += "<td style='display:none;'>" + currencyTypeId + "</td>";
+                    tr += "<td style='display:none;'>" + currencyType + "</td>";
+                    tr += "<td style='display:none;'>" + cardType + "</td>";
+                    tr += "<td style='display:none;'>" + cardTypeId + "</td>";
+                    tr += "<td style='display:none;'>" + cardNumber + "</td>";
+                    tr += "<td style='display:none;'>" + bankId + "</td>";
+                    tr += "<td style='display:none;'>" + chequeNumber + "</td>";
 
-            tr += "</tr>";
+                    tr += "</tr>";
 
-            $("#PaymentInformationTbl tbody").prepend(tr);
+                    $("#PaymentInformationTbl tbody").prepend(tr);
 
-            var totalAmount = 0;
-            $("#PaymentInformationTbl tr").each(function () {
-                var amount = $(this).find("td").eq(2).html();
-                if (amount == undefined) {
-                    amount = 0;
+                    var totalAmount = 0;
+                    $("#PaymentInformationTbl tr").each(function () {
+                        var amount = $(this).find("td").eq(2).html();
+                        if (amount == undefined) {
+                            amount = 0;
+                        }
+                        totalAmount = parseFloat(totalAmount) + parseFloat(amount);
+                    });
+                    totalAmount = totalAmount.toFixed(2);
+                    $("#ContentPlaceHolder1_txtTotalPaymentAmount").val(totalAmount);
+                    $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(totalAmount);
+
+                    tr = "";
+
+                    ClearAfterPaymentInfoAdded();
                 }
-                totalAmount = parseFloat(totalAmount) + parseFloat(amount);
-            });
-            totalAmount = totalAmount.toFixed(2);
-            $("#ContentPlaceHolder1_txtTotalPaymentAmount").val(totalAmount);
-            $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(totalAmount);
-
-            tr = "";
-
-            ClearAfterPaymentInfoAdded();
+            }
+            else {
+                $("#PaymentInformationTbl tr").each(function () {
+                    var currentPaymentModeId = $(this).find("td").eq(4).html();
+                    if ($("#ContentPlaceHolder1_hfEditPayment").val() == 1) {
+                        if (currentPaymentModeId == paymentModeId) {
+                            $(this).find("td").eq(0).html(paymentModeName);
+                            $(this).find("td").eq(1).html(bankName);
+                            $(this).find("td").eq(2).html(receiveAmount);
+                            $(this).find("td").eq(4).html(paymentModeId);
+                            $(this).find("td").eq(5).html(currencyTypeId);
+                            $(this).find("td").eq(6).html(currencyType);
+                            $(this).find("td").eq(7).html(cardType);
+                            $(this).find("td").eq(8).html(cardTypeId);
+                            $(this).find("td").eq(9).html(cardNumber);
+                            $(this).find("td").eq(10).html(bankId);
+                            $(this).find("td").eq(11).html(chequeNumber);
+                        }
+                    }
+                });
+                var totalAmount = 0;
+                $("#PaymentInformationTbl tr").each(function () {
+                    var amount = $(this).find("td").eq(2).html();
+                    if (amount == undefined) {
+                        amount = 0;
+                    }
+                    totalAmount = parseFloat(totalAmount) + parseFloat(amount);
+                });
+                totalAmount = totalAmount.toFixed(2);
+                $("#ContentPlaceHolder1_txtTotalPaymentAmount").val(totalAmount);
+                $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(totalAmount);
+                if ($("#ContentPlaceHolder1_hfEditPayment").val() == 1) {
+                    ClearAfterPaymentInfoAdded();
+                }
+            }
         }
 
         function ClearAfterPaymentInfoAdded() {
@@ -725,7 +837,35 @@
             $("#ContentPlaceHolder1_ddlCardType").val("0").trigger('change');
             $("#ContentPlaceHolder1_txtCardNumber").val("");
             $("#ContentPlaceHolder1_txtbankName").val("");
+            $("#ContentPlaceHolder1_txtBankNameForMBanking").val("");
+            $("#ContentPlaceHolder1_txtBankNameForCheque").val("");
             $("#ContentPlaceHolder1_txtChecqueNumber").val("");
+            $("#ContentPlaceHolder1_hfBankId").val(0);
+            $("#ContentPlaceHolder1_hfEditPayment").val(0);
+        }
+
+        function IsPaymentHeadExists(paymentHeadId) {
+            var IsDuplicate = false;
+            $("#PaymentInformationTbl tr").each(function (index) {
+                
+                if (index !== 0 && !IsDuplicate) {
+                    var paymentHeadIdValueInTable = $(this).find("td").eq(4).html();
+
+                    var IsPaymentHeadIdFound = paymentHeadIdValueInTable.indexOf(paymentHeadId) > -1;
+                    if (IsPaymentHeadIdFound) {
+                        if ($("#ContentPlaceHolder1_hfEditPayment").val() == 1) {
+                            toastr.success('Payment Information Updated Successfully.');
+                            IsDuplicate = true;
+                        }
+                        else {
+                            toastr.warning('Payment Mode Already Added.');
+                            IsDuplicate = true;
+                            return true;
+                        }
+                    }
+                }
+            });
+            return IsDuplicate;
         }
 
         function ValidationBeforeSave() {
@@ -746,7 +886,7 @@
             var transactionType = "", companyName = "", companyId = "0", referenceName = "", registrationNumber = "",
                 clientName = "", mobileNumber = "", email = "", address = "", issueDate = "", ticketTypeId = "",
                 ticketType = "", airlineName = "", airlineId = "0", flightDate = "", returnDate = "",
-                ticketNumber = "", pnrNumber = "", invoiceAmount = 0, airlineAmount = 0, routePath = "", remarks = "", paymentModeId = "",
+                ticketNumber = "", pnrNumber = "", ticketValue = 0, invoiceAmount = 0, airlineAmount = 0, routePath = "", remarks = "", paymentModeId = "",
                 paymentModeName = "", currencyTypeId = "", currencyType = "", receiveAmount = 0, cardTypeId = "", cardType = "", cardNumber = "", bankId = "0", bankName = "", chequeNumber = "";
 
             //var quantity = "0", finishedProductDetailsId = "0";
@@ -823,6 +963,7 @@
                 airlineAmount = $.trim($(item).find("td:eq(15)").text());
                 routePath = $.trim($(item).find("td:eq(16)").text());
                 remarks = $.trim($(item).find("td:eq(17)").text());
+                ticketValue = $.trim($(item).find("td:eq(18)").text());
 
                 airlineAmount = airlineAmount != "" ? parseFloat(airlineAmount) : 0.00;
 
@@ -841,6 +982,7 @@
                     ReturnDate: returnDate,
                     TicketNumber: ticketNumber,
                     PnrNumber: pnrNumber,
+                    TicketValue: ticketValue,
                     AirlineAmount: airlineAmount,
                     RoutePath: routePath,
                     Remarks: remarks
@@ -890,7 +1032,7 @@
                 return false;
             }
 
-            PageMethods.SaveAirlineTicketInfo(AirTicketMasterInfo, AddedSingleTicketInfo, AddedPaymentInfo, OnSaveAirlineTicketInfoSucceeded, OnSaveAirlineTicketInfoFailed);
+            PageMethods.SaveAirlineTicketInfo(AirTicketMasterInfo, AddedSingleTicketInfo, AddedPaymentInfo, deletedPaymentInfoList, OnSaveAirlineTicketInfoSucceeded, OnSaveAirlineTicketInfoFailed);
 
             return false;
         }
@@ -898,6 +1040,7 @@
             if (result.IsSuccess) {
                 CommonHelper.AlertMessage(result.AlertMessage);
                 PerformClearAction();
+                deletedPaymentInfoList = [];
             }
             else {
                 CommonHelper.AlertMessage(result.AlertMessage);
@@ -925,10 +1068,29 @@
             $("#ContentPlaceHolder1_txtTotalInvoiceAmount").val(totalAmount);
             $("#ContentPlaceHolder1_hftotalForTicketInfos").val(totalAmount);
         }
+        function EditPaymentInfoItem(paymentModeId, paymentMode, bankId, bankName, receiveAmount, currencyTypeId, currencyType, cardTypeId, cardType, cardNumber, chequeNumber) {
+            if (!confirm("Do you want to edit item?")) {
+                return false;
+            }
+            $("#ContentPlaceHolder1_hfEditPayment").val(1);
+            $("#ContentPlaceHolder1_ddlPayMode").val(paymentModeId).trigger('change');
+            $("#ContentPlaceHolder1_ddlCurrency").val(currencyTypeId).trigger('change');
+            $("#ContentPlaceHolder1_txtReceiveLeadgerAmount").val(receiveAmount);
+            $("#ContentPlaceHolder1_ddlCardType").val(cardTypeId).trigger('change');
+            $("#ContentPlaceHolder1_txtCardNumber").val(cardNumber);
+            $("#ContentPlaceHolder1_txtbankName").val(bankName);
+            $("#ContentPlaceHolder1_txtBankNameForMBanking").val(bankName);
+            $("#ContentPlaceHolder1_txtBankNameForCheque").val(bankName);
+            $("#ContentPlaceHolder1_hfbankId").val(bankId);
+            $("#ContentPlaceHolder1_txtChecqueNumber").val(chequeNumber);
+        }
+        var deletedPaymentInfoList = [];
         function DeletePaymentInfoItem(control) {
             if (!confirm("Do you want to delete item?")) { return false; }
-
+            
             var tr = $(control).parent().parent();
+            let paymentModeId = $(tr).find("td").eq(4).html();
+            deletedPaymentInfoList.push(parseInt(paymentModeId, 10));
             $(tr).remove();
 
             var totalAmount = 0;
@@ -1113,15 +1275,16 @@
 
         function PaymentMethodInformationEdit(result) {
             $.each(result, function (count, obj) {
-
+                
                 var tr = "";
 
                 tr += "<tr>";
                 tr += "<td style='width:35%;'>" + obj.PaymentMode + "</td>";
                 tr += "<td style='width:25%;'>" + obj.BankName + "</td>";
                 tr += "<td style='width:25%;'>" + obj.ReceiveAmount + "</td>";
-                tr += "<td style='width:15%;'>" +
-                    "<a href='javascript:void()' onclick= 'DeletePaymentInfoItem(this)' ><img alt='Delete' src='../Images/delete.png' title='Delete' /></a>";
+                tr += "<td style=\"width:15%;\">";
+                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return EditPaymentInfoItem('" + obj.PaymentModeId + "','" + obj.PaymentMode + "','" + obj.BankId + "','" + obj.BankName + "','" + obj.ReceiveAmount + "','" + obj.CurrencyTypeId + "','" + obj.CurrencyType + "','" + obj.CardTypeId + "','" + obj.CardType + "','" + obj.CardNumber + "','" + obj.ChequeNumber + "')\" alt='Edit'  title='Edit' border='0' />";
+                tr += "&nbsp;&nbsp;<a href='javascript:void()' onclick= 'DeletePaymentInfoItem(this)' ><img alt='Delete' src='../Images/delete.png' title='Delete' /></a>";
                 tr += "</td>";
 
                 tr += "<td style='display:none;'>" + obj.PaymentModeId + "</td>";
@@ -1180,6 +1343,7 @@
                 tr += "<td style='display:none;'>" + obj.AirlineAmount + "</td>";
                 tr += "<td style='display:none;'>" + obj.RoutePath + "</td>";
                 tr += "<td style='display:none;'>" + obj.Remarks + "</td>";
+                tr += "<td style='display:none;'>" + obj.TicketValue + "</td>";
 
                 tr += "</tr>";
 
@@ -1311,6 +1475,8 @@
     <asp:HiddenField ID="hfbankId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfRegistrationNumber" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfTicketMasterId" runat="server" Value="0"></asp:HiddenField>
+    <asp:HiddenField ID="hfEditPayment" runat="server" Value="0"></asp:HiddenField>
+    <asp:HiddenField ID="hfStopAddingExistingPayment" runat="server" Value="0"></asp:HiddenField>
 
     <asp:HiddenField ID="hftotalForPaymentInfos" runat="server" Value="0" />
     <asp:HiddenField ID="hftotalForTicketInfos" runat="server" Value="0" />
@@ -1485,16 +1651,24 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblInvoiceAmount" runat="server" class="control-label required-field" Text="Invoice Amount"></asp:Label>
+                                <asp:Label ID="lblTicketValue" runat="server" class="control-label required-field" Text="Ticket Value"></asp:Label>
                             </div>
                             <div class="col-md-4">
-                                <asp:TextBox ID="txtInvoiceAmount" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                <asp:TextBox ID="txtTicketValue" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
                             </div>
                             <div class="col-md-2">
                                 <asp:Label ID="lblAirlineAmount" runat="server" class="control-label" Text="Airline Amount"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtAirlineAmount" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:Label ID="lblInvoiceAmount" runat="server" class="control-label required-field" Text="Invoice Amount"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtInvoiceAmount" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
@@ -1667,15 +1841,10 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-md-2">
-                                                    <asp:Label ID="lblCompanyBank" runat="server" class="control-label required-field"
-                                                        Text="Bank Name"></asp:Label>
+                                                    <asp:Label ID="lblBankNameForCheque" runat="server" class="control-label required-field" Text="Bank Name"></asp:Label>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <input id="txtCompanyBank" type="text" class="form-control" />
-                                                    <div style="display: none;">
-                                                        <asp:DropDownList ID="ddlCompanyBank" CssClass="form-control" runat="server" AutoPostBack="false">
-                                                        </asp:DropDownList>
-                                                    </div>
+                                                    <asp:TextBox ID="txtBankNameForCheque" runat="server" CssClass="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -1739,14 +1908,10 @@
                                         <div id="MBankingPaymentAccountHeadDiv" style="display: none;">
                                             <div class="form-group">
                                                 <div class="col-md-2">
-                                                    <asp:Label ID="lblMBankingBankName" runat="server" class="control-label" Text="Bank Name"></asp:Label>
+                                                    <asp:Label ID="lblBankNameForMBanking" runat="server" class="control-label required-field" Text="Bank Name"></asp:Label>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <input id="txtMBankingBankId" type="text" class="form-control" />
-                                                    <div style="display: none;">
-                                                        <asp:DropDownList ID="ddlMBankingBankId" runat="server" CssClass="form-control" AutoPostBack="false">
-                                                        </asp:DropDownList>
-                                                    </div>
+                                                    <asp:TextBox ID="txtBankNameForMBanking" runat="server" CssClass="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>

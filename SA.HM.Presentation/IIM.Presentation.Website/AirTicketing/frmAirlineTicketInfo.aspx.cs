@@ -103,11 +103,11 @@ namespace HotelManagement.Presentation.Website.AirTicketing
         }
 
         [WebMethod]
-        public static List<ContactInformationBO> GetGuestReferenceInfoForCompany(string searchTerm)
+        public static List<ContactInformationBO> GetGuestReferenceInfoForCompany(int companyId, string searchTerm)
         {
             List<ContactInformationBO> contactList = new List<ContactInformationBO>();
             ContactInformationDA contactDa = new ContactInformationDA();
-            contactList = contactDa.GetContactByAutoSearch(searchTerm);
+            contactList = contactDa.GetContactInformationByCompanyIdNSearchTextForAutoComplete(companyId, searchTerm);
             return contactList;
         }
 
@@ -122,7 +122,7 @@ namespace HotelManagement.Presentation.Website.AirTicketing
 
 
         [WebMethod]
-        public static ReturnInfo SaveAirlineTicketInfo(AirlineTicketMasterBO AirTicketMasterInfo, List<AirlineTicketInfoBO> AddedSingleTicketInfo, List<GuestBillPaymentBO> AddedPaymentInfo)
+        public static ReturnInfo SaveAirlineTicketInfo(AirlineTicketMasterBO AirTicketMasterInfo, List<AirlineTicketInfoBO> AddedSingleTicketInfo, List<GuestBillPaymentBO> AddedPaymentInfo, List<int> deletedPaymentInfoList)
         {
             ReturnInfo rtninfo = new ReturnInfo();
             Boolean status = false;
@@ -144,7 +144,7 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                 }
                 
 
-                status = atDa.SaveAirlineTicketInfo(AirTicketMasterInfo, AddedSingleTicketInfo, AddedPaymentInfo);
+                status = atDa.SaveAirlineTicketInfo(AirTicketMasterInfo, AddedSingleTicketInfo, AddedPaymentInfo, deletedPaymentInfoList);
                 if (status)
                 {
                     rtninfo.IsSuccess = true;

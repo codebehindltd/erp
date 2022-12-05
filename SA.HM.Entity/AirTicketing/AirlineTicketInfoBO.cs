@@ -11,6 +11,7 @@ namespace HotelManagement.Entity.AirTicketing
         public DateTime IssueDate { get; set; }
         public DateTime FlightDate { get; set; }
         public decimal InvoiceAmount { get; set; }
+        public decimal? TicketValue { get; set; }
         public string ClientName { get; set; }
         public string MobileNumber { get; set; }
         public string Email { get; set; }

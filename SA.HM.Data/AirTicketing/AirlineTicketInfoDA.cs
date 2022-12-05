@@ -1,5 +1,6 @@
 ﻿using HotelManagement.Entity.AirTicketing;
 using HotelManagement.Entity.HotelManagement;
+using HotelManagement.Entity.SalesAndMarketing;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,7 +12,7 @@ namespace HotelManagement.Data.AirTicketing
 {
     public class AirlineTicketInfoDA : BaseService
     {
-        public bool SaveAirlineTicketInfo(AirlineTicketMasterBO airTicketMasterInfo, List<AirlineTicketInfoBO> AddedSingleTicketInfo, List<GuestBillPaymentBO> AddedPaymentInfo)
+        public bool SaveAirlineTicketInfo(AirlineTicketMasterBO airTicketMasterInfo, List<AirlineTicketInfoBO> AddedSingleTicketInfo, List<GuestBillPaymentBO> AddedPaymentInfo, List<int> deletedPaymentInfoList)
         {
             Int64 status = 0, ticketId = 0;
             bool retVal = false;
@@ -109,6 +110,7 @@ namespace HotelManagement.Data.AirTicketing
                                     
                                     dbSmartAspects.AddInParameter(cmdSingle, "@TicketNumber", DbType.String, at.TicketNumber);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@PnrNumber", DbType.String, at.PnrNumber);
+                                    dbSmartAspects.AddInParameter(cmdSingle, "@TicketValue", DbType.Decimal, at.TicketValue);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@InvoiceAmount", DbType.Decimal, at.InvoiceAmount);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@AirlineAmount", DbType.Decimal, at.AirlineAmount);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@RoutePath", DbType.String, at.RoutePath);
@@ -120,19 +122,24 @@ namespace HotelManagement.Data.AirTicketing
                             }
                         }
 
-                        if (status > 0 && AddedPaymentInfo.Count > 0)
+                        if(status > 0 && deletedPaymentInfoList.Count > 0)
                         {
-                            if (airTicketMasterInfo.TicketId > 0)
+                            foreach (int pi in deletedPaymentInfoList)
                             {
-                                using (DbCommand cmdPay = dbSmartAspects.GetStoredProcCommand("DeletePaymentInfoByTicketId_SP"))
+                                using (DbCommand cmdPay = dbSmartAspects.GetStoredProcCommand("DeletePaymentInfoForAirTicket_SP"))
                                 {
                                     cmdPay.Parameters.Clear();
 
-                                    dbSmartAspects.AddInParameter(cmdPay, "@TicketId", DbType.Int64, airTicketMasterInfo.TicketId);
+                                    dbSmartAspects.AddInParameter(cmdPay, "@TicketId", DbType.Int64, ticketId);
+                                    dbSmartAspects.AddInParameter(cmdPay, "@PaymentModeId", DbType.Int64, pi);
 
                                     status = dbSmartAspects.ExecuteNonQuery(cmdPay, transction);
                                 }
                             }
+                        }
+
+                        if (status > 0 && AddedPaymentInfo.Count > 0)
+                        {
                             foreach (GuestBillPaymentBO pi in AddedPaymentInfo)
                             {
                                 using (DbCommand cmdPay = dbSmartAspects.GetStoredProcCommand("SavePaymentInfoForAirTicket_SP"))
@@ -361,7 +368,8 @@ namespace HotelManagement.Data.AirTicketing
                         InvoiceAmount = r.Field<decimal>("InvoiceAmount"),
                         AirlineAmount = r.Field<decimal>("AirlineAmount"),
                         RoutePath = r.Field<string>("RoutePath"),
-                        Remarks = r.Field<string>("Remarks")
+                        Remarks = r.Field<string>("Remarks"),
+                        TicketValue = r.Field<decimal?>("TicketValue")
                     }).ToList();
                 }
             }
@@ -445,6 +453,63 @@ namespace HotelManagement.Data.AirTicketing
             }
 
             return retVal;
+        }
+
+        public List<ContactInformationBO> GetContactInformationByCompanyIdNSearchTextForAutoComplete(int companyId, string searchText)
+        {
+            List<ContactInformationBO> contactInformationList = new List<ContactInformationBO>();
+            try
+            {
+
+                using (DbConnection conn = dbSmartAspects.CreateConnection())
+                {
+                    using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetContactInformationByCompanyIdNSearchTextForAutoComplete_SP"))
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
+
+                        if (!string.IsNullOrWhiteSpace(searchText))
+                            dbSmartAspects.AddInParameter(cmd, "@SearchText", DbType.String, searchText);
+                        else
+                            dbSmartAspects.AddInParameter(cmd, "@SearchText", DbType.String, DBNull.Value);
+
+                        using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                        {
+                            if (reader != null)
+                            {
+                                while (reader.Read())
+                                {
+                                    ContactInformationBO contactInformation = new ContactInformationBO();
+
+                                    contactInformation.Id = Convert.ToInt64(reader["Id"]);
+                                    contactInformation.Name = reader["Name"].ToString();
+                                    contactInformation.CompanyId = Convert.ToInt32(reader["CompanyId"]);
+                                    contactInformation.ContactOwnerId = Convert.ToInt32(reader["ContactOwnerId"]);
+                                    contactInformation.Email = reader["Email"].ToString();
+                                    contactInformation.ContactNo = reader["ContactNo"].ToString();
+                                    contactInformation.JobTitle = reader["JobTitle"].ToString();
+                                    contactInformation.EmailWork = reader["EmailWork"].ToString();
+                                    //contactInformation.PersonalAddress = reader["PersonalAddress"].ToString();
+                                    contactInformation.WorkAddress = reader["WorkAddress"].ToString();
+                                    //contactInformation.MobilePersonal = reader["MobilePersonal"].ToString();
+                                    //if (reader["LastContactDateTime"] != DBNull.Value)
+                                    //{
+                                    //    contactInformation.LastContactDateTime = Convert.ToDateTime(reader["LastContactDateTime"]);
+
+                                    //}
+
+                                    contactInformationList.Add(contactInformation);
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return contactInformationList;
         }
     }
 }
