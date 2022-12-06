@@ -12,6 +12,6 @@ namespace InnboardDomain.Utility
 
         public static string CompanyCode = System.Web.Configuration.WebConfigurationManager.AppSettings["CompanyCode"].ToString();
 
-
+        public static string DefaultPerPageItemCount = System.Web.Configuration.WebConfigurationManager.AppSettings["DefaultPerPageItemCount"].ToString();
     }
 }

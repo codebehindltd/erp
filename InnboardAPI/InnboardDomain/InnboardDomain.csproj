@@ -88,6 +88,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Model\PageParams.cs" />
+    <Compile Include="CriteriaDtoModel\PayrollEmpCriteriaDto.cs" />
     <Compile Include="Cryptography.cs" />
     <Compile Include="Interfaces\IAppsLogin.cs" />
     <Compile Include="Interfaces\IBanquetReservation.cs" />
@@ -244,6 +246,7 @@
     <Compile Include="Models\HotelGuestDocuments.cs" />
     <Compile Include="Models\HotelGuestExtraServiceBillApproved.cs" />
     <Compile Include="Models\HotelGuestHouseCheckOut.cs" />
+    <Compile Include="Models\PayrollEmpTracking.cs" />
     <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Utility\CommonHelper.cs" />
     <Compile Include="ViewModel\HotelGuestExtraServiceBillApprovedView.cs" />
@@ -603,6 +606,7 @@
     <Compile Include="ViewModel\GuestInformationBO.cs" />
     <Compile Include="ViewModel\HotelRegistrationAireportPickupDropView.cs" />
     <Compile Include="ViewModel\HotelRoomReservationOnlineView.cs" />
+    <Compile Include="ViewModel\PayrollEmpLocationInfo.cs" />
     <Compile Include="ViewModel\RegistrationDataSync.cs" />
     <Compile Include="ViewModel\ReservationDetailBO.cs" />
     <Compile Include="ViewModel\RestaurantDataSync.cs" />
