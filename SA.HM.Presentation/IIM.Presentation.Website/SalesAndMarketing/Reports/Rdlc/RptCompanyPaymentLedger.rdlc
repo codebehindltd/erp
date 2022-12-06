@@ -926,7 +926,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Company Ledger</Value>
+                <Value>Company Details Ledger</Value>
                 <Style>
                   <FontFamily>Tahoma</FontFamily>
                   <FontSize>12pt</FontSize>
