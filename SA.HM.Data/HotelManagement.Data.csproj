@@ -250,6 +250,7 @@
     <Compile Include="Inventory\InvCategoryCostCenterMappingDA.cs" />
     <Compile Include="Inventory\InvItemClassificationCostCenterMappingDA.cs" />
     <Compile Include="Inventory\InvItemCostCenterMappingDA.cs" />
+    <Compile Include="Inventory\InvNutrientInfoDA.cs" />
     <Compile Include="Inventory\InvServiceFrequencyDA.cs" />
     <Compile Include="Inventory\InvServicePackageDA.cs" />
     <Compile Include="Inventory\InvServicePriceMatrixDA.cs" />
