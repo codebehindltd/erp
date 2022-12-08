@@ -300,6 +300,7 @@
     <Content Include="Images\quotation.png" />
     <Content Include="Images\TaskAssign.png" />
     <Content Include="Inventory\frmInvProduction.aspx" />
+    <Content Include="Inventory\frmNutrientInformation.aspx" />
     <Content Include="Inventory\InvItemAttributeSetup.aspx" />
     <Content Include="Inventory\InvItemAttributeSetupIframe.aspx" />
     <Content Include="Inventory\Reports\frmReportABCAnalysis.aspx" />
@@ -2834,6 +2835,13 @@
     </Compile>
     <Compile Include="Inventory\frmInvProduction.aspx.designer.cs">
       <DependentUpon>frmInvProduction.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmNutrientInformation.aspx.cs">
+      <DependentUpon>frmNutrientInformation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmNutrientInformation.aspx.designer.cs">
+      <DependentUpon>frmNutrientInformation.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventory\InvItemAttributeSetup.aspx.cs">
       <DependentUpon>InvItemAttributeSetup.aspx</DependentUpon>
