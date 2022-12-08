@@ -194,7 +194,9 @@ namespace InnboardAPI.Controllers
         {
             
             AppsLoginDataAccess dbLogin = new AppsLoginDataAccess();
-            
+            var d = appAttModel.AttDateTime.ToShortTimeString();
+            var da = appAttModel.AttDateTime.ToShortDateString();
+            var daa = appAttModel.AttDateTime.ToString("dd/MM/yyyy HH:mm:ss");
             appAttModel.Image = UploadByteArrayToFileForAttd(appAttModel.ImageName, appAttModel.ImageByte);
             appAttModel.GoogleMapUrl = "https://www.google.com/maps/place/" + appAttModel.Latitude + "+" + appAttModel.Longitude;
 
