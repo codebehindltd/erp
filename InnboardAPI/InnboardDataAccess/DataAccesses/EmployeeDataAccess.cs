@@ -39,10 +39,18 @@ namespace InnboardDataAccess.DataAccesses
             }
         }
 
-        public async  Task<List<PayrollEmpTracking>> GetEmpTrackingList()
+        public async  Task<List<PayrollEmpTracking>> GetEmpTrackingList(int? EmpId, DateTime FromDate, DateTime ToDate)
         {
-            string query = string.Format(@"Select TOP (50) * from [dbo].[PayrollEmpLocationTracking] order by [CreatedDate] desc");
-
+            string query;
+            if (EmpId != null)
+            {
+                query = string.Format($@"Select * from [dbo].[PayrollEmpLocationTracking] WHERE EmpId='{EmpId}' AND AttDateTime between '{FromDate.ToShortDateString()}' AND '{ToDate.ToShortDateString()}'
+	                        order by [CreatedDate] desc");
+            }
+            else
+            {
+                query = string.Format(@"SELECT TOP(50) * FROM [dbo].[PayrollEmpLocationTracking] ORDER BY [CreatedDate] DESC");
+            }
             var data = await InnboardDBContext.Database.SqlQuery<PayrollEmpTracking>(query).ToListAsync();           
 
             return data;
