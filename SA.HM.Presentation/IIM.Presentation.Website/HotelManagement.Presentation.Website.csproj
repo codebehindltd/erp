@@ -173,6 +173,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="AirTicketing\frmAirlineTicketInfo.aspx" />
+    <Content Include="AirTicketing\Reports\frmATBillInfo.aspx" />
     <Content Include="Banquet\frmBanquetCalendar.aspx" />
     <Content Include="Banquet\frmBanquetInformation.aspx" />
     <Content Include="Banquet\frmBanquetRefference.aspx" />
@@ -839,6 +840,7 @@
     <Content Include="Inventory\Reports\Rdlc\rptProductOutInfoTransferNumberWiseItemSummary.rdlc" />
     <Content Include="HotelManagement\Reports\Rdlc\rptDivisionRevenueMonthWise.rdlc" />
     <Content Include="HotelManagement\Reports\Rdlc\rptRoomSalesRevenueMonthWise.rdlc" />
+    <Content Include="AirTicketing\Reports\Rdlc\rptATBillingInvoice.rdlc" />
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />
@@ -2362,6 +2364,13 @@
     </Compile>
     <Compile Include="AirTicketing\frmAirlineTicketInfo.aspx.designer.cs">
       <DependentUpon>frmAirlineTicketInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AirTicketing\Reports\frmATBillInfo.aspx.cs">
+      <DependentUpon>frmATBillInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AirTicketing\Reports\frmATBillInfo.aspx.designer.cs">
+      <DependentUpon>frmATBillInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Banquet\Reports\frmReportAdvBanquetReservationForecast.aspx.cs">
       <DependentUpon>frmReportAdvBanquetReservationForecast.aspx</DependentUpon>
@@ -8469,7 +8478,6 @@
     <Content Include="SalesManagment\Reports\Rdlc\SalesInvoice.rdlc" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AirTicketing\Reports\Rdlc\" />
     <Folder Include="App_Readme\" />
     <Folder Include="Banquet\SeatingPlanImage\" />
     <Folder Include="bin\" />

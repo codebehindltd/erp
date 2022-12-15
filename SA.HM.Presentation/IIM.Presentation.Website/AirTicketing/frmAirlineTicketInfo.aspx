@@ -1163,6 +1163,12 @@
 
             return false;
         }
+        function PerformBillPreviewAction(billId) {
+            var url = "";
+            var popup_window = "Print Preview";
+            url = "/AirTicketing/Reports/frmATBillInfo.aspx?billID=" + billId;
+            window.open(url, popup_window, "width=750,height=680,left=300,top=50,resizable=yes");
+        }
         function OnSearchTicketInformationSucceed(result) {
             var tr = "";
             $.each(result.GridData, function (count, gridObject) {
@@ -1190,7 +1196,7 @@
                     tr += "&nbsp;&nbsp;<img src='../Images/approved.png' onClick= \"javascript:return ReceiveOrderApprovalWithConfirmation(" + gridObject.TicketId + ")\" alt='Approve'  title='Approve' border='0' />";
                 }
                 
-                //tr += "&nbsp;&nbsp;<img src='../Images/ReportDocument.png'  onClick= \"javascript:return ShowReport('" + gridObject.ReceiveType + "'," + gridObject.ReceivedId + ",'" + gridObject.Status + "'," + gridObject.SupplierId + "," + gridObject.CostCenterId + "," + gridObject.CreatedBy + ")\" alt='Invoice' title='Receive Order Info' border='0' />";
+                tr += "&nbsp;&nbsp;<img src='../Images/ReportDocument.png'  onClick= \"javascript:return PerformBillPreviewAction(" + gridObject.TicketId + ")\" alt='Invoice' title='Invoice' border='0' />";
                 
                 //tr += "&nbsp;&nbsp;<img src='../Images/note.png'  onClick= \"javascript:return ShowDealDocuments('" + gridObject.ReceivedId + "')\" alt='Invoice' title='Receive Order Info' border='0' />";
                 tr += "</td>";

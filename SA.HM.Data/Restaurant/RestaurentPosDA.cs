@@ -4075,6 +4075,73 @@ namespace HotelManagement.Data.Restaurant
             }
             return salesList;
         }
+        public RetailPosBillReturnBO ATPosBill (int billId)
+        {
+            RetailPosBillReturnBO salesList = new RetailPosBillReturnBO();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("ATPosBill_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@BillId", DbType.Int32, billId);
 
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "PosSales");
+
+                    salesList.PosBillWithSalesReturn = ds.Tables[0].AsEnumerable().Select(r =>
+                                new RetailPosBillWithSalesReturnBO
+                                {
+                                    //BillId = r.Field<int>("BillId"),
+                                    BillNumber = r.Field<string>("BillNumber"),
+                                    ReturnBillId = r.Field<int?>("ReturnBillId"),
+                                    BillDate = r.Field<DateTime?>("BillDate"),
+                                    BillDateDisplay = r.Field<string>("BillDateDisplay"),
+                                    CostCenter = r.Field<string>("CostCenter"),
+                                    CashierName = r.Field<string>("CashierName"),
+                                    CustomerName = r.Field<string>("CustomerName"),
+                                    SalesAmount = r.Field<decimal?>("SalesAmount"),
+                                    DiscountAmount = r.Field<decimal?>("DiscountAmount"),
+                                    CalculatedDiscountAmount = r.Field<decimal?>("CalculatedDiscountAmount"),
+                                    AmountAfterDiscount = r.Field<decimal?>("AmountAfterDiscount"),
+                                    InvoiceVatAmount = r.Field<decimal?>("InvoiceVatAmount"),
+                                    InvoiceServiceCharge = r.Field<decimal?>("InvoiceServiceCharge"),
+                                    InvoiceAdditionalCharge = r.Field<decimal?>("InvoiceAdditionalCharge"),
+                                    GrandTotal = r.Field<decimal?>("GrandTotal"),
+                                    RoundedAmount = r.Field<decimal?>("RoundedAmount"),
+                                    RoundedGrandTotal = r.Field<decimal?>("RoundedGrandTotal"),
+                                    IsInvoiceVatAmountEnable = r.Field<bool?>("IsInvoiceVatAmountEnable"),
+                                    IsInvoiceServiceChargeEnable = r.Field<bool?>("IsInvoiceServiceChargeEnable"),
+                                    InvoiceCitySDCharge = r.Field<decimal?>("InvoiceCitySDCharge"),
+                                    KotId = r.Field<int>("KotId"),
+                                    BearerId = r.Field<int?>("BearerId"),
+                                    ReferenceKotId = r.Field<int?>("ReferenceKotId"),
+                                    ItemId = r.Field<int?>("ItemId"),
+                                    ItemName = r.Field<string>("ItemName"),
+                                    ItemUnit = r.Field<decimal?>("ItemUnit"),
+                                    UnitHead = r.Field<string>("UnitHead"),
+                                    UnitRate = r.Field<decimal?>("UnitRate"),
+                                    ItemTotalAmount = r.Field<decimal?>("ItemTotalAmount"),
+                                    PointsAwarded = r.Field<decimal?>("PointsAwarded"),
+                                    PointsRedeemed = r.Field<decimal?>("PointsRedeemed"),
+                                    PointsRedeemedAmount = r.Field<decimal?>("PointsRedeemedAmount"),
+                                    BalancePoints = r.Field<decimal?>("BalancePoints"),
+                                    Attention = r.Field<string>("Attention"),
+                                    PaymentInstruction = r.Field<string>("PaymentInstruction"),
+                                    BillSubject = r.Field<string>("BillSubject")
+                                }).ToList();
+
+                    salesList.PosSalesReturnPayment = ds.Tables[1].AsEnumerable().Select(r =>
+                               new RetailPosSalesPaymentBO
+                               {
+                                   PaymentId = r.Field<int>("PaymentId"),
+                                   BillId = r.Field<int?>("BillId"),
+                                   PayMode = r.Field<string>("PayMode"),
+                                   PaymentAmount = r.Field<decimal?>("PaymentAmount")
+
+                               }).ToList();
+                }
+            }
+            return salesList;
+        }
     }
 }
