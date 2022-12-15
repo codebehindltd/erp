@@ -13,6 +13,7 @@ namespace InnboardDomain.CriteriaDtoModel
         {
             pageParams = new PageParams();
         }
+        public int EmpId { get; set; }
         public PageParams pageParams { get; set; }
     }
 }
