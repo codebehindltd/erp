@@ -49,42 +49,74 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             PMSupplierDA supplier = new PMSupplierDA();
             List<PMSupplierBO> supplierList = supplier.GetPMSupplierInfo();
 
-            Object[] companySupplierList = new Object[4];
+            NodeMatrixDA accountHead = new NodeMatrixDA();
+            List<NodeMatrixBO> accoutHeadList = accountHead.GetNodeMatrixInfo();
+
+
+            Object[] companySupplierAccountList = new Object[4];
             
             if(transactionTypeId == 1)
             {
-                companySupplierList[0] = supplierList;
-                companySupplierList[1] = companyList;
-                companySupplierList[2] = "Supplier";
-                companySupplierList[3] = "Company";
+                companySupplierAccountList[0] = supplierList;
+                companySupplierAccountList[1] = companyList;
+                companySupplierAccountList[2] = "Supplier";
+                companySupplierAccountList[3] = "Company";
             }
             else if(transactionTypeId == 2)
             {
-                companySupplierList[0] = companyList;
-                companySupplierList[1] = supplierList;
-                companySupplierList[2] = "Company";
-                companySupplierList[3] = "Supplier";
+                companySupplierAccountList[0] = companyList;
+                companySupplierAccountList[1] = supplierList;
+                companySupplierAccountList[2] = "Company";
+                companySupplierAccountList[3] = "Supplier";
             }
             else if (transactionTypeId == 3)
             {
-                companySupplierList[0] = supplierList;
-                companySupplierList[1] = supplierList;
-                companySupplierList[2] = "Supplier";
-                companySupplierList[3] = "Supplier";
+                companySupplierAccountList[0] = supplierList;
+                companySupplierAccountList[1] = supplierList;
+                companySupplierAccountList[2] = "Supplier";
+                companySupplierAccountList[3] = "Supplier";
             }
             else if (transactionTypeId == 4)
             {
-                companySupplierList[0] = companyList;
-                companySupplierList[1] = companyList;
-                companySupplierList[2] = "Company";
-                companySupplierList[3] = "Company";
+                companySupplierAccountList[0] = companyList;
+                companySupplierAccountList[1] = companyList;
+                companySupplierAccountList[2] = "Company";
+                companySupplierAccountList[3] = "Company";
+            }
+            else if (transactionTypeId == 5)
+            {
+                companySupplierAccountList[0] = companyList;
+                companySupplierAccountList[1] = accoutHeadList;
+                companySupplierAccountList[2] = "Company";
+                companySupplierAccountList[3] = "GLAccounts";
+            }
+            else if (transactionTypeId == 6)
+            {
+                companySupplierAccountList[0] = accoutHeadList;
+                companySupplierAccountList[1] = companyList;
+                companySupplierAccountList[2] = "GLAccounts";
+                companySupplierAccountList[3] = "Company";
+            }
+            else if (transactionTypeId == 7)
+            {
+                companySupplierAccountList[0] = supplierList;
+                companySupplierAccountList[1] = accoutHeadList;
+                companySupplierAccountList[2] = "Supplier";
+                companySupplierAccountList[3] = "GLAccounts";
+            }
+            else if (transactionTypeId == 8)
+            {
+                companySupplierAccountList[0] = accoutHeadList;
+                companySupplierAccountList[1] = supplierList;
+                companySupplierAccountList[2] = "GLAccounts";
+                companySupplierAccountList[3] = "Supplier";
             }
             else
             {
-                companySupplierList[2] = "";
-                companySupplierList[3] = "";
+                companySupplierAccountList[2] = "";
+                companySupplierAccountList[3] = "";
             }
-            return companySupplierList;
+            return companySupplierAccountList;
         }
 
         [WebMethod]
