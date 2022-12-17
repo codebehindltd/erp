@@ -4091,7 +4091,6 @@ namespace HotelManagement.Data.Restaurant
                     salesList.PosBillWithSalesReturn = ds.Tables[0].AsEnumerable().Select(r =>
                                 new RetailPosBillWithSalesReturnBO
                                 {
-                                    //BillId = r.Field<int>("BillId"),
                                     BillNumber = r.Field<string>("BillNumber"),
                                     ReturnBillId = r.Field<int?>("ReturnBillId"),
                                     BillDate = r.Field<DateTime?>("BillDate"),
@@ -4127,7 +4126,15 @@ namespace HotelManagement.Data.Restaurant
                                     BalancePoints = r.Field<decimal?>("BalancePoints"),
                                     Attention = r.Field<string>("Attention"),
                                     PaymentInstruction = r.Field<string>("PaymentInstruction"),
-                                    BillSubject = r.Field<string>("BillSubject")
+                                    BillSubject = r.Field<string>("BillSubject"),
+                                    IssueDate = r.Field<DateTime?>("IssueDate"),
+                                    IssueDateDisplay = r.Field<string>("IssueDateDisplay"),
+                                    FlightDate = r.Field<DateTime?>("FlightDate"),
+                                    FlightDateDisplay = r.Field<string>("FlightDateDisplay"),
+                                    TicketNumber = r.Field<string>("TicketNumber"),
+                                    RoutePath = r.Field<string>("RoutePath"),
+                                    AirlineName = r.Field<string>("AirlineName"),
+                                    Remarks = r.Field<string>("Remarks"),
                                 }).ToList();
 
                     salesList.PosSalesReturnPayment = ds.Tables[1].AsEnumerable().Select(r =>
