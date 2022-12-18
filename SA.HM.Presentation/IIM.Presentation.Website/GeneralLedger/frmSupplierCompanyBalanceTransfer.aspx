@@ -348,10 +348,10 @@
                                     <asp:ListItem Value="2">Company To Supplier</asp:ListItem>
                                     <asp:ListItem Value="3">Supplier To Supplier</asp:ListItem>
                                     <asp:ListItem Value="4">Company To Company</asp:ListItem>
-                                    <asp:ListItem Value="5">Company to GL Accounts</asp:ListItem>
-                                    <asp:ListItem Value="6">GL Accounts to Company</asp:ListItem>
-                                    <asp:ListItem Value="7">Supplier to GL Accounts</asp:ListItem>
-                                    <asp:ListItem Value="8">GL Accounts to Supplier</asp:ListItem>
+                                    <asp:ListItem Value="5">Company to Accounts Head</asp:ListItem>
+                                    <asp:ListItem Value="6">Accounts Head to Company</asp:ListItem>
+                                    <asp:ListItem Value="7">Supplier to Accounts Head</asp:ListItem>
+                                    <asp:ListItem Value="8">Accounts Head to Supplier</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
                         </div>
