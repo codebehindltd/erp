@@ -40,6 +40,20 @@
                 allowClear: true,
                 width: "99.75%"
             });
+                        
+            $("#ContentPlaceHolder1_ddlProject").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+            
+            $("#ContentPlaceHolder1_ddlPaymentInstructionBank").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
 
             $("#ContentPlaceHolder1_ddlTransactionType").change(function () {
                 if ($("#ContentPlaceHolder1_ddlTransactionType").val() == "CorporateCompany") {
@@ -567,7 +581,7 @@
 
         function AddItemForAirTicket() {
             if ($("#ContentPlaceHolder1_ddlTransactionType").val() == "0") {
-                toastr.warning("Please Select Transaction Type");
+                toastr.warning("Please Select Transaction Type.");
                 return false;
             }
             else if ($("#ContentPlaceHolder1_txtClientName").val() == "") {
@@ -842,6 +856,8 @@
             $("#ContentPlaceHolder1_txtChecqueNumber").val("");
             $("#ContentPlaceHolder1_hfBankId").val(0);
             $("#ContentPlaceHolder1_hfEditPayment").val(0);
+            $("#btnAddDetailGuestPayment").val("Save");
+            $('#ContentPlaceHolder1_ddlPayMode').attr('disabled', false);
         }
 
         function IsPaymentHeadExists(paymentHeadId) {
@@ -883,6 +899,11 @@
                 return false;
             }
 
+            if ($("#ContentPlaceHolder1_ddlProject").val() == "0") {
+                toastr.warning("Please Select Project.");
+                return false;
+            }
+
             var transactionType = "", companyName = "", companyId = "0", referenceName = "", registrationNumber = "",
                 clientName = "", mobileNumber = "", email = "", address = "", issueDate = "", ticketTypeId = "",
                 ticketType = "", airlineName = "", airlineId = "0", flightDate = "", returnDate = "",
@@ -900,6 +921,8 @@
 
             var ticketId = $("#ContentPlaceHolder1_hfTicketMasterId").val();
             transactionType = $("#ContentPlaceHolder1_ddlTransactionType option:selected").val();
+            projectId = $("#ContentPlaceHolder1_ddlProject").val();
+            paymentInstructionBankId = $("#ContentPlaceHolder1_ddlPaymentInstructionBank").val();
 
             if (transactionType == "CorporateCompany") {
                 companyId = $("#ContentPlaceHolder1_hfCompanyId").val();
@@ -929,7 +952,9 @@
                 ReferenceId: referenceId,
                 ReferenceName: referenceName,
                 RegistrationNumber: registrationNumber,
-                InvoiceAmount: totalForTicketInfos
+                InvoiceAmount: totalForTicketInfos,
+                ProjectId: projectId,
+                PaymentInstructionBankId: paymentInstructionBankId
             }
 
 
@@ -1072,6 +1097,8 @@
             if (!confirm("Do you want to edit item?")) {
                 return false;
             }
+            $('#ContentPlaceHolder1_ddlPayMode').attr('disabled', true);
+            $("#btnAddDetailGuestPayment").val("Update");
             $("#ContentPlaceHolder1_hfEditPayment").val(1);
             $("#ContentPlaceHolder1_ddlPayMode").val(paymentModeId).trigger('change');
             $("#ContentPlaceHolder1_ddlCurrency").val(currencyTypeId).trigger('change');
@@ -1107,7 +1134,9 @@
         }
 
         function PerformClearAction() {
-            $("#ContentPlaceHolder1_ddlTransactionType").val("0");
+            $("#ContentPlaceHolder1_ddlTransactionType").val("0").trigger('change');
+            $("#ContentPlaceHolder1_ddlProject").val("0").trigger('change');
+            $("#ContentPlaceHolder1_ddlPaymentInstructionBank").val("0").trigger('change');
             $("#ContentPlaceHolder1_txtCompany").val("");
             $("#ContentPlaceHolder1_txtReferenceForCompany").val("");
             $("#ContentPlaceHolder1_txtCompanyWalkInGuest").val("");
@@ -1128,6 +1157,7 @@
             $("#ContentPlaceHolder1_txtTotalInvoiceAmount").val("");
             $("#ContentPlaceHolder1_txtTotalPaymentAmount").val("");
             $("#btnSave").val("Save");
+            ClearAfterPaymentInfoAdded();
         }
         function PerformClearActionWithConfirmation() {
 
@@ -1250,6 +1280,8 @@
             AddedSerialCount = 0;
 
             $("#ContentPlaceHolder1_ddlTransactionType").val(result.ATMasterInfo.TransactionType);
+            $("#ContentPlaceHolder1_ddlProject").val(result.ATMasterInfo.ProjectId).trigger('change');
+            $("#ContentPlaceHolder1_ddlPaymentInstructionBank").val(result.ATMasterInfo.PaymentInstructionBankId).trigger('change');
             if (result.ATMasterInfo.TransactionType == "CorporateCompany") {
                 $("#ContentPlaceHolder1_txtCompany").val(result.ATMasterInfo.CompanyName);
                 $("#ContentPlaceHolder1_txtReferenceForCompany").val(result.ATMasterInfo.ReferenceName);
@@ -1515,6 +1547,13 @@
                                     <asp:ListItem Text="Room Guest" Value="RoomGuest"></asp:ListItem>
                                 </asp:DropDownList>
                             </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblProject" runat="server" class="control-label required-field" Text="Project"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:DropDownList ID="ddlProject" runat="server" CssClass="form-control">
+                                </asp:DropDownList>
+                            </div>
                         </div>
                         <div id="ReferenceForRoomGuest" style="display: none">
                             <div class="form-group">
@@ -1725,255 +1764,273 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div id="PaymentDetailsInformation" class="childDivSection">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Guest Payment Information
-                                </div>
-                                <div class="panel-body childDivSectionDivBlockBody">
-                                    <div class="form-horizontal">
+                    <div id="PaymentDetailsInformation" class="childDivSection">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Guest Payment Information
+                            </div>
+                            <div class="panel-body childDivSectionDivBlockBody">
+                                <div class="form-horizontal">
 
-                                        <%--<div class="form-group" id="GrandTotalPaymentDetailsDiv">
-                                            <div class="col-md-2">
-                                                <asp:Label ID="Label7" runat="server" class="control-label required-field" Text="Grand Total"></asp:Label>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <asp:TextBox ID="txtGrandTotalInfo" TabIndex="3" runat="server" CssClass="form-control"
-                                                    Enabled="false"> </asp:TextBox>
-                                            </div>
-                                        </div>--%>
-                                        <div class="form-group">
-                                            <div class="col-md-2">
-                                                <asp:Label ID="lblPayMode" runat="server" class="control-label required-field" Text="Payment Mode"></asp:Label>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <asp:DropDownList ID="ddlPayMode" runat="server" CssClass="form-control" TabIndex="5">
-                                                    <asp:ListItem Value="0">--- Please Select ---</asp:ListItem>
-                                                    <asp:ListItem Value="1">Cash</asp:ListItem>
-                                                    <asp:ListItem Value="2">Card</asp:ListItem>
-                                                    <asp:ListItem Value="3">M-Banking</asp:ListItem>
-                                                    <asp:ListItem Value="4">Cheque</asp:ListItem>
-                                                    <asp:ListItem Value="5">Company</asp:ListItem>
-                                                    <asp:ListItem Value="6">Guest Room</asp:ListItem>
-                                                    <asp:ListItem Value="7">Refund</asp:ListItem>
-                                                </asp:DropDownList>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <asp:Label ID="lblCurrencyType" runat="server" class="control-label required-field"
-                                                    Text="Currency Type"></asp:Label>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <asp:DropDownList ID="ddlCurrency" TabIndex="6" CssClass="form-control" runat="server">
-                                                </asp:DropDownList>
-                                                <asp:Label ID="lblDisplayConvertionRate" runat="server" Text=""></asp:Label>
-                                                <asp:HiddenField ID="ddlCurrencyHiddenField" runat="server"></asp:HiddenField>
-                                            </div>
+                                    <%--<div class="form-group" id="GrandTotalPaymentDetailsDiv">
+                                        <div class="col-md-2">
+                                            <asp:Label ID="Label7" runat="server" class="control-label required-field" Text="Grand Total"></asp:Label>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="col-md-2">
-                                                <asp:Label ID="lblReceiveLeadgerAmount" runat="server" class="control-label required-field"
-                                                    Text="Receive Amount"></asp:Label>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <asp:TextBox ID="txtReceiveLeadgerAmount" runat="server" CssClass="form-control quantitydecimal"
-                                                    TabIndex="7"></asp:TextBox>
-                                            </div>
-                                            <div id="ConversionRateDivInformation" style="display: none;">
-                                                <div class="col-md-2">
-                                                    <asp:Label ID="lblConversionRate" runat="server" class="control-label required-field"
-                                                        Text="Conversion Rate"></asp:Label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <asp:TextBox ID="txtConversionRate" runat="server" CssClass="form-control" Text=""></asp:TextBox>
-                                                    <asp:HiddenField ID="txtConversionRateHiddenField" runat="server"></asp:HiddenField>
-                                                </div>
-                                            </div>
+                                        <div class="col-md-4">
+                                            <asp:TextBox ID="txtGrandTotalInfo" TabIndex="3" runat="server" CssClass="form-control"
+                                                Enabled="false"> </asp:TextBox>
                                         </div>
-                                        <div class="form-group" style="display: none;">
-                                            <div class="col-md-2">
-                                                <asp:Label ID="lblPaymentAccountHead" runat="server" class="control-label" Text="Account Head"></asp:Label>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <div id="CashPaymentAccountHeadDiv">
-                                                    <asp:DropDownList ID="ddlCashReceiveAccountsInfo" runat="server" CssClass="form-control">
-                                                    </asp:DropDownList>
-                                                </div>
-                                                <div id="BankPaymentAccountHeadDiv" style="display: none;">
-                                                    <asp:DropDownList ID="ddlCardReceiveAccountsInfo" runat="server" CssClass="form-control">
-                                                    </asp:DropDownList>
-                                                </div>
-                                                <div id="CompanyPaymentAccountHeadDiv" style="display: none;">
-                                                    <asp:DropDownList ID="ddlCompanyPaymentAccountHead" runat="server" CssClass="form-control">
-                                                    </asp:DropDownList>
-                                                </div>
-                                                <div id="MBankingReceiveAccountsInfo" style="display: none;">
-                                                    <asp:DropDownList ID="ddlMBankingReceiveAccountsInfo" runat="server">
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
+                                    </div>--%>
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <asp:Label ID="lblPayMode" runat="server" class="control-label required-field" Text="Payment Mode"></asp:Label>
                                         </div>
-                                        <div id="PaidByOtherRoomDiv" style="display: none">
-                                            <div class="form-group">
-                                                <div class="col-md-2">
-                                                    <asp:Label ID="Label6" runat="server" class="control-label required-field" Text="Room Number"></asp:Label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <asp:DropDownList ID="ddlPaidByRegistrationId" runat="server" CssClass="form-control">
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
+                                        <div class="col-md-4">
+                                            <asp:DropDownList ID="ddlPayMode" runat="server" CssClass="form-control" TabIndex="5">
+                                                <asp:ListItem Value="0">--- Please Select ---</asp:ListItem>
+                                                <asp:ListItem Value="1">Cash</asp:ListItem>
+                                                <asp:ListItem Value="2">Card</asp:ListItem>
+                                                <asp:ListItem Value="3">M-Banking</asp:ListItem>
+                                                <asp:ListItem Value="4">Cheque</asp:ListItem>
+                                                <asp:ListItem Value="5">Company</asp:ListItem>
+                                                <asp:ListItem Value="6">Guest Room</asp:ListItem>
+                                                <asp:ListItem Value="7">Refund</asp:ListItem>
+                                            </asp:DropDownList>
                                         </div>
-                                        <div id="ChecquePaymentAccountHeadDiv" style="display: none;">
-                                            <div class="form-group" style="display: none;">
-                                                <div class="col-md-2">
-                                                    <asp:Label ID="lblChecquePaymentAccountHeadId" runat="server" class="control-label required-field"
-                                                        Text="Company Name"></asp:Label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <asp:DropDownList ID="ddlChecquePaymentAccountHeadId" runat="server" CssClass="form-control"
-                                                        TabIndex="6">
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-2">
-                                                    <asp:Label ID="lblChecqueNumber" runat="server" class="control-label required-field"
-                                                        Text="Cheque Number"></asp:Label>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <asp:TextBox ID="txtChecqueNumber" runat="server" CssClass="form-control" TabIndex="7"></asp:TextBox>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-2">
-                                                    <asp:Label ID="lblBankNameForCheque" runat="server" class="control-label required-field" Text="Bank Name"></asp:Label>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <asp:TextBox ID="txtBankNameForCheque" runat="server" CssClass="form-control"></asp:TextBox>
-                                                </div>
-                                            </div>
+                                        <div class="col-md-2">
+                                            <asp:Label ID="lblCurrencyType" runat="server" class="control-label required-field"
+                                                Text="Currency Type"></asp:Label>
                                         </div>
-                                        <div id="CardPaymentAccountHeadDiv" style="display: none;">
-                                            <div class="form-group" style="display: none;">
-                                                <div class="col-md-2">
-                                                    <asp:Label ID="lblCardPaymentAccountHeadId" runat="server" class="control-label"
-                                                        Text="Accounts Posting Head"></asp:Label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <asp:DropDownList ID="ddlCardPaymentAccountHeadId" runat="server" CssClass="form-control"
-                                                        TabIndex="6">
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-2">
-                                                    <asp:Label ID="Label3" runat="server" class="control-label required-field" Text="Card Type"></asp:Label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <asp:DropDownList ID="ddlCardType" runat="server" CssClass="form-control">
-                                                        <asp:ListItem Value="0">--- Please Select ---</asp:ListItem>
-                                                        <asp:ListItem Value="1">American Express</asp:ListItem>
-                                                        <asp:ListItem Value="2">Master Card</asp:ListItem>
-                                                        <asp:ListItem Value="3">Visa Card</asp:ListItem>
-                                                        <asp:ListItem Value="4">Discover Card</asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <asp:Label ID="lblCardNumber" runat="server" class="control-label" Text="Card Number"></asp:Label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <asp:TextBox ID="txtCardNumber" CssClass="form-control" runat="server"></asp:TextBox>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-2">
-                                                    <asp:Label ID="lblBankId" runat="server" class="control-label required-field" Text="Bank Name"></asp:Label>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <asp:TextBox ID="txtbankName" runat="server" CssClass="form-control"></asp:TextBox>
-                                                </div>
-                                            </div>
-                                            <div style="display: none;">
-                                                <div class="form-group">
-                                                    <div class="col-md-2">
-                                                        <asp:Label ID="Label4" runat="server" class="control-label" Text="Expiry Date"></asp:Label>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <asp:TextBox ID="txtExpireDate" CssClass="form-control" runat="server"></asp:TextBox>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <asp:Label ID="Label5" runat="server" class="control-label" Text="Card Holder Name"></asp:Label>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <asp:TextBox ID="txtCardHolderName" CssClass="form-control" runat="server"></asp:TextBox>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="MBankingPaymentAccountHeadDiv" style="display: none;">
-                                            <div class="form-group">
-                                                <div class="col-md-2">
-                                                    <asp:Label ID="lblBankNameForMBanking" runat="server" class="control-label required-field" Text="Bank Name"></asp:Label>
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <asp:TextBox ID="txtBankNameForMBanking" runat="server" CssClass="form-control"></asp:TextBox>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="RefundDiv">
-                                            <div class="form-group" style="display: none;">
-                                                <div class="col-md-2">
-                                                    <asp:Label ID="lblRefundAccountHead" runat="server" class="control-label" Text="Account Head"></asp:Label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <asp:DropDownList ID="ddlRefundAccountHead" CssClass="form-control" runat="server">
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="padding-left: 10px;">
-                                            <%--Right Left--%>
-                                            <input id="btnAddDetailGuestPayment" type="button" value="Add" class="TransactionalButton btn btn-primary btn-sm" onclick="AddItemForPaymentInfo()" />                                            
-                                            <input id="btnCancelPayment" type="button" value="Cancel" onclick="ClearAfterPaymentInfoAdded()"
-                                                class="TransactionalButton btn btn-primary btn-sm" />
-                                            
-                                            <asp:Label ID="lblHiddenIdDetailGuestPayment" runat="server" Text='' Visible="False"></asp:Label>
-                                        </div>
-                                        <div id="PaymentInformation" style="overflow-y: scroll;">
-                                            <table id="PaymentInformationTbl" class="table table-bordered table-condensed table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 35%;">Payment Mode</th>
-                                                        <th style="width: 25%;">Payment Head</th>
-                                                        <th style="width: 25%;">Payment Amount</th>
-                                                        <th style="width: 15%;">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody></tbody>
-                                                <tfoot></tfoot>
-                                            </table>
-                                            <div class="form-group">
-                                                <div class="col-md-2">
-                                                    <asp:Label ID="lblTotalPaymentAmount" runat="server" class="control-label" Text="Total Payment Amount"></asp:Label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <asp:TextBox ID="txtTotalPaymentAmount" ReadOnly="true" runat="server" TabIndex="75" CssClass="form-control quantitydecimal"></asp:TextBox>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div id="GuestPaymentDetailGrid" class="childDivSection">
-                                        </div>
-                                        <div id="TotalPaid" class="totalAmout">
-                                        </div>
-                                        <div id="dueTotal" class="totalAmout">
+                                        <div class="col-md-4">
+                                            <asp:DropDownList ID="ddlCurrency" TabIndex="6" CssClass="form-control" runat="server">
+                                            </asp:DropDownList>
+                                            <asp:Label ID="lblDisplayConvertionRate" runat="server" Text=""></asp:Label>
+                                            <asp:HiddenField ID="ddlCurrencyHiddenField" runat="server"></asp:HiddenField>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <asp:Label ID="lblReceiveLeadgerAmount" runat="server" class="control-label required-field"
+                                                Text="Receive Amount"></asp:Label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <asp:TextBox ID="txtReceiveLeadgerAmount" runat="server" CssClass="form-control quantitydecimal"
+                                                TabIndex="7"></asp:TextBox>
+                                        </div>
+                                        <div id="ConversionRateDivInformation" style="display: none;">
+                                            <div class="col-md-2">
+                                                <asp:Label ID="lblConversionRate" runat="server" class="control-label required-field"
+                                                    Text="Conversion Rate"></asp:Label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <asp:TextBox ID="txtConversionRate" runat="server" CssClass="form-control" Text=""></asp:TextBox>
+                                                <asp:HiddenField ID="txtConversionRateHiddenField" runat="server"></asp:HiddenField>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <div class="col-md-2">
+                                            <asp:Label ID="lblPaymentAccountHead" runat="server" class="control-label" Text="Account Head"></asp:Label>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div id="CashPaymentAccountHeadDiv">
+                                                <asp:DropDownList ID="ddlCashReceiveAccountsInfo" runat="server" CssClass="form-control">
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div id="BankPaymentAccountHeadDiv" style="display: none;">
+                                                <asp:DropDownList ID="ddlCardReceiveAccountsInfo" runat="server" CssClass="form-control">
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div id="CompanyPaymentAccountHeadDiv" style="display: none;">
+                                                <asp:DropDownList ID="ddlCompanyPaymentAccountHead" runat="server" CssClass="form-control">
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div id="MBankingReceiveAccountsInfo" style="display: none;">
+                                                <asp:DropDownList ID="ddlMBankingReceiveAccountsInfo" runat="server">
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="PaidByOtherRoomDiv" style="display: none">
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <asp:Label ID="Label6" runat="server" class="control-label required-field" Text="Room Number"></asp:Label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <asp:DropDownList ID="ddlPaidByRegistrationId" runat="server" CssClass="form-control">
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="ChecquePaymentAccountHeadDiv" style="display: none;">
+                                        <div class="form-group" style="display: none;">
+                                            <div class="col-md-2">
+                                                <asp:Label ID="lblChecquePaymentAccountHeadId" runat="server" class="control-label required-field"
+                                                    Text="Company Name"></asp:Label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <asp:DropDownList ID="ddlChecquePaymentAccountHeadId" runat="server" CssClass="form-control"
+                                                    TabIndex="6">
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <asp:Label ID="lblChecqueNumber" runat="server" class="control-label required-field"
+                                                    Text="Cheque Number"></asp:Label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <asp:TextBox ID="txtChecqueNumber" runat="server" CssClass="form-control" TabIndex="7"></asp:TextBox>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <asp:Label ID="lblBankNameForCheque" runat="server" class="control-label required-field" Text="Bank Name"></asp:Label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <asp:TextBox ID="txtBankNameForCheque" runat="server" CssClass="form-control"></asp:TextBox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="CardPaymentAccountHeadDiv" style="display: none;">
+                                        <div class="form-group" style="display: none;">
+                                            <div class="col-md-2">
+                                                <asp:Label ID="lblCardPaymentAccountHeadId" runat="server" class="control-label"
+                                                    Text="Accounts Posting Head"></asp:Label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <asp:DropDownList ID="ddlCardPaymentAccountHeadId" runat="server" CssClass="form-control"
+                                                    TabIndex="6">
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <asp:Label ID="Label3" runat="server" class="control-label required-field" Text="Card Type"></asp:Label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <asp:DropDownList ID="ddlCardType" runat="server" CssClass="form-control">
+                                                    <asp:ListItem Value="0">--- Please Select ---</asp:ListItem>
+                                                    <asp:ListItem Value="1">American Express</asp:ListItem>
+                                                    <asp:ListItem Value="2">Master Card</asp:ListItem>
+                                                    <asp:ListItem Value="3">Visa Card</asp:ListItem>
+                                                    <asp:ListItem Value="4">Discover Card</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <asp:Label ID="lblCardNumber" runat="server" class="control-label" Text="Card Number"></asp:Label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <asp:TextBox ID="txtCardNumber" CssClass="form-control" runat="server"></asp:TextBox>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <asp:Label ID="lblBankId" runat="server" class="control-label required-field" Text="Bank Name"></asp:Label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <asp:TextBox ID="txtbankName" runat="server" CssClass="form-control"></asp:TextBox>
+                                            </div>
+                                        </div>
+                                        <div style="display: none;">
+                                            <div class="form-group">
+                                                <div class="col-md-2">
+                                                    <asp:Label ID="Label4" runat="server" class="control-label" Text="Expiry Date"></asp:Label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <asp:TextBox ID="txtExpireDate" CssClass="form-control" runat="server"></asp:TextBox>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <asp:Label ID="Label5" runat="server" class="control-label" Text="Card Holder Name"></asp:Label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <asp:TextBox ID="txtCardHolderName" CssClass="form-control" runat="server"></asp:TextBox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="MBankingPaymentAccountHeadDiv" style="display: none;">
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <asp:Label ID="lblBankNameForMBanking" runat="server" class="control-label required-field" Text="Bank Name"></asp:Label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <asp:TextBox ID="txtBankNameForMBanking" runat="server" CssClass="form-control"></asp:TextBox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="RefundDiv">
+                                        <div class="form-group" style="display: none;">
+                                            <div class="col-md-2">
+                                                <asp:Label ID="lblRefundAccountHead" runat="server" class="control-label" Text="Account Head"></asp:Label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <asp:DropDownList ID="ddlRefundAccountHead" CssClass="form-control" runat="server">
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="padding-left: 10px;">
+                                        <%--Right Left--%>
+                                        <input id="btnAddDetailGuestPayment" type="button" value="Add" class="TransactionalButton btn btn-primary btn-sm" onclick="AddItemForPaymentInfo()" />                                            
+                                        <input id="btnCancelPayment" type="button" value="Cancel" onclick="ClearAfterPaymentInfoAdded()"
+                                            class="TransactionalButton btn btn-primary btn-sm" />
+                                            
+                                        <asp:Label ID="lblHiddenIdDetailGuestPayment" runat="server" Text='' Visible="False"></asp:Label>
+                                    </div>
+                                    <div id="PaymentInformation" style="overflow-y: scroll;">
+                                        <table id="PaymentInformationTbl" class="table table-bordered table-condensed table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 35%;">Payment Mode</th>
+                                                    <th style="width: 25%;">Payment Head</th>
+                                                    <th style="width: 25%;">Payment Amount</th>
+                                                    <th style="width: 15%;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                            <tfoot></tfoot>
+                                        </table>
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <asp:Label ID="lblTotalPaymentAmount" runat="server" class="control-label" Text="Total Payment Amount"></asp:Label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <asp:TextBox ID="txtTotalPaymentAmount" ReadOnly="true" runat="server" TabIndex="75" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="GuestPaymentDetailGrid" class="childDivSection">
+                                    </div>
+                                    <div id="TotalPaid" class="totalAmout">
+                                    </div>
+                                    <div id="dueTotal" class="totalAmout">
+                                    </div>
                                 </div>
-                                <div>
-                                    <asp:Label ID="AlartMessege" runat="server" Style="color: Red;" Text='Grand Total and Guest Payment Amount is not Equal.'
-                                        CssClass="totalAmout" Visible="false"></asp:Label>
+                            </div>
+                            <div>
+                                <asp:Label ID="AlartMessege" runat="server" Style="color: Red;" Text='Grand Total and Guest Payment Amount is not Equal.'
+                                    CssClass="totalAmout" Visible="false"></asp:Label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="PaymentInstructionInformation" class="childDivSection">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Payment Instruction Information
+                            </div>
+                            <div class="panel-body childDivSectionDivBlockBody">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <asp:Label ID="lblPaymentInstructionBank" runat="server" class="control-label" Text="Bank Name"></asp:Label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <asp:DropDownList ID="ddlPaymentInstructionBank" runat="server" CssClass="form-control" TabIndex="5">
+                                            </asp:DropDownList>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

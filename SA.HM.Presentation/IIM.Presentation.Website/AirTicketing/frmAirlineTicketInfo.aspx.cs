@@ -1,8 +1,10 @@
 ﻿using HotelManagement.Data.AirTicketing;
+using HotelManagement.Data.GeneralLedger;
 using HotelManagement.Data.HMCommon;
 using HotelManagement.Data.HotelManagement;
 using HotelManagement.Data.SalesAndMarketing;
 using HotelManagement.Entity.AirTicketing;
+using HotelManagement.Entity.GeneralLedger;
 using HotelManagement.Entity.HMCommon;
 using HotelManagement.Entity.HotelManagement;
 using HotelManagement.Entity.SalesAndMarketing;
@@ -28,6 +30,8 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                 LoadAirline();
                 LoadCurrency();
                 CheckPermission();
+                LoadProject();
+                LoadBankName();
             }
         }
 
@@ -65,6 +69,39 @@ namespace HotelManagement.Presentation.Website.AirTicketing
             itemSearch.Value = "0";
             itemSearch.Text = hmUtility.GetDropDownFirstValue();
             ddlAirlineName.Items.Insert(0, itemSearch);
+        }
+
+        private void LoadProject()
+        {
+            GLProjectDA projectDa = new GLProjectDA();
+            List<GLProjectBO> projectBO = new List<GLProjectBO>();
+            projectBO = projectDa.GetProjectInfoForAirlineTikect();
+
+            ddlProject.DataSource = projectBO;
+            ddlProject.DataTextField = "Name";
+            ddlProject.DataValueField = "ProjectId";
+            ddlProject.DataBind();
+
+            ListItem itemSearch = new ListItem();
+            itemSearch.Value = "0";
+            itemSearch.Text = hmUtility.GetDropDownFirstValue();
+            ddlProject.Items.Insert(0, itemSearch);
+        }
+        private void LoadBankName()
+        {
+            BankDA bankDa = new BankDA();
+            List<BankBO> bankBo = new List<BankBO>();
+            bankBo = bankDa.GetBankInfo();
+
+            ddlPaymentInstructionBank.DataSource = bankBo;
+            ddlPaymentInstructionBank.DataTextField = "BankName";
+            ddlPaymentInstructionBank.DataValueField = "BankId";
+            ddlPaymentInstructionBank.DataBind();
+
+            ListItem itemSearch = new ListItem();
+            itemSearch.Value = "0";
+            itemSearch.Text = hmUtility.GetDropDownFirstValue();
+            ddlPaymentInstructionBank.Items.Insert(0, itemSearch);
         }
 
         private void LoadCurrency()

@@ -525,6 +525,11 @@
                         value: value.SupplierId,
                         text: value.Name
                     }));
+                } else if (value.NodeId) {
+                    $('#ContentPlaceHolder1_ddlFromSearch').append($('<option/>', {
+                        value: value.NodeId,
+                        text: value.NodeHead
+                    }));
                 }
             });
 
@@ -542,6 +547,11 @@
                     $('#ContentPlaceHolder1_ddlToSearch').append($('<option/>', {
                         value: value.SupplierId,
                         text: value.Name
+                    }));
+                } else if (value.NodeId) {
+                    $('#ContentPlaceHolder1_ddlToSearch').append($('<option/>', {
+                        value: value.NodeId,
+                        text: value.NodeHead
                     }));
                 }
             });
