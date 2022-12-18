@@ -79,7 +79,7 @@
                 } else if (value.NodeId) {
                     $('#ContentPlaceHolder1_ddlFrom').append($('<option/>', {
                         value: value.NodeId,
-                        text: value.NodeHead
+                        text: value.HeadWithCode
                     }));
                 }
             });
@@ -103,7 +103,7 @@
                 } else if (value.NodeId) {
                     $('#ContentPlaceHolder1_ddlTo').append($('<option/>', {
                         value: value.NodeId,
-                        text: value.NodeHead
+                        text: value.HeadWithCode
                     }));
                 }
             });
@@ -260,10 +260,10 @@
                                     <asp:ListItem Value="2">Company To Supplier</asp:ListItem>
                                     <asp:ListItem Value="3">Supplier To Supplier</asp:ListItem>
                                     <asp:ListItem Value="4">Company To Company</asp:ListItem>
-                                    <asp:ListItem Value="5">Company to GLAccounts</asp:ListItem>
-                                    <asp:ListItem Value="6">GLAccounts to Company</asp:ListItem>
-                                    <asp:ListItem Value="7">Supplier to GLAccounts</asp:ListItem>
-                                    <asp:ListItem Value="8">GLAccounts to Supplier</asp:ListItem>
+                                    <asp:ListItem Value="5">Company to Accounts Head</asp:ListItem>
+                                    <asp:ListItem Value="6">Accounts Head to Company</asp:ListItem>
+                                    <asp:ListItem Value="7">Supplier to Accounts Head</asp:ListItem>
+                                    <asp:ListItem Value="8">Accounts Head to Supplier</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -348,10 +348,10 @@
                                     <asp:ListItem Value="2">Company To Supplier</asp:ListItem>
                                     <asp:ListItem Value="3">Supplier To Supplier</asp:ListItem>
                                     <asp:ListItem Value="4">Company To Company</asp:ListItem>
-                                    <asp:ListItem Value="5">Company to GLAccounts</asp:ListItem>
-                                    <asp:ListItem Value="6">GLAccounts to Company</asp:ListItem>
-                                    <asp:ListItem Value="7">Supplier to GLAccounts</asp:ListItem>
-                                    <asp:ListItem Value="8">GLAccounts to Supplier</asp:ListItem>
+                                    <asp:ListItem Value="5">Company to GL Accounts</asp:ListItem>
+                                    <asp:ListItem Value="6">GL Accounts to Company</asp:ListItem>
+                                    <asp:ListItem Value="7">Supplier to GL Accounts</asp:ListItem>
+                                    <asp:ListItem Value="8">GL Accounts to Supplier</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -643,13 +643,13 @@
                 editTransactionId = "3";
             } else if (result.TransactionType == "Company To Company") {
                 editTransactionId = "4";
-            } else if (result.TransactionType == "Company to GLAccounts") {
+            } else if (result.TransactionType == "Company to Accounts Head") {
                 editTransactionId = "5";
-            } else if (result.TransactionType == "GLAccounts to Company") {
+            } else if (result.TransactionType == "Accounts Head to Company") {
                 editTransactionId = "6";
-            } else if (result.TransactionType == "Supplier to GLAccounts") {
+            } else if (result.TransactionType == "Supplier to Accounts Head") {
                 editTransactionId = "7";
-            } else if (result.TransactionType == "GLAccounts to Supplier") {
+            } else if (result.TransactionType == "Accounts Head to Supplier") {
                 editTransactionId = "8";
             }
             $("#ContentPlaceHolder1_hfEditFromTransaction").val(result.FromTransactionId);
