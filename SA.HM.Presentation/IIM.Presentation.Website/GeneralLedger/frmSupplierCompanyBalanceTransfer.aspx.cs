@@ -64,13 +64,18 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 }
             }
 
-            HMUtility hmUtility = new HMUtility();
-            HMCommonDA commonDA = new HMCommonDA();
-            List<CustomFieldBO> accountsReceivableAccountHeadBO = new List<CustomFieldBO>();
-            accountsReceivableAccountHeadBO = commonDA.GetCustomField("AccountsReceivableAccountHeadForHotelGuest", hmUtility.GetDropDownFirstValue());
-            foreach (CustomFieldBO row in accountsReceivableAccountHeadBO)
+
+            HMCommonDA hmCommonDA = new HMCommonDA();
+            NodeMatrixDA entityDA = new NodeMatrixDA();
+            List<CommonPaymentModeBO> commonPaymentModeBOList = new List<CommonPaymentModeBO>();
+            commonPaymentModeBOList = hmCommonDA.GetCommonPaymentModeInfo("All");
+            CommonPaymentModeBO companyPaymentModeInfo = commonPaymentModeBOList.Where(x => x.PaymentMode == "Company").FirstOrDefault();
+            if (companyPaymentModeInfo != null)
             {
-                accoutHeadList = accoutHeadList.Where(x => x.NodeId.ToString() != row.FieldValue).ToList();
+                if (companyPaymentModeInfo.PaymentModeId > 0)
+                {
+                    accoutHeadList = accoutHeadList.Where(x => x.NodeId != companyPaymentModeInfo.PaymentAccountsPostingId).ToList();
+                }
             }
 
             Object[] companySupplierAccountList = new Object[4];
