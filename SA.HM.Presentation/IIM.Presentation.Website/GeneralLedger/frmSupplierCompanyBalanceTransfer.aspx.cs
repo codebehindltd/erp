@@ -1,4 +1,5 @@
 ﻿using HotelManagement.Data.GeneralLedger;
+using HotelManagement.Data.HMCommon;
 using HotelManagement.Data.PurchaseManagment;
 using HotelManagement.Data.UserInformation;
 using HotelManagement.Entity.GeneralLedger;
@@ -50,8 +51,32 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             List<PMSupplierBO> supplierList = supplier.GetPMSupplierInfo();
 
             NodeMatrixDA accountHead = new NodeMatrixDA();
-            List<NodeMatrixBO> accoutHeadList = accountHead.GetNodeMatrixInfo();
+            List<NodeMatrixBO> accoutHeadList = (accountHead.GetNodeMatrixInfo().Where(xActive => xActive.NodeMode == true).ToList()).Where(xITH => xITH.IsTransactionalHead == true).ToList();
 
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            HMCommonSetupBO commonSetupSupplierAccountsHeadBO = new HMCommonSetupBO();            
+            commonSetupSupplierAccountsHeadBO = commonSetupDA.GetCommonConfigurationInfo("SupplierAccountsHeadId", "SupplierAccountsHeadId");
+            if (commonSetupSupplierAccountsHeadBO != null)
+            {
+                if (commonSetupSupplierAccountsHeadBO.SetupId > 0)
+                {
+                    accoutHeadList = accoutHeadList.Where(x => x.NodeId.ToString() != commonSetupSupplierAccountsHeadBO.SetupValue).ToList();
+                }
+            }
+
+
+            HMCommonDA hmCommonDA = new HMCommonDA();
+            NodeMatrixDA entityDA = new NodeMatrixDA();
+            List<CommonPaymentModeBO> commonPaymentModeBOList = new List<CommonPaymentModeBO>();
+            commonPaymentModeBOList = hmCommonDA.GetCommonPaymentModeInfo("All");
+            CommonPaymentModeBO companyPaymentModeInfo = commonPaymentModeBOList.Where(x => x.PaymentMode == "Company").FirstOrDefault();
+            if (companyPaymentModeInfo != null)
+            {
+                if (companyPaymentModeInfo.PaymentModeId > 0)
+                {
+                    accoutHeadList = accoutHeadList.Where(x => x.NodeId != companyPaymentModeInfo.PaymentAccountsPostingId).ToList();
+                }
+            }
 
             Object[] companySupplierAccountList = new Object[4];
             
@@ -88,13 +113,13 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 companySupplierAccountList[0] = companyList;
                 companySupplierAccountList[1] = accoutHeadList;
                 companySupplierAccountList[2] = "Company";
-                companySupplierAccountList[3] = "GLAccounts";
+                companySupplierAccountList[3] = "Accounts Head";
             }
             else if (transactionTypeId == 6)
             {
                 companySupplierAccountList[0] = accoutHeadList;
                 companySupplierAccountList[1] = companyList;
-                companySupplierAccountList[2] = "GLAccounts";
+                companySupplierAccountList[2] = "Accounts Head";
                 companySupplierAccountList[3] = "Company";
             }
             else if (transactionTypeId == 7)
@@ -102,13 +127,13 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 companySupplierAccountList[0] = supplierList;
                 companySupplierAccountList[1] = accoutHeadList;
                 companySupplierAccountList[2] = "Supplier";
-                companySupplierAccountList[3] = "GLAccounts";
+                companySupplierAccountList[3] = "Accounts Head";
             }
             else if (transactionTypeId == 8)
             {
                 companySupplierAccountList[0] = accoutHeadList;
                 companySupplierAccountList[1] = supplierList;
-                companySupplierAccountList[2] = "GLAccounts";
+                companySupplierAccountList[2] = "Accounts Head";
                 companySupplierAccountList[3] = "Supplier";
             }
             else
