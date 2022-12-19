@@ -3143,12 +3143,12 @@
             <TablixMember />
             <TablixMember>
               <Visibility>
-                <Hidden>=IIF(Parameters!BillDeclaration.Value = "", true, false)</Hidden>
+                <Hidden>=IIF(Fields!PaymentInstruction.Value = "", true, IIF(Parameters!BillDeclaration.Value = "", true, false))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=IIF(Parameters!BillDeclaration.Value = "", true, false)</Hidden>
+                <Hidden>=IIF(Fields!PaymentInstruction.Value = "", true, IIF(Parameters!BillDeclaration.Value = "", true, false))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember />

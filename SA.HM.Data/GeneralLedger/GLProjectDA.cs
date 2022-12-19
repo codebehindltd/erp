@@ -60,13 +60,14 @@ namespace HotelManagement.Data.GeneralLedger
             }
             return projectList;
         }
-        public List<GLProjectBO> GetProjectInfoForAirlineTikect()
+        public List<GLProjectBO> GetProjectInfoForAirlineTikect(int companyId)
         {
             List<GLProjectBO> projectList = new List<GLProjectBO>();
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProjectInfoForAirlineTikect_SP"))
                 {
+                    dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)

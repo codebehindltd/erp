@@ -1972,6 +1972,9 @@ namespace HotelManagement.Data.Restaurant
                                 //billBO.IsInvoiceAdditionalChargeEnable = Convert.ToBoolean(reader["IsInvoiceAdditionalChargeEnable"].ToString());
                                 ////billBO.InvoiceAdditionalCharge = Convert.ToString(reader["CostCenterId"].ToString());
 
+                                billBO.GLCompanyId = Convert.ToInt32(reader["GLCompanyId"].ToString());
+                                billBO.ProjectId = Convert.ToInt32(reader["ProjectId"].ToString());
+
                                 billBO.AccountCompany = reader["AccountCompany"].ToString();
                                 billBO.ProjectCode = reader["ProjectCode"].ToString();
                                 billBO.ProjectName = reader["ProjectName"].ToString();

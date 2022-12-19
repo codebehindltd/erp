@@ -53,7 +53,6 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                 }
             }
         }
-
         private void LoadAirline()
         {
             AirlineDA airlineDa = new AirlineDA();
@@ -73,9 +72,20 @@ namespace HotelManagement.Presentation.Website.AirTicketing
 
         private void LoadProject()
         {
+            int glCompanyId = 0;
+            CostCentreTabDA entityDA = new CostCentreTabDA();
+            List<CostCentreTabBO> listAirlineTicketListBO = entityDA.GetCostCentreTabInfoByType("AirlineTicket");
+            if (listAirlineTicketListBO != null)
+            {
+                if (listAirlineTicketListBO.Count > 0)
+                {
+                    glCompanyId = listAirlineTicketListBO[0].GLCompanyId;
+                }
+            }
+
             GLProjectDA projectDa = new GLProjectDA();
             List<GLProjectBO> projectBO = new List<GLProjectBO>();
-            projectBO = projectDa.GetProjectInfoForAirlineTikect();
+            projectBO = projectDa.GetProjectInfoForAirlineTikect(glCompanyId);
 
             ddlProject.DataSource = projectBO;
             ddlProject.DataTextField = "Name";
@@ -179,7 +189,18 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                 {
                     IsUpdate = true;
                 }
-                
+
+                int costCenterId = 0;
+                CostCentreTabDA entityDA = new CostCentreTabDA();
+                List<CostCentreTabBO> listAirlineTicketListBO = entityDA.GetCostCentreTabInfoByType("AirlineTicket");
+                if (listAirlineTicketListBO != null)
+                {
+                    if (listAirlineTicketListBO.Count > 0)
+                    {
+                        costCenterId = listAirlineTicketListBO[0].CostCenterId;
+                    }
+                }
+                AirTicketMasterInfo.CostCenterId = costCenterId;
 
                 status = atDa.SaveAirlineTicketInfo(AirTicketMasterInfo, AddedSingleTicketInfo, AddedPaymentInfo, deletedPaymentInfoList);
                 if (status)
