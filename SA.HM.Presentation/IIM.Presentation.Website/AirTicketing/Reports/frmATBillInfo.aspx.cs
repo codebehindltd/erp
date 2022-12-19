@@ -17,6 +17,8 @@ using System.Net;
 using HotelManagement.Presentation.Website.Common;
 using HotelManagement.Entity.UserInformation;
 using HotelManagement.Entity.RetailPOS;
+using HotelManagement.Entity.GeneralLedger;
+using HotelManagement.Data.GeneralLedger;
 
 namespace HotelManagement.Presentation.Website.AirTicketing.Reports
 {
@@ -60,6 +62,8 @@ namespace HotelManagement.Presentation.Website.AirTicketing.Reports
 
                 string companyName = string.Empty;
                 string companyAddress = string.Empty;
+                string webAddress = string.Empty;
+                string contactNumber = string.Empty;
                 string binNumber = string.Empty;
                 string tinNumber = string.Empty;
                 string projectName = string.Empty;
@@ -86,10 +90,12 @@ namespace HotelManagement.Presentation.Website.AirTicketing.Reports
 
                     if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
                     {
-                        reportParam.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
+                        //reportParam.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
+                        webAddress = files[0].WebAddress;
                     }
 
-                    reportParam.Add(new ReportParameter("ContactNumber", files[0].ContactNumber));
+                    //reportParam.Add(new ReportParameter("ContactNumber", files[0].ContactNumber));
+                    contactNumber = files[0].ContactNumber;
                 }
 
                 RestaurantBillBO billBO = new RestaurantBillBO();
@@ -101,14 +107,17 @@ namespace HotelManagement.Presentation.Website.AirTicketing.Reports
                 string billDeclaration = string.Empty;
                 string imagePreparedBySignature = string.Empty;
 
+                HMCommonDA hmCommonDA = new HMCommonDA();
+                string imageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
+
                 if (billBO != null)
                 {
                     if (billBO.BillId > 0)
                     {
                         billRemarks = billBO.Remarks;
-                        //binNumber = billBO.BinNumber;
-                        //tinNumber = billBO.TinNumber;
-                        //projectName = billBO.ProjectName;
+                        binNumber = billBO.BinNumber;
+                        tinNumber = billBO.TinNumber;
+                        projectName = billBO.ProjectName;
                         billDescription = billBO.BillDescription;
                         billDeclaration = billBO.BillDeclaration;
                         
@@ -127,6 +136,34 @@ namespace HotelManagement.Presentation.Website.AirTicketing.Reports
                         //        reportName = "rptRestaurentBillForA402PageWithoutHeader";
                         //    }
                         //}
+
+
+                        if (billBO.GLCompanyId > 0)
+                        {
+                            GLCompanyBO glCompanyBO = new GLCompanyBO();
+                            GLCompanyDA glCompanyDA = new GLCompanyDA();
+                            glCompanyBO = glCompanyDA.GetGLCompanyInfoById(billBO.GLCompanyId);
+                            if (glCompanyBO != null)
+                            {
+                                if (glCompanyBO.CompanyId > 0)
+                                {
+                                    companyName = glCompanyBO.Name;
+                                    if (!string.IsNullOrWhiteSpace(glCompanyBO.CompanyAddress))
+                                    {
+                                        companyAddress = glCompanyBO.CompanyAddress;
+                                    }
+                                    if (!string.IsNullOrWhiteSpace(glCompanyBO.WebAddress))
+                                    {
+                                        webAddress = glCompanyBO.WebAddress;
+                                    }
+                                    if (!string.IsNullOrWhiteSpace(glCompanyBO.ImageName))
+                                    {
+                                        imageName = glCompanyBO.ImageName;
+                                    }
+                                }
+                            }
+                        }
+
                     }
                 }
 
@@ -138,6 +175,9 @@ namespace HotelManagement.Presentation.Website.AirTicketing.Reports
 
                 reportParam.Add(new ReportParameter("CompanyProfile", companyName));
                 reportParam.Add(new ReportParameter("CompanyAddress", companyAddress));
+                reportParam.Add(new ReportParameter("CompanyWeb", webAddress));
+                reportParam.Add(new ReportParameter("ContactNumber", contactNumber));
+
                 reportParam.Add(new ReportParameter("VatRegistrationNo", binNumber));
                 reportParam.Add(new ReportParameter("TinNumber", tinNumber));
                 reportParam.Add(new ReportParameter("ProjectName", projectName));
@@ -146,9 +186,9 @@ namespace HotelManagement.Presentation.Website.AirTicketing.Reports
                 reportParam.Add(new ReportParameter("BillDeclaration", billDeclaration));
 
                 rvTransaction.LocalReport.EnableExternalImages = true;
-                HMCommonDA hmCommonDA = new HMCommonDA();
+                
                 //string imageName = hmCommonDA.GetOutletImageNameByCostCenterId(billBO.CostCenterId);
-                string imageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
+                
                 if (!string.IsNullOrWhiteSpace(imageName))
                 {
                     reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + imageName)));

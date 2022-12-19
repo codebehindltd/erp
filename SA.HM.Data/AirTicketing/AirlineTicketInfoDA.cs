@@ -32,6 +32,7 @@ namespace HotelManagement.Data.AirTicketing
 
                                 dbSmartAspects.AddInParameter(cmdOut, "@TicketId", DbType.Int64, airTicketMasterInfo.TicketId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@TransactionType", DbType.String, airTicketMasterInfo.TransactionType);
+                                dbSmartAspects.AddInParameter(cmdOut, "@CostCenterId", DbType.Int32, airTicketMasterInfo.CostCenterId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@ProjectId", DbType.Int32, airTicketMasterInfo.ProjectId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@PaymentInstructionBankId", DbType.Int32, airTicketMasterInfo.PaymentInstructionBankId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@CompanyId", DbType.Int64, airTicketMasterInfo.CompanyId);
@@ -42,9 +43,7 @@ namespace HotelManagement.Data.AirTicketing
                                 dbSmartAspects.AddInParameter(cmdOut, "@InvoiceAmount", DbType.Decimal, airTicketMasterInfo.InvoiceAmount);
                                 dbSmartAspects.AddInParameter(cmdOut, "@LastModifiedBy", DbType.Int64, airTicketMasterInfo.LastModifiedBy);
                                 
-
                                 status = dbSmartAspects.ExecuteNonQuery(cmdOut, transction);
-
                                 ticketId = Convert.ToInt64(cmdOut.Parameters["@TicketId"].Value);
                             }
                         }
@@ -54,6 +53,7 @@ namespace HotelManagement.Data.AirTicketing
                             {
                                 cmdOut.Parameters.Clear();
                                 dbSmartAspects.AddInParameter(cmdOut, "@TransactionType", DbType.String, airTicketMasterInfo.TransactionType);
+                                dbSmartAspects.AddInParameter(cmdOut, "@CostCenterId", DbType.Int32, airTicketMasterInfo.CostCenterId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@ProjectId", DbType.Int32, airTicketMasterInfo.ProjectId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@PaymentInstructionBankId", DbType.Int32, airTicketMasterInfo.PaymentInstructionBankId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@CompanyId", DbType.Int64, airTicketMasterInfo.CompanyId);
@@ -66,13 +66,11 @@ namespace HotelManagement.Data.AirTicketing
                                 dbSmartAspects.AddInParameter(cmdOut, "@CreatedBy", DbType.Int64, airTicketMasterInfo.CreatedBy);
 
                                 dbSmartAspects.AddOutParameter(cmdOut, "@TicketId", DbType.Int64, sizeof(Int64));
-
                                 status = dbSmartAspects.ExecuteNonQuery(cmdOut, transction);
 
                                 ticketId = Convert.ToInt64(cmdOut.Parameters["@TicketId"].Value);
                             }
-                        }
-                        
+                        }                        
                         
                         if(status > 0 && AddedSingleTicketInfo.Count > 0)
                         {
@@ -81,9 +79,7 @@ namespace HotelManagement.Data.AirTicketing
                                 using (DbCommand cmdPay = dbSmartAspects.GetStoredProcCommand("DeleteAirTicketsByTicketId_SP"))
                                 {
                                     cmdPay.Parameters.Clear();
-
                                     dbSmartAspects.AddInParameter(cmdPay, "@TicketId", DbType.Int64, airTicketMasterInfo.TicketId);
-
                                     status = dbSmartAspects.ExecuteNonQuery(cmdPay, transction);
                                 }
                             }
@@ -207,13 +203,9 @@ namespace HotelManagement.Data.AirTicketing
                         using (DbCommand cmdDelete = dbSmartAspects.GetStoredProcCommand("TicketInformationDelete_SP"))
                         {
                             cmdDelete.Parameters.Clear();
-
                             dbSmartAspects.AddInParameter(cmdDelete, "@TicketId", DbType.Int64, ticketId);
-
-
                             status = dbSmartAspects.ExecuteNonQuery(cmdDelete, transction);
-                        }                 
-
+                        }
 
                         if (status > 0)
                         {
