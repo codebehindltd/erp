@@ -32,6 +32,8 @@ namespace HotelManagement.Data.AirTicketing
 
                                 dbSmartAspects.AddInParameter(cmdOut, "@TicketId", DbType.Int64, airTicketMasterInfo.TicketId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@TransactionType", DbType.String, airTicketMasterInfo.TransactionType);
+                                dbSmartAspects.AddInParameter(cmdOut, "@ProjectId", DbType.Int32, airTicketMasterInfo.ProjectId);
+                                dbSmartAspects.AddInParameter(cmdOut, "@PaymentInstructionBankId", DbType.Int32, airTicketMasterInfo.PaymentInstructionBankId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@CompanyId", DbType.Int64, airTicketMasterInfo.CompanyId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@CompanyName", DbType.String, airTicketMasterInfo.CompanyName);
                                 dbSmartAspects.AddInParameter(cmdOut, "@ReferenceId", DbType.Int64, airTicketMasterInfo.ReferenceId);
@@ -52,6 +54,8 @@ namespace HotelManagement.Data.AirTicketing
                             {
                                 cmdOut.Parameters.Clear();
                                 dbSmartAspects.AddInParameter(cmdOut, "@TransactionType", DbType.String, airTicketMasterInfo.TransactionType);
+                                dbSmartAspects.AddInParameter(cmdOut, "@ProjectId", DbType.Int32, airTicketMasterInfo.ProjectId);
+                                dbSmartAspects.AddInParameter(cmdOut, "@PaymentInstructionBankId", DbType.Int32, airTicketMasterInfo.PaymentInstructionBankId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@CompanyId", DbType.Int64, airTicketMasterInfo.CompanyId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@CompanyName", DbType.String, airTicketMasterInfo.CompanyName);
                                 dbSmartAspects.AddInParameter(cmdOut, "@ReferenceId", DbType.Int64, airTicketMasterInfo.ReferenceId);
@@ -328,6 +332,8 @@ namespace HotelManagement.Data.AirTicketing
                                 ATMasterInfo.BillNumber = reader["BillNumber"].ToString();
                                 ATMasterInfo.TransactionType = reader["TransactionType"].ToString();
                                 ATMasterInfo.TransactionId = Convert.ToInt64(reader["TransactionId"]);
+                                ATMasterInfo.ProjectId = Convert.ToInt32(reader["ProjectId"]);
+                                ATMasterInfo.PaymentInstructionBankId = Convert.ToInt32(reader["PaymentInstructionBankId"]);
                                 ATMasterInfo.CompanyName = reader["CompanyName"].ToString();
                                 ATMasterInfo.ReferenceId = Convert.ToInt64(reader["ReferenceId"]);
                                 ATMasterInfo.ReferenceName = reader["ReferenceName"].ToString();
