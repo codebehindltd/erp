@@ -301,6 +301,41 @@ namespace HotelManagement.Presentation.Website.AirTicketing
         }
 
         [WebMethod]
+        public static ReturnInfo TicketInformationApproval(long ticketId)
+        {
+            ReturnInfo rtninfo = new ReturnInfo();
+            Boolean status = false;
+            try
+            {
+                HMUtility hmUtility = new HMUtility();
+                UserInformationBO userInformationBO = new UserInformationBO();
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+                AirlineTicketInfoDA atDa = new AirlineTicketInfoDA();
+                status = atDa.TicketInformationApproval(ticketId, userInformationBO.UserInfoId);
+                if (status)
+                {
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Approved, AlertType.Success);
+                }
+
+                if (!status)
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            return rtninfo;
+
+        }
+
+        [WebMethod]
         public static GridViewDataNPaging<AirlineTicketMasterBO, GridPaging> SearchTicketInformation(DateTime? fromDate, DateTime? toDate, string invoiceNumber, string companyName, 
                                                                                           string referenceName, int gridRecordsCount, int pageNumber, int isCurrentOrPreviousPage
                                                                                          )

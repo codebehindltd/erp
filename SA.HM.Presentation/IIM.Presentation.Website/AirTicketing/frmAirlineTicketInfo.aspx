@@ -1214,16 +1214,19 @@
 
                 tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
 
-
-                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return TicketInfoEditWithConfirmation(" + gridObject.TicketId + ")\" alt='Edit'  title='Edit' border='0' />";
+                if (gridObject.IsCanEdit && IsCanEdit) {
+                    tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return TicketInfoEditWithConfirmation(" + gridObject.TicketId + ")\" alt='Edit'  title='Edit' border='0' />";
+                }
                 
-                tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return TicketInformationDelete(" + gridObject.TicketId + ")\" alt='Delete'  title='Delete' border='0' />";
+                if (gridObject.IsCanDelete && IsCanDelete) {
+                    tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return TicketInformationDelete(" + gridObject.TicketId + ")\" alt='Delete'  title='Delete' border='0' />";
+                }
                 
                 if (gridObject.IsCanChecked && IsCanSave) {
                     tr += "&nbsp;&nbsp;<img src='../Images/checked.png' onClick= \"javascript:return TicketInformationCheckWithConfirmation(" + gridObject.TicketId + ")\" alt='Check'  title='Check' border='0' />";
                 }
                 if (gridObject.IsCanApproved && IsCanSave) {
-                    tr += "&nbsp;&nbsp;<img src='../Images/approved.png' onClick= \"javascript:return ReceiveOrderApprovalWithConfirmation(" + gridObject.TicketId + ")\" alt='Approve'  title='Approve' border='0' />";
+                    tr += "&nbsp;&nbsp;<img src='../Images/approved.png' onClick= \"javascript:return TicketInformationApprovalWithConfirmation(" + gridObject.TicketId + ")\" alt='Approve'  title='Approve' border='0' />";
                 }
                 
                 tr += "&nbsp;&nbsp;<img src='../Images/ReportDocument.png'  onClick= \"javascript:return PerformBillPreviewAction(" + gridObject.TicketId + ")\" alt='Invoice' title='Invoice' border='0' />";
@@ -1445,16 +1448,16 @@
             toastr.error(error.get_message());
         }
 
-        function ReceiveOrderApproval(ReceiveType, ApprovedStatus, ReceivedId, SupplierId, POrderId) {
+        function TicketInformationApproval(TicketId) {
 
-            PageMethods.ReceiveOrderApproval(ReceiveType, ReceivedId, ApprovedStatus, POrderId, OnApprovalSucceed, OnApprovalFailed);
+            PageMethods.TicketInformationApproval(TicketId, OnApprovalSucceed, OnApprovalFailed);
         }
-        function ReceiveOrderApprovalWithConfirmation(ReceiveType, ReceivedId, ApprovedStatus, POrderId, OnApprovalSucceed, OnApprovalFailed) {
+        function TicketInformationApprovalWithConfirmation(TicketId) {
 
             if (!confirm("Do you Want To Approve?")) {
                 return false;
             }
-            ReceiveOrderApproval(ReceiveType, ReceivedId, ApprovedStatus, POrderId, OnApprovalSucceed, OnApprovalFailed);
+            TicketInformationApproval(TicketId);
         }
         function TicketInformationCheckWithConfirmation(TicketId) {
             if (!confirm("Do you Want To Check?")) {
@@ -1466,30 +1469,15 @@
         function OnApprovalSucceed(result) {
             if (result.IsSuccess) {
                 CommonHelper.AlertMessage(result.AlertMessage);
-
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    url: '/Common/WebMethodPage.aspx/GetCommonCheckByApproveByListForSMS',
-                    data: JSON.stringify({ tableName: 'PMProductReceived', primaryKeyName: 'ReceivedId', primaryKeyValue: result.PrimaryKeyValue, featuresValue: 'Receive', statusColumnName: 'Status' }),
-                    dataType: "json",
-                    success: function (data) {
-                        debugger;
-
-                        SendSMSToUserList(data.d, result.PrimaryKeyValue, result.TransactionNo, result.TransactionType, result.TransactionStatus);
-
-                    },
-                    error: function (result) {
-                        toastr.error("Can not load Check or Approve By List.");
-                    }
-                });
-
-                LoadNotReceivedPurchaseOrder();
-                SearchTicketInformation($("#GridPagingContainer").find("li.active").index(), 1);
+                SearchTicketInformation(1, 1);
             }
             else {
                 CommonHelper.AlertMessage(result.AlertMessage);
             }
+            return false;
+        }
+        function OnApprovalFailed() {
+            toastr.error(error.get_message());
         }
                 
         function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
@@ -1544,7 +1532,7 @@
                                     <asp:ListItem Text="--- Please Select ---" Value="0"></asp:ListItem>
                                     <asp:ListItem Text="Corporate Company" Value="CorporateCompany"></asp:ListItem>
                                     <asp:ListItem Text="Walk-In Customer" Value="WalkInCustomer"></asp:ListItem>
-                                    <asp:ListItem Text="Room Guest" Value="RoomGuest"></asp:ListItem>
+                                    <%--<asp:ListItem Text="Room Guest" Value="RoomGuest"></asp:ListItem>--%>
                                 </asp:DropDownList>
                             </div>
                             <div class="col-md-2">
@@ -1653,7 +1641,7 @@
                                     <asp:ListItem Text="--- Please Select ---" Value="0"></asp:ListItem>
                                     <asp:ListItem Text="International" Value="1"></asp:ListItem>
                                     <asp:ListItem Text="Domestic" Value="2"></asp:ListItem>
-                                    <asp:ListItem Text="Visa" Value="3"></asp:ListItem>
+                                    <%--<asp:ListItem Text="Visa" Value="3"></asp:ListItem>--%>
                                 </asp:DropDownList>
                             </div>
                         </div>

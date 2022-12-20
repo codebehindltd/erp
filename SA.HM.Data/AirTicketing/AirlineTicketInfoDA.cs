@@ -452,6 +452,65 @@ namespace HotelManagement.Data.AirTicketing
 
             return retVal;
         }
+        
+        public bool TicketInformationApproval(long ticketId, int userInfoId)
+        {
+            Int64 status = 0;
+            bool retVal = false;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand cmdApprove = dbSmartAspects.GetStoredProcCommand("TicketInformationApproval_SP"))
+                        {
+                            cmdApprove.Parameters.Clear();
+
+                            dbSmartAspects.AddInParameter(cmdApprove, "@TicketId", DbType.Int64, ticketId);
+                            dbSmartAspects.AddInParameter(cmdApprove, "@UserInfoId", DbType.Int32, userInfoId);
+
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmdApprove, transction);
+                        }
+
+                        if (status > 0)
+                        {
+                            using (DbCommand cmdAfterApproved = dbSmartAspects.GetStoredProcCommand("ATBillingAccountsVoucherPostingProcess_SP"))
+                            {
+                                cmdAfterApproved.Parameters.Clear();
+
+                                dbSmartAspects.AddInParameter(cmdAfterApproved, "@BillId", DbType.Int32, ticketId);
+                                dbSmartAspects.AddOutParameter(cmdAfterApproved, "@mErr", DbType.Int32, sizeof(Int32));
+
+                                status = dbSmartAspects.ExecuteNonQuery(cmdAfterApproved, transction);
+                            }
+                        }
+
+
+                        if (status > 0)
+                        {
+                            retVal = true;
+                            transction.Commit();
+                        }
+                        else
+                        {
+                            retVal = false;
+                            transction.Rollback();
+                        }
+                    }
+                    catch
+                    {
+                        retVal = false;
+                        transction.Rollback();
+                    }
+                }
+            }
+
+            return retVal;
+        }
 
         public List<ContactInformationBO> GetContactInformationByCompanyIdNSearchTextForAutoComplete(int companyId, string searchText)
         {
