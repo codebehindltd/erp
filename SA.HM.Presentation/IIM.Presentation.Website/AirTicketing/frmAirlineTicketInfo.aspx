@@ -56,15 +56,20 @@
             });
 
             $("#ContentPlaceHolder1_ddlTransactionType").change(function () {
+                $("#ContentPlaceHolder1_ddlPayMode option[value='5']").remove();
+                $("#ContentPlaceHolder1_ddlPayMode option[value='6']").remove();
+                $("#ContentPlaceHolder1_ddlPayMode option[value='7']").remove();
                 if ($("#ContentPlaceHolder1_ddlTransactionType").val() == "CorporateCompany") {
                     $("#ReferenceForCorporateCompany").show();
                     $("#ReferenceForWalkIn").hide();
                     $("#ReferenceForRoomGuest").hide();
+                    $("#ContentPlaceHolder1_ddlPayMode").append("<option value='5'>Company</option>");
                 }
                 else if ($("#ContentPlaceHolder1_ddlTransactionType").val() == "WalkInCustomer") {
                     $("#ReferenceForWalkIn").show();
                     $("#ReferenceForCorporateCompany").hide();
                     $("#ReferenceForRoomGuest").hide();
+                    $("#ContentPlaceHolder1_ddlPayMode option[value='5']").remove();
                 }
                 else if ($("#ContentPlaceHolder1_ddlTransactionType").val() == "RoomGuest") {
                     $("#ReferenceForRoomGuest").show();
@@ -73,41 +78,9 @@
                 }
             });
 
-            //$("#ContentPlaceHolder1_txtCompanyName").autocomplete({
-            //    source: function (request, response) {
-            //        $.ajax({
-            //            type: "POST",
-            //            contentType: "application/json; charset=utf-8",
-            //            url: "../AirTicketing/frmAirlineTicketInfo.aspx/GetCompanyInfoForAirTicket",
-            //            data: JSON.stringify({ searchTerm: request.term }),
-            //            dataType: "json",
-            //            async: false,
-            //            success: function (data) {
-            //                var searchData = data.error ? [] : $.map(data.d, function (m) {
-            //                    return {
-            //                        label: m.CompanyName,
-            //                        value: m.CompanyId,
-
-            //                    };
-            //                });
-            //                response(searchData);
-            //            },
-            //            failed: function (result) {
-
-            //            }
-            //        });
-            //    },
-            //    focus: function (event, ui) {
-            //        event.preventDefault();
-            //    },
-            //    select: function (event, ui) {
-            //        event.preventDefault();
-            //        $(this).val(ui.item.label);
-            //        $("#ContentPlaceHolder1_hfCompanySearchId").val(ui.item.value);
-            //    }
-            //});
-
             $("#ContentPlaceHolder1_txtCompany").autocomplete({
+                minLength: 3,
+                selectFirst: true,
                 source: function (request, response) {
                     $.ajax({
                         type: "POST",
@@ -175,7 +148,7 @@
             });
 
             $("#ContentPlaceHolder1_txtReferenceForCompany").autocomplete({
-                source: function (request, response) {
+               source: function (request, response) {
                     $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
@@ -193,7 +166,6 @@
                             response(searchData);
                         },
                         failed: function (result) {
-
                         }
                     });
                 },
