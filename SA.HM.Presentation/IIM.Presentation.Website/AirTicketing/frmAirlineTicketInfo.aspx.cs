@@ -27,6 +27,7 @@ namespace HotelManagement.Presentation.Website.AirTicketing
         {
             if (!IsPostBack)
             {
+                IsAdminUser();
                 LoadAirline();
                 LoadCurrency();
                 CheckPermission();
@@ -34,7 +35,32 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                 LoadBankName();
             }
         }
-
+        private void IsAdminUser()
+        {
+            HMUtility hmUtility = new HMUtility();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            // // // ------User Admin Authorization BO Session Information --------------------------------
+            #region User Admin Authorization
+            btnAdminApproval.Visible = false;
+            if (userInformationBO.UserInfoId == 1)
+            {
+                btnAdminApproval.Visible = true;
+            }
+            else
+            {
+                List<SecurityUserAdminAuthorizationBO> adminAuthorizationList = new List<SecurityUserAdminAuthorizationBO>();
+                adminAuthorizationList = System.Web.HttpContext.Current.Session["UserAdminAuthorizationBOSession"] as List<SecurityUserAdminAuthorizationBO>;
+                if (adminAuthorizationList != null)
+                {
+                    if (adminAuthorizationList.Where(x => x.UserInfoId == userInformationBO.UserInfoId && x.ModuleId == 40).Count() > 0)
+                    {
+                        btnAdminApproval.Visible = true;
+                    }
+                }
+            }
+            #endregion
+        }
         private void CheckPermission()
         {
             hfSavePermission.Value = isSavePermission ? "1" : "0";
