@@ -368,5 +368,38 @@ namespace HotelManagement.Presentation.Website.AirTicketing
             viewBo.ATPaymentInfo = aTDA.GetATPaymentInfo(ticketId);
             return viewBo;
         }
+        [WebMethod]
+        public static ReturnInfo AdminApprovalStatus(string ticketNo, string ticketStatus)
+        {
+            Boolean status = false;
+            ReturnInfo rtninfo = new ReturnInfo();
+            AirlineTicketInfoDA supportDA = new AirlineTicketInfoDA();
+            HMUtility hmUtility = new HMUtility();
+            UserInformationBO userInformationBO = new UserInformationBO();
+
+            try
+            {
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+                status = supportDA.UpdateTicketStatusByATTicketNo(ticketNo, ticketStatus, userInformationBO.UserInfoId);
+                if (status)
+                {
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = "Ticket Unapprove Successfull.";
+                }
+                else
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            return rtninfo;
+        }
     }
 }

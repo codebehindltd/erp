@@ -186,8 +186,7 @@ namespace HotelManagement.Data.AirTicketing
             }
 
             return retVal;
-        }
-        
+        }        
         public bool TicketInformationDelete(long ticketId)
         {
             Int64 status = 0;
@@ -228,7 +227,6 @@ namespace HotelManagement.Data.AirTicketing
 
             return retVal;
         }
-
         public List<AirlineTicketMasterBO> GetTicketInformation(DateTime? fromDate, DateTime? toDate, string invoiceNumber, string companyName, string referenceName,
                                                                Int32 userInfoId, int recordPerPage, int pageIndex, out int totalRecords)
         {
@@ -301,9 +299,7 @@ namespace HotelManagement.Data.AirTicketing
             }
 
             return productReceive;
-        }
-
-        
+        }        
         public AirlineTicketMasterBO GetATMasterInfo(long ticketId)
         {
             AirlineTicketMasterBO ATMasterInfo = new AirlineTicketMasterBO();
@@ -372,8 +368,7 @@ namespace HotelManagement.Data.AirTicketing
                 }
             }
             return ticketList;
-        }
-        
+        }        
         public List<GuestBillPaymentBO> GetATPaymentInfo(long ticketId)
         {
             List<GuestBillPaymentBO> paymentList = new List<GuestBillPaymentBO>();
@@ -404,9 +399,7 @@ namespace HotelManagement.Data.AirTicketing
                 }
             }
             return paymentList;
-        }
-
-        
+        }        
         public bool TicketInformationCheck(long ticketId, int userInfoId)
         {
             Int64 status = 0;
@@ -451,8 +444,7 @@ namespace HotelManagement.Data.AirTicketing
             }
 
             return retVal;
-        }
-        
+        }        
         public bool TicketInformationApproval(long ticketId, int userInfoId)
         {
             Int64 status = 0;
@@ -511,7 +503,6 @@ namespace HotelManagement.Data.AirTicketing
 
             return retVal;
         }
-
         public List<ContactInformationBO> GetContactInformationByCompanyIdNSearchTextForAutoComplete(int companyId, string searchText)
         {
             List<ContactInformationBO> contactInformationList = new List<ContactInformationBO>();
@@ -567,6 +558,47 @@ namespace HotelManagement.Data.AirTicketing
                 throw ex;
             }
             return contactInformationList;
+        }
+        public Boolean UpdateTicketStatusByATTicketNo(string ticketNo, string ticketStatus, int userInfoId)
+        {
+            bool retVal = false;
+            int status = 0;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand commandMaster = dbSmartAspects.GetStoredProcCommand("UpdateTicketStatusByATTicketNo_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(commandMaster, "@TicketNo", DbType.String, ticketNo);
+                            dbSmartAspects.AddInParameter(commandMaster, "@TicketStatus", DbType.String, ticketStatus);
+                            dbSmartAspects.AddInParameter(commandMaster, "@UserInfoId", DbType.Int32, userInfoId);
+                            status = dbSmartAspects.ExecuteNonQuery(commandMaster, transction);
+                        }
+
+                        if (status > 0)
+                        {
+                            transction.Commit();
+                            retVal = true;
+                        }
+                        else
+                        {
+                            transction.Rollback();
+                            retVal = false;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transction.Rollback();
+                        retVal = false;
+                        throw ex;
+                    }
+                }
+            }
+            return retVal;
         }
     }
 }

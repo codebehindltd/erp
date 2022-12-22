@@ -40,14 +40,14 @@
                 allowClear: true,
                 width: "99.75%"
             });
-                        
+
             $("#ContentPlaceHolder1_ddlProject").select2({
                 tags: "true",
                 placeholder: "--- Please Select ---",
                 allowClear: true,
                 width: "99.75%"
             });
-            
+
             $("#ContentPlaceHolder1_ddlPaymentInstructionBank").select2({
                 tags: "true",
                 placeholder: "--- Please Select ---",
@@ -94,7 +94,7 @@
                                 return {
                                     label: m.CompanyName,
                                     value: m.CompanyId,
-                                    
+
                                 };
                             });
                             response(searchData);
@@ -148,7 +148,7 @@
             });
 
             $("#ContentPlaceHolder1_txtReferenceForCompany").autocomplete({
-               source: function (request, response) {
+                source: function (request, response) {
                     $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
@@ -156,7 +156,7 @@
                         data: JSON.stringify({ companyId: $("#ContentPlaceHolder1_hfCompanyId").val(), searchTerm: request.term }),
                         dataType: "json",
                         async: false,
-                        success: function(data) {
+                        success: function (data) {
                             var searchData = data.error ? [] : $.map(data.d, function (m) {
                                 return {
                                     label: m.Name,
@@ -169,10 +169,10 @@
                         }
                     });
                 },
-                focus: function(event, ui){
+                focus: function (event, ui) {
                     event.preventDefault();
                 },
-                select: function(event, ui){
+                select: function (event, ui) {
                     event.preventDefault();
                     $(this).val(ui.item.label);
                     $("#ContentPlaceHolder1_hfReferenceIdForCompany").val(ui.item.value);
@@ -211,7 +211,7 @@
             //        $("#ContentPlaceHolder1_hfRegistrationNumber").val(ui.item.value);
             //    }
             //});
-            
+
             $("#ContentPlaceHolder1_txtbankName").autocomplete({
                 source: function (request, response) {
                     $.ajax({
@@ -244,7 +244,7 @@
                     $("#ContentPlaceHolder1_hfbankId").val(ui.item.value);
                 }
             });
-                        
+
             $("#ContentPlaceHolder1_txtBankNameForMBanking").autocomplete({
                 source: function (request, response) {
                     $.ajax({
@@ -316,7 +316,7 @@
                 changeYear: true,
                 dateFormat: innBoarDateFormat
             });
-            
+
             $("#ContentPlaceHolder1_txtFlightDate").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -337,7 +337,7 @@
                     $('#ContentPlaceHolder1_txtToDate').datepicker("option", "minDate", selectedDate);
                 }
             });
-                        
+
             $('#ContentPlaceHolder1_txtToDate').datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -346,7 +346,7 @@
                     $('#ContentPlaceHolder1_txtFromDate').datepicker("option", "maxDate", selectedDate);
                 }
             });
-            
+
             var ddlPayMode = '<%=ddlPayMode.ClientID%>'
             var lblPaymentAccountHead = '<%=lblPaymentAccountHead.ClientID%>'
 
@@ -547,8 +547,8 @@
                     }
                 });
             });
-                    
-            $("#myTabs").tabs();         
+
+            $("#myTabs").tabs();
         });
 
         function AddItemForAirTicket() {
@@ -576,10 +576,10 @@
                 toastr.warning("Please Select Flight Date.");
                 return false;
             }
-            //else if ($("#ContentPlaceHolder1_txtReturnDate").val() == "") {
-            //    toastr.warning("Please Select Return Date.");
-            //    return false;
-            //}
+                //else if ($("#ContentPlaceHolder1_txtReturnDate").val() == "") {
+                //    toastr.warning("Please Select Return Date.");
+                //    return false;
+                //}
             else if ($("#ContentPlaceHolder1_txtTicketNumber").val() == "") {
                 toastr.warning("Please Give Ticket Number.");
                 return false;
@@ -596,10 +596,10 @@
                 toastr.warning("Please Give Invoice Amount.");
                 return false;
             }
-            //else if ($("#ContentPlaceHolder1_txtAirlineAmount").val() == "") {
-            //    toastr.warning("Please Give a Number or Zero to Airline Amount.");
-            //    return false;
-            //}
+                //else if ($("#ContentPlaceHolder1_txtAirlineAmount").val() == "") {
+                //    toastr.warning("Please Give a Number or Zero to Airline Amount.");
+                //    return false;
+                //}
             else if ($("#ContentPlaceHolder1_txtRoute").val() == "") {
                 toastr.warning("Please Give Route.");
                 return false;
@@ -627,7 +627,7 @@
             var airlineAmount = $("#ContentPlaceHolder1_txtAirlineAmount").val();
             var routePath = $("#ContentPlaceHolder1_txtRoute").val();
             var remarks = $("#ContentPlaceHolder1_txtRemarks").val();
-            
+
             if (airlineAmount == "") {
                 airlineAmount = parseFloat(0);
             }
@@ -698,7 +698,7 @@
             $("#ContentPlaceHolder1_txtRemarks").val("");
             return false;
         }
-                
+
         function AddItemForPaymentInfo() {
             if ($("#ContentPlaceHolder1_ddlPayMode").val() == "0") {
                 toastr.warning("Please Select Payment Mode");
@@ -835,7 +835,7 @@
         function IsPaymentHeadExists(paymentHeadId) {
             var IsDuplicate = false;
             $("#PaymentInformationTbl tr").each(function (index) {
-                
+
                 if (index !== 0 && !IsDuplicate) {
                     var paymentHeadIdValueInTable = $(this).find("td").eq(4).html();
 
@@ -944,7 +944,7 @@
                     flightDate = CommonHelper.DateFormatMMDDYYYYFromDDMMYYYY(flightDate, innBoarDateFormat);
                 }
                 invoiceAmount = $.trim($(item).find("td:eq(4)").text());
-                
+
                 mobileNumber = $.trim($(item).find("td:eq(6)").text());
                 email = $.trim($(item).find("td:eq(7)").text());
                 address = $.trim($(item).find("td:eq(8)").text());
@@ -1015,7 +1015,7 @@
                     BankId: bankId,
                     ChequeNumber: chequeNumber
                 });
-                
+
             });
             var totalForTicketInfos = $("#ContentPlaceHolder1_hftotalForTicketInfos").val();
             var totalForPaymentInfos = $("#ContentPlaceHolder1_hftotalForPaymentInfos").val();
@@ -1047,7 +1047,7 @@
         function OnSaveAirlineTicketInfoFailed(error) {
             toastr.error(error.get_message());
         }
-                        
+
         function DeleteAirlineInfoItem(control) {
             if (!confirm("Do you want to delete item?")) { return false; }
 
@@ -1086,7 +1086,7 @@
         var deletedPaymentInfoList = [];
         function DeletePaymentInfoItem(control) {
             if (!confirm("Do you want to delete item?")) { return false; }
-            
+
             var tr = $(control).parent().parent();
             let paymentModeId = $(tr).find("td").eq(4).html();
             deletedPaymentInfoList.push(parseInt(paymentModeId, 10));
@@ -1189,20 +1189,20 @@
                 if (gridObject.IsCanEdit && IsCanEdit) {
                     tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return TicketInfoEditWithConfirmation(" + gridObject.TicketId + ")\" alt='Edit'  title='Edit' border='0' />";
                 }
-                
+
                 if (gridObject.IsCanDelete && IsCanDelete) {
                     tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return TicketInformationDelete(" + gridObject.TicketId + ")\" alt='Delete'  title='Delete' border='0' />";
                 }
-                
+
                 if (gridObject.IsCanChecked && IsCanSave) {
                     tr += "&nbsp;&nbsp;<img src='../Images/checked.png' onClick= \"javascript:return TicketInformationCheckWithConfirmation(" + gridObject.TicketId + ")\" alt='Check'  title='Check' border='0' />";
                 }
                 if (gridObject.IsCanApproved && IsCanSave) {
                     tr += "&nbsp;&nbsp;<img src='../Images/approved.png' onClick= \"javascript:return TicketInformationApprovalWithConfirmation(" + gridObject.TicketId + ")\" alt='Approve'  title='Approve' border='0' />";
                 }
-                
+
                 tr += "&nbsp;&nbsp;<img src='../Images/ReportDocument.png'  onClick= \"javascript:return PerformBillPreviewAction(" + gridObject.TicketId + ")\" alt='Invoice' title='Invoice' border='0' />";
-                
+
                 //tr += "&nbsp;&nbsp;<img src='../Images/note.png'  onClick= \"javascript:return ShowDealDocuments('" + gridObject.ReceivedId + "')\" alt='Invoice' title='Receive Order Info' border='0' />";
                 tr += "</td>";
 
@@ -1228,7 +1228,7 @@
         function OnSearchTicketInformationFailed() {
 
         }
-        
+
         function TicketInfoEdit(TicketId) {
 
             PageMethods.TicketInfoEdit(TicketId, OnTicketInfoEditSucceed, OnTicketInfoEditFailed);
@@ -1288,7 +1288,7 @@
 
         function PaymentMethodInformationEdit(result) {
             $.each(result, function (count, obj) {
-                
+
                 var tr = "";
 
                 tr += "<tr>";
@@ -1378,8 +1378,8 @@
             });
 
             $("#myTabs").tabs({ active: 0 });
-        }   
-        
+        }
+
         function TicketInformationDelete(TicketId) {
 
             if (!confirm("Do you Want To Delete?")) {
@@ -1451,7 +1451,7 @@
         function OnApprovalFailed() {
             toastr.error(error.get_message());
         }
-                
+
         function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
             SearchTicketInformation(pageNumber, IsCurrentOrPreviousPage);
             return false;
@@ -1461,7 +1461,54 @@
             window.location = "/AirTicketing/frmAirlineTicketInfo.aspx";
             return false;
         }
-        
+        function TicketUnapprovalPanel(result) {
+            $("#<%=txtApprovalTransactionNo.ClientID%>").val("");
+
+            $("#AdminApprovalDiv").dialog({
+                autoOpen: true,
+                modal: true,
+                width: 900,
+                closeOnEscape: true,
+                resizable: false,
+                title: "Ticket Unapproval Information",
+                show: 'slide'
+            });
+
+            return false;
+        }
+
+        function CloseDialogTicketUnapprovalPanel() {
+            $("#AdminApprovalDiv").dialog('close');
+            return false;
+        }
+        function AdminApprovalProcess() {
+            var r = confirm("Do you want to continue Voucher Unapproval?");
+            if (r == true) {
+                var transactionNo = $("#<%=txtApprovalTransactionNo.ClientID%>").val();
+                
+                var status = "Pending";
+
+                if (transactionNo == '') {
+                    toastr.warning("Please Enter Ticket Number.");
+                    $("#<%=txtApprovalTransactionNo.ClientID%>").focus();
+                    return false;
+                }
+
+                PageMethods.AdminApprovalStatus(transactionNo, status, OnAdminApprovalProcessSucceed, OnAdminApprovalProcessFailed);
+            }
+
+            return false;
+        }
+
+        function OnAdminApprovalProcessSucceed(result) {
+            toastr.success("Ticket Unapprove Successfull.");
+            return false;
+        }
+
+        function OnAdminApprovalProcessFailed(error) {
+            toastr.error(error.get_message());
+            return false;
+        }
     </script>
     <div id="dealDocuments" style="display: none;">
         <div id="imageDiv"></div>
@@ -1475,14 +1522,34 @@
     <asp:HiddenField ID="hfTicketMasterId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfEditPayment" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfStopAddingExistingPayment" runat="server" Value="0"></asp:HiddenField>
-
     <asp:HiddenField ID="hftotalForPaymentInfos" runat="server" Value="0" />
     <asp:HiddenField ID="hftotalForTicketInfos" runat="server" Value="0" />
-    
     <asp:HiddenField ID="hfSavePermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfEditPermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfDeletePermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfViewPermission" runat="server" Value="0" />
+    <div id="AdminApprovalDiv" class="panel panel-default" style="display: none;">
+        <div class="panel-body">
+            <div class="form-horizontal">                
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label class="control-label">Ticket Number</label>
+                    </div>
+                    <div class="col-md-4">
+                        <asp:TextBox ID="txtApprovalTransactionNo" runat="server" CssClass="form-control"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <asp:Button ID="Button2" runat="server" TabIndex="3" Text="Unapprove" CssClass="TransactionalButton btn btn-primary btn-sm"
+                        OnClientClick="javascript: return AdminApprovalProcess();" />
+                    <asp:Button ID="Button3" runat="server" TabIndex="4" Text="Close" CssClass="TransactionalButton btn btn-primary btn-sm"
+                        OnClientClick="javascript: return CloseDialogTicketUnapprovalPanel();" />
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="myTabs">
         <ul id="tabPage" class="ui-style">
             <li id="A" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
@@ -1932,10 +1999,10 @@
                                     </div>
                                     <div class="form-group" style="padding-left: 10px;">
                                         <%--Right Left--%>
-                                        <input id="btnAddDetailGuestPayment" type="button" value="Add" class="TransactionalButton btn btn-primary btn-sm" onclick="AddItemForPaymentInfo()" />                                            
+                                        <input id="btnAddDetailGuestPayment" type="button" value="Add" class="TransactionalButton btn btn-primary btn-sm" onclick="AddItemForPaymentInfo()" />
                                         <input id="btnCancelPayment" type="button" value="Cancel" onclick="ClearAfterPaymentInfoAdded()"
                                             class="TransactionalButton btn btn-primary btn-sm" />
-                                            
+
                                         <asp:Label ID="lblHiddenIdDetailGuestPayment" runat="server" Text='' Visible="False"></asp:Label>
                                     </div>
                                     <div id="PaymentInformation" style="overflow-y: scroll;">
@@ -1994,7 +2061,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                     <div class="form-group" style="padding-top: 10px;">
                         <div class="col-md-12">
                             <input id="btnSave" type="button" value="Save" onclick="ValidationBeforeSave()"
@@ -2050,6 +2117,8 @@
                             <div class="col-md-12">
                                 <input type="button" id="btnSearch" class="TransactionalButton btn btn-primary btn-large" value="Search" onclick="SearchTicketInformation(1, 1)" />
                                 <input type="button" id="btnSearchCancel" class="TransactionalButton btn btn-primary btn-large" value="Clear" onclick="ClearSearch()" />
+                                <asp:Button ID="btnAdminApproval" runat="server" TabIndex="4" Text="Ticket Unapproval" CssClass="TransactionalButton btn btn-primary btn-sm"
+                                    OnClientClick="javascript: return TicketUnapprovalPanel();" />
                             </div>
                         </div>
                     </div>
