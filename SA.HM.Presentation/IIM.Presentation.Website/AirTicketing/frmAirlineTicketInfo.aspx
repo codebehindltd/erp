@@ -1542,9 +1542,9 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <asp:Button ID="Button2" runat="server" TabIndex="3" Text="Unapprove" CssClass="TransactionalButton btn btn-primary btn-sm"
+                    <asp:Button ID="Button2" runat="server" Text="Unapprove" CssClass="TransactionalButton btn btn-primary btn-sm"
                         OnClientClick="javascript: return AdminApprovalProcess();" />
-                    <asp:Button ID="Button3" runat="server" TabIndex="4" Text="Close" CssClass="TransactionalButton btn btn-primary btn-sm"
+                    <asp:Button ID="Button3" runat="server" Text="Close" CssClass="TransactionalButton btn btn-primary btn-sm"
                         OnClientClick="javascript: return CloseDialogTicketUnapprovalPanel();" />
                 </div>
             </div>
@@ -1689,7 +1689,7 @@
                                 <asp:Label ID="lblAirlineName" runat="server" class="control-label required-field" Text="Airline Name"></asp:Label>
                             </div>
                             <div class="col-md-10">
-                                <asp:DropDownList ID="ddlAirlineName" CssClass="form-control" runat="server" TabIndex="21">
+                                <asp:DropDownList ID="ddlAirlineName" CssClass="form-control" runat="server">
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -1786,7 +1786,7 @@
                                     <asp:Label ID="lblTotalInvoiceAmount" runat="server" class="control-label" Text="Total Invoice Amount"></asp:Label>
                                 </div>
                                 <div class="col-md-4">
-                                    <asp:TextBox ID="txtTotalInvoiceAmount" ReadOnly="true" runat="server" TabIndex="75" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                    <asp:TextBox ID="txtTotalInvoiceAmount" ReadOnly="true" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
@@ -1804,7 +1804,7 @@
                                             <asp:Label ID="Label7" runat="server" class="control-label required-field" Text="Grand Total"></asp:Label>
                                         </div>
                                         <div class="col-md-4">
-                                            <asp:TextBox ID="txtGrandTotalInfo" TabIndex="3" runat="server" CssClass="form-control"
+                                            <asp:TextBox ID="txtGrandTotalInfo" runat="server" CssClass="form-control"
                                                 Enabled="false"> </asp:TextBox>
                                         </div>
                                     </div>--%>
@@ -1813,7 +1813,7 @@
                                             <asp:Label ID="lblPayMode" runat="server" class="control-label required-field" Text="Payment Mode"></asp:Label>
                                         </div>
                                         <div class="col-md-4">
-                                            <asp:DropDownList ID="ddlPayMode" runat="server" CssClass="form-control" TabIndex="5">
+                                            <asp:DropDownList ID="ddlPayMode" runat="server" CssClass="form-control">
                                                 <asp:ListItem Value="0">--- Please Select ---</asp:ListItem>
                                                 <asp:ListItem Value="1">Cash</asp:ListItem>
                                                 <asp:ListItem Value="2">Card</asp:ListItem>
@@ -1829,7 +1829,7 @@
                                                 Text="Currency Type"></asp:Label>
                                         </div>
                                         <div class="col-md-4">
-                                            <asp:DropDownList ID="ddlCurrency" TabIndex="6" CssClass="form-control" runat="server">
+                                            <asp:DropDownList ID="ddlCurrency" CssClass="form-control" runat="server">
                                             </asp:DropDownList>
                                             <asp:Label ID="lblDisplayConvertionRate" runat="server" Text=""></asp:Label>
                                             <asp:HiddenField ID="ddlCurrencyHiddenField" runat="server"></asp:HiddenField>
@@ -1841,8 +1841,7 @@
                                                 Text="Receive Amount"></asp:Label>
                                         </div>
                                         <div class="col-md-4">
-                                            <asp:TextBox ID="txtReceiveLeadgerAmount" runat="server" CssClass="form-control quantitydecimal"
-                                                TabIndex="7"></asp:TextBox>
+                                            <asp:TextBox ID="txtReceiveLeadgerAmount" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
                                         </div>
                                         <div id="ConversionRateDivInformation" style="display: none;">
                                             <div class="col-md-2">
@@ -1896,8 +1895,7 @@
                                                     Text="Company Name"></asp:Label>
                                             </div>
                                             <div class="col-md-4">
-                                                <asp:DropDownList ID="ddlChecquePaymentAccountHeadId" runat="server" CssClass="form-control"
-                                                    TabIndex="6">
+                                                <asp:DropDownList ID="ddlChecquePaymentAccountHeadId" runat="server" CssClass="form-control">
                                                 </asp:DropDownList>
                                             </div>
                                         </div>
@@ -1907,7 +1905,7 @@
                                                     Text="Cheque Number"></asp:Label>
                                             </div>
                                             <div class="col-md-10">
-                                                <asp:TextBox ID="txtChecqueNumber" runat="server" CssClass="form-control" TabIndex="7"></asp:TextBox>
+                                                <asp:TextBox ID="txtChecqueNumber" runat="server" CssClass="form-control"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -1926,8 +1924,7 @@
                                                     Text="Accounts Posting Head"></asp:Label>
                                             </div>
                                             <div class="col-md-4">
-                                                <asp:DropDownList ID="ddlCardPaymentAccountHeadId" runat="server" CssClass="form-control"
-                                                    TabIndex="6">
+                                                <asp:DropDownList ID="ddlCardPaymentAccountHeadId" runat="server" CssClass="form-control">
                                                 </asp:DropDownList>
                                             </div>
                                         </div>
@@ -2023,7 +2020,7 @@
                                                 <asp:Label ID="lblTotalPaymentAmount" runat="server" class="control-label" Text="Total Payment Amount"></asp:Label>
                                             </div>
                                             <div class="col-md-4">
-                                                <asp:TextBox ID="txtTotalPaymentAmount" ReadOnly="true" runat="server" TabIndex="75" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                                <asp:TextBox ID="txtTotalPaymentAmount" ReadOnly="true" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
                                             </div>
                                         </div>
                                     </div>
@@ -2054,7 +2051,7 @@
                                             <asp:Label ID="lblPaymentInstructionBank" runat="server" class="control-label" Text="Bank Name"></asp:Label>
                                         </div>
                                         <div class="col-md-4">
-                                            <asp:DropDownList ID="ddlPaymentInstructionBank" runat="server" CssClass="form-control" TabIndex="5">
+                                            <asp:DropDownList ID="ddlPaymentInstructionBank" runat="server" CssClass="form-control">
                                             </asp:DropDownList>
                                         </div>
                                     </div>
@@ -2085,16 +2082,16 @@
                                 <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="Date"></asp:Label>
                             </div>
                             <div class="col-md-2">
-                                <asp:TextBox ID="txtFromDate" Placeholder="From" CssClass="form-control" runat="server" TabIndex="61"></asp:TextBox>
+                                <asp:TextBox ID="txtFromDate" Placeholder="From" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-md-2">
-                                <asp:TextBox ID="txtToDate" Placeholder="To" CssClass="form-control" runat="server" TabIndex="62"></asp:TextBox>
+                                <asp:TextBox ID="txtToDate" Placeholder="To" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-md-2">
                                 <asp:Label ID="lblInvoiceNumber" runat="server" class="control-label" Text="Invoice No."></asp:Label>
                             </div>
                             <div class="col-md-4">
-                                <asp:TextBox ID="txtInvoiceNumber" CssClass="form-control" runat="server" TabIndex="63"></asp:TextBox>
+                                <asp:TextBox ID="txtInvoiceNumber" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
@@ -2102,7 +2099,7 @@
                                 <asp:Label ID="lblCompanyName" runat="server" class="control-label" Text="Company Name"></asp:Label>
                             </div>
                             <div class="col-md-10">
-                                <asp:TextBox ID="txtCompanyName" CssClass="form-control" runat="server" TabIndex="64"></asp:TextBox>
+                                <asp:TextBox ID="txtCompanyName" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
@@ -2110,14 +2107,14 @@
                                 <asp:Label ID="lblRefName" runat="server" class="control-label" Text="Reference Name"></asp:Label>
                             </div>
                             <div class="col-md-10">
-                                <asp:TextBox ID="txtRefName" CssClass="form-control" runat="server" TabIndex="65"></asp:TextBox>
+                                <asp:TextBox ID="txtRefName" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <input type="button" id="btnSearch" class="TransactionalButton btn btn-primary btn-large" value="Search" onclick="SearchTicketInformation(1, 1)" />
                                 <input type="button" id="btnSearchCancel" class="TransactionalButton btn btn-primary btn-large" value="Clear" onclick="ClearSearch()" />
-                                <asp:Button ID="btnAdminApproval" runat="server" TabIndex="4" Text="Ticket Unapproval" CssClass="TransactionalButton btn btn-primary btn-sm"
+                                <asp:Button ID="btnAdminApproval" runat="server" Text="Ticket Unapproval" CssClass="TransactionalButton btn btn-primary btn-sm"
                                     OnClientClick="javascript: return TicketUnapprovalPanel();" />
                             </div>
                         </div>
