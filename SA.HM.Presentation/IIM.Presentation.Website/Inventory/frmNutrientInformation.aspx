@@ -333,6 +333,7 @@
             return false;
         }
         function OnNutrientInfoEditSucceed(result) {
+            debugger;
             $("#myTabs").tabs({ active: 0 });
             $("#btnSave").val("Update");
             $("#ContentPlaceHolder1_hfEditId").val(1);
@@ -350,7 +351,7 @@
                 $("#nutrientInfoTextDiv").show();
                 $("#nutritionTypeTextDiv").hide();
                 $("#nutritionTypeList").show();
-                $("#ContentPlaceHolder1_ddlNutritionType").val(result.NutrientId).trigger('change');
+                $("#ContentPlaceHolder1_ddlNutritionType").val(result.NutritionTypeId).trigger('change');
             }
 
             $("#ContentPlaceHolder1_hfNutritionTypeId").val(result.NutritionTypeId);

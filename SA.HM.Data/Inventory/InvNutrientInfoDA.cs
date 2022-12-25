@@ -170,8 +170,37 @@ namespace HotelManagement.Data.Inventory
             }
             return nutritionTypeList;
         }
+        public List<InvNutrientInfoBO> GetNutrientInformations()
+        {
+            List<InvNutrientInfoBO> nutrientList = new List<InvNutrientInfoBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetNutrientInformations_SP"))
+                {
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                InvNutrientInfoBO nutrient = new InvNutrientInfoBO();
 
-        public List<InvNutrientInfoBO> GetNutrientInformation(InvNutrientInfoBO nutrientInfo, Int32 userInfoId, int recordPerPage, int pageIndex, out int totalRecords)
+                                nutrient.NutrientId = Convert.ToInt64(reader["NutrientId"]);
+                                nutrient.NutritionTypeId = Convert.ToInt64(reader["NutritionTypeId"]);
+                                nutrient.Code = reader["Code"].ToString();
+                                nutrient.Name = reader["Name"].ToString();
+                                nutrient.Remarks = reader["Remarks"].ToString();
+                                nutrient.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
+                                nutrientList.Add(nutrient);
+                            }
+                        }
+                    }
+                }
+            }
+            return nutrientList;
+        }
+
+        public List<InvNutrientInfoBO> GetNutrientInformationForSearch(InvNutrientInfoBO nutrientInfo, Int32 userInfoId, int recordPerPage, int pageIndex, out int totalRecords)
         {
             List<InvNutrientInfoBO> nutritionInfo = new List<InvNutrientInfoBO>();
             totalRecords = 0;

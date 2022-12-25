@@ -165,7 +165,7 @@ namespace HotelManagement.Presentation.Website.Inventory
             InvNutrientInfoDA inDA = new InvNutrientInfoDA();
             List<InvNutrientInfoBO> nutrientList = new List<InvNutrientInfoBO>();
 
-            nutrientList = inDA.GetNutrientInformation(nutrientInfo, userInformationBO.UserInfoId, userInformationBO.GridViewPageSize, pageNumber, out totalRecords);
+            nutrientList = inDA.GetNutrientInformationForSearch(nutrientInfo, userInformationBO.UserInfoId, userInformationBO.GridViewPageSize, pageNumber, out totalRecords);
 
             myGridData.GridPagingProcessing(nutrientList, totalRecords);
             return myGridData;
