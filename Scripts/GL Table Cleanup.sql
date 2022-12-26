@@ -5,6 +5,5 @@ TRUNCATE TABLE GLAccountTypeSetup
 TRUNCATE TABLE GLDealMaster
 TRUNCATE TABLE GLLedger
 TRUNCATE TABLE GLProfitLossSetup
-TRUNCATE TABLE GLProjectWiseCostCenterMapping
 TRUNCATE TABLE GLReportConfiguration
 TRUNCATE TABLE GLReportConfigurationDetail
