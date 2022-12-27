@@ -3,7 +3,6 @@
 <%@ Register TagPrefix="UserControl" TagName="CompanyProjectUserControl" Src="~/HMCommon/UserControl/CompanyProjectUserControl.ascx" %>
 <%@ Register TagPrefix="UserControl" TagName="companyProjectUserControlSrc" Src="~/HMCommon/UserControl/CompanyProjectUserControl.ascx" %>
 
-
 <%@ Register Assembly="FlashUpload" Namespace="ClientUploader" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -178,39 +177,6 @@
                     $("#ContentPlaceHolder1_hfReferenceIdForCompany").val(ui.item.value);
                 }
             });
-
-            //$("#ContentPlaceHolder1_txtRegistrationNumber").autocomplete({
-            //    source: function (request, response) {
-            //        $.ajax({
-            //            type: "POST",
-            //            contentType: "application/json; charset=utf-8",
-            //            url: "../AirTicketing/frmAirlineTicketInfo.aspx/GetGuestRegistrationNumberForRoomGuest",
-            //            data: JSON.stringify({ searchTerm: request.term }),
-            //            dataType: "json",
-            //            async: false,
-            //            success: function (data) {
-            //                var searchData = data.error ? [] : $.map(data.d, function (m) {
-            //                    return {
-            //                        label: m.Name,
-            //                        value: m.Id
-            //                    }
-            //                });
-            //                response(searchData);
-            //            },
-            //            failed: function (result) {
-
-            //            }
-            //        });
-            //    },
-            //    focus: function (event, ui) {
-            //        event.preventDefault();
-            //    },
-            //    select: function (event, ui) {
-            //        event.preventDefault();
-            //        $(this).val(ui.item.label);
-            //        $("#ContentPlaceHolder1_hfRegistrationNumber").val(ui.item.value);
-            //    }
-            //});
 
             $("#ContentPlaceHolder1_txtbankName").autocomplete({
                 source: function (request, response) {
@@ -2050,7 +2016,7 @@
                                         <div class="col-md-2">
                                             <asp:Label ID="lblPaymentInstructionBank" runat="server" class="control-label" Text="Bank Name"></asp:Label>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-10">
                                             <asp:DropDownList ID="ddlPaymentInstructionBank" runat="server" CssClass="form-control">
                                             </asp:DropDownList>
                                         </div>

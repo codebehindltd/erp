@@ -1439,7 +1439,11 @@
                                             <Hidden>=IIF(Parameters!VatRegistrationNo.Value = "", true, false)</Hidden>
                                           </Visibility>
                                         </TablixMember>
-                                        <TablixMember />
+                                        <TablixMember>
+                                          <Visibility>
+                                            <Hidden>true</Hidden>
+                                          </Visibility>
+                                        </TablixMember>
                                         <TablixMember>
                                           <Visibility>
                                             <Hidden>true</Hidden>
@@ -1590,16 +1594,16 @@
                             <Width>0.67156in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.44495in</Width>
+                            <Width>1.33037in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>0.76352in</Width>
+                            <Width>1.15935in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.33723in</Width>
+                            <Width>1.20181in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.11396in</Width>
+                            <Width>0.96813in</Width>
                           </TablixColumn>
                           <TablixColumn>
                             <Width>1.251in</Width>

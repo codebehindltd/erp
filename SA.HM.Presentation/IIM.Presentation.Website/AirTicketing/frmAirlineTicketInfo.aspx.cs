@@ -130,7 +130,7 @@ namespace HotelManagement.Presentation.Website.AirTicketing
             bankBo = bankDa.GetBankInfo();
 
             ddlPaymentInstructionBank.DataSource = bankBo;
-            ddlPaymentInstructionBank.DataTextField = "BankName";
+            ddlPaymentInstructionBank.DataTextField = "BankAccountNameAndNumber";
             ddlPaymentInstructionBank.DataValueField = "BankId";
             ddlPaymentInstructionBank.DataBind();
 
