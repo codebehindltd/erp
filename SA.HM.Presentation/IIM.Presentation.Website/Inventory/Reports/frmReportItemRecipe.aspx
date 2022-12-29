@@ -24,6 +24,13 @@
                 $("#LocationWise").hide();
             }
 
+            $("#ContentPlaceHolder1_ddlProduct").select2({
+                tags: "true",
+                placeholder: "--- All ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             $("#ContentPlaceHolder1_ddlReportType").change(function () {
 
                 if ($(this).val() == "ItemWiseStock") {

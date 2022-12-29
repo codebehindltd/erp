@@ -572,12 +572,13 @@
                 toastr.warning('Please Select Stock Type.');
                 return false;
             }
-    if ($("#<%=ddlClassification.ClientID %>").val() == "0") {
+
+            if ($("#<%=ddlClassification.ClientID %>").val() == "0") {
                 toastr.warning('Please Select Item Classification.');
                 return false;
             }
             else if ($("#<%=ddlCategory.ClientID %>").val() != "0") {
-        if ($("#<%=ddlStockType.ClientID %>").val() == "KitchenItem") {
+                if ($("#<%=ddlStockType.ClientID %>").val() == "KitchenItem") {
                     if (rowLength == 0 && saveObj.length == 0 && deleteSalesObj.length == 0) {
                         toastr.warning('Please add at least one recipe item.');
                         return false;

@@ -38,12 +38,12 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 Random rd = new Random();
                 int seatingId = rd.Next(100000, 999999);
                 RandomProjectId.Value = seatingId.ToString();
-
+                this.IsProjectCodeAutoGenerate();
                 this.LoadCompany();
                 this.LoadProjectStage();
                 this.LoadCostCenterInfoGridView();
-                LoadSMCompany();
-                FileUpload();
+                this.LoadSMCompany();
+                this.FileUpload();
             }
         }
         protected void gvUserGroupCostCenterInfo_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -240,6 +240,28 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
 
         }
         //************************ User Defined Function ********************//
+        private void IsProjectCodeAutoGenerate()
+        {
+            CodeModelLabel.Visible = true;
+            CodeModelControl.Visible = true;
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+            HMCommonSetupBO homePageSetupBO = new HMCommonSetupBO();
+            homePageSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsProjectCodeAutoGenerate", "IsProjectCodeAutoGenerate");
+            if (homePageSetupBO != null)
+            {
+                if (homePageSetupBO.SetupId > 0)
+                {
+                    hfIsProjectCodeAutoGenerate.Value = homePageSetupBO.SetupValue;
+                    if (homePageSetupBO.SetupValue == "1")
+                    {
+                        CodeModelLabel.Visible = false;
+                        CodeModelControl.Visible = false;
+                    }
+                }
+            }
+        }
         private void LoadFormConfiguration()
         {
             UserInformationBO userInformationBO = new UserInformationBO();
@@ -444,9 +466,12 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             }
             else if (string.IsNullOrWhiteSpace(this.txtCode.Text))
             {
-                status = false;
-                CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Project Code.", AlertType.Warning);
-                txtCode.Focus();
+                if (hfIsProjectCodeAutoGenerate.Value == "0")
+                {
+                    status = false;
+                    CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Project Code.", AlertType.Warning);
+                    txtCode.Focus();
+                }
             }
             else if (this.ddlProjectStage.SelectedValue == "0")
             {

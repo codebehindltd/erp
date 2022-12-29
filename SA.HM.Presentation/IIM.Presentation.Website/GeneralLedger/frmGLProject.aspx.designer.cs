@@ -22,6 +22,15 @@ namespace HotelManagement.Presentation.Website.GeneralLedger {
         protected global::System.Web.UI.WebControls.HiddenField hfDeletedDoc;
         
         /// <summary>
+        /// hfIsProjectCodeAutoGenerate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsProjectCodeAutoGenerate;
+        
+        /// <summary>
         /// pnlUpload control.
         /// </summary>
         /// <remarks>
@@ -130,6 +139,15 @@ namespace HotelManagement.Presentation.Website.GeneralLedger {
         protected global::System.Web.UI.WebControls.DropDownList ddlCompanyId;
         
         /// <summary>
+        /// CodeModelLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CodeModelLabel;
+        
+        /// <summary>
         /// lblCode control.
         /// </summary>
         /// <remarks>
@@ -137,6 +155,15 @@ namespace HotelManagement.Presentation.Website.GeneralLedger {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblCode;
+        
+        /// <summary>
+        /// CodeModelControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CodeModelControl;
         
         /// <summary>
         /// txtCode control.
