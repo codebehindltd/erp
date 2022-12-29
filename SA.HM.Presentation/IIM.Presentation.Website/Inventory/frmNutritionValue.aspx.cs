@@ -1,5 +1,7 @@
 ﻿using HotelManagement.Data.Inventory;
 using HotelManagement.Entity.Inventory;
+using HotelManagement.Entity.UserInformation;
+using HotelManagement.Presentation.Website.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +46,46 @@ namespace HotelManagement.Presentation.Website.Inventory
             invItemBo = invItemDa.GetInvItemInfo();
             return invItemBo;
         }
-        
+        [WebMethod]
+        public static List<InvNutrientInfoBO> GetNutrientAmounts()
+        {
+            List<InvNutrientInfoBO> nutrientAmountList = new List<InvNutrientInfoBO>();
+            InvNutrientInfoDA niDa = new InvNutrientInfoDA();
+            nutrientAmountList = niDa.GetNutrientAmounts();
+            return nutrientAmountList;
+        }
+        [WebMethod]        
+        public static ReturnInfo SaveNutrientsAmount(List<InvNutrientInfoBO> AddedNutrients)
+        {
+            ReturnInfo rtninfo = new ReturnInfo();
+            Boolean status = false;
+            try
+            {
+                HMUtility hmUtility = new HMUtility();
+                UserInformationBO userInformationBO = new UserInformationBO();
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                InvNutrientInfoDA nutrientInfoDa = new InvNutrientInfoDA();
+                status = nutrientInfoDa.SaveNutrientsAmount(AddedNutrients, userInformationBO.UserInfoId);
+                if (status)
+                {
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
+                }
+
+                if (!status)
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            return rtninfo;
+
+        }
     }
 }

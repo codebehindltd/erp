@@ -143,6 +143,57 @@ namespace HotelManagement.Data.Inventory
 
             return retVal;
         }
+        
+        public bool SaveNutrientsAmount(List<InvNutrientInfoBO> AddedNutrients, int userInfoId)
+        {
+            Int64 status = 0;
+            bool retVal = false;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (InvNutrientInfoBO ni in AddedNutrients)
+                        {
+                            using (DbCommand cmdSave = dbSmartAspects.GetStoredProcCommand("SaveNutrientsAmount_SP"))
+                            {
+                                cmdSave.Parameters.Clear();
+
+                                dbSmartAspects.AddInParameter(cmdSave, "@ItemId", DbType.Int32, ni.ItemId);
+                                dbSmartAspects.AddInParameter(cmdSave, "@NutritionTypeId", DbType.Int32, ni.NutritionTypeId);
+                                dbSmartAspects.AddInParameter(cmdSave, "@NutrientId", DbType.Int32, ni.NutrientId);
+                                dbSmartAspects.AddInParameter(cmdSave, "@NutrientAmount", DbType.Decimal, ni.NutrientAmount);
+                                dbSmartAspects.AddInParameter(cmdSave, "@Formula", DbType.String, ni.Formula);
+                                dbSmartAspects.AddInParameter(cmdSave, "@CreatedBy", DbType.Int32, userInfoId);
+
+                                status = dbSmartAspects.ExecuteNonQuery(cmdSave, transction);
+                            }
+                        }
+
+                        if (status > 0)
+                        {
+                            retVal = true;
+                            transction.Commit();
+                        }
+                        else
+                        {
+                            retVal = false;
+                            transction.Rollback();
+                        }
+                    }
+                    catch
+                    {
+                        retVal = false;
+                        transction.Rollback();
+                    }
+                }
+            }
+
+            return retVal;
+        }
         public List<InvNutrientInfoBO> GetNutritionType()
         {
             List<InvNutrientInfoBO> nutritionTypeList = new List<InvNutrientInfoBO>();
@@ -198,6 +249,35 @@ namespace HotelManagement.Data.Inventory
                 }
             }
             return nutrientList;
+        }
+        
+        public List<InvNutrientInfoBO> GetNutrientAmounts()
+        {
+            List<InvNutrientInfoBO> nutrientAmountList = new List<InvNutrientInfoBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetNutrientAmounts_SP"))
+                {
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                InvNutrientInfoBO nutrientAmount = new InvNutrientInfoBO();
+
+                                nutrientAmount.ItemId = Convert.ToInt32(reader["RecipeItemId"]);
+                                nutrientAmount.NutrientId = Convert.ToInt32(reader["NutrientsId"]);
+                                nutrientAmount.NutritionTypeId = Convert.ToInt32(reader["NTypeId"]);
+                                nutrientAmount.Formula = reader["Formula"].ToString();
+                                nutrientAmount.NutrientAmount = Convert.ToDecimal(reader["FormulaValue"]);
+                                nutrientAmountList.Add(nutrientAmount);
+                            }
+                        }
+                    }
+                }
+            }
+            return nutrientAmountList;
         }
 
         public List<InvNutrientInfoBO> GetNutrientInformationForSearch(InvNutrientInfoBO nutrientInfo, Int32 userInfoId, int recordPerPage, int pageIndex, out int totalRecords)

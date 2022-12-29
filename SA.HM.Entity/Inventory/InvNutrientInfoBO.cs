@@ -19,5 +19,8 @@ namespace HotelManagement.Entity.Inventory
         public DateTime LastModifiedDate { get; set; }
         public int SetupTypeId { get; set; }
         public Boolean IsEdit { get; set; }
+        public int ItemId { get; set; }
+        public decimal NutrientAmount { get; set; }
+        public string Formula { get; set; }
     }
 }

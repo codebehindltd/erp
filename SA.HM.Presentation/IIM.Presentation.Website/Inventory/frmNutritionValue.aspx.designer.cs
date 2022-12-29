@@ -13,6 +13,42 @@ namespace HotelManagement.Presentation.Website.Inventory {
     public partial class frmNutritionValue {
         
         /// <summary>
+        /// hfSelectedBoxId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfSelectedBoxId;
+        
+        /// <summary>
+        /// hfItemId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfItemId;
+        
+        /// <summary>
+        /// hfNutritionTypeId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfNutritionTypeId;
+        
+        /// <summary>
+        /// hfNutrientId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfNutrientId;
+        
+        /// <summary>
         /// hfSavePermission control.
         /// </summary>
         /// <remarks>
@@ -56,15 +92,6 @@ namespace HotelManagement.Presentation.Website.Inventory {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl A;
-        
-        /// <summary>
-        /// B control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl B;
         
         /// <summary>
         /// lblFormula control.
