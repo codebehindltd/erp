@@ -18,5 +18,17 @@ namespace HotelManagement.Entity.Inventory
         public string ServingInstructions { get; set; }
         public string IngredientPrepComments { get; set; }
         public long ItemRank { get; set; }
+        
+        public string FinishedGoodsName { get; set; }
+        public string FinishedGoodsCode { get; set; }
+        public long NTypeId { get; set; }
+        public string NutrientTypeName { get; set; }
+        public string NutrientTypeCode { get; set; }
+        public long NutrientsId { get; set; }
+        public string NutrientName { get; set; }
+        public string NutrientCode { get; set; }
+        public decimal RequiredValue { get; set; }
+        public decimal CalculatedFormula { get; set; }
+        public decimal CalculatedValue { get; set; }
     }
 }

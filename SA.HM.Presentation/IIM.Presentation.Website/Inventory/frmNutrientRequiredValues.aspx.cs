@@ -25,7 +25,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         {
             InvItemDA invItemDa = new InvItemDA();
             List<InvItemBO> invItemBo = new List<InvItemBO>();
-            invItemBo = invItemDa.GetInvItemInfo();
+            invItemBo = invItemDa.GetInvFinishedItemInformation();
 
             ddlItemName.DataSource = invItemBo;
             ddlItemName.DataTextField = "Name";

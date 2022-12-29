@@ -13,6 +13,20 @@
             IsCanDelete = $('#ContentPlaceHolder1_hfDeletePermission').val() == '1' ? true : false;
             IsCanView = $('#ContentPlaceHolder1_hfViewPermission').val() == '1' ? true : false;
             
+            $("#ContentPlaceHolder1_ddlItemName").select2({
+                tags: "true",
+                placeholder: "--- All ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
+            $("#ContentPlaceHolder1_ddlNutrient").select2({
+                tags: "true",
+                placeholder: "--- All ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             $("#myTabs").tabs();
         });       
 

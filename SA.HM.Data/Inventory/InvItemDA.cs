@@ -2643,6 +2643,44 @@ namespace HotelManagement.Data.Inventory
 
             return itemRecipe;
         }
+        public List<RecipeReportBO> GetItemNutrientInformationReport(int itemId)
+        {
+            List<RecipeReportBO> itemRecipe = new List<RecipeReportBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvNutrientInformationByFGId_SP"))
+                {
+                    //if (itemId != 0)
+                        dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, itemId);
+                    //else
+                    //    dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, DBNull.Value);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "PMProductOut");
+                    DataTable Table = ds.Tables["PMProductOut"];
+
+                    itemRecipe = Table.AsEnumerable().Select(r => new RecipeReportBO
+                    {
+                        ItemId = r.Field<Int32>("ItemId"),
+                        FinishedGoodsName = r.Field<string>("FinishedGoodsName"),
+                        FinishedGoodsCode = r.Field<string>("FinishedGoodsCode"),
+                        //NTypeId = r.Field<Int64>("NTypeId"),
+                        NutrientTypeName = r.Field<string>("NutrientTypeName"),
+                        NutrientTypeCode = r.Field<string>("NutrientTypeCode"),
+                        //NutrientsId = r.Field<Int64>("NutrientsId"),
+                        NutrientName = r.Field<string>("NutrientName"),
+                        NutrientCode = r.Field<string>("NutrientCode"),
+                        RequiredValue = r.Field<decimal>("RequiredValue"),
+                        CalculatedFormula = r.Field<decimal>("CalculatedFormula"),
+                        CalculatedValue = r.Field<decimal>("CalculatedValue"),
+
+                    }).ToList();
+                }
+            }
+
+            return itemRecipe;
+        }
         public List<InvItemAutoSearchBO> GetItemNameNCategoryForRecipeAutoSearch(string itemName, int categoryId, bool? isCustomerItem, string itemType)
         {
             List<InvItemAutoSearchBO> itemInfo = new List<InvItemAutoSearchBO>();
@@ -5404,6 +5442,46 @@ namespace HotelManagement.Data.Inventory
             }
 
             return itemInfo;
+        }
+        public List<InvItemBO> GetInvFinishedItemInformation()
+        {
+            List<InvItemBO> productList = new List<InvItemBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvFinishedItemInformation_SP"))
+                {
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                InvItemBO productBO = new InvItemBO();
+                                productBO.ItemId = Convert.ToInt32(reader["ItemId"]);
+                                productBO.Name = reader["Name"].ToString();
+                                productBO.Code = reader["Code"].ToString();
+                                productBO.CodeAndName = reader["Code"].ToString() + " - " + reader["Name"].ToString();
+                                productBO.Description = reader["Description"].ToString();
+                                productBO.CategoryId = Convert.ToInt32(reader["CategoryId"]);
+                                productBO.ManufacturerId = Convert.ToInt32(reader["ManufacturerId"]);
+                                productBO.ProductType = reader["ProductType"].ToString();
+                                productBO.PurchasePrice = Convert.ToDecimal(reader["PurchasePrice"]);
+                                productBO.SellingLocalCurrencyId = Int32.Parse(reader["SellingLocalCurrencyId"].ToString());
+                                productBO.UnitPriceLocal = Convert.ToDecimal(reader["UnitPriceLocal"]);
+                                productBO.SellingUsdCurrencyId = Int32.Parse(reader["SellingUsdCurrencyId"].ToString());
+                                productBO.UnitPriceUsd = Convert.ToDecimal(reader["UnitPriceUsd"]);
+                                productBO.ServiceWarranty = Int32.Parse(reader["ServiceWarranty"].ToString());
+                                productBO.StockType = reader["StockType"].ToString();
+                                productBO.ServiceType = reader["ServiceType"].ToString();
+                                productBO.StockBy = Int32.Parse(reader["StockBy"].ToString());
+                                productBO.IsSupplierItem = Convert.ToBoolean(reader["IsSupplierItem"].ToString());
+                                productList.Add(productBO);
+                            }
+                        }
+                    }
+                }
+            }
+            return productList;
         }
     }
 }

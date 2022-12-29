@@ -307,6 +307,7 @@
     <Content Include="Inventory\InvItemAttributeSetup.aspx" />
     <Content Include="Inventory\InvItemAttributeSetupIframe.aspx" />
     <Content Include="Inventory\Reports\frmReportABCAnalysis.aspx" />
+    <Content Include="Inventory\Reports\frmReportNutrientInformation.aspx" />
     <Content Include="Inventory\Reports\frmReportProductConsumption.aspx" />
     <Content Include="Inventory\Reports\frmReportProductionInfo.aspx" />
     <Content Include="Inventory\Reports\frmReportXYZAnalysis.aspx" />
@@ -2889,6 +2890,13 @@
     </Compile>
     <Compile Include="Inventory\Reports\frmReportABCAnalysis.aspx.designer.cs">
       <DependentUpon>frmReportABCAnalysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\Reports\frmReportNutrientInformation.aspx.cs">
+      <DependentUpon>frmReportNutrientInformation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\Reports\frmReportNutrientInformation.aspx.designer.cs">
+      <DependentUpon>frmReportNutrientInformation.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventory\Reports\frmReportProductConsumption.aspx.cs">
       <DependentUpon>frmReportProductConsumption.aspx</DependentUpon>
