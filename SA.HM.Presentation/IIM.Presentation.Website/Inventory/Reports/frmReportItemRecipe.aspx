@@ -112,7 +112,7 @@
     </div>
     <div id="ReportPanel" class="panel panel-default">
         <div class="panel-heading">
-            Report:: Recipe Information</div>
+            Report:: Ingredients Information</div>
         <div class="panel-body">
             <asp:Panel ID="pnlReporContainer" runat="server" ScrollBars="Both" Height="700px">
                 <rsweb:ReportViewer ShowFindControls="false" ShowWaitControlCancelLink="false" ID="rvTransaction"

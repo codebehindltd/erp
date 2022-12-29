@@ -52,6 +52,7 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             rvTransaction.ProcessingMode = ProcessingMode.Local;
 
             var reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptItemRecipe.rdlc");
+            //Server.MapPath(@"~/Inventory/Reports/Rdlc/rptItemNutrientInformation.rdlc");
 
             if (!File.Exists(reportPath))
                 return;
