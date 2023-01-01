@@ -796,7 +796,15 @@ namespace HotelManagement.Presentation.Website.POS
                             RestaurantBillBO mappingInfoBO = rda.GetItemCostCenterMappingInfo(bo.CostCenterId, bo.ItemId);
                             if (mappingInfoBO != null)
                             {
-                                if (mappingInfoBO.VatAmount == 15)
+                                if (mappingInfoBO.VatAmount == 5)
+                                {
+                                    reportBo.VatCategory = "16038";
+                                }
+                                else if(mappingInfoBO.VatAmount == 10)
+                                {
+                                    reportBo.VatCategory = "16040";
+                                }
+                                else if(mappingInfoBO.VatAmount == 15)
                                 {
                                     reportBo.VatCategory = "16042";
                                 }
