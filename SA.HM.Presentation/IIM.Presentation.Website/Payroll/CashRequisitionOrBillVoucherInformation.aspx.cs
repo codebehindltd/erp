@@ -46,7 +46,10 @@ namespace HotelManagement.Presentation.Website.Payroll
             if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
             {
                 if (setUpBO.SetupValue == "0")
+                {
                     btnCreateNewCashRequisition.Visible = false;
+                    this.ddlTransactionType.Items.Remove(ddlTransactionType.Items.FindByValue("Cash Requisition"));
+                }
             }
 
             btnCreateNewBillVoucher.Visible = true;
@@ -54,7 +57,10 @@ namespace HotelManagement.Presentation.Website.Payroll
             if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
             {
                 if (setUpBO.SetupValue == "0")
+                { 
                     btnCreateNewBillVoucher.Visible = false;
+                this.ddlTransactionType.Items.Remove(ddlTransactionType.Items.FindByValue("Bill Voucher"));
+                }
             }
         }
         private void IsAdminUser()
