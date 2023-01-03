@@ -12,14 +12,7 @@
             IsCanView = $('#ContentPlaceHolder1_hfViewPermission').val() == '1' ? true : false;
             $("#ContentPlaceHolder1_txtFormula").attr("disabled", true);
 
-            
             LoadNutritionType();
-
-            //LoadNutrientInformation();
-
-            //LoadIngredients();
-
-            //LoadNutrientAmount();
                     
             $("#myTabs").tabs();         
         });
@@ -60,11 +53,9 @@
             var tr = "";
             tr += "<tr>";
             var lengthOfResult = result.length;
-            // var widthOfNType = 00 / lengthOfResult;
-            // style='width:"+ widthOfNType +"px;'
-            tr += "<td style='width:200px;'></td>";
+            tr += "<td style='white-space: nowrap;'></td>";
             $.each(result, function (count, obj) {
-                tr += "<td>" + obj.Name + "</td>";
+                tr += "<td style='white-space: nowrap; text-align: center;'>" + obj.Name + "</td>";
             });
             tr += "</tr>";
             $("#NutritionValueTbl thead").append(tr);
@@ -82,13 +73,13 @@
         function OnGetNutrientInformationSucceed(result) {
             nutrientInfoList = result;
             var tr = "";
-            tr += "<td style='width:200px;'>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "Ingredient Name</td>";
+            tr += "<td style='text-align: center; white-space: nowrap;'>" + "Ingredient Name</td>";
             $.each(nutritionTypeList, function (ncount, nobj) {
                 var td = "";
-                td += "<td>";
+                td += "<td style='white-space: nowrap;'>";
                 $.each(result, function (count, obj) {
                     if (nobj.NutritionTypeId == obj.NutritionTypeId) {
-                        td += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + obj.Name;
+                        td += "<span style='width: 100px; text-align: center; display: inline-block; margin: 0 5px;'>" + obj.Name + "</span>";
                     }
                 });
                 td += "</td>";
@@ -113,14 +104,14 @@
                 var tr = "";
                 tr += "<tr>";
                 var td = "";
-                td += "<td style='width:200px;'>" + obj.Name + "</td>";
+                td += "<td style='white-space: nowrap;'>" + obj.Name + "</td>";
                 tr += td;
                 
                 $.each(nutritionTypeList, function (ncount, nobj) {
-                    td = "<td>";
+                    td = "<td style='white-space: nowrap;'>";
                     $.each(nutrientInfoList, function (icount, iobj) {
                         if (nobj.NutritionTypeId == iobj.NutritionTypeId) {
-                            td += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "<input type='text' size='2' onclick='getNutrientAmount(" + obj.ItemId + "," + nobj.NutritionTypeId + "," + iobj.NutrientId + ");' id='" + obj.ItemId + nobj.NutritionTypeId + iobj.NutrientId + "' \>";
+                            td += "<input type='text' style='width: 100px; margin: 0 5px;' onclick='getNutrientAmount(" + obj.ItemId + "," + nobj.NutritionTypeId + "," + iobj.NutrientId + ");' id='" + obj.ItemId + nobj.NutritionTypeId + iobj.NutrientId + "' readonly\>";
                         }
                     });
                     td += "</td>";
@@ -201,10 +192,11 @@
             let formula;
             let formulaValue;
             let inputFormula;
+            let lengthOfFormulaOrValue = formulaOrValue.length;
             if(formulaOrValue[0] == "="){
                 inputFormula = formulaOrValue.slice(1, formulaOrValue.length);
             }
-            
+                        
             if (formulaOrValue == "") {
                 formulaValue = 0;
                 $("#" + boxId + "").val(formulaOrValue);
@@ -253,7 +245,23 @@
                             }
                         }
                     }
-                    formulaValue = eval(formula);
+                    try {
+                        formulaValue = eval(formula);
+                        console.log(formulaValue);
+                    }
+                    catch (err) {
+                        toastr.warning("Enter a correct formula.");
+                        $("#ContentPlaceHolder1_txtFormula").focus();
+                        return false;
+                    }
+                    if (eval(formula) == "Infinity") {
+                        toastr.warning("Infinite Value Is Not Acceptable.");
+                        $("#ContentPlaceHolder1_txtFormula").focus();
+                        return false;
+                    }
+
+                    // formulaValue = eval(formula);
+                    
                     formulaValue = parseFloat(formulaValue).toFixed(2);
                     $("#" + boxId + "").val(formulaValue);
                 }
@@ -360,7 +368,6 @@
         }
         function OnSaveNutrientsAmountSucceed(result) {
             if (result.IsSuccess) {
-                //$("#btnSave").val("Save");
                 CommonHelper.AlertMessage(result.AlertMessage);
             }
             else {
@@ -406,7 +413,7 @@
                                     class="TransactionalButton btn btn-primary btn-sm" />
                             </div>
                         </div>
-                        <div class="table-responsive" id="NutritionValue">
+                        <div class="table-responsive" id="NutritionValue" style="overflow: scroll;">
                             <table id="NutritionValueTbl" class="table table-bordered table-condensed table-hover">
                                 <thead>
                                 </thead>
