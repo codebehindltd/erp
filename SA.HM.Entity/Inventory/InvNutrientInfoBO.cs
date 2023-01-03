@@ -22,5 +22,6 @@ namespace HotelManagement.Entity.Inventory
         public int ItemId { get; set; }
         public decimal NutrientAmount { get; set; }
         public string Formula { get; set; }
+        public string FormulaWithDecimal { get; set; }
     }
 }
