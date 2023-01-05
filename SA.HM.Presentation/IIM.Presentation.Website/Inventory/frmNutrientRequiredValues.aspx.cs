@@ -1,10 +1,12 @@
 ﻿using HotelManagement.Data.Inventory;
 using HotelManagement.Entity.Inventory;
+using HotelManagement.Entity.UserInformation;
 using HotelManagement.Presentation.Website.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -53,6 +55,38 @@ namespace HotelManagement.Presentation.Website.Inventory
             itemSearch.Value = "0";
             itemSearch.Text = hmUtility.GetDropDownFirstValue();
             ddlNutrient.Items.Insert(0, itemSearch);
+        }
+        
+        [WebMethod]
+        public static ReturnInfo SaveNutrientRequiredValues(List<InvNutrientInfoBO> AddedNutrientRequiredValueInfo)
+        {
+            ReturnInfo rtninfo = new ReturnInfo();
+            Boolean status = false;
+            try
+            {
+                HMUtility hmUtility = new HMUtility();
+                UserInformationBO userInformationBO = new UserInformationBO();
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                InvNutrientInfoDA nutrientInfoDa = new InvNutrientInfoDA();
+                status = nutrientInfoDa.SaveNutrientRequiredValues(AddedNutrientRequiredValueInfo, userInformationBO.UserInfoId);
+                if (status)
+                {
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
+                }
+
+                if (!status)
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+            return rtninfo;
         }
     }
 }

@@ -216,6 +216,58 @@ namespace HotelManagement.Data.Inventory
 
             return retVal;
         }
+
+        
+        public bool SaveNutrientRequiredValues(List<InvNutrientInfoBO> AddedNutrientRequiredValueInfo, int userInfoId)
+        {
+            Int64 status = 0;
+            bool retVal = false;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (InvNutrientInfoBO ni in AddedNutrientRequiredValueInfo)
+                        {
+                            using (DbCommand cmdSave = dbSmartAspects.GetStoredProcCommand("SaveNutrientRequiredValues_SP"))
+                            {
+                                cmdSave.Parameters.Clear();
+
+                                dbSmartAspects.AddInParameter(cmdSave, "@ItemId", DbType.Int32, ni.ItemId);
+                                dbSmartAspects.AddInParameter(cmdSave, "@ItemName", DbType.String, ni.ItemName);
+                                dbSmartAspects.AddInParameter(cmdSave, "@NutrientId", DbType.Int32, ni.NutrientId);
+                                dbSmartAspects.AddInParameter(cmdSave, "@NutrientName", DbType.String, ni.NutrientName);
+                                dbSmartAspects.AddInParameter(cmdSave, "@RequiredValue", DbType.Decimal, ni.RequiredValue);
+                                dbSmartAspects.AddInParameter(cmdSave, "@CreatedBy", DbType.Int32, userInfoId);
+
+                                status = dbSmartAspects.ExecuteNonQuery(cmdSave, transction);
+                            }
+                        }
+
+                        if (status > 0)
+                        {
+                            retVal = true;
+                            transction.Commit();
+                        }
+                        else
+                        {
+                            retVal = false;
+                            transction.Rollback();
+                        }
+                    }
+                    catch
+                    {
+                        retVal = false;
+                        transction.Rollback();
+                    }
+                }
+            }
+
+            return retVal;
+        }
         public List<InvNutrientInfoBO> GetNutritionType()
         {
             List<InvNutrientInfoBO> nutritionTypeList = new List<InvNutrientInfoBO>();

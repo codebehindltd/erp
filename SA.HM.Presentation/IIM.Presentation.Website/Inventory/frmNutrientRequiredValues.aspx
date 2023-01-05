@@ -46,12 +46,13 @@
         }
 
         function AddNutrientRequiredValueTable() {
+            var itemId = $("#ContentPlaceHolder1_ddlItemName option:selected").val();
+            var itemName = $("#ContentPlaceHolder1_ddlItemName option:selected").text();
             var nutrientName = $("#ContentPlaceHolder1_ddlNutrient option:selected").text();
             var nutrientId = $("#ContentPlaceHolder1_ddlNutrient option:selected").val();
             var requiredValue = $("#ContentPlaceHolder1_txtRequiredValue").val();
 
             if (!IsNutrientRequiredValueExists(nutrientId)) {
-                debugger;
                 if ($("#ContentPlaceHolder1_hfEditNutrientRequiredValue").val() == 0) {
                     var tr = "";
 
@@ -64,6 +65,8 @@
                     tr += "</td>";
 
                     tr += "<td style='display:none;'>" + nutrientId + "</td>";
+                    tr += "<td style='display:none;'>" + itemId + "</td>";
+                    tr += "<td style='display:none;'>" + itemName + "</td>";
 
                     tr += "</tr>";
 
@@ -80,6 +83,8 @@
                             $(this).find("td").eq(0).html(nutrientName);
                             $(this).find("td").eq(1).html(requiredValue);
                             $(this).find("td").eq(3).html(nutrientId);
+                            $(this).find("td").eq(4).html(itemId);
+                            $(this).find("td").eq(5).html(itemName);
                         }
                     }
                 });
@@ -121,6 +126,12 @@
         }
 
         function ValidationBeforeSave() {
+            if ($("#ContentPlaceHolder1_ddlItemName").val() == "0") {
+                toastr.warning("Please Select Item Name.");
+                $("#ContentPlaceHolder1_ddlItemName").focus();
+                return false;
+            }
+
             var rowCountAT = $('#NutrientRequiredValuesTbl tbody tr').length;
             if (rowCountAT == 0) {
                 toastr.warning('Add at least one Nutrient Required Value.');
@@ -128,167 +139,43 @@
                 return false;
             }
 
+            var itemId = "0", itemName = "", nutrientId = "0", nutrientName = "", requiredValue = 0;
 
-            var transactionType = "", companyName = "", companyId = "0", referenceName = "", registrationNumber = "",
-                clientName = "", mobileNumber = "", email = "", address = "", issueDate = "", ticketTypeId = "",
-                ticketType = "", airlineName = "", airlineId = "0", flightDate = "", returnDate = "",
-                ticketNumber = "", pnrNumber = "", ticketValue = 0, invoiceAmount = 0, airlineAmount = 0, routePath = "", remarks = "", paymentModeId = "",
-                paymentModeName = "", currencyTypeId = "", currencyType = "", receiveAmount = 0, cardTypeId = "", cardType = "", cardNumber = "", bankId = "0", bankName = "", chequeNumber = "";
-
-            var ticketId = $("#ContentPlaceHolder1_hfTicketMasterId").val();
-            transactionType = $("#ContentPlaceHolder1_ddlTransactionType option:selected").val();
-            projectId = $("#ContentPlaceHolder1_ddlProject").val();
-            paymentInstructionBankId = $("#ContentPlaceHolder1_ddlPaymentInstructionBank").val();
-
-            if (transactionType == "CorporateCompany") {
-                companyId = $("#ContentPlaceHolder1_hfCompanyId").val();
-                companyName = $("#ContentPlaceHolder1_txtCompany").val();
-                referenceId = $("#ContentPlaceHolder1_hfReferenceIdForCompany").val();
-                referenceName = $("#ContentPlaceHolder1_txtReferenceForCompany").val();
-            }
-            else if (transactionType == "WalkInCustomer") {
-                companyName = $("#ContentPlaceHolder1_txtCompanyWalkInGuest").val();
-                referenceId = $("#ContentPlaceHolder1_hfReferenceIdForWalkIn").val();
-                referenceName = $("#ContentPlaceHolder1_txtReferenceNameForWalkIn").val();
-            }
-
-            if (transactionType == "RoomGuest") {
-                registrationNumber = $("#ContentPlaceHolder1_txtRegistrationNumber").val();
-            }
-
-            var totalForTicketInfos = $("#ContentPlaceHolder1_hftotalForTicketInfos").val();
-            totalForTicketInfos = parseFloat(totalForTicketInfos);
-            totalForTicketInfos = totalForTicketInfos.toFixed(2);
-
-            var AirTicketMasterInfo = {
-                TicketId: ticketId,
-                TransactionType: transactionType,
-                CompanyId: companyId,
-                CompanyName: companyName,
-                ReferenceId: referenceId,
-                ReferenceName: referenceName,
-                RegistrationNumber: registrationNumber,
-                InvoiceAmount: totalForTicketInfos,
-                ProjectId: projectId,
-                PaymentInstructionBankId: paymentInstructionBankId
-            }
-
-
-            var AddedSingleTicketInfo = [], EditedSingleTicketInfo = [];
-
-            $("#TicketInformationTbl tbody tr").each(function (index, item) {
-                clientName = $.trim($(item).find("td:eq(0)").text());
-                airlineName = $(item).find("td:eq(1)").text();
-                issueDate = $.trim($(item).find("td:eq(2)").text());
-                if (issueDate != '') {
-                    issueDate = CommonHelper.DateFormatMMDDYYYYFromDDMMYYYY(issueDate, innBoarDateFormat);
-                }
-                flightDate = $.trim($(item).find("td:eq(3)").text());
-                if (flightDate != '') {
-                    flightDate = CommonHelper.DateFormatMMDDYYYYFromDDMMYYYY(flightDate, innBoarDateFormat);
-                }
-                invoiceAmount = $.trim($(item).find("td:eq(4)").text());
-
-                mobileNumber = $.trim($(item).find("td:eq(6)").text());
-                email = $.trim($(item).find("td:eq(7)").text());
-                address = $.trim($(item).find("td:eq(8)").text());
-                ticketTypeId = $.trim($(item).find("td:eq(9)").text());
-                ticketType = $.trim($(item).find("td:eq(10)").text());
-                airlineId = $.trim($(item).find("td:eq(11)").text());
-                returnDate = $.trim($(item).find("td:eq(12)").text());
-                if (returnDate != '') {
-                    returnDate = CommonHelper.DateFormatMMDDYYYYFromDDMMYYYY(returnDate, innBoarDateFormat);
-                }
-                ticketNumber = $.trim($(item).find("td:eq(13)").text());
-                pnrNumber = $.trim($(item).find("td:eq(14)").text());
-                airlineAmount = $.trim($(item).find("td:eq(15)").text());
-                routePath = $.trim($(item).find("td:eq(16)").text());
-                remarks = $.trim($(item).find("td:eq(17)").text());
-                ticketValue = $.trim($(item).find("td:eq(18)").text());
-
-                airlineAmount = airlineAmount != "" ? parseFloat(airlineAmount) : 0.00;
-
-                AddedSingleTicketInfo.push({
-                    AirlineName: airlineName,
-                    IssueDate: issueDate,
-                    FlightDate: flightDate,
-                    InvoiceAmount: invoiceAmount,
-                    ClientName: clientName,
-                    MobileNumber: mobileNumber,
-                    Email: email,
-                    Address: address,
-                    TicketTypeId: ticketTypeId,
-                    TicketType: ticketType,
-                    AirlineId: airlineId,
-                    ReturnDate: returnDate,
-                    TicketNumber: ticketNumber,
-                    PnrNumber: pnrNumber,
-                    TicketValue: ticketValue,
-                    AirlineAmount: airlineAmount,
-                    RoutePath: routePath,
-                    Remarks: remarks
-                });
-            });
-
-            var AddedPaymentInfo = [], EditedPaymentInfo = [];
+            var AddedNutrientRequiredValueInfo = [], EditNutrientRequiredValueInfo = [];
 
             $("#NutrientRequiredValuesTbl tbody tr").each(function (index, item) {
 
-                paymentModeName = $.trim($(item).find("td:eq(0)").text());
-                bankName = $.trim($(item).find("td:eq(1)").text());
-                receiveAmount = $.trim($(item).find("td:eq(2)").text());
-                paymentModeId = $.trim($(item).find("td:eq(4)").text());
-                currencyTypeId = $.trim($(item).find("td:eq(5)").text());
-                currencyType = $.trim($(item).find("td:eq(6)").text());
-                cardType = $.trim($(item).find("td:eq(7)").text());
-                cardTypeId = $.trim($(item).find("td:eq(8)").text());
-                cardNumber = $.trim($(item).find("td:eq(9)").text());
-                bankId = $.trim($(item).find("td:eq(10)").text());
-                chequeNumber = $.trim($(item).find("td:eq(11)").text());
+                nutrientName = $.trim($(item).find("td:eq(0)").text());
+                requiredValue = $.trim($(item).find("td:eq(1)").text());
+                nutrientId = $.trim($(item).find("td:eq(3)").text());
+                itemId = $.trim($(item).find("td:eq(4)").text());
+                itemName = $.trim($(item).find("td:eq(5)").text());
 
-                AddedPaymentInfo.push({
-                    PaymentMode: paymentModeName,
-                    BankName: bankName,
-                    ReceiveAmount: receiveAmount,
-                    PaymentModeId: paymentModeId,
-                    CurrencyTypeId: currencyTypeId,
-                    CurrencyType: currencyType,
-                    CardType: cardType,
-                    CardTypeId: cardTypeId,
-                    CardNumber: cardNumber,
-                    BankId: bankId,
-                    ChequeNumber: chequeNumber
+                AddedNutrientRequiredValueInfo.push({
+                    ItemId: itemId,
+                    ItemName: itemName,
+                    NutrientId: nutrientId,
+                    NutrientName: nutrientName,
+                    RequiredValue: requiredValue
                 });
-
             });
-            var totalForTicketInfos = $("#ContentPlaceHolder1_hftotalForTicketInfos").val();
-            var totalForPaymentInfos = $("#ContentPlaceHolder1_hftotalForPaymentInfos").val();
-            totalForTicketInfos = parseFloat(totalForTicketInfos);
-            totalForPaymentInfos = parseFloat(totalForPaymentInfos);
-            totalForTicketInfos = totalForTicketInfos.toFixed(2);
-            totalForPaymentInfos = totalForPaymentInfos.toFixed(2);
-            if (totalForTicketInfos != totalForPaymentInfos) {
-                toastr.warning("Total Ticket price & Total Payment are not same.");
-                $("#ContentPlaceHolder1_txtPMAmount").focus();
-                return false;
-            }
 
-            PageMethods.SaveAirlineTicketInfo(AirTicketMasterInfo, AddedSingleTicketInfo, AddedPaymentInfo, deletedNutrientRequiredValueList, OnSaveAirlineTicketInfoSucceeded, OnSaveAirlineTicketInfoFailed);
+            PageMethods.SaveNutrientRequiredValues(AddedNutrientRequiredValueInfo, OnSaveNutrientRequiredValuesSucceeded, OnSaveNutrientRequiredValuesFailed);
 
             return false;
         }
-        function OnSaveAirlineTicketInfoSucceeded(result) {
+        function OnSaveNutrientRequiredValuesSucceeded(result) {
             if (result.IsSuccess) {
                 CommonHelper.AlertMessage(result.AlertMessage);
                 PerformClearAction();
-                deletedNutrientRequiredValueList = [];
+                //deletedNutrientRequiredValueList = [];
             }
             else {
                 CommonHelper.AlertMessage(result.AlertMessage);
             }
             return false;
         }
-        function OnSaveAirlineTicketInfoFailed(error) {
+        function OnSaveNutrientRequiredValuesFailed(error) {
             toastr.error(error.get_message());
         }
                 
@@ -311,28 +198,8 @@
         }
 
         function PerformClearAction() {
-            $("#ContentPlaceHolder1_ddlTransactionType").val("0").trigger('change');
-            $("#ContentPlaceHolder1_ddlProject").val("0").trigger('change');
-            $("#ContentPlaceHolder1_ddlPaymentInstructionBank").val("0").trigger('change');
-            $("#ContentPlaceHolder1_txtCompany").val("");
-            $("#ContentPlaceHolder1_txtReferenceForCompany").val("");
-            $("#ContentPlaceHolder1_txtCompanyWalkInGuest").val("");
-            $("#ContentPlaceHolder1_txtReferenceNameForWalkIn").val("");
-            $("#ContentPlaceHolder1_txtRegistrationNumber").val("");
-            $("#TicketInformationTbl tbody").html("");
+            $("#ContentPlaceHolder1_ddlItemName").val("0").trigger('change');
             $("#NutrientRequiredValuesTbl tbody").html("");
-            $("#ContentPlaceHolder1_hfCompanyId").val(0);
-            $("#ContentPlaceHolder1_hfCompanySearchId").val(0);
-            $("#ContentPlaceHolder1_hfReferenceIdForCompany").val(0);
-            $("#ContentPlaceHolder1_hfReferenceIdForWalkIn").val(0);
-            $("#ContentPlaceHolder1_hfbankId").val(0);
-            $("#ContentPlaceHolder1_hfRegistrationNumber").val(0);
-            $("#ContentPlaceHolder1_hfTicketMasterId").val(0);
-            $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(0);
-            $("#ContentPlaceHolder1_hftotalForTicketInfos").val(0);
-
-            $("#ContentPlaceHolder1_txtTotalInvoiceAmount").val("");
-            $("#ContentPlaceHolder1_txtTotalPaymentAmount").val("");
             $("#btnSave").val("Save");
             ClearAfterNutrientRequiredValueAdded();
         }
