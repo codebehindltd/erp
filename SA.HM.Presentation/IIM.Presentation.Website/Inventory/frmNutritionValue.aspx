@@ -1,7 +1,110 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Innboard.Master" AutoEventWireup="true" CodeBehind="frmNutritionValue.aspx.cs" Inherits="HotelManagement.Presentation.Website.Inventory.frmNutritionValue" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <style type="text/css">
+        .nutritionTable tbody tr td span:nth-child(1) input {
+            margin-left: 0 !important;
+        }
 
+        .nutritionTable tbody tr td span input {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .nutritionTable {
+            position: relative;
+        }
+
+        .nutritionTable thead {
+            position: sticky;
+            z-index: 2;
+            top: -2px;
+         }
+
+        .nutritionTable thead tr td {
+            position: relative;
+
+        }
+        .nutritionTable thead tr td::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            z-index: 2;
+            background: #fff;
+        }
+
+        .nutritionTable tbody tr td:first-child, .nutritionTable thead tr td:first-child {
+            position: sticky;
+            left: -2px;
+            z-index: 1;
+            background: #fff;
+            vertical-align: middle;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+
+        .nutritionTable thead tr td:first-child {
+            background: #7a919f;
+            z-index: 3;
+        }
+
+        .table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+            border-bottom-width: 0px;
+            border-top-width: 0px;
+        }
+
+        .nutritionTable thead td span, .nutritionTable tbody tr td span {
+            display: inline-block;
+            position: relative;
+            margin-right: 8px;
+            padding-right: 8px;
+        }
+        .nutritionTable thead td span {
+            padding-right: 8px !important;
+            margin-right: 8px !important;
+            width: 153px !important;
+        }
+        .nutritionTable thead td span::before,
+        .nutritionTable tbody tr td span::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: -6px;
+            height: calc(100% + 12px);
+            width: 1px;
+            background: #ddd;
+        }
+
+        .nutritionTable thead td span::before {
+            right: 0;
+            top: -5px;
+            height: calc(100% + 10px);
+        }
+
+        .nutritionTable tbody tr td span.valueNo {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nutritionTable tbody tr td span.valueNo::before,
+        .nutritionTable tbody tr td span.valueNo span:nth-child(2)::before {
+            display: none;
+        }
+        .nutritionTable tbody tr td span.valueNo span:nth-child(1) {
+            margin: 0 0 0 8px;
+            padding: 0 0 0  8px;
+        }
+        .nutritionTable tbody tr td span.valueNo span:nth-child(1)::before {
+            display: block;
+            right: auto;
+            left: 0;
+            height: calc(100% + 16px);
+        }
+
+    </style>
     <script type="text/javascript">
         
         $(document).ready(function () {
@@ -13,18 +116,25 @@
             $("#ContentPlaceHolder1_txtFormula").attr("disabled", true);
 
             LoadNutritionType();
-                    
+            
             $("#myTabs").tabs();         
         });
         var AddedNutrients = [];
         function getNutrientAmount(itemId, nutritionTypeId, nutrientId) {
             let boxId = "";
-            boxId = boxId + itemId + nutritionTypeId + nutrientId;
+            let nutrientColumnName = intToString(nutrientId);
+            boxId = boxId + itemId + nutritionTypeId + nutrientColumnName;
             $("#ContentPlaceHolder1_hfSelectedBoxId").val(boxId);
             $("#ContentPlaceHolder1_hfItemId").val(itemId);
             $("#ContentPlaceHolder1_hfNutritionTypeId").val(nutritionTypeId);
             $("#ContentPlaceHolder1_hfNutrientId").val(nutrientId);
             var boxCurrentVal = $("#" + boxId + "").val();
+            //$("#" + boxId + "").blur(function () {
+            //    $("#" + boxId + "").css({ color: 'red', 'background-color': 'black' });
+            //});
+            //$("#" + boxId + "").click(function () {
+            //    $("#" + boxId + "").css({ color: 'red', 'background-color': 'black' });
+            //});
             var boxCurrentFormula = "";
             $.each(AddedNutrients, function (count, obj) {
                 if (obj.ItemId == itemId && obj.NutrientId == nutrientId && obj.NutritionTypeId == nutritionTypeId) {
@@ -72,19 +182,37 @@
         }
         function OnGetNutrientInformationSucceed(result) {
             nutrientInfoList = result;
-            var tr = "";
+            var tr = "<tr>";
             tr += "<td style='text-align: center; white-space: nowrap;'>" + "Ingredient Name</td>";
             $.each(nutritionTypeList, function (ncount, nobj) {
                 var td = "";
-                td += "<td style='white-space: nowrap;'>";
+                td += "<td style='white-space: nowrap; padding-left: 5px;'>";
                 $.each(result, function (count, obj) {
                     if (nobj.NutritionTypeId == obj.NutritionTypeId) {
-                        td += "<span style='width: 100px; text-align: center; display: inline-block; margin: 0 5px;'>" + obj.Name + "</span>";
+                        td += "<span style='width: 150px; text-align: center; display: inline-block; margin: 0 5px;'>" + obj.Name + "</span>";
                     }
                 });
                 td += "</td>";
                 tr += td;
             });
+            tr += "</tr>";
+            $("#NutritionValueTbl thead").append(tr);
+            td = "";
+            tr = "<tr>";
+            tr += "<td style='text-align: center; white-space: nowrap;'></td>";
+            $.each(nutritionTypeList, function (ncount, nobj) {
+                td = "";
+                td += "<td style='white-space: nowrap; padding-left: 5px;'>";
+                $.each(result, function (count, obj) {
+                    if (nobj.NutritionTypeId == obj.NutritionTypeId) {
+                        let currentCol = intToString(obj.NutrientId);
+                        td += "<span style='width: 150px; text-align: center; display: inline-block; margin: 0 5px;'>" + currentCol + "</span>";
+                    }
+                });
+                td += "</td>";
+                tr += td;
+            });
+            tr += "</tr>";
             $("#NutritionValueTbl thead").append(tr);
             td = "";
             tr = "";
@@ -98,20 +226,20 @@
             return false;
         }
         function OnGetIngredientsSucceed(result) {
-            let first10 = result.slice(0, 10);
-            
-            $.each(first10, function (count, obj) {
+            $.each(result, function (count, obj) {
+                let newCount = parseInt(count + 1);
                 var tr = "";
                 tr += "<tr>";
                 var td = "";
-                td += "<td style='white-space: nowrap;'>" + obj.Name + "</td>";
+                td += "<td style='white-space: nowrap;'><span class='valueNo'><span style='width: 50px; text-align: center;'>" + obj.ItemId + "</span><span>" + obj.Name + "</span></span></td>";
                 tr += td;
                 
                 $.each(nutritionTypeList, function (ncount, nobj) {
                     td = "<td style='white-space: nowrap;'>";
                     $.each(nutrientInfoList, function (icount, iobj) {
                         if (nobj.NutritionTypeId == iobj.NutritionTypeId) {
-                            td += "<input type='text' style='width: 100px; margin: 0 5px;' onclick='getNutrientAmount(" + obj.ItemId + "," + nobj.NutritionTypeId + "," + iobj.NutrientId + ");' id='" + obj.ItemId + nobj.NutritionTypeId + iobj.NutrientId + "' readonly\>";
+                            let nutrientColumnName = intToString(iobj.NutrientId);
+                            td += "<span><input type='text' style='width: 150px; margin: 0 5px;' onclick='getNutrientAmount(" + obj.ItemId + "," + nobj.NutritionTypeId + "," + iobj.NutrientId + ");' id='" + obj.ItemId + nobj.NutritionTypeId + nutrientColumnName + "' readonly /></span>";
                         }
                     });
                     td += "</td>";
@@ -144,7 +272,8 @@
                     Formula: obj.Formula
                 });
                 var boxId = "";
-                boxId = boxId + obj.ItemId + obj.NutritionTypeId + obj.NutrientId;
+                let nutrientColumnName = intToString(obj.NutrientId);
+                boxId = boxId + obj.ItemId + obj.NutritionTypeId + nutrientColumnName;
                 formulaValue = parseFloat(obj.NutrientAmount).toFixed(2);
                 $("#" + boxId + "").val(formulaValue);
             });
@@ -196,7 +325,6 @@
             if(formulaOrValue[0] == "="){
                 inputFormula = formulaOrValue.slice(1, formulaOrValue.length);
             }
-                        
             if (formulaOrValue == "") {
                 formulaValue = 0;
                 $("#" + boxId + "").val(formulaOrValue);
@@ -269,11 +397,15 @@
                     formulaOrValue = parseFloat(formulaOrValue).toFixed(2);
                     $("#" + boxId + "").val(formulaOrValue);
                     formulaValue = $("#" + boxId + "").val();
-                    formulaValue = parseFloat(formulaValue).toFixed(2);
+                    // formulaValue = parseFloat(formulaValue).toFixed(2);
                 }
             }
             
-            
+            itemId = parseInt(itemId);
+            nutritionTypeId = parseInt(nutritionTypeId);
+            nutrientId = parseInt(nutrientId);
+            formulaValue = parseInt(formulaValue);
+
             var isUpdate = false;
             $.each(AddedNutrients, function (count, obj) {
                 if (obj.ItemId == itemId && obj.NutritionTypeId == nutritionTypeId && obj.NutrientId == nutrientId) {
@@ -303,7 +435,9 @@
         function changeFieldsWithTheChangedValueOfCurrentField(currentColumn, itemId, nutrientId, formulaValue) {
             
             $.each(AddedNutrients, function (count, obj) {
-                if (obj.Formula.includes(currentColumn)) {
+                if (obj.Formula != undefined && obj.Formula.includes(currentColumn)) {
+                    console.log("Current Column : " + currentColumn + "Formula: " + obj.Formula);
+
                     let currentChar = "";
                     let currentVal = "";
                     let replacedValue = 0.0;
@@ -337,12 +471,21 @@
                                 let finalValue = eval(replacedFormula);
                                 finalValue = parseFloat(finalValue).toFixed(2);
                                 let boxId = "";
-                                boxId = boxId + obj.ItemId + obj.NutritionTypeId + obj.NutrientId;
+                                let nutrientColumnName = intToString(obj.NutrientId);
+                                boxId = boxId + obj.ItemId + obj.NutritionTypeId + nutrientColumnName;
                                 $("#" + boxId + "").val(finalValue);
-                            }
-                            
-                            replacedValue = 0.0;
 
+                                $.each(AddedNutrients, function (changeAmountcount, changeAmountobj) {
+                                    if (changeAmountobj.NutrientId == obj.NutrientId && changeAmountobj.ItemId == obj.ItemId) {
+                                        changeAmountobj.NutrientAmount = finalValue;
+                                        newNutrientId = parseInt(changeAmountobj.NutrientId);
+                                        let currentColumnAgain = intToString(newNutrientId) + changeAmountobj.ItemId;
+                                        changeFieldsWithTheChangedValueOfCurrentField(currentColumnAgain, changeAmountobj.ItemId, changeAmountobj.NutrientId, changeAmountobj.NutrientAmount);
+                                    }
+                                });
+                            }
+                            replacedValue = 0.0;
+                            
                             currentChar = "";
                             currentVal = "";
                         }
@@ -350,7 +493,7 @@
                             if (formula.charCodeAt(i) >= 65 && formula.charCodeAt(i) <= 90) {
                                 currentChar += formula[i];
                             }
-                            else if (formula.charCodeAt(i) >= 48 && formula.charCodeAt(i) <= 57) {
+                            else if ((formula.charCodeAt(i) >= 48 && formula.charCodeAt(i) <= 57) || formula.charCodeAt(i) == 46) {
                                 currentVal += formula[i];
                             }
                         }
@@ -413,8 +556,8 @@
                                     class="TransactionalButton btn btn-primary btn-sm" />
                             </div>
                         </div>
-                        <div class="table-responsive" id="NutritionValue" style="overflow: scroll;">
-                            <table id="NutritionValueTbl" class="table table-bordered table-condensed table-hover">
+                        <div class="table-responsive" id="NutritionValue" style="overflow: scroll; max-height: 600px;">
+                            <table id="NutritionValueTbl" class="table table-bordered table-condensed table-hover nutritionTable">
                                 <thead>
                                 </thead>
                                 <tbody></tbody>

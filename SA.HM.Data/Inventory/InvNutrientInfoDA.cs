@@ -158,18 +158,40 @@ namespace HotelManagement.Data.Inventory
                     {
                         foreach (InvNutrientInfoBO ni in AddedNutrients)
                         {
-                            using (DbCommand cmdSave = dbSmartAspects.GetStoredProcCommand("SaveNutrientsAmount_SP"))
+                            if(ni.NutrientAmount > 0)
                             {
-                                cmdSave.Parameters.Clear();
+                                using (DbCommand cmdSave = dbSmartAspects.GetStoredProcCommand("SaveNutrientsAmount_SP"))
+                                {
+                                    cmdSave.Parameters.Clear();
 
-                                dbSmartAspects.AddInParameter(cmdSave, "@ItemId", DbType.Int32, ni.ItemId);
-                                dbSmartAspects.AddInParameter(cmdSave, "@NutritionTypeId", DbType.Int32, ni.NutritionTypeId);
-                                dbSmartAspects.AddInParameter(cmdSave, "@NutrientId", DbType.Int32, ni.NutrientId);
-                                dbSmartAspects.AddInParameter(cmdSave, "@NutrientAmount", DbType.Decimal, ni.NutrientAmount);
-                                dbSmartAspects.AddInParameter(cmdSave, "@Formula", DbType.String, ni.Formula);
-                                dbSmartAspects.AddInParameter(cmdSave, "@CreatedBy", DbType.Int32, userInfoId);
+                                    dbSmartAspects.AddInParameter(cmdSave, "@ItemId", DbType.Int32, ni.ItemId);
+                                    dbSmartAspects.AddInParameter(cmdSave, "@NutritionTypeId", DbType.Int32, ni.NutritionTypeId);
+                                    dbSmartAspects.AddInParameter(cmdSave, "@NutrientId", DbType.Int32, ni.NutrientId);
+                                    dbSmartAspects.AddInParameter(cmdSave, "@NutrientAmount", DbType.Decimal, ni.NutrientAmount);
+                                    dbSmartAspects.AddInParameter(cmdSave, "@Formula", DbType.String, ni.Formula);
+                                    dbSmartAspects.AddInParameter(cmdSave, "@CreatedBy", DbType.Int32, userInfoId);
 
-                                status = dbSmartAspects.ExecuteNonQuery(cmdSave, transction);
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdSave, transction);
+                                }
+                            }
+                            else
+                            {
+                                if(ni.Formula == null)
+                                {
+                                    using (DbCommand cmdSave = dbSmartAspects.GetStoredProcCommand("SaveOrDeleteNutrientsAmount_SP"))
+                                    {
+                                        cmdSave.Parameters.Clear();
+
+                                        dbSmartAspects.AddInParameter(cmdSave, "@ItemId", DbType.Int32, ni.ItemId);
+                                        dbSmartAspects.AddInParameter(cmdSave, "@NutritionTypeId", DbType.Int32, ni.NutritionTypeId);
+                                        dbSmartAspects.AddInParameter(cmdSave, "@NutrientId", DbType.Int32, ni.NutrientId);
+                                        dbSmartAspects.AddInParameter(cmdSave, "@NutrientAmount", DbType.Decimal, ni.NutrientAmount);
+                                        dbSmartAspects.AddInParameter(cmdSave, "@Formula", DbType.String, ni.Formula);
+                                        dbSmartAspects.AddInParameter(cmdSave, "@CreatedBy", DbType.Int32, userInfoId);
+
+                                        status = dbSmartAspects.ExecuteNonQuery(cmdSave, transction);
+                                    }
+                                }
                             }
                         }
 
