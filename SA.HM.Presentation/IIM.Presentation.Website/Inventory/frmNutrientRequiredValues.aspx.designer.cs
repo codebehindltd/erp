@@ -67,13 +67,13 @@ namespace HotelManagement.Presentation.Website.Inventory {
         protected global::System.Web.UI.WebControls.HiddenField hfRegistrationNumber;
         
         /// <summary>
-        /// hfTicketMasterId control.
+        /// hfNRVMasterId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfTicketMasterId;
+        protected global::System.Web.UI.WebControls.HiddenField hfNRVMasterId;
         
         /// <summary>
         /// hfEditNutrientRequiredValue control.
@@ -220,21 +220,21 @@ namespace HotelManagement.Presentation.Website.Inventory {
         protected global::System.Web.UI.WebControls.TextBox txtRequiredValue;
         
         /// <summary>
-        /// lblNutrientSearch control.
+        /// lblItemNameSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNutrientSearch;
+        protected global::System.Web.UI.WebControls.Label lblItemNameSearch;
         
         /// <summary>
-        /// ddlNutrientSearch control.
+        /// ddlItemNameSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlNutrientSearch;
+        protected global::System.Web.UI.WebControls.DropDownList ddlItemNameSearch;
     }
 }

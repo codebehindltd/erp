@@ -7,6 +7,7 @@ namespace HotelManagement.Entity.Inventory
 {
     public class InvNutrientInfoBO
     {
+        public long Id { get; set; }
         public long NutrientId { get; set; }
         public string NutrientName { get; set; }
         public long NutritionTypeId { get; set; }
@@ -26,5 +27,7 @@ namespace HotelManagement.Entity.Inventory
         public string Formula { get; set; }
         public string FormulaWithDecimal { get; set; }
         public decimal RequiredValue { get; set; }
+        public decimal CalculatedValue { get; set; }
+        public decimal Difference { get; set; }
     }
 }

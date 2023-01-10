@@ -264,6 +264,7 @@
     <Compile Include="Inventory\InvItemAttributeBO.cs" />
     <Compile Include="Inventory\InvItemAttributeViewBO.cs" />
     <Compile Include="Inventory\InvNutrientInfoBO.cs" />
+    <Compile Include="Inventory\NRVViewBO.cs" />
     <Compile Include="Inventory\ProductionInfoViewBO.cs" />
     <Compile Include="Inventory\XYZAnalysisBO.cs" />
     <Compile Include="PurchaseManagment\OverheadExpensesBO.cs" />

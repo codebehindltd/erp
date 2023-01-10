@@ -42,7 +42,9 @@
             z-index: 1;
             background: #fff;
             vertical-align: middle;
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            -moz-box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.35);
+            -webkit-box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.35);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.35);
         }
 
         .nutritionTable thead tr td:first-child {
@@ -124,17 +126,34 @@
             let boxId = "";
             let nutrientColumnName = intToString(nutrientId);
             boxId = boxId + itemId + nutritionTypeId + nutrientColumnName;
+            let secItemId =$("#ContentPlaceHolder1_hfSecondItemId").val();
+            let secNutritionTypeId = $("#ContentPlaceHolder1_hfSecondNutritionTypeId").val();
+            let secNutrientId = $("#ContentPlaceHolder1_hfSecondNutrientId").val();
+            let deselectBoxId = "";
+            if (secNutrientId != "0" && secItemId != "0") {
+                secNutrientId = parseInt(secNutrientId);
+                secItemId = parseInt(secItemId);
+                secNutritionTypeId = parseInt(secNutritionTypeId);
+                let deselectNutrientColumnName = intToString(secNutrientId);
+                deselectBoxId = deselectBoxId + secItemId + secNutritionTypeId + deselectNutrientColumnName;
+            }
+            
             $("#ContentPlaceHolder1_hfSelectedBoxId").val(boxId);
             $("#ContentPlaceHolder1_hfItemId").val(itemId);
             $("#ContentPlaceHolder1_hfNutritionTypeId").val(nutritionTypeId);
             $("#ContentPlaceHolder1_hfNutrientId").val(nutrientId);
             var boxCurrentVal = $("#" + boxId + "").val();
-            //$("#" + boxId + "").blur(function () {
-            //    $("#" + boxId + "").css({ color: 'red', 'background-color': 'black' });
-            //});
-            //$("#" + boxId + "").click(function () {
-            //    $("#" + boxId + "").css({ color: 'red', 'background-color': 'black' });
-            //});
+            $("#" + boxId + "").blur(function () {
+                $("#" + boxId + "").css({ color: 'red', border: '2px solid blue' });
+                if (deselectBoxId != "") {
+                    $("#" + deselectBoxId + "").css({ color: 'black', border: '1px solid gray' });
+                }
+            });
+
+            $("#ContentPlaceHolder1_hfSecondItemId").val($("#ContentPlaceHolder1_hfItemId").val());
+            $("#ContentPlaceHolder1_hfSecondNutritionTypeId").val($("#ContentPlaceHolder1_hfNutritionTypeId").val());
+            $("#ContentPlaceHolder1_hfSecondNutrientId").val($("#ContentPlaceHolder1_hfNutrientId").val());
+
             var boxCurrentFormula = "";
             $.each(AddedNutrients, function (count, obj) {
                 if (obj.ItemId == itemId && obj.NutrientId == nutrientId && obj.NutritionTypeId == nutritionTypeId) {
@@ -501,6 +520,16 @@
                 }
             });
         }
+        function ClearAfterSave() {
+            $("#ContentPlaceHolder1_hfSelectedBoxId").val(0);
+            $("#ContentPlaceHolder1_hfItemId").val(0);
+            $("#ContentPlaceHolder1_hfNutritionTypeId").val(0);
+            $("#ContentPlaceHolder1_hfNutrientId").val(0);
+
+            $("#ContentPlaceHolder1_hfSecondItemId").val(0);
+            $("#ContentPlaceHolder1_hfSecondNutritionTypeId").val(0);
+            $("#ContentPlaceHolder1_hfSecondNutrientId").val(0);
+        }
         function ValidationBeforeSave() {
             if (AddedNutrients.length == 0) {
                 toastr.warning("Please Give At Least One Nutrient Amount.");
@@ -512,6 +541,7 @@
         function OnSaveNutrientsAmountSucceed(result) {
             if (result.IsSuccess) {
                 CommonHelper.AlertMessage(result.AlertMessage);
+                //ClearAfterSave();
             }
             else {
                 CommonHelper.AlertMessage(result.AlertMessage);
@@ -527,6 +557,10 @@
     <asp:HiddenField ID="hfItemId" runat="server" Value="0" />
     <asp:HiddenField ID="hfNutritionTypeId" runat="server" Value="0" />
     <asp:HiddenField ID="hfNutrientId" runat="server" Value="0" />
+
+    <asp:HiddenField ID="hfSecondItemId" runat="server" Value="0" />
+    <asp:HiddenField ID="hfSecondNutritionTypeId" runat="server" Value="0" />
+    <asp:HiddenField ID="hfSecondNutrientId" runat="server" Value="0" />
 
     <asp:HiddenField ID="hfSavePermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfEditPermission" runat="server" Value="0" />

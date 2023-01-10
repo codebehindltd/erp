@@ -26,6 +26,13 @@
                 allowClear: true,
                 width: "99.75%"
             });
+            
+            $("#ContentPlaceHolder1_ddlItemNameSearch").select2({
+                tags: "true",
+                placeholder: "--- All ---",
+                allowClear: true,
+                width: "99.75%"
+            });
 
             $("#myTabs").tabs();
         });       
@@ -46,8 +53,6 @@
         }
 
         function AddNutrientRequiredValueTable() {
-            var itemId = $("#ContentPlaceHolder1_ddlItemName option:selected").val();
-            var itemName = $("#ContentPlaceHolder1_ddlItemName option:selected").text();
             var nutrientName = $("#ContentPlaceHolder1_ddlNutrient option:selected").text();
             var nutrientId = $("#ContentPlaceHolder1_ddlNutrient option:selected").val();
             var requiredValue = $("#ContentPlaceHolder1_txtRequiredValue").val();
@@ -65,8 +70,6 @@
                     tr += "</td>";
 
                     tr += "<td style='display:none;'>" + nutrientId + "</td>";
-                    tr += "<td style='display:none;'>" + itemId + "</td>";
-                    tr += "<td style='display:none;'>" + itemName + "</td>";
 
                     tr += "</tr>";
 
@@ -83,8 +86,6 @@
                             $(this).find("td").eq(0).html(nutrientName);
                             $(this).find("td").eq(1).html(requiredValue);
                             $(this).find("td").eq(3).html(nutrientId);
-                            $(this).find("td").eq(4).html(itemId);
-                            $(this).find("td").eq(5).html(itemName);
                         }
                     }
                 });
@@ -106,7 +107,6 @@
                 
                 if (index !== 0 && !IsDuplicate) {
                     var nutrientIdValueInTable = $(this).find("td").eq(3).html();
-                    console.log(nutrientIdValueInTable);
 
                     var IsNutrientIdFound = nutrientIdValueInTable.indexOf(nutrientId) > -1;
                     if (IsNutrientIdFound) {
@@ -140,6 +140,15 @@
             }
 
             var itemId = "0", itemName = "", nutrientId = "0", nutrientName = "", requiredValue = 0;
+            itemId = $("#ContentPlaceHolder1_ddlItemName option:selected").val();
+            itemName = $("#ContentPlaceHolder1_ddlItemName option:selected").text();
+            var id = $("#ContentPlaceHolder1_hfNRVMasterId").val();
+
+            var nutrientRequiredMasterInfo = {
+                Id: id,
+                ItemId: itemId,
+                ItemName: itemName
+            }
 
             var AddedNutrientRequiredValueInfo = [], EditNutrientRequiredValueInfo = [];
 
@@ -148,19 +157,15 @@
                 nutrientName = $.trim($(item).find("td:eq(0)").text());
                 requiredValue = $.trim($(item).find("td:eq(1)").text());
                 nutrientId = $.trim($(item).find("td:eq(3)").text());
-                itemId = $.trim($(item).find("td:eq(4)").text());
-                itemName = $.trim($(item).find("td:eq(5)").text());
 
                 AddedNutrientRequiredValueInfo.push({
-                    ItemId: itemId,
-                    ItemName: itemName,
                     NutrientId: nutrientId,
                     NutrientName: nutrientName,
                     RequiredValue: requiredValue
                 });
             });
 
-            PageMethods.SaveNutrientRequiredValues(AddedNutrientRequiredValueInfo, OnSaveNutrientRequiredValuesSucceeded, OnSaveNutrientRequiredValuesFailed);
+            PageMethods.SaveNutrientRequiredValues(nutrientRequiredMasterInfo, AddedNutrientRequiredValueInfo, deletedNutrientRequiredValueList, OnSaveNutrientRequiredValuesSucceeded, OnSaveNutrientRequiredValuesFailed);
 
             return false;
         }
@@ -168,7 +173,8 @@
             if (result.IsSuccess) {
                 CommonHelper.AlertMessage(result.AlertMessage);
                 PerformClearAction();
-                //deletedNutrientRequiredValueList = [];
+                deletedNutrientRequiredValueList = [];
+                $("#btnSave").val("Save");
             }
             else {
                 CommonHelper.AlertMessage(result.AlertMessage);
@@ -192,12 +198,13 @@
             if (!confirm("Do you want to delete this item?")) { return false; }
 
             var tr = $(control).parent().parent();
-            let nutrientId = $(tr).find("td").eq(4).html();
+            let nutrientId = $(tr).find("td").eq(3).html();
             deletedNutrientRequiredValueList.push(parseInt(nutrientId, 10));
             $(tr).remove();
         }
 
         function PerformClearAction() {
+            $("#ContentPlaceHolder1_hfNRVMasterId").val(0);
             $("#ContentPlaceHolder1_ddlItemName").val("0").trigger('change');
             $("#NutrientRequiredValuesTbl tbody").html("");
             $("#btnSave").val("Save");
@@ -211,76 +218,59 @@
             PerformClearAction();
         }
 
-        function SearchTicketInformation(pageNumber, IsCurrentOrPreviousPage) {
-            var gridRecordsCount = $("#TicketInformationGrid tbody tr").length;
-            var fromDate = null, toDate = null, invoiceNumber = "", companyName = "", referenceName = "";
-            fromDate = $("#ContentPlaceHolder1_txtFromDate").val();
-            toDate = $("#ContentPlaceHolder1_txtToDate").val();
-            invoiceNumber = $("#ContentPlaceHolder1_txtInvoiceNumber").val();
-            companyName = $("#ContentPlaceHolder1_txtCompanyName").val();
-            referenceName = $("#ContentPlaceHolder1_txtRefName").val();
-
-            if (fromDate != "")
-                fromDate = CommonHelper.DateFormatToMMDDYYYY(fromDate, '/');
-
-            if (toDate != "")
-                toDate = CommonHelper.DateFormatToMMDDYYYY(toDate, '/');
+        function SearchNutrientRequiredValues(pageNumber, IsCurrentOrPreviousPage) {
+            var gridRecordsCount = $("#NutrientRequiredValuesGrid tbody tr").length;
+            var itemId = $("#ContentPlaceHolder1_ddlItemNameSearch option:selected").val();
+            var itemName = $("#ContentPlaceHolder1_ddlItemNameSearch option:selected").text();
 
             $("#GridPagingContainer ul").html("");
-            $("#TicketInformationGrid tbody").html("");
+            $("#NutrientRequiredValuesGrid tbody").html("");
 
             if (pageNumber < 0)
                 pageNumber = 1;
 
-            PageMethods.SearchTicketInformation(fromDate, toDate, invoiceNumber, companyName, referenceName,
-                gridRecordsCount, pageNumber, IsCurrentOrPreviousPage, OnSearchTicketInformationSucceed, OnSearchTicketInformationFailed);
+            PageMethods.SearchNutrientRequiredValues(itemId,
+                gridRecordsCount, pageNumber, IsCurrentOrPreviousPage, OnSearchNutrientRequiredValuesSucceed, OnSearchNutrientRequiredValuesFailed);
 
             return false;
         }
         
-        function OnSearchTicketInformationSucceed(result) {
+        function OnSearchNutrientRequiredValuesSucceed(result) {
             var tr = "";
             $.each(result.GridData, function (count, gridObject) {
 
                 tr += "<tr>";
 
-                tr += "<td style='width:10%;'>" + gridObject.BillNumber + "</td>";
-                tr += "<td style='width:20%;'>" + gridObject.TransactionType + "</td>";
-                tr += "<td style='width:30%;'>" + gridObject.CompanyName + "</td>";
-                tr += "<td style='width:20%;'>" + gridObject.InvoiceAmount + "</td>";
+                tr += "<td style='width:70%;'>" + gridObject.ItemName + "</td>";
 
-                tr += "<td style='width:10%;'>" + gridObject.Status + "</td>";
+                tr += "<td style=\"text-align: center; width:30%; cursor:pointer;\">";
 
-                tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
+                //if (gridObject.IsCanEdit && IsCanEdit) {
+                    tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return NutrientRequiredValuesEditWithConfirmation(" + gridObject.Id + ")\" alt='Edit'  title='Edit' border='0' />";
+                //}
 
-                if (gridObject.IsCanEdit && IsCanEdit) {
-                    tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return TicketInfoEditWithConfirmation(" + gridObject.TicketId + ")\" alt='Edit'  title='Edit' border='0' />";
-                }
+                //if (gridObject.IsCanDelete && IsCanDelete) {
+                    tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return NutrientRequiredValuesDelete(" + gridObject.Id + ")\" alt='Delete'  title='Delete' border='0' />";
+                //}
 
-                if (gridObject.IsCanDelete && IsCanDelete) {
-                    tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return TicketInformationDelete(" + gridObject.TicketId + ")\" alt='Delete'  title='Delete' border='0' />";
-                }
+                //if (gridObject.IsCanChecked && IsCanSave) {
+                //    tr += "&nbsp;&nbsp;<img src='../Images/checked.png' onClick= \"javascript:return TicketInformationCheckWithConfirmation(" + gridObject.TicketId + ")\" alt='Check'  title='Check' border='0' />";
+                //}
+                //if (gridObject.IsCanApproved && IsCanSave) {
+                //    tr += "&nbsp;&nbsp;<img src='../Images/approved.png' onClick= \"javascript:return TicketInformationApprovalWithConfirmation(" + gridObject.TicketId + ")\" alt='Approve'  title='Approve' border='0' />";
+                //}
 
-                if (gridObject.IsCanChecked && IsCanSave) {
-                    tr += "&nbsp;&nbsp;<img src='../Images/checked.png' onClick= \"javascript:return TicketInformationCheckWithConfirmation(" + gridObject.TicketId + ")\" alt='Check'  title='Check' border='0' />";
-                }
-                if (gridObject.IsCanApproved && IsCanSave) {
-                    tr += "&nbsp;&nbsp;<img src='../Images/approved.png' onClick= \"javascript:return TicketInformationApprovalWithConfirmation(" + gridObject.TicketId + ")\" alt='Approve'  title='Approve' border='0' />";
-                }
-
-                tr += "&nbsp;&nbsp;<img src='../Images/ReportDocument.png'  onClick= \"javascript:return PerformBillPreviewAction(" + gridObject.TicketId + ")\" alt='Invoice' title='Invoice' border='0' />";
+                //tr += "&nbsp;&nbsp;<img src='../Images/ReportDocument.png'  onClick= \"javascript:return PerformBillPreviewAction(" + gridObject.TicketId + ")\" alt='Invoice' title='Invoice' border='0' />";
 
                 //tr += "&nbsp;&nbsp;<img src='../Images/note.png'  onClick= \"javascript:return ShowDealDocuments('" + gridObject.ReceivedId + "')\" alt='Invoice' title='Receive Order Info' border='0' />";
                 tr += "</td>";
 
-                tr += "<td style='display:none;'>" + gridObject.TicketId + "</td>";
-                tr += "<td style='display:none;'>" + gridObject.CostCenterId + "</td>";
-                tr += "<td style='display:none;'>" + gridObject.TransactionId + "</td>";
-                tr += "<td style='display:none;'>" + gridObject.ReferenceId + "</td>";
+                tr += "<td style='display:none;'>" + gridObject.ItemId + "</td>";
+                tr += "<td style='display:none;'>" + gridObject.Id + "</td>";
 
                 tr += "</tr>";
 
-                $("#TicketInformationGrid tbody").append(tr);
+                $("#NutrientRequiredValuesGrid tbody").append(tr);
 
                 tr = "";
             });
@@ -292,54 +282,90 @@
             CommonHelper.SpinnerClose();
             return false;
         }
-        function OnSearchTicketInformationFailed() {
+        function OnSearchNutrientRequiredValuesFailed() {
 
         }
 
-        function PaymentMethodInformationEdit(result) {
+        
+        function NutrientRequiredValuesEditWithConfirmation(Id) {
+            if (!confirm("Do you Want To Edit?")) {
+                return false;
+            }
+            NutrientRequiredValuesEdit(Id);
+        }
+        function NutrientRequiredValuesEdit(Id) {
+
+            PageMethods.NutrientRequiredValuesEdit(Id, OnNutrientRequiredValuesEditSucceed, OnNutrientRequiredValuesEditFailed);
+            return false;
+        }
+        function OnNutrientRequiredValuesEditSucceed(result) {
+            
+            $("#btnSave").val("Update");
+            $("#ContentPlaceHolder1_hfNRVMasterId").val(result.NRVMasterInfo.Id);
+            $("#NutrientRequiredValuesTbl tbody").html("");
+
+            $("#ContentPlaceHolder1_ddlItemName").val(result.NRVMasterInfo.ItemId).trigger('change');
+
+            NutrientRequiredValueEdit(result.NRVDetails);
+
+            $("#myTabs").tabs({ active: 0 });
+        }
+        function OnNutrientRequiredValuesEditFailed() { }
+
+        function NutrientRequiredValueEdit(result) {
             $.each(result, function (count, obj) {
 
                 var tr = "";
 
                 tr += "<tr>";
-                tr += "<td style='width:35%;'>" + obj.PaymentMode + "</td>";
-                tr += "<td style='width:25%;'>" + obj.BankName + "</td>";
-                tr += "<td style='width:25%;'>" + obj.ReceiveAmount + "</td>";
-                tr += "<td style=\"width:15%;\">";
-                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return EditPaymentInfoItem('" + obj.PaymentModeId + "','" + obj.PaymentMode + "','" + obj.BankId + "','" + obj.BankName + "','" + obj.ReceiveAmount + "','" + obj.CurrencyTypeId + "','" + obj.CurrencyType + "','" + obj.CardTypeId + "','" + obj.CardType + "','" + obj.CardNumber + "','" + obj.ChequeNumber + "')\" alt='Edit'  title='Edit' border='0' />";
+                tr += "<td style='width:40%;'>" + obj.NutrientName + "</td>";
+                tr += "<td style='width:40%;'>" + obj.RequiredValue + "</td>";
+                tr += "<td style=\"width:20%;\">";
+                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return EditNutrientRequiredValueItem('" + obj.NutrientId + "','" + obj.RequiredValue + "')\" alt='Edit'  title='Edit' border='0' />";
                 tr += "&nbsp;&nbsp;<a href='javascript:void()' onclick= 'DeleteNutrientRequiredValueItem(this)' ><img alt='Delete' src='../Images/delete.png' title='Delete' /></a>";
                 tr += "</td>";
 
-                tr += "<td style='display:none;'>" + obj.PaymentModeId + "</td>";
-                tr += "<td style='display:none;'>" + obj.CurrencyTypeId + "</td>";
-                tr += "<td style='display:none;'>" + obj.CurrencyType + "</td>";
-                tr += "<td style='display:none;'>" + obj.CardType + "</td>";
-                tr += "<td style='display:none;'>" + obj.CardTypeId + "</td>";
-                tr += "<td style='display:none;'>" + obj.CardNumber + "</td>";
-                tr += "<td style='display:none;'>" + obj.BankId + "</td>";
-                tr += "<td style='display:none;'>" + obj.ChequeNumber + "</td>";
+                tr += "<td style='display:none;'>" + obj.NutrientId + "</td>";
+                tr += "<td style='display:none;'>" + obj.Id + "</td>";
+                tr += "<td style='display:none;'>" + obj.CalculatedValue + "</td>";
+                tr += "<td style='display:none;'>" + obj.Difference + "</td>";
 
                 tr += "</tr>";
 
                 $("#NutrientRequiredValuesTbl tbody").prepend(tr);
-                var totalAmount = 0;
-                $("#NutrientRequiredValuesTbl tr").each(function () {
-                    var amount = $(this).find("td").eq(2).html();
-                    if (amount == undefined) {
-                        amount = 0;
-                    }
-                    totalAmount = parseFloat(totalAmount) + parseFloat(amount);
-                });
-                totalAmount = totalAmount.toFixed(2);
-                $("#ContentPlaceHolder1_txtTotalPaymentAmount").val(totalAmount);
-                $("#ContentPlaceHolder1_hftotalForPaymentInfos").val(totalAmount);
 
                 tr = "";
             });
         }
+        function ClearSearch() {
+            $("#ContentPlaceHolder1_ddlItemNameSearch").val("0").trigger('change');
+        }
+
+        function NutrientRequiredValuesDelete(TicketId) {
+
+            if (!confirm("Do you Want To Delete?")) {
+                return false;
+            }
+
+            PageMethods.NutrientRequiredValuesDelete(TicketId, OnNutrientRequiredValuesDeleteSucceed, OnNutrientRequiredValuesDeleteFailed);
+        }
+
+        function OnNutrientRequiredValuesDeleteSucceed(result) {
+            if (result.IsSuccess) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                SearchNutrientRequiredValues(1, 1);
+            }
+            else {
+                CommonHelper.AlertMessage(result.AlertMessage);
+            }
+            return false;
+        }
+        function OnNutrientRequiredValuesDeleteFailed() {
+            toastr.error(error.get_message());
+        }
 
         function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
-            SearchTicketInformation(pageNumber, IsCurrentOrPreviousPage);
+            SearchNutrientRequiredValues(pageNumber, IsCurrentOrPreviousPage);
             return false;
         }
 
@@ -354,7 +380,7 @@
     <asp:HiddenField ID="hfReferenceIdForWalkIn" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfbankId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfRegistrationNumber" runat="server" Value="0"></asp:HiddenField>
-    <asp:HiddenField ID="hfTicketMasterId" runat="server" Value="0"></asp:HiddenField>
+    <asp:HiddenField ID="hfNRVMasterId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfEditNutrientRequiredValue" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfStopAddingExistingPayment" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hftotalForPaymentInfos" runat="server" Value="0" />
@@ -445,16 +471,16 @@
                     <div class="form-horizontal">
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblNutrientSearch" runat="server" class="control-label" Text="Nutrient"></asp:Label>
+                                <asp:Label ID="lblItemNameSearch" runat="server" class="control-label" Text="Item Name"></asp:Label>
                             </div>
                             <div class="col-md-4">
-                                <asp:DropDownList ID="ddlNutrientSearch" runat="server" CssClass="form-control">
+                                <asp:DropDownList ID="ddlItemNameSearch" runat="server" CssClass="form-control">
                                 </asp:DropDownList>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="button" id="btnSearch" class="TransactionalButton btn btn-primary btn-large" value="Search" onclick="SearchTicketInformation(1, 1)" />
+                                <input type="button" id="btnSearch" class="TransactionalButton btn btn-primary btn-large" value="Search" onclick="SearchNutrientRequiredValues(1, 1)" />
                                 <input type="button" id="btnSearchCancel" class="TransactionalButton btn btn-primary btn-large" value="Clear" onclick="ClearSearch()" />
                             </div>
                         </div>
@@ -469,17 +495,9 @@
                     <table id="NutrientRequiredValuesGrid" class="table table-bordered table-condensed table-responsive">
                         <thead>
                             <tr style="color: White; background-color: #44545E; font-weight: bold;">
-                                <th style="width: 10%;">Invoice No.
+                                <th style="width: 70%;">Item Name
                                 </th>
-                                <th style="width: 20%;">Transaction Type
-                                </th>
-                                <th style="width: 30%;">Transaction For
-                                </th>
-                                <th style="width: 20%;">Invoice Amount
-                                </th>
-                                <th style="width: 10%;">Status
-                                </th>
-                                <th style="width: 10%;">Action
+                                <th style="width: 30%;">Action
                                 </th>
                             </tr>
                         </thead>

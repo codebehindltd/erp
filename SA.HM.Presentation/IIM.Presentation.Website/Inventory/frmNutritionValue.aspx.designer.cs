@@ -49,6 +49,33 @@ namespace HotelManagement.Presentation.Website.Inventory {
         protected global::System.Web.UI.WebControls.HiddenField hfNutrientId;
         
         /// <summary>
+        /// hfSecondItemId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfSecondItemId;
+        
+        /// <summary>
+        /// hfSecondNutritionTypeId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfSecondNutritionTypeId;
+        
+        /// <summary>
+        /// hfSecondNutrientId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfSecondNutrientId;
+        
+        /// <summary>
         /// hfSavePermission control.
         /// </summary>
         /// <remarks>

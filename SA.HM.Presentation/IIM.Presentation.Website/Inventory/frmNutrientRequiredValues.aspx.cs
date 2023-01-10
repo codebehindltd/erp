@@ -1,4 +1,5 @@
 ﻿using HotelManagement.Data.Inventory;
+using HotelManagement.Entity.HMCommon;
 using HotelManagement.Entity.Inventory;
 using HotelManagement.Entity.UserInformation;
 using HotelManagement.Presentation.Website.Common;
@@ -34,10 +35,16 @@ namespace HotelManagement.Presentation.Website.Inventory
             ddlItemName.DataValueField = "ItemId";
             ddlItemName.DataBind();
 
+            ddlItemNameSearch.DataSource = invItemBo;
+            ddlItemNameSearch.DataTextField = "Name";
+            ddlItemNameSearch.DataValueField = "ItemId";
+            ddlItemNameSearch.DataBind();
+
             ListItem itemSearch = new ListItem();
             itemSearch.Value = "0";
             itemSearch.Text = hmUtility.GetDropDownFirstValue();
             ddlItemName.Items.Insert(0, itemSearch);
+            ddlItemNameSearch.Items.Insert(0, itemSearch);
         }
         
         private void LoadNutrientInfo()
@@ -58,7 +65,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         }
         
         [WebMethod]
-        public static ReturnInfo SaveNutrientRequiredValues(List<InvNutrientInfoBO> AddedNutrientRequiredValueInfo)
+        public static ReturnInfo SaveNutrientRequiredValues(InvNutrientInfoBO NutrientRequiredMasterInfo, List<InvNutrientInfoBO> AddedNutrientRequiredValueInfo, List<int> deletedNutrientRequiredValueList)
         {
             ReturnInfo rtninfo = new ReturnInfo();
             Boolean status = false;
@@ -68,11 +75,18 @@ namespace HotelManagement.Presentation.Website.Inventory
                 UserInformationBO userInformationBO = new UserInformationBO();
                 userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
                 InvNutrientInfoDA nutrientInfoDa = new InvNutrientInfoDA();
-                status = nutrientInfoDa.SaveNutrientRequiredValues(AddedNutrientRequiredValueInfo, userInformationBO.UserInfoId);
+                status = nutrientInfoDa.SaveNutrientRequiredValues(NutrientRequiredMasterInfo, AddedNutrientRequiredValueInfo, deletedNutrientRequiredValueList, userInformationBO.UserInfoId);
                 if (status)
                 {
                     rtninfo.IsSuccess = true;
-                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
+                    if(NutrientRequiredMasterInfo.Id > 0)
+                    {
+                        rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
+                    }
+                    else
+                    {
+                        rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
+                    }
                 }
 
                 if (!status)
@@ -87,6 +101,70 @@ namespace HotelManagement.Presentation.Website.Inventory
                 rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
             }
             return rtninfo;
+        }
+
+        [WebMethod]
+        public static GridViewDataNPaging<InvNutrientInfoBO, GridPaging> SearchNutrientRequiredValues(int itemId, int gridRecordsCount, int pageNumber, int isCurrentOrPreviousPage
+                                                                                         )
+        {
+            int totalRecords = 0;
+            HMUtility hmUtility = new HMUtility();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+            GridViewDataNPaging<InvNutrientInfoBO, GridPaging> myGridData = new GridViewDataNPaging<InvNutrientInfoBO, GridPaging>(userInformationBO.GridViewPageSize, userInformationBO.GridViewPageLink, isCurrentOrPreviousPage);
+            pageNumber = myGridData.PageNumberCalculation(gridRecordsCount, pageNumber);
+
+            InvNutrientInfoDA nutrientInfoDa = new InvNutrientInfoDA();
+            List<InvNutrientInfoBO> invNutrientList = new List<InvNutrientInfoBO>();
+
+            invNutrientList = nutrientInfoDa.GetNutrientRequiredValuesForSearch(itemId, userInformationBO.UserInfoId, userInformationBO.GridViewPageSize, pageNumber, out totalRecords);
+
+            myGridData.GridPagingProcessing(invNutrientList, totalRecords);
+            return myGridData;
+        }
+
+        [WebMethod]
+        public static NRVViewBO NutrientRequiredValuesEdit(long Id)
+        {
+            NRVViewBO viewBo = new NRVViewBO();
+            InvNutrientInfoDA nutrientDa = new InvNutrientInfoDA();
+
+            viewBo.NRVMasterInfo = nutrientDa.GetNRVMasterInfo(Id);
+            viewBo.NRVDetails = nutrientDa.GetNRVDetailsById(Id);
+            return viewBo;
+        }
+
+        [WebMethod]
+        public static ReturnInfo NutrientRequiredValuesDelete(long Id)
+        {
+            ReturnInfo rtninfo = new ReturnInfo();
+            Boolean status = false;
+            try
+            {
+
+                InvNutrientInfoDA nutrientInfoDa = new InvNutrientInfoDA();
+                status = nutrientInfoDa.NutrientRequiredValuesDelete(Id);
+                if (status)
+                {
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Delete, AlertType.Success);
+                }
+
+                if (!status)
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            return rtninfo;
+
         }
     }
 }
