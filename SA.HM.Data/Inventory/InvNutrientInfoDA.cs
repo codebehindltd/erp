@@ -695,7 +695,7 @@ namespace HotelManagement.Data.Inventory
 
                     nutrientList = Table.AsEnumerable().Select(r => new InvNutrientInfoBO
                     {
-                        Id = r.Field<Int64>("ItemId"),
+                        Id = r.Field<Int64>("RequiredValueMasterId"),
                         NutrientId = r.Field<Int32>("NutrientsId"),
                         NutrientName = r.Field<string>("Name"),
                         RequiredValue = r.Field<decimal>("RequiredValue"),
