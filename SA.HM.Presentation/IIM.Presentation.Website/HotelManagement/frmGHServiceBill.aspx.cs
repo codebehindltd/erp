@@ -593,7 +593,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                     ghServiceBill.CardHolderName = payment[8].Trim();
                 }
-                else if (payment[1] == "Checque")
+                else if (payment[1] == "Cheque")
                 {
                     ghServiceBill.AccountsPostingHeadId = Int32.Parse(payment[4]);
                     ghServiceBill.ChecqueNumber = txtChecqueNumber.Text;

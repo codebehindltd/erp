@@ -328,7 +328,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 }
                 else if (ddlPayMode.SelectedValue == "Cheque")
                 {
-                    reservationBillPaymentBO.AccountsPostingHeadId = Convert.ToInt32(ddlChecquePaymentAccountHeadId.SelectedValue);
+                    reservationBillPaymentBO.AccountsPostingHeadId = Convert.ToInt32(ddlChequeReceiveAccountsInfo.SelectedValue);
                     reservationBillPaymentBO.BankId = Convert.ToInt32(ddlCompanyBank.SelectedValue);
                     reservationBillPaymentBO.ChecqueNumber = txtChecqueNumber.Text;
                     reservationBillPaymentBO.CardReference = "";

@@ -2707,7 +2707,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     guestBillPaymentBO.NodeId = Convert.ToInt32(ddlCardPaymentAccountHeadId);
                     guestBillPaymentBO.AccountsPostingHeadId = Convert.ToInt32(ddlCardPaymentAccountHeadId);
                 }
-                else if (ddlPayMode == "Checque")
+                else if (ddlPayMode == "Cheque")
                 {
                     guestBillPaymentBO.NodeId = Convert.ToInt32(ddlChecquePaymentAccountHeadId);
                     guestBillPaymentBO.AccountsPostingHeadId = Convert.ToInt32(ddlChecquePaymentAccountHeadId);
