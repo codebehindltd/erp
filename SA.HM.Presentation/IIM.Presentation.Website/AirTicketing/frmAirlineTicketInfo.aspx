@@ -1107,12 +1107,14 @@
 
         function SearchTicketInformation(pageNumber, IsCurrentOrPreviousPage) {
             var gridRecordsCount = $("#TicketInformationGrid tbody tr").length;
-            var fromDate = null, toDate = null, invoiceNumber = "", companyName = "", referenceName = "";
+            var fromDate = null, toDate = null, invoiceNumber = "", companyName = "", referenceName = "", ticketNumber = "", pnrNumber = "";
             fromDate = $("#ContentPlaceHolder1_txtFromDate").val();
             toDate = $("#ContentPlaceHolder1_txtToDate").val();
             invoiceNumber = $("#ContentPlaceHolder1_txtInvoiceNumber").val();
             companyName = $("#ContentPlaceHolder1_txtCompanyName").val();
             referenceName = $("#ContentPlaceHolder1_txtRefName").val();
+            ticketNumber = $("#ContentPlaceHolder1_txtTicketNumberSearch").val();
+            pnrNumber = $("#ContentPlaceHolder1_txtPNRSearch").val();
 
             if (fromDate != "")
                 fromDate = CommonHelper.DateFormatToMMDDYYYY(fromDate, '/');
@@ -1126,7 +1128,7 @@
             if (pageNumber < 0)
                 pageNumber = 1;
 
-            PageMethods.SearchTicketInformation(fromDate, toDate, invoiceNumber, companyName, referenceName,
+            PageMethods.SearchTicketInformation(fromDate, toDate, invoiceNumber, companyName, referenceName, ticketNumber, pnrNumber,
                 gridRecordsCount, pageNumber, IsCurrentOrPreviousPage, OnSearchTicketInformationSucceed, OnSearchTicketInformationFailed);
 
             return false;
@@ -2074,6 +2076,20 @@
                             </div>
                             <div class="col-md-10">
                                 <asp:TextBox ID="txtRefName" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:Label ID="lblTicketNumberSearch" runat="server" class="control-label" Text="Ticket Number"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtTicketNumberSearch" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblPNRSearch" runat="server" class="control-label" Text="PNR"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtPNRSearch" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                         </div>
                         <div class="row">

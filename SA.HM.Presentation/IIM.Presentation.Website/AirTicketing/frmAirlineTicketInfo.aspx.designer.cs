@@ -1120,6 +1120,42 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.TextBox txtRefName;
         
         /// <summary>
+        /// lblTicketNumberSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTicketNumberSearch;
+        
+        /// <summary>
+        /// txtTicketNumberSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTicketNumberSearch;
+        
+        /// <summary>
+        /// lblPNRSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPNRSearch;
+        
+        /// <summary>
+        /// txtPNRSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPNRSearch;
+        
+        /// <summary>
         /// btnAdminApproval control.
         /// </summary>
         /// <remarks>

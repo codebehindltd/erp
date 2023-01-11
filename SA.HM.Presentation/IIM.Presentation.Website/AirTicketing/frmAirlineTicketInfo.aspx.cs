@@ -363,7 +363,7 @@ namespace HotelManagement.Presentation.Website.AirTicketing
 
         [WebMethod]
         public static GridViewDataNPaging<AirlineTicketMasterBO, GridPaging> SearchTicketInformation(DateTime? fromDate, DateTime? toDate, string invoiceNumber, string companyName, 
-                                                                                          string referenceName, int gridRecordsCount, int pageNumber, int isCurrentOrPreviousPage
+                                                                                          string referenceName, string ticketNumber, string pnrNumber, int gridRecordsCount, int pageNumber, int isCurrentOrPreviousPage
                                                                                          )
         {
             int totalRecords = 0;
@@ -377,7 +377,7 @@ namespace HotelManagement.Presentation.Website.AirTicketing
             AirlineTicketInfoDA aTDA = new AirlineTicketInfoDA();
             List<AirlineTicketMasterBO> ticketList = new List<AirlineTicketMasterBO>();
 
-            ticketList = aTDA.GetTicketInformation(fromDate, toDate, invoiceNumber, companyName, referenceName, userInformationBO.UserInfoId, userInformationBO.GridViewPageSize, pageNumber, out totalRecords);
+            ticketList = aTDA.GetTicketInformation(fromDate, toDate, invoiceNumber, companyName, referenceName, ticketNumber, pnrNumber, userInformationBO.UserInfoId, userInformationBO.GridViewPageSize, pageNumber, out totalRecords);
 
             myGridData.GridPagingProcessing(ticketList, totalRecords);
             return myGridData;

@@ -30,5 +30,7 @@ namespace HotelManagement.Entity.AirTicketing
         public bool IsCanDelete { get; set; }
         public bool IsCanChecked { get; set; }
         public bool IsCanApproved { get; set; }
+        public string TicketNumber { get; set; }
+        public string PNRNumber { get; set; }
     }
 }

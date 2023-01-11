@@ -227,7 +227,7 @@ namespace HotelManagement.Data.AirTicketing
 
             return retVal;
         }
-        public List<AirlineTicketMasterBO> GetTicketInformation(DateTime? fromDate, DateTime? toDate, string invoiceNumber, string companyName, string referenceName,
+        public List<AirlineTicketMasterBO> GetTicketInformation(DateTime? fromDate, DateTime? toDate, string invoiceNumber, string companyName, string referenceName, string ticketNumber, string pnrNumber,
                                                                Int32 userInfoId, int recordPerPage, int pageIndex, out int totalRecords)
         {
             List<AirlineTicketMasterBO> productReceive = new List<AirlineTicketMasterBO>();
@@ -261,6 +261,16 @@ namespace HotelManagement.Data.AirTicketing
                         dbSmartAspects.AddInParameter(cmd, "@ReferenceName", DbType.String, referenceName);
                     else
                         dbSmartAspects.AddInParameter(cmd, "@ReferenceName", DbType.String, DBNull.Value);
+
+                    if (!string.IsNullOrEmpty(ticketNumber))
+                        dbSmartAspects.AddInParameter(cmd, "@TicketNumber", DbType.String, ticketNumber);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@TicketNumber", DbType.String, DBNull.Value);
+
+                    if (!string.IsNullOrEmpty(pnrNumber))
+                        dbSmartAspects.AddInParameter(cmd, "@PnrNumber", DbType.String, pnrNumber);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@PnrNumber", DbType.String, DBNull.Value);
 
                     dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int32, userInfoId);
 
