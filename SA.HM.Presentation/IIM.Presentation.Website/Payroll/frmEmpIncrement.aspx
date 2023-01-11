@@ -487,7 +487,7 @@
             </div>
             <div id="childDivSection">
                 <asp:GridView ID="gvEmpIncrement" Width="100%" runat="server" AllowPaging="True" OnRowCommand="gvEmpIncrement_RowCommand"
-                    OnRowDataBound="gvEmpIncrement_RowDataBound" AutoGenerateColumns="False" CellPadding="4" GridLines="None" PageSize="300" AllowSorting="True"
+                    OnRowDataBound="gvEmpIncrement_RowDataBound" AutoGenerateColumns="False" CellPadding="4" GridLines="None" PageSize="300000" AllowSorting="True"
                     ForeColor="#333333" CssClass="table table-bordered table-condensed table-responsive" OnPageIndexChanging="gvEmpIncrement_PageIndexChanging">
                     <RowStyle BackColor="#E3EAEB" />
                     <Columns>
