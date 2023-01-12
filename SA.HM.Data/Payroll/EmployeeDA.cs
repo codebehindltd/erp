@@ -141,6 +141,7 @@ namespace HotelManagement.Data.Payroll
 
                                 bo.RepotingTo = Convert.ToInt32(reader["RepotingTo"]);
                                 bo.RepotingTo2 = Convert.ToInt32(reader["RepotingTo2"]);
+                                bo.EmployeeStatusId = Convert.ToInt32(reader["EmployeeStatusId"]);
                                 
                                 boList.Add(bo);
                             }

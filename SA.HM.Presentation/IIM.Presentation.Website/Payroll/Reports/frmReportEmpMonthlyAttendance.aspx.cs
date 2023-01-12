@@ -205,8 +205,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
         {
             EmployeeDA employeeDA = new EmployeeDA();
             List<EmployeeBO> employeeBOList = new List<EmployeeBO>();
-            employeeBOList = employeeDA.GetEmployeeInfo();
-
+            employeeBOList = employeeDA.GetEmployeeInfo().Where(x => x.EmployeeStatusId != 6).ToList();
             this.ddlEmployee.DataSource = employeeBOList;
             this.ddlEmployee.DataTextField = "EmployeeName";
             this.ddlEmployee.DataValueField = "EmpId";
