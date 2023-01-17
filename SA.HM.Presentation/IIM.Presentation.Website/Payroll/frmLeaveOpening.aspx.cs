@@ -100,7 +100,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                     lv.MaxDayCanCarryForwardYearly = leaveTypeBO.MaxDayCanCarryForwardYearly;
                     lv.MaxDayCanKeepAsCarryForwardLeave = leaveTypeBO.MaxDayCanKeepAsCarryForwardLeave;
                     lv.MaxDayCanEncash = leaveTypeBO.MaxDayCanEncash;
-                    lv.TakenLeave = (lv.OpeningLeave != leaveTypeBO.YearlyLeave ? leaveTypeBO.YearlyLeave - lv.OpeningLeave : 0);
+                    lv.TakenLeave = 0; //(lv.OpeningLeave != leaveTypeBO.YearlyLeave ? leaveTypeBO.YearlyLeave - lv.OpeningLeave : 0);
                     lv.RemainingLeave = lv.OpeningLeave;
                     lv.TotalCarryforwardLeave = 0;
                     lv.ApprovedStatus = HMConstants.ApprovalStatus.Approved.ToString();
@@ -113,7 +113,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                     lv.MaxDayCanCarryForwardYearly = leaveTypeBO.MaxDayCanCarryForwardYearly;
                     lv.MaxDayCanKeepAsCarryForwardLeave = leaveTypeBO.MaxDayCanKeepAsCarryForwardLeave;
                     lv.MaxDayCanEncash = leaveTypeBO.MaxDayCanEncash;
-                    lv.TakenLeave = (lv.OpeningLeave != leaveTypeBO.YearlyLeave ? leaveTypeBO.YearlyLeave - lv.OpeningLeave : 0);
+                    lv.TakenLeave = 0;//(lv.OpeningLeave != leaveTypeBO.YearlyLeave ? leaveTypeBO.YearlyLeave - lv.OpeningLeave : 0);
                     lv.RemainingLeave = lv.OpeningLeave;
                     lv.TotalCarryforwardLeave = 0;
                     lv.ApprovedStatus = HMConstants.ApprovalStatus.Pending.ToString();
