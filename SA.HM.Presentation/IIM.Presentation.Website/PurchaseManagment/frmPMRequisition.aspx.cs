@@ -604,7 +604,7 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
             ddlLocation.DataValueField = "DefaultStockLocationId";
             ddlLocation.DataBind();
 
-            requisitionToCostCentreList = costCentreTabDA.GetCostCentreTabInfoByType("Inventory");
+            requisitionToCostCentreList = costCentreTabDA.GetCostCentreTabInfoByType("Inventory").Where(o => o.OutletType == 2).ToList(); ;
 
             ddlRequisitionTo.DataSource = requisitionToCostCentreList;
             ddlRequisitionTo.DataTextField = "CostCenter";

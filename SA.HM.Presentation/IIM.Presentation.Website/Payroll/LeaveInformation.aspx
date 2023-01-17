@@ -401,7 +401,7 @@
 
                     tr += "<td style='width:20%;'>" + (gridObject.EmployeeName == null ? "" : (gridObject.EmpCode + " - " + gridObject.EmployeeName)) + "</td>";
                     tr += "<td style='width:10%;'>" + (gridObject.TypeName == null ? "" : gridObject.TypeName) + "</td>";
-                    tr += "<td style='width:10%;'>" + gridObject.LeaveMode + "</td>";                    
+                    //tr += "<td style='width:10%;'>" + gridObject.LeaveMode + "</td>";                    
                     tr += "<td style='width:10%;'>" + gridObject.CreatedDateString + "</td>";
                     tr += "<td style='width:10%;'>" + GetStringFromDateTime(gridObject.FromDate) + "</td>";
                     tr += "<td style='width:10%;'>" + GetStringFromDateTime(gridObject.ToDate) + "</td>";
@@ -545,8 +545,8 @@
                             </td>
                             <td style="width: 10%;">Leave Type
                             </td>
-                            <td style="width: 10%;">Leave Mode
-                            </td>
+                            <%--<td style="width: 10%;">Leave Mode
+                            </td>--%>
                             <td style="width: 10%;">App. Date
                             </td>
                             <td style="width: 10%;">From Date
