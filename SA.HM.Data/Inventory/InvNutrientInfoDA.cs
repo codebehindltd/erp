@@ -176,8 +176,8 @@ namespace HotelManagement.Data.Inventory
                             }
                             else
                             {
-                                if(ni.Formula == null)
-                                {
+                                //if(ni.Formula == null)
+                                //{
                                     using (DbCommand cmdSave = dbSmartAspects.GetStoredProcCommand("SaveOrDeleteNutrientsAmount_SP"))
                                     {
                                         cmdSave.Parameters.Clear();
@@ -191,7 +191,7 @@ namespace HotelManagement.Data.Inventory
 
                                         status = dbSmartAspects.ExecuteNonQuery(cmdSave, transction);
                                     }
-                                }
+                                //}
                             }
                         }
 

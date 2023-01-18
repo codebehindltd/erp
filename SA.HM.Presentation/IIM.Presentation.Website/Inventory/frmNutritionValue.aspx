@@ -341,6 +341,7 @@
             let formulaValue;
             let inputFormula;
             let lengthOfFormulaOrValue = formulaOrValue.length;
+
             if(formulaOrValue[0] == "="){
                 inputFormula = formulaOrValue.slice(1, formulaOrValue.length);
             }
@@ -355,19 +356,19 @@
                     let currentChar = "";
                     let replacedValue = 0.0;
                     let equation = "";
-                    for (let i = 0; i < formula.length; i++) {
-                        if (formula.charCodeAt(i) == 37 ||
-                            formula.charCodeAt(i) == 40 ||
-                            formula.charCodeAt(i) == 41 ||
-                            formula.charCodeAt(i) == 42 ||
-                            formula.charCodeAt(i) == 43 ||
-                            formula.charCodeAt(i) == 45 ||
-                            formula.charCodeAt(i) == 47 ||
-                            i == formula.length - 1) {
-
+                    for (let i = 0; i < inputFormula.length; i++) {
+                        if (inputFormula.charCodeAt(i) == 37 ||
+                            inputFormula.charCodeAt(i) == 40 ||
+                            inputFormula.charCodeAt(i) == 41 ||
+                            inputFormula.charCodeAt(i) == 42 ||
+                            inputFormula.charCodeAt(i) == 43 ||
+                            inputFormula.charCodeAt(i) == 45 ||
+                            inputFormula.charCodeAt(i) == 47 ||
+                            i == inputFormula.length - 1) {
+                            debugger;
                             let currentNutrientId = stringToInt(currentChar);
-                            if (currentChar != "" && i == formula.length - 1) {
-                                currentVal += formula[i];
+                            if (currentChar != "" && i == inputFormula.length - 1 && inputFormula.charCodeAt(i) != 41) {
+                                currentVal += inputFormula[i];
                             }
                             let currentItemId = parseInt(currentVal);
                             $.each(AddedNutrients, function (count, obj) {
@@ -375,8 +376,9 @@
                                     replacedValue = obj.NutrientAmount;
                                 }
                             });
-                            if (replacedValue > 0) {
-                                formula = formula.replace(currentChar + currentVal, replacedValue);
+                            if (replacedValue >= 0 && currentChar != "" && currentVal != "") {
+                                var charVal = currentChar + currentVal;
+                                formula = formula.replace(charVal, replacedValue);
                             }
                             replacedValue = 0.0;
 
@@ -384,17 +386,17 @@
                             currentVal = "";
                         }
                         else {
-                            if (formula.charCodeAt(i) >= 65 && formula.charCodeAt(i) <= 90) {
-                                currentChar += formula[i];
+                            if (inputFormula.charCodeAt(i) >= 65 && inputFormula.charCodeAt(i) <= 90) {
+                                currentChar += inputFormula[i];
                             }
-                            else if (formula.charCodeAt(i) >= 48 && formula.charCodeAt(i) <= 57) {
-                                currentVal += formula[i];
+                            else if (inputFormula.charCodeAt(i) >= 48 && inputFormula.charCodeAt(i) <= 57) {
+                                currentVal += inputFormula[i];
                             }
                         }
                     }
                     try {
+                        console.log(formula);
                         formulaValue = eval(formula);
-                        console.log(formulaValue);
                     }
                     catch (err) {
                         toastr.warning("Enter a correct formula.");
@@ -423,7 +425,7 @@
             itemId = parseInt(itemId);
             nutritionTypeId = parseInt(nutritionTypeId);
             nutrientId = parseInt(nutrientId);
-            formulaValue = parseInt(formulaValue);
+            formulaValue = parseFloat(formulaValue).toFixed(2);
 
             var isUpdate = false;
             $.each(AddedNutrients, function (count, obj) {
@@ -454,9 +456,10 @@
         function changeFieldsWithTheChangedValueOfCurrentField(currentColumn, itemId, nutrientId, formulaValue) {
             
             $.each(AddedNutrients, function (count, obj) {
+                
                 if (obj.Formula != undefined && obj.Formula.includes(currentColumn)) {
                     console.log("Current Column : " + currentColumn + "Formula: " + obj.Formula);
-
+                    debugger;
                     let currentChar = "";
                     let currentVal = "";
                     let replacedValue = 0.0;
