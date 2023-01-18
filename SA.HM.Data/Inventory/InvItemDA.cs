@@ -236,6 +236,7 @@ namespace HotelManagement.Data.Inventory
                                 productBO.ItemId = Convert.ToInt32(reader["ItemId"]);
                                 productBO.Name = reader["Name"].ToString();
                                 productBO.Code = reader["Code"].ToString();
+                                productBO.CodeAndName = reader["CodeAndName"].ToString();
                                 productBO.Description = reader["Description"].ToString();
                                 productBO.CategoryId = Convert.ToInt32(reader["CategoryId"]);
                                 productBO.ManufacturerId = Convert.ToInt32(reader["ManufacturerId"]);
