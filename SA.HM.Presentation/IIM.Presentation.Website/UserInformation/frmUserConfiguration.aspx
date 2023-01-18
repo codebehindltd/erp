@@ -43,17 +43,11 @@
                 GetLinkByGroupId();
             });
             $("#ContentPlaceHolder1_ddlUserGroupName").change( function(){
-                
-
                 if ($(this).val() == "0") {
                     return false;
                 }
-                
-
                 GetLinkByGroupId();
-            });
-
-            
+            });            
 
             $("#chkCheckedBy").change(function () {
                 if ($(this).is(":checked")) {
@@ -72,11 +66,9 @@
                     $("#GroupWiseUser tbody tr").find("td:eq(4)").find("input").prop("checked", false);
                 }
             });
-
         });
 
         function GetLinkByGroupId() {
-
             var userGroupId = $("#ContentPlaceHolder1_ddlUserGroupName").val();
             var featuresId = $("#ContentPlaceHolder1_ddlFeatures").val();
 
@@ -135,7 +127,7 @@
                 tr += "<td style=\"display:none;\">" + userInformationList[i].UserInfoId + "</td>";
 
                 tr += "<td style=\"width: 50%;\">" +
-                                 userInformationList[i].UserName +
+                                 userInformationList[i].UserIdAndName +
                             "</td>" +
                             "<td style=\"width: 25%; text-align:center;\">" +
                                  "<input type='checkbox' id='create" + userInformationList[i].UserInfoId + "'" + isCheckedBy + "/>" +
@@ -272,7 +264,7 @@
                                     <input type="checkbox" id="chkAll" />
                                 </th>--%>
                                 <th style="width: 50%; ">
-                                    User Name
+                                    User
                                 </th>                                
                                 <th style="width: 25%; text-align: center;">
                                     Checked By<br />

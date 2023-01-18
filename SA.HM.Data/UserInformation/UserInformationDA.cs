@@ -845,7 +845,7 @@ namespace HotelManagement.Data.UserInformation
 
                                 userInformation.UserName = reader["UserName"].ToString();
                                 userInformation.UserId = reader["UserId"].ToString();
-                                //userInformation.UserPassword = reader["UserPassword"].ToString();
+                                userInformation.UserIdAndName = reader["UserIdAndName"].ToString();
                                 userInformation.UserEmail = reader["UserEmail"].ToString();
                                 userInformation.UserPhone = reader["UserPhone"].ToString();
                                 userInformation.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
