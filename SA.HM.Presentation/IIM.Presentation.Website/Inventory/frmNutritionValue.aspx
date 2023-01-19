@@ -330,6 +330,32 @@
             }
             return str;
         }
+        var boxToBeChangedList = [];
+        function changedList(itemId, nutrientId) {
+            nutrientId = parseInt(nutrientId);
+            let currentColumn = intToString(nutrientId) + itemId;
+            $.each(AddedNutrients, function (count, obj) {
+                if (obj.Formula != undefined && obj.Formula.includes(currentColumn)) {
+                    let columnWithTheValue = intToString(obj.NutrientId) + obj.ItemId;
+
+                    var count = AddedNutrients.filter(function (nobj) { nobj.ItemId == obj.ItemId && nobj.NutrientId == obj.NutrientId }).length;
+                    console.log(count);
+                    if(count <= 1) {
+                        boxToBeChangedList.push({
+                            NutrientId: obj.NutrientId,
+                            ItemId: obj.ItemId,
+                            ColumnWithTheValue: columnWithTheValue
+                        });
+                    }
+
+                }
+            });
+            console.log(boxToBeChangedList);
+
+            $.each(boxToBeChangedList, function (count, obj) {
+                changedList(itemId, nutrientId);
+            });
+        }
 
         function ValidationBeforeAdd() {
             var formulaOrValue = $("#ContentPlaceHolder1_txtFormula").val();
@@ -341,6 +367,10 @@
             let formulaValue;
             let inputFormula;
             let lengthOfFormulaOrValue = formulaOrValue.length;
+
+
+            // changedList(itemId, nutrientId);
+
 
             if(formulaOrValue[0] == "="){
                 inputFormula = formulaOrValue.slice(1, formulaOrValue.length);
@@ -365,7 +395,7 @@
                             inputFormula.charCodeAt(i) == 45 ||
                             inputFormula.charCodeAt(i) == 47 ||
                             i == inputFormula.length - 1) {
-                            debugger;
+                            
                             let currentNutrientId = stringToInt(currentChar);
                             if (currentChar != "" && i == inputFormula.length - 1 && inputFormula.charCodeAt(i) != 41) {
                                 currentVal += inputFormula[i];
@@ -452,21 +482,22 @@
             nutrientId = parseInt(nutrientId);
             let currentColumn = intToString(nutrientId) + itemId;
             changeFieldsWithTheChangedValueOfCurrentField(currentColumn, itemId, nutrientId, formulaValue);
+            console.log(boxToBeChangedList);
         }
         function changeFieldsWithTheChangedValueOfCurrentField(currentColumn, itemId, nutrientId, formulaValue) {
-            
+            boxToBeChangedList.push(currentColumn);
             $.each(AddedNutrients, function (count, obj) {
                 
                 if (obj.Formula != undefined && obj.Formula.includes(currentColumn)) {
-                    console.log("Current Column : " + currentColumn + "Formula: " + obj.Formula);
-                    debugger;
+                    //console.log("Current Column : " + currentColumn + "Formula: " + obj.Formula);
+                    
                     let currentChar = "";
                     let currentVal = "";
                     let replacedValue = 0.0;
                     var formula = obj.Formula;
                     var replacedFormula = obj.Formula;
                     for (let i = 0; i < formula.length; i++) {
-                        
+                        debugger;
                         if (formula.charCodeAt(i) == 37 ||
                             formula.charCodeAt(i) == 40 ||
                             formula.charCodeAt(i) == 41 ||
@@ -476,7 +507,7 @@
                             formula.charCodeAt(i) == 47 ||
                             i == formula.length - 1) {
                             let currentNutrientId = stringToInt(currentChar);
-                            if (currentChar != "" && i == formula.length - 1) {
+                            if (currentChar != "" && i == formula.length - 1 && formula.charCodeAt(i) != 41) {
                                 currentVal += formula[i];
                             }
                             let currentItemId = parseInt(currentVal);
@@ -485,7 +516,9 @@
                                     replacedValue = nobj.NutrientAmount;
                                 }
                             });
-                            if (replacedValue > 0) {
+                            
+                            console.log(replacedFormula);
+                            if (replacedValue >= 0 && currentChar != "" && currentVal != "") {
                                 replacedFormula = replacedFormula.replace(currentChar + currentVal, replacedValue);
                             }
 
