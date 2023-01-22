@@ -145,7 +145,7 @@
             var boxCurrentVal = $("#" + boxId + "").val();
             $("#" + boxId + "").blur(function () {
                 $("#" + boxId + "").css({ color: 'red', border: '2px solid blue' });
-                if (deselectBoxId != "") {
+                if (deselectBoxId != "" && boxId != deselectBoxId) {
                     $("#" + deselectBoxId + "").css({ color: 'black', border: '1px solid gray' });
                 }
             });
@@ -168,6 +168,7 @@
             }
             
             $("#ContentPlaceHolder1_txtFormula").focus();
+            $("#ContentPlaceHolder1_txtFormula").select();
             return false;
         }
         var nutritionTypeList = new Array();
@@ -330,6 +331,17 @@
             }
             return str;
         }
+
+        function PerformCancel() {
+            let deselectBoxId = $("#ContentPlaceHolder1_hfSelectedBoxId").val();
+            $("#" + deselectBoxId + "").css({ color: 'black', border: '1px solid gray' });
+            $("#ContentPlaceHolder1_hfSelectedBoxId").val(0);
+            $("#ContentPlaceHolder1_hfItemId").val(0);
+            $("#ContentPlaceHolder1_hfNutritionTypeId").val(0);
+            $("#ContentPlaceHolder1_hfNutrientId").val(0);
+            $("#ContentPlaceHolder1_txtFormula").val("");
+            $("#ContentPlaceHolder1_txtFormula").attr("disabled", true);
+        }
         
         function ValidationBeforeAdd() {
             var formulaOrValue = $("#ContentPlaceHolder1_txtFormula").val();
@@ -341,25 +353,18 @@
             let formulaValue;
             let inputFormula;
             let lengthOfFormulaOrValue = formulaOrValue.length;
-                        
-            if(formulaOrValue[0] == "="){
+
+            if (formulaOrValue[0] == "=") {
                 inputFormula = formulaOrValue.slice(1, formulaOrValue.length);
-            }
-            else {
-                inputFormula = formulaOrValue;
             }
             if (formulaOrValue == "") {
                 formulaValue = 0;
                 $("#" + boxId + "").val(formulaOrValue);
             }
             else {
-                if (formulaOrValue[0] == "=" || formulaOrValue.length == 1) {
-                    if (formulaOrValue.length == 1) {
-                        formula = formulaOrValue;
-                    }
-                    else {
-                        formula = formulaOrValue.slice(1, formulaOrValue.length);
-                    }
+                if (formulaOrValue[0] == "=") {
+
+                    formula = formulaOrValue.slice(1, formulaOrValue.length);
                     let currentVal = "";
                     let currentChar = "";
                     let replacedValue = 0.0;
@@ -458,6 +463,10 @@
             nutrientId = parseInt(nutrientId);
             let currentColumn = intToString(nutrientId) + itemId;
             changeFieldsWithTheChangedValueOfCurrentField(currentColumn, itemId, nutrientId, formulaValue);
+            $("#ContentPlaceHolder1_hfSelectedBoxId").val(0);
+            $("#ContentPlaceHolder1_hfItemId").val(0);
+            $("#ContentPlaceHolder1_hfNutritionTypeId").val(0);
+            $("#ContentPlaceHolder1_hfNutrientId").val(0);
         }
         function changeFieldsWithTheChangedValueOfCurrentField(currentColumn, itemId, nutrientId, formulaValue) {
             $.each(AddedNutrients, function (count, obj) {
@@ -595,6 +604,8 @@
                             </div>
                             <div class="col-md-2">
                                 <input id="btnAdd" type="button" value="Update" onclick="ValidationBeforeAdd()"
+                                    class="TransactionalButton btn btn-primary btn-sm" />
+                                <input id="btnCancel" type="button" value="Cancel" onclick="PerformCancel()"
                                     class="TransactionalButton btn btn-primary btn-sm" />
                             </div>
                         </div>
