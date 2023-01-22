@@ -107,6 +107,14 @@
                 }
             });
 
+            $("#ContentPlaceHolder1_txtDisplaySequence").keypress(function (e) {
+                //if the letter is not digit then display error and don't type anything
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    //display error message
+                    toastr.warning("Digits Only");
+                    return false;
+                }
+            });
         });
 
         function ValidationBeforeSave() {
@@ -117,6 +125,7 @@
             var code = $("#ContentPlaceHolder1_txtCode").val();
             var name = $("#ContentPlaceHolder1_txtName").val();
             var remarks = $("#ContentPlaceHolder1_txtRemarks").val();
+            var displaySequence = $("#ContentPlaceHolder1_txtDisplaySequence").val();
             var statusId = $("#ContentPlaceHolder1_ddlActiveStat option:selected").val();
             var status = $("#ContentPlaceHolder1_ddlActiveStat option:selected").text();
             if (statusId == 1) {
@@ -125,7 +134,7 @@
             else {
                 statusId = 1;
             }
-            debugger;
+
             if ($("#ContentPlaceHolder1_ddlSetupType").val() == "0") {
                 toastr.warning("Please Select Setup Type.");
                 return false;
@@ -162,7 +171,8 @@
                 Name: name,
                 Remarks: remarks,
                 ActiveStat: Boolean(statusId),
-                IsEdit: isEdit
+                IsEdit: isEdit,
+                DisplaySequence: displaySequence
             }
 
             var NutrientInfo = {
@@ -172,7 +182,8 @@
                 Name: name,
                 Remarks: remarks,
                 ActiveStat: Boolean(statusId),
-                IsEdit: isEdit
+                IsEdit: isEdit,
+                DisplaySequence: displaySequence
             }
             
             if (setupTypeId == "1") {
@@ -333,7 +344,7 @@
             return false;
         }
         function OnNutrientInfoEditSucceed(result) {
-            debugger;
+
             $("#myTabs").tabs({ active: 0 });
             $("#btnSave").val("Update");
             $("#ContentPlaceHolder1_hfEditId").val(1);
@@ -359,6 +370,7 @@
             $("#ContentPlaceHolder1_txtCode").val(result.Code);
             $("#ContentPlaceHolder1_txtName").val(result.Name);
             $("#ContentPlaceHolder1_txtRemarks").val(result.Remarks);
+            $("#ContentPlaceHolder1_txtDisplaySequence").val(result.DisplaySequence);
             $("#ContentPlaceHolder1_ddlActiveStat").val(status).trigger('change');
         }
         function OnNutrientInfoEditFailed() { }
@@ -411,6 +423,7 @@
             $("#ContentPlaceHolder1_txtCode").val("");
             $("#ContentPlaceHolder1_txtName").val("");
             $("#ContentPlaceHolder1_txtRemarks").val("");
+            $("#ContentPlaceHolder1_txtDisplaySequence").val("");
             $("#ContentPlaceHolder1_ddlActiveStat").val(0).trigger('change');
             return false;
         }
@@ -432,7 +445,7 @@
             return false;
         }
         function OnLoadDetailObjectSucceeded(result) {
-            debugger;
+
             <%--$("#<%=ddlBankAccounts.ClientID %>").val(result.BankHeadId).trigger('change');
 
             $("#<%=txtBankName.ClientID %>").val(result.BankName);--%>
@@ -498,16 +511,16 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblCode" runat="server" class="control-label required-field" Text="Code"></asp:Label>
-                            </div>
-                            <div class="col-md-4">
-                                <asp:TextBox ID="txtCode" runat="server" CssClass="form-control" TabIndex="2"></asp:TextBox>
-                            </div>
-                            <div class="col-md-2">
                                 <asp:Label ID="lblName" runat="server" class="control-label required-field" Text="Name"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtName" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblCode" runat="server" class="control-label required-field" Text="Code"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtCode" runat="server" CssClass="form-control" TabIndex="2"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
@@ -520,6 +533,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:Label ID="lblDisplaySequence" runat="server" class="control-label" Text="Display Sequence"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtDisplaySequence" CssClass="quantity form-control" runat="server"></asp:TextBox>
+                            </div>
                             <div class="col-md-2">
                                 <asp:Label ID="lblActiveStat" runat="server" class="control-label" Text="Status"></asp:Label>
                             </div>
@@ -579,16 +598,16 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblSCode" runat="server" class="control-label" Text="Code"></asp:Label>
-                            </div>
-                            <div class="col-md-4">
-                                <asp:TextBox ID="txtSCode" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
-                            </div>
-                            <div class="col-md-2">
                                 <asp:Label ID="lblSName" runat="server" class="control-label" Text="Name"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtSName" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblSCode" runat="server" class="control-label" Text="Code"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtSCode" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">

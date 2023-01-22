@@ -32,6 +32,7 @@ namespace HotelManagement.Data.Inventory
                                 dbSmartAspects.AddInParameter(cmdSave, "@Code", DbType.String, NutritionTypeInfo.Code);
                                 dbSmartAspects.AddInParameter(cmdSave, "@Name", DbType.String, NutritionTypeInfo.Name);
                                 dbSmartAspects.AddInParameter(cmdSave, "@Remarks", DbType.String, NutritionTypeInfo.Remarks);
+                                dbSmartAspects.AddInParameter(cmdSave, "@DisplaySequence", DbType.Int32, NutritionTypeInfo.DisplaySequence);
                                 dbSmartAspects.AddInParameter(cmdSave, "@ActiveStat", DbType.Boolean, NutritionTypeInfo.ActiveStat);
                                 dbSmartAspects.AddInParameter(cmdSave, "@CreatedBy", DbType.Int32, NutritionTypeInfo.CreatedBy);
 
@@ -47,6 +48,7 @@ namespace HotelManagement.Data.Inventory
                                 dbSmartAspects.AddInParameter(cmdSave, "@Code", DbType.String, NutritionTypeInfo.Code);
                                 dbSmartAspects.AddInParameter(cmdSave, "@Name", DbType.String, NutritionTypeInfo.Name);
                                 dbSmartAspects.AddInParameter(cmdSave, "@Remarks", DbType.String, NutritionTypeInfo.Remarks);
+                                dbSmartAspects.AddInParameter(cmdSave, "@DisplaySequence", DbType.Int32, NutritionTypeInfo.DisplaySequence);
                                 dbSmartAspects.AddInParameter(cmdSave, "@ActiveStat", DbType.Boolean, NutritionTypeInfo.ActiveStat);
                                 dbSmartAspects.AddInParameter(cmdSave, "@CreatedBy", DbType.Int32, NutritionTypeInfo.CreatedBy);
 
@@ -99,6 +101,7 @@ namespace HotelManagement.Data.Inventory
                                 dbSmartAspects.AddInParameter(cmdSave, "@Code", DbType.String, nutrientInfo.Code);
                                 dbSmartAspects.AddInParameter(cmdSave, "@Name", DbType.String, nutrientInfo.Name);
                                 dbSmartAspects.AddInParameter(cmdSave, "@Remarks", DbType.String, nutrientInfo.Remarks);
+                                dbSmartAspects.AddInParameter(cmdSave, "@DisplaySequence", DbType.Int32, nutrientInfo.DisplaySequence);
                                 dbSmartAspects.AddInParameter(cmdSave, "@ActiveStat", DbType.Boolean, nutrientInfo.ActiveStat);
                                 dbSmartAspects.AddInParameter(cmdSave, "@CreatedBy", DbType.Int32, nutrientInfo.CreatedBy);
 
@@ -115,6 +118,7 @@ namespace HotelManagement.Data.Inventory
                                 dbSmartAspects.AddInParameter(cmdSave, "@Code", DbType.String, nutrientInfo.Code);
                                 dbSmartAspects.AddInParameter(cmdSave, "@Name", DbType.String, nutrientInfo.Name);
                                 dbSmartAspects.AddInParameter(cmdSave, "@Remarks", DbType.String, nutrientInfo.Remarks);
+                                dbSmartAspects.AddInParameter(cmdSave, "@DisplaySequence", DbType.Int32, nutrientInfo.DisplaySequence);
                                 dbSmartAspects.AddInParameter(cmdSave, "@ActiveStat", DbType.Boolean, nutrientInfo.ActiveStat);
                                 dbSmartAspects.AddInParameter(cmdSave, "@CreatedBy", DbType.Int32, nutrientInfo.CreatedBy);
 
@@ -532,6 +536,7 @@ namespace HotelManagement.Data.Inventory
                                     inInfo.Code = reader["Code"].ToString();
                                     inInfo.Name = reader["Name"].ToString();
                                     inInfo.Remarks = reader["Remarks"].ToString();
+                                    inInfo.DisplaySequence = Convert.ToInt32(reader["DisplaySequence"]);
                                     inInfo.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
                                 }
                             }
@@ -558,6 +563,7 @@ namespace HotelManagement.Data.Inventory
                                     inInfo.Code = reader["Code"].ToString();
                                     inInfo.Name = reader["Name"].ToString();
                                     inInfo.Remarks = reader["Remarks"].ToString();
+                                    inInfo.DisplaySequence = Convert.ToInt32(reader["DisplaySequence"]);
                                     inInfo.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
                                 }
                             }

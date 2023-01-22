@@ -293,7 +293,7 @@
                 var boxId = "";
                 let nutrientColumnName = intToString(obj.NutrientId);
                 boxId = boxId + obj.ItemId + obj.NutritionTypeId + nutrientColumnName;
-                formulaValue = parseFloat(obj.NutrientAmount).toFixed(2);
+                formulaValue = parseFloat(obj.NutrientAmount).toFixed(5);
                 $("#" + boxId + "").val(formulaValue);
             });
         }
@@ -330,33 +330,7 @@
             }
             return str;
         }
-        var boxToBeChangedList = [];
-        function changedList(itemId, nutrientId) {
-            nutrientId = parseInt(nutrientId);
-            let currentColumn = intToString(nutrientId) + itemId;
-            $.each(AddedNutrients, function (count, obj) {
-                if (obj.Formula != undefined && obj.Formula.includes(currentColumn)) {
-                    let columnWithTheValue = intToString(obj.NutrientId) + obj.ItemId;
-
-                    var count = AddedNutrients.filter(function (nobj) { nobj.ItemId == obj.ItemId && nobj.NutrientId == obj.NutrientId }).length;
-                    console.log(count);
-                    if(count <= 1) {
-                        boxToBeChangedList.push({
-                            NutrientId: obj.NutrientId,
-                            ItemId: obj.ItemId,
-                            ColumnWithTheValue: columnWithTheValue
-                        });
-                    }
-
-                }
-            });
-            console.log(boxToBeChangedList);
-
-            $.each(boxToBeChangedList, function (count, obj) {
-                changedList(itemId, nutrientId);
-            });
-        }
-
+        
         function ValidationBeforeAdd() {
             var formulaOrValue = $("#ContentPlaceHolder1_txtFormula").val();
             let boxId = $("#ContentPlaceHolder1_hfSelectedBoxId").val();
@@ -367,21 +341,25 @@
             let formulaValue;
             let inputFormula;
             let lengthOfFormulaOrValue = formulaOrValue.length;
-
-
-            // changedList(itemId, nutrientId);
-
-
+                        
             if(formulaOrValue[0] == "="){
                 inputFormula = formulaOrValue.slice(1, formulaOrValue.length);
+            }
+            else {
+                inputFormula = formulaOrValue;
             }
             if (formulaOrValue == "") {
                 formulaValue = 0;
                 $("#" + boxId + "").val(formulaOrValue);
             }
             else {
-                if (formulaOrValue[0] == "=") {
-                    formula = formulaOrValue.slice(1, formulaOrValue.length);
+                if (formulaOrValue[0] == "=" || formulaOrValue.length == 1) {
+                    if (formulaOrValue.length == 1) {
+                        formula = formulaOrValue;
+                    }
+                    else {
+                        formula = formulaOrValue.slice(1, formulaOrValue.length);
+                    }
                     let currentVal = "";
                     let currentChar = "";
                     let replacedValue = 0.0;
@@ -395,7 +373,9 @@
                             inputFormula.charCodeAt(i) == 45 ||
                             inputFormula.charCodeAt(i) == 47 ||
                             i == inputFormula.length - 1) {
-                            
+                            if (formulaOrValue.length == 1) {
+                                currentVal = inputFormula[i];
+                            }
                             let currentNutrientId = stringToInt(currentChar);
                             if (currentChar != "" && i == inputFormula.length - 1 && inputFormula.charCodeAt(i) != 41) {
                                 currentVal += inputFormula[i];
@@ -406,7 +386,7 @@
                                     replacedValue = obj.NutrientAmount;
                                 }
                             });
-                            if (replacedValue >= 0 && currentChar != "" && currentVal != "") {
+                            if (currentChar != "" && currentVal != "") {
                                 var charVal = currentChar + currentVal;
                                 formula = formula.replace(charVal, replacedValue);
                             }
@@ -425,7 +405,6 @@
                         }
                     }
                     try {
-                        console.log(formula);
                         formulaValue = eval(formula);
                     }
                     catch (err) {
@@ -438,24 +417,21 @@
                         $("#ContentPlaceHolder1_txtFormula").focus();
                         return false;
                     }
-
-                    // formulaValue = eval(formula);
                     
-                    formulaValue = parseFloat(formulaValue).toFixed(2);
+                    formulaValue = parseFloat(formulaValue).toFixed(5);
                     $("#" + boxId + "").val(formulaValue);
                 }
                 else {
-                    formulaOrValue = parseFloat(formulaOrValue).toFixed(2);
+                    formulaOrValue = parseFloat(formulaOrValue).toFixed(5);
                     $("#" + boxId + "").val(formulaOrValue);
                     formulaValue = $("#" + boxId + "").val();
-                    // formulaValue = parseFloat(formulaValue).toFixed(2);
                 }
             }
             
             itemId = parseInt(itemId);
             nutritionTypeId = parseInt(nutritionTypeId);
             nutrientId = parseInt(nutrientId);
-            formulaValue = parseFloat(formulaValue).toFixed(2);
+            formulaValue = parseFloat(formulaValue).toFixed(5);
 
             var isUpdate = false;
             $.each(AddedNutrients, function (count, obj) {
@@ -482,14 +458,11 @@
             nutrientId = parseInt(nutrientId);
             let currentColumn = intToString(nutrientId) + itemId;
             changeFieldsWithTheChangedValueOfCurrentField(currentColumn, itemId, nutrientId, formulaValue);
-            console.log(boxToBeChangedList);
         }
         function changeFieldsWithTheChangedValueOfCurrentField(currentColumn, itemId, nutrientId, formulaValue) {
-            boxToBeChangedList.push(currentColumn);
             $.each(AddedNutrients, function (count, obj) {
                 
                 if (obj.Formula != undefined && obj.Formula.includes(currentColumn)) {
-                    //console.log("Current Column : " + currentColumn + "Formula: " + obj.Formula);
                     
                     let currentChar = "";
                     let currentVal = "";
@@ -497,7 +470,7 @@
                     var formula = obj.Formula;
                     var replacedFormula = obj.Formula;
                     for (let i = 0; i < formula.length; i++) {
-                        debugger;
+                        
                         if (formula.charCodeAt(i) == 37 ||
                             formula.charCodeAt(i) == 40 ||
                             formula.charCodeAt(i) == 41 ||
@@ -517,14 +490,14 @@
                                 }
                             });
                             
-                            console.log(replacedFormula);
-                            if (replacedValue >= 0 && currentChar != "" && currentVal != "") {
+
+                            if (currentChar != "" && currentVal != "") {
                                 replacedFormula = replacedFormula.replace(currentChar + currentVal, replacedValue);
                             }
 
                             if (i == formula.length - 1) {
                                 let finalValue = eval(replacedFormula);
-                                finalValue = parseFloat(finalValue).toFixed(2);
+                                finalValue = parseFloat(finalValue).toFixed(5);
                                 let boxId = "";
                                 let nutrientColumnName = intToString(obj.NutrientId);
                                 boxId = boxId + obj.ItemId + obj.NutritionTypeId + nutrientColumnName;
@@ -577,7 +550,6 @@
         function OnSaveNutrientsAmountSucceed(result) {
             if (result.IsSuccess) {
                 CommonHelper.AlertMessage(result.AlertMessage);
-                //ClearAfterSave();
             }
             else {
                 CommonHelper.AlertMessage(result.AlertMessage);

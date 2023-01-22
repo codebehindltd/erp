@@ -29,5 +29,6 @@ namespace HotelManagement.Entity.Inventory
         public decimal RequiredValue { get; set; }
         public decimal CalculatedValue { get; set; }
         public decimal Difference { get; set; }
+        public int? DisplaySequence { get; set; }
     }
 }
