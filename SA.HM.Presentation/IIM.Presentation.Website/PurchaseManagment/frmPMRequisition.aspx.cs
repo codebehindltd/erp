@@ -622,7 +622,8 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
             ddlLocation.DataValueField = "DefaultStockLocationId";
             ddlLocation.DataBind();
 
-            requisitionToCostCentreList = costCentreTabBOList.Where(o => o.OutletType == 2).ToList();
+            //requisitionToCostCentreList = costCentreTabBOList.Where(o => o.OutletType == 2).ToList();
+            requisitionToCostCentreList = costCentreTabDA.GetCostCentreTabInfoByType("Inventory").Where(o => o.OutletType == 2).ToList();
 
             ddlRequisitionTo.DataSource = requisitionToCostCentreList;
             ddlRequisitionTo.DataTextField = "CostCenter";
@@ -638,11 +639,7 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
                 if (requisitionToCostCentreList.Count > 1)
                 {
                     ddlRequisitionTo.Items.Insert(0, item);
-                }
-                else
-                {
-                    ddlRequisitionTo.SelectedValue = requisitionToCostCentreList[0].CostCenterId.ToString();
-                }
+                }                
             }
 
             if (customCostCentreTabBOList != null)
@@ -651,10 +648,6 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
                 {
                     ddlCostCentre.Items.Insert(0, item);
                     ddlLocation.Items.Insert(0, item);
-                }
-                else
-                {
-                    ddlCostCentre.SelectedValue = customCostCentreTabBOList[0].CostCenterId.ToString();
                 }
             }
         }
