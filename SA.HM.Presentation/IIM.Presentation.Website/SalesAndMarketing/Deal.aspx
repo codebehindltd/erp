@@ -258,18 +258,6 @@
                 $("#ContentPlaceHolder1_ddlDealOwner").focus();
                 return false;
             }
-            //if (gLCompanyId == 0) {
-            //    flagValidation = 0;
-            //    toastr.warning("Select Company");
-            //    $("#ContentPlaceHolder1_ddlGLCompany").focus();
-            //    return false;
-            //}
-            //if (gLProjectId == 0) {
-            //    flagValidation = 0;
-            //    toastr.warning("Select Project");
-            //    $("#ContentPlaceHolder1_ddlGLProject").focus();
-            //    return false;
-            //}
 
             if (name == "") {
                 flagValidation = 0;
@@ -297,7 +285,6 @@
             }
 
             var amount = ($("#ContentPlaceHolder1_txtDealAmount").val());
-
             var startDate = $("#ContentPlaceHolder1_txtStartDate").val();
 
             if (startDate == "") {
@@ -414,10 +401,10 @@
             if (result.IsSuccess) {
                 parent.ShowAlert(result.AlertMessage);
                 var contactId = +$.trim(CommonHelper.GetParameterByName("conid"));
-                if (typeof parent.GridPaging === "function") {
-                    var activeLink = Math.trunc($(parent.WebForm_GetElementById("GridPagingContainer")).find("ul li.active").text());
-                    parent.GridPaging(activeLink, 1);
-                }
+                //if (typeof parent.GridPaging === "function") {
+                //    var activeLink = Math.trunc($(parent.WebForm_GetElementById("GridPagingContainer")).find("ul li.active").text());
+                //    parent.GridPaging(activeLink, 1);
+                //}
 
                 if (typeof parent.LoadContactAllDeal == "function")
                     parent.LoadContactAllDeal();

@@ -471,7 +471,7 @@
                         <label class="control-label">Client Name</label>
                     </div>
                     <div class="col-md-10">
-                        <asp:TextBox ID="txtClientName" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:TextBox ID="txtClientName" runat="server" placeholder="Enter minimum 3 characters" CssClass="form-control"></asp:TextBox>
                     </div>
                 </div>
                 <div class="form-group">

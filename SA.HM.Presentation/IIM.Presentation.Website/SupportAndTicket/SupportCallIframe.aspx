@@ -113,6 +113,7 @@
             });
 
             $("#ContentPlaceHolder1_txtClientName").autocomplete({
+                minLength: 3,
                 source: function (request, response) {
                     $.ajax({
                         type: "POST",
@@ -1192,7 +1193,7 @@
                                                 <label class="control-label required-field">Client Name</label>
                                             </div>
                                             <div class="col-md-10">
-                                                <asp:TextBox ID="txtClientName" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtClientName" runat="server" placeholder="Enter minimum 3 characters" CssClass="form-control"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="form-group">

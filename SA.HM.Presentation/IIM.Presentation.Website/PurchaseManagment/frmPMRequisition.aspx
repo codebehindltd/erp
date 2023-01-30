@@ -68,6 +68,7 @@
             });
 
             $("#ContentPlaceHolder1_txtItemName").autocomplete({
+                minLength: 3,
                 source: function (request, response) {
                     var companyId = $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val();
                     var projectId = $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").val();
@@ -1547,7 +1548,7 @@
                                         <asp:Label ID="lblItemName" runat="server" class="control-label required-field" Text="Item Name"></asp:Label>
                                     </div>
                                     <div class="col-md-10">
-                                        <asp:TextBox ID="txtItemName" runat="server" TabIndex="5" CssClass="form-control"></asp:TextBox>
+                                        <asp:TextBox ID="txtItemName" runat="server" placeholder="Enter minimum 3 characters" TabIndex="5" CssClass="form-control"></asp:TextBox>
                                     </div>
                                 </div>
                                 <div id="AttributeDiv">

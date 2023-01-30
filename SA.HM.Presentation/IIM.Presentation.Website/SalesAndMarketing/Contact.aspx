@@ -854,7 +854,7 @@
             });
 
             $("#ContentPlaceHolder1_txtCompanyName").autocomplete({
-
+                minLength: 3,
                 source: function (request, response) {
                     //debugger;
                     $.ajax({
@@ -1950,7 +1950,7 @@
                     <div class="form-group" id="companyDiv" style="display: none">
                         <label class="control-label col-md-2">Company Name</label>
                         <div class="col-sm-9">
-                            <asp:TextBox ID="txtCompanyName" CssClass="form-control" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtCompanyName" placeholder="Enter minimum 3 characters" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
                         <div class="col-sm-1">
                             <input type="button" id="btnAddNewCompany" class="TransactionalButton btn btn-primary btn-sm" value="+" title="Add New Company" />

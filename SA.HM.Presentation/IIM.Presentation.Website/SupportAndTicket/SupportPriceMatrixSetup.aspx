@@ -70,6 +70,7 @@
                 dropdownParent: "#CreateNewDialog",
             });
             $("#ContentPlaceHolder1_txtItem").autocomplete({
+                minLength: 3,
                 source: function (request, response) {
                     var categoryId = $("#ContentPlaceHolder1_ddlCategory").val();
                     $.ajax({
@@ -559,7 +560,7 @@
                             <asp:Label ID="Label4" runat="server" class="control-label required-field" Text="Item"></asp:Label>
                         </div>
                         <div class="col-md-10">
-                            <asp:TextBox ID="txtItem" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:TextBox ID="txtItem" runat="server" placeholder="Enter minimum 3 characters" CssClass="form-control"></asp:TextBox>
                         </div>
                     </div>
                     <div class="form-group">

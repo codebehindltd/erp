@@ -1202,11 +1202,10 @@
         function PerformSaveUpdate() {
         }
         function OnSaveCompanySucceed(result) {
-            //PerformClearAction();
             if (result.IsSuccess) {
                 parent.ShowAlert(result.AlertMessage);
-                if (typeof parent.GridPaging === "function")
-                    parent.GridPaging(1, 1);
+                //if (typeof parent.GridPaging === "function")
+                //    parent.GridPaging(1, 1);
                 PerformClearAction();
                 LoadParentCompanyAfterSave();
             }
