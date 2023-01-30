@@ -11,17 +11,17 @@
 
     $(document).ready(function () {
         //PopulateProjects();
-
         if ($("#<%=hfCompanyAll.ClientID%>").val() != "") {
-            //debugger;
+
             CompanyList = JSON.parse($("#<%=hfCompanyAll.ClientID%>").val());
         }
+        debugger;
         var single = $("#<%=hfIsSingle.ClientID%>").val();
         if (single == "1") {
-            $('#CompanyProjectPanel').hide();
+            $('.CompanyProjectPanelClass').hide();
         }
         else {
-            $('#CompanyProjectPanel').show();
+            $('.CompanyProjectPanelClass').show();
         }
 
         $('#<%=ddlGLCompany.ClientID%>').select2({
@@ -57,11 +57,11 @@
                     dataType: "json",
                     async: false,
                     success: function (data) {
-                        // debugger;
+
                         OnProjectsPopulated(data, projectControl);
                     },
                     failure: function (response) {
-                        //debugger;
+
                         alert(response.d);
                     }
                 });
@@ -101,7 +101,7 @@
 <asp:HiddenField ID="hfDropdownFirstValue" runat="server" Value=""></asp:HiddenField>
 
 <div class="form-horizontal">
-    <div id="CompanyProjectPanel">
+    <div id="CompanyProjectPanel" class="CompanyProjectPanelClass">
         <div class="form-group">
             <div class="col-md-4">
                 <asp:Label ID="lblGLCompany" runat="server" class="control-label required-field" Text="Company"></asp:Label>

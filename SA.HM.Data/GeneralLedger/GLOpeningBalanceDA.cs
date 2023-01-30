@@ -90,17 +90,19 @@ namespace HotelManagement.Data.GeneralLedger
                                 openingBalance.OpeningBalance = ds.Tables[0].AsEnumerable().Select(r => new GLOpeningBalance
                                 {
                                     Id = r.Field<Int64>("Id"),
-                                    TransactionType = r.Field<string>("TransactionType"),
                                     CompanyId = r.Field<int>("CompanyId"),
                                     ProjectId = r.Field<int>("ProjectId"),
-                                    FiscalYearId = r.Field<int>("FiscalYearId")
+                                    FiscalYearId = r.Field<int>("FiscalYearId"),
+                                    OpeningBalanceDate = r.Field<DateTime>("OpeningDate")
 
                                 }).FirstOrDefault();
 
                             if (ds.Tables[1] != null)
                                 openingBalance.CompanyDebitCreditList = ds.Tables[1].AsEnumerable().Select(r => new GLOpeningBalance
                                 {
-                                    CompanyId = r.Field<Int32>("CompanyId"),
+                                    Id = r.Field<Int64>("Id"),
+                                    MasterId = r.Field<Int64>("CompanyMasterId"),
+                                    CompanyId = r.Field<Int32>("TransactionNodeId"),
                                     DrAmount = r.Field<decimal>("DrAmount"),
                                     CrAmount = r.Field<decimal>("CrAmount")
 
@@ -112,17 +114,19 @@ namespace HotelManagement.Data.GeneralLedger
                                 openingBalance.OpeningBalance = ds.Tables[0].AsEnumerable().Select(r => new GLOpeningBalance
                                 {
                                     Id = r.Field<Int64>("Id"),
-                                    TransactionType = r.Field<string>("TransactionType"),
                                     CompanyId = r.Field<int>("CompanyId"),
                                     ProjectId = r.Field<int>("ProjectId"),
-                                    FiscalYearId = r.Field<int>("FiscalYearId")
+                                    FiscalYearId = r.Field<int>("FiscalYearId"),
+                                    OpeningBalanceDate = r.Field<DateTime>("OpeningDate")
 
                                 }).FirstOrDefault();
 
                             if (ds.Tables[1] != null)
                                 openingBalance.SupplierDebitCreditList = ds.Tables[1].AsEnumerable().Select(r => new GLOpeningBalance
                                 {
-                                    SupplierId = r.Field<Int32>("SupplierId"),
+                                    Id = r.Field<Int64>("Id"),
+                                    MasterId = r.Field<Int64>("SupplierMasterId"),
+                                    SupplierId = r.Field<Int32>("TransactionNodeId"),
                                     DrAmount = r.Field<decimal>("DrAmount"),
                                     CrAmount = r.Field<decimal>("CrAmount")
 
@@ -134,17 +138,19 @@ namespace HotelManagement.Data.GeneralLedger
                                 openingBalance.OpeningBalance = ds.Tables[0].AsEnumerable().Select(r => new GLOpeningBalance
                                 {
                                     Id = r.Field<Int64>("Id"),
-                                    TransactionType = r.Field<string>("TransactionType"),
                                     CompanyId = r.Field<int>("CompanyId"),
                                     ProjectId = r.Field<int>("ProjectId"),
-                                    FiscalYearId = r.Field<int>("FiscalYearId")
+                                    FiscalYearId = r.Field<int>("FiscalYearId"),
+                                    OpeningBalanceDate = r.Field<DateTime>("OpeningDate")
 
                                 }).FirstOrDefault();
 
                             if (ds.Tables[1] != null)
                                 openingBalance.EmployeeDebitCreditList = ds.Tables[1].AsEnumerable().Select(r => new GLOpeningBalance
                                 {
-                                    EmployeeId = r.Field<Int32>("EmployeeId"),
+                                    Id = r.Field<Int64>("Id"),
+                                    MasterId = r.Field<Int64>("EmployeeMasterId"),
+                                    EmployeeId = r.Field<Int32>("TransactionNodeId"),
                                     DrAmount = r.Field<decimal>("DrAmount"),
                                     CrAmount = r.Field<decimal>("CrAmount")
 
@@ -156,17 +162,19 @@ namespace HotelManagement.Data.GeneralLedger
                                 openingBalance.OpeningBalance = ds.Tables[0].AsEnumerable().Select(r => new GLOpeningBalance
                                 {
                                     Id = r.Field<Int64>("Id"),
-                                    TransactionType = r.Field<string>("TransactionType"),
                                     CompanyId = r.Field<int>("CompanyId"),
                                     ProjectId = r.Field<int>("ProjectId"),
-                                    FiscalYearId = r.Field<int>("FiscalYearId")
+                                    FiscalYearId = r.Field<int>("FiscalYearId"),
+                                    OpeningBalanceDate = r.Field<DateTime>("OpeningDate")
 
                                 }).FirstOrDefault();
 
                             if (ds.Tables[1] != null)
                                 openingBalance.MemberDebitCreditList = ds.Tables[1].AsEnumerable().Select(r => new GLOpeningBalance
                                 {
-                                    MemberId = r.Field<Int32>("MemberId"),
+                                    Id = r.Field<Int64>("Id"),
+                                    MasterId = r.Field<Int64>("MemberMasterId"),
+                                    MemberId = r.Field<Int32>("TransactionNodeId"),
                                     DrAmount = r.Field<decimal>("DrAmount"),
                                     CrAmount = r.Field<decimal>("CrAmount")
 
@@ -178,17 +186,19 @@ namespace HotelManagement.Data.GeneralLedger
                                 openingBalance.OpeningBalance = ds.Tables[0].AsEnumerable().Select(r => new GLOpeningBalance
                                 {
                                     Id = r.Field<Int64>("Id"),
-                                    TransactionType = r.Field<string>("TransactionType"),
                                     CompanyId = r.Field<int>("CompanyId"),
                                     ProjectId = r.Field<int>("ProjectId"),
-                                    FiscalYearId = r.Field<int>("FiscalYearId")
+                                    FiscalYearId = r.Field<int>("FiscalYearId"),
+                                    OpeningBalanceDate = r.Field<DateTime>("OpeningDate")
 
                                 }).FirstOrDefault();
 
                             if (ds.Tables[1] != null)
                                 openingBalance.CNFDebitCreditList = ds.Tables[1].AsEnumerable().Select(r => new GLOpeningBalance
                                 {
-                                    SupplierId = r.Field<Int32>("SupplierId"),
+                                    Id = r.Field<Int64>("Id"),
+                                    MasterId = r.Field<Int64>("CNFMasterId"),
+                                    CNFId = r.Field<Int32>("TransactionNodeId"),
                                     DrAmount = r.Field<decimal>("DrAmount"),
                                     CrAmount = r.Field<decimal>("CrAmount")
 
@@ -367,7 +377,7 @@ namespace HotelManagement.Data.GeneralLedger
             return status;
         }
 
-        public bool SaveOrUpdateCompanyOpeningBalance(List<GLOpeningBalance> CompanyDebitCreditList)
+        public bool SaveOrUpdateCompanyOpeningBalance(InvOpeningBalance OpeningBalance, List<GLOpeningBalance> CompanyDebitCreditList, out long OpeningBalanceId)
         {
             bool status = false;
 
@@ -380,17 +390,36 @@ namespace HotelManagement.Data.GeneralLedger
                     {
                         using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateCompanyOpeningBalance_SP"))
                         {
-                            foreach (var company in CompanyDebitCreditList)
+                            dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, OpeningBalance.Id);
+                            dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, OpeningBalance.CompanyId);
+                            dbSmartAspects.AddInParameter(cmd, "@ProjectId", DbType.Int32, OpeningBalance.ProjectId);
+                            dbSmartAspects.AddInParameter(cmd, "@VoucherDate", DbType.Date, OpeningBalance.VoucherDate);
+                            dbSmartAspects.AddInParameter(cmd, "@CreatedBy", DbType.Int32, OpeningBalance.CreatedBy);
+                            dbSmartAspects.AddInParameter(cmd, "@LastModifiedBy", DbType.Int32, OpeningBalance.LastModifiedBy);
+                            dbSmartAspects.AddOutParameter(cmd, "@OpeningBalanceId", DbType.Int64, sizeof(Int64));
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+
+                            OpeningBalanceId = Convert.ToInt64(cmd.Parameters["@OpeningBalanceId"].Value);
+
+                        }
+                        if (status)
+                        {
+                            using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateCompanyOpeningBalanceDetail_SP"))
                             {
-                                cmd.Parameters.Clear();
-                                dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, company.Id);
-                                dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int64, company.CompanyId);
-                                dbSmartAspects.AddInParameter(cmd, "@DrAmount", DbType.Decimal, company.DrAmount);
-                                dbSmartAspects.AddInParameter(cmd, "@CrAmount", DbType.Decimal, company.CrAmount);
+                                foreach (var company in CompanyDebitCreditList)
+                                {
+                                    cmd.Parameters.Clear();
+                                    dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, company.Id);
+                                    dbSmartAspects.AddInParameter(cmd, "@CompanyOpeningBalanceId", DbType.Int64, OpeningBalanceId);
+                                    dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int64, company.CompanyId);
+                                    dbSmartAspects.AddInParameter(cmd, "@DrAmount", DbType.Decimal, company.DrAmount);
+                                    dbSmartAspects.AddInParameter(cmd, "@CrAmount", DbType.Decimal, company.CrAmount);
 
-                                status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+                                    status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+                                }
+
                             }
-
                         }
                         if (status)
                         {
@@ -413,7 +442,7 @@ namespace HotelManagement.Data.GeneralLedger
             return status;
         }
 
-        public bool SaveOrUpdateSupplierOpeningBalance(List<GLOpeningBalance> SupplierDebitCreditList)
+        public bool SaveOrUpdateSupplierOpeningBalance(InvOpeningBalance OpeningBalance, List<GLOpeningBalance> SupplierDebitCreditList, out long OpeningBalanceId)
         {
             bool status = false;
 
@@ -426,17 +455,36 @@ namespace HotelManagement.Data.GeneralLedger
                     {
                         using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateSupplierOpeningBalance_SP"))
                         {
-                            foreach (var sdc in SupplierDebitCreditList)
+                            dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, OpeningBalance.Id);
+                            dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, OpeningBalance.CompanyId);
+                            dbSmartAspects.AddInParameter(cmd, "@ProjectId", DbType.Int32, OpeningBalance.ProjectId);
+                            dbSmartAspects.AddInParameter(cmd, "@VoucherDate", DbType.Date, OpeningBalance.VoucherDate);
+                            dbSmartAspects.AddInParameter(cmd, "@CreatedBy", DbType.Int32, OpeningBalance.CreatedBy);
+                            dbSmartAspects.AddInParameter(cmd, "@LastModifiedBy", DbType.Int32, OpeningBalance.LastModifiedBy);
+                            dbSmartAspects.AddOutParameter(cmd, "@OpeningBalanceId", DbType.Int64, sizeof(Int64));
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+
+                            OpeningBalanceId = Convert.ToInt64(cmd.Parameters["@OpeningBalanceId"].Value);
+
+                        }
+                        if (status)
+                        {
+                            using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateSupplierOpeningBalanceDetail_SP"))
                             {
-                                cmd.Parameters.Clear();
-                                dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, sdc.Id);
-                                dbSmartAspects.AddInParameter(cmd, "@SupplierId", DbType.Int64, sdc.SupplierId);
-                                dbSmartAspects.AddInParameter(cmd, "@DrAmount", DbType.Decimal, sdc.DrAmount);
-                                dbSmartAspects.AddInParameter(cmd, "@CrAmount", DbType.Decimal, sdc.CrAmount);
+                                foreach (var supplier in SupplierDebitCreditList)
+                                {
+                                    cmd.Parameters.Clear();
+                                    dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, supplier.Id);
+                                    dbSmartAspects.AddInParameter(cmd, "@SupplierOpeningBalanceId", DbType.Int64, OpeningBalanceId);
+                                    dbSmartAspects.AddInParameter(cmd, "@SupplierId", DbType.Int64, supplier.SupplierId);
+                                    dbSmartAspects.AddInParameter(cmd, "@DrAmount", DbType.Decimal, supplier.DrAmount);
+                                    dbSmartAspects.AddInParameter(cmd, "@CrAmount", DbType.Decimal, supplier.CrAmount);
 
-                                status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+                                    status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+                                }
+
                             }
-
                         }
                         if (status)
                         {
@@ -459,7 +507,7 @@ namespace HotelManagement.Data.GeneralLedger
             return status;
         }
 
-        public bool SaveOrUpdateEmployeeOpeningBalance(List<GLOpeningBalance> EmployeeDebitCreditList)
+        public bool SaveOrUpdateEmployeeOpeningBalance(InvOpeningBalance OpeningBalance, List<GLOpeningBalance> EmployeeDebitCreditList, out long OpeningBalanceId)
         {
             bool status = false;
 
@@ -472,17 +520,36 @@ namespace HotelManagement.Data.GeneralLedger
                     {
                         using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateEmployeeOpeningBalance_SP"))
                         {
-                            foreach (var sdc in EmployeeDebitCreditList)
+                            dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, OpeningBalance.Id);
+                            dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, OpeningBalance.CompanyId);
+                            dbSmartAspects.AddInParameter(cmd, "@ProjectId", DbType.Int32, OpeningBalance.ProjectId);
+                            dbSmartAspects.AddInParameter(cmd, "@VoucherDate", DbType.Date, OpeningBalance.VoucherDate);
+                            dbSmartAspects.AddInParameter(cmd, "@CreatedBy", DbType.Int32, OpeningBalance.CreatedBy);
+                            dbSmartAspects.AddInParameter(cmd, "@LastModifiedBy", DbType.Int32, OpeningBalance.LastModifiedBy);
+                            dbSmartAspects.AddOutParameter(cmd, "@OpeningBalanceId", DbType.Int64, sizeof(Int64));
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+
+                            OpeningBalanceId = Convert.ToInt64(cmd.Parameters["@OpeningBalanceId"].Value);
+
+                        }
+                        if (status)
+                        {
+                            using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateEmployeeOpeningBalanceDetail_SP"))
                             {
-                                cmd.Parameters.Clear();
-                                dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, sdc.Id);
-                                dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int64, sdc.EmployeeId);
-                                dbSmartAspects.AddInParameter(cmd, "@DrAmount", DbType.Decimal, sdc.DrAmount);
-                                dbSmartAspects.AddInParameter(cmd, "@CrAmount", DbType.Decimal, sdc.CrAmount);
+                                foreach (var employee in EmployeeDebitCreditList)
+                                {
+                                    cmd.Parameters.Clear();
+                                    dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, employee.Id);
+                                    dbSmartAspects.AddInParameter(cmd, "@EmployeeOpeningBalanceId", DbType.Int64, OpeningBalanceId);
+                                    dbSmartAspects.AddInParameter(cmd, "@EmployeeId", DbType.Int64, employee.EmployeeId);
+                                    dbSmartAspects.AddInParameter(cmd, "@DrAmount", DbType.Decimal, employee.DrAmount);
+                                    dbSmartAspects.AddInParameter(cmd, "@CrAmount", DbType.Decimal, employee.CrAmount);
 
-                                status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+                                    status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+                                }
+
                             }
-
                         }
                         if (status)
                         {
@@ -505,7 +572,7 @@ namespace HotelManagement.Data.GeneralLedger
             return status;
         }
 
-        public bool SaveOrUpdateMemberOpeningBalance(List<GLOpeningBalance> MemberDebitCreditList)
+        public bool SaveOrUpdateMemberOpeningBalance(InvOpeningBalance OpeningBalance, List<GLOpeningBalance> MemberDebitCreditList, out long OpeningBalanceId)
         {
             bool status = false;
 
@@ -518,17 +585,36 @@ namespace HotelManagement.Data.GeneralLedger
                     {
                         using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateMemberOpeningBalance_SP"))
                         {
-                            foreach (var sdc in MemberDebitCreditList)
+                            dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, OpeningBalance.Id);
+                            dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, OpeningBalance.CompanyId);
+                            dbSmartAspects.AddInParameter(cmd, "@ProjectId", DbType.Int32, OpeningBalance.ProjectId);
+                            dbSmartAspects.AddInParameter(cmd, "@VoucherDate", DbType.Date, OpeningBalance.VoucherDate);
+                            dbSmartAspects.AddInParameter(cmd, "@CreatedBy", DbType.Int32, OpeningBalance.CreatedBy);
+                            dbSmartAspects.AddInParameter(cmd, "@LastModifiedBy", DbType.Int32, OpeningBalance.LastModifiedBy);
+                            dbSmartAspects.AddOutParameter(cmd, "@OpeningBalanceId", DbType.Int64, sizeof(Int64));
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+
+                            OpeningBalanceId = Convert.ToInt64(cmd.Parameters["@OpeningBalanceId"].Value);
+
+                        }
+                        if (status)
+                        {
+                            using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateMemberOpeningBalanceDetail_SP"))
                             {
-                                cmd.Parameters.Clear();
-                                dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, sdc.Id);
-                                dbSmartAspects.AddInParameter(cmd, "@Member", DbType.Int64, sdc.MemberId);
-                                dbSmartAspects.AddInParameter(cmd, "@DrAmount", DbType.Decimal, sdc.DrAmount);
-                                dbSmartAspects.AddInParameter(cmd, "@CrAmount", DbType.Decimal, sdc.CrAmount);
+                                foreach (var member in MemberDebitCreditList)
+                                {
+                                    cmd.Parameters.Clear();
+                                    dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, member.Id);
+                                    dbSmartAspects.AddInParameter(cmd, "@MemberOpeningBalanceId", DbType.Int64, OpeningBalanceId);
+                                    dbSmartAspects.AddInParameter(cmd, "@MemberId", DbType.Int64, member.MemberId);
+                                    dbSmartAspects.AddInParameter(cmd, "@DrAmount", DbType.Decimal, member.DrAmount);
+                                    dbSmartAspects.AddInParameter(cmd, "@CrAmount", DbType.Decimal, member.CrAmount);
 
-                                status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+                                    status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+                                }
+
                             }
-
                         }
                         if (status)
                         {
@@ -551,7 +637,7 @@ namespace HotelManagement.Data.GeneralLedger
             return status;
         }
 
-        public bool SaveOrUpdateCNFOpeningBalance(List<GLOpeningBalance> CNFDebitCreditList)
+        public bool SaveOrUpdateCNFOpeningBalance(InvOpeningBalance OpeningBalance, List<GLOpeningBalance> CNFDebitCreditList, out long OpeningBalanceId)
         {
             bool status = false;
 
@@ -564,17 +650,36 @@ namespace HotelManagement.Data.GeneralLedger
                     {
                         using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateCNFOpeningBalance_SP"))
                         {
-                            foreach (var sdc in CNFDebitCreditList)
+                            dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, OpeningBalance.Id);
+                            dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, OpeningBalance.CompanyId);
+                            dbSmartAspects.AddInParameter(cmd, "@ProjectId", DbType.Int32, OpeningBalance.ProjectId);
+                            dbSmartAspects.AddInParameter(cmd, "@VoucherDate", DbType.Date, OpeningBalance.VoucherDate);
+                            dbSmartAspects.AddInParameter(cmd, "@CreatedBy", DbType.Int32, OpeningBalance.CreatedBy);
+                            dbSmartAspects.AddInParameter(cmd, "@LastModifiedBy", DbType.Int32, OpeningBalance.LastModifiedBy);
+                            dbSmartAspects.AddOutParameter(cmd, "@OpeningBalanceId", DbType.Int64, sizeof(Int64));
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+
+                            OpeningBalanceId = Convert.ToInt64(cmd.Parameters["@OpeningBalanceId"].Value);
+
+                        }
+                        if (status)
+                        {
+                            using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveOrUpdateCNFOpeningBalanceDetail_SP"))
                             {
-                                cmd.Parameters.Clear();
-                                dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, sdc.Id);
-                                dbSmartAspects.AddInParameter(cmd, "@SupplierId", DbType.Int64, sdc.SupplierId);
-                                dbSmartAspects.AddInParameter(cmd, "@DrAmount", DbType.Decimal, sdc.DrAmount);
-                                dbSmartAspects.AddInParameter(cmd, "@CrAmount", DbType.Decimal, sdc.CrAmount);
+                                foreach (var cnf in CNFDebitCreditList)
+                                {
+                                    cmd.Parameters.Clear();
+                                    dbSmartAspects.AddInParameter(cmd, "@Id", DbType.Int64, cnf.Id);
+                                    dbSmartAspects.AddInParameter(cmd, "@CNFOpeningBalanceId", DbType.Int64, OpeningBalanceId);
+                                    dbSmartAspects.AddInParameter(cmd, "@CNFId", DbType.Int64, cnf.CNFId);
+                                    dbSmartAspects.AddInParameter(cmd, "@DrAmount", DbType.Decimal, cnf.DrAmount);
+                                    dbSmartAspects.AddInParameter(cmd, "@CrAmount", DbType.Decimal, cnf.CrAmount);
 
-                                status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+                                    status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0;
+                                }
+
                             }
-
                         }
                         if (status)
                         {

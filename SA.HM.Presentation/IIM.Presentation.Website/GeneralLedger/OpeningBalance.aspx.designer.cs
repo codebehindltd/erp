@@ -22,6 +22,15 @@ namespace HotelManagement.Presentation.Website.GeneralLedger {
         protected global::System.Web.UI.WebControls.HiddenField CommonDropDownHiddenField;
         
         /// <summary>
+        /// hfIsValueExisted control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsValueExisted;
+        
+        /// <summary>
         /// ddlTransactionType control.
         /// </summary>
         /// <remarks>
