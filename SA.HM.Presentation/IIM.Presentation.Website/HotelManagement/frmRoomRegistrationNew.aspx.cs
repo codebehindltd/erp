@@ -1333,7 +1333,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 btnSave.Enabled = true;
                 CommonHelper.AlertInfo(innboardMessage, AlertMessage.Error, AlertType.Error);
             }
-        }       
+        }
         //************************ User Defined Function ********************//
         private void LoadGuestTitle()
         {
@@ -1396,7 +1396,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         {
             bool flag = true;
             if (Session["MessegePanelEnableForSelectedRoomNumber"] == null)
-            {                
+            {
                 HMUtility hmUtility = new HMUtility();
                 RoomNumberBO roomBO = new RoomNumberBO();
                 RoomNumberDA roomDA = new RoomNumberDA();
@@ -1694,20 +1694,17 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             UserInformationBO userInformationBO = new UserInformationBO();
             userInformationBO = System.Web.HttpContext.Current.Session["UserInformationBOSession"] as UserInformationBO;
 
-            if (userInformationBO.UserGroupId != 1)
-            {
-                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsBlankRegistrationButtonWillHide", "IsBlankRegistrationButtonWillHide");
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsBlankRegistrationButtonWillHide", "IsBlankRegistrationButtonWillHide");
 
-                if (commonSetupBO != null)
+            if (commonSetupBO != null)
+            {
+                if (commonSetupBO.SetupId > 0)
                 {
-                    if (commonSetupBO.SetupId > 0)
+                    if (commonSetupBO.SetupValue == "1")
                     {
-                        if (commonSetupBO.SetupValue == "1")
-                        {
-                            btnBlankRegistration.Visible = false;
-                        }
+                        btnBlankRegistration.Visible = false;
                     }
                 }
             }
@@ -3447,7 +3444,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                          ProjectModuleEnum.ProjectModule.FrontOffice.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.RoomRegistration) + ".EntityId is registrationId");
                 }
             }
-            
+
             List<GuestInformationBO> guestInformationList = new List<GuestInformationBO>();
             GuestInformationDA guestInformationDA = new GuestInformationDA();
             DocumentsDA documentsDA = new DocumentsDA();
@@ -3653,7 +3650,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             string strTable = "";
             strTable += "<table  width='100%' class='table table-bordered table-condensed table-responsive' id='TableGuestHistory'><tr style='color: White; background-color: #44545E; font-weight: bold;'>";
-            
+
             strTable += "<th align='center' scope='col'>Registration Number</th><th align='left' scope='col'>Arrival Date</th> <th align='left' scope='col'>Checkout Date</th></tr>";
             int counter = 0;
             foreach (RoomRegistrationBO dr in registrationList)

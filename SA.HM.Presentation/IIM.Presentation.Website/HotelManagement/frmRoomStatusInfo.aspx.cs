@@ -2998,6 +2998,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 if (cancelStatus)
                 {
                     CommonHelper.AlertInfo(innboardMessage, "Blank Registration Canceled Successfully.", AlertType.Success);
+
+                    UserInformationBO userInformationBO = new UserInformationBO();
+                    userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                    Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Delete.ToString(), EntityTypeEnum.EntityType.RoomRegistration.ToString(), Convert.ToInt32(registrationId),
+                    ProjectModuleEnum.ProjectModule.FrontOffice.ToString(), "Blank Registration Cancel");
+
                     ViewStautsProcess();
                 }
             }
