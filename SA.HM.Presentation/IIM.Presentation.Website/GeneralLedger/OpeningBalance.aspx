@@ -374,7 +374,6 @@
 
                 var transactionNodeId = 0, id = 0, detailsId = 0, debitAmount = 0, creditAmount = 0, unitCost = 0, stockQuantity = 0, totalCost = 0;
                 var drAmount = 0, crAmount = 0, quantity = 0;
-                debugger;
                 if (Balance != null) {
                     id = Balance.Id;
                 }
@@ -396,18 +395,18 @@
 
                 if (transactionType == "Inventory") {
                     $("#balanceTable tbody tr").each(function () {
-
+                        console.log(EditedItemList);
                         transactionNodeId = $(this).find("td:eq(0)").attr("tnid");
                         detailsId = $(this).find("td:eq(0)").attr("did");
-
                         if (isInventoryType) {
                             unitCost = $(this).find("td:eq(4) input").val();
                             stockQuantity = $(this).find("td:eq(5) input").val();
                             totalCost = $(this).find("td:eq(6) input").val();
                             unitHead = $(this).find("td").eq(7).html();
-
-                            if (unitCost && stockQuantity) {
-
+                            console.log(EditedItemList.includes(transactionNodeId));
+                            debugger;
+                            if (unitCost || stockQuantity || EditedItemList.includes(transactionNodeId)) {
+                                debugger;
                                 OpeningBalanceDetails.push({
                                     Id: parseInt(detailsId),
                                     TransactionNodeId: parseInt(transactionNodeId),
@@ -529,15 +528,15 @@
                 else if (transactionType == "Accounts")
                     PageMethods.SaveGLOpeningBalance(OpeningBalance, AccountOpeningBalance, OnSucceedSaveOpeningBalance, OnErrorSucceedSaveOpeningBalance);
                 else if (transactionType == "Company")
-                    PageMethods.SaveCompanyOpeningBalance(CompanyDebitCreditList, OnSaveCompanyOpeningBalanceSucceeded, OnSaveCompanyOpeningBalanceFailed);
+                    PageMethods.SaveCompanyOpeningBalance(OpeningBalance, CompanyDebitCreditList, OnSaveCompanyOpeningBalanceSucceeded, OnSaveCompanyOpeningBalanceFailed);
                 else if (transactionType == "Supplier")
-                    PageMethods.SaveSupplierOpeningBalance(SupplierDebitCreditList, OnSaveSupplierOpeningBalanceSucceeded, OnSaveSupplierOpeningBalanceFailed);
+                    PageMethods.SaveSupplierOpeningBalance(OpeningBalance, SupplierDebitCreditList, OnSaveSupplierOpeningBalanceSucceeded, OnSaveSupplierOpeningBalanceFailed);
                 else if (transactionType == "Employee")
-                    PageMethods.SaveEmployeeOpeningBalance(EmployeeDebitCreditList, OnSaveEmployeeOpeningBalanceSucceeded, OnSaveEmployeeOpeningBalanceFailed);
+                    PageMethods.SaveEmployeeOpeningBalance(OpeningBalance, EmployeeDebitCreditList, OnSaveEmployeeOpeningBalanceSucceeded, OnSaveEmployeeOpeningBalanceFailed);
                 else if (transactionType == "Member")
-                    PageMethods.SaveMemberOpeningBalance(MemberDebitCreditList, OnSaveMemberOpeningBalanceSucceeded, OnSaveMemberOpeningBalanceFailed);
+                    PageMethods.SaveMemberOpeningBalance(OpeningBalance, MemberDebitCreditList, OnSaveMemberOpeningBalanceSucceeded, OnSaveMemberOpeningBalanceFailed);
                 else if (transactionType == "CNF")
-                    PageMethods.SaveCNFOpeningBalance(CNFDebitCreditList, OnSaveCNFOpeningBalanceSucceeded, OnSaveCNFOpeningBalanceFailed);
+                    PageMethods.SaveCNFOpeningBalance(OpeningBalance, CNFDebitCreditList, OnSaveCNFOpeningBalanceSucceeded, OnSaveCNFOpeningBalanceFailed);
                 return false;
             }
 
@@ -622,7 +621,20 @@
                 $("#SaveContent").hide();
                 $("#btnApprove").hide();
             }
-
+            
+        //var DeleteInvOpeningBalanceDetailList = [];
+            var EditedItemList = [];
+            function IsValueExisted(control) {
+                var tableRow = $(control).parent().parent();
+                var unitCost = tableRow.find("td:eq(4) input").val();
+                var stockQuantity = tableRow.find("td:eq(5) input").val();
+                if (unitCost != "" || stockQuantity != "") {
+                    var transactionNodeId = tableRow.find("td:eq(0)").attr("tnid");
+                    if (!EditedItemList.includes(transactionNodeId)) {
+                        EditedItemList.push(transactionNodeId);
+                    }                    
+                }
+            }
             function UpdateTotal(control) {
                 var tableRow = $(control).parent().parent();
 
@@ -631,6 +643,15 @@
                 if (!isNaN(unitCost) && !isNaN(stockQuantity))
                     tableRow.find("td:eq(6) input").val(parseFloat(unitCost * stockQuantity).toFixed(2));
 
+                //if (unitCost == 0.00 && stockQuantity == 0.00) {
+                //    var transactionNodeId = $(this).find("td:eq(0)").attr("tnid");
+                //    var detailsId = $(this).find("td:eq(0)").attr("did");
+                //    DeleteInvOpeningBalanceDetailList.push({
+                //        TransactionNodeId: transactionNodeId,
+                //        UnitCost: unitCost,
+                //        StockQuantity: stockQuantity
+                //    });
+                //}
             }
 
             function CheckAssetInputValue(control, index) {
@@ -669,7 +690,6 @@
 
             //function CheckCreditExists(control) {
             //    let tableRow = $(control).parent().parent();
-            //    debugger;
             //    if (parseFloat(tableRow.find("td:eq(2) input").val()) > 0) {
             //        tableRow.find("td:eq(1) input").attr("disabled", true);
             //    }
@@ -683,7 +703,6 @@
 
             function CheckCreditExists(control) {
                 let tableRow = $(control).parent().parent();
-                debugger;
                 if (parseFloat(tableRow.find("td:eq(1) input").val()) > 0) {
                     tableRow.find("td:eq(2) input").attr("disabled", true);
                 }
@@ -711,7 +730,6 @@
             
             function CheckDebitExists(control) {
                 let tableRow = $(control).parent().parent();
-                debugger;
                 if (parseFloat(tableRow.find("td:eq(2) input").val()) > 0) {
                     tableRow.find("td:eq(1) input").attr("disabled", true);
                 }
@@ -889,7 +907,6 @@
                 else if (transactionType == "Inventory") {
                     id = InvOpeningBalanceDetails[0].InvOpeningBalanceId;
                 }
-                debugger;
                 
                 if (transactionInfo.length > 0) {
                     PageMethods.ApproveTransactionOpeningBalance(transactionInfo, transactionType, OnApproveTransactionOpeningBalanceSucceeded, OnApproveTransactionOpeningBalanceFailed);
@@ -939,6 +956,7 @@
     </script>
 
     <asp:HiddenField ID="CommonDropDownHiddenField" runat="server"></asp:HiddenField>
+    <asp:HiddenField ID="hfIsValueExisted" Value="0" runat="server"></asp:HiddenField>
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="form-horizontal">

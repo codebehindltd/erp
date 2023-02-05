@@ -31,13 +31,13 @@ namespace HotelManagement.Presentation.Website.UserInformation {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl LoginBackgroudDiv;
         
         /// <summary>
-        /// form2 control.
+        /// loginForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
+        protected global::System.Web.UI.HtmlControls.HtmlForm loginForm;
         
         /// <summary>
         /// txtUserId control.
@@ -49,13 +49,13 @@ namespace HotelManagement.Presentation.Website.UserInformation {
         protected global::System.Web.UI.WebControls.TextBox txtUserId;
         
         /// <summary>
-        /// txtUserPassword control.
+        /// passwordInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUserPassword;
+        protected global::System.Web.UI.WebControls.TextBox passwordInput;
         
         /// <summary>
         /// btnLogin control.

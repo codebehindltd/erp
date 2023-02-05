@@ -640,7 +640,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         }
 
         [WebMethod]
-        public static ReturnInfo SaveCompanyOpeningBalance(List<GLOpeningBalance> CompanyDebitCreditList)
+        public static ReturnInfo SaveCompanyOpeningBalance(InvOpeningBalance OpeningBalance, List<GLOpeningBalance> CompanyDebitCreditList)
         {
             ReturnInfo returnInfo = new ReturnInfo();
             HMUtility hmUtility = new HMUtility();
@@ -648,11 +648,15 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             long OpeningBalaceId = 0;
             try
             {
-                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateCompanyOpeningBalance(CompanyDebitCreditList);
+                UserInformationBO userInformation = hmUtility.GetCurrentApplicationUserInfo();
+                OpeningBalance.CreatedBy = userInformation.UserInfoId;
+                OpeningBalance.LastModifiedBy = userInformation.UserInfoId;
+
+                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateCompanyOpeningBalance(OpeningBalance, CompanyDebitCreditList, out OpeningBalaceId);
 
                 if (returnInfo.IsSuccess)
                 {
-                    if (CompanyDebitCreditList[0].Id == 0)
+                    if (OpeningBalance.Id == 0)
                     {
                         Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
                         EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalaceId,
@@ -661,9 +665,9 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                     }
                     else
                     {
-                        //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
-                        //EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
-                        //ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
+                        EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
+                        ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
                         returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
                     }
                 }
@@ -681,7 +685,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         }
 
         [WebMethod]
-        public static ReturnInfo SaveSupplierOpeningBalance(List<GLOpeningBalance> SupplierDebitCreditList)
+        public static ReturnInfo SaveSupplierOpeningBalance(InvOpeningBalance OpeningBalance, List<GLOpeningBalance> SupplierDebitCreditList)
         {
             ReturnInfo returnInfo = new ReturnInfo();
             HMUtility hmUtility = new HMUtility();
@@ -689,11 +693,15 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             long OpeningBalaceId = 0;
             try
             {
-                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateSupplierOpeningBalance(SupplierDebitCreditList);
+                UserInformationBO userInformation = hmUtility.GetCurrentApplicationUserInfo();
+                OpeningBalance.CreatedBy = userInformation.UserInfoId;
+                OpeningBalance.LastModifiedBy = userInformation.UserInfoId;
+
+                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateSupplierOpeningBalance(OpeningBalance, SupplierDebitCreditList, out OpeningBalaceId);
 
                 if (returnInfo.IsSuccess)
                 {
-                    if (SupplierDebitCreditList[0].Id == 0)
+                    if (OpeningBalance.Id == 0)
                     {
                         Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
                         EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalaceId,
@@ -702,9 +710,9 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                     }
                     else
                     {
-                        //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
-                        //EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
-                        //ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
+                        EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
+                        ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
                         returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
                     }
                 }
@@ -722,7 +730,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         }
 
         [WebMethod]
-        public static ReturnInfo SaveEmployeeOpeningBalance(List<GLOpeningBalance> EmployeeDebitCreditList)
+        public static ReturnInfo SaveEmployeeOpeningBalance(InvOpeningBalance OpeningBalance, List<GLOpeningBalance> EmployeeDebitCreditList)
         {
             ReturnInfo returnInfo = new ReturnInfo();
             HMUtility hmUtility = new HMUtility();
@@ -730,11 +738,15 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             long OpeningBalaceId = 0;
             try
             {
-                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateEmployeeOpeningBalance(EmployeeDebitCreditList);
+                UserInformationBO userInformation = hmUtility.GetCurrentApplicationUserInfo();
+                OpeningBalance.CreatedBy = userInformation.UserInfoId;
+                OpeningBalance.LastModifiedBy = userInformation.UserInfoId;
+
+                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateEmployeeOpeningBalance(OpeningBalance, EmployeeDebitCreditList, out OpeningBalaceId);
 
                 if (returnInfo.IsSuccess)
                 {
-                    if (EmployeeDebitCreditList[0].Id == 0)
+                    if (OpeningBalance.Id == 0)
                     {
                         Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
                         EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalaceId,
@@ -743,9 +755,9 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                     }
                     else
                     {
-                        //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
-                        //EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
-                        //ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
+                        EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
+                        ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
                         returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
                     }
                 }
@@ -763,7 +775,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         }
 
         [WebMethod]
-        public static ReturnInfo SaveMemberOpeningBalance(List<GLOpeningBalance> MemberDebitCreditList)
+        public static ReturnInfo SaveMemberOpeningBalance(InvOpeningBalance OpeningBalance, List<GLOpeningBalance> MemberDebitCreditList)
         {
             ReturnInfo returnInfo = new ReturnInfo();
             HMUtility hmUtility = new HMUtility();
@@ -771,11 +783,15 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             long OpeningBalaceId = 0;
             try
             {
-                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateMemberOpeningBalance(MemberDebitCreditList);
+                UserInformationBO userInformation = hmUtility.GetCurrentApplicationUserInfo();
+                OpeningBalance.CreatedBy = userInformation.UserInfoId;
+                OpeningBalance.LastModifiedBy = userInformation.UserInfoId;
+
+                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateMemberOpeningBalance(OpeningBalance, MemberDebitCreditList, out OpeningBalaceId);
 
                 if (returnInfo.IsSuccess)
                 {
-                    if (MemberDebitCreditList[0].Id == 0)
+                    if (OpeningBalance.Id == 0)
                     {
                         Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
                         EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalaceId,
@@ -784,9 +800,9 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                     }
                     else
                     {
-                        //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
-                        //EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
-                        //ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
+                        EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
+                        ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
                         returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
                     }
                 }
@@ -804,7 +820,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         }
 
         [WebMethod]
-        public static ReturnInfo SaveCNFOpeningBalance(List<GLOpeningBalance> CNFDebitCreditList)
+        public static ReturnInfo SaveCNFOpeningBalance(InvOpeningBalance OpeningBalance, List<GLOpeningBalance> CNFDebitCreditList)
         {
             ReturnInfo returnInfo = new ReturnInfo();
             HMUtility hmUtility = new HMUtility();
@@ -812,11 +828,15 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             long OpeningBalaceId = 0;
             try
             {
-                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateCNFOpeningBalance(CNFDebitCreditList);
+                UserInformationBO userInformation = hmUtility.GetCurrentApplicationUserInfo();
+                OpeningBalance.CreatedBy = userInformation.UserInfoId;
+                OpeningBalance.LastModifiedBy = userInformation.UserInfoId;
+
+                returnInfo.IsSuccess = openingBalanceDA.SaveOrUpdateCNFOpeningBalance(OpeningBalance, CNFDebitCreditList, out OpeningBalaceId);
 
                 if (returnInfo.IsSuccess)
                 {
-                    if (CNFDebitCreditList[0].Id == 0)
+                    if (OpeningBalance.Id == 0)
                     {
                         Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
                         EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalaceId,
@@ -825,9 +845,9 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                     }
                     else
                     {
-                        //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
-                        //EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
-                        //ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
+                        Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
+                        EntityTypeEnum.EntityType.GLOpeningBalance.ToString(), OpeningBalance.Id,
+                        ProjectModuleEnum.ProjectModule.GeneralLedger.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.InvOpeningBalance));
                         returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
                     }
                 }
@@ -1192,7 +1212,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
 
             foreach (GLOpeningBalanceTransactionNodeAutoComplete obn in nodeList)
             {
-                var detail = openingBalanceView.CNFDebitCreditList.Where(i => i.SupplierId == obn.TransactionNodeId).FirstOrDefault();
+                var detail = openingBalanceView.CNFDebitCreditList.Where(i => i.CNFId == obn.TransactionNodeId).FirstOrDefault();
                 tBody += string.Format(@"<tr> <td did =""{0}""  tnid=""{1}"" style=""width:50%;"">{2}</td>", detail == null ? 0 : detail.SupplierId, obn.TransactionNodeId, string.IsNullOrEmpty(obn.NodeName) ? "" : obn.NodeName);
 
                 if (obn.TransactionNodeId > 0)
@@ -1245,8 +1265,8 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 tBody += "<td style=\"width:10%;\" >" + opd.StyleName + "</td>";
                 tBody += "<td style=\"width:10%;\" >" + opd.ColorName + "</td>";
                 tBody += "<td style=\"width:10%;\" >" + opd.StyleName + "</td>";
-                tBody += "<td style=\"width:10%;\" > <input type=\"text\" onblur=\"UpdateTotal(this)\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.UnitCost.ToString()) + "> </td>";
-                tBody += "<td style=\"width:10%;\" > <input type=\"text\" onblur=\"UpdateTotal(this)\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.StockQuantity.ToString()) + "> </td>";
+                tBody += "<td style=\"width:10%;\" > <input type=\"text\" onchange=\"IsValueExisted(this)\" onblur=\"UpdateTotal(this)\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.UnitCost.ToString()) + "> </td>";
+                tBody += "<td style=\"width:10%;\" > <input type=\"text\" onchange=\"IsValueExisted(this)\" onblur=\"UpdateTotal(this)\" class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.StockQuantity.ToString()) + "> </td>";
                 tBody += "<td style=\"width:10%;\" > <input disabled=\"disabled\" type=\"text\"  class=\"form-control quantitynegativedecimal\" value=" + (detail == null ? "" : detail.Total.ToString()) + "> </td>";
                 tBody += "<td style=\"width:10%;\" >" + opd.UnitHead + "</td>";
 

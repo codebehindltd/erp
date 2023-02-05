@@ -123,7 +123,6 @@
 
             $("#ContentPlaceHolder1_txtBillNo").autocomplete({
                 source: function (request, response) {
-                    //debugger;
                     $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
@@ -156,7 +155,6 @@
                     // prevent autocomplete from updating the textbox
                     event.preventDefault();
                     // manually update the textbox and hidden field
-                    //debugger;
                     $(this).val(ui.item.label);
                     $("#ContentPlaceHolder1_hfBillId").val(ui.item.value);
                     if (NotTriggerChange == 0) {
@@ -1422,7 +1420,6 @@
         }
 
         function CalculateTotalForAdhoq(control) {
-            debugger;
             var tr = $(control).parent().parent();
 
             var stockQuantity = $.trim($(tr).find("td:eq(4)").text());
@@ -1458,7 +1455,6 @@
             if (!confirm("Do you want to delete item?")) { return false; }
 
             var tr = $(control).parent().parent();
-            debugger;
             var itemId = parseInt($.trim($(tr).find("td:eq(8)").text()), 10);
             var outDetailsId = parseInt($.trim($(tr).find("td:eq(12)").text()), 10);
             var colorId = parseInt($(tr).find("td:eq(13)").text(), 10);
@@ -1827,7 +1823,6 @@
             }
 
             var row = 0, rowCount = TransferItemNewlyAdded.length;
-            debugger;
             if (productOutFor != 'Billing') {
 
                 for (row = 0; row < rowCount; row++) {
@@ -2436,7 +2431,6 @@
         function BillingWiseOutOrderEdit(result) {
 
             LoadForEditOutOrder(result);
-            debugger;
 
             var tr = "";
 
