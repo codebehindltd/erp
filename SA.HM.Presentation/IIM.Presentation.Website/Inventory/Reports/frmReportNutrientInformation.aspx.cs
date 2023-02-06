@@ -155,7 +155,7 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             InvItemDA productDA = new InvItemDA();
             List = productDA.GetInvItemInfo(true);
             ddlProduct.DataSource = List;
-            ddlProduct.DataTextField = "Name";
+            ddlProduct.DataTextField = "CodeAndName";
             ddlProduct.DataValueField = "ItemId";
             ddlProduct.DataBind();
             System.Web.UI.WebControls.ListItem itemNodeId = new System.Web.UI.WebControls.ListItem();

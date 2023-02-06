@@ -4350,7 +4350,9 @@
                 var roomIdList = roomIds.split(",");
                 var reservationRoomIdList = reservationDetailIds.split(",");
 
-                for (i = 0; i < paxQuantity; i++) {
+                // // // Will Update Later For Reservation Pax Wise---------------------------------Pax Wise Extra Room generated
+                //for (i = 0; i < paxQuantity; i++) {
+                for (i = 0; i < totalRoom; i++) {
                     roomId = (roomIdList[i] == null ? "0" : roomIdList[i]);
                     reservationDetailId = (reservationRoomIdList[i] == null ? "0" : reservationRoomIdList[i]);
 
@@ -4383,55 +4385,6 @@
                     RoomQuantity: totalRoom
                 });
 
-                //for (i = 0; i < roomIdList.length; i++) {
-                //    roomId = (roomIdList[i] == null ? "0" : roomIdList[i]);
-                //    reservationDetailId = (reservationRoomIdList[i] == null ? "0" : reservationRoomIdList[i]);
-
-                //    roomId = (roomId == "" ? "0" : roomId);
-                //    reservationDetailId = (reservationDetailId == "" ? "0" : reservationDetailId);
-
-                //    if (roomId == "0") {
-                //        for (j = 0; j < totalRoom; j++) {
-                //            RoomReservationDetail.push({
-                //                ReservationDetailId: ((reservationRoomIdList[j] == null || reservationRoomIdList[j] == "") ? "0" : reservationRoomIdList[j]),
-                //                ReservationId: reservationId,
-                //                RoomTypeId: roomTypeId,
-                //                RoomId: ((roomIdList[j] == null || roomIdList[j] == "") ? "0" : roomIdList[j]),
-                //                UnitPrice: unitPrice,
-                //                DiscountType: discountType,
-                //                DiscountAmount: discountAmount,
-                //                RoomRate: roomRate,
-                //                RoomTypeWisePaxQuantity: paxQuantity,
-                //                IsRegistered: false,
-                //                IsCityChargeEnable: cbCityChargeVal,
-                //                IsServiceChargeEnable: cbServiceChargeVal,
-                //                IsVatAmountEnable: cbVatAmountVal,
-                //                IsAdditionalChargeEnable: cbAdditionalChargeVal,
-                //                TotalCalculatedAmount: totalRoomRate
-                //            });
-                //        }
-                //    }
-                //    else {
-                //        RoomReservationDetail.push({
-                //            ReservationDetailId: reservationDetailId,
-                //            ReservationId: reservationId,
-                //            RoomTypeId: roomTypeId,
-                //            RoomId: roomId,
-                //            UnitPrice: unitPrice,
-                //            DiscountType: discountType,
-                //            DiscountAmount: discountAmount,
-                //            RoomRate: roomRate,
-                //            RoomTypeWisePaxQuantity: paxQuantity,
-                //            IsRegistered: false,
-                //            IsCityChargeEnable: cbCityChargeVal,
-                //            IsServiceChargeEnable: cbServiceChargeVal,
-                //            IsVatAmountEnable: cbVatAmountVal,
-                //            IsAdditionalChargeEnable: cbAdditionalChargeVal,
-                //            TotalCalculatedAmount: totalRoomRate
-                //        });
-                //    }
-                //}
-
                 reservationDetailId = "0";
             });
 
@@ -4448,6 +4401,7 @@
                     if (prevguestId == "") {
                         prevguestId = 0;
                     }
+
                     //title change
                     var titleText = $("#<%=ddlTitle.ClientID %> option:selected").text();
                     var title = $("#<%=ddlTitle.ClientID %>").val();
@@ -4457,10 +4411,6 @@
                         document.getElementById("ContentPlaceHolder1_btnSave").disabled = false;
                         return false;
                     }
-
-                    //if (title == "MrNMrs.") {
-                    //    title = "Mr. & Mrs.";
-                    //}
 
                     var firstName = $("#<%=txtFirstName.ClientID %>").val().trim();
                     var lastName = $("#<%=txtLastName.ClientID %>").val().trim();
@@ -4486,7 +4436,6 @@
                     var txtGuestCountrySearch = $.trim($("#txtGuestCountrySearch").val());
                     var txtGuestPhone = $("#<%=txtPhone.ClientID %>").val();
                     var ddlGuestSex = $("#<%=ddlGuestSex.ClientID %>").val();
-                    //toastr.info(ddlGuestSex);
                     var txtGuestZipCode = $("#<%=txtGuestZipCode.ClientID %>").val();
                     var txtNationalId = $("#<%=txtNationalId.ClientID %>").val();
                     var txtPassportNumber = $("#<%=txtPassportNumber.ClientID %>").val();
@@ -4549,7 +4498,6 @@
                         GuestCountryId: ddlGuestCountry,
                         GuestDrivinlgLicense: txtGuestDrivinlgLicense,
                         GuestEmail: txtGuestEmail,
-
                         Title: title,
                         FirstName: firstName,
                         LastName: lastName,

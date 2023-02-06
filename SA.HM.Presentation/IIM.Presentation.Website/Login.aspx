@@ -164,13 +164,13 @@
                     <h1>Login</h1>
                     <form id="loginForm" class="login-form" runat="server" autocomplete="off">
                         <div class="input-field">
-                            <asp:TextBox ID="txtUserId" runat="server" CssClass="input-effect required-field" TabIndex="1" Autocomplete="off"></asp:TextBox>
+                            <asp:TextBox ID="txtUserId" runat="server" name="username" CssClass="input-effect required-field" TabIndex="1" Autocomplete="off"></asp:TextBox>
                             <%--<input id="txtUserId" class="input-effect" type="text" tabindex="1" />--%>
                             <span class="focus-input"></span>
                             <label class="input-label"><span>Username</span></label>
                         </div>
                         <div class="input-field passwordField">
-                            <asp:TextBox ID="passwordInput" runat="server" TextMode="Password" CssClass="input-effect required-field"
+                            <asp:TextBox ID="passwordInput" runat="server" name="password" TextMode="Password" CssClass="input-effect required-field"
                             onkeypress="return EnterEvent(event)" TabIndex="2" autocomplete="off"></asp:TextBox>
                             <%--<input id="passwordInput" class="input-effect" type="password" />--%>
                             <span class="focus-input"></span>
@@ -195,7 +195,7 @@
                     </form>
                     <div>
                         <p>
-                            <span style="color: #808B96; font-weight: bold;">Version:</span>&nbsp;13.1.1<span style="color: #1B4F72; font-weight: bold;"></span>
+                            <span style="color: #808B96; font-weight: bold;">Version:</span>&nbsp;13.2.1<span style="color: #1B4F72; font-weight: bold;"></span>
                         </p>
                     </div>
                     <div id="MessageBox" style="display: none;">
@@ -293,69 +293,65 @@
         }
     </script>
     <script type="text/javascript">
-
         // Form class add
-
         //window.addEventListener("load", onLoadFunc);
-
         $(document).ready(function () {
             var inputField = document.querySelectorAll(".input-effect");
-
+            //inputField.appearance;
             var inputFieldLength = inputField.length;
-            console.log(inputFieldLength);
-
+            //console.log(inputFieldLength);
             for (var i = 0; i < inputFieldLength; i++) {
-
-                //if (inputField[i].value !== "" || inputField[i].value !== null) {
-                //    this.classList.add("has-content");
-                //}
-
                 inputField[i].addEventListener("focusout", (event) => {
-
                     if (event.target.value !== "") {
                         event.target.classList.add("has-content");
                     } else {
                         event.target.classList.remove("has-content");
                     }
-
                 });
-
             };
-        });
-
-        // document.addEventListener('contextmenu', event => event.preventDefault());
-
-        var textInput = document.getElementById("txtUserId");
-        var passwordInput = document.getElementById("passwordInput");
-        var formSubmit = document.getElementById("formSubmit");
-        var btnLogin = document.getElementById("btnLogin");
-
-        
-
-        var formSubmitWidth = formSubmit.clientWidth;
-        var formSubmitXDistance = formSubmit.offsetLeft;
-
-        console.log(formSubmitWidth, formSubmitXDistance);
-
-        formSubmit.addEventListener("mouseover", (event) => {
-
-            var textInputValue = textInput.value;
-            var passwordInputValue = passwordInput.value;
-
-            if (textInputValue == "" || textInputValue == null || passwordInputValue == "" || passwordInputValue == null) {
-
-                if((event.clientX - formSubmitXDistance) <= (formSubmitWidth / 2)) {
-                    btnLogin.classList.add("active");
+            // document.addEventListener('contextmenu', event => event.preventDefault());
+            var textInput = document.getElementById("txtUserId");
+            var passwordInput = document.getElementById("passwordInput");
+            var loginForm = document.getElementById("loginForm");
+            var formSubmit = document.getElementById("formSubmit");
+            var btnLogin = document.getElementById("btnLogin");
+            var formSubmitWidth = formSubmit.clientWidth;
+            var formSubmitXDistance = formSubmit.offsetLeft;
+            // Using localStorage
+            btnLogin.addEventListener("click", function () {
+                localStorage.setItem("username", textInput.value);
+                localStorage.setItem("password", passwordInput.value);
+            });
+            var username = localStorage.getItem("username");
+            var password = localStorage.getItem("password");
+            console.log(username, password);
+            var textInputValue = username;
+            var passwordInputValue = password;
+            var textInputValueFocus = "";
+            var passwordInputValueFocus = "";
+            textInput.addEventListener("input", function () {
+                textInputValueFocus = textInput.value;
+                textInputValue = textInputValueFocus;
+            });
+            passwordInput.addEventListener("input", function () {
+                passwordInputValueFocus = passwordInput.value;
+                passwordInputValue = passwordInputValueFocus;
+            });
+            console.log(textInputValue, passwordInputValue);
+            formSubmit.addEventListener("mouseover", function (event) {
+                console.log(textInputValue, passwordInputValue);
+                if (textInputValue == "" || textInputValue == null || passwordInputValue == "" || passwordInputValue == null) {
+                    console.log("Empty field");
+                    if ((event.clientX - formSubmitXDistance) <= (formSubmitWidth / 2)) {
+                        btnLogin.classList.add("active");
+                    } else {
+                        btnLogin.classList.remove("active");
+                    }
                 } else {
                     btnLogin.classList.remove("active");
                 }
-                
-            } else {
-                btnLogin.classList.remove("active");
-            }
-            
+            });
         });
-        
     </script>
     <script type="text/javascript">
         var x = '<%=isMessageBoxEnable%>';
