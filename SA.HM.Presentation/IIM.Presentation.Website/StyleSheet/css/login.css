@@ -1135,8 +1135,9 @@ input:checked+.slider:before {
 .copyright-info a {
     font-style: italic;
     text-decoration: none;
-    color: var(--white-color);
-    text-transform: uppercase;
+    color: var(--secondary-color);
+    /*text-transform: uppercase;*/
+    font-weight: 750;
 }
 
 .copyright-info a img {
@@ -1144,9 +1145,9 @@ input:checked+.slider:before {
     height: 20px;
 }
 
-.copyright-info a:hover {
-    color: var(--white-color);
-}
+    .copyright-info a:hover {
+        color: var(--secondary-color);
+    }
 
 
 /* Clock styles  */

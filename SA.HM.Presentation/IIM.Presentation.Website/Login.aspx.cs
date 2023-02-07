@@ -26,6 +26,7 @@ namespace HotelManagement.Presentation.Website.UserInformation
             {
                 this.LoginBackGroudImage();
                 SiteTitle.InnerText = System.Web.Configuration.WebConfigurationManager.AppSettings["InnboardTitleHead"].ToString();
+                CopyrightInfoName.InnerText = System.Web.Configuration.WebConfigurationManager.AppSettings["InnboardTitleHead"].ToString();
                 this.txtUserId.Focus();
             }
         }        
@@ -363,15 +364,15 @@ namespace HotelManagement.Presentation.Website.UserInformation
         }
         private void LoginBackGroudImage()
         {
-            try
-            {
-                string loginBackGroudImage = System.Web.Configuration.WebConfigurationManager.AppSettings["LoginBackgroudImage"].ToString();
-                LoginBackgroudDiv.Style.Add("background-image", "url(/Images/" + loginBackGroudImage + ".jpg)");
-            }
-            catch (Exception ex)
-            {
-                LoginBackgroudDiv.Style.Add("background-image", "url(/Images/LogInPageDataGrid.jpg)");
-            }
+            //try
+            //{
+            //    string loginBackGroudImage = System.Web.Configuration.WebConfigurationManager.AppSettings["LoginBackgroudImage"].ToString();
+            //    LoginBackgroudDiv.Style.Add("background-image", "url(/Images/" + loginBackGroudImage + ".jpg)");
+            //}
+            //catch (Exception ex)
+            //{
+            //    LoginBackgroudDiv.Style.Add("background-image", "url(/Images/LogInPageDataGrid.jpg)");
+            //}
         }
         private void InvItemStockInformationLogProcess(int userInfoId)
         {

@@ -298,6 +298,10 @@
     <Content Include="Images\cashAdjustmentDetails.png" />
     <Content Include="Images\comparison.png" />
     <Content Include="Images\employeesearch.png" />
+    <Content Include="Images\LoginImage\circle.png" />
+    <Content Include="Images\LoginImage\polygon.png" />
+    <Content Include="Images\LoginImage\rectangle.png" />
+    <Content Include="Images\LoginImage\ring.png" />
     <Content Include="Images\quotation.png" />
     <Content Include="Images\TaskAssign.png" />
     <Content Include="Inventory\frmInvProduction.aspx" />
@@ -879,6 +883,8 @@
     <Content Include="SMSTemplates\ReservationAmedmentSms.txt" />
     <Content Include="SMSTemplates\ReservationCancelSms.txt" />
     <Content Include="SMSTemplates\ReservationConfirmationSms.txt" />
+    <Content Include="StyleSheet\css\login.css" />
+    <Content Include="StyleSheet\css\ProductionPagination.css" />
     <Content Include="SupportAndTicket\Reports\Rdlc\rptSupportTicket.rdlc" />
     <Content Include="POS\Reports\Rdlc\rptRiceMillBillForA4Page.rdlc" />
     <Content Include="POS\Reports\Rdlc\rptRiceMillBillForA4PageWithoutHeader.rdlc" />

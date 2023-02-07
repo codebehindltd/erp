@@ -31,12 +31,12 @@ namespace HotelManagement.Presentation.Website.Inventory
             invItemBo = invItemDa.GetInvFinishedItemInformation();
 
             ddlItemName.DataSource = invItemBo;
-            ddlItemName.DataTextField = "Name";
+            ddlItemName.DataTextField = "CodeAndName";
             ddlItemName.DataValueField = "ItemId";
             ddlItemName.DataBind();
 
             ddlItemNameSearch.DataSource = invItemBo;
-            ddlItemNameSearch.DataTextField = "Name";
+            ddlItemNameSearch.DataTextField = "CodeAndName";
             ddlItemNameSearch.DataValueField = "ItemId";
             ddlItemNameSearch.DataBind();
 

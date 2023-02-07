@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Presentation.Website.UserInformation {
-    
-    
-    public partial class Login {
-        
+namespace HotelManagement.Presentation.Website.UserInformation
+{
+
+
+    public partial class Login
+    {
+
         /// <summary>
         /// SiteTitle control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace HotelManagement.Presentation.Website.UserInformation {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl SiteTitle;
-        
+
         /// <summary>
         /// LoginBackgroudDiv control.
         /// </summary>
@@ -29,7 +31,16 @@ namespace HotelManagement.Presentation.Website.UserInformation {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl LoginBackgroudDiv;
-        
+
+        /// <summary>
+        /// CopyrightInfoName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor CopyrightInfoName;
+
         /// <summary>
         /// loginForm control.
         /// </summary>
@@ -38,7 +49,7 @@ namespace HotelManagement.Presentation.Website.UserInformation {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm loginForm;
-        
+
         /// <summary>
         /// txtUserId control.
         /// </summary>
@@ -47,7 +58,7 @@ namespace HotelManagement.Presentation.Website.UserInformation {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtUserId;
-        
+
         /// <summary>
         /// passwordInput control.
         /// </summary>
@@ -56,7 +67,7 @@ namespace HotelManagement.Presentation.Website.UserInformation {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox passwordInput;
-        
+
         /// <summary>
         /// btnLogin control.
         /// </summary>
@@ -65,7 +76,7 @@ namespace HotelManagement.Presentation.Website.UserInformation {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnLogin;
-        
+
         /// <summary>
         /// lblMessage control.
         /// </summary>
