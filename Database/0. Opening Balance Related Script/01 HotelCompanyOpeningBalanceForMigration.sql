@@ -40,7 +40,7 @@
 				DrAmount,
 				CrAmount
 		FROM HotelCompanyOpeningBalance
-
+		
 		DROP TABLE HotelCompanyOpeningBalance
 
 		IF NOT EXISTS(SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[HotelCompanyOpeningBalance]') AND type in (N'U'))
@@ -66,6 +66,7 @@
 		--INSERT INTO HotelCompanyOpeningBalance(CompanyId, ProjectId, FiscalYearId, OpeningDate, IsApproved, CreatedBy, CreatedDate)
 		--SELECT TOP 1 CompanyId, ProjectId, FiscalYearId, OpeningBalanceDate, IsApproved, CreatedBy, CreatedDate FROM GLOpeningBalance
 		
+		DROP TABLE HotelCompanyOpeningBalanceDetail
 		IF NOT EXISTS(SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[HotelCompanyOpeningBalanceDetail]') AND type in (N'U'))
 		BEGIN
 			CREATE TABLE [dbo].[HotelCompanyOpeningBalanceDetail](

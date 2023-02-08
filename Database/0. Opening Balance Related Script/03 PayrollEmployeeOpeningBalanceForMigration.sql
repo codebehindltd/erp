@@ -66,6 +66,7 @@
 		--INSERT INTO PayrollEmployeeOpeningBalance(CompanyId, ProjectId, FiscalYearId, OpeningDate, IsApproved, CreatedBy, CreatedDate)
 		--SELECT TOP 1 CompanyId, ProjectId, FiscalYearId, OpeningBalanceDate, IsApproved, CreatedBy, CreatedDate FROM GLOpeningBalance
 
+		DROP TABLE PayrollEmployeeOpeningBalanceDetail
 		IF NOT EXISTS(SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PayrollEmployeeOpeningBalanceDetail]') AND type in (N'U'))
 		BEGIN
 			CREATE TABLE [dbo].[PayrollEmployeeOpeningBalanceDetail](

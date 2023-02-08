@@ -66,6 +66,7 @@
 		--INSERT INTO PMSupplierOpeningBalance(CompanyId, ProjectId, FiscalYearId, OpeningDate, IsApproved, CreatedBy, CreatedDate)
 		--SELECT TOP 1 CompanyId, ProjectId, FiscalYearId, OpeningBalanceDate, IsApproved, CreatedBy, CreatedDate FROM GLOpeningBalance
 
+		DROP TABLE PMSupplierOpeningBalanceDetail
 		IF NOT EXISTS(SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PMSupplierOpeningBalanceDetail]') AND type in (N'U'))
 		BEGIN
 			CREATE TABLE [dbo].[PMSupplierOpeningBalanceDetail](
