@@ -23,8 +23,12 @@ SELECT * FROM MemberOpeningBalance
 
 ----DROP TABLE GLOpeningBalance
 ----DROP TABLE HotelCompanyOpeningBalance
+----DROP TABLE HotelCompanyOpeningBalanceDetail
 ----DROP TABLE PMSupplierOpeningBalance
+----DROP TABLE PMSupplierOpeningBalanceDetail
 ----DROP TABLE PayrollEmployeeOpeningBalance
+----DROP TABLE PayrollEmployeeOpeningBalanceDetail
 ----DROP TABLE LCCNFOpeningBalance
 ----DROP TABLE LCCNFOpeningBalanceDetail
 ----DROP TABLE MemberOpeningBalance
+----DROP TABLE MemberOpeningBalanceDetail
