@@ -33,7 +33,7 @@ namespace HotelManagement.Entity.RetailPOS
         public int KotId { get; set; }
         public Nullable<int> BearerId { get; set; }
         public Nullable<int> ReferenceKotId { get; set; }
-        public Nullable<int> BagWaight { get; set; }
+        public Nullable<decimal> BagWaight { get; set; }
         public Nullable<int> ItemId { get; set; }
         public string ItemName { get; set; }
         public Nullable<decimal> UnitRate { get; set; }
