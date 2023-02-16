@@ -10,7 +10,6 @@
         ////Bread Crumbs Information-------------
         $(document).ready(function () {
 
-            //debugger;
             var IsItemOriginHide = $("#ContentPlaceHolder1_hfIsItemOriginHide").val();
 
             if (IsItemOriginHide == "1") {
@@ -67,7 +66,6 @@
             }
             $('#ImagePanel').hide();
             if ($("#ContentPlaceHolder1_hfEditedItemId").val() != "") {
-                debugger;
                 UploadComplete();
             }
 
@@ -1166,7 +1164,6 @@
                     $("#Styletbl tbody tr").find("td:eq(0)").find("input").prop("checked", false);
                 }
             });
-            debugger;
             var str = $("#ContentPlaceHolder1_hfItemAttributeList").val();
             var array = new Array();
             $.each(str.split(","), function () {

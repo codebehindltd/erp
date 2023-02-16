@@ -304,6 +304,7 @@
     <Content Include="Images\LoginImage\ring.png" />
     <Content Include="Images\quotation.png" />
     <Content Include="Images\TaskAssign.png" />
+    <Content Include="Inventory\frmInvIngredientNNutrientInfo.aspx" />
     <Content Include="Inventory\frmInvProduction.aspx" />
     <Content Include="Inventory\frmNutrientInformation.aspx" />
     <Content Include="Inventory\frmNutrientRequiredValues.aspx" />
@@ -2847,6 +2848,13 @@
     </Compile>
     <Compile Include="HouseKeeping\Reports\ReportHKLostNFound.aspx.designer.cs">
       <DependentUpon>ReportHKLostNFound.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmInvIngredientNNutrientInfo.aspx.cs">
+      <DependentUpon>frmInvIngredientNNutrientInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmInvIngredientNNutrientInfo.aspx.designer.cs">
+      <DependentUpon>frmInvIngredientNNutrientInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventory\frmInvProduction.aspx.cs">
       <DependentUpon>frmInvProduction.aspx</DependentUpon>

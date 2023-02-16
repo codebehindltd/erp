@@ -11,6 +11,7 @@ namespace HotelManagement.Entity.Inventory
         public int TypeId { get; set; }
         public string ItemType { get; set; }
         public string Name { get; set; }
+        public string ItemName { get; set; }
         public string DisplayName { get; set; }
         public string Code { get; set; }
         public string CodeAndName { get; set; }
@@ -72,5 +73,13 @@ namespace HotelManagement.Entity.Inventory
         public string SizeName { get; set; }
         public string ColorName { get; set; }
         public string StyleName { get; set; }
+        public long FinishGoodId { get; set; }
+        public string FinishGoodName { get; set; }
+        public string IngredientName { get; set; }
+        public string UnitHeadName { get; set; }
+        public decimal UnitQuantity { get; set; }
+        public decimal UnitCost { get; set; }
+        public int IngredientId { get; set; }
+        public int UnitHeadId { get; set; }
     }
 }

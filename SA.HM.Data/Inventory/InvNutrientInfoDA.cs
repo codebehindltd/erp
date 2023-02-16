@@ -713,6 +713,33 @@ namespace HotelManagement.Data.Inventory
             return nutrientList;
         }
 
+        public List<InvNutrientInfoBO> GetNRVDetailsByItemId(int ItemId)
+        {
+            List<InvNutrientInfoBO> nutrientList = new List<InvNutrientInfoBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetNRVDetailsByItemId_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, ItemId);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "NutrientList");
+                    DataTable Table = ds.Tables["NutrientList"];
+
+                    nutrientList = Table.AsEnumerable().Select(r => new InvNutrientInfoBO
+                    {
+                        Id = r.Field<Int64>("RequiredValueMasterId"),
+                        NutrientId = r.Field<Int32>("NutrientsId"),
+                        NutrientName = r.Field<string>("Name"),
+                        RequiredValue = r.Field<decimal>("RequiredValue"),
+                        CalculatedValue = r.Field<decimal>("CalculatedValue"),
+                        Difference = r.Field<decimal>("Difference")
+                    }).ToList();
+                }
+            }
+            return nutrientList;
+        }
+
         public bool NutrientRequiredValuesDelete(long Id)
         {
             Int64 status = 0;
