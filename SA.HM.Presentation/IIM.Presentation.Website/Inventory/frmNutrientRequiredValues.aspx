@@ -107,8 +107,15 @@
                 
                 if (index !== 0 && !IsDuplicate) {
                     var nutrientIdValueInTable = $(this).find("td").eq(3).html();
-
-                    var IsNutrientIdFound = nutrientIdValueInTable.indexOf(nutrientId) > -1;
+                    nutrientIdValueInTable = parseInt(nutrientIdValueInTable);
+                    nutrientId = parseInt(nutrientId);
+                    var IsNutrientIdFound;
+                    if (nutrientId == nutrientIdValueInTable) {
+                        IsNutrientIdFound = true;
+                    }
+                    else {
+                        IsNutrientIdFound = false;
+                    }
                     if (IsNutrientIdFound) {
                         if ($("#ContentPlaceHolder1_hfEditNutrientRequiredValue").val() == 1) {
                             toastr.success('Nutrient Required Value Updated Successfully.');
@@ -244,25 +251,8 @@
                 tr += "<td style='width:70%;'>" + gridObject.ItemName + "</td>";
 
                 tr += "<td style=\"text-align: center; width:30%; cursor:pointer;\">";
-
-                //if (gridObject.IsCanEdit && IsCanEdit) {
-                    tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return NutrientRequiredValuesEditWithConfirmation(" + gridObject.Id + ")\" alt='Edit'  title='Edit' border='0' />";
-                //}
-
-                //if (gridObject.IsCanDelete && IsCanDelete) {
-                    tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return NutrientRequiredValuesDelete(" + gridObject.Id + ")\" alt='Delete'  title='Delete' border='0' />";
-                //}
-
-                //if (gridObject.IsCanChecked && IsCanSave) {
-                //    tr += "&nbsp;&nbsp;<img src='../Images/checked.png' onClick= \"javascript:return TicketInformationCheckWithConfirmation(" + gridObject.TicketId + ")\" alt='Check'  title='Check' border='0' />";
-                //}
-                //if (gridObject.IsCanApproved && IsCanSave) {
-                //    tr += "&nbsp;&nbsp;<img src='../Images/approved.png' onClick= \"javascript:return TicketInformationApprovalWithConfirmation(" + gridObject.TicketId + ")\" alt='Approve'  title='Approve' border='0' />";
-                //}
-
-                //tr += "&nbsp;&nbsp;<img src='../Images/ReportDocument.png'  onClick= \"javascript:return PerformBillPreviewAction(" + gridObject.TicketId + ")\" alt='Invoice' title='Invoice' border='0' />";
-
-                //tr += "&nbsp;&nbsp;<img src='../Images/note.png'  onClick= \"javascript:return ShowDealDocuments('" + gridObject.ReceivedId + "')\" alt='Invoice' title='Receive Order Info' border='0' />";
+                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return NutrientRequiredValuesEditWithConfirmation(" + gridObject.Id + ")\" alt='Edit'  title='Edit' border='0' />";
+                tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return NutrientRequiredValuesDelete(" + gridObject.Id + ")\" alt='Delete'  title='Delete' border='0' />";
                 tr += "</td>";
 
                 tr += "<td style='display:none;'>" + gridObject.ItemId + "</td>";
