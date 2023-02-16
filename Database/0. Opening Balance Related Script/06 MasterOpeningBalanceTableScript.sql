@@ -15,11 +15,15 @@ SELECT TOP 1 CompanyId, ProjectId, FiscalYearId, OpeningBalanceDate, IsApproved,
 
 SELECT * FROM GLOpeningBalance
 SELECT * FROM HotelCompanyOpeningBalance
+SELECT * FROM HotelCompanyOpeningBalanceDetail
 SELECT * FROM PMSupplierOpeningBalance
+SELECT * FROM PMSupplierOpeningBalanceDetail
 SELECT * FROM PayrollEmployeeOpeningBalance
+SELECT * FROM PayrollEmployeeOpeningBalanceDetail
 SELECT * FROM LCCNFOpeningBalance
 SELECT * FROM LCCNFOpeningBalanceDetail
 SELECT * FROM MemberOpeningBalance
+SELECT * FROM MemberOpeningBalanceDetail
 
 ----DROP TABLE GLOpeningBalance
 ----DROP TABLE HotelCompanyOpeningBalance
