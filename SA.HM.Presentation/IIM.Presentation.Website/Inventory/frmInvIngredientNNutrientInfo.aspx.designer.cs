@@ -130,22 +130,40 @@ namespace HotelManagement.Presentation.Website.Inventory {
         protected global::System.Web.UI.WebControls.DropDownList ddlStockBy;
         
         /// <summary>
-        /// lblUnitCost control.
+        /// lblUnitQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUnitCost;
+        protected global::System.Web.UI.WebControls.Label lblUnitQuantity;
         
         /// <summary>
-        /// txtUnitCost control.
+        /// txtUnitQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUnitCost;
+        protected global::System.Web.UI.WebControls.TextBox txtUnitQuantity;
+        
+        /// <summary>
+        /// lblCost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCost;
+        
+        /// <summary>
+        /// txtCost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCost;
         
         /// <summary>
         /// lblNutrient control.

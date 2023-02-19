@@ -479,7 +479,8 @@
             var rawMaterialId = $("#ContentPlaceHolder1_hfRawMaterialId").val();
             var unitHeadId = $("#ContentPlaceHolder1_ddlStockBy").val();
             var unitHeadName = $("#ContentPlaceHolder1_ddlStockBy option:selected").text();
-            var unitQuantity = $("#ContentPlaceHolder1_txtUnitCost").val();
+            var unitQuantity = $("#ContentPlaceHolder1_txtUnitQuantity").val();
+            var itemCost = $("#ContentPlaceHolder1_txtCost").val();
             if (unitHeadId == "0") {
                 toastr.warning("Please Select Stock By.");
                 return false;
@@ -490,7 +491,7 @@
             }
             
             if (rawMaterial != "") {
-                AddNewRawMaterial(rawMaterial, rawMaterialId, unitHeadId, unitHeadName, unitQuantity, 0);
+                AddNewRawMaterial(rawMaterial, rawMaterialId, unitHeadId, unitHeadName, unitQuantity, itemCost);
             }
             else {
                 toastr.warning('Raw Material Not found');
@@ -587,7 +588,8 @@
         function ClearRawMaterials() {
             $("#ContentPlaceHolder1_txtRawMaterial").val("");
             $("#ContentPlaceHolder1_ddlStockBy").val("0");
-            $("#ContentPlaceHolder1_txtUnitCost").val("");
+            $("#ContentPlaceHolder1_txtUnitQuantity").val("");
+            $("#ContentPlaceHolder1_txtCost").val("");
             $("#ContentPlaceHolder1_txtRawMaterial").attr("disabled", false);
             $("#btnAdd").val("Add");
             $("#ContentPlaceHolder1_hfRawMaterialId").val(0);
@@ -768,7 +770,8 @@
             $("#ContentPlaceHolder1_txtRawMaterial").val(rawMaterialName);
             $("#ContentPlaceHolder1_txtRawMaterial").attr("disabled", true);
             $("#ContentPlaceHolder1_ddlStockBy").val(unitHeadId).trigger('change');
-            $("#ContentPlaceHolder1_txtUnitCost").val(unitQuantity);
+            $("#ContentPlaceHolder1_txtUnitQuantity").val(unitQuantity);
+            $("#ContentPlaceHolder1_txtCost").val(itemCost);
         }
 
         function NutrientInfoEditWithConfirmation(control) {
@@ -895,15 +898,23 @@
                                             <div class="col-md-3">
                                                 <asp:Label ID="lblStockBy" runat="server" class="control-label required-field" Text="Stock By"></asp:Label>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-9">
                                                 <asp:DropDownList ID="ddlStockBy" runat="server" CssClass="form-control" TabIndex="52">
                                                 </asp:DropDownList>
                                             </div>
+                                        </div>
+                                        <div class="form-group">
                                             <div class="col-md-3">
-                                                <asp:Label ID="lblUnitCost" runat="server" class="control-label required-field" Text="Unit"></asp:Label>
+                                                <asp:Label ID="lblUnitQuantity" runat="server" class="control-label required-field" Text="Unit"></asp:Label>
                                             </div>
                                             <div class="col-md-3">
-                                                <asp:TextBox ID="txtUnitCost" runat="server" CssClass="form-control" TabIndex="53"></asp:TextBox>
+                                                <asp:TextBox ID="txtUnitQuantity" runat="server" CssClass="form-control" TabIndex="53"></asp:TextBox>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <asp:Label ID="lblCost" runat="server" class="control-label required-field" Text="Cost"></asp:Label>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <asp:TextBox ID="txtCost" runat="server" CssClass="form-control" TabIndex="54"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="form-group" style="padding-left: 10px;">
