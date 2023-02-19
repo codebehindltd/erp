@@ -245,6 +245,7 @@ namespace HotelManagement.Data
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetTodaysExpectedCheckOutRoomNumberInfo_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)
@@ -252,7 +253,6 @@ namespace HotelManagement.Data
                             while (reader.Read())
                             {
                                 RoomNumberBO roomNumber = new RoomNumberBO();
-
                                 roomNumber.RoomId = Convert.ToInt32(reader["RoomId"]);
                                 roomNumber.RoomTypeId = Convert.ToInt32(reader["RoomTypeId"]);
                                 roomNumber.RoomNumber = reader["RoomNumber"].ToString();

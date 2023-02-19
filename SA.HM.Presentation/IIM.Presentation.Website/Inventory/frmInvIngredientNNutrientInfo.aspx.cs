@@ -35,7 +35,7 @@ namespace HotelManagement.Presentation.Website.Inventory
             invItemBo = invItemDa.GetInvFinishedItemInformation();
 
             ddlItemName.DataSource = invItemBo;
-            ddlItemName.DataTextField = "Name";
+            ddlItemName.DataTextField = "CodeAndName";
             ddlItemName.DataValueField = "ItemId";
             ddlItemName.DataBind();
             ListItem itemSearch = new ListItem();
@@ -81,8 +81,8 @@ namespace HotelManagement.Presentation.Website.Inventory
         private void LoadAccountHead()
         {
             NodeMatrixDA nodeMatrixDA = new NodeMatrixDA();
-            ddlAccountHead.DataSource = nodeMatrixDA.GetNodeMatrixInfo();
-            ddlAccountHead.DataTextField = "NodeHead";
+            ddlAccountHead.DataSource = nodeMatrixDA.GetNodeMatrixInfoByCustomString("WHERE CHARINDEX('.4.', Hierarchy) = 1 AND IsTransactionalHead = 1");
+            ddlAccountHead.DataTextField = "HeadWithCode";
             ddlAccountHead.DataValueField = "NodeId";
             ddlAccountHead.DataBind();
 

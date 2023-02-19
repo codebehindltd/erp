@@ -7,6 +7,25 @@
         var DeletedAccountHead = [];
         //Bread Crumbs Information-------------
         $(document).ready(function () {
+            $("#ContentPlaceHolder1_ddlItemName").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+            $("#ContentPlaceHolder1_ddlNutrient").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+            $("#ContentPlaceHolder1_ddlAccountHead").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             $("#ContentPlaceHolder1_ddlItemName").change(function () {
                 $("#ContentPlaceHolder1_ddlAccountHead").select2({
                     tags: "true",
@@ -267,15 +286,11 @@
 
                 tr += "<td style='width:40%;'>" + obj.RecipeItemName + "</td>";
                 tr += "<td style='width:20%;'>" + obj.HeadName + "</td>";
-                tr += "<td style='width:20%;'>" + obj.ItemUnit + "</td>";
+                tr += "<td style='width:15%;'>" + obj.ItemUnit + "</td>";
                 tr += "<td style='width:10%;'>" + obj.ItemCost + "</td>";
-                tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
-
-
-                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return IngredientInformationEditWithConfirmation(this)\" alt='Edit'  title='Edit' border='0' />";
-
+                tr += "<td style=\"text-align: center; width:15%; cursor:pointer;\">";
                 tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return IngredientInformationDeleteWithConfirmation(this)\" alt='Delete'  title='Delete' border='0' />";
-
+                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return IngredientInformationEditWithConfirmation(this)\" alt='Edit'  title='Edit' border='0' />";               
                 tr += "</td>";
 
                 tr += "<td style='display:none;'>" + obj.RecipeItemId + "</td>";
@@ -302,14 +317,14 @@
                 }
                 tr += "<tr>";
 
-                tr += "<td style='width:40%;'>" + obj.NutrientName + "</td>";
-                tr += "<td style='width:20%;'>" + obj.RequiredValue + "</td>";
-                tr += "<td style='width:20%;'>" + obj.CalculatedValue + "</td>";
+                tr += "<td style='width:35%;'>" + obj.NutrientName + "</td>";
+                tr += "<td style='width:15%;'>" + obj.RequiredValue + "</td>";
+                tr += "<td style='width:25%;'>" + obj.CalculatedValue + "</td>";
                 tr += "<td style='width:10%;'>" + obj.Difference + "</td>";
 
-                tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
-                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return NutrientInfoEditWithConfirmation(this)\" alt='Edit'  title='Edit' border='0' />";
+                tr += "<td style=\"text-align: center; width:15%; cursor:pointer;\">";
                 tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return DeleteNutrientRequiredValueItem(this)\" alt='Delete'  title='Delete' border='0' />";
+                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return NutrientInfoEditWithConfirmation(this)\" alt='Edit'  title='Edit' border='0' />";                
                 tr += "</td>";
 
                 tr += "<td style='display:none;'>" + obj.NutrientId + "</td>";
@@ -503,15 +518,11 @@
                 }
                 tr += "<td align='left' style=\"width:40%; text-align:Left;\">" + rawMaterial + "</td>";
                 tr += "<td align='left' style=\"width:20%; text-align:Left;\">" + unitHeadName + "</td>";
-                tr += "<td align='left' style=\"width:20%; text-align:Left;\">" + unitQuantity + "</td>";
+                tr += "<td align='left' style=\"width:15%; text-align:Left;\">" + unitQuantity + "</td>";
                 tr += "<td align='left' style='width: 10%;'>" + itemCost + "</td>";
-                tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
-
-
-                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return IngredientInformationEditWithConfirmation(this)\" alt='Edit'  title='Edit' border='0' />";
-
+                tr += "<td style=\"text-align: center; width:15%; cursor:pointer;\">";
                 tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return IngredientInformationDeleteWithConfirmation(this)\" alt='Delete'  title='Delete' border='0' />";
-
+                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return IngredientInformationEditWithConfirmation(this)\" alt='Edit'  title='Edit' border='0' />";
                 tr += "</td>";
 
                 tr += "<td style='display:none;'>" + rawMaterialId + "</td>";
@@ -606,11 +617,11 @@
                 var tr = "";
 
                 tr += "<tr>";
-                tr += "<td style='width:40%;'>" + nutrientName + "</td>";
-                tr += "<td style='width:20%;'>" + requiredValue + "</td>";
-                tr += "<td style='width:20%;'>" + 0 + "</td>";
+                tr += "<td style='width:35%;'>" + nutrientName + "</td>";
+                tr += "<td style='width:15%;'>" + requiredValue + "</td>";
+                tr += "<td style='width:25%;'>" + 0 + "</td>";
                 tr += "<td style='width:10%;'>" + 0 + "</td>";
-                tr += "<td style=\"width:10%;\">";
+                tr += "<td style=\"width:15%;\">";
                 tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return NutrientInfoEditWithConfirmation(this)\" alt='Edit'  title='Edit' border='0' />";
                 tr += "&nbsp;&nbsp;<a href='javascript:void()' onclick= 'DeleteNutrientRequiredValueItem(this)' ><img alt='Delete' src='../Images/delete.png' title='Delete' /></a>";
                 tr += "</td>";
@@ -907,11 +918,11 @@
                                                         </th>
                                                         <th style="width: 20%;">Stock By
                                                         </th>
-                                                        <th style="width: 20%;">Quantity
+                                                        <th style="width: 15%;">Quantity
                                                         </th>
                                                         <th style="width: 10%;">Cost
                                                         </th>
-                                                        <th style="width: 10%;">Action</th>
+                                                        <th style="width: 15%;">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -952,15 +963,15 @@
                                             <table id="NutrientInformationGrid" class="table table-bordered table-condensed table-responsive">
                                                 <thead>
                                                     <tr style="color: White; background-color: #44545E; font-weight: bold;">
-                                                        <th style="width: 40%;">Nutrient
+                                                        <th style="width: 35%;">Nutrient
                                                         </th>
-                                                        <th style="width: 20%;">Required Value
+                                                        <th style="width: 15%;">Required
                                                         </th>
-                                                        <th style="width: 20%;">Calculated Value
+                                                        <th style="width: 25%;">Calculated
                                                         </th>
                                                         <th style="width: 10%;">Difference
                                                         </th>
-                                                        <th style="width: 10%;">Action
+                                                        <th style="width: 15%;">Action
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -984,10 +995,12 @@
                                         <div class="col-md-2">
                                             <asp:Label ID="lblAccountHead" runat="server" class="control-label required-field" Text="Account Head"></asp:Label>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-10">
                                             <asp:DropDownList ID="ddlAccountHead" runat="server" CssClass="form-control" TabIndex="20">
                                             </asp:DropDownList>
                                         </div>
+                                    </div>
+                                    <div class="form-group">
                                         <div class="col-md-2">
                                             <asp:Label ID="lblAmount" runat="server" class="control-label required-field" Text="Amount"></asp:Label>
                                         </div>
