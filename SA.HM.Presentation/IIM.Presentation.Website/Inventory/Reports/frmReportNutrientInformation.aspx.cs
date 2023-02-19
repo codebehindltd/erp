@@ -93,9 +93,10 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             paramReport.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
             paramReport.Add(new ReportParameter("PrintDateTime", printDate));
             paramReport.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
-            rvTransaction.LocalReport.SetParameters(paramReport);
+
+            
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
-                    
+
             //long maxRow = 0;
             //double mid = 0;
             //if (itemWiseStockBO != null)
@@ -123,6 +124,57 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             nutrientOverheadExpensesBO = goodsDA.GetInvNutrientOEDetailsById(itemId);
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[2], nutrientOverheadExpensesBO));
 
+            decimal totalRMCost = 0;
+            decimal totalOHCost = 0;
+            decimal calculatedTotalCost = 0;
+            decimal finishedGoodsSalesRate = 0;
+            decimal calculatedProfitOrLoss = 0;
+
+            foreach (RecipeReportBO rmCost in itemWiseStockBO)
+            {
+                totalRMCost = totalRMCost + (rmCost.ItemUnit * rmCost.ItemCost);
+            }
+
+            foreach (OverheadExpensesBO ohCost in nutrientOverheadExpensesBO)
+            {
+                totalOHCost = totalOHCost + ohCost.OEAmount;
+            }
+
+            calculatedTotalCost = totalRMCost + totalOHCost;
+
+            int costCenterId = 0;
+
+
+            CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
+            List<CostCentreTabBO> allCostCentreTabListBO = new List<CostCentreTabBO>();
+            allCostCentreTabListBO = costCentreTabDA.GetCostCentreTabInfoByType("Restaurant,RetailPos,OtherOutlet,Billing");
+            if (allCostCentreTabListBO != null)
+            {
+                if (allCostCentreTabListBO.Count > 0)
+                {
+                    costCenterId = allCostCentreTabListBO[0].CostCenterId;
+                }
+            }
+
+            InvItemBO itemEntityBO = new InvItemBO();
+            InvItemDA itemEntityDA = new InvItemDA();
+            itemEntityBO = itemEntityDA.GetInvItemInfoById(costCenterId, itemId);
+            if (itemEntityBO != null)
+            {
+                if (itemEntityBO.ItemId > 0)
+                {
+                    finishedGoodsSalesRate = itemEntityBO.UnitPriceLocal;
+                }
+            }
+
+            calculatedProfitOrLoss = finishedGoodsSalesRate - calculatedTotalCost;
+
+            paramReport.Add(new ReportParameter("TotalRMCost", totalRMCost.ToString("0.00")));
+            paramReport.Add(new ReportParameter("TotalOHCost", totalOHCost.ToString("0.00")));
+            paramReport.Add(new ReportParameter("CalculatedTotalCost", calculatedTotalCost.ToString("0.00")));
+            paramReport.Add(new ReportParameter("FinishedGoodsSalesRate", finishedGoodsSalesRate.ToString("0.00")));
+            paramReport.Add(new ReportParameter("CalculatedProfitOrLoss", calculatedProfitOrLoss.ToString("0.00")));
+            rvTransaction.LocalReport.SetParameters(paramReport);
             rvTransaction.LocalReport.DisplayName = "Nutrient Information";
             rvTransaction.LocalReport.Refresh();
 

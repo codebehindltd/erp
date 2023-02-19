@@ -494,7 +494,7 @@
                 AddNewRawMaterial(rawMaterial, rawMaterialId, unitHeadId, unitHeadName, unitQuantity, itemCost);
             }
             else {
-                toastr.warning('Raw Material Not found');
+                toastr.warning('Ingredient Not found');
                 $("#hfRawMaterialId").val('');
                 return;
             }
@@ -570,11 +570,11 @@
                         }
                         if (IsRawMaterialIdFound) {
                             if ($("#ContentPlaceHolder1_hfRawMaterialId").val() > 0 && $("#ContentPlaceHolder1_hfIsRawMaterialEdit").val() == 1) {
-                                toastr.success('Raw Material Updated Successfully.');
+                                toastr.success('Ingredient Updated Successfully.');
                                 IsDuplicate = true;
                             }
                             else {
-                                toastr.warning('Raw Material Already Added.');
+                                toastr.warning('Ingredient Already Added.');
                                 IsDuplicate = true;
                                 return true;
                             }
@@ -888,7 +888,7 @@
                                     <div class="panel-body">
                                         <div class="form-group">
                                             <div class="col-md-3">
-                                                <asp:Label ID="lblRawMaterial" runat="server" class="control-label required-field" Text="Raw Materials"></asp:Label>
+                                                <asp:Label ID="lblRawMaterial" runat="server" class="control-label required-field" Text="Ingredient"></asp:Label>
                                             </div>
                                             <div class="col-md-9">
                                                 <asp:TextBox ID="txtRawMaterial" CssClass="form-control" TabIndex="51" runat="server"></asp:TextBox>
@@ -925,7 +925,7 @@
                                             <table id="IngredientInformationGrid" class="table table-bordered table-condensed table-responsive">
                                                 <thead>
                                                     <tr style="color: White; background-color: #44545E; font-weight: bold;">
-                                                        <th style="width: 40%;">Ingredient Name
+                                                        <th style="width: 40%;">Ingredient
                                                         </th>
                                                         <th style="width: 20%;">Stock By
                                                         </th>

@@ -847,7 +847,6 @@
 				</TablixRowHierarchy>
 				<DataSetName>Recipe</DataSetName>
 				<Top>1.16958in</Top>
-				<Left>0in</Left>
 				<Height>1.18752in</Height>
 				<Width>3.8341in</Width>
 				<Style>
@@ -1087,7 +1086,6 @@
 					</TablixMembers>
 				</TablixRowHierarchy>
 				<DataSetName>Recipe</DataSetName>
-				<Left>0in</Left>
 				<Height>0.82291in</Height>
 				<Width>7.74654in</Width>
 				<ZIndex>1</ZIndex>
@@ -1120,7 +1118,6 @@
 				</Paragraphs>
 				<rd:DefaultName>Textbox7</rd:DefaultName>
 				<Top>0.86458in</Top>
-				<Left>0in</Left>
 				<Height>0.28125in</Height>
 				<Width>7.74653in</Width>
 				<ZIndex>2</ZIndex>
@@ -1136,7 +1133,6 @@
 			</Textbox>
 			<Line Name="Line3">
 				<Top>0.84375in</Top>
-				<Left>0in</Left>
 				<Height>0in</Height>
 				<Width>7.74653in</Width>
 				<ZIndex>3</ZIndex>
@@ -1905,8 +1901,8 @@
 					</TablixMembers>
 				</TablixRowHierarchy>
 				<DataSetName>Recipe2</DataSetName>
-				<Top>1.16958in</Top>
-				<Left>3.91243in</Left>
+				<Top>2.98928in</Top>
+				<Left>0.00001in</Left>
 				<Height>1.47919in</Height>
 				<Width>3.8341in</Width>
 				<ZIndex>4</ZIndex>
@@ -1923,10 +1919,10 @@
 				<TablixBody>
 					<TablixColumns>
 						<TablixColumn>
-							<Width>2.77829in</Width>
+							<Width>2.76996in</Width>
 						</TablixColumn>
 						<TablixColumn>
-							<Width>1.05581in</Width>
+							<Width>1.06205in</Width>
 						</TablixColumn>
 					</TablixColumns>
 					<TablixRows>
@@ -2183,9 +2179,9 @@
 					</TablixMembers>
 				</TablixRowHierarchy>
 				<DataSetName>Recipe3</DataSetName>
-				<Top>2.54389in</Top>
+				<Top>2.38139in</Top>
 				<Height>0.59376in</Height>
-				<Width>3.8341in</Width>
+				<Width>3.83201in</Width>
 				<ZIndex>5</ZIndex>
 				<Style>
 					<Border>
@@ -2193,8 +2189,457 @@
 					</Border>
 				</Style>
 			</Tablix>
+			<Tablix Name="Tablix6">
+				<TablixBody>
+					<TablixColumns>
+						<TablixColumn>
+							<Width>1.62578in</Width>
+						</TablixColumn>
+						<TablixColumn>
+							<Width>2.20623in</Width>
+						</TablixColumn>
+					</TablixColumns>
+					<TablixRows>
+						<TablixRow>
+							<Height>0.19792in</Height>
+							<TablixCells>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox33">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>Report Summary</Value>
+															<Style>
+																<FontSize>8pt</FontSize>
+																<FontWeight>Bold</FontWeight>
+																<Color>White</Color>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox1</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+													<Width>0.25pt</Width>
+												</Border>
+												<BackgroundColor>SteelBlue</BackgroundColor>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+										<ColSpan>2</ColSpan>
+									</CellContents>
+								</TablixCell>
+								<TablixCell />
+							</TablixCells>
+						</TablixRow>
+						<TablixRow>
+							<Height>0.19792in</Height>
+							<TablixCells>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox41">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>Total Raw Materials Cost</Value>
+															<Style>
+																<FontSize>8pt</FontSize>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox8</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+													<Width>0.25pt</Width>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox60">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Parameters!TotalRMCost.Value</Value>
+															<Style>
+																<FontSize>8pt</FontSize>
+																<Format>#,0.00;(#,0.00)</Format>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox29</rd:DefaultName>
+											<ZIndex>7</ZIndex>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+													<Width>0.25pt</Width>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+							</TablixCells>
+						</TablixRow>
+						<TablixRow>
+							<Height>0.19792in</Height>
+							<TablixCells>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox42">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>Total Overhead Cost</Value>
+															<Style>
+																<FontSize>8pt</FontSize>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox35</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+													<Width>0.25pt</Width>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox46">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Parameters!TotalOHCost.Value</Value>
+															<Style>
+																<FontSize>8pt</FontSize>
+																<Format>#,0.00;(#,0.00)</Format>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox37</rd:DefaultName>
+											<ZIndex>8</ZIndex>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+													<Width>0.25pt</Width>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+							</TablixCells>
+						</TablixRow>
+						<TablixRow>
+							<Height>0.19792in</Height>
+							<TablixCells>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox43">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value EvaluationMode="Constant">Total Cost</Value>
+															<Style>
+																<FontSize>8pt</FontSize>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox32</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+													<Width>0.25pt</Width>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox52">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Parameters!CalculatedTotalCost.Value</Value>
+															<Style>
+																<FontSize>8pt</FontSize>
+																<Format>#,0.00;(#,0.00)</Format>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox34</rd:DefaultName>
+											<ZIndex>9</ZIndex>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+													<Width>0.25pt</Width>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+							</TablixCells>
+						</TablixRow>
+						<TablixRow>
+							<Height>0.19792in</Height>
+							<TablixCells>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox44">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>Sales Rate</Value>
+															<Style>
+																<FontSize>8pt</FontSize>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox10</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+													<Width>0.25pt</Width>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox55">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Parameters!FinishedGoodsSalesRate.Value</Value>
+															<Style>
+																<FontSize>8pt</FontSize>
+																<Format>#,0.00;(#,0.00)</Format>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox48</rd:DefaultName>
+											<ZIndex>10</ZIndex>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+													<Width>0.25pt</Width>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+							</TablixCells>
+						</TablixRow>
+						<TablixRow>
+							<Height>0.19792in</Height>
+							<TablixCells>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox49">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value EvaluationMode="Constant">Profit/ Loss</Value>
+															<Style>
+																<FontSize>8pt</FontSize>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox10</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+													<Width>0.25pt</Width>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox62">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Parameters!CalculatedProfitOrLoss.Value</Value>
+															<Style>
+																<FontSize>8pt</FontSize>
+																<Format>#,0.00;(#,0.00)</Format>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox30</rd:DefaultName>
+											<ZIndex>11</ZIndex>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+													<Width>0.25pt</Width>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+							</TablixCells>
+						</TablixRow>
+					</TablixRows>
+				</TablixBody>
+				<TablixColumnHierarchy>
+					<TablixMembers>
+						<TablixMember />
+						<TablixMember />
+					</TablixMembers>
+				</TablixColumnHierarchy>
+				<TablixRowHierarchy>
+					<TablixMembers>
+						<TablixMember />
+						<TablixMember />
+						<TablixMember />
+						<TablixMember />
+						<TablixMember />
+						<TablixMember />
+					</TablixMembers>
+				</TablixRowHierarchy>
+				<DataSetName>Recipe</DataSetName>
+				<Top>1.59042in</Top>
+				<Left>3.91244in</Left>
+				<Height>1.18752in</Height>
+				<Width>3.83201in</Width>
+				<ZIndex>6</ZIndex>
+				<Style>
+					<Border>
+						<Style>None</Style>
+					</Border>
+				</Style>
+			</Tablix>
 		</ReportItems>
-		<Height>3.20663in</Height>
+		<Height>4.73097in</Height>
 		<Style />
 	</Body>
 	<Width>7.74654in</Width>
@@ -2388,6 +2833,36 @@
     </ReportParameter>
     <ReportParameter Name="Path">
       <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="TotalRMCost">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="TotalOHCost">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="CalculatedTotalCost">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="CalculatedProfitOrLoss">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="FinishedGoodsSalesRate">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
