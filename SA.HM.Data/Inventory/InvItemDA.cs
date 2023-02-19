@@ -2680,11 +2680,8 @@ namespace HotelManagement.Data.Inventory
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvNutrientInformationByFGId_SP"))
-                {
-                    //if (itemId != 0)
-                        dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, itemId);
-                    //else
-                    //    dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, DBNull.Value);
+                {                    
+                    dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, itemId);
 
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "PMProductOut");
@@ -2695,10 +2692,8 @@ namespace HotelManagement.Data.Inventory
                         ItemId = r.Field<Int32>("ItemId"),
                         FinishedGoodsName = r.Field<string>("FinishedGoodsName"),
                         FinishedGoodsCode = r.Field<string>("FinishedGoodsCode"),
-                        //NTypeId = r.Field<Int64>("NTypeId"),
                         NutrientTypeName = r.Field<string>("NutrientTypeName"),
                         NutrientTypeCode = r.Field<string>("NutrientTypeCode"),
-                        //NutrientsId = r.Field<Int64>("NutrientsId"),
                         NutrientName = r.Field<string>("NutrientName"),
                         NutrientCode = r.Field<string>("NutrientCode"),
                         RequiredValue = r.Field<decimal>("RequiredValue"),

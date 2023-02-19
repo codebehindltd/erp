@@ -18,6 +18,8 @@ using System.IO;
 using HotelManagement.Entity.UserInformation;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using HotelManagement.Data.PurchaseManagment;
+using HotelManagement.Entity.PurchaseManagment;
 
 namespace HotelManagement.Presentation.Website.Inventory.Reports
 {
@@ -115,6 +117,11 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             List<RecipeReportBO> itemNutrientInformationBO = new List<RecipeReportBO>();
             itemNutrientInformationBO = itemWiseStockDA.GetItemNutrientInformationReport(itemId);
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[1], itemNutrientInformationBO));
+
+            PMFinishProductDA goodsDA = new PMFinishProductDA();
+            List<OverheadExpensesBO> nutrientOverheadExpensesBO = new List<OverheadExpensesBO>();
+            nutrientOverheadExpensesBO = goodsDA.GetInvNutrientOEDetailsById(itemId);
+            rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[2], nutrientOverheadExpensesBO));
 
             rvTransaction.LocalReport.DisplayName = "Nutrient Information";
             rvTransaction.LocalReport.Refresh();

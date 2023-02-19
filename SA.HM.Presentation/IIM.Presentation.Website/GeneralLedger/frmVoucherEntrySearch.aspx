@@ -512,7 +512,7 @@
                         <thead>
                             <tr>
                                 <td style="text-align: center; width: 5%;">
-                                    <input type="checkbox" value="" id="voucherCheck" onclick="CheckAllVoucher()" />
+                                    <%--<input type="checkbox" value="" id="voucherCheck" onclick="CheckAllVoucher()" />--%>
                                 </td>
                                 <td style="width: 10%;">Voucher Date
                                 </td>
