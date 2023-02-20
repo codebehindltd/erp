@@ -13,6 +13,12 @@
                 allowClear: true,
                 width: "99.75%"
             });
+            $("#ContentPlaceHolder1_ddlStockBy").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
             $("#ContentPlaceHolder1_ddlNutrient").select2({
                 tags: "true",
                 placeholder: "--- Please Select ---",
@@ -45,7 +51,7 @@
                                 
                 PageMethods.GetInvFinishGoodsInformationById(itemId, OnGetInvFinishGoodsInformationByIdSucceeded, OnGetInvFinishGoodsInformationByIdFailed);
                 PageMethods.GetInvNutrientInformationById(itemId, OnGetInvNutrientInformationByIdSucceeded, OnGetInvNutrientInformationByIdFailed);
-                PageMethods.GetInvFGNNutrientRequiredOEById(itemId, OnGetInvFGNNutrientRequiredByIdSucceeded, OnGetInvFGNNutrientRequiredByIdFailed);
+                PageMethods.GetInvFGNNutrientRequiredOEById(itemId, OnGetInvFGNNutrientRequiredOEByIdSucceeded, OnGetInvFGNNutrientRequiredOEByIdFailed);
                 return false;
             });
             $("#ContentPlaceHolder1_txtRawMaterial").autocomplete({
@@ -93,9 +99,31 @@
                     //}
                     $("#ContentPlaceHolder1_hfRawMaterialId").val(ui.item.value);
                     $(this).val(ui.item.label);
+                    PageMethods.LoadRelatedStockBy(ui.item.StockById, OnLoadStockBySucceeded, OnLoadStockByFailed);
                 }
             });
         });
+        function OnLoadStockBySucceeded(result) {
+            var list = result;
+            var ddlStockById = '<%=ddlStockBy.ClientID%>';
+            var control = $('#' + ddlStockById);
+            control.empty();
+
+            if (list != null) {
+                if (list.length > 0) {
+                    control.removeAttr("disabled");
+                    for (i = 0; i < list.length; i++) {
+                        control.append('<option title="' + list[i].HeadName + '" value="' + list[i].UnitHeadId + '">' + list[i].HeadName + '</option>');
+                    }
+                }
+                else {
+                    control.removeAttr("disabled");
+                }
+            }
+            return false;
+        }
+        function OnLoadStockByFailed(error) {
+        }
 
         function AddOverHeadExpense() {
 
@@ -129,7 +157,7 @@
 
             if (accountHeadId != "0" && finisItemEdited != "") {
                 AccountHeadDetailsId = $(finisItemEdited).find("td:eq(4)").text();
-                EditAccountHeadForOE(accountHead, amount, oEDescription, AccountHeadDetailsId, FGItemId, isEdited);
+                EditAccountHeadForOE(accountHead, amount, oEDescription, accountHeadId, FGItemId, isEdited);
                 return;
             }
             else if (accountHeadId == "0" && finisItemEdited != "") {
@@ -141,6 +169,20 @@
             if (!IsAccountHeadExistsForOE(FGItemId, accountHeadId)) {
                 AddAccountHeadForOEInfo(accountHeadId, accountHead, amount, oEDescription, AccountHeadDetailsId, FGItemId, isEdited);
             }
+            else {
+                $("#OEAmountGrid tr").each(function () {
+                    var currentOElId = $(this).find("td").eq(5).html();
+                    if ($("#ContentPlaceHolder1_hfIsOEEdit").val() == 1) {
+                        if (currentOElId == accountHeadId) {
+                            $(this).find("td").eq(0).html(accountHead);
+                            $(this).find("td").eq(1).html(amount);
+                            $(this).find("td").eq(2).html(oEDescription);
+                            $(this).find("td").eq(4).html(FGItemId);
+                            $(this).find("td").eq(5).html(accountHeadId);
+                        }
+                    }
+                });
+            }
             ClearOverheadExpenseInfo();
         }
 
@@ -148,28 +190,33 @@
             $("#ContentPlaceHolder1_ddlAccountHead").val("0").trigger('change');
             $("#ContentPlaceHolder1_txtAmount").val("");
             $("#ContentPlaceHolder1_txtOEDescription").val("");
-
+            $("#ContentPlaceHolder1_hfIsOEEdit").val(0);
+            $("#btnAddOEAmount").html("Add");
             return false;
 
         }
-        function EditAccountHeadForOE(accountHead, amount, OEDescription, AccountHeadDetailsId, FGItemId, isEdited) {
-            $(finisItemEdited).find("td:eq(0)").text(accountHead);
-            $(finisItemEdited).find("td:eq(1)").text(amount);
-            $(finisItemEdited).find("td:eq(2)").text(OEDescription);
+        function AccountHeadOfOEInfoEditWithConfirmation(control) {
+            if (!confirm("Do you Want To Edit?")) {
+                return false;
+            }
+            $("#btnAddOEAmount").html("Update");
+            $("#ContentPlaceHolder1_hfIsOEEdit").val(1);
+            var tr = $(control).parent().parent();
+            var accountHead = $(tr).find("td").eq(0).html();
+            var amount = $(tr).find("td").eq(1).html();
+            var OEDescription = $(tr).find("td").eq(2).html();
 
-            $(finisItemEdited).find("td:eq(4)").text(AccountHeadDetailsId);
-            $(finisItemEdited).find("td:eq(5)").text(FGItemId);
+            var FGItemId = $(tr).find("td").eq(4).html();
+            var accountHeadId = $(tr).find("td").eq(5).html();
+            var isEdited = $(tr).find("td").eq(6).html();
+            EditAccountHeadForOE(accountHead, amount, OEDescription, accountHeadId, FGItemId, isEdited);
+        }
+        function EditAccountHeadForOE(accountHead, amount, OEDescription, accountHeadId, FGItemId, isEdited) {
+            $("#ContentPlaceHolder1_hfOEId").val(accountHeadId);
 
-            if (AccountHeadDetailsId != "0")
-                $(finisItemEdited).find("td:eq(6)").text("1");
-
-            $(finisItemEdited).find("td:eq(7)").text((FGItemId + "-" + accountHead));
-
-            $("#ContentPlaceHolder1_txtAmount").val("");
-            $("#ContentPlaceHolder1_txtOEDescription").val("");
-
-            $("#btnAdd").val("Add");
-            finisItemEdited = "";
+            $("#ContentPlaceHolder1_ddlAccountHead").val(accountHeadId).trigger('change');
+            $("#ContentPlaceHolder1_txtAmount").val(amount);
+            $("#ContentPlaceHolder1_txtOEDescription").val(OEDescription);
         }
         function IsAccountHeadExistsForOE(FGItemId, accountHeadId) {
             var IsDuplicate = false;
@@ -199,7 +246,9 @@
                         IsAccountHeadIdFound = false;
                     }
                     if (IsFGItemIdFound && IsAccountHeadIdFound) {
-                        toastr.warning('Account Head Already Added.');
+                        if ($("#ContentPlaceHolder1_hfIsOEEdit").val() != 1) {
+                            toastr.warning('Account Head Already Added.');
+                        }
                         IsDuplicate = true;
                         return true;
                     }
@@ -225,8 +274,8 @@
             tr += "<td style='width:10%;'>" + amount + "</td>";
             tr += "<td style='width:50%;'>" + OEDescription + "</td>";
             tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
-            //tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return NutrientInfoEditWithConfirmation(this)\" alt='Edit'  title='Edit' border='0' />";
             tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return DeleteAccountHeadOfOE(this)\" alt='Delete'  title='Delete' border='0' />";
+            tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return AccountHeadOfOEInfoEditWithConfirmation(this)\" alt='Edit'  title='Edit' border='0' />";
             tr += "</td>";
 
             tr += "<td style='display:none'>" + FGItemId + "</td>";
@@ -340,7 +389,7 @@
         function OnGetInvNutrientInformationByIdFailed() {
 
         }
-        function OnGetInvFGNNutrientRequiredByIdSucceeded(result) {
+        function OnGetInvFGNNutrientRequiredOEByIdSucceeded(result) {
             var tr = "";
             $.each(result, function (count, obj) {
                 if (result.length > 0) {
@@ -348,18 +397,19 @@
                 }
                 tr += "<tr>";
 
-                tr += "<td style='width:40%;'>" + obj.AccountHead + "</td>";
-                tr += "<td style='width:20%;'>" + obj.Amount + "</td>";
-                tr += "<td style='width:20%;'>" + obj.Remarks + "</td>";
+                tr += "<td style='width:30%;'>" + obj.HeadWithCode+ "</td>";
+                tr += "<td style='width:10%;'>" + obj.Amount + "</td>";
+                tr += "<td style='width:50%;'>" + obj.Remarks + "</td>";
 
-                tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
-                //tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return NutrientInfoEditWithConfirmation(this)\" alt='Edit'  title='Edit' border='0' />";
+                tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";                
                 tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return DeleteAccountHeadOfOE(this)\" alt='Delete'  title='Delete' border='0' />";
+                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return AccountHeadOfOEInfoEditWithConfirmation(this)\" alt='Edit'  title='Edit' border='0' />";
                 tr += "</td>";
 
                 tr += "<td style='display:none;'>" + obj.FinishProductId + "</td>";
                 tr += "<td style='display:none;'>" + obj.NodeId + "</td>";
                 tr += "<td style='display:none'>" + obj.IsEdited + "</td>";
+                tr += "<td style='display:none'>" + obj.AccountHead + "</td>";
 
                 tr += "</tr>";
 
@@ -369,7 +419,7 @@
             });
             return false;
         }
-        function OnGetInvFGNNutrientRequiredByIdFailed() {
+        function OnGetInvFGNNutrientRequiredOEByIdFailed() {
 
         }
 
@@ -504,6 +554,8 @@
             if ($("#ContentPlaceHolder1_hfIsNutrientInfoEdit").val() == 1) {
                 ClearAfterNutrientRequiredValueAdded();
             }
+            ClearRawMaterials();
+
         }
 
         function AddNewRawMaterial(rawMaterial, rawMaterialId, unitHeadId, unitHeadName, unitQuantity, itemCost) {
@@ -587,13 +639,14 @@
 
         function ClearRawMaterials() {
             $("#ContentPlaceHolder1_txtRawMaterial").val("");
-            $("#ContentPlaceHolder1_ddlStockBy").val("0");
+            $("#ContentPlaceHolder1_ddlStockBy").val("0").trigger('change');
             $("#ContentPlaceHolder1_txtUnitQuantity").val("");
             $("#ContentPlaceHolder1_txtCost").val("");
             $("#ContentPlaceHolder1_txtRawMaterial").attr("disabled", false);
             $("#btnAdd").val("Add");
             $("#ContentPlaceHolder1_hfRawMaterialId").val(0);
             $("#ContentPlaceHolder1_hfIsRawMaterialEdit").val(0);
+            $("#ContentPlaceHolder1_txtRawMaterial").val("");
         }
         function AddNutrientRequiredValue() {
             if ($("#ContentPlaceHolder1_ddlNutrient").val() == "0") {
@@ -623,9 +676,10 @@
                 tr += "<td style='width:15%;'>" + requiredValue + "</td>";
                 tr += "<td style='width:25%;'>" + 0 + "</td>";
                 tr += "<td style='width:10%;'>" + 0 + "</td>";
-                tr += "<td style=\"width:15%;\">";
+
+                tr += "<td style=\"text-align: center; width:15%; cursor:pointer;\">";
+                tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return DeleteNutrientRequiredValueItem(this)\" alt='Delete'  title='Delete' border='0' />";
                 tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return NutrientInfoEditWithConfirmation(this)\" alt='Edit'  title='Edit' border='0' />";
-                tr += "&nbsp;&nbsp;<a href='javascript:void()' onclick= 'DeleteNutrientRequiredValueItem(this)' ><img alt='Delete' src='../Images/delete.png' title='Delete' /></a>";
                 tr += "</td>";
 
                 tr += "<td style='display:none;'>" + nutrientId + "</td>";
@@ -658,8 +712,8 @@
         }
 
         function ClearAfterNutrientRequiredValueAdded() {
-            $("#ContentPlaceHolder1_ddlNutrient").attr("disabled", false);
             $("#ContentPlaceHolder1_ddlNutrient").val("0").trigger('change');
+            $("#ContentPlaceHolder1_ddlNutrient").attr("disabled", false);
             $("#ContentPlaceHolder1_txtRequiredValue").val("");
             $("#ContentPlaceHolder1_hfEditNutrientRequiredValue").val(0);
             $("#ContentPlaceHolder1_hfIsNutrientInfoEdit").val(0);
@@ -718,13 +772,6 @@
             $(tr).remove();
         }
 
-        function PerformClearAction() {
-            $("#ContentPlaceHolder1_hfNRVMasterId").val(0);
-            $("#ContentPlaceHolder1_ddlItemName").val("0").trigger('change');
-            $("#NutrientInformationGrid tbody").html("");
-            $("#btnSave").val("Save");
-            ClearAfterNutrientRequiredValueAdded();
-        }
         function PerformClearActionWithConfirmation() {
 
             if (!confirm("Do you Want To Clear?")) {
@@ -839,6 +886,7 @@
             $("#ContentPlaceHolder1_hfNutrientInfoId").val(0);
             $("#ContentPlaceHolder1_hfEditId").val(0);
             $("#ContentPlaceHolder1_hfRawMaterialId").val(0);
+            $("#ContentPlaceHolder1_hfOEId").val(0);
             $("#ContentPlaceHolder1_hfNutrientInfoId").val(0);
             $("#ContentPlaceHolder1_ddlSetupType").val(0).trigger('change');
             $("#ContentPlaceHolder1_ddlNutritionType").val(0).trigger('change');
@@ -849,12 +897,23 @@
             $("#ContentPlaceHolder1_ddlActiveStat").val(0).trigger('change');
             $("#ContentPlaceHolder1_ddlAccountHead").val("0").trigger('change');
             $("#ContentPlaceHolder1_txttotalAmount").val("");
+            $("#ContentPlaceHolder1_hfNRVMasterId").val(0);
+            $("#NutrientInformationGrid tbody").html("");
+            $("#btnSave").val("Save");
+            ClearAfterNutrientRequiredValueAdded();
+            ClearRawMaterials();
+            ClearOverheadExpenseInfo();
+            DeletedAccountHead = [];
+            DeletedItemList = [];
+            deletedNutrientRequiredValueList = [];
             return false;
         }
                 
     </script>
     <asp:HiddenField ID="hfRawMaterialId" runat="server" Value="0" />
+    <asp:HiddenField ID="hfOEId" runat="server" Value="0" />
     <asp:HiddenField ID="hfIsRawMaterialEdit" runat="server" Value="0" />
+    <asp:HiddenField ID="hfIsOEEdit" runat="server" Value="0" />
     <asp:HiddenField ID="hfIsNutrientInfoEdit" runat="server" Value="0" />
     <asp:HiddenField ID="hfNutrientInfoId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfNutritionTypeId" runat="server" Value="0"></asp:HiddenField>

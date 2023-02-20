@@ -18,5 +18,6 @@ namespace HotelManagement.Entity.PurchaseManagment
         public decimal OEAmount { get; set; }
         public string Remarks { get; set; }
         public int CostCenterId { get; set; }
+        public string HeadWithCode { get; set; }
     }
 }

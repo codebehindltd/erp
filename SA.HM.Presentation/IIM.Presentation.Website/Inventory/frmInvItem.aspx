@@ -416,7 +416,7 @@
             var ddlStockById = '<%=ddlItemStockBy.ClientID%>';
             var control = $('#' + ddlStockById);
             control.empty();
-
+            debugger;
             if (list != null) {
                 if (list.length > 0) {
                     control.removeAttr("disabled");

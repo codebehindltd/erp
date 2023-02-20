@@ -2271,8 +2271,8 @@ namespace HotelManagement.Data.Inventory
                         NodeId = r.Field<Int32>("NodeId"),
                         AccountHead = r.Field<string>("AccountHead"),
                         Amount = r.Field<decimal>("OEAmount"),
-                        Remarks = r.Field<string>("OERemarks")
-
+                        Remarks = r.Field<string>("OERemarks"),
+                        HeadWithCode = r.Field<string>("HeadWithCode")
                     }).ToList();
                 }
             }
@@ -5658,22 +5658,19 @@ namespace HotelManagement.Data.Inventory
                                 }
                             }
                         }
-                        if (status > 0)
+                        using (DbCommand cmdOut = dbSmartAspects.GetStoredProcCommand("SaveNRVMasterInfo_SP"))
                         {
-                            using (DbCommand cmdOut = dbSmartAspects.GetStoredProcCommand("SaveNRVMasterInfo_SP"))
-                            {
-                                cmdOut.Parameters.Clear();
-                                dbSmartAspects.AddInParameter(cmdOut, "@ItemId", DbType.Int32, NutrientRequiredMasterInfo.ItemId);
-                                dbSmartAspects.AddInParameter(cmdOut, "@ItemName", DbType.String, NutrientRequiredMasterInfo.ItemName);
-                                dbSmartAspects.AddInParameter(cmdOut, "@CreatedBy", DbType.Int64, userInfoId);
+                            cmdOut.Parameters.Clear();
+                            dbSmartAspects.AddInParameter(cmdOut, "@ItemId", DbType.Int32, NutrientRequiredMasterInfo.ItemId);
+                            dbSmartAspects.AddInParameter(cmdOut, "@ItemName", DbType.String, NutrientRequiredMasterInfo.ItemName);
+                            dbSmartAspects.AddInParameter(cmdOut, "@CreatedBy", DbType.Int64, userInfoId);
 
-                                dbSmartAspects.AddOutParameter(cmdOut, "@Id", DbType.Int64, sizeof(Int64));
-                                status = dbSmartAspects.ExecuteNonQuery(cmdOut, transction);
+                            dbSmartAspects.AddOutParameter(cmdOut, "@Id", DbType.Int64, sizeof(Int64));
+                            status = dbSmartAspects.ExecuteNonQuery(cmdOut, transction);
 
-                                Id = Convert.ToInt64(cmdOut.Parameters["@Id"].Value);
-                            }
+                            Id = Convert.ToInt64(cmdOut.Parameters["@Id"].Value);
                         }
-                        if (status > 0 && AddedNutrientRequiredValueInfo.Count > 0)
+                        if (AddedNutrientRequiredValueInfo.Count > 0)
                         {
                             foreach (InvNutrientInfoBO ni in AddedNutrientRequiredValueInfo)
                             {
@@ -5706,7 +5703,7 @@ namespace HotelManagement.Data.Inventory
                                 }
                             }
                         }
-                        if (status > 0 && AddedOverheadExpenses.Count > 0)
+                        if (AddedOverheadExpenses.Count > 0)
                         {
                             foreach (OverheadExpensesBO oe in AddedOverheadExpenses)
                             {

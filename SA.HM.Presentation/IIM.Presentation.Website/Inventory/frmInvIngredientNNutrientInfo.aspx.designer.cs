@@ -22,6 +22,15 @@ namespace HotelManagement.Presentation.Website.Inventory {
         protected global::System.Web.UI.WebControls.HiddenField hfRawMaterialId;
         
         /// <summary>
+        /// hfOEId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfOEId;
+        
+        /// <summary>
         /// hfIsRawMaterialEdit control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,15 @@ namespace HotelManagement.Presentation.Website.Inventory {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfIsRawMaterialEdit;
+        
+        /// <summary>
+        /// hfIsOEEdit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsOEEdit;
         
         /// <summary>
         /// hfIsNutrientInfoEdit control.

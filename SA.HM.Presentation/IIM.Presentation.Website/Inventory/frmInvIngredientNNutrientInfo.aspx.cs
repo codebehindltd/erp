@@ -91,8 +91,16 @@ namespace HotelManagement.Presentation.Website.Inventory
             itemNodeId.Text = hmUtility.GetDropDownFirstValue();
             ddlAccountHead.Items.Insert(0, itemNodeId);
         }
+        [WebMethod]
+        public static List<InvUnitHeadBO> LoadRelatedStockBy(int stockById)
+        {
+            InvUnitHeadDA unitHeadDA = new InvUnitHeadDA();
+            List<InvUnitHeadBO> unitHeadList = new List<InvUnitHeadBO>();
 
+            unitHeadList = unitHeadDA.GetRelatedStockBy(stockById);
 
+            return unitHeadList;
+        }
         [WebMethod]
         public static List<RestaurantRecipeDetailBO> GetInvFinishGoodsInformationById(int itemId)
         {
