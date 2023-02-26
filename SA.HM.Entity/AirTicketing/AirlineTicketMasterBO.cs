@@ -32,5 +32,7 @@ namespace HotelManagement.Entity.AirTicketing
         public bool IsCanApproved { get; set; }
         public string TicketNumber { get; set; }
         public string PNRNumber { get; set; }
+        public int MyProperty { get; set; }
+        public Int64 PaymentId { get; set; }
     }
 }

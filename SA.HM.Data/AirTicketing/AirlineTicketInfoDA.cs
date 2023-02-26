@@ -12,9 +12,10 @@ namespace HotelManagement.Data.AirTicketing
 {
     public class AirlineTicketInfoDA : BaseService
     {
-        public bool SaveAirlineTicketInfo(AirlineTicketMasterBO airTicketMasterInfo, List<AirlineTicketInfoBO> AddedSingleTicketInfo, List<GuestBillPaymentBO> AddedPaymentInfo, List<int> deletedPaymentInfoList)
+        public bool SaveAirlineTicketInfo(AirlineTicketMasterBO airTicketMasterInfo, List<AirlineTicketInfoBO> AddedSingleTicketInfo, List<int> deletedAirlineInfoList, List<GuestBillPaymentBO> AddedPaymentInfo, List<int> deletedPaymentInfoList, out long ticketId)
         {
-            Int64 status = 0, ticketId = 0;
+            Int64 status = 0;
+            ticketId = 0;
             bool retVal = false;
 
             using (DbConnection conn = dbSmartAspects.CreateConnection())
@@ -74,14 +75,17 @@ namespace HotelManagement.Data.AirTicketing
                         
                         if(status > 0 && AddedSingleTicketInfo.Count > 0)
                         {
-                            if(airTicketMasterInfo.TicketId > 0)
+                            if (deletedAirlineInfoList.Count > 0)
                             {
-                                using (DbCommand cmdPay = dbSmartAspects.GetStoredProcCommand("DeleteAirTicketsByTicketId_SP"))
+                                foreach (int ai in deletedAirlineInfoList)
                                 {
-                                    cmdPay.Parameters.Clear();
-                                    dbSmartAspects.AddInParameter(cmdPay, "@TicketId", DbType.Int64, airTicketMasterInfo.TicketId);
-                                    status = dbSmartAspects.ExecuteNonQuery(cmdPay, transction);
-                                }
+                                    using (DbCommand cmdPay = dbSmartAspects.GetStoredProcCommand("DeleteAirTicketsByTicketId_SP"))
+                                    {
+                                        cmdPay.Parameters.Clear();
+                                        dbSmartAspects.AddInParameter(cmdPay, "@Id", DbType.Int64, ai);
+                                        status = dbSmartAspects.ExecuteNonQuery(cmdPay, transction);
+                                    }
+                                }                                
                             }
                             foreach (AirlineTicketInfoBO at in AddedSingleTicketInfo)
                             {
@@ -90,6 +94,7 @@ namespace HotelManagement.Data.AirTicketing
                                     cmdSingle.Parameters.Clear();
 
                                     dbSmartAspects.AddInParameter(cmdSingle, "@TicketId", DbType.Int64, ticketId);
+                                    dbSmartAspects.AddInParameter(cmdSingle, "@Id", DbType.Int64, at.Id);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@ClientName", DbType.String, at.ClientName);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@MobileNumber", DbType.String, at.MobileNumber);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@Email", DbType.String, at.Email);
@@ -158,6 +163,7 @@ namespace HotelManagement.Data.AirTicketing
                                     dbSmartAspects.AddInParameter(cmdPay, "@CardNumber", DbType.String, pi.CardNumber);
                                     dbSmartAspects.AddInParameter(cmdPay, "@BankId", DbType.Int32, pi.BankId);
                                     dbSmartAspects.AddInParameter(cmdPay, "@ChequeNumber", DbType.String, pi.ChequeNumber);
+                                    dbSmartAspects.AddInParameter(cmdPay, "@ChequeDate", DbType.DateTime, pi.ChequeDate);
                                     dbSmartAspects.AddInParameter(cmdPay, "@CreatedBy", DbType.Int64, airTicketMasterInfo.CreatedBy);
 
                                     status = dbSmartAspects.ExecuteNonQuery(cmdPay, transction);
@@ -357,6 +363,7 @@ namespace HotelManagement.Data.AirTicketing
 
                     ticketList = Table.AsEnumerable().Select(r => new AirlineTicketInfoBO
                     {
+                        Id = r.Field<Int64>("Id"),
                         ClientName = r.Field<string>("ClientName"),
                         MobileNumber = r.Field<string>("MobileNo"),
                         Email = r.Field<string>("Email"),
@@ -404,7 +411,8 @@ namespace HotelManagement.Data.AirTicketing
                         CardTypeId = r.Field<Int32>("CardTypeId"),
                         CardNumber = r.Field<string>("CardNumber"),
                         BankId = r.Field<Int32>("BankId"),
-                        ChequeNumber = r.Field<string>("ChequeNumber")
+                        ChequeNumber = r.Field<string>("ChequeNumber"),
+                        ChequeDate = r.Field<DateTime?>("ChequeDate")
                     }).ToList();
                 }
             }

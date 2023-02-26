@@ -27,12 +27,16 @@ namespace HotelManagement.Presentation.Website.AirTicketing
         {
             if (!IsPostBack)
             {
+                Random rd = new Random();
+                int seatingId = rd.Next(100000, 999999);
+                RandomDocId.Value = seatingId.ToString();
                 IsAdminUser();
                 LoadAirline();
                 LoadCurrency();
                 CheckPermission();
                 LoadProject();
                 LoadBankName();
+                FileUpload();
             }
         }
         private void IsAdminUser()
@@ -78,6 +82,13 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                     this.ddlTransactionType.Items.Remove(ddlTransactionType.Items.FindByValue("RoomGuest"));
                 }
             }
+        }
+        private void FileUpload()
+        {
+            string jscript = "function UploadComplete(){ };";
+            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "FileCompleteUpload", jscript, true);
+            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "LoadDetailGridInformation", jscript, true);
+            //flashUpload.QueryParameters = "TaskAssignDocId=" + Server.UrlEncode(RandomDocId.Value);
         }
         private void LoadAirline()
         {
@@ -195,7 +206,8 @@ namespace HotelManagement.Presentation.Website.AirTicketing
 
 
         [WebMethod]
-        public static ReturnInfo SaveAirlineTicketInfo(AirlineTicketMasterBO AirTicketMasterInfo, List<AirlineTicketInfoBO> AddedSingleTicketInfo, List<GuestBillPaymentBO> AddedPaymentInfo, List<int> deletedPaymentInfoList)
+        public static ReturnInfo SaveAirlineTicketInfo(AirlineTicketMasterBO AirTicketMasterInfo, List<AirlineTicketInfoBO> AddedSingleTicketInfo, List<int> deletedAirlineInfoList, List<GuestBillPaymentBO> AddedPaymentInfo, 
+                                                        List<int> deletedPaymentInfoList, int randomDocId, string deletedDoc)
         {
             ReturnInfo rtninfo = new ReturnInfo();
             Boolean status = false;
@@ -227,11 +239,24 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                     }
                 }
                 AirTicketMasterInfo.CostCenterId = costCenterId;
+                long id = 0;
+                int OwnerIdForDocuments = 0;
+                HMCommonDA hmCommonDA = new HMCommonDA();
 
-                status = atDa.SaveAirlineTicketInfo(AirTicketMasterInfo, AddedSingleTicketInfo, AddedPaymentInfo, deletedPaymentInfoList);
+                status = atDa.SaveAirlineTicketInfo(AirTicketMasterInfo, AddedSingleTicketInfo, deletedAirlineInfoList, AddedPaymentInfo, deletedPaymentInfoList, out id);
                 if (status)
                 {
                     rtninfo.IsSuccess = true;
+                    OwnerIdForDocuments = Convert.ToInt32(id);
+                    DocumentsDA documentsDA = new DocumentsDA();
+                    string s = deletedDoc;
+                    string[] DeletedDocList = s.Split(',');
+                    for (int i = 0; i < DeletedDocList.Length; i++)
+                    {
+                        DeletedDocList[i] = DeletedDocList[i].Trim();
+                        Boolean DeleteStatus = documentsDA.DeleteDocumentsByDocumentId(Convert.ToInt32(DeletedDocList[i]));
+                    }
+                    Boolean updateStatus = hmCommonDA.UpdateUploadedDocumentsInformationByOwnerId(OwnerIdForDocuments, Convert.ToInt32(randomDocId));
                     if (IsUpdate)
                     {
                         rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
@@ -253,9 +278,10 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                 rtninfo.IsSuccess = false;
                 rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
             }
-
+            Random rd = new Random();
+            int randomId = rd.Next(100000, 999999);
+            rtninfo.Data = randomId;
             return rtninfo;
-            
         }
 
         
@@ -336,15 +362,15 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                 HMUtility hmUtility = new HMUtility();
                 UserInformationBO userInformationBO = new UserInformationBO();
                 userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
-
                 AirlineTicketInfoDA atDa = new AirlineTicketInfoDA();
                 status = atDa.TicketInformationApproval(ticketId, userInformationBO.UserInfoId);
                 if (status)
                 {
+                    CommonDA commonDA = new CommonDA();
+                    bool autoProcessStatus = commonDA.AutoCompanyBillGenerationProcess("Airline Ticketing", ticketId, userInformationBO.UserInfoId);
                     rtninfo.IsSuccess = true;
                     rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Approved, AlertType.Success);
                 }
-
                 if (!status)
                 {
                     rtninfo.IsSuccess = false;
@@ -356,9 +382,7 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                 rtninfo.IsSuccess = false;
                 rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
             }
-
             return rtninfo;
-
         }
 
         [WebMethod]
@@ -426,6 +450,31 @@ namespace HotelManagement.Presentation.Website.AirTicketing
             }
 
             return rtninfo;
+        }
+        [WebMethod]
+        public static List<DocumentsBO> GetUploadedDocByWebMethod(int randomId, int id, string deletedDoc)
+        {
+            List<int> delete = new List<int>();
+            if (!(String.IsNullOrEmpty(deletedDoc)))
+            {
+                delete = deletedDoc.Split(',').Select(t => int.Parse(t)).ToList();
+            }
+            List<DocumentsBO> docList = new List<DocumentsBO>();
+            docList = new DocumentsDA().GetDocumentsByUserTypeAndUserId("AirlineTicketInfo", randomId);
+            if (id > 0)
+                docList.AddRange(new DocumentsDA().GetDocumentsByUserTypeAndUserId("AirlineTicketInfo", (int)id));
+
+            docList.RemoveAll(x => delete.Contains(Convert.ToInt32(x.DocumentId)));
+            foreach (DocumentsBO dc in docList)
+            {
+
+                if (dc.DocumentType == "Image")
+                    dc.Path = (dc.Path + dc.Name);
+
+                dc.Name = dc.Name.Remove(dc.Name.LastIndexOf('.'));
+            }
+            docList = new HMCommonDA().GetDocumentListWithIcon(docList).ToList();
+            return docList;
         }
     }
 }

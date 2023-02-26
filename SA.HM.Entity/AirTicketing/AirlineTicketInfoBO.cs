@@ -7,6 +7,7 @@ namespace HotelManagement.Entity.AirTicketing
 {
     public class AirlineTicketInfoBO
     {
+        public long Id { get; set; }
         public string AirlineName { get; set; }
         public DateTime IssueDate { get; set; }
         public DateTime FlightDate { get; set; }
