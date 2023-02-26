@@ -1834,7 +1834,6 @@ function OnProjectsPopulated(response) {
                 title: "Documents Upload",
                 show: 'slide'
             });
-
         }
         function CloseDialog() {
             $("#DocumentDialouge").dialog('close');

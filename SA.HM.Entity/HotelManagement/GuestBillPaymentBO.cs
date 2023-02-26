@@ -32,6 +32,7 @@ namespace HotelManagement.Entity.HotelManagement
         public decimal ReceiveAmount { get; set; }
 
         public string ChequeNumber { get; set; }
+        public DateTime? ChequeDate { get; set; }
         public string ChecqueNumber { get; set; }
         public DateTime? ChecqueDate { get; set; }
         public int CardTypeId { get; set; }
