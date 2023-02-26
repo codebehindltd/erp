@@ -12,56 +12,43 @@
             var breadCrumbs = moduleName + formName;
             $("#ltlBreadCrumbsInformation").html(breadCrumbs);
 
-            if ($("#ContentPlaceHolder1_ddlReportType").val() == "ItemWiseStock") {
-                $("#CostcenterWise").hide();
-                $("#LocationWise").hide();
-
-                $("#ContentPlaceHolder1_ddlCostCenterId").val("0");
-                $("#ContentPlaceHolder1_ddlLocation").val("0");
-            }
-            else if ($("#ContentPlaceHolder1_ddlReportType").val() == "CostcenterWiseStock") {
-                $("#CostcenterWise").show();
-                $("#LocationWise").hide();
+            if ($("#InnboardMessageHiddenField").val() != "") {
+                CommonHelper.AlertMessage(JSON.parse($("#InnboardMessageHiddenField").val()));
+                $("#InnboardMessageHiddenField").val("");
             }
 
-            $("#ContentPlaceHolder1_ddlProduct").select2({
+            if ($("#ContentPlaceHolder1_ddlReportType").val() == "SummaryReport") {
+                $("#ProductSummaryReportDiv").show();
+                $("#ProductDetailReportDiv").hide();
+            }
+            else if ($("#ContentPlaceHolder1_ddlReportType").val() == "DetailReport") {
+                $("#ProductSummaryReportDiv").hide();
+                $("#ProductDetailReportDiv").show();
+            }
+
+            $("#ContentPlaceHolder1_ddlProductSummaryReport").select2({
                 tags: "true",
                 placeholder: "--- All ---",
                 allowClear: true,
                 width: "99.75%"
             });
 
+            $("#ContentPlaceHolder1_ddlProductDetailReport").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             $("#ContentPlaceHolder1_ddlReportType").change(function () {
-
-                if ($(this).val() == "ItemWiseStock") {
-                    $("#CostcenterWise").hide();
-                    $("#LocationWise").hide();
-
-                    $("#ContentPlaceHolder1_ddlCategory").val("0");
-                    $("#ContentPlaceHolder1_ddlProduct").val("0");
-                    $("#ContentPlaceHolder1_ddlCostCenterId").val("0");
-                    $("#ContentPlaceHolder1_ddlLocation").val("0");
+                if ($(this).val() == "SummaryReport") {
+                    $("#ProductSummaryReportDiv").show();
+                    $("#ProductDetailReportDiv").hide();
                 }
-                else if ($(this).val() == "CostcenterWiseStock") {
-
-                    $("#ContentPlaceHolder1_ddlCategory").val("0");
-                    $("#ContentPlaceHolder1_ddlProduct").val("0");
-                    $("#ContentPlaceHolder1_ddlCostCenterId").val("0");
-                    $("#ContentPlaceHolder1_ddlLocation").val("0");
-
-                    $("#CostcenterWise").show();
-                    $("#LocationWise").hide();
+                else if ($(this).val() == "DetailReport") {
+                    $("#ProductSummaryReportDiv").hide();
+                    $("#ProductDetailReportDiv").show();
                 }
-                else {
-                    $("#ContentPlaceHolder1_ddlCategory").val("0");
-                    $("#ContentPlaceHolder1_ddlProduct").val("0");
-                    $("#ContentPlaceHolder1_ddlCostCenterId").val("0");
-                    $("#ContentPlaceHolder1_ddlLocation").val("0");
-
-                    $("#CostcenterWise").show();
-                    $("#LocationWise").show();
-                }
-
             });
 
         });
@@ -72,12 +59,27 @@
             <div class="form-horizontal">
                 <div class="form-group">
                     <div class="col-md-2">
-                        <asp:Label ID="lblProduct" runat="server" class="control-label" Text="Item Name"></asp:Label>
+                        <asp:Label ID="Label1" runat="server" class="control-label" Text="Report Type"></asp:Label>
                     </div>
                     <div class="col-md-4">
-                        <asp:DropDownList ID="ddlProduct" CssClass="form-control" runat="server">
+                        <asp:DropDownList ID="ddlReportType" CssClass="form-control" runat="server">
+                            <asp:ListItem Value="SummaryReport" Text="Summary Report"></asp:ListItem>
+                            <asp:ListItem Value="DetailReport" Text="Detail Report"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="lblProduct" runat="server" class="control-label" Text="Item Name"></asp:Label>
+                    </div>                    
+                    <div class="col-md-4" id="ProductSummaryReportDiv">
+                        <asp:DropDownList ID="ddlProductSummaryReport" CssClass="form-control" runat="server">
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-md-4" id="ProductDetailReportDiv" style="display: none;">
+                        <asp:DropDownList ID="ddlProductDetailReport" CssClass="form-control" runat="server">
+                        </asp:DropDownList>
+                    </div>
+                </div>
+                <div class="form-group" style="display: none;">
                     <div class="col-md-2" style="display: none;">
                         <asp:Label ID="lblCategory" runat="server" class="control-label" Text="Category"></asp:Label>
                     </div>
@@ -107,12 +109,13 @@
             ClientIDMode="Static" />
     </div>
     <div style="display: none;">
-        <iframe id="frmPrint" name="frmPrint" width="0" height="0" runat="server" style="left: -1000;
-            top: 2000;" clientidmode="static"></iframe>
+        <iframe id="frmPrint" name="frmPrint" width="0" height="0" runat="server" style="left: -1000; top: 2000;"
+            clientidmode="static"></iframe>
     </div>
     <div id="ReportPanel" class="panel panel-default">
         <div class="panel-heading">
-            Report:: Nutrient Information</div>
+            Report:: Nutrient Information
+        </div>
         <div class="panel-body">
             <asp:Panel ID="pnlReporContainer" runat="server" ScrollBars="Both" Height="700px">
                 <rsweb:ReportViewer ShowFindControls="false" ShowWaitControlCancelLink="false" ID="rvTransaction"
@@ -135,11 +138,19 @@
 
                 $("#" + barControlId + " > div").append(outerDiv);
             }
+
+            var _IsReportPanelEnable = '<%=_IsReportPanelEnable%>';
+            if (_IsReportPanelEnable > -1) {
+                $('#ReportPanel').show();
+            }
+            else {
+                $('#ReportPanel').hide();
+            }
         });
 
         function PrintDocumentFunc(ss) {
             $('#btnPrintReportFromClient').trigger('click');
             return true;
-        }        
+        }
     </script>
 </asp:Content>

@@ -2659,6 +2659,7 @@ namespace HotelManagement.Data.Inventory
                         ItemName = r.Field<string>("ItemName"),
                         RecipeItemId = r.Field<Int32>("RecipeItemId"),
                         RecipeItemName = r.Field<string>("RecipeItemName"),
+                        RecipeItemCodeAndName = r.Field<string>("RecipeItemCodeAndName"),
                         ItemUnit = r.Field<decimal>("ItemUnit"),
                         ItemCost = r.Field<decimal>("ItemCost"),
                         HeadName = r.Field<string>("HeadName"),
@@ -2667,6 +2668,44 @@ namespace HotelManagement.Data.Inventory
                         IngredientPrepComments = r.Field<string>("IngredientPrepComments"),
                         ItemRank = r.Field<Int64>("ItemRank")
 
+                    }).ToList();
+                }
+            }
+
+            return itemRecipe;
+        }
+        public List<RecipeReportBO> GetFinishedGoodsNutrientSummaryInformation(int itemId)
+        {
+            List<RecipeReportBO> itemRecipe = new List<RecipeReportBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetFinishedGoodsNutrientSummaryInformation_SP"))
+                {
+                    if (itemId != 0)
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, itemId);
+                    }
+                    else
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, DBNull.Value);
+                    }
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "PMProductOut");
+                    DataTable Table = ds.Tables["PMProductOut"];
+
+                    itemRecipe = Table.AsEnumerable().Select(r => new RecipeReportBO
+                    {
+                        ItemId = r.Field<Int32>("ItemId"),
+                        FinishedGoodsCode = r.Field<string>("FinishedGoodsCode"),
+                        FinishedGoodsName = r.Field<string>("FinishedGoodsName"),
+                        FinishedGoodsCodeAndName = r.Field<string>("FinishedGoodsCodeAndName"),
+                        TotalRawMaterialsCost = r.Field<decimal>("TotalRawMaterialsCost"),
+                        TotalOverheadCost = r.Field<decimal>("TotalOverheadCost"),
+                        TotalCost = r.Field<decimal>("TotalCost"),
+                        SalesRate = r.Field<decimal>("SalesRate"),
+                        ProfitAndLoss = r.Field<decimal>("ProfitAndLoss"),
                     }).ToList();
                 }
             }

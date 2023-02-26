@@ -147,11 +147,11 @@
                 toastr.warning("Please give Amount.");
                 return false;
             }
-            else if (oEDescription == "") {
-                $("#ContentPlaceHolder1_txtOEDescription").focus();
-                toastr.warning("Please give OverHead Description.");
-                return false;
-            }
+            //else if (oEDescription == "") {
+            //    $("#ContentPlaceHolder1_txtOEDescription").focus();
+            //    toastr.warning("Please give OverHead Description.");
+            //    return false;
+            //}
 
             var AccountHeadDetailsId = "0", isEdited = 0, editedItemId = "0";
 
@@ -1080,7 +1080,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-2">
-                                            <asp:Label ID="lblOEDescription" runat="server" class="control-label required-field" Text="Description"></asp:Label>
+                                            <asp:Label ID="lblOEDescription" runat="server" class="control-label" Text="Description"></asp:Label>
                                         </div>
                                         <div class="col-md-10">
                                             <asp:TextBox ID="txtOEDescription" runat="server" TabIndex="22" CssClass="form-control"

@@ -25,11 +25,13 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
 {
     public partial class frmReportNutrientInformation : System.Web.UI.Page
     {
+        HiddenField innboardMessage;
         HMUtility hmUtility = new HMUtility();
-        protected int _RoomStatusInfoByDate = -1;
+        protected int _IsReportPanelEnable = -1;
         //**************************** Handlers ****************************//
         protected void Page_Load(object sender, EventArgs e)
         {
+            innboardMessage = (HiddenField)this.Master.FindControl("InnboardMessageHiddenField");
             if (!IsPostBack)
             {
                 LoadCommonDropDownHiddenField();
@@ -39,7 +41,7 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
         }
         protected void btnGenarate_Click(object sender, EventArgs e)
         {
-            _RoomStatusInfoByDate = 1;
+            _IsReportPanelEnable = 1;
             HMCommonDA hmCommonDA = new HMCommonDA();
 
             int categoryId = 0, itemId = 0;
@@ -47,13 +49,31 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             if (ddlCategory.SelectedValue != "")
                 categoryId = Convert.ToInt32(ddlCategory.SelectedValue);
 
-            if (ddlProduct.SelectedValue != "")
-                itemId = Convert.ToInt32(ddlProduct.SelectedValue);
+            var reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptItemNutrientInformation.rdlc");
+
+            if (ddlReportType.SelectedValue == "SummaryReport")
+            {
+                reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptItemNutrientSummary.rdlc");
+                if (ddlProductSummaryReport.SelectedValue != "")
+                {
+                    itemId = Convert.ToInt32(ddlProductSummaryReport.SelectedValue);
+                }
+            }
+            else
+            {
+                if (!IsFrmValid())
+                {
+                    return;
+                }
+                reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptItemNutrientInformation.rdlc");
+                if (ddlProductDetailReport.SelectedValue != "")
+                {
+                    itemId = Convert.ToInt32(ddlProductDetailReport.SelectedValue);
+                }
+            }
 
             rvTransaction.LocalReport.DataSources.Clear();
             rvTransaction.ProcessingMode = ProcessingMode.Local;
-
-            var reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptItemNutrientInformation.rdlc");
 
             if (!File.Exists(reportPath))
                 return;
@@ -94,86 +114,83 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             paramReport.Add(new ReportParameter("PrintDateTime", printDate));
             paramReport.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
 
-            
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
 
-            //long maxRow = 0;
-            //double mid = 0;
-            //if (itemWiseStockBO != null)
-            //{
-            //    if (itemWiseStockBO.Count > 0)
-            //    {
-            //        maxRow = itemWiseStockBO.Max(m => m.ItemRank);
-            //        mid = Math.Round(Convert.ToDouble(maxRow) / 2);
-            //        itemWiseStockBO2 = itemWiseStockBO.Where(w => w.ItemRank > mid && w.ItemRank <= maxRow).ToList();
-            //        itemWiseStockBO = itemWiseStockBO.Where(w => w.ItemRank >= 1 && w.ItemRank <= mid).ToList();
-            //    }
-            //}
-
-            InvItemDA itemWiseStockDA = new InvItemDA();
-            List<RecipeReportBO> itemWiseStockBO = new List<RecipeReportBO>();
-            itemWiseStockBO = itemWiseStockDA.GetItemRecipeReport(itemId);
-            rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], itemWiseStockBO));
-            
-            List<RecipeReportBO> itemNutrientInformationBO = new List<RecipeReportBO>();
-            itemNutrientInformationBO = itemWiseStockDA.GetItemNutrientInformationReport(itemId);
-            rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[1], itemNutrientInformationBO));
-
-            PMFinishProductDA goodsDA = new PMFinishProductDA();
-            List<OverheadExpensesBO> nutrientOverheadExpensesBO = new List<OverheadExpensesBO>();
-            nutrientOverheadExpensesBO = goodsDA.GetInvNutrientOEDetailsById(itemId);
-            rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[2], nutrientOverheadExpensesBO));
-
-            decimal totalRMCost = 0;
-            decimal totalOHCost = 0;
-            decimal calculatedTotalCost = 0;
-            decimal finishedGoodsSalesRate = 0;
-            decimal calculatedProfitOrLoss = 0;
-
-            foreach (RecipeReportBO rmCost in itemWiseStockBO)
+            if (ddlReportType.SelectedValue == "SummaryReport")
             {
-                totalRMCost = totalRMCost + (rmCost.ItemUnit * rmCost.ItemCost);
+                InvItemDA itemWiseStockDA = new InvItemDA();
+                List<RecipeReportBO> FinishedGoodsNutrientSummaryInformationListBO = new List<RecipeReportBO>();
+                FinishedGoodsNutrientSummaryInformationListBO = itemWiseStockDA.GetFinishedGoodsNutrientSummaryInformation(itemId);
+                rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], FinishedGoodsNutrientSummaryInformationListBO));
             }
-
-            foreach (OverheadExpensesBO ohCost in nutrientOverheadExpensesBO)
+            else
             {
-                totalOHCost = totalOHCost + ohCost.OEAmount;
-            }
+                InvItemDA itemWiseStockDA = new InvItemDA();
+                List<RecipeReportBO> itemWiseStockBO = new List<RecipeReportBO>();
+                itemWiseStockBO = itemWiseStockDA.GetItemRecipeReport(itemId);
+                rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], itemWiseStockBO));
 
-            calculatedTotalCost = totalRMCost + totalOHCost;
+                List<RecipeReportBO> itemNutrientInformationBO = new List<RecipeReportBO>();
+                itemNutrientInformationBO = itemWiseStockDA.GetItemNutrientInformationReport(itemId);
+                rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[1], itemNutrientInformationBO));
 
-            int costCenterId = 0;
+                PMFinishProductDA goodsDA = new PMFinishProductDA();
+                List<OverheadExpensesBO> nutrientOverheadExpensesBO = new List<OverheadExpensesBO>();
+                nutrientOverheadExpensesBO = goodsDA.GetInvNutrientOEDetailsById(itemId);
+                rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[2], nutrientOverheadExpensesBO));
 
+                decimal totalRMCost = 0;
+                decimal totalOHCost = 0;
+                decimal calculatedTotalCost = 0;
+                decimal finishedGoodsSalesRate = 0;
+                decimal calculatedProfitOrLoss = 0;
 
-            CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
-            List<CostCentreTabBO> allCostCentreTabListBO = new List<CostCentreTabBO>();
-            allCostCentreTabListBO = costCentreTabDA.GetCostCentreTabInfoByType("Restaurant,RetailPos,OtherOutlet,Billing");
-            if (allCostCentreTabListBO != null)
-            {
-                if (allCostCentreTabListBO.Count > 0)
+                foreach (RecipeReportBO rmCost in itemWiseStockBO)
                 {
-                    costCenterId = allCostCentreTabListBO[0].CostCenterId;
+                    totalRMCost = totalRMCost + (rmCost.ItemUnit * rmCost.ItemCost);
                 }
-            }
 
-            InvItemBO itemEntityBO = new InvItemBO();
-            InvItemDA itemEntityDA = new InvItemDA();
-            itemEntityBO = itemEntityDA.GetInvItemInfoById(costCenterId, itemId);
-            if (itemEntityBO != null)
-            {
-                if (itemEntityBO.ItemId > 0)
+                foreach (OverheadExpensesBO ohCost in nutrientOverheadExpensesBO)
                 {
-                    finishedGoodsSalesRate = itemEntityBO.UnitPriceLocal;
+                    totalOHCost = totalOHCost + ohCost.OEAmount;
                 }
+
+                calculatedTotalCost = totalRMCost + totalOHCost;
+
+                int costCenterId = 0;
+
+                CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
+                List<CostCentreTabBO> allCostCentreTabListBO = new List<CostCentreTabBO>();
+                allCostCentreTabListBO = costCentreTabDA.GetCostCentreTabInfoByType("Restaurant,RetailPos,OtherOutlet,Billing");
+                if (allCostCentreTabListBO != null)
+                {
+                    if (allCostCentreTabListBO.Count > 0)
+                    {
+                        costCenterId = allCostCentreTabListBO[0].CostCenterId;
+                    }
+                }
+
+                InvItemBO itemEntityBO = new InvItemBO();
+                InvItemDA itemEntityDA = new InvItemDA();
+                itemEntityBO = itemEntityDA.GetInvItemInfoById(costCenterId, itemId);
+                if (itemEntityBO != null)
+                {
+                    if (itemEntityBO.ItemId > 0)
+                    {
+                        finishedGoodsSalesRate = itemEntityBO.UnitPriceLocal;
+                    }
+                }
+
+                calculatedProfitOrLoss = finishedGoodsSalesRate - calculatedTotalCost;
+
+                paramReport.Add(new ReportParameter("TotalRMCost", totalRMCost.ToString("0.00")));
+                paramReport.Add(new ReportParameter("TotalOHCost", totalOHCost.ToString("0.00")));
+                paramReport.Add(new ReportParameter("CalculatedTotalCost", calculatedTotalCost.ToString("0.00")));
+                paramReport.Add(new ReportParameter("FinishedGoodsSalesRate", finishedGoodsSalesRate.ToString("0.00")));
+                paramReport.Add(new ReportParameter("CalculatedProfitOrLoss", calculatedProfitOrLoss.ToString("0.00")));
+
             }
 
-            calculatedProfitOrLoss = finishedGoodsSalesRate - calculatedTotalCost;
-
-            paramReport.Add(new ReportParameter("TotalRMCost", totalRMCost.ToString("0.00")));
-            paramReport.Add(new ReportParameter("TotalOHCost", totalOHCost.ToString("0.00")));
-            paramReport.Add(new ReportParameter("CalculatedTotalCost", calculatedTotalCost.ToString("0.00")));
-            paramReport.Add(new ReportParameter("FinishedGoodsSalesRate", finishedGoodsSalesRate.ToString("0.00")));
-            paramReport.Add(new ReportParameter("CalculatedProfitOrLoss", calculatedProfitOrLoss.ToString("0.00")));
             rvTransaction.LocalReport.SetParameters(paramReport);
             rvTransaction.LocalReport.DisplayName = "Nutrient Information";
             rvTransaction.LocalReport.Refresh();
@@ -187,7 +204,7 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             LocalReport rpt = rvTransaction.LocalReport;
             var reportSource = print.PrintReport(rpt, HMConstants.PrintPageType.Portrait.ToString());
 
-            frmPrint.Attributes["src"] = reportSource;            
+            frmPrint.Attributes["src"] = reportSource;
         }
         //************************ User Defined Function ********************//
         private void LoadCommonDropDownHiddenField()
@@ -213,14 +230,40 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             List<InvItemBO> List = new List<InvItemBO>();
             InvItemDA productDA = new InvItemDA();
             List = productDA.GetInvItemInfo(true);
-            ddlProduct.DataSource = List;
-            ddlProduct.DataTextField = "CodeAndName";
-            ddlProduct.DataValueField = "ItemId";
-            ddlProduct.DataBind();
-            System.Web.UI.WebControls.ListItem itemNodeId = new System.Web.UI.WebControls.ListItem();
-            itemNodeId.Value = "0";
-            itemNodeId.Text = "---ALL---";
-            this.ddlProduct.Items.Insert(0, itemNodeId);
+
+            ddlProductSummaryReport.DataSource = List;
+            ddlProductSummaryReport.DataTextField = "CodeAndName";
+            ddlProductSummaryReport.DataValueField = "ItemId";
+            ddlProductSummaryReport.DataBind();
+            System.Web.UI.WebControls.ListItem itemNodeIdSummaryReport = new System.Web.UI.WebControls.ListItem();
+            itemNodeIdSummaryReport.Value = "0";
+            itemNodeIdSummaryReport.Text = "--- ALL ---";
+            this.ddlProductSummaryReport.Items.Insert(0, itemNodeIdSummaryReport);
+
+
+            ddlProductDetailReport.DataSource = List;
+            ddlProductDetailReport.DataTextField = "CodeAndName";
+            ddlProductDetailReport.DataValueField = "ItemId";
+            ddlProductDetailReport.DataBind();
+            System.Web.UI.WebControls.ListItem itemNodeIdDetailReport = new System.Web.UI.WebControls.ListItem();
+            itemNodeIdDetailReport.Value = "0";
+            itemNodeIdDetailReport.Text = "--- Please Select ---";
+            this.ddlProductDetailReport.Items.Insert(0, itemNodeIdDetailReport);
+        }
+        private bool IsFrmValid()
+        {
+            bool flag = true;
+            if (ddlReportType.SelectedValue == "DetailReport")
+            {
+                if (ddlProductDetailReport.SelectedValue == "0")
+                {
+                    CommonHelper.AlertInfo(innboardMessage, AlertMessage.DropDownValidation + "Item Name.", AlertType.Warning);
+                    flag = false;
+                    _IsReportPanelEnable = -1;
+                    ddlProductDetailReport.Focus();
+                }
+            }
+            return flag;
         }
         //************************ User Defined Web Method ********************//
         [WebMethod]

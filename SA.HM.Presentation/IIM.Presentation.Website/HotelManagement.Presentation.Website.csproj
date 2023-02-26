@@ -850,6 +850,7 @@
     <Content Include="HotelManagement\Reports\Rdlc\rptRoomSalesRevenueMonthWise.rdlc" />
     <Content Include="AirTicketing\Reports\Rdlc\rptATBillingInvoice.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptItemNutrientInformation.rdlc" />
+    <Content Include="Inventory\Reports\Rdlc\rptItemNutrientSummary.rdlc" />
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />

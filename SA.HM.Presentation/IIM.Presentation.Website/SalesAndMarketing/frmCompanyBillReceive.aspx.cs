@@ -541,6 +541,13 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 entityBOList.AddRange(entityLiabilitiesBOList);
             }
 
+            List<NodeMatrixBO> entityIncomeBOList = new List<NodeMatrixBO>();
+            entityIncomeBOList = entityDA.GetNodeMatrixInfoByAncestorNodeIdList("3").Where(x => x.IsTransactionalHead == true).ToList();
+            if (entityIncomeBOList != null)
+            {
+                entityBOList.AddRange(entityIncomeBOList);
+            }
+
             List<NodeMatrixBO> entityExpenditureBOList = new List<NodeMatrixBO>();
             entityExpenditureBOList = entityDA.GetNodeMatrixInfoByAncestorNodeIdList("4").Where(x => x.IsTransactionalHead == true).ToList();
             if (entityExpenditureBOList != null)
