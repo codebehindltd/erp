@@ -282,7 +282,14 @@
         function OnApprovalSucceed(result) {
             if (result.IsSuccess) {
                 CommonHelper.AlertMessage(result.AlertMessage);
-                GridPaging(1, 1);
+                //GridPaging(1, 1);
+                if ($("#ContentPlaceHolder1_hfPageNumber").val() == "") {
+                    GridPaging($("#GridPagingContainer").find("li.active").index(), 1);
+                }
+                else {
+                    var pageNumber = $("#ContentPlaceHolder1_hfPageNumber").val();
+                    GridPaging(pageNumber, 1);
+                }
                 PerformEnable();
                 PerformClearClose();
                 $("#ApprovalDiv").hide();
@@ -359,6 +366,7 @@
         }
         function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
             var fromDate = "", toDate = "";
+            $("#ContentPlaceHolder1_hfPageNumber").val(pageNumber);
             fromDate = $("#<%=txtSrcFromDate.ClientID %>").val();
             toDate = $("#<%=txtSrcToDate.ClientID %>").val();
             var empId = $("#<%=ddlEmployee.ClientID %>").val();
@@ -474,6 +482,7 @@
 
         }
     </script>
+    <asp:HiddenField ID="hfPageNumber" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfLeaveId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfEmployeeId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfIsEmpListVisible" runat="server" Value="0" />

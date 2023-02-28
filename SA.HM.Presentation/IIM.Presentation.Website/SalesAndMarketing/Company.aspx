@@ -981,7 +981,7 @@
                 $("#<%=ddlCompanyType.ClientID %>").focus();
                 return false;
             }
-
+            debugger;
             var ticketNo = $("#<%=txtTicketNo.ClientID %>").val();
             var annualRev = $("#<%=txtAnnualRevenue.ClientID %>").val();
             var noOfEmp = $("#<%=txtNoOfEmployee.ClientID %>").val();
@@ -1027,17 +1027,17 @@
             } if (creditLim == "") {
                 creditLim = 0;
             }
-
+            
             var companyGrid = $("#ContentPlaceHolder1_gvCompany tbody tr").length;
-            var crmCompanyIds = [];
+            var crmCompanyIds = [];            
             if (companyGrid > 0) {
-
                 crmCompanyIds = $("input:checkbox:checked", "#ContentPlaceHolder1_gvCompany").map(function () {
-                    return parseInt($(this).val());
+                    if (!isNaN($(this).val())) {
+                        return parseInt($(this).val());
+                    }                    
                 }).get();
-
             }
-
+            
             var compayBO = {
                 CompanyId: id,
                 AncestorId: parentComId,

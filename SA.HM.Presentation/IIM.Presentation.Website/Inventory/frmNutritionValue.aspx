@@ -251,7 +251,7 @@
                 var tr = "";
                 tr += "<tr>";
                 var td = "";
-                td += "<td style='white-space: nowrap;'><span class='valueNo'><span style='width: 50px; text-align: center;'>" + obj.ItemId + "</span><span>" + obj.Name + "</span></span></td>";
+                td += "<td style='white-space: nowrap;'><span class='valueNo'><span style='width: 50px; text-align: center;'>" + obj.ItemId + "</span><span>" + obj.CodeAndName + "</span></span></td>";
                 tr += td;
                 
                 $.each(nutritionTypeList, function (ncount, nobj) {

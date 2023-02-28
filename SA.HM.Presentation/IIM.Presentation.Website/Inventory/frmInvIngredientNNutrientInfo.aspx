@@ -66,7 +66,7 @@
 
                             var searchData = data.error ? [] : $.map(data.d, function (m) {
                                 return {
-                                    label: m.Name,
+                                    label: m.ItemNameAndCode,
                                     value: m.ItemId,
                                     StockById: m.StockBy
                                 };
@@ -333,7 +333,7 @@
                 }
                 tr += "<tr>";
 
-                tr += "<td style='width:40%;'>" + obj.RecipeItemName + "</td>";
+                tr += "<td style='width:40%;'>" + obj.RecipeItemCodeAndName + "</td>";
                 tr += "<td style='width:20%;'>" + obj.HeadName + "</td>";
                 tr += "<td style='width:15%;'>" + obj.ItemUnit + "</td>";
                 tr += "<td style='width:10%;'>" + obj.ItemCost + "</td>";
