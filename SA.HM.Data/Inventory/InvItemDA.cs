@@ -53,13 +53,14 @@ namespace HotelManagement.Data.Inventory
             }
             return productList;
         }
-        public List<InvItemBO> GetInvItemInformationByCustomCategoryIdList()
+        public List<InvItemBO> GetInvItemInformationByCustomCategoryIdList(string categoryType)
         {
             List<InvItemBO> productList = new List<InvItemBO>();
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvItemInformationByCustomCategoryIdList_SP"))
                 {
+                    dbSmartAspects.AddInParameter(cmd, "@CategoryType", DbType.String, categoryType);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)
