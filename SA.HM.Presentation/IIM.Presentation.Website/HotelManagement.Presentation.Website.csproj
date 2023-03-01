@@ -386,6 +386,7 @@
     <Content Include="HMCommon\Reports\CustomeNoticeReport.aspx" />
     <Content Include="Inventory\PackageInformation.aspx" />
     <Content Include="SalesAndMarketing\AccountManagerSalesTarget.aspx" />
+    <Content Include="SalesAndMarketing\frmCompanyAccountApproval.aspx" />
     <Content Include="SalesAndMarketing\frmCompanyBillAdjustment.aspx" />
     <Content Include="SalesAndMarketing\iFrameSourceInformation.aspx" />
     <Content Include="SalesAndMarketing\ContactTitle.aspx" />
@@ -3365,6 +3366,13 @@
     </Compile>
     <Compile Include="SalesAndMarketing\AccountManagerSalesTarget.aspx.designer.cs">
       <DependentUpon>AccountManagerSalesTarget.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SalesAndMarketing\frmCompanyAccountApproval.aspx.cs">
+      <DependentUpon>frmCompanyAccountApproval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SalesAndMarketing\frmCompanyAccountApproval.aspx.designer.cs">
+      <DependentUpon>frmCompanyAccountApproval.aspx</DependentUpon>
     </Compile>
     <Compile Include="SalesAndMarketing\frmCompanyBillAdjustment.aspx.cs">
       <DependentUpon>frmCompanyBillAdjustment.aspx</DependentUpon>
@@ -8518,6 +8526,7 @@
     <Content Include="SalesManagment\Reports\Rdlc\SalesInvoice.rdlc" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AirTicketing\Image\" />
     <Folder Include="App_Readme\" />
     <Folder Include="Banquet\SeatingPlanImage\" />
     <Folder Include="bin\" />

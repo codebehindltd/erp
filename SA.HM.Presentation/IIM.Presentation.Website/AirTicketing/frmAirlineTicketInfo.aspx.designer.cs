@@ -193,6 +193,15 @@ namespace HotelManagement.Presentation.Website.AirTicketing {
         protected global::System.Web.UI.WebControls.HiddenField hfViewPermission;
         
         /// <summary>
+        /// fileIframe control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl fileIframe;
+        
+        /// <summary>
         /// txtApprovalTransactionNo control.
         /// </summary>
         /// <remarks>

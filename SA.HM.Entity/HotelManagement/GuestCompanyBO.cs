@@ -104,5 +104,16 @@ namespace HotelManagement.Entity.HotelManagement
         public string AccountManager { get; set; }
         public int IsDetailPanelEnableForCompany { get; set; }
         public int IsDetailPanelEnableForParentCompany { get; set; }
+        public DateTime? CreditLimitExpire { get; set; }
+        public DateTime? ShortCreditLimitExpire { get; set; }
+        public decimal TransportFareFactory { get; set; }
+        public decimal TransportFareDepo { get; set; }
+        public decimal SalesCommission { get; set; }
+        //public bool LegalAction { get; set; }
+        public DateTime? TransactionDate { get; set; }
+        public string DetailDescription { get; set; }
+        public string CallToAction { get; set; }
+        public int AccountsApprovedBy { get; set; }
+        public DateTime? AccountsApprovedDate { get; set; }
     }
 }

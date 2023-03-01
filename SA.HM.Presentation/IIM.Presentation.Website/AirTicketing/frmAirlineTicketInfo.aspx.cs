@@ -476,5 +476,49 @@ namespace HotelManagement.Presentation.Website.AirTicketing
             docList = new HMCommonDA().GetDocumentListWithIcon(docList).ToList();
             return docList;
         }
+        [WebMethod]
+        public static string LoadVoucherDocumentById(long id)
+        {
+            List<DocumentsBO> docList = new List<DocumentsBO>();
+
+            docList = new DocumentsDA().GetDocumentsByUserTypeAndUserId("AirlineTicketInfo", id);
+            docList = new HMCommonDA().GetDocumentListWithIcon(docList);
+
+            string strTable = "";
+            strTable += "<div style='color: White; background-color: #44545E;width:750px;'>";
+            int counter = 0;
+            foreach (DocumentsBO dr in docList)
+            {
+                if (dr.Extention == ".jpg")
+                {
+                    string ImgSource = dr.Path + dr.Name;
+                    counter++;
+                    strTable += "<div style=' width:250px; height:250px; float:left;padding:30px'>";
+                    strTable += "<a style='color:#333333;' target='_blank' href='" + ImgSource + "'>";
+                    strTable += "<img style='width: 200px; height: 200px;' src='" + ImgSource + "'  alt='Image preview' />";
+                    strTable += "<span>'" + dr.Name + "'</span>";
+                    strTable += "</a>";
+                    strTable += "</div>";
+                }
+                else
+                {
+                    string ImgSource = dr.Path + dr.Name;
+                    counter++;
+                    strTable += "<div style=' width:100px; height:100px; float:left;padding:30px'>";
+                    strTable += "<a style='color:#333333;' target='_blank' href='" + ImgSource + "'>";
+                    strTable += "<img style='width: 100px; height: 100px;' src='" + dr.IconImage + "' alt='Image preview' />";
+                    strTable += "<span>'" + dr.Name + "'</span>";
+                    strTable += "</a>";
+                    strTable += "</div>";
+                }
+            }
+            strTable += "</div>";
+            if (strTable == "")
+            {
+                strTable = "<tr><td align='center'>No Record Available!</td></tr>";
+            }
+            return strTable;
+
+        }
     }
 }

@@ -74,7 +74,96 @@ namespace HotelManagement.Data.HotelManagement
             }
             return companyList;
         }
+        public List<GuestCompanyBO> GetCompanyInfoForAccountApproval(string searchTerm)
+        {
+            List<GuestCompanyBO> companyList = new List<GuestCompanyBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyInfoForAirTicket_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@SearchTerm", DbType.String, searchTerm);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                GuestCompanyBO guestCompany = new GuestCompanyBO();
+                                guestCompany.CompanyId = Convert.ToInt32(reader["CompanyId"]);
+                                guestCompany.CompanyName = reader["CompanyName"].ToString();
+                                companyList.Add(guestCompany);
+                            }
+                        }
+                    }
+                }
+            }
+            return companyList;
+        }
+        public GuestCompanyBO GetCompanyInformationByCompanyId(int companyId)
+        {
+            GuestCompanyBO companyInfo = new GuestCompanyBO();
+            companyInfo.CompanyId = companyId;
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyInformationByCompanyId_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.String, companyId);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                companyInfo.CreditLimit = Convert.ToDecimal(reader["CreditLimit"]);
+                                if (reader["CreditLimitExpire"] != DBNull.Value)
+                                    companyInfo.CreditLimitExpire = Convert.ToDateTime(reader["CreditLimitExpire"]);
+                                if (reader["ShortCreditLimit"] != DBNull.Value)
+                                    companyInfo.ShortCreditLimit = Convert.ToDecimal(reader["ShortCreditLimit"]);
+                                if (reader["ShortCreditLimitExpire"] != DBNull.Value)
+                                    companyInfo.ShortCreditLimitExpire = Convert.ToDateTime(reader["ShortCreditLimitExpire"]);
+                                if (reader["TransportFareFactory"] != DBNull.Value)
+                                    companyInfo.TransportFareFactory = Convert.ToDecimal(reader["TransportFareFactory"]);
+                                if (reader["TransportFareDepo"] != DBNull.Value)
+                                    companyInfo.TransportFareDepo = Convert.ToDecimal(reader["TransportFareDepo"]);
+                                if (reader["SalesCommission"] != DBNull.Value)
+                                    companyInfo.SalesCommission = Convert.ToDecimal(reader["SalesCommission"]);
+                                if (reader["LegalAction"] != DBNull.Value)
+                                    companyInfo.LegalAction = reader["LegalAction"].ToString();
+                            }
+                        }
+                    }
+                }
+            }
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetLegalActionInfoByCompanyId_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.String, companyId);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                if (reader["TransactionDate"] != DBNull.Value)
+                                    companyInfo.TransactionDate = Convert.ToDateTime(reader["TransactionDate"]);
+                                if (reader["Remarks"] != DBNull.Value)
+                                    companyInfo.DetailDescription = reader["Remarks"].ToString();
+                                if (reader["CallToAction"] != DBNull.Value)
+                                    companyInfo.CallToAction = reader["CallToAction"].ToString();
 
+
+
+                            }
+                        }
+                    }
+                }
+            }
+            return companyInfo;
+        }
         public List<GuestCompanyBO> GetGuestCompanyInfoByUserId(int userInfoId)
         {
             List<GuestCompanyBO> roomTypeList = new List<GuestCompanyBO>();
@@ -1109,6 +1198,64 @@ namespace HotelManagement.Data.HotelManagement
 
                                     status = dbSmartAspects.ExecuteNonQuery(command, transaction);
                                 }
+                            }
+                        }
+
+                        if (status > 0)
+                        {
+                            transaction.Commit();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        status = 0;
+                        transaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+
+            return status > 0 ? true : false;
+        }
+        public Boolean SaveCompanyAccountApprovalInfo(GuestCompanyBO BenefitList, GuestCompanyBO LegalActions, out int tmpCompanyId)
+        {
+            int status = 0;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand commBen = dbSmartAspects.GetStoredProcCommand("UpdateCompanyAccountApprovalBenefitInfo_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(commBen, "@CompanyId", DbType.Int32, BenefitList.CompanyId);
+                            dbSmartAspects.AddInParameter(commBen, "@CompanyName", DbType.String, BenefitList.CompanyName);
+                            dbSmartAspects.AddInParameter(commBen, "@CreditLimit", DbType.Decimal, BenefitList.CreditLimit);
+                            dbSmartAspects.AddInParameter(commBen, "@CreditLimitExpire", DbType.DateTime, BenefitList.CreditLimitExpire);
+                            dbSmartAspects.AddInParameter(commBen, "@ShortCreditLimit", DbType.Decimal, BenefitList.ShortCreditLimit);
+                            dbSmartAspects.AddInParameter(commBen, "@ShortCreditLimitExpire", DbType.DateTime, BenefitList.ShortCreditLimitExpire);
+                            dbSmartAspects.AddInParameter(commBen, "@TransportFareFactory", DbType.Decimal, BenefitList.TransportFareFactory);
+                            dbSmartAspects.AddInParameter(commBen, "@TransportFareDepo", DbType.Decimal, BenefitList.TransportFareDepo);
+                            dbSmartAspects.AddInParameter(commBen, "@SalesCommission", DbType.Decimal, BenefitList.SalesCommission);
+                            dbSmartAspects.AddInParameter(commBen, "@LegalAction", DbType.String, BenefitList.LegalAction);
+                            dbSmartAspects.AddInParameter(commBen, "@AccountsApprovedBy", DbType.Int32, BenefitList.AccountsApprovedBy);
+
+                            status = dbSmartAspects.ExecuteNonQuery(commBen, transaction);
+                            tmpCompanyId = Convert.ToInt32(BenefitList.CompanyId);
+                        }
+
+                        if (status > 0 && LegalActions.CompanyId > 0)
+                        {
+                            using (DbCommand commApprove = dbSmartAspects.GetStoredProcCommand("SaveCompanyAccountApprovalLegalActionInfo_SP"))
+                            {
+                                dbSmartAspects.AddInParameter(commApprove, "@CompanyId", DbType.Int32, LegalActions.CompanyId);
+                                dbSmartAspects.AddInParameter(commApprove, "@TransactionDate", DbType.DateTime, LegalActions.TransactionDate);
+                                dbSmartAspects.AddInParameter(commApprove, "@DetailDescription", DbType.String, LegalActions.DetailDescription);
+                                dbSmartAspects.AddInParameter(commApprove, "@CallToAction", DbType.String, LegalActions.CallToAction);
+
+                                status = dbSmartAspects.ExecuteNonQuery(commApprove, transaction);
                             }
                         }
 

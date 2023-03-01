@@ -1334,6 +1334,8 @@
 
                 tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
 
+                tr += '&nbsp;&nbsp;<a href="javascript:void();" onclick= "javascript:return ShowDocuments(' + gridObject.TicketId + ');" title="Documents"><img style="width:16px;height:16px;" alt="Documents" src="../Images/document.png" /></a>';
+
                 if (gridObject.IsCanEdit && IsCanEdit) {
                     tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return TicketInfoEditWithConfirmation(" + gridObject.TicketId + ")\" alt='Edit'  title='Edit' border='0' />";
                 }
@@ -1375,6 +1377,32 @@
         }
         function OnSearchTicketInformationFailed() {
 
+        }
+        function ShowDocuments(id) {
+            console.log("Working");
+            PageMethods.LoadVoucherDocumentById(id, OnLoadDocumentByIdSucceeded, OnLoadDocumentByIdFailed);
+            return false;
+        }
+
+        function OnLoadDocumentByIdSucceeded(result) {
+            $("#imageDiv").html(result);
+
+            $("#voucherDocuments").dialog({
+                autoOpen: true,
+                modal: true,
+                width: 900,
+                minHeight: 400,
+                closeOnEscape: true,
+                resizable: false,
+                title: "Airline Ticket Documents",
+                show: 'slide'
+            });
+
+            return false;
+        }
+
+        function OnLoadDocumentByIdFailed(error) {
+            toastr.error(error.get_message());
         }
 
         function TicketInfoEdit(TicketId) {
@@ -1660,7 +1688,7 @@
         }
         function LoadDocUploader() {
             var randomId = +$("#ContentPlaceHolder1_RandomDocId").val();
-            var path = "/HotelManagement/Image/";
+            var path = "/AirTicketing/Image/";
             var category = "AirlineTicketInfo";
             var iframeid = 'frmPrint';
             //var url = "/HMCommon/FileUploadTest.aspx?Path=" + path + "&OwnerId=" + randomId + "&Category=" + category;
@@ -1760,9 +1788,6 @@
             return false;
         }
     </script>
-    <div id="dealDocuments" style="display: none;">
-        <div id="imageDiv"></div>
-    </div>
     <asp:HiddenField ID="hfIsAirlineInfoEdit" runat="server" Value="0" />
     <asp:HiddenField ID="hfClickedAirlineId" runat="server" Value="0" />
     <asp:HiddenField ID="hfDeletedDoc" runat="server" Value="0" />
@@ -1783,6 +1808,13 @@
     <asp:HiddenField ID="hfEditPermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfDeletePermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfViewPermission" runat="server" Value="0" />
+    <div id="voucherDocuments" style="display: none;">
+        <div id="imageDiv"></div>
+    </div>
+    <div id="ShowDocumentDiv" style="display: none;">
+        <iframe id="fileIframe" name="IframeName" width="100%" height="100%" runat="server"
+            clientidmode="static" scrolling="yes"></iframe>
+    </div>
     <div id="AdminApprovalDiv" class="panel panel-default" style="display: none;">
         <div class="panel-body">
             <div class="form-horizontal">                
