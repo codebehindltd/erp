@@ -53,6 +53,46 @@ namespace HotelManagement.Data.Inventory
             }
             return productList;
         }
+        public List<InvItemBO> GetInvItemInformationByCustomCategoryIdList()
+        {
+            List<InvItemBO> productList = new List<InvItemBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvItemInformationByCustomCategoryIdList_SP"))
+                {
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                InvItemBO productBO = new InvItemBO();
+                                productBO.ItemId = Convert.ToInt32(reader["ItemId"]);
+                                productBO.Name = reader["Name"].ToString();
+                                productBO.Code = reader["Code"].ToString();
+                                productBO.CodeAndName = reader["Code"].ToString() + " - " + reader["Name"].ToString();
+                                productBO.Description = reader["Description"].ToString();
+                                productBO.CategoryId = Convert.ToInt32(reader["CategoryId"]);
+                                productBO.ManufacturerId = Convert.ToInt32(reader["ManufacturerId"]);
+                                productBO.ProductType = reader["ProductType"].ToString();
+                                productBO.PurchasePrice = Convert.ToDecimal(reader["PurchasePrice"]);
+                                productBO.SellingLocalCurrencyId = Int32.Parse(reader["SellingLocalCurrencyId"].ToString());
+                                productBO.UnitPriceLocal = Convert.ToDecimal(reader["UnitPriceLocal"]);
+                                productBO.SellingUsdCurrencyId = Int32.Parse(reader["SellingUsdCurrencyId"].ToString());
+                                productBO.UnitPriceUsd = Convert.ToDecimal(reader["UnitPriceUsd"]);
+                                productBO.ServiceWarranty = Int32.Parse(reader["ServiceWarranty"].ToString());
+                                productBO.StockType = reader["StockType"].ToString();
+                                productBO.ServiceType = reader["ServiceType"].ToString();
+                                productBO.StockBy = Int32.Parse(reader["StockBy"].ToString());
+                                productBO.IsSupplierItem = Convert.ToBoolean(reader["IsSupplierItem"].ToString());
+                                productList.Add(productBO);
+                            }
+                        }
+                    }
+                }
+            }
+            return productList;
+        }
 
         public List<InvItemAutoSearchBO> GetItemDetailsForAutoSearchByCategoryAndCustomerNSupplierItem(string itemName, int categoryId, int IsCustomerItem, int IsSupplierItem)
         {

@@ -43,7 +43,7 @@ namespace HotelManagement.Presentation.Website.Inventory
         {
             List<InvItemBO> invItemBo = new List<InvItemBO>();
             InvItemDA invItemDa = new InvItemDA();
-            invItemBo = invItemDa.GetInvItemInfo();
+            invItemBo = invItemDa.GetInvItemInformationByCustomCategoryIdList();
             return invItemBo;
         }
         [WebMethod]
