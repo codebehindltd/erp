@@ -1010,6 +1010,9 @@
 
             $("#TicketInformationTbl tbody tr").each(function (index, item) {
                 var id = $.trim($(item).find("td:eq(0)").text());
+                if (id == 'NaN') {
+                    id = 0;
+                }
                 clientName = $.trim($(item).find("td:eq(1)").text());
                 airlineName = $(item).find("td:eq(2)").text();
                 issueDate = $.trim($(item).find("td:eq(3)").text());
@@ -1379,7 +1382,6 @@
 
         }
         function ShowDocuments(id) {
-            console.log("Working");
             PageMethods.LoadVoucherDocumentById(id, OnLoadDocumentByIdSucceeded, OnLoadDocumentByIdFailed);
             return false;
         }
