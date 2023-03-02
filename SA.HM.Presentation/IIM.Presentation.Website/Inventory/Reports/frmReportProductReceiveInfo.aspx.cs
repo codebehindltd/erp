@@ -132,10 +132,13 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             int categoryId = 0, productId = 0, supplierId = 0;
             DateTime? FromDate = dateTime, ToDate = dateTime;
 
+            string strStartDate = string.Empty;
+            string strEndDate = string.Empty;
+
             //ToDate = hmUtility.GetDateTimeFromString(endDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1).AddSeconds(-1);
 
             if (!string.IsNullOrWhiteSpace(txtStartDate.Text))
-            {
+            {                
                 FromDate = hmUtility.GetDateTimeFromString(txtStartDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             }
             else
@@ -213,6 +216,17 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
                 else
                 {
                     reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptProductReceiveDetailsInfoByCategory.rdlc");
+                }
+            }
+            else if (ddlReportType.SelectedValue == "Item")
+            {
+                if (ddlDisplayType.SelectedValue == "Summary")
+                {
+                    reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptProductReceiveSummaryInfoByItem.rdlc");
+                }
+                else
+                {
+                    reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptProductReceiveDetailsInfoByItem.rdlc");
                 }
             }
 
@@ -294,6 +308,7 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             paramReport.Add(new ReportParameter("CompanyWeb", webAddress));
             paramReport.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + imageName)));
             paramReport.Add(new ReportParameter("PrintDateTime", printDate));
+            paramReport.Add(new ReportParameter("ReportDate", "Date From " + txtStartDate.Text + " To " + txtEndDate.Text));
             paramReport.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
             paramReport.Add(new ReportParameter("DisplayTypeInfo", ddlDisplayType.SelectedValue));
             if (productId > 0)

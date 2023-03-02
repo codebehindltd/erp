@@ -58,21 +58,6 @@
             var ddlCategory = '<%=ddlCategory.ClientID%>'
             var category = $("#ContentPlaceHolder1_ddlCategory").val();
             var ddlItem = '<%=ddlProductId.ClientID%>'
-                        
-            <%--if (category != "0") {                
-                LoadProductItem(category);
-                setTimeout(SetValForItem, 300);
-            }
-            else {
-                var control = $('#' + ddlItem);
-                control.removeAttr("disabled");
-                control.empty().append('<option value="-1">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
-            }
-
-            $('#' + ddlCategory).change(function () {
-                var category = $('#' + ddlCategory).val();
-                LoadProductItem(category);
-            });--%>
 
             var txtHiddenItemId = '<%=txtHiddenItemId.ClientID%>'
             $('#' + ddlItem).change(function () {
@@ -171,6 +156,7 @@
                             <asp:ListItem Text="Date Wise" Value="DateRange"></asp:ListItem>
                             <asp:ListItem Text="Supplier Wise" Value="Supplier"></asp:ListItem>
                             <asp:ListItem Text="Category Wise" Value="Category"></asp:ListItem>
+                            <asp:ListItem Text="Item Wise" Value="Item"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
                     <div class="col-md-2">
