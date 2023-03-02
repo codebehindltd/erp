@@ -49,6 +49,24 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing {
         protected global::System.Web.UI.WebControls.HiddenField hfGuestCompanyId;
         
         /// <summary>
+        /// hfIsLegalActionEdit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsLegalActionEdit;
+        
+        /// <summary>
+        /// hfClickedLegalActionId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfClickedLegalActionId;
+        
+        /// <summary>
         /// fileIframe control.
         /// </summary>
         /// <remarks>

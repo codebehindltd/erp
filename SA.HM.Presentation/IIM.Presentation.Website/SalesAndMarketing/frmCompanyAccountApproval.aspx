@@ -66,12 +66,13 @@
                     $(this).val(ui.item.label);
                     $("#ContentPlaceHolder1_hfGuestCompanyId").val(ui.item.value);
                     let guestCompanyId = ui.item.value;
-                    LoadCompanyInformationForFillForm(guestCompanyId);
+                    LoadCompanyBenefitsForFillForm(guestCompanyId);
+                    LoadCompanyLegalActionForFillForm(guestCompanyId);
                 }
             });
         });
-        function LoadCompanyInformationForFillForm(companyId) {
-            PageMethods.GetCompanyInformationForFillForm(companyId, OnGetCompanyInformationForFillFormSucceeded, OnGetCompanyInformationForFillFormFailed);
+        function LoadCompanyBenefitsForFillForm(companyId) {
+            PageMethods.GetCompanyBenefitsForFillForm(companyId, OnGetCompanyInformationForFillFormSucceeded, OnGetCompanyInformationForFillFormFailed);
             return false;
         }
         function OnGetCompanyInformationForFillFormSucceeded(result) {
@@ -98,13 +99,39 @@
             $("#ContentPlaceHolder1_txtSalesCommission").val(salesCommission);
 
             $("#ContentPlaceHolder1_ddlLegalAction").val(parseInt(legalAction)).trigger('change');
-
-            $("#ContentPlaceHolder1_txtTransactionDate").val(transactionDate);
-            $("#ContentPlaceHolder1_txtDetailDescription").val(detailDescription);
-            $("#ContentPlaceHolder1_txtCallToAction").val(callToAction);
             ShowUploadedDocument($("#ContentPlaceHolder1_RandomDocId").val());
         }
         function OnGetCompanyInformationForFillFormFailed(error) {
+            alert(error.get_message());
+        }
+        function LoadCompanyLegalActionForFillForm(companyId){
+            PageMethods.GetCompanyLegalActionForFillForm(companyId, OnGetCompanyLegalActionForFillFormSucceeded, OnGetCompanyLegalActionForFillFormFailed);
+            return false;
+        }
+        function OnGetCompanyLegalActionForFillFormSucceeded(result) {
+            $("#LegalActionTbl tbody").html("");
+            var tr = "";
+            $.each(result, function (count, gridObject) {
+
+                var tr = "";
+
+                tr += "<tr>";
+                tr += "<td style='display:none;'>" + gridObject.Id + "</td>";
+                tr += "<td style='width:20%;'>" + GetStringFromDateTime(gridObject.TransactionDate) + "</td>";
+                tr += "<td style='width:40%;'>" + gridObject.DetailDescription + "</td>";
+                tr += "<td style='width:25%;'>" + gridObject.CallToAction + "</td>";
+                tr += "<td style='width:15%;'>" +
+                    "<a href='javascript:void()' onclick= 'DeleteLegalActionInfoItem(this)' ><img alt='Delete' src='../Images/delete.png' title='Delete' /></a>";
+                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return EditLegalActionInfoItem(this)\" alt='Edit'  title='Edit' border='0' />";
+                tr += "</td>";
+                tr += "</tr>";
+
+                $("#LegalActionTbl tbody").append(tr);
+
+                tr = "";
+            });
+        }
+        function OnGetCompanyLegalActionForFillFormFailed(error) {
             alert(error.get_message());
         }
         function LoadDocUploader() {
@@ -259,36 +286,31 @@
                 return false;
             }
 
+            var LegalActions = [];
+
             var legalAction = $("#ContentPlaceHolder1_ddlLegalAction").val();
-            var LegalActions = {};
+            
             if (legalAction == 1) {
-                transactionDate = $("#ContentPlaceHolder1_txtTransactionDate").val();
-                detailDescription = $("#ContentPlaceHolder1_txtDetailDescription").val();
-                callToAction = $("#ContentPlaceHolder1_txtCallToAction").val();
-                if (transactionDate == "") {
-                    toastr.warning("Please Give Transaction Date.");
-                    $("#ContentPlaceHolder1_txtTransactionDate").focus();
-                    return false;
-                }
-                else if (detailDescription == "") {
-                    toastr.warning("Please Give Detail Description.");
-                    $("#ContentPlaceHolder1_txtDetailDescription").focus();
-                    return false;
-                }
-                else if (callToAction == "") {
-                    toastr.warning("Please Give Call To Action.");
-                    $("#ContentPlaceHolder1_txtCallToAction").focus();
-                    return false;
-                }
-                if (transactionDate != '') {
-                    transactionDate = CommonHelper.DateFormatMMDDYYYYFromDDMMYYYY(transactionDate, innBoarDateFormat);
-                }
-                LegalActions = {
-                    CompanyId: companyId,
-                    TransactionDate: transactionDate,
-                    DetailDescription: detailDescription,
-                    CallToAction: callToAction
-                }
+                $("#LegalActionTbl tbody tr").each(function (index, item) {
+                    var id = $.trim($(item).find("td:eq(0)").text());
+                    if (id == 'NaN') {
+                        id = 0;
+                    }
+                    transactionDate = $.trim($(item).find("td:eq(1)").text());
+                    detailDescription = $(item).find("td:eq(2)").text();
+                    callToAction = $.trim($(item).find("td:eq(3)").text());
+                    if (transactionDate != '') {
+                        transactionDate = CommonHelper.DateFormatMMDDYYYYFromDDMMYYYY(transactionDate, innBoarDateFormat);
+                    }
+
+                    LegalActions.push({
+                        Id: id,
+                        CompanyId: companyId,
+                        TransactionDate: transactionDate,
+                        DetailDescription: detailDescription,
+                        CallToAction: callToAction
+                    });
+                });
             }
             if (creditLimitExpire != '') {
                 creditLimitExpire = CommonHelper.DateFormatMMDDYYYYFromDDMMYYYY(creditLimitExpire, innBoarDateFormat);
@@ -315,7 +337,7 @@
             var randomDocId = $("#ContentPlaceHolder1_RandomDocId").val();
             var deletedDoc = $("#ContentPlaceHolder1_hfDeletedDoc").val();
             CommonHelper.SpinnerOpen();
-            PageMethods.SaveCompanyAccountApprovalInfo(BenefitList, LegalActions, parseInt(randomDocId), deletedDoc, OnSaveCompanyAccountApprovalInfoSucceeded, OnSaveCompanyAccountApprovalInfoFailed);
+            PageMethods.SaveCompanyAccountApprovalInfo(BenefitList, LegalActions, deletedLegalActionInfoList, parseInt(randomDocId), deletedDoc, OnSaveCompanyAccountApprovalInfoSucceeded, OnSaveCompanyAccountApprovalInfoFailed);
             return false;
         }
         function OnSaveCompanyAccountApprovalInfoSucceeded(result) {
@@ -323,6 +345,7 @@
                 CommonHelper.AlertMessage(result.AlertMessage);
                 PerformClearAction();
                 $("#ContentPlaceHolder1_RandomDocId").val(result.Data);
+                deletedLegalActionInfoList = [];
             }
             else {
                 CommonHelper.AlertMessage(result.AlertMessage);
@@ -356,12 +379,134 @@
             $("#ContentPlaceHolder1_txtDetailDescription").val("");
             $("#ContentPlaceHolder1_txtCallToAction").val("");
             $("#DocumentInfo").html("");
+            $("#LegalActionTbl tbody").html("");
         }
+
+        function AddItemForLegalAction() {
+            var transactionDate = $("#ContentPlaceHolder1_txtTransactionDate").val();
+            var detailDescription = $("#ContentPlaceHolder1_txtDetailDescription").val();
+            var callToAction = $("#ContentPlaceHolder1_txtCallToAction").val();
+            if (transactionDate == "") {
+                toastr.warning("Please Give Transaction Date.");
+                $("#ContentPlaceHolder1_txtTransactionDate").focus();
+                return false;
+            }
+            else if (detailDescription == "") {
+                toastr.warning("Please Give Detail Description.");
+                $("#ContentPlaceHolder1_txtDetailDescription").focus();
+                return false;
+            }
+            else if (callToAction == "") {
+                toastr.warning("Please Give Call To Action.");
+                $("#ContentPlaceHolder1_txtCallToAction").focus();
+                return false;
+            }
+
+            AddItemForLegalActionTable(transactionDate, detailDescription, callToAction);
+        }
+
+        function AddItemForLegalActionTable(transactionDate, detailDescription, callToAction) {
+            var lastTr = $("#LegalActionTbl").find("tr").last();
+            var lastId = $(lastTr).find("td").eq(0).html();
+            if (lastId == undefined) {
+                lastId = 0;
+            }
+            lastId = parseInt(lastId);
+            
+
+            var lastTr = $("#LegalActionTbl").find("tr").last();
+            var lastId = $(lastTr).find("td").eq(0).html();
+            var newId;
+            if (lastId == undefined) {
+                lastId = 0;
+                newId = 0;
+            }
+            else {
+                lastId = parseInt(lastId);
+                newId = lastId + 1;
+            }
+            
+
+            if ($("#ContentPlaceHolder1_hfIsLegalActionEdit").val() != 1) {
+                var tr = "";
+
+                tr += "<tr>";
+                tr += "<td style='display:none;'>" + newId + "</td>";
+                tr += "<td style='width:20%;'>" + transactionDate + "</td>";
+                tr += "<td style='width:40%;'>" + detailDescription + "</td>";
+                tr += "<td style='width:25%;'>" + callToAction + "</td>";
+                tr += "<td style='width:15%;'>" +
+                    "<a href='javascript:void()' onclick= 'DeleteLegalActionInfoItem(this)' ><img alt='Delete' src='../Images/delete.png' title='Delete' /></a>";
+                tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return EditLegalActionInfoItem(this)\" alt='Edit'  title='Edit' border='0' />";
+                tr += "</td>";                                
+                tr += "</tr>";
+
+                $("#LegalActionTbl tbody").append(tr);
+
+                tr = "";
+
+                ClearAfterLegalActionAdded();
+            }
+            else {
+                debugger;
+                $("#LegalActionTbl tr").each(function () {
+                    var currentLegalActionId = $(this).find("td").eq(0).html();
+                    if ($("#ContentPlaceHolder1_hfIsLegalActionEdit").val() == 1) {
+                        var clickedId = $("#ContentPlaceHolder1_hfClickedLegalActionId").val();
+                        if (currentLegalActionId == clickedId) {
+                            $(this).find("td").eq(1).html(transactionDate);
+                            $(this).find("td").eq(2).html(detailDescription);
+                            $(this).find("td").eq(3).html(callToAction);                        
+                            ClearAfterLegalActionAdded();
+                        }
+                    }
+                });
+            }
+        }
+        function ClearAfterLegalActionAdded() {
+            $("#btnAdd").val("Add");
+            $("#ContentPlaceHolder1_txtTransactionDate").val("");
+            $("#ContentPlaceHolder1_txtDetailDescription").val("");
+            $("#ContentPlaceHolder1_txtCallToAction").val("");
+            $("#ContentPlaceHolder1_hfIsLegalActionEdit").val(0);
+            $("#ContentPlaceHolder1_hfClickedLegalActionId").val(0);
+        }
+
+        var deletedLegalActionInfoList = [];
+        function DeleteLegalActionInfoItem(control) {
+            if (!confirm("Do you want to delete item?")) { return false; }
+
+            var tr = $(control).parent().parent();
+            let legalActionInfoId = $(tr).find("td").eq(0).html();
+            deletedLegalActionInfoList.push(parseInt(legalActionInfoId, 10));
+            $(tr).remove();
+        }
+
+        function EditLegalActionInfoItem(control) {
+            if (!confirm("Do You Want To Edit Item?")) {
+                return false;
+            }
+            $("#btnAdd").val("Update");
+            $("#ContentPlaceHolder1_hfIsLegalActionEdit").val(1);
+            var tr = $(control).parent().parent();
+            var clickedId = $(tr).find("td").eq(0).html();
+            debugger;
+            $("#ContentPlaceHolder1_hfClickedLegalActionId").val(clickedId);
+            var transactionDate = $(tr).find("td").eq(1).html();
+            var detailDescription = $(tr).find("td").eq(2).html();
+            var callToAction = $(tr).find("td").eq(3).html();
+            $("#ContentPlaceHolder1_txtTransactionDate").val(transactionDate);
+            $("#ContentPlaceHolder1_txtDetailDescription").val(detailDescription);
+            $("#ContentPlaceHolder1_txtCallToAction").val(callToAction);
+        }
+
     </script>
     <asp:HiddenField ID="hfDeletedDoc" runat="server" Value="0" />
     <asp:HiddenField ID="hfCompanyId" runat="server" Value="0" />
     <asp:HiddenField ID="RandomDocId" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfGuestCompanyId" runat="server" Value="0"></asp:HiddenField>
+    <asp:HiddenField ID="hfIsLegalActionEdit" runat="server" Value="0" />
+    <asp:HiddenField ID="hfClickedLegalActionId" runat="server" Value="0" />
     <div id="ShowDocumentDiv" style="display: none;">
         <iframe id="fileIframe" name="IframeName" width="100%" height="100%" runat="server"
             clientidmode="static" scrolling="yes"></iframe>
@@ -450,7 +595,7 @@
                             <div class="col-md-2">
                                 <asp:Label ID="lblLegalAction" runat="server" class="control-label required-field" Text="Legal Action"></asp:Label>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-10">
                                 <asp:DropDownList ID="ddlLegalAction" runat="server" CssClass="form-control">
                                     <asp:ListItem Value="0">No Legal Action</asp:ListItem>
                                     <asp:ListItem Value="1">Under Process For Legal Action</asp:ListItem>
@@ -462,7 +607,7 @@
                                 <div class="col-md-2">
                                     <asp:Label ID="lblTransactionDate" runat="server" class="control-label required-field" Text="Transaction Date"></asp:Label>
                                 </div>
-                                <div class="col-md-10">
+                                <div class="col-md-4">
                                     <asp:TextBox ID="txtTransactionDate" runat="server" CssClass="form-control"></asp:TextBox>
                                 </div>
                             </div>
@@ -481,6 +626,27 @@
                                 <div class="col-md-10">
                                     <asp:TextBox ID="txtCallToAction" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
                                 </div>
+                            </div>
+                            <div class="form-group" style="padding-top: 10px;">
+                                <div class="col-md-12">
+                                    <input id="btnAdd" type="button" value="Add" class="TransactionalButton btn btn-primary btn-sm" onclick="AddItemForLegalAction()" />
+                                    <input id="btnCancelLegalAction" type="button" value="Cancel" onclick="ClearAfterLegalActionAdded()"
+                                        class="TransactionalButton btn btn-primary btn-sm" />
+                                </div>
+                            </div>
+                            <div id="LegalAction" style="overflow-y: scroll;">
+                                <table id="LegalActionTbl" class="table table-bordered table-condensed table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20%;">Transaction Date</th>
+                                            <th style="width: 40%;">Detail Description</th>
+                                            <th style="width: 25%;">Call To Action</th>
+                                            <th style="width: 15%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot></tfoot>
+                                </table>
                             </div>
                         </div>
                     </div>

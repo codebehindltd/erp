@@ -7,6 +7,7 @@ namespace HotelManagement.Entity.HotelManagement
 {
     public class GuestCompanyBO
     {
+        public long Id { get; set; }
         public int CompanyId { get; set; }
         public long RandomProductId { get; set; }       
         public string CompanyAddress { get; set; }
@@ -115,5 +116,7 @@ namespace HotelManagement.Entity.HotelManagement
         public string CallToAction { get; set; }
         public int AccountsApprovedBy { get; set; }
         public DateTime? AccountsApprovedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? LastModifiedDate { get; set; }
     }
 }

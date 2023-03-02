@@ -100,7 +100,7 @@ namespace HotelManagement.Data.HotelManagement
             }
             return companyList;
         }
-        public GuestCompanyBO GetCompanyInformationByCompanyId(int companyId)
+        public GuestCompanyBO GetCompanyBenefitsForFillForm(int companyId)
         {
             GuestCompanyBO companyInfo = new GuestCompanyBO();
             companyInfo.CompanyId = companyId;
@@ -136,6 +136,12 @@ namespace HotelManagement.Data.HotelManagement
                     }
                 }
             }
+            return companyInfo;
+        }
+
+        public List<GuestCompanyBO> GetCompanyLegalActionForFillForm(int companyId)
+        {
+            List<GuestCompanyBO> legalActionList = new List<GuestCompanyBO>();
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetLegalActionInfoByCompanyId_SP"))
@@ -148,21 +154,22 @@ namespace HotelManagement.Data.HotelManagement
                         {
                             while (reader.Read())
                             {
+                                GuestCompanyBO legalAction = new GuestCompanyBO();
+                                legalAction.Id = Convert.ToInt64(reader["Id"]);
+                                legalAction.CompanyId = companyId;
                                 if (reader["TransactionDate"] != DBNull.Value)
-                                    companyInfo.TransactionDate = Convert.ToDateTime(reader["TransactionDate"]);
+                                    legalAction.TransactionDate = Convert.ToDateTime(reader["TransactionDate"]);
                                 if (reader["Remarks"] != DBNull.Value)
-                                    companyInfo.DetailDescription = reader["Remarks"].ToString();
+                                    legalAction.DetailDescription = reader["Remarks"].ToString();
                                 if (reader["CallToAction"] != DBNull.Value)
-                                    companyInfo.CallToAction = reader["CallToAction"].ToString();
-
-
-
+                                    legalAction.CallToAction = reader["CallToAction"].ToString();
+                                legalActionList.Add(legalAction);
                             }
                         }
                     }
                 }
             }
-            return companyInfo;
+            return legalActionList;
         }
         public List<GuestCompanyBO> GetGuestCompanyInfoByUserId(int userInfoId)
         {
@@ -1217,7 +1224,7 @@ namespace HotelManagement.Data.HotelManagement
 
             return status > 0 ? true : false;
         }
-        public Boolean SaveCompanyAccountApprovalInfo(GuestCompanyBO BenefitList, GuestCompanyBO LegalActions, out int tmpCompanyId)
+        public Boolean SaveCompanyAccountApprovalInfo(GuestCompanyBO BenefitList, List<GuestCompanyBO> LegalActions, List<int> deletedLegalActionInfoList, out int tmpCompanyId)
         {
             int status = 0;
 
@@ -1246,16 +1253,34 @@ namespace HotelManagement.Data.HotelManagement
                             tmpCompanyId = Convert.ToInt32(BenefitList.CompanyId);
                         }
 
-                        if (status > 0 && LegalActions.CompanyId > 0)
+                        if (status > 0 && LegalActions.Count > 0)
                         {
+                            if (deletedLegalActionInfoList.Count > 0)
+                            {
+                                foreach (int ai in deletedLegalActionInfoList)
+                                {
+                                    using (DbCommand cmdDelLa = dbSmartAspects.GetStoredProcCommand("DeleteLegalActionById_SP"))
+                                    {
+                                        cmdDelLa.Parameters.Clear();
+                                        dbSmartAspects.AddInParameter(cmdDelLa, "@Id", DbType.Int64, ai);
+                                        status = dbSmartAspects.ExecuteNonQuery(cmdDelLa, transaction);
+                                    }
+                                }
+                            }
                             using (DbCommand commApprove = dbSmartAspects.GetStoredProcCommand("SaveCompanyAccountApprovalLegalActionInfo_SP"))
                             {
-                                dbSmartAspects.AddInParameter(commApprove, "@CompanyId", DbType.Int32, LegalActions.CompanyId);
-                                dbSmartAspects.AddInParameter(commApprove, "@TransactionDate", DbType.DateTime, LegalActions.TransactionDate);
-                                dbSmartAspects.AddInParameter(commApprove, "@DetailDescription", DbType.String, LegalActions.DetailDescription);
-                                dbSmartAspects.AddInParameter(commApprove, "@CallToAction", DbType.String, LegalActions.CallToAction);
+                                foreach (GuestCompanyBO gc in LegalActions)
+                                {
+                                    commApprove.Parameters.Clear();
+                                    dbSmartAspects.AddInParameter(commApprove, "@Id", DbType.Int64, gc.Id);
+                                    dbSmartAspects.AddInParameter(commApprove, "@CompanyId", DbType.Int32, gc.CompanyId);
+                                    dbSmartAspects.AddInParameter(commApprove, "@TransactionDate", DbType.DateTime, gc.TransactionDate);
+                                    dbSmartAspects.AddInParameter(commApprove, "@DetailDescription", DbType.String, gc.DetailDescription);
+                                    dbSmartAspects.AddInParameter(commApprove, "@CallToAction", DbType.String, gc.CallToAction);
+                                    dbSmartAspects.AddInParameter(commApprove, "@CreatedBy", DbType.Int32, BenefitList.AccountsApprovedBy);
 
-                                status = dbSmartAspects.ExecuteNonQuery(commApprove, transaction);
+                                    status = dbSmartAspects.ExecuteNonQuery(commApprove, transaction);
+                                }
                             }
                         }
 

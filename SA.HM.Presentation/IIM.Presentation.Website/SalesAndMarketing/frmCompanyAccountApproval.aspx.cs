@@ -43,11 +43,20 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
         }
         
         [WebMethod]
-        public static GuestCompanyBO GetCompanyInformationForFillForm(int companyId)
+        public static GuestCompanyBO GetCompanyBenefitsForFillForm(int companyId)
         {
             GuestCompanyBO companyInfo = new GuestCompanyBO();
             GuestCompanyDA companyDa = new GuestCompanyDA();
-            companyInfo = companyDa.GetCompanyInformationByCompanyId(companyId);
+            companyInfo = companyDa.GetCompanyBenefitsForFillForm(companyId);
+            return companyInfo;
+        }
+        
+        [WebMethod]
+        public static List<GuestCompanyBO> GetCompanyLegalActionForFillForm(int companyId)
+        {
+            List<GuestCompanyBO> companyInfo = new List<GuestCompanyBO>();
+            GuestCompanyDA companyDa = new GuestCompanyDA();
+            companyInfo = companyDa.GetCompanyLegalActionForFillForm(companyId);
             return companyInfo;
         }
         [WebMethod]
@@ -76,7 +85,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             return docList;
         }
         [WebMethod]
-        public static ReturnInfo SaveCompanyAccountApprovalInfo(GuestCompanyBO BenefitList, GuestCompanyBO LegalActions, int randomDocId, string deletedDoc)
+        public static ReturnInfo SaveCompanyAccountApprovalInfo(GuestCompanyBO BenefitList, List<GuestCompanyBO> LegalActions, List<int> deletedLegalActionInfoList, int randomDocId, string deletedDoc)
         {
             ReturnInfo rtninfo = new ReturnInfo();
             Boolean status = false;
@@ -94,7 +103,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
                 int OwnerIdForDocuments = 0;
                 HMCommonDA hmCommonDA = new HMCommonDA();
 
-                status = gcDa.SaveCompanyAccountApprovalInfo(BenefitList, LegalActions, out id);
+                status = gcDa.SaveCompanyAccountApprovalInfo(BenefitList, LegalActions, deletedLegalActionInfoList, out id);
                 if (status)
                 {
                     rtninfo.IsSuccess = true;
