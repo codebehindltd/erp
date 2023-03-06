@@ -120,6 +120,7 @@ namespace HotelManagement.Data.AirTicketing
                                     dbSmartAspects.AddInParameter(cmdSingle, "@AirlineAmount", DbType.Decimal, at.AirlineAmount);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@RoutePath", DbType.String, at.RoutePath);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@Remarks", DbType.String, at.Remarks);
+                                    dbSmartAspects.AddInParameter(cmdSingle, "@IsPreviousDataExists", DbType.Int32, at.IsPreviousDataExists);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@CreatedBy", DbType.Int64, airTicketMasterInfo.CreatedBy);
 
                                     status = dbSmartAspects.ExecuteNonQuery(cmdSingle, transction);
@@ -617,6 +618,28 @@ namespace HotelManagement.Data.AirTicketing
                 }
             }
             return retVal;
+        }
+        public AirlineTicketInfoBO GetLastAirlineTicketId()
+        {
+            AirlineTicketInfoBO airlineInfo = new AirlineTicketInfoBO();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetLastAirlineTicketId_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                airlineInfo.LastId = Convert.ToInt64(reader["LastId"]);
+                            }
+                        }
+                    }
+                }
+            }
+            return airlineInfo;
         }
     }
 }

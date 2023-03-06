@@ -520,5 +520,13 @@ namespace HotelManagement.Presentation.Website.AirTicketing
             return strTable;
 
         }
+        [WebMethod]
+        public static AirlineTicketInfoBO GetLastAirlineTicketId()
+        {
+            AirlineTicketInfoBO ticketInfo = new AirlineTicketInfoBO();
+            AirlineTicketInfoDA ATDa = new AirlineTicketInfoDA();
+            ticketInfo = ATDa.GetLastAirlineTicketId();
+            return ticketInfo;
+        }
     }
 }

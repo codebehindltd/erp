@@ -59,6 +59,15 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             companyInfo = companyDa.GetCompanyLegalActionForFillForm(companyId);
             return companyInfo;
         }
+        
+        [WebMethod]
+        public static GuestCompanyBO GetLastLegalActionId()
+        {
+            GuestCompanyBO companyInfo = new GuestCompanyBO();
+            GuestCompanyDA companyDa = new GuestCompanyDA();
+            companyInfo = companyDa.GetLastLegalActionId();
+            return companyInfo;
+        }
         [WebMethod]
         public static List<DocumentsBO> GetUploadedDocByWebMethod(int randomId, int id, string deletedDoc)
         {

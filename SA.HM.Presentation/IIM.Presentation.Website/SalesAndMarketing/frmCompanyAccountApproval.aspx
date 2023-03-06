@@ -110,9 +110,13 @@
         }
         function OnGetCompanyLegalActionForFillFormSucceeded(result) {
             $("#LegalActionTbl tbody").html("");
-            var tr = "";
+            if (result.length > 0) {
+                $("#ContentPlaceHolder1_hfIsPreviousDataExists").val(1);
+            }
+            LoadLastLegalActionId();
+            
             $.each(result, function (count, gridObject) {
-
+                
                 var tr = "";
 
                 tr += "<tr>";
@@ -132,6 +136,16 @@
             });
         }
         function OnGetCompanyLegalActionForFillFormFailed(error) {
+            alert(error.get_message());
+        }
+        function LoadLastLegalActionId() {
+            PageMethods.GetLastLegalActionId(OnGetLastLegalActionIdSucceeded, OnGetLastLegalActionIdFailed);
+            return false;
+        }
+        function OnGetLastLegalActionIdSucceeded(result) {
+            $("#ContentPlaceHolder1_hfLastLegalActionId").val(result.LastId);
+        }
+        function OnGetLastLegalActionIdFailed(error) {
             alert(error.get_message());
         }
         function LoadDocUploader() {
@@ -302,13 +316,14 @@
                     if (transactionDate != '') {
                         transactionDate = CommonHelper.DateFormatMMDDYYYYFromDDMMYYYY(transactionDate, innBoarDateFormat);
                     }
-
+                    var isPreviousDataExists = $("#ContentPlaceHolder1_hfIsPreviousDataExists").val();
                     LegalActions.push({
                         Id: id,
                         CompanyId: companyId,
                         TransactionDate: transactionDate,
                         DetailDescription: detailDescription,
-                        CallToAction: callToAction
+                        CallToAction: callToAction,
+                        IsPreviousDataExists: isPreviousDataExists
                     });
                 });
             }
@@ -378,8 +393,10 @@
             $("#ContentPlaceHolder1_txtTransactionDate").val("");
             $("#ContentPlaceHolder1_txtDetailDescription").val("");
             $("#ContentPlaceHolder1_txtCallToAction").val("");
+            $("#ContentPlaceHolder1_hfIsPreviousDataExists").val(0);
             $("#DocumentInfo").html("");
             $("#LegalActionTbl tbody").html("");
+            $("#ContentPlaceHolder1_hfLastLegalActionId").val(0);
         }
 
         function AddItemForLegalAction() {
@@ -406,26 +423,19 @@
         }
 
         function AddItemForLegalActionTable(transactionDate, detailDescription, callToAction) {
-            var lastTr = $("#LegalActionTbl").find("tr").last();
-            var lastId = $(lastTr).find("td").eq(0).html();
-            if (lastId == undefined) {
-                lastId = 0;
-            }
-            lastId = parseInt(lastId);
-            
-
+            var lastLegalActionDBId = $("#ContentPlaceHolder1_hfLastLegalActionId").val();
+            lastLegalActionDBId = parseInt(lastLegalActionDBId);
             var lastTr = $("#LegalActionTbl").find("tr").last();
             var lastId = $(lastTr).find("td").eq(0).html();
             var newId;
-            if (lastId == undefined) {
+            if (lastId == undefined && lastLegalActionDBId == 0) {
                 lastId = 0;
-                newId = 0;
+                newId = 1;
             }
             else {
-                lastId = parseInt(lastId);
+                lastId = parseInt(lastLegalActionDBId);
                 newId = lastId + 1;
-            }
-            
+            }        
 
             if ($("#ContentPlaceHolder1_hfIsLegalActionEdit").val() != 1) {
                 var tr = "";
@@ -444,11 +454,10 @@
                 $("#LegalActionTbl tbody").append(tr);
 
                 tr = "";
-
+                $("#ContentPlaceHolder1_hfLastLegalActionId").val(newId);
                 ClearAfterLegalActionAdded();
             }
             else {
-                debugger;
                 $("#LegalActionTbl tr").each(function () {
                     var currentLegalActionId = $(this).find("td").eq(0).html();
                     if ($("#ContentPlaceHolder1_hfIsLegalActionEdit").val() == 1) {
@@ -501,6 +510,8 @@
         }
 
     </script>
+    <asp:HiddenField ID="hfLastLegalActionId" runat="server" Value="0" />
+    <asp:HiddenField ID="hfIsPreviousDataExists" runat="server" Value="0" />
     <asp:HiddenField ID="hfDeletedDoc" runat="server" Value="0" />
     <asp:HiddenField ID="hfCompanyId" runat="server" Value="0" />
     <asp:HiddenField ID="RandomDocId" runat="server"></asp:HiddenField>

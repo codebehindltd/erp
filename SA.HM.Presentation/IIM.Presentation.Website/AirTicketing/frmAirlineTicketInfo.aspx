@@ -602,17 +602,26 @@
             if (airlineAmount == "") {
                 airlineAmount = parseFloat(0);
             }
-
+            
+            var lastAirlineTicketId = $("#ContentPlaceHolder1_hfLastAirlineTicketId").val();
+            lastAirlineTicketId = parseInt(lastAirlineTicketId);
             var lastTr = $("#TicketInformationTbl").find("tr").last();
             var lastId = $(lastTr).find("td").eq(0).html();
-            lastId = parseInt(lastId);
-            lastId = lastId;
+            var newId;
+            if (lastId == undefined && lastAirlineTicketId == 0) {
+                lastId = 0;
+                newId = 1;
+            }
+            else {
+                lastId = parseInt(lastAirlineTicketId);
+                newId = lastId + 1;
+            }
 
             if ($("#ContentPlaceHolder1_hfIsAirlineInfoEdit").val() != 1) {
                 var tr = "";
 
                 tr += "<tr>";
-                tr += "<td style='display:none;'>" + ++lastId + "</td>";
+                tr += "<td style='display:none;'>" + newId + "</td>";
                 tr += "<td style='width:20%;'>" + clientName + "</td>";
                 tr += "<td style='width:20%;'>" + airlineName + "</td>";
                 tr += "<td style='width:15%;'>" + issueDate + "</td>";
@@ -640,6 +649,7 @@
                 tr += "</tr>";
 
                 $("#TicketInformationTbl tbody").append(tr);
+                $("#ContentPlaceHolder1_hfLastAirlineTicketId").val(newId);
 
                 var totalAmount = 0;
                 $("#TicketInformationTbl tr").each(function () {
@@ -1043,7 +1053,7 @@
                 ticketValue = $.trim($(item).find("td:eq(19)").text());
 
                 airlineAmount = airlineAmount != "" ? parseFloat(airlineAmount) : 0.00;
-
+                var isPreviousDataExists = $("#ContentPlaceHolder1_hfIsPreviousDataExists").val();
                 AddedSingleTicketInfo.push({
                     Id: id,
                     AirlineName: airlineName,
@@ -1063,7 +1073,8 @@
                     TicketValue: ticketValue,
                     AirlineAmount: airlineAmount,
                     RoutePath: routePath,
-                    Remarks: remarks
+                    Remarks: remarks,
+                    IsPreviousDataExists: isPreviousDataExists
                 });
             });
 
@@ -1277,6 +1288,8 @@
             $("#DocumentInfo").html("");
             $("#ContentPlaceHolder1_txtTotalInvoiceAmount").val("");
             $("#ContentPlaceHolder1_txtTotalPaymentAmount").val("");
+            $("#ContentPlaceHolder1_hfLastAirlineTicketId").val(0);
+            $("#ContentPlaceHolder1_hfIsPreviousDataExists").val(0);
             $("#btnSave").val("Save");
             ClearAfterPaymentInfoAdded();
         }
@@ -1424,6 +1437,10 @@
             } else {
                 $('#btnSave').hide();
             }
+            if (result.length > 0) {
+                $("#ContentPlaceHolder1_hfIsPreviousDataExists").val(1);
+            }
+            LoadLastAirlineTicketId();
             $("#btnSave").val("Update");
             $("#ContentPlaceHolder1_hfTicketMasterId").val(result.ATMasterInfo.TicketId);
             $("#TicketInformationTbl tbody").html("");
@@ -1463,7 +1480,16 @@
             ShowUploadedDocument($("#ContentPlaceHolder1_RandomDocId").val());
         }
         function OnTicketInfoEditFailed() { }
-
+        function LoadLastAirlineTicketId() {
+            PageMethods.GetLastAirlineTicketId(OnGetLastAirlineTicketIdSucceeded, OnGetLastAirlineTicketIdFailed);
+            return false;
+        }
+        function OnGetLastAirlineTicketIdSucceeded(result) {
+            $("#ContentPlaceHolder1_hfLastAirlineTicketId").val(result.LastId);
+        }
+        function OnGetLastAirlineTicketIdFailed(error) {
+            alert(error.get_message());
+        }
         function PaymentMethodInformationEdit(result) {
             $.each(result, function (count, obj) {
 
@@ -1790,6 +1816,8 @@
             return false;
         }
     </script>
+    <asp:HiddenField ID="hfIsPreviousDataExists" runat="server" Value="0" />
+    <asp:HiddenField ID="hfLastAirlineTicketId" runat="server" Value="0" />
     <asp:HiddenField ID="hfIsAirlineInfoEdit" runat="server" Value="0" />
     <asp:HiddenField ID="hfClickedAirlineId" runat="server" Value="0" />
     <asp:HiddenField ID="hfDeletedDoc" runat="server" Value="0" />

@@ -171,6 +171,29 @@ namespace HotelManagement.Data.HotelManagement
             }
             return legalActionList;
         }
+        public GuestCompanyBO GetLastLegalActionId()
+        {
+            GuestCompanyBO guestCompany = new GuestCompanyBO();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetLastLegalActionId_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                guestCompany.LastId = Convert.ToInt64(reader["LastId"]);
+                            }
+                        }
+                    }
+                }
+            }
+            return guestCompany;
+        }
+
         public List<GuestCompanyBO> GetGuestCompanyInfoByUserId(int userInfoId)
         {
             List<GuestCompanyBO> roomTypeList = new List<GuestCompanyBO>();
@@ -1253,20 +1276,21 @@ namespace HotelManagement.Data.HotelManagement
                             tmpCompanyId = Convert.ToInt32(BenefitList.CompanyId);
                         }
 
-                        if (status > 0 && LegalActions.Count > 0)
+                        if (deletedLegalActionInfoList.Count > 0)
                         {
-                            if (deletedLegalActionInfoList.Count > 0)
+                            foreach (int ai in deletedLegalActionInfoList)
                             {
-                                foreach (int ai in deletedLegalActionInfoList)
+                                using (DbCommand cmdDelLa = dbSmartAspects.GetStoredProcCommand("DeleteLegalActionById_SP"))
                                 {
-                                    using (DbCommand cmdDelLa = dbSmartAspects.GetStoredProcCommand("DeleteLegalActionById_SP"))
-                                    {
-                                        cmdDelLa.Parameters.Clear();
-                                        dbSmartAspects.AddInParameter(cmdDelLa, "@Id", DbType.Int64, ai);
-                                        status = dbSmartAspects.ExecuteNonQuery(cmdDelLa, transaction);
-                                    }
+                                    cmdDelLa.Parameters.Clear();
+                                    dbSmartAspects.AddInParameter(cmdDelLa, "@Id", DbType.Int64, ai);
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdDelLa, transaction);
                                 }
                             }
+                        }
+
+                        if (LegalActions.Count > 0)
+                        {
                             using (DbCommand commApprove = dbSmartAspects.GetStoredProcCommand("SaveCompanyAccountApprovalLegalActionInfo_SP"))
                             {
                                 foreach (GuestCompanyBO gc in LegalActions)
@@ -1277,6 +1301,7 @@ namespace HotelManagement.Data.HotelManagement
                                     dbSmartAspects.AddInParameter(commApprove, "@TransactionDate", DbType.DateTime, gc.TransactionDate);
                                     dbSmartAspects.AddInParameter(commApprove, "@DetailDescription", DbType.String, gc.DetailDescription);
                                     dbSmartAspects.AddInParameter(commApprove, "@CallToAction", DbType.String, gc.CallToAction);
+                                    dbSmartAspects.AddInParameter(commApprove, "@IsPreviousDataExists", DbType.Int32, gc.IsPreviousDataExists);
                                     dbSmartAspects.AddInParameter(commApprove, "@CreatedBy", DbType.Int32, BenefitList.AccountsApprovedBy);
 
                                     status = dbSmartAspects.ExecuteNonQuery(commApprove, transaction);

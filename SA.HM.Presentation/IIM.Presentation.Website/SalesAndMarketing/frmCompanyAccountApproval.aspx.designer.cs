@@ -13,6 +13,24 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing {
     public partial class frmCompanyAccountApproval {
         
         /// <summary>
+        /// hfLastLegalActionId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfLastLegalActionId;
+        
+        /// <summary>
+        /// hfIsPreviousDataExists control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsPreviousDataExists;
+        
+        /// <summary>
         /// hfDeletedDoc control.
         /// </summary>
         /// <remarks>
