@@ -908,7 +908,31 @@
             deletedNutrientRequiredValueList = [];
             return false;
         }
-                
+              
+        function isFloatNumber(e, t) {
+            var n;
+            var r;
+            if (navigator.appName == "Microsoft Internet Explorer" || navigator.appName == "Netscape") {
+                n = t.keyCode;
+                r = 1;
+                if (navigator.appName == "Netscape") {
+                    n = t.charCode;
+                    r = 0
+                }
+            } else {
+                n = t.charCode;
+                r = 0
+            }
+            if (r == 1) {
+                if (!(n >= 48 && n <= 57 || n == 46)) {
+                    t.returnValue = false
+                }
+            } else {
+                if (!(n >= 48 && n <= 57 || n == 0 || n == 46)) {
+                    t.preventDefault()
+                }
+            }
+        }
     </script>
     <asp:HiddenField ID="hfRawMaterialId" runat="server" Value="0" />
     <asp:HiddenField ID="hfOEId" runat="server" Value="0" />
@@ -967,13 +991,13 @@
                                                 <asp:Label ID="lblUnitQuantity" runat="server" class="control-label required-field" Text="Unit"></asp:Label>
                                             </div>
                                             <div class="col-md-3">
-                                                <asp:TextBox ID="txtUnitQuantity" runat="server" CssClass="form-control" TabIndex="53"></asp:TextBox>
+                                                <asp:TextBox ID="txtUnitQuantity" runat="server" CssClass="form-control" TabIndex="53" onkeypress="return isFloatNumber(this,event);"></asp:TextBox>
                                             </div>
                                             <div class="col-md-3">
                                                 <asp:Label ID="lblCost" runat="server" class="control-label required-field" Text="Cost"></asp:Label>
                                             </div>
                                             <div class="col-md-3">
-                                                <asp:TextBox ID="txtCost" runat="server" CssClass="form-control" TabIndex="54"></asp:TextBox>
+                                                <asp:TextBox ID="txtCost" runat="server" CssClass="form-control" TabIndex="54" onkeypress="return isFloatNumber(this,event);"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="form-group" style="padding-left: 10px;">
@@ -1022,7 +1046,7 @@
                                                 <asp:Label ID="lblRequiredValue" runat="server" class="control-label required-field" Text="Required Value"></asp:Label>
                                             </div>
                                             <div class="col-md-9">
-                                                <asp:TextBox ID="txtRequiredValue" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                                <asp:TextBox ID="txtRequiredValue" runat="server" CssClass="form-control quantitydecimal" onkeypress="return isFloatNumber(this,event);"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="form-group" style="padding-left: 10px;">
@@ -1075,7 +1099,7 @@
                                             <asp:Label ID="lblAmount" runat="server" class="control-label required-field" Text="Amount"></asp:Label>
                                         </div>
                                         <div class="col-md-4">
-                                            <asp:TextBox ID="txtAmount" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                            <asp:TextBox ID="txtAmount" runat="server" CssClass="form-control quantitydecimal" onkeypress="return isFloatNumber(this,event);"></asp:TextBox>
                                         </div>
                                     </div>
                                     <div class="form-group">
