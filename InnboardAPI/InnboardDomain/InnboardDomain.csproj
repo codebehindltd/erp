@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Model\PageParams.cs" />
+    <Compile Include="CriteriaDtoModel\GeneralLedgerCriteriaDto.cs" />
     <Compile Include="CriteriaDtoModel\PayrollEmpCriteriaDto.cs" />
     <Compile Include="Cryptography.cs" />
     <Compile Include="Interfaces\IAppsLogin.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="Models\PayrollEmpTracking.cs" />
     <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Utility\CommonHelper.cs" />
+    <Compile Include="ViewModel\GLLedgerMasterVwBO.cs" />
     <Compile Include="ViewModel\HotelGuestExtraServiceBillApprovedView.cs" />
     <Compile Include="Models\HotelGuestInformation.cs" />
     <Compile Include="Models\HotelGuestInformationOnline.cs" />
