@@ -109,6 +109,10 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                             {
                                 reportName = "RptWorkStationWiseEmployeeSalarySheetsForSingleCompany";
                             }
+                            else if (ddlReportFormat.SelectedValue == "GenderWise")
+                            {
+                                reportName = "RptGenderWiseEmployeeSalarySheetsForSingleCompany";
+                            }
                         }
                         else
                         {
@@ -127,6 +131,10 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                             else if (ddlReportFormat.SelectedValue == "WorkStationWise")
                             {
                                 reportName = "RptWorkStationWiseEmployeeSalarySheets";
+                            }
+                            else if (ddlReportFormat.SelectedValue == "GenderWise")
+                            {
+                                reportName = "RptGenderWiseEmployeeSalarySheets";
                             }
                         }
                     }

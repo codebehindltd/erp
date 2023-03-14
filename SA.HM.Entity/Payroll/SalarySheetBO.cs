@@ -56,5 +56,12 @@ namespace HotelManagement.Entity.Payroll
         public decimal BasicAmountInEmployeeCurrency { get; set; }
         public Int64 Serial { get; set; }
         public decimal? CurrencyExchangeRate { get; set; }
+        public int TotalDays { get; set; }
+        public int TotalLeave { get; set; }
+        public int TotalHoliday { get; set; }
+        public int TotalDayOff { get; set; }
+        public int TotalAbsent { get; set; }
+        public int TotalPresent { get; set; }
+        public string Gender { get; set; }
     }
 }

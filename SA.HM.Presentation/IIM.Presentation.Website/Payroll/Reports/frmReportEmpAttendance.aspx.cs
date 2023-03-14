@@ -228,7 +228,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             HMCommonDA hmCommonDA = new HMCommonDA();
             rvTransaction.LocalReport.DataSources.Clear();
             rvTransaction.ProcessingMode = ProcessingMode.Local;
-
+            var reportType = ddlReportType.SelectedValue;
             var reportPath = "";
             if (ddlReportType.SelectedValue == "-1")
             {
@@ -302,6 +302,25 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 {
                     reportPath = Server.MapPath(@"~/Payroll/Reports/Rdlc/RptEmployeeAttendanceLogIndividual.rdlc");
                 }                
+            }
+            else if (ddlReportType.SelectedValue == "5")
+            {
+                reportType = "-1";
+                if (employeeId == 0)
+                {
+                    if (rosterDateFrom.Date == rosterDateTo.Date)
+                    {
+                        reportPath = Server.MapPath(@"~/Payroll/Reports/Rdlc/RptEmployeeAttendanceSingleDay.rdlc");
+                    }
+                    else
+                    {
+                        reportPath = Server.MapPath(@"~/Payroll/Reports/Rdlc/RptDepartmentWiseEmployeeAttendance.rdlc");
+                    }
+                }
+                else
+                {
+                    reportPath = Server.MapPath(@"~/Payroll/Reports/Rdlc/RptEmployeeIndividualAttendance.rdlc");
+                }
             }
 
             if (!File.Exists(reportPath))
@@ -381,7 +400,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             EmpAttendanceDA attendanceDA = new EmpAttendanceDA();
             List<EmpAttendanceReportBO> serviceList = new List<EmpAttendanceReportBO>();
 
-            serviceList = attendanceDA.GetEmpAttendanceReport(Convert.ToInt32(ddlReportType.SelectedValue), companyId, projectId, rosterDateFrom, rosterDateTo, employeeId, departmentId, workStationId, timeslabId);
+            serviceList = attendanceDA.GetEmpAttendanceReport(Convert.ToInt32(reportType), companyId, projectId, rosterDateFrom, rosterDateTo, employeeId, departmentId, workStationId, timeslabId);
 
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], serviceList));
@@ -457,6 +476,20 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             {
                 paramLogo.Add(new ReportParameter("ReportName", "Employee Overtime"));
                 rvTransaction.LocalReport.DisplayName = "Employee Overtime";
+            }
+            else if (ddlReportType.SelectedValue == "5")
+            {
+                totalLateCount = (serviceList.Where(x => x.AttendanceStatus == "P").ToList()).Where(x => x.LateTime != "").ToList().Count();
+                totalApprovedLateCount = 0;
+                totalWorkingDayCount = serviceList.Where(x => x.AttendanceStatus == "P").ToList().Count();
+                totalAbsentCount = serviceList.Where(x => x.AttendanceStatus == "A").ToList().Count();
+                totalHolidayCount = serviceList.Where(x => x.AttendanceStatus == "H").ToList().Count();
+                totalLeaveCount = serviceList.Where(x => x.AttendanceStatus == "L").ToList().Count();
+                totalDayOffCount = serviceList.Where(x => x.AttendanceStatus == "D/O").ToList().Count();
+                totalPenaltyCount = 0;
+
+                paramLogo.Add(new ReportParameter("ReportName", "Employee Attendance Information"));
+                rvTransaction.LocalReport.DisplayName = "Employee Attendance";
             }
 
             paramLogo.Add(new ReportParameter("EmployeeId", employeeId.ToString()));

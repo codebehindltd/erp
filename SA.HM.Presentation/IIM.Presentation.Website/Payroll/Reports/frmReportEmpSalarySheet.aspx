@@ -175,6 +175,7 @@
                             <asp:ListItem Text="Department Wise" Value="DepartmentWise"></asp:ListItem>
                             <asp:ListItem Text="Designation Wise" Value="DesignationWise"></asp:ListItem>
                             <asp:ListItem Text="Work Station Wise" Value="WorkStationWise"></asp:ListItem>
+                            <asp:ListItem Text="Gender Wise" Value="GenderWise"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
                     <div class="col-md-2">
