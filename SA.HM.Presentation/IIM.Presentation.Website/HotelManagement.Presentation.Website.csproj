@@ -886,6 +886,7 @@
     <Content Include="Payroll\Reports\Rdlc\RptWorkStationWiseEmployeeSalarySheets.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptWorkStationWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptGenderWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptGenderWiseEmployeeSalarySheets.rdlc" />
     <EmbeddedResource Include="POS\Reports\Rdlc\rptKotBill02.rdlc" />
     <Content Include="SMSTemplates\ReservationAmedmentSms.txt" />
     <Content Include="SMSTemplates\ReservationCancelSms.txt" />
@@ -1950,7 +1951,6 @@
     <Content Include="SalesAndMarketing\Reports\Rdlc\DynamicCRMReport.rdlc" />
     <Content Include="SalesAndMarketing\Reports\Rdlc\rptQuotationDetailsForInventoryNTechnical.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptItemConsumption.rdlc" />
-    <Content Include="InnboardMembership.Master" />
     <Content Include="POS\Restaurant.Master" />
     <Content Include="POS\RestaurantMaster.Master" />
     <Content Include="POS\RestaurantMM.Master" />
@@ -3721,13 +3721,6 @@
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportMarketSegmentWiseInformation.aspx.designer.cs">
       <DependentUpon>frmReportMarketSegmentWiseInformation.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="InnboardMembership.Master.cs">
-      <DependentUpon>InnboardMembership.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="InnboardMembership.Master.designer.cs">
-      <DependentUpon>InnboardMembership.Master</DependentUpon>
     </Compile>
     <Compile Include="Inventory\frmInventoryConfiguration.aspx.cs">
       <DependentUpon>frmInventoryConfiguration.aspx</DependentUpon>
@@ -7831,13 +7824,6 @@
     <Compile Include="HotelManagement\Reports\frmReportRoomWiseStatus.aspx.designer.cs">
       <DependentUpon>frmReportRoomWiseStatus.aspx</DependentUpon>
     </Compile>
-    <Compile Include="InnBoard.Master.cs">
-      <DependentUpon>InnBoard.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="InnBoard.Master.designer.cs">
-      <DependentUpon>InnBoard.Master</DependentUpon>
-    </Compile>
     <Compile Include="Logout.aspx.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -8278,7 +8264,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common\HMReport.Master" />
-    <Content Include="InnBoard.Master" />
     <Content Include="Handler.ashx" />
     <Content Include="Common\ReportViewer.Master" />
     <Content Include="Common\IRReportViewer.Master" />
