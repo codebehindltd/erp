@@ -77,7 +77,19 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             UserInformationBO userInformationBO = new UserInformationBO();
             userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
 
+            string IsPayrollAttendancePartWillShowOnSalarySheet = "0";
             HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            HMCommonSetupBO IsPayrollAttendancePartWillShowOnSalarySheetBO = new HMCommonSetupBO();
+            IsPayrollAttendancePartWillShowOnSalarySheetBO = commonSetupDA.GetCommonConfigurationInfo("IsPayrollAttendancePartWillShowOnSalarySheet", "IsPayrollAttendancePartWillShowOnSalarySheet");
+            if (IsPayrollAttendancePartWillShowOnSalarySheetBO != null)
+            {
+                if (IsPayrollAttendancePartWillShowOnSalarySheetBO.SetupId > 0)
+                {
+                    IsPayrollAttendancePartWillShowOnSalarySheet = IsPayrollAttendancePartWillShowOnSalarySheetBO.SetupValue;
+                }
+            }
+
+            //HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
             HMCommonSetupBO salaryExecutionProcess = new HMCommonSetupBO();
             salaryExecutionProcess = commonSetupDA.GetCommonConfigurationInfo("PayrollSalaryExecutionProcessType", "PayrollSalaryExecutionProcessType");
 
@@ -204,6 +216,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             paramReport.Add(new ReportParameter("month", ddlEffectedMonth.SelectedItem.ToString()));
             paramReport.Add(new ReportParameter("year", ddlYear.SelectedItem.ToString()));
             paramReport.Add(new ReportParameter("CurrencyType", ddlCurrencyType.SelectedValue.ToString()));
+            paramReport.Add(new ReportParameter("IsPayrollAttendancePartWillShowOnSalarySheet", IsPayrollAttendancePartWillShowOnSalarySheet));            
 
             string companyName = string.Empty;
             string companyAddress = string.Empty;
