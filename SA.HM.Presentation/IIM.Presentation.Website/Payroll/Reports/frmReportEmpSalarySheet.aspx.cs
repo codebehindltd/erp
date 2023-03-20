@@ -104,49 +104,118 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                     {
                         if (hfIsSingle.Value == "1")
                         {
-                            //reportName = "RptEmployeeSalarySheetsForSingleCompany";
                             if (ddlReportFormat.SelectedValue == "Regular")
                             {
-                                reportName = "RptEmployeeSalarySheetsForSingleCompany";
+                                if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
+                                {
+                                    reportName = "RptEmployeeSalarySheetsForSingleCompany";
+                                }
+                                else
+                                {
+                                    reportName = "RptEmployeeSalarySheetsForSingleCompanyWAS";
+                                }                                
                             }
                             else if (ddlReportFormat.SelectedValue == "DepartmentWise")
                             {
-                                reportName = "RptDepartmentWiseEmployeeSalarySheetsForSingleCompany";
+                                if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
+                                {
+                                    reportName = "RptDepartmentWiseEmployeeSalarySheetsForSingleCompany";
+                                }
+                                else
+                                {
+                                    reportName = "RptDepartmentWiseEmployeeSalarySheetsForSingleCompanyWAS";
+                                }
                             }
                             else if (ddlReportFormat.SelectedValue == "DesignationWise")
                             {
-                                reportName = "RptDesignationWiseEmployeeSalarySheetsForSingleCompany";
+                                if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
+                                {
+                                    reportName = "RptDesignationWiseEmployeeSalarySheetsForSingleCompany";
+                                }
+                                else
+                                {
+                                    reportName = "RptDesignationWiseEmployeeSalarySheetsForSingleCompanyWAS";
+                                }
                             }
                             else if (ddlReportFormat.SelectedValue == "WorkStationWise")
                             {
-                                reportName = "RptWorkStationWiseEmployeeSalarySheetsForSingleCompany";
+                                if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
+                                {
+                                    reportName = "RptWorkStationWiseEmployeeSalarySheetsForSingleCompany";
+                                }
+                                else
+                                {
+                                    reportName = "RptWorkStationWiseEmployeeSalarySheetsForSingleCompanyWAS";
+                                }
                             }
                             else if (ddlReportFormat.SelectedValue == "GenderWise")
                             {
-                                reportName = "RptGenderWiseEmployeeSalarySheetsForSingleCompany";
+                                if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
+                                {
+                                    reportName = "RptGenderWiseEmployeeSalarySheetsForSingleCompany";
+                                }
+                                else
+                                {
+                                    reportName = "RptGenderWiseEmployeeSalarySheetsForSingleCompanyWAS";
+                                }
                             }
                         }
                         else
                         {
                             if (ddlReportFormat.SelectedValue == "Regular")
                             {
-                                reportName = "RptEmployeeSalarySheets";
+                                if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
+                                {
+                                    reportName = "RptEmployeeSalarySheets";
+                                }
+                                else
+                                {
+                                    reportName = "RptEmployeeSalarySheetsWAS";
+                                }
                             }
                             else if (ddlReportFormat.SelectedValue == "DepartmentWise")
                             {
-                                reportName = "RptDepartmentWiseEmployeeSalarySheets";
+                                if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
+                                {
+                                    reportName = "RptDepartmentWiseEmployeeSalarySheets";
+                                }
+                                else
+                                {
+                                    reportName = "RptDepartmentWiseEmployeeSalarySheetsWAS";
+                                }
                             }
                             else if (ddlReportFormat.SelectedValue == "DesignationWise")
                             {
-                                reportName = "RptDesignationWiseEmployeeSalarySheets";
+                                if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
+                                {
+                                    reportName = "RptDesignationWiseEmployeeSalarySheets";
+                                }
+                                else
+                                {
+                                    reportName = "RptDesignationWiseEmployeeSalarySheetsWAS";
+                                }
                             }                            
                             else if (ddlReportFormat.SelectedValue == "WorkStationWise")
                             {
-                                reportName = "RptWorkStationWiseEmployeeSalarySheets";
+                                if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
+                                {
+                                    reportName = "RptWorkStationWiseEmployeeSalarySheets";
+                                }
+                                else
+                                {
+                                    reportName = "RptWorkStationWiseEmployeeSalarySheetsWAS";
+                                }
                             }
                             else if (ddlReportFormat.SelectedValue == "GenderWise")
                             {
-                                reportName = "RptGenderWiseEmployeeSalarySheets";
+                                if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
+                                {
+                                    reportName = "RptGenderWiseEmployeeSalarySheets";
+                                }
+                                else
+                                {
+                                    reportName = "RptGenderWiseEmployeeSalarySheetsWAS";
+                                }
                             }
                         }
                     }
@@ -155,10 +224,10 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                         reportName = "RptEmployeeSalarySheetsWithCurrency";
                     }
                 }
-                else if (ddlReportType.SelectedValue == "Location")
-                {
-                    reportName = "RptEmployeeSalarySheetDepartmentLocationWise";
-                }
+                //else if (ddlReportType.SelectedValue == "Location")
+                //{
+                //    reportName = "RptEmployeeSalarySheetDepartmentLocationWise";
+                //}
             }
             else if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.RedCross)
             {
@@ -215,8 +284,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             List<ReportParameter> paramReport = new List<ReportParameter>();
             paramReport.Add(new ReportParameter("month", ddlEffectedMonth.SelectedItem.ToString()));
             paramReport.Add(new ReportParameter("year", ddlYear.SelectedItem.ToString()));
-            paramReport.Add(new ReportParameter("CurrencyType", ddlCurrencyType.SelectedValue.ToString()));
-            paramReport.Add(new ReportParameter("IsPayrollAttendancePartWillShowOnSalarySheet", IsPayrollAttendancePartWillShowOnSalarySheet));            
+            paramReport.Add(new ReportParameter("CurrencyType", ddlCurrencyType.SelectedValue.ToString()));     
 
             string companyName = string.Empty;
             string companyAddress = string.Empty;

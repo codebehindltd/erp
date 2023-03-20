@@ -74,6 +74,17 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             HMCommonDA hmCommonDA = new HMCommonDA();
             HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
 
+            string IsPayrollAttendancePartWillShowOnSalarySheet = "0";
+            HMCommonSetupBO IsPayrollAttendancePartWillShowOnSalarySheetBO = new HMCommonSetupBO();
+            IsPayrollAttendancePartWillShowOnSalarySheetBO = commonSetupDA.GetCommonConfigurationInfo("IsPayrollAttendancePartWillShowOnSalarySheet", "IsPayrollAttendancePartWillShowOnSalarySheet");
+            if (IsPayrollAttendancePartWillShowOnSalarySheetBO != null)
+            {
+                if (IsPayrollAttendancePartWillShowOnSalarySheetBO.SetupId > 0)
+                {
+                    IsPayrollAttendancePartWillShowOnSalarySheet = IsPayrollAttendancePartWillShowOnSalarySheetBO.SetupValue;
+                }
+            }
+
             HMCommonSetupBO salaryExecutionProcess = new HMCommonSetupBO();
             salaryExecutionProcess = commonSetupDA.GetCommonConfigurationInfo("PayrollSalaryExecutionProcessType", "PayrollSalaryExecutionProcessType");
 
@@ -95,11 +106,25 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             {
                 if (hfIsSingle.Value == "1")
                 {
-                    reportName = "RptEmployeeSalarySheetsForSingleCompany";
+                    if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
+                    {
+                        reportName = "RptEmployeeSalarySheetsForSingleCompany";
+                    }
+                    else
+                    {
+                        reportName = "RptEmployeeSalarySheetsForSingleCompanyWAS";
+                    }
                 }
                 else
                 {
-                    reportName = "RptEmployeeSalarySheets";
+                    if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
+                    {
+                        reportName = "RptEmployeeSalarySheets";
+                    }
+                    else
+                    {
+                        reportName = "RptEmployeeSalarySheetsWAS";
+                    }
                 }
             }
             else if (Convert.ToInt32(salaryExecutionProcess.SetupValue) == (int)HMConstants.PayrollSalaryExecutionProcessType.RedCross)
