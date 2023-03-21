@@ -19,6 +19,7 @@
         var previousPoint = 0.0;
         var DiscountDetails = new Array();
         var IsMembershipPaymentEnableFlag = false;
+        var dataForEditForBillingBillId = new Array();
 
         $(document).ready(function () {
             if ($("#ContentPlaceHolder1_hfBillId").val() != '' && $("#ContentPlaceHolder1_hfBillIdControl").val() != '1') {
@@ -476,14 +477,14 @@
                 return false;
             }
         }
-
+        
         function PerformEdit(id) {
             // debugger;
             PageMethods.GetBillById(id, "RestaurantToken", OnSuccessLoading, OnFailLoading)
             return false;
         }
         function OnSuccessLoading(result) {
-            debugger;
+            dataForEditForBillingBillId = result.RestaurantKotBill;
             var str = result;
 
             var tr = "";
@@ -578,6 +579,14 @@
             }
 
             $("#txtTotalSales").val(result.RestaurantKotBill.GrandTotal - result.RestaurantKotBill.VatAmount - result.RestaurantKotBill.DiscountAmount);
+            if (result.RestaurantKotBill.DiscountType == "Fixed") {
+                $("#rbFixedDiscount").prop("checked", true);
+                $("#rbPercentageDiscount").prop("checked", false);
+            }
+            else if (result.RestaurantKotBill.DiscountType == "Percentage") {
+                $("#rbFixedDiscount").prop("checked", false);
+                $("#rbPercentageDiscount").prop("checked", true);
+            }
             $("#txtDiscountAmount").val(result.RestaurantKotBill.DiscountAmount);
             $("#txtAfterDiscountAmount").val(result.RestaurantKotBill.GrandTotal - result.RestaurantKotBill.VatAmount);
             $("#txtVat").val(result.RestaurantKotBill.VatAmount);
@@ -1380,14 +1389,26 @@
             //}
 
             $("#AddedItem tbody tr").each(function () {
-
+                debugger;
                 amount = parseFloat($(this).find("td:eq(6)").text());
-
+                let discountType;
+                if ($("#rbFixedDiscount").is(":checked")) {
+                    discountType = "Fixed";
+                }
+                else if ($("#rbPercentageDiscount").is(":checked")) {
+                    discountType = "Percentage";
+                }
                 if (AddedItemList[index].DiscountType == "Fixed") {
                     discountAmount = AddedItemList[index].DiscountAmount;
                 }
+                else if (discountType == "Fixed") {
+                    discountAmount = parseFloat($("#txtDiscountAmount").val());
+                }
                 else if (AddedItemList[index].DiscountType == "Percentage") {
                     discountAmount = amount * (AddedItemList[index].DiscountAmount / 100.00);
+                }
+                else if (discountType == "Percentage") {
+                    discountAmount = amount * (parseFloat($("#txtDiscountAmount").val()) / 100.00);
                 }
 
                 totalAmount += amount;
@@ -1399,28 +1420,28 @@
                 discountAmount = 0.00;
             });
 
-            if ($("#rbPercentageDiscount").is(":checked") == true && discount != 0) {
-                discountType = "Percentage";
-                discountAmount = totalAmount * (discount / 100.00);
-            }
-            else if ($("#rbFixedDiscount").is(":checked") == true && discount != 0) {
-                discountType = "Fixed";
-                discountAmount = discount;
-            }
-            totalDiscountAmount = discountAmount;
+            //if ($("#rbPercentageDiscount").is(":checked") == true && discount != 0) {
+            //    discountType = "Percentage";
+            //    discountAmount = totalAmount * (discount / 100.00);
+            //}
+            //else if ($("#rbFixedDiscount").is(":checked") == true && discount != 0) {
+            //    discountType = "Fixed";
+            //    discountAmount = discount;
+            //}
+            //totalDiscountAmount = discountAmount;
 
 
-            var MaxItemDiscountTotal = 0.0;
+            //var MaxItemDiscountTotal = 0.0;
 
-            $("#AddedItem tbody tr").each(function () {
+            //$("#AddedItem tbody tr").each(function () {
 
-                var itemDiscountAmount = parseFloat($(this).find("td:eq(14)").text());
-                MaxItemDiscountTotal = MaxItemDiscountTotal + itemDiscountAmount;
+            //    var itemDiscountAmount = parseFloat($(this).find("td:eq(14)").text());
+            //    MaxItemDiscountTotal = MaxItemDiscountTotal + itemDiscountAmount;
 
-            });
-            totalDiscountAmount = MaxItemDiscountTotal;
+            //});
+            //totalDiscountAmount = MaxItemDiscountTotal;
 
-            debugger;
+            //debugger;
             //afterDiscountAmount = totalAmount - discountAmount;
             afterDiscountAmount = totalAmount - totalDiscountAmount;
 
@@ -1847,7 +1868,7 @@
             var SalesReturnItem = new Array();
             EditedItemList = new Array();
             //debugger;
-
+            
             costCenterId = $("#ContentPlaceHolder1_hfCostcenterId").val();
 
             if ($("#rbFixedDiscount").is(":checked")) {
@@ -1856,7 +1877,10 @@
             else if ($("#rbPercentageDiscount").is(":checked")) {
                 discountType = "Percentage";
             }
-
+            if (dataForEditForBillingBillId.DiscountType == "Fixed" || dataForEditForBillingBillId.DiscountType == "Percentage") {
+                discountType = dataForEditForBillingBillId.DiscountType;
+            }
+            
             if ($("#ContentPlaceHolder1_hfResumedKotId").val() != "") {
                 kotId = $("#ContentPlaceHolder1_hfResumedKotId").val();
             }
@@ -2975,6 +2999,7 @@
             EditedItemList = new Array();
             DeletedItemList = new Array();
             PreviousBillItemList = new Array();
+            dataForEditForBillingBillId = new Array();
 
             $("#AddedItem tbody").html("");
             $("#PreviousBillItem  tbody").html("");
@@ -3033,6 +3058,11 @@
             $("#ContentPlaceHolder1_txtSubject").val("");
             $("#txtReturnItemTotal").val("");
             $("#txtReturnItemVatTotal").val("");
+        }
+
+        function FocusDiscountField() {
+            debugger;
+            $("#txtDiscountAmount").focus();
         }
 
     </script>
@@ -3220,16 +3250,16 @@
                                     <input type="text" class="form-control" id="txtTotalSales" placeholder="Total Sales" disabled="disabled" />
                                 </div>
                             </div>
-                            <div class="form-group no-gutter" style="display: none">
+                            <div class="form-group no-gutter">
                                 <div class="col-md-12" id="discountTable">
                                     <table class="table table-condensed table-responsive" style="margin-bottom: 2px;">
                                         <tbody>
                                             <tr>
                                                 <td style="width: 60px;">
-                                                    <input type="radio" id="rbFixedDiscount" name="DiscountType" />&nbsp;<span>Fixed</span>
+                                                    <input type="radio" id="rbFixedDiscount" name="DiscountType" onselect="FocusDiscountField()" />&nbsp;<span>Fixed</span>
                                                 </td>
                                                 <td style="width: 100px;">
-                                                    <input type="radio" id="rbPercentageDiscount" name="DiscountType" checked="checked" />&nbsp;<span>Percentage</span>
+                                                    <input type="radio" id="rbPercentageDiscount" name="DiscountType" checked="checked" onselect="FocusDiscountField()" />&nbsp;<span>Percentage</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -3243,7 +3273,7 @@
                                 </div>
                                 <div class="col-md-7">
                                     <input type="text" class="form-control quantity" id="txtDiscountAmount" tabindex="1" placeholder="Discount Amount"
-                                        onblur="CalculateDiscount()" disabled="disabled" />
+                                        onblur="CalculateDiscount()" />
                                 </div>
                             </div>
                             <div class="form-group no-gutter">

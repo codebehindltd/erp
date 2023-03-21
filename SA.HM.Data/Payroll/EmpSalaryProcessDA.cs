@@ -643,7 +643,6 @@ namespace HotelManagement.Data.Payroll
                         dbSmartAspects.AddInParameter(cmd, "@Branch", DbType.Int32, DBNull.Value);
 
                     dbSmartAspects.AddInParameter(cmd, "@CurrencyType", DbType.String, currencyType);
-
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateFrom", DbType.DateTime, processDateFrom);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessDateTo", DbType.DateTime, processDateTo);
                     dbSmartAspects.AddInParameter(cmd, "@ProcessYear", DbType.Int16, processYear);
@@ -652,10 +651,6 @@ namespace HotelManagement.Data.Payroll
                     dbSmartAspects.LoadDataSet(cmd, salarySheetDS, "SalarySheet");
 
                     DataTable Table = salarySheetDS.Tables["SalarySheet"];
-
-                    // ProcessId	EmpId	EmpCode	EmployeeName	Designation	LocationId	Location	
-                    // DepartmentId	DepartmentName	SalaryDateFrom	SalaryDateTo	PaidDays	DonorId	
-                    // Project	BasicAmount	SalaryHeadId	SalaryHead	SalaryType	SalaryAmount	GrossAmount	HomeTakenAmount
 
                     salarySheetList = Table.AsEnumerable().Select(r => new SalarySheetBO
                     {
@@ -690,9 +685,15 @@ namespace HotelManagement.Data.Payroll
                         PayrollCurrencyId = r.Field<int>("PayrollCurrencyId"),
                         CurrencyName = r.Field<string>("CurrencyName"),
                         ConvertionRate = r.Field<decimal>("ConvertionRate"),
-                        BasicAmountInEmployeeCurrency = r.Field<decimal>("BasicAmountInEmployeeCurrency")
+                        BasicAmountInEmployeeCurrency = r.Field<decimal>("BasicAmountInEmployeeCurrency"),
+                        TotalDays = r.Field<int>("TotalDays"),
+                        TotalLeave = r.Field<int>("TotalLeave"),
+                        TotalHoliday = r.Field<int>("TotalHoliday"),
+                        TotalDayOff = r.Field<int>("TotalDayOff"),
+                        TotalAbsent = r.Field<int>("TotalAbsent"),
+                        TotalPresent = r.Field<int>("TotalPresent"),
+                        Gender = r.Field<string>("Gender"),
                     }).ToList();
-
                 }
             }
             return salarySheetList;
@@ -744,12 +745,7 @@ namespace HotelManagement.Data.Payroll
 
                     DataSet salarySheetDS = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, salarySheetDS, "SalarySheet");
-
                     DataTable Table = salarySheetDS.Tables["SalarySheet"];
-
-                    // ProcessId	EmpId	EmpCode	EmployeeName	Designation	LocationId	Location	
-                    // DepartmentId	DepartmentName	SalaryDateFrom	SalaryDateTo	PaidDays	DonorId	
-                    // Project	BasicAmount	SalaryHeadId	SalaryHead	SalaryType	SalaryAmount	GrossAmount	HomeTakenAmount
 
                     salarySheetList = Table.AsEnumerable().Select(r => new SalarySheetBO
                     {
@@ -772,25 +768,19 @@ namespace HotelManagement.Data.Payroll
                         SalaryType = r.Field<string>("SalaryType"),
                         SalaryAmount = r.Field<decimal>("SalaryAmount"),
                         GrossAmount = r.Field<decimal>("GrossAmount"),
-
                         MedicalAllowance = r.Field<decimal>("MedicalAllowance"),
                         NSSFEmployeeContribution = r.Field<decimal>("NSSFEmployeeContribution"),
-
                         TotalAllowance = r.Field<decimal>("TotalAllowance"),
                         TotalDeduction = r.Field<decimal>("TotalDeduction"),
-
                         TaxableIncome = r.Field<decimal>("TaxableIncome"),
                         HomeTakenAmount = r.Field<decimal>("HomeTakenAmount"),
-
                         SalaryTypeRank = r.Field<int>("SalaryTypeRank"),
                         SalaryMonth = r.Field<string>("SalaryMonth"),
                         SalaryYearMonth = r.Field<string>("SalaryYearMonth"),
                         ShowJoiningDate = r.Field<string>("ShowJoiningDate"),
-
                         SalaryEffectiveness = r.Field<string>("SalaryEffectiveness"),
                         PayHead = r.Field<string>("PayHead"),
                         PayHeadDescription = r.Field<string>("PayHeadDescription")
-
                     }).ToList();
 
                 }
@@ -1048,6 +1038,12 @@ namespace HotelManagement.Data.Payroll
                         ConvertionRate = r.Field<decimal>("ConvertionRate"),
                         BasicAmountInEmployeeCurrency = r.Field<decimal>("BasicAmountInEmployeeCurrency"),
                         ShowJoiningDate = r.Field<string>("ShowJoiningDate"),
+                        TotalDays = r.Field<int>("TotalDays"),
+                        TotalLeave = r.Field<int>("TotalLeave"),
+                        TotalHoliday = r.Field<int>("TotalHoliday"),
+                        TotalDayOff = r.Field<int>("TotalDayOff"),
+                        TotalAbsent = r.Field<int>("TotalAbsent"),
+                        TotalPresent = r.Field<int>("TotalPresent"),
                     }).ToList();
 
                 }

@@ -1,4 +1,5 @@
 ﻿using HotelManagement.Data.GeneralLedger;
+using HotelManagement.Data.HMCommon;
 using HotelManagement.Data.PurchaseManagment;
 using HotelManagement.Data.UserInformation;
 using HotelManagement.Entity.GeneralLedger;
@@ -49,42 +50,98 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             PMSupplierDA supplier = new PMSupplierDA();
             List<PMSupplierBO> supplierList = supplier.GetPMSupplierInfo();
 
-            Object[] companySupplierList = new Object[4];
+            NodeMatrixDA accountHead = new NodeMatrixDA();
+            List<NodeMatrixBO> accoutHeadList = (accountHead.GetNodeMatrixInfo().Where(xActive => xActive.NodeMode == true).ToList()).Where(xITH => xITH.IsTransactionalHead == true).ToList();
+
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            HMCommonSetupBO commonSetupSupplierAccountsHeadBO = new HMCommonSetupBO();            
+            commonSetupSupplierAccountsHeadBO = commonSetupDA.GetCommonConfigurationInfo("SupplierAccountsHeadId", "SupplierAccountsHeadId");
+            if (commonSetupSupplierAccountsHeadBO != null)
+            {
+                if (commonSetupSupplierAccountsHeadBO.SetupId > 0)
+                {
+                    accoutHeadList = accoutHeadList.Where(x => x.NodeId.ToString() != commonSetupSupplierAccountsHeadBO.SetupValue).ToList();
+                }
+            }
+
+
+            HMCommonDA hmCommonDA = new HMCommonDA();
+            NodeMatrixDA entityDA = new NodeMatrixDA();
+            List<CommonPaymentModeBO> commonPaymentModeBOList = new List<CommonPaymentModeBO>();
+            commonPaymentModeBOList = hmCommonDA.GetCommonPaymentModeInfo("All");
+            CommonPaymentModeBO companyPaymentModeInfo = commonPaymentModeBOList.Where(x => x.PaymentMode == "Company").FirstOrDefault();
+            if (companyPaymentModeInfo != null)
+            {
+                if (companyPaymentModeInfo.PaymentModeId > 0)
+                {
+                    accoutHeadList = accoutHeadList.Where(x => x.NodeId != companyPaymentModeInfo.PaymentAccountsPostingId).ToList();
+                }
+            }
+
+            Object[] companySupplierAccountList = new Object[4];
             
             if(transactionTypeId == 1)
             {
-                companySupplierList[0] = supplierList;
-                companySupplierList[1] = companyList;
-                companySupplierList[2] = "Supplier";
-                companySupplierList[3] = "Company";
+                companySupplierAccountList[0] = supplierList;
+                companySupplierAccountList[1] = companyList;
+                companySupplierAccountList[2] = "Supplier";
+                companySupplierAccountList[3] = "Company";
             }
             else if(transactionTypeId == 2)
             {
-                companySupplierList[0] = companyList;
-                companySupplierList[1] = supplierList;
-                companySupplierList[2] = "Company";
-                companySupplierList[3] = "Supplier";
+                companySupplierAccountList[0] = companyList;
+                companySupplierAccountList[1] = supplierList;
+                companySupplierAccountList[2] = "Company";
+                companySupplierAccountList[3] = "Supplier";
             }
             else if (transactionTypeId == 3)
             {
-                companySupplierList[0] = supplierList;
-                companySupplierList[1] = supplierList;
-                companySupplierList[2] = "Supplier";
-                companySupplierList[3] = "Supplier";
+                companySupplierAccountList[0] = supplierList;
+                companySupplierAccountList[1] = supplierList;
+                companySupplierAccountList[2] = "Supplier";
+                companySupplierAccountList[3] = "Supplier";
             }
             else if (transactionTypeId == 4)
             {
-                companySupplierList[0] = companyList;
-                companySupplierList[1] = companyList;
-                companySupplierList[2] = "Company";
-                companySupplierList[3] = "Company";
+                companySupplierAccountList[0] = companyList;
+                companySupplierAccountList[1] = companyList;
+                companySupplierAccountList[2] = "Company";
+                companySupplierAccountList[3] = "Company";
+            }
+            else if (transactionTypeId == 5)
+            {
+                companySupplierAccountList[0] = companyList;
+                companySupplierAccountList[1] = accoutHeadList;
+                companySupplierAccountList[2] = "Company";
+                companySupplierAccountList[3] = "Accounts Head";
+            }
+            else if (transactionTypeId == 6)
+            {
+                companySupplierAccountList[0] = accoutHeadList;
+                companySupplierAccountList[1] = companyList;
+                companySupplierAccountList[2] = "Accounts Head";
+                companySupplierAccountList[3] = "Company";
+            }
+            else if (transactionTypeId == 7)
+            {
+                companySupplierAccountList[0] = supplierList;
+                companySupplierAccountList[1] = accoutHeadList;
+                companySupplierAccountList[2] = "Supplier";
+                companySupplierAccountList[3] = "Accounts Head";
+            }
+            else if (transactionTypeId == 8)
+            {
+                companySupplierAccountList[0] = accoutHeadList;
+                companySupplierAccountList[1] = supplierList;
+                companySupplierAccountList[2] = "Accounts Head";
+                companySupplierAccountList[3] = "Supplier";
             }
             else
             {
-                companySupplierList[2] = "";
-                companySupplierList[3] = "";
+                companySupplierAccountList[2] = "";
+                companySupplierAccountList[3] = "";
             }
-            return companySupplierList;
+            return companySupplierAccountList;
         }
 
         [WebMethod]

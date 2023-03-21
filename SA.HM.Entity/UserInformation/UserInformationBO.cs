@@ -15,6 +15,7 @@ namespace HotelManagement.Entity.UserInformation
         public string GroupName { get; set; }
         public string EmployeeName { get; set; }
         public string UserId { get; set; }
+        public string UserIdAndName { get; set; }
         public string UserPassword { get; set; }
         public DateTime CreatedDate { get; set; }
         public Boolean ActiveStat { get; set; }

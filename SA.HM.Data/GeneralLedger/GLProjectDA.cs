@@ -60,6 +60,31 @@ namespace HotelManagement.Data.GeneralLedger
             }
             return projectList;
         }
+        public List<GLProjectBO> GetProjectInfoForAirlineTikect(int companyId)
+        {
+            List<GLProjectBO> projectList = new List<GLProjectBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetProjectInfoForAirlineTikect_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                GLProjectBO projectBO = new GLProjectBO();
+                                projectBO.ProjectId = Convert.ToInt32(reader["ProjectId"]);
+                                projectBO.Name = reader["Name"].ToString();
+                                projectList.Add(projectBO);
+                            }
+                        }
+                    }
+                }
+            }
+            return projectList;
+        }
         public bool SaveGLProjectInfo(GLProjectBO projectBO, List<GLProjectWiseCostCenterMappingBO> newCostCenterList, long randomDocumentOwnerId, string deletedDocuments, out int tmpProjectId)
         {
             Boolean status = false;

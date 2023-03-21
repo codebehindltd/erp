@@ -40,6 +40,15 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment.Reports {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
+        /// ddlReportFor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlReportFor;
+        
+        /// <summary>
         /// ddlReportType control.
         /// </summary>
         /// <remarks>
@@ -130,13 +139,13 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment.Reports {
         protected global::System.Web.UI.WebControls.TextBox txtEndDateTo;
         
         /// <summary>
-        /// lblToDate control.
+        /// lblAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblToDate;
+        protected global::System.Web.UI.WebControls.Label lblAmount;
         
         /// <summary>
         /// txtFromAmount control.

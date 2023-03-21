@@ -124,6 +124,10 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                     {
                         va.GLStatus = HMConstants.ApprovalStatus.Checked.ToString();
                     }
+                    else if (va.GLStatus == HMConstants.ApprovalStatus.Submit.ToString())
+                    {
+                        va.GLStatus = HMConstants.ApprovalStatus.Checked.ToString();
+                    }
                     else if (va.GLStatus == HMConstants.ApprovalStatus.Checked.ToString())
                     {
                         va.GLStatus = HMConstants.ApprovalStatus.Approved.ToString();

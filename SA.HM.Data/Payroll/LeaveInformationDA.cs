@@ -691,12 +691,13 @@ namespace HotelManagement.Data.Payroll
                                 count += dbSmartAspects.ExecuteNonQuery(command);
                             }
 
+                            status = true;
 
-                            if (count == editList.Count)
-                            {
-                                status = true;
-                                count = 0;
-                            }
+                            //if (count == editList.Count)
+                            //{
+                            //    status = true;
+                            //    count = 0;
+                            //}
                         }
                         if (status)
                         {
@@ -725,12 +726,13 @@ namespace HotelManagement.Data.Payroll
                                         count += dbSmartAspects.ExecuteNonQuery(command);
                                     }
 
+                                    status = true;
 
-                                    if (count == addtList.Count)
-                                    {
-                                        status = true;
-                                        count = 0;
-                                    }
+                                    //if (count == addtList.Count)
+                                    //{
+                                    //    status = true;
+                                    //    count = 0;
+                                    //}
                                 }
                             }
                             if (deleteList != null)
@@ -744,10 +746,13 @@ namespace HotelManagement.Data.Payroll
 
                                         count = dbSmartAspects.ExecuteNonQuery(command);
                                     }
-                                    if (count == deleteList.Count)
-                                    {
-                                        status = true;
-                                    }
+
+                                    status = true;
+
+                                    //if (count == deleteList.Count)
+                                    //{
+                                    //    status = true;
+                                    //}
                                 }
                             }
                         }

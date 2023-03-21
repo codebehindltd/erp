@@ -171,6 +171,10 @@ namespace HotelManagement.Entity.Payroll
         public string DSOAC { get; set; }
         public string ConfirmationLetter { get; set; }
 
+        public decimal EmpContribution { get; set; }
+        public decimal CompanyContribution { get; set; }
+        public decimal ProvidentFundInterest { get; set; }
+
     }
 
 }

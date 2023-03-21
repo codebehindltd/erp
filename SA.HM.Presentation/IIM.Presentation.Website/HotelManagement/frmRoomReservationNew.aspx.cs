@@ -1056,8 +1056,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             ddlGuestCountry.DataTextField = "CountryName";
             ddlGuestCountry.DataValueField = "CountryId";
             ddlGuestCountry.DataBind();
-            //string bangladesh = "19";
-            //ddlGuestCountry.SelectedValue = bangladesh;
 
             ListItem itemGuestCountry = new ListItem();
             itemGuestCountry.Value = "0";
@@ -2864,7 +2862,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
                 commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
                 CommonDA commonDA = new CommonDA();
-                //RoomReservationBO reservationBO = new RoomReservationBO();
                 RoomReservationDA reservationDA = new RoomReservationDA();
                 string mainString = commonSetupBO.Description;
                 string[] dataArray = mainString.Split('~');
@@ -2911,7 +2908,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
                 commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
                 CommonDA commonDA = new CommonDA();
-                //RoomReservationBO reservationBO = new RoomReservationBO();
                 RoomReservationDA reservationDA = new RoomReservationDA();
                 string mainString = commonSetupBO.Description;
                 string[] dataArray = mainString.Split('~');
@@ -2958,7 +2954,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
                 commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
                 CommonDA commonDA = new CommonDA();
-                //RoomReservationBO reservationBO = new RoomReservationBO();
                 RoomReservationDA reservationDA = new RoomReservationDA();
                 string mainString = commonSetupBO.Description;
                 string[] dataArray = mainString.Split('~');
@@ -3098,16 +3093,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                       {"ReferencePersonDesignation",detailList[0].ReferenceDesignation},
                       {"ContactPersonOrganization",detailList[0].GuestCompanyName +", "+detailList[0].GuestCompanyAddress+" ."},
                       {"ReferencePersonOrganization",detailList[0].ReferenceOrganization},
-
                       {"ContactPersonTelephone",detailList[0].TelephoneNumber},
                       {"ReferencePersonTelephone",detailList[0].ReferenceTelephone},
-
                       {"ContactPersonCell",detailList[0].ContactNumber},
                       {"ReferencePersonCell",detailList[0].ReferenceCellNumber},
-
                       {"ContactPersonFax",detailList[0].FaxNumber},
                       {"ReferencePersonFax",detailList[0].FaxNumber},
-                      //{"NAME", detailList[0].GuestName},
                       {"NAME", detailList[0].ContactPerson},
                       {"ContactPersonEmail",detailList[0].ContactEmail},
                       {"ReferencePersonEmail",detailList[0].ReferenceEmail},
@@ -3278,16 +3269,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                       {"ReferencePersonDesignation",detailList[0].ReferenceDesignation},
                       {"ContactPersonOrganization",detailList[0].GuestCompanyName +", "+detailList[0].GuestCompanyAddress+" ."},
                       {"ReferencePersonOrganization",detailList[0].ReferenceOrganization},
-
                       {"ContactPersonTelephone",detailList[0].TelephoneNumber},
                       {"ReferencePersonTelephone",detailList[0].ReferenceTelephone},
-
                       {"ContactPersonCell",detailList[0].ContactNumber},
                       {"ReferencePersonCell",detailList[0].ReferenceCellNumber},
-
                       {"ContactPersonFax",detailList[0].FaxNumber},
                       {"ReferencePersonFax",detailList[0].FaxNumber},
-                      //{"NAME", detailList[0].GuestName},
                       {"NAME", detailList[0].ContactPerson },
                       {"ContactPersonEmail",detailList[0].ContactEmail},
                       {"ReferencePersonEmail",detailList[0].ReferenceEmail},
@@ -4960,22 +4947,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             List<RoomAvailableStatusBO> avalibleRoomList = new List<RoomAvailableStatusBO>();
             HMCommonDA hmCommonDA = new HMCommonDA();
-            //avalibleRoomList = hmCommonDA.GetRoomWithAvailableStatusByDate(startDate, endDate, "Availability").Where(x => x.RoomTypeId == Convert.ToInt32(RoomTypeId)).ToList();
-
-            //foreach (RoomAvailableStatusBO row in avalibleRoomList)
-            //{
-            //    if (availableRoomQty == -100)
-            //    {
-            //        availableRoomQty = row.TotalAvailable;
-            //    }
-            //    else if (availableRoomQty > row.TotalAvailable)
-            //    {
-            //        availableRoomQty = row.TotalAvailable;
-            //    }
-            //}  
-
-            //return availableRoomQty.ToString();
-
+            
             availableRoomQty = hmCommonDA.GetRoomAvailableQuantity(reservationId, startDate, endDate, RoomTypeId, roomQuantityEntered);
             return availableRoomQty.ToString();
         }

@@ -23,7 +23,7 @@
                 onClose: function (selectedDate) {
                     $('#' + txtEndDate).datepicker("option", "minDate", selectedDate);
                 }
-            });//.datepicker("setDate", DayOpenDate);/*.datepicker("setDate", DayOpenDate);*/
+            });
 
             $('#' + txtEndDate).datepicker({
                 changeMonth: true,
@@ -32,7 +32,7 @@
                 onClose: function (selectedDate) {
                     $('#' + txtStartDate).datepicker("option", "maxDate", selectedDate);
                 }
-            });//.datepicker("setDate", DayOpenDate);
+            });
 
             $("#ContentPlaceHolder1_ddlCategory").select2({
                 tags: "true",
@@ -58,21 +58,6 @@
             var ddlCategory = '<%=ddlCategory.ClientID%>'
             var category = $("#ContentPlaceHolder1_ddlCategory").val();
             var ddlItem = '<%=ddlProductId.ClientID%>'
-                        
-            <%--if (category != "0") {                
-                LoadProductItem(category);
-                setTimeout(SetValForItem, 300);
-            }
-            else {
-                var control = $('#' + ddlItem);
-                control.removeAttr("disabled");
-                control.empty().append('<option value="-1">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
-            }
-
-            $('#' + ddlCategory).change(function () {
-                var category = $('#' + ddlCategory).val();
-                LoadProductItem(category);
-            });--%>
 
             var txtHiddenItemId = '<%=txtHiddenItemId.ClientID%>'
             $('#' + ddlItem).change(function () {
@@ -86,10 +71,10 @@
         });
 
         function SetValForItem() {
-                var itemId = $('#ContentPlaceHolder1_txtHiddenItemId').val();
-                if (itemId != "") {
-                    $("#ContentPlaceHolder1_ddlProductId").val(itemId).trigger('change');
-                }
+            var itemId = $('#ContentPlaceHolder1_txtHiddenItemId').val();
+            if (itemId != "") {
+                $("#ContentPlaceHolder1_ddlProductId").val(itemId).trigger('change');
+            }
         }
 
         //Div Visible True/False-------------------
@@ -140,12 +125,10 @@
         function ValidationProcess() {
             var company = $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val();
             var project = $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").val();
-
             $("#ContentPlaceHolder1_hfCompanyId").val(company);
             $("#ContentPlaceHolder1_hfProjectId").val(project);
             $("#ContentPlaceHolder1_hfCompanyName").val($("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany option:selected").text());
             $("#ContentPlaceHolder1_hfProjectName").val($("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject option:selected").text());
-
         }
     </script>
     <asp:HiddenField ID="txtHiddenItemId" runat="server" />
@@ -171,6 +154,7 @@
                             <asp:ListItem Text="Date Wise" Value="DateRange"></asp:ListItem>
                             <asp:ListItem Text="Supplier Wise" Value="Supplier"></asp:ListItem>
                             <asp:ListItem Text="Category Wise" Value="Category"></asp:ListItem>
+                            <asp:ListItem Text="Item Wise" Value="Item"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
                     <div class="col-md-2">
@@ -256,15 +240,6 @@
                 </div>
             </div>
         </div>
-        <%-- <div class="row">
-            <div class="columnRight">
-                <asp:TextBox ID="txtCompanyName" runat="server" Visible="False"></asp:TextBox>
-                <asp:TextBox ID="txtCompanyAddress" runat="server" Visible="False"></asp:TextBox>
-                <asp:TextBox ID="txtCompanyWeb" runat="server" Visible="False"></asp:TextBox>
-            </div>
-            <div class="clear">
-            </div>
-        </div>--%>
     </div>
     <div style="display: none;">
         <asp:Button ID="btnPrintReportFromClient" runat="server" Text="Button" OnClick="btnPrintReportFromClient_Click"
@@ -284,33 +259,14 @@
                     PageCountMode="Actual" SizeToReportContent="true" ShowPrintButton="true" runat="server"
                     Font-Names="Verdana" Font-Size="8pt" InteractiveDeviceInfos="(Collection)" WaitMessageFont-Names="Verdana"
                     WaitMessageFont-Size="14pt" Width="950px" Height="820px">
-                    <%--<LocalReport ReportPath="Inventory\Reports\Rdlc\rptProductReceiveInfo.rdlc">
-                        <DataSources>
-                            <rsweb:ReportDataSource DataSourceId="TransactionDataSource" Name="ProductReceiveDS" />
-                        </DataSources>
-                    </LocalReport>--%>
                 </rsweb:ReportViewer>
             </asp:Panel>
-            <%--<asp:ObjectDataSource ID="TransactionDataSource" runat="server" SelectMethod="GetData"
-                TypeName="HotelManagement.Presentation.Website.HotelManagementDBDataSetTableAdapters.GetProductReceive_SPTableAdapter"
-                OldValuesParameterFormatString="original_{0}">
-                <SelectParameters>
-                    <asp:FormParameter FormField="txtStartDate" Name="FromDate" Type="DateTime" />
-                    <asp:FormParameter FormField="txtEndDate" Name="ToDate" Type="DateTime" />
-                    <asp:FormParameter FormField="txtCompanyName" Name="CompanyName" Type="String" />
-                    <asp:FormParameter FormField="txtCompanyAddress" Name="CompanyAddress" Type="String" />
-                    <asp:FormParameter FormField="txtCompanyWeb" Name="CompanyWeb" Type="String" />
-                    <asp:FormParameter FormField="ddlProductId" Name="ProductId" Type="String" />
-                </SelectParameters>
-            </asp:ObjectDataSource>--%>
         </div>
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
             if (CommonHelper.BrowserType().mozilla || CommonHelper.BrowserType().chrome) {
-
                 var barControlId = CommonHelper.GetReportViewerControlId($("#<%=rvTransaction.ClientID %>"));
-
                 var innerTbody = '<tbody><tr><td><input type="image" style="border-width: 0px; padding: 2px; height: 16px; width: 16px;" alt="Print" src="/Reserved.ReportViewerWebControl.axd?OpType=Resource&amp;Version=9.0.30729.1&amp;Name=Microsoft.Reporting.WebForms.Icons.Print.gif" title="Print"></td></tr></tbody>';
                 var innerTable = '<table title="Print" onclick="PrintDocumentFunc(\'' + barControlId + '\'); return false;" id="ff_print" style="cursor: default;">' + innerTbody + '</table>'
                 var outerDiv = '<div style="display: inline-block; font-size: 8pt; height: 30px;" class=" "><table cellspacing="0" cellpadding="0" style="display: inline;"><tbody><tr><td height="28px">' + innerTable + '</td></tr></tbody></table></div>';

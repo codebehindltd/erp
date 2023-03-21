@@ -180,7 +180,8 @@
                 interestAmount *= loanPeriod;
             }
             else {
-                interestAmount /= 12;
+                //interestAmount /= 12;
+                interestAmount /= loanPeriod;
                 interestAmount *= loanPeriod;
             }
 
@@ -483,6 +484,10 @@
                 toastr.warning("Please give loan date");
                 return false;
             }
+            else if ($("#ContentPlaceHolder1_txtRemarks").val() == "") {
+                toastr.warning("Please give loan Remarks");
+                return false;
+            }
             else if ($("#ContentPlaceHolder1_approvedByEmployee_hfEmployeeId").val() == "0") {
                 toastr.warning("Please give loan approved by");
                 return false;
@@ -490,7 +495,7 @@
             else if ($("#ContentPlaceHolder1_txtLoanTakenForPeriod").val() == "" || $("#ContentPlaceHolder1_txtLoanTakenForPeriod").val() == "0") {
                 toastr.warning("Please give Loan Taken Period");
                 return false;
-            }
+            }            
             else {
                 return true;
             }
@@ -746,8 +751,8 @@
                             </div>
                             <div class="col-md-4">
                                 <asp:DropDownList ID="ddlLoanTakenForMonthOrYear" runat="server" CssClass="form-control">
-                                    <asp:ListItem Text="Year" Value="year"> </asp:ListItem>
                                     <asp:ListItem Text="Month" Value="month"></asp:ListItem>
+                                    <asp:ListItem Text="Year" Value="year"> </asp:ListItem>                                    
                                 </asp:DropDownList>
                             </div>                            
                         </div>
@@ -795,7 +800,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblRemarks" runat="server" class="control-label" Text="Remarks"></asp:Label>
+                                <asp:Label ID="lblRemarks" runat="server" class="control-label required-field" Text="Remarks"></asp:Label>
                             </div>
                             <div class="col-md-10">
                                 <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control" TextMode="MultiLine"

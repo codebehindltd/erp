@@ -13,7 +13,10 @@ namespace HotelManagement.Entity.AirTicketing
         public string TransactionType { get; set; }
         public long TransactionId { get; set; }
         public int CompanyId { get; set; }
+        public int ProjectId { get; set; }
+        public int PaymentInstructionBankId { get; set; }
         public string CompanyName { get; set; }
+        public string ProjectName { get; set; }
         public long ReferenceId { get; set; }
         public string ReferenceName { get; set; }
         public string RegistrationNumber { get; set; }
@@ -27,5 +30,9 @@ namespace HotelManagement.Entity.AirTicketing
         public bool IsCanDelete { get; set; }
         public bool IsCanChecked { get; set; }
         public bool IsCanApproved { get; set; }
+        public string TicketNumber { get; set; }
+        public string PNRNumber { get; set; }
+        public int MyProperty { get; set; }
+        public Int64 PaymentId { get; set; }
     }
 }

@@ -17,6 +17,9 @@ TRUNCATE TABLE InvInventoryAccountVsItemCategoryMappping
 TRUNCATE TABLE InvItemTransactionLog
 TRUNCATE TABLE InvItemTransactionLogSummary
 TRUNCATE TABLE InvItemTransactionPaymentDetails
+TRUNCATE TABLE ItemEntry
+TRUNCATE TABLE InvItemStockInformationLog
+TRUNCATE TABLE InvItemTransactionHistory
 
 
 -- -------------------------*All Tables*----------------------

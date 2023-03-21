@@ -56,8 +56,39 @@ TRUNCATE TABLE RestaurantSalesReturn
 TRUNCATE TABLE RestaurantSalesReturnDetails
 TRUNCATE TABLE RestaurantSalesReturnItem
 
+TRUNCATE TABLE CommonCheckedByApprovedBy
+TRUNCATE TABLE CommonDeleteLedgerLog
+TRUNCATE TABLE ContributionAnalysis
+
+TRUNCATE TABLE HotelGuestRoomShiftInfo
+TRUNCATE TABLE HotelManagerReportInfo
+TRUNCATE TABLE HotelMarketSegmentWiseSalesSummary
+TRUNCATE TABLE HotelMonthToDateInfo
+TRUNCATE TABLE HotelTaskAssignmentRoomWise
+TRUNCATE TABLE HotelTaskAssignmentToEmployee
+
+TRUNCATE TABLE RegistrationSync
+TRUNCATE TABLE RestaurantBearer
+TRUNCATE TABLE RestaurantBillSync
+TRUNCATE TABLE RestaurantResettlementLog
+TRUNCATE TABLE SecurityObjectPermission
+TRUNCATE TABLE SecurityObjectTab
+TRUNCATE TABLE SMLogKeeping
+TRUNCATE TABLE SMLogKeepingBackup
+TRUNCATE TABLE SMContactInformation
+TRUNCATE TABLE SMContactDetails
+TRUNCATE TABLE ServiceBillSync
+
 UPDATE HotelRoomNumber
 SET	
 	StatusId = 1,
 	CleanupStatus = 'Cleaned',
 	HKRoomStatusId = 5
+
+
+TRUNCATE TABLE ATTicketMaster
+TRUNCATE TABLE ATTicketDetails
+TRUNCATE TABLE ATTicketPaymentDetails
+
+TRUNCATE TABLE CashRequisition
+TRUNCATE TABLE CashRequisitionDetails

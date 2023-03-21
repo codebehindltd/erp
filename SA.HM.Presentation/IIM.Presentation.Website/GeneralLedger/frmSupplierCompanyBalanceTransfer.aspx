@@ -76,6 +76,11 @@
                         value: value.SupplierId,
                         text: value.Name
                     }));
+                } else if (value.NodeId) {
+                    $('#ContentPlaceHolder1_ddlFrom').append($('<option/>', {
+                        value: value.NodeId,
+                        text: value.HeadWithCode
+                    }));
                 }
             });
             $('#ContentPlaceHolder1_ddlFrom option[value="' + fromId + '"]').attr("selected", "selected");
@@ -95,6 +100,11 @@
                         value: value.SupplierId,
                         text: value.Name
                     }));
+                } else if (value.NodeId) {
+                    $('#ContentPlaceHolder1_ddlTo').append($('<option/>', {
+                        value: value.NodeId,
+                        text: value.HeadWithCode
+                    }));
                 }
             });
             $('#ContentPlaceHolder1_ddlTo option[value="' + toId + '"]').attr("selected", "selected");
@@ -105,9 +115,11 @@
         }
 
         function Clear() {
-            $("#ContentPlaceHolder1_ddlTransactionType").val("0");
-            $("#ContentPlaceHolder1_ddlFrom").val("1");
-            $("#ContentPlaceHolder1_ddlTo").val("1");
+            $("#ContentPlaceHolder1_ddlTransactionType").val("0").trigger('change');
+            $("#ContentPlaceHolder1_ddlFrom").val("0").trigger('change');
+            $("#ContentPlaceHolder1_ddlTo").val("0").trigger('change');
+            $("#ContentPlaceHolder1_hfEditFromTransaction").val(0);
+            $("#ContentPlaceHolder1_hfEditToTransaction").val(0);
             $("#ContentPlaceHolder1_txtAmount").val("");
             $("#ContentPlaceHolder1_txtTransactionDate").val("");
             $("#ContentPlaceHolder1_txtRemarks").val("");
@@ -202,6 +214,7 @@
                     $("#SupplierToCompanyDiv").show();
                 }
                 $("#ContentPlaceHolder1_txtRemarks").val("");
+                Clear();
             }
             else {
                 toastr.warning("Balance Transfer Failed.");
@@ -247,6 +260,10 @@
                                     <asp:ListItem Value="2">Company To Supplier</asp:ListItem>
                                     <asp:ListItem Value="3">Supplier To Supplier</asp:ListItem>
                                     <asp:ListItem Value="4">Company To Company</asp:ListItem>
+                                    <asp:ListItem Value="5">Company to Accounts Head</asp:ListItem>
+                                    <asp:ListItem Value="6">Accounts Head to Company</asp:ListItem>
+                                    <asp:ListItem Value="7">Supplier to Accounts Head</asp:ListItem>
+                                    <asp:ListItem Value="8">Accounts Head to Supplier</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -331,6 +348,10 @@
                                     <asp:ListItem Value="2">Company To Supplier</asp:ListItem>
                                     <asp:ListItem Value="3">Supplier To Supplier</asp:ListItem>
                                     <asp:ListItem Value="4">Company To Company</asp:ListItem>
+                                    <asp:ListItem Value="5">Company to Accounts Head</asp:ListItem>
+                                    <asp:ListItem Value="6">Accounts Head to Company</asp:ListItem>
+                                    <asp:ListItem Value="7">Supplier to Accounts Head</asp:ListItem>
+                                    <asp:ListItem Value="8">Accounts Head to Supplier</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -504,6 +525,11 @@
                         value: value.SupplierId,
                         text: value.Name
                     }));
+                } else if (value.NodeId) {
+                    $('#ContentPlaceHolder1_ddlFromSearch').append($('<option/>', {
+                        value: value.NodeId,
+                        text: value.NodeHead
+                    }));
                 }
             });
 
@@ -521,6 +547,11 @@
                     $('#ContentPlaceHolder1_ddlToSearch').append($('<option/>', {
                         value: value.SupplierId,
                         text: value.Name
+                    }));
+                } else if (value.NodeId) {
+                    $('#ContentPlaceHolder1_ddlToSearch').append($('<option/>', {
+                        value: value.NodeId,
+                        text: value.NodeHead
                     }));
                 }
             });
@@ -622,6 +653,14 @@
                 editTransactionId = "3";
             } else if (result.TransactionType == "Company To Company") {
                 editTransactionId = "4";
+            } else if (result.TransactionType == "Company to Accounts Head") {
+                editTransactionId = "5";
+            } else if (result.TransactionType == "Accounts Head to Company") {
+                editTransactionId = "6";
+            } else if (result.TransactionType == "Supplier to Accounts Head") {
+                editTransactionId = "7";
+            } else if (result.TransactionType == "Accounts Head to Supplier") {
+                editTransactionId = "8";
             }
             $("#ContentPlaceHolder1_hfEditFromTransaction").val(result.FromTransactionId);
             $("#ContentPlaceHolder1_hfEditToTransaction").val(result.ToTransactionId);

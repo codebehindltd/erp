@@ -31,10 +31,43 @@ BEGIN
 	--SELECT RegistrationId FROM HotelRoomRegistration WHERE CheckOutDate > '2018-09-01' AND CheckOutDate < '2018-10-01'))
 	
 	--EXEC VatRelatedDataDelete 'RNumber', 'RR00000001'
+
+	--EXEC VatRelatedDataDelete 'RNumber', 'RR00000001'
+
+	----Reservation Base Data Remove Process-----------------Start
+	----GO
+	----DECLARE @RegistrationId INT
+	----DECLARE @getRegistrationId CURSOR
+	----SET @getRegistrationId = CURSOR FOR
+
+	----SELECT RegistrationId FROM HotelRoomRegistration 
+	----WHERE ReservationId IN(
+	----	SELECT TOP 1 ReservationId FROM HotelRoomReservation WHERE ReservationNumber LIKE '%GR00000%'
+	----)
+
+	----OPEN @getRegistrationId
+	----FETCH NEXT
+	----FROM @getRegistrationId INTO @RegistrationId
+	----WHILE @@FETCH_STATUS = 0
+	----BEGIN
+	----	 PRINT @RegistrationId
+	----	DECLARE @RegistrationNumber VARCHAR(100)
+	----	SELECT @RegistrationNumber = RegistrationNumber 
+	----	FROM HotelRoomRegistration 
+	----	WHERE RegistrationId = @RegistrationId
+	----	AND CheckOutDate IS NOT NULL
 	
-	DECLARE @DataCount INT
+	----	EXEC VatRelatedDataDelete 'RNumber', @RegistrationNumber
+
+	----FETCH NEXT
+	----FROM @getRegistrationId INTO @RegistrationId
+	----END
+	----CLOSE @getRegistrationId
+	----DEALLOCATE @getRegistrationId
+	----GO
+	----Reservation Base Data Remove Process-----------------End
 	
-	
+	DECLARE @DataCount INT	
 	DECLARE @RegistrationId BIGINT
 	SET @RegistrationId = 0
 	

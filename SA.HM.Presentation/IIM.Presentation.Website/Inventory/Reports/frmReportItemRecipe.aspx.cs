@@ -52,6 +52,7 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             rvTransaction.ProcessingMode = ProcessingMode.Local;
 
             var reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptItemRecipe.rdlc");
+            //Server.MapPath(@"~/Inventory/Reports/Rdlc/rptItemNutrientInformation.rdlc");
 
             if (!File.Exists(reportPath))
                 return;
@@ -157,7 +158,7 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             InvItemDA productDA = new InvItemDA();
             List = productDA.GetInvItemInfo(true);
             ddlProduct.DataSource = List;
-            ddlProduct.DataTextField = "Name";
+            ddlProduct.DataTextField = "CodeAndName";
             ddlProduct.DataValueField = "ItemId";
             ddlProduct.DataBind();
             System.Web.UI.WebControls.ListItem itemNodeId = new System.Web.UI.WebControls.ListItem();

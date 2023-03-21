@@ -31,27 +31,12 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
         {
             if (!IsPostBack)
             {
-                //LoadProduct();
                 LoadCategory();
                 LoadSupplierInfo();
                 LoadCommonDropDownHiddenField();
                 LoadItem();
-                //LoadCurrentDate();
             }
         }
-        //private void LoadProduct()
-        //{
-        //    InvItemDA productDA = new InvItemDA();
-        //    ddlProductId.DataSource = productDA.GetInvItemInfo();
-        //    ddlProductId.DataTextField = "Name";
-        //    ddlProductId.DataValueField = "ItemId";
-        //    ddlProductId.DataBind();
-
-        //    System.Web.UI.WebControls.ListItem itemProduct = new System.Web.UI.WebControls.ListItem();
-        //    itemProduct.Value = "0";
-        //    itemProduct.Text = hmUtility.GetDropDownFirstAllValue();
-        //    ddlProductId.Items.Insert(0, itemProduct);
-        //}
         private void LoadCurrentDate()
         {
             txtStartDate.Text = DateTime.Now.ToString();
@@ -72,7 +57,6 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             item.Text = hmUtility.GetDropDownFirstAllValue();
             ddlCategory.Items.Insert(0, item);
         }
-
         private void LoadItem()
         {
             List<InvItemBO> productList = new List<InvItemBO>();
@@ -87,7 +71,6 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             item.Text = hmUtility.GetDropDownFirstAllValue();
             ddlProductId.Items.Insert(0, item);
         }
-
         private void LoadSupplierInfo()
         {
             PMSupplierDA entityDA = new PMSupplierDA();
@@ -132,10 +115,11 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             int categoryId = 0, productId = 0, supplierId = 0;
             DateTime? FromDate = dateTime, ToDate = dateTime;
 
-            //ToDate = hmUtility.GetDateTimeFromString(endDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1).AddSeconds(-1);
+            string strStartDate = string.Empty;
+            string strEndDate = string.Empty;
 
             if (!string.IsNullOrWhiteSpace(txtStartDate.Text))
-            {
+            {                
                 FromDate = hmUtility.GetDateTimeFromString(txtStartDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             }
             else
@@ -153,7 +137,6 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             }
 
             categoryId = Convert.ToInt32(ddlCategory.SelectedValue);
-            //productId = Convert.ToInt32(ddlProductId.SelectedValue);
             productId = !string.IsNullOrWhiteSpace(txtHiddenItemId.Value) ? Convert.ToInt32(txtHiddenItemId.Value) : 0;
             supplierId = Convert.ToInt32(ddlSupplier.SelectedValue);
             receiveNumber = txtReceiveNumber.Text.Trim();
@@ -215,6 +198,17 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
                     reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptProductReceiveDetailsInfoByCategory.rdlc");
                 }
             }
+            else if (ddlReportType.SelectedValue == "Item")
+            {
+                if (ddlDisplayType.SelectedValue == "Summary")
+                {
+                    reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptProductReceiveSummaryInfoByItem.rdlc");
+                }
+                else
+                {
+                    reportPath = Server.MapPath(@"~/Inventory/Reports/Rdlc/rptProductReceiveDetailsInfoByItem.rdlc");
+                }
+            }
 
             if (!File.Exists(reportPath))
                 return;
@@ -224,7 +218,6 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             CompanyDA companyDA = new CompanyDA();
             List<CompanyBO> files = companyDA.GetCompanyInfo();
 
-            //string companyName = string.Empty;
             string companyAddress = string.Empty;
             string webAddress = string.Empty;
 
@@ -237,22 +230,17 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             {
                 companyName = files[0].CompanyName;
                 companyAddress = files[0].CompanyAddress;
-                //paramReport.Add(new ReportParameter("CompanyProfile", fileCompany[0].Name));
-                //paramReport.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
 
                 if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
                 {
-                    //paramReport.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
                     webAddress = files[0].WebAddress;
                 }
                 else
                 {
-                    //paramReport.Add(new ReportParameter("CompanyWeb", files[0].ContactNumber));
                     webAddress = files[0].ContactNumber;
                 }
             }
 
-            //int glCompanyId = Convert.ToInt32(ddlGLCompanyId.SelectedValue);
             if (companyId > 0)
             {
                 GLCompanyBO glCompanyBO = new GLCompanyBO();
@@ -286,14 +274,12 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
             userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
             footerPoweredByInfo = userInformationBO.FooterPoweredByInfo;
 
-            //string ImageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
-            //rvTransaction.LocalReport.EnableExternalImages = true;
-
             paramReport.Add(new ReportParameter("CompanyProfile", companyName));
             paramReport.Add(new ReportParameter("CompanyAddress", companyAddress));
             paramReport.Add(new ReportParameter("CompanyWeb", webAddress));
             paramReport.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + imageName)));
             paramReport.Add(new ReportParameter("PrintDateTime", printDate));
+            paramReport.Add(new ReportParameter("ReportDate", "Date From " + txtStartDate.Text + " To " + txtEndDate.Text));
             paramReport.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
             paramReport.Add(new ReportParameter("DisplayTypeInfo", ddlDisplayType.SelectedValue));
             if (productId > 0)
@@ -332,7 +318,6 @@ namespace HotelManagement.Presentation.Website.Inventory.Reports
 
             return productList;
         }
-
         protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             int CategoryId = Convert.ToInt32(ddlCategory.SelectedValue);

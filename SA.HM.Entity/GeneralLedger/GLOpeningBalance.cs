@@ -8,6 +8,7 @@ namespace HotelManagement.Entity.GeneralLedger
     public class GLOpeningBalance
     {
         public long Id { get; set; }
+        public long MasterId { get; set; }
         public string TransactionType { get; set; }
         public int CompanyId { get; set; }
         public int SupplierId { get; set; }

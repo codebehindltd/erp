@@ -1936,6 +1936,60 @@ namespace HotelManagement.Data.Restaurant
             }
             return billBO;
         }
+        public RestaurantBillBO GetATBillInfoByBillId(int billID)
+        {
+            RestaurantBillBO billBO = new RestaurantBillBO();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetATBillInfoByBillId_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@BillId", DbType.Int32, billID);
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                billBO.BillId = billID;
+                                billBO.CostCenterId = Convert.ToInt32(reader["CostCenterId"].ToString());
+                                //billBO.IsBillSettlement = Convert.ToBoolean(reader["IsBillSettlement"].ToString());
+                                billBO.CustomerName = reader["CustomerName"].ToString();
+                                billBO.CardNumber = reader["CardNumber"].ToString();
+                                billBO.BillDate = Convert.ToDateTime(reader["BillDate"].ToString());
+                                billBO.CreatedBy = Convert.ToInt32(reader["CreatedBy"].ToString());
+                                billBO.CreatedDate = reader["CreatedDate"].ToString();
+                                billBO.DiscountType = reader["DiscountType"].ToString();
+                                billBO.Remarks = reader["Remarks"].ToString();
+                                billBO.InvoiceServiceRate = Convert.ToDecimal(reader["InvoiceServiceRate"].ToString());
+                                //billBO.IsInvoiceServiceChargeEnable = Convert.ToBoolean(reader["IsInvoiceServiceChargeEnable"].ToString());
+                                ////billBO.InvoiceServiceCharge = Convert.ToDecimal(reader["CostCenterId"].ToString());
+                                //billBO.IsInvoiceCitySDChargeEnable = Convert.ToBoolean(reader["IsInvoiceCitySDChargeEnable"].ToString());
+                                ////billBO.InvoiceCitySDCharge = Convert.ToDecimal(reader["CostCenterId"].ToString());
+                                //billBO.IsInvoiceVatAmountEnable = Convert.ToBoolean(reader["IsInvoiceVatAmountEnable"].ToString());
+                                ////billBO.InvoiceVatAmount = Convert.ToDecimal(reader["CostCenterId"].ToString());
+                                //billBO.IsInvoiceAdditionalChargeEnable = Convert.ToBoolean(reader["IsInvoiceAdditionalChargeEnable"].ToString());
+                                ////billBO.InvoiceAdditionalCharge = Convert.ToString(reader["CostCenterId"].ToString());
+
+                                billBO.GLCompanyId = Convert.ToInt32(reader["GLCompanyId"].ToString());
+                                billBO.ProjectId = Convert.ToInt32(reader["ProjectId"].ToString());
+
+                                billBO.AccountCompany = reader["AccountCompany"].ToString();
+                                billBO.ProjectCode = reader["ProjectCode"].ToString();
+                                billBO.ProjectName = reader["ProjectName"].ToString();
+                                billBO.BinNumber = reader["BinNumber"].ToString();
+                                billBO.TinNumber = reader["TinNumber"].ToString();
+                                billBO.BillDescription = reader["BillDescription"].ToString();
+                                billBO.BillDeclaration = reader["BillDeclaration"].ToString();
+                                billBO.UserSignature = reader["UserSignature"].ToString();
+                            }
+                        }
+                    }
+                }
+            }
+            return billBO;
+        }
         public List<RestaurantBillBO> GetRestaurantBillInfoBySearchCriteria(DateTime FormDate, DateTime ToDate, string BillNo, string CustomerInfo, string Remarks, int userInfoId, int costCenterId)
         {
             string Where = GenarateWhereConditionstring(FormDate, ToDate, BillNo, CustomerInfo, Remarks, userInfoId, costCenterId);

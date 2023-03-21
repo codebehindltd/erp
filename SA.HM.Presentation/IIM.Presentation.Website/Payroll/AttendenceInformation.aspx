@@ -283,6 +283,7 @@
         }
         function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
             var fromDate = "", toDate = "";
+            $("#ContentPlaceHolder1_hfPageNumber").val(pageNumber);
             fromDate = $("#<%=txtFromDate.ClientID %>").val();
             toDate = $("#<%=txtToDate.ClientID %>").val();
             var empId = $("#<%=ddlEmployee.ClientID %>").val();
@@ -590,7 +591,16 @@
             if (result.IsSuccess) {
                 CommonHelper.AlertMessage(result.AlertMessage);
                 PerformClearClose();
-                GridPaging(1, 1);
+                //GridPaging(1, 1);
+
+                if ($("#ContentPlaceHolder1_hfPageNumber").val() == "") {
+                    GridPaging($("#GridPagingContainer").find("li.active").index(), 1);
+                }
+                else {
+                    var pageNumber = $("#ContentPlaceHolder1_hfPageNumber").val();
+                    GridPaging(pageNumber, 1);
+                }
+
                 $("#ApprovalDiv").hide();
                 $("#saveBtnDiv ").show();
             }
@@ -601,6 +611,7 @@
         function OnFailed(error) {
         }
     </script>
+    <asp:HiddenField ID="hfPageNumber" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfAttendanceId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfEmployeeId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfIsEmpListVisible" runat="server" Value="0" />

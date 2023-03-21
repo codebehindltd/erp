@@ -7,45 +7,45 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Presentation.Website {
+namespace HotelManagement.Presentation.Website.AirTicketing.Reports {
     
     
-    public partial class InnBoard {
+    public partial class frmATBillInfo {
         
         /// <summary>
-        /// form1 control.
+        /// hfBillTemplate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.HiddenField hfBillTemplate;
         
         /// <summary>
-        /// InnboardMessageHiddenField control.
+        /// btnPrintReportTemplate1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField InnboardMessageHiddenField;
+        protected global::System.Web.UI.WebControls.Button btnPrintReportTemplate1;
         
         /// <summary>
-        /// ScriptManager1 control.
+        /// frmPrint control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl frmPrint;
         
         /// <summary>
-        /// ContentPlaceHolder1 control.
+        /// rvTransaction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::Microsoft.Reporting.WebForms.ReportViewer rvTransaction;
     }
 }

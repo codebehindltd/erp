@@ -340,18 +340,18 @@ namespace HotelManagement.Presentation.Website.Payroll
                 {
                     leaveInformationBO.LeaveStatus = HMConstants.ApprovalStatus.Approved.ToString();
                 }
-                else
-                {
-                    List<SecurityUserAdminAuthorizationBO> adminAuthorizationList = new List<SecurityUserAdminAuthorizationBO>();
-                    adminAuthorizationList = System.Web.HttpContext.Current.Session["UserAdminAuthorizationBOSession"] as List<SecurityUserAdminAuthorizationBO>;
-                    if (adminAuthorizationList != null)
-                    {
-                        if (adminAuthorizationList.Where(x => x.UserInfoId == userInformationBO.UserInfoId && x.ModuleId == 18).Count() > 0)
-                        {
-                            leaveInformationBO.LeaveStatus = HMConstants.ApprovalStatus.Approved.ToString();
-                        }
-                    }
-                }
+                //else
+                //{
+                //    List<SecurityUserAdminAuthorizationBO> adminAuthorizationList = new List<SecurityUserAdminAuthorizationBO>();
+                //    adminAuthorizationList = System.Web.HttpContext.Current.Session["UserAdminAuthorizationBOSession"] as List<SecurityUserAdminAuthorizationBO>;
+                //    if (adminAuthorizationList != null)
+                //    {
+                //        if (adminAuthorizationList.Where(x => x.UserInfoId == userInformationBO.UserInfoId && x.ModuleId == 18).Count() > 0)
+                //        {
+                //            leaveInformationBO.LeaveStatus = HMConstants.ApprovalStatus.Approved.ToString();
+                //        }
+                //    }
+                //}
                 #endregion
 
                 if (leaveInformationBO.LeaveId <= 0)//save

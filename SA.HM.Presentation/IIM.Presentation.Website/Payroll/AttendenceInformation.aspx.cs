@@ -433,24 +433,24 @@ namespace HotelManagement.Presentation.Website.Payroll
                         }
                     }
                 }
-                else
-                {
-                    List<SecurityUserAdminAuthorizationBO> adminAuthorizationList = new List<SecurityUserAdminAuthorizationBO>();
-                    adminAuthorizationList = System.Web.HttpContext.Current.Session["UserAdminAuthorizationBOSession"] as List<SecurityUserAdminAuthorizationBO>;
-                    if (adminAuthorizationList != null)
-                    {
-                        if (adminAuthorizationList.Where(x => x.UserInfoId == userInformationBO.UserInfoId && x.ModuleId == 18).Count() > 0)
-                        {
-                            if (!string.IsNullOrWhiteSpace(entryHour) && !string.IsNullOrWhiteSpace(exitHour))
-                            {
-                                if (attendenceBO.EntryTime != attendenceBO.ExitTime)
-                                {
-                                    attendenceBO.AttendenceStatus = "Approved";
-                                }
-                            }
-                        }
-                    }
-                }
+                //else
+                //{
+                //    List<SecurityUserAdminAuthorizationBO> adminAuthorizationList = new List<SecurityUserAdminAuthorizationBO>();
+                //    adminAuthorizationList = System.Web.HttpContext.Current.Session["UserAdminAuthorizationBOSession"] as List<SecurityUserAdminAuthorizationBO>;
+                //    if (adminAuthorizationList != null)
+                //    {
+                //        if (adminAuthorizationList.Where(x => x.UserInfoId == userInformationBO.UserInfoId && x.ModuleId == 18).Count() > 0)
+                //        {
+                //            if (!string.IsNullOrWhiteSpace(entryHour) && !string.IsNullOrWhiteSpace(exitHour))
+                //            {
+                //                if (attendenceBO.EntryTime != attendenceBO.ExitTime)
+                //                {
+                //                    attendenceBO.AttendenceStatus = "Approved";
+                //                }
+                //            }
+                //        }
+                //    }
+                //}
                 #endregion
 
                 if (attendanceId == 0)

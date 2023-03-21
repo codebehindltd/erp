@@ -12,6 +12,7 @@ namespace HotelManagement.Entity.Inventory
         public int ItemId { get; set; }
         public int RecipeItemId { get; set; }
         public string RecipeItemName { get; set; }
+        public string RecipeItemCodeAndName { get; set; }
         public int UnitHeadId { get; set; }
         public string HeadName { get; set; }
         public decimal ItemUnit { get; set; }

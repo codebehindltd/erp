@@ -1834,7 +1834,6 @@ function OnProjectsPopulated(response) {
                 title: "Documents Upload",
                 show: 'slide'
             });
-
         }
         function CloseDialog() {
             $("#DocumentDialouge").dialog('close');
@@ -2934,7 +2933,7 @@ function OnProjectsPopulated(response) {
                             </div>
                             <div class="col-md-4">
                                 <input id="btnImageUp" type="button" onclick="javascript: return LoadDocUploader();"
-                                    class="TransactionalButton btn btn-primary btn-sm" value="Assignment Doc..." />
+                                    class="TransactionalButton btn btn-primary btn-sm" value="Documents..." />
                             </div>
                         </div>
                         <div id="DocumentInfo">

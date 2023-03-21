@@ -1,8 +1,10 @@
 ﻿using HotelManagement.Data.AirTicketing;
+using HotelManagement.Data.GeneralLedger;
 using HotelManagement.Data.HMCommon;
 using HotelManagement.Data.HotelManagement;
 using HotelManagement.Data.SalesAndMarketing;
 using HotelManagement.Entity.AirTicketing;
+using HotelManagement.Entity.GeneralLedger;
 using HotelManagement.Entity.HMCommon;
 using HotelManagement.Entity.HotelManagement;
 using HotelManagement.Entity.SalesAndMarketing;
@@ -25,12 +27,44 @@ namespace HotelManagement.Presentation.Website.AirTicketing
         {
             if (!IsPostBack)
             {
+                Random rd = new Random();
+                int seatingId = rd.Next(100000, 999999);
+                RandomDocId.Value = seatingId.ToString();
+                IsAdminUser();
                 LoadAirline();
                 LoadCurrency();
                 CheckPermission();
+                LoadProject();
+                LoadBankName();
+                FileUpload();
             }
         }
-
+        private void IsAdminUser()
+        {
+            HMUtility hmUtility = new HMUtility();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            // // // ------User Admin Authorization BO Session Information --------------------------------
+            #region User Admin Authorization
+            btnAdminApproval.Visible = false;
+            if (userInformationBO.UserInfoId == 1)
+            {
+                btnAdminApproval.Visible = true;
+            }
+            else
+            {
+                List<SecurityUserAdminAuthorizationBO> adminAuthorizationList = new List<SecurityUserAdminAuthorizationBO>();
+                adminAuthorizationList = System.Web.HttpContext.Current.Session["UserAdminAuthorizationBOSession"] as List<SecurityUserAdminAuthorizationBO>;
+                if (adminAuthorizationList != null)
+                {
+                    if (adminAuthorizationList.Where(x => x.UserInfoId == userInformationBO.UserInfoId && x.ModuleId == 40).Count() > 0)
+                    {
+                        btnAdminApproval.Visible = true;
+                    }
+                }
+            }
+            #endregion
+        }
         private void CheckPermission()
         {
             hfSavePermission.Value = isSavePermission ? "1" : "0";
@@ -49,7 +83,13 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                 }
             }
         }
-
+        private void FileUpload()
+        {
+            string jscript = "function UploadComplete(){ };";
+            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "FileCompleteUpload", jscript, true);
+            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "LoadDetailGridInformation", jscript, true);
+            //flashUpload.QueryParameters = "TaskAssignDocId=" + Server.UrlEncode(RandomDocId.Value);
+        }
         private void LoadAirline()
         {
             AirlineDA airlineDa = new AirlineDA();
@@ -65,6 +105,50 @@ namespace HotelManagement.Presentation.Website.AirTicketing
             itemSearch.Value = "0";
             itemSearch.Text = hmUtility.GetDropDownFirstValue();
             ddlAirlineName.Items.Insert(0, itemSearch);
+        }
+
+        private void LoadProject()
+        {
+            int glCompanyId = 0;
+            CostCentreTabDA entityDA = new CostCentreTabDA();
+            List<CostCentreTabBO> listAirlineTicketListBO = entityDA.GetCostCentreTabInfoByType("AirlineTicket");
+            if (listAirlineTicketListBO != null)
+            {
+                if (listAirlineTicketListBO.Count > 0)
+                {
+                    glCompanyId = listAirlineTicketListBO[0].GLCompanyId;
+                }
+            }
+
+            GLProjectDA projectDa = new GLProjectDA();
+            List<GLProjectBO> projectBO = new List<GLProjectBO>();
+            projectBO = projectDa.GetProjectInfoForAirlineTikect(glCompanyId);
+
+            ddlProject.DataSource = projectBO;
+            ddlProject.DataTextField = "Name";
+            ddlProject.DataValueField = "ProjectId";
+            ddlProject.DataBind();
+
+            ListItem itemSearch = new ListItem();
+            itemSearch.Value = "0";
+            itemSearch.Text = hmUtility.GetDropDownFirstValue();
+            ddlProject.Items.Insert(0, itemSearch);
+        }
+        private void LoadBankName()
+        {
+            BankDA bankDa = new BankDA();
+            List<BankBO> bankBo = new List<BankBO>();
+            bankBo = bankDa.GetBankInfo();
+
+            ddlPaymentInstructionBank.DataSource = bankBo;
+            ddlPaymentInstructionBank.DataTextField = "BankAccountNameAndNumber";
+            ddlPaymentInstructionBank.DataValueField = "BankId";
+            ddlPaymentInstructionBank.DataBind();
+
+            ListItem itemSearch = new ListItem();
+            itemSearch.Value = "0";
+            itemSearch.Text = hmUtility.GetDropDownFirstValue();
+            ddlPaymentInstructionBank.Items.Insert(0, itemSearch);
         }
 
         private void LoadCurrency()
@@ -122,7 +206,8 @@ namespace HotelManagement.Presentation.Website.AirTicketing
 
 
         [WebMethod]
-        public static ReturnInfo SaveAirlineTicketInfo(AirlineTicketMasterBO AirTicketMasterInfo, List<AirlineTicketInfoBO> AddedSingleTicketInfo, List<GuestBillPaymentBO> AddedPaymentInfo, List<int> deletedPaymentInfoList)
+        public static ReturnInfo SaveAirlineTicketInfo(AirlineTicketMasterBO AirTicketMasterInfo, List<AirlineTicketInfoBO> AddedSingleTicketInfo, List<int> deletedAirlineInfoList, List<GuestBillPaymentBO> AddedPaymentInfo, 
+                                                        List<int> deletedPaymentInfoList, int randomDocId, string deletedDoc)
         {
             ReturnInfo rtninfo = new ReturnInfo();
             Boolean status = false;
@@ -142,12 +227,36 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                 {
                     IsUpdate = true;
                 }
-                
 
-                status = atDa.SaveAirlineTicketInfo(AirTicketMasterInfo, AddedSingleTicketInfo, AddedPaymentInfo, deletedPaymentInfoList);
+                int costCenterId = 0;
+                CostCentreTabDA entityDA = new CostCentreTabDA();
+                List<CostCentreTabBO> listAirlineTicketListBO = entityDA.GetCostCentreTabInfoByType("AirlineTicket");
+                if (listAirlineTicketListBO != null)
+                {
+                    if (listAirlineTicketListBO.Count > 0)
+                    {
+                        costCenterId = listAirlineTicketListBO[0].CostCenterId;
+                    }
+                }
+                AirTicketMasterInfo.CostCenterId = costCenterId;
+                long id = 0;
+                int OwnerIdForDocuments = 0;
+                HMCommonDA hmCommonDA = new HMCommonDA();
+
+                status = atDa.SaveAirlineTicketInfo(AirTicketMasterInfo, AddedSingleTicketInfo, deletedAirlineInfoList, AddedPaymentInfo, deletedPaymentInfoList, out id);
                 if (status)
                 {
                     rtninfo.IsSuccess = true;
+                    OwnerIdForDocuments = Convert.ToInt32(id);
+                    DocumentsDA documentsDA = new DocumentsDA();
+                    string s = deletedDoc;
+                    string[] DeletedDocList = s.Split(',');
+                    for (int i = 0; i < DeletedDocList.Length; i++)
+                    {
+                        DeletedDocList[i] = DeletedDocList[i].Trim();
+                        Boolean DeleteStatus = documentsDA.DeleteDocumentsByDocumentId(Convert.ToInt32(DeletedDocList[i]));
+                    }
+                    Boolean updateStatus = hmCommonDA.UpdateUploadedDocumentsInformationByOwnerId(OwnerIdForDocuments, Convert.ToInt32(randomDocId));
                     if (IsUpdate)
                     {
                         rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
@@ -169,9 +278,10 @@ namespace HotelManagement.Presentation.Website.AirTicketing
                 rtninfo.IsSuccess = false;
                 rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
             }
-
+            Random rd = new Random();
+            int randomId = rd.Next(100000, 999999);
+            rtninfo.Data = randomId;
             return rtninfo;
-            
         }
 
         
@@ -243,8 +353,41 @@ namespace HotelManagement.Presentation.Website.AirTicketing
         }
 
         [WebMethod]
+        public static ReturnInfo TicketInformationApproval(long ticketId)
+        {
+            ReturnInfo rtninfo = new ReturnInfo();
+            Boolean status = false;
+            try
+            {
+                HMUtility hmUtility = new HMUtility();
+                UserInformationBO userInformationBO = new UserInformationBO();
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                AirlineTicketInfoDA atDa = new AirlineTicketInfoDA();
+                status = atDa.TicketInformationApproval(ticketId, userInformationBO.UserInfoId);
+                if (status)
+                {
+                    CommonDA commonDA = new CommonDA();
+                    bool autoProcessStatus = commonDA.AutoCompanyBillGenerationProcess("Airline Ticketing", ticketId, userInformationBO.UserInfoId);
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Approved, AlertType.Success);
+                }
+                if (!status)
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+            return rtninfo;
+        }
+
+        [WebMethod]
         public static GridViewDataNPaging<AirlineTicketMasterBO, GridPaging> SearchTicketInformation(DateTime? fromDate, DateTime? toDate, string invoiceNumber, string companyName, 
-                                                                                          string referenceName, int gridRecordsCount, int pageNumber, int isCurrentOrPreviousPage
+                                                                                          string referenceName, string ticketNumber, string pnrNumber, int gridRecordsCount, int pageNumber, int isCurrentOrPreviousPage
                                                                                          )
         {
             int totalRecords = 0;
@@ -258,7 +401,7 @@ namespace HotelManagement.Presentation.Website.AirTicketing
             AirlineTicketInfoDA aTDA = new AirlineTicketInfoDA();
             List<AirlineTicketMasterBO> ticketList = new List<AirlineTicketMasterBO>();
 
-            ticketList = aTDA.GetTicketInformation(fromDate, toDate, invoiceNumber, companyName, referenceName, userInformationBO.UserInfoId, userInformationBO.GridViewPageSize, pageNumber, out totalRecords);
+            ticketList = aTDA.GetTicketInformation(fromDate, toDate, invoiceNumber, companyName, referenceName, ticketNumber, pnrNumber, userInformationBO.UserInfoId, userInformationBO.GridViewPageSize, pageNumber, out totalRecords);
 
             myGridData.GridPagingProcessing(ticketList, totalRecords);
             return myGridData;
@@ -274,6 +417,116 @@ namespace HotelManagement.Presentation.Website.AirTicketing
             viewBo.ATInformationDetails = aTDA.GetATInformationDetails(ticketId);
             viewBo.ATPaymentInfo = aTDA.GetATPaymentInfo(ticketId);
             return viewBo;
+        }
+        [WebMethod]
+        public static ReturnInfo AdminApprovalStatus(string ticketNo, string ticketStatus)
+        {
+            Boolean status = false;
+            ReturnInfo rtninfo = new ReturnInfo();
+            AirlineTicketInfoDA supportDA = new AirlineTicketInfoDA();
+            HMUtility hmUtility = new HMUtility();
+            UserInformationBO userInformationBO = new UserInformationBO();
+
+            try
+            {
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+                status = supportDA.UpdateTicketStatusByATTicketNo(ticketNo, ticketStatus, userInformationBO.UserInfoId);
+                if (status)
+                {
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = "Ticket Unapprove Successfull.";
+                }
+                else
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            return rtninfo;
+        }
+        [WebMethod]
+        public static List<DocumentsBO> GetUploadedDocByWebMethod(int randomId, int id, string deletedDoc)
+        {
+            List<int> delete = new List<int>();
+            if (!(String.IsNullOrEmpty(deletedDoc)))
+            {
+                delete = deletedDoc.Split(',').Select(t => int.Parse(t)).ToList();
+            }
+            List<DocumentsBO> docList = new List<DocumentsBO>();
+            docList = new DocumentsDA().GetDocumentsByUserTypeAndUserId("AirlineTicketInfo", randomId);
+            if (id > 0)
+                docList.AddRange(new DocumentsDA().GetDocumentsByUserTypeAndUserId("AirlineTicketInfo", (int)id));
+
+            docList.RemoveAll(x => delete.Contains(Convert.ToInt32(x.DocumentId)));
+            foreach (DocumentsBO dc in docList)
+            {
+
+                if (dc.DocumentType == "Image")
+                    dc.Path = (dc.Path + dc.Name);
+
+                dc.Name = dc.Name.Remove(dc.Name.LastIndexOf('.'));
+            }
+            docList = new HMCommonDA().GetDocumentListWithIcon(docList).ToList();
+            return docList;
+        }
+        [WebMethod]
+        public static string LoadVoucherDocumentById(long id)
+        {
+            List<DocumentsBO> docList = new List<DocumentsBO>();
+
+            docList = new DocumentsDA().GetDocumentsByUserTypeAndUserId("AirlineTicketInfo", id);
+            docList = new HMCommonDA().GetDocumentListWithIcon(docList);
+
+            string strTable = "";
+            strTable += "<div style='color: White; background-color: #44545E;width:750px;'>";
+            int counter = 0;
+            foreach (DocumentsBO dr in docList)
+            {
+                if (dr.Extention == ".jpg")
+                {
+                    string ImgSource = dr.Path + dr.Name;
+                    counter++;
+                    strTable += "<div style=' width:250px; height:250px; float:left;padding:30px'>";
+                    strTable += "<a style='color:#333333;' target='_blank' href='" + ImgSource + "'>";
+                    strTable += "<img style='width: 200px; height: 200px;' src='" + ImgSource + "'  alt='Image preview' />";
+                    strTable += "<span>'" + dr.Name + "'</span>";
+                    strTable += "</a>";
+                    strTable += "</div>";
+                }
+                else
+                {
+                    string ImgSource = dr.Path + dr.Name;
+                    counter++;
+                    strTable += "<div style=' width:100px; height:100px; float:left;padding:30px'>";
+                    strTable += "<a style='color:#333333;' target='_blank' href='" + ImgSource + "'>";
+                    strTable += "<img style='width: 100px; height: 100px;' src='" + dr.IconImage + "' alt='Image preview' />";
+                    strTable += "<span>'" + dr.Name + "'</span>";
+                    strTable += "</a>";
+                    strTable += "</div>";
+                }
+            }
+            strTable += "</div>";
+            if (strTable == "")
+            {
+                strTable = "<tr><td align='center'>No Record Available!</td></tr>";
+            }
+            return strTable;
+
+        }
+        [WebMethod]
+        public static AirlineTicketInfoBO GetLastAirlineTicketId()
+        {
+            AirlineTicketInfoBO ticketInfo = new AirlineTicketInfoBO();
+            AirlineTicketInfoDA ATDa = new AirlineTicketInfoDA();
+            ticketInfo = ATDa.GetLastAirlineTicketId();
+            return ticketInfo;
         }
     }
 }

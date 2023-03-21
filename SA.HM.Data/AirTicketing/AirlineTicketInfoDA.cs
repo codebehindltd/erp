@@ -12,9 +12,10 @@ namespace HotelManagement.Data.AirTicketing
 {
     public class AirlineTicketInfoDA : BaseService
     {
-        public bool SaveAirlineTicketInfo(AirlineTicketMasterBO airTicketMasterInfo, List<AirlineTicketInfoBO> AddedSingleTicketInfo, List<GuestBillPaymentBO> AddedPaymentInfo, List<int> deletedPaymentInfoList)
+        public bool SaveAirlineTicketInfo(AirlineTicketMasterBO airTicketMasterInfo, List<AirlineTicketInfoBO> AddedSingleTicketInfo, List<int> deletedAirlineInfoList, List<GuestBillPaymentBO> AddedPaymentInfo, List<int> deletedPaymentInfoList, out long ticketId)
         {
-            Int64 status = 0, ticketId = 0;
+            Int64 status = 0;
+            ticketId = 0;
             bool retVal = false;
 
             using (DbConnection conn = dbSmartAspects.CreateConnection())
@@ -32,6 +33,9 @@ namespace HotelManagement.Data.AirTicketing
 
                                 dbSmartAspects.AddInParameter(cmdOut, "@TicketId", DbType.Int64, airTicketMasterInfo.TicketId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@TransactionType", DbType.String, airTicketMasterInfo.TransactionType);
+                                dbSmartAspects.AddInParameter(cmdOut, "@CostCenterId", DbType.Int32, airTicketMasterInfo.CostCenterId);
+                                dbSmartAspects.AddInParameter(cmdOut, "@ProjectId", DbType.Int32, airTicketMasterInfo.ProjectId);
+                                dbSmartAspects.AddInParameter(cmdOut, "@PaymentInstructionBankId", DbType.Int32, airTicketMasterInfo.PaymentInstructionBankId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@CompanyId", DbType.Int64, airTicketMasterInfo.CompanyId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@CompanyName", DbType.String, airTicketMasterInfo.CompanyName);
                                 dbSmartAspects.AddInParameter(cmdOut, "@ReferenceId", DbType.Int64, airTicketMasterInfo.ReferenceId);
@@ -40,9 +44,7 @@ namespace HotelManagement.Data.AirTicketing
                                 dbSmartAspects.AddInParameter(cmdOut, "@InvoiceAmount", DbType.Decimal, airTicketMasterInfo.InvoiceAmount);
                                 dbSmartAspects.AddInParameter(cmdOut, "@LastModifiedBy", DbType.Int64, airTicketMasterInfo.LastModifiedBy);
                                 
-
                                 status = dbSmartAspects.ExecuteNonQuery(cmdOut, transction);
-
                                 ticketId = Convert.ToInt64(cmdOut.Parameters["@TicketId"].Value);
                             }
                         }
@@ -52,6 +54,9 @@ namespace HotelManagement.Data.AirTicketing
                             {
                                 cmdOut.Parameters.Clear();
                                 dbSmartAspects.AddInParameter(cmdOut, "@TransactionType", DbType.String, airTicketMasterInfo.TransactionType);
+                                dbSmartAspects.AddInParameter(cmdOut, "@CostCenterId", DbType.Int32, airTicketMasterInfo.CostCenterId);
+                                dbSmartAspects.AddInParameter(cmdOut, "@ProjectId", DbType.Int32, airTicketMasterInfo.ProjectId);
+                                dbSmartAspects.AddInParameter(cmdOut, "@PaymentInstructionBankId", DbType.Int32, airTicketMasterInfo.PaymentInstructionBankId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@CompanyId", DbType.Int64, airTicketMasterInfo.CompanyId);
                                 dbSmartAspects.AddInParameter(cmdOut, "@CompanyName", DbType.String, airTicketMasterInfo.CompanyName);
                                 dbSmartAspects.AddInParameter(cmdOut, "@ReferenceId", DbType.Int64, airTicketMasterInfo.ReferenceId);
@@ -62,26 +67,25 @@ namespace HotelManagement.Data.AirTicketing
                                 dbSmartAspects.AddInParameter(cmdOut, "@CreatedBy", DbType.Int64, airTicketMasterInfo.CreatedBy);
 
                                 dbSmartAspects.AddOutParameter(cmdOut, "@TicketId", DbType.Int64, sizeof(Int64));
-
                                 status = dbSmartAspects.ExecuteNonQuery(cmdOut, transction);
 
                                 ticketId = Convert.ToInt64(cmdOut.Parameters["@TicketId"].Value);
                             }
-                        }
-                        
+                        }                        
                         
                         if(status > 0 && AddedSingleTicketInfo.Count > 0)
                         {
-                            if(airTicketMasterInfo.TicketId > 0)
+                            if (deletedAirlineInfoList.Count > 0)
                             {
-                                using (DbCommand cmdPay = dbSmartAspects.GetStoredProcCommand("DeleteAirTicketsByTicketId_SP"))
+                                foreach (int ai in deletedAirlineInfoList)
                                 {
-                                    cmdPay.Parameters.Clear();
-
-                                    dbSmartAspects.AddInParameter(cmdPay, "@TicketId", DbType.Int64, airTicketMasterInfo.TicketId);
-
-                                    status = dbSmartAspects.ExecuteNonQuery(cmdPay, transction);
-                                }
+                                    using (DbCommand cmdPay = dbSmartAspects.GetStoredProcCommand("DeleteAirTicketsByTicketId_SP"))
+                                    {
+                                        cmdPay.Parameters.Clear();
+                                        dbSmartAspects.AddInParameter(cmdPay, "@Id", DbType.Int64, ai);
+                                        status = dbSmartAspects.ExecuteNonQuery(cmdPay, transction);
+                                    }
+                                }                                
                             }
                             foreach (AirlineTicketInfoBO at in AddedSingleTicketInfo)
                             {
@@ -90,6 +94,7 @@ namespace HotelManagement.Data.AirTicketing
                                     cmdSingle.Parameters.Clear();
 
                                     dbSmartAspects.AddInParameter(cmdSingle, "@TicketId", DbType.Int64, ticketId);
+                                    dbSmartAspects.AddInParameter(cmdSingle, "@Id", DbType.Int64, at.Id);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@ClientName", DbType.String, at.ClientName);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@MobileNumber", DbType.String, at.MobileNumber);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@Email", DbType.String, at.Email);
@@ -115,6 +120,7 @@ namespace HotelManagement.Data.AirTicketing
                                     dbSmartAspects.AddInParameter(cmdSingle, "@AirlineAmount", DbType.Decimal, at.AirlineAmount);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@RoutePath", DbType.String, at.RoutePath);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@Remarks", DbType.String, at.Remarks);
+                                    dbSmartAspects.AddInParameter(cmdSingle, "@IsPreviousDataExists", DbType.Int32, at.IsPreviousDataExists);
                                     dbSmartAspects.AddInParameter(cmdSingle, "@CreatedBy", DbType.Int64, airTicketMasterInfo.CreatedBy);
 
                                     status = dbSmartAspects.ExecuteNonQuery(cmdSingle, transction);
@@ -158,6 +164,7 @@ namespace HotelManagement.Data.AirTicketing
                                     dbSmartAspects.AddInParameter(cmdPay, "@CardNumber", DbType.String, pi.CardNumber);
                                     dbSmartAspects.AddInParameter(cmdPay, "@BankId", DbType.Int32, pi.BankId);
                                     dbSmartAspects.AddInParameter(cmdPay, "@ChequeNumber", DbType.String, pi.ChequeNumber);
+                                    dbSmartAspects.AddInParameter(cmdPay, "@ChequeDate", DbType.DateTime, pi.ChequeDate);
                                     dbSmartAspects.AddInParameter(cmdPay, "@CreatedBy", DbType.Int64, airTicketMasterInfo.CreatedBy);
 
                                     status = dbSmartAspects.ExecuteNonQuery(cmdPay, transction);
@@ -186,8 +193,7 @@ namespace HotelManagement.Data.AirTicketing
             }
 
             return retVal;
-        }
-        
+        }        
         public bool TicketInformationDelete(long ticketId)
         {
             Int64 status = 0;
@@ -203,13 +209,9 @@ namespace HotelManagement.Data.AirTicketing
                         using (DbCommand cmdDelete = dbSmartAspects.GetStoredProcCommand("TicketInformationDelete_SP"))
                         {
                             cmdDelete.Parameters.Clear();
-
                             dbSmartAspects.AddInParameter(cmdDelete, "@TicketId", DbType.Int64, ticketId);
-
-
                             status = dbSmartAspects.ExecuteNonQuery(cmdDelete, transction);
-                        }                 
-
+                        }
 
                         if (status > 0)
                         {
@@ -232,8 +234,7 @@ namespace HotelManagement.Data.AirTicketing
 
             return retVal;
         }
-
-        public List<AirlineTicketMasterBO> GetTicketInformation(DateTime? fromDate, DateTime? toDate, string invoiceNumber, string companyName, string referenceName,
+        public List<AirlineTicketMasterBO> GetTicketInformation(DateTime? fromDate, DateTime? toDate, string invoiceNumber, string companyName, string referenceName, string ticketNumber, string pnrNumber,
                                                                Int32 userInfoId, int recordPerPage, int pageIndex, out int totalRecords)
         {
             List<AirlineTicketMasterBO> productReceive = new List<AirlineTicketMasterBO>();
@@ -267,6 +268,16 @@ namespace HotelManagement.Data.AirTicketing
                         dbSmartAspects.AddInParameter(cmd, "@ReferenceName", DbType.String, referenceName);
                     else
                         dbSmartAspects.AddInParameter(cmd, "@ReferenceName", DbType.String, DBNull.Value);
+
+                    if (!string.IsNullOrEmpty(ticketNumber))
+                        dbSmartAspects.AddInParameter(cmd, "@TicketNumber", DbType.String, ticketNumber);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@TicketNumber", DbType.String, DBNull.Value);
+
+                    if (!string.IsNullOrEmpty(pnrNumber))
+                        dbSmartAspects.AddInParameter(cmd, "@PnrNumber", DbType.String, pnrNumber);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@PnrNumber", DbType.String, DBNull.Value);
 
                     dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int32, userInfoId);
 
@@ -305,9 +316,7 @@ namespace HotelManagement.Data.AirTicketing
             }
 
             return productReceive;
-        }
-
-        
+        }        
         public AirlineTicketMasterBO GetATMasterInfo(long ticketId)
         {
             AirlineTicketMasterBO ATMasterInfo = new AirlineTicketMasterBO();
@@ -328,6 +337,8 @@ namespace HotelManagement.Data.AirTicketing
                                 ATMasterInfo.BillNumber = reader["BillNumber"].ToString();
                                 ATMasterInfo.TransactionType = reader["TransactionType"].ToString();
                                 ATMasterInfo.TransactionId = Convert.ToInt64(reader["TransactionId"]);
+                                ATMasterInfo.ProjectId = Convert.ToInt32(reader["ProjectId"]);
+                                ATMasterInfo.PaymentInstructionBankId = Convert.ToInt32(reader["PaymentInstructionBankId"]);
                                 ATMasterInfo.CompanyName = reader["CompanyName"].ToString();
                                 ATMasterInfo.ReferenceId = Convert.ToInt64(reader["ReferenceId"]);
                                 ATMasterInfo.ReferenceName = reader["ReferenceName"].ToString();
@@ -353,6 +364,7 @@ namespace HotelManagement.Data.AirTicketing
 
                     ticketList = Table.AsEnumerable().Select(r => new AirlineTicketInfoBO
                     {
+                        Id = r.Field<Int64>("Id"),
                         ClientName = r.Field<string>("ClientName"),
                         MobileNumber = r.Field<string>("MobileNo"),
                         Email = r.Field<string>("Email"),
@@ -374,8 +386,7 @@ namespace HotelManagement.Data.AirTicketing
                 }
             }
             return ticketList;
-        }
-        
+        }        
         public List<GuestBillPaymentBO> GetATPaymentInfo(long ticketId)
         {
             List<GuestBillPaymentBO> paymentList = new List<GuestBillPaymentBO>();
@@ -401,14 +412,13 @@ namespace HotelManagement.Data.AirTicketing
                         CardTypeId = r.Field<Int32>("CardTypeId"),
                         CardNumber = r.Field<string>("CardNumber"),
                         BankId = r.Field<Int32>("BankId"),
-                        ChequeNumber = r.Field<string>("ChequeNumber")
+                        ChequeNumber = r.Field<string>("ChequeNumber"),
+                        ChequeDate = r.Field<DateTime?>("ChequeDate")
                     }).ToList();
                 }
             }
             return paymentList;
-        }
-
-        
+        }        
         public bool TicketInformationCheck(long ticketId, int userInfoId)
         {
             Int64 status = 0;
@@ -453,8 +463,65 @@ namespace HotelManagement.Data.AirTicketing
             }
 
             return retVal;
-        }
+        }        
+        public bool TicketInformationApproval(long ticketId, int userInfoId)
+        {
+            Int64 status = 0;
+            bool retVal = false;
 
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand cmdApprove = dbSmartAspects.GetStoredProcCommand("TicketInformationApproval_SP"))
+                        {
+                            cmdApprove.Parameters.Clear();
+
+                            dbSmartAspects.AddInParameter(cmdApprove, "@TicketId", DbType.Int64, ticketId);
+                            dbSmartAspects.AddInParameter(cmdApprove, "@UserInfoId", DbType.Int32, userInfoId);
+
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmdApprove, transction);
+                        }
+
+                        if (status > 0)
+                        {
+                            using (DbCommand cmdAfterApproved = dbSmartAspects.GetStoredProcCommand("ATBillingAccountsVoucherPostingProcess_SP"))
+                            {
+                                cmdAfterApproved.Parameters.Clear();
+
+                                dbSmartAspects.AddInParameter(cmdAfterApproved, "@BillId", DbType.Int32, ticketId);
+                                dbSmartAspects.AddOutParameter(cmdAfterApproved, "@mErr", DbType.Int32, sizeof(Int32));
+
+                                status = dbSmartAspects.ExecuteNonQuery(cmdAfterApproved, transction);
+                            }
+                        }
+
+
+                        if (status > 0)
+                        {
+                            retVal = true;
+                            transction.Commit();
+                        }
+                        else
+                        {
+                            retVal = false;
+                            transction.Rollback();
+                        }
+                    }
+                    catch
+                    {
+                        retVal = false;
+                        transction.Rollback();
+                    }
+                }
+            }
+
+            return retVal;
+        }
         public List<ContactInformationBO> GetContactInformationByCompanyIdNSearchTextForAutoComplete(int companyId, string searchText)
         {
             List<ContactInformationBO> contactInformationList = new List<ContactInformationBO>();
@@ -510,6 +577,69 @@ namespace HotelManagement.Data.AirTicketing
                 throw ex;
             }
             return contactInformationList;
+        }
+        public Boolean UpdateTicketStatusByATTicketNo(string ticketNo, string ticketStatus, int userInfoId)
+        {
+            bool retVal = false;
+            int status = 0;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand commandMaster = dbSmartAspects.GetStoredProcCommand("UpdateTicketStatusByATTicketNo_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(commandMaster, "@TicketNo", DbType.String, ticketNo);
+                            dbSmartAspects.AddInParameter(commandMaster, "@TicketStatus", DbType.String, ticketStatus);
+                            dbSmartAspects.AddInParameter(commandMaster, "@UserInfoId", DbType.Int32, userInfoId);
+                            status = dbSmartAspects.ExecuteNonQuery(commandMaster, transction);
+                        }
+
+                        if (status > 0)
+                        {
+                            transction.Commit();
+                            retVal = true;
+                        }
+                        else
+                        {
+                            transction.Rollback();
+                            retVal = false;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transction.Rollback();
+                        retVal = false;
+                        throw ex;
+                    }
+                }
+            }
+            return retVal;
+        }
+        public AirlineTicketInfoBO GetLastAirlineTicketId()
+        {
+            AirlineTicketInfoBO airlineInfo = new AirlineTicketInfoBO();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetLastAirlineTicketId_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                airlineInfo.LastId = Convert.ToInt64(reader["LastId"]);
+                            }
+                        }
+                    }
+                }
+            }
+            return airlineInfo;
         }
     }
 }

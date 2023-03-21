@@ -108,6 +108,7 @@ namespace HotelManagement.Data.HMCommon
 
                                 costCentreTabBO.CostCenterId = Convert.ToInt32(reader["CostCenterId"]);
                                 costCentreTabBO.CompanyId = Convert.ToInt32(reader["CompanyId"]);
+                                costCentreTabBO.GLCompanyId = Convert.ToInt32(reader["GLCompanyId"]);
                                 costCentreTabBO.CompanyName = reader["CompanyName"].ToString();
                                 costCentreTabBO.CostCenter = reader["CostCenter"].ToString();
                                 costCentreTabBO.CostCenterLogo = reader["CostCenterLogo"].ToString();

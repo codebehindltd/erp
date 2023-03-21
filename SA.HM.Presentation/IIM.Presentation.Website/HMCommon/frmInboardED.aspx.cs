@@ -35,7 +35,7 @@ namespace HotelManagement.Presentation.Website.HMCommon
         {
             UserInformationBO userInformationBO = new UserInformationBO();
             UserInformationDA userInformationDA = new UserInformationDA();
-            //superadminInnb0@rdsmartaspects
+            //superadminInnb0@rd!nnb0@rdERP@2010
             string enteredValue = this.txtInnboardHead.Text;
             if (!string.IsNullOrWhiteSpace(this.txtInnboardHead.Text))
             {

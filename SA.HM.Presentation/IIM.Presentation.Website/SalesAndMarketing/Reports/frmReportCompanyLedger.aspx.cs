@@ -42,7 +42,14 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
 
             var reportPath = "";
 
-            reportPath = Server.MapPath(@"~/SalesAndMarketing/Reports/Rdlc/RptCompanyPaymentLedger.rdlc");
+            if (ddlReportType.SelectedValue == "0")
+            {
+                reportPath = Server.MapPath(@"~/SalesAndMarketing/Reports/Rdlc/RptCompanyLedger.rdlc");
+            }
+            else
+            {
+                reportPath = Server.MapPath(@"~/SalesAndMarketing/Reports/Rdlc/RptCompanyPaymentLedger.rdlc");
+            }
 
             if (!File.Exists(reportPath))
                 return;
@@ -70,7 +77,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
             {
                 endDate = txtEndDateTo.Text;
             }
-            
+
             DateTime FromDate = hmUtility.GetDateTimeFromString(startDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             DateTime ToDate = hmUtility.GetDateTimeFromString(endDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1).AddSeconds(-1);
 
@@ -98,7 +105,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
             }
 
             paymentStatus = ddlPaymentStatus.SelectedValue;
-            reportType = ddlReportType.SelectedValue;
+            reportType = ddlReportFor.SelectedValue;
 
             DateTime currentDate = DateTime.Now;
             string printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);

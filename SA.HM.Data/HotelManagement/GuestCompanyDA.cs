@@ -19,6 +19,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestCompanyInfo_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)
@@ -54,6 +55,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using(DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyInfoForAirTicket_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@SearchTerm", DbType.String, searchTerm);
                     using(IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
@@ -72,6 +74,125 @@ namespace HotelManagement.Data.HotelManagement
             }
             return companyList;
         }
+        public List<GuestCompanyBO> GetCompanyInfoForAccountApproval(string searchTerm)
+        {
+            List<GuestCompanyBO> companyList = new List<GuestCompanyBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyInfoForAirTicket_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@SearchTerm", DbType.String, searchTerm);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                GuestCompanyBO guestCompany = new GuestCompanyBO();
+                                guestCompany.CompanyId = Convert.ToInt32(reader["CompanyId"]);
+                                guestCompany.CompanyName = reader["CompanyName"].ToString();
+                                companyList.Add(guestCompany);
+                            }
+                        }
+                    }
+                }
+            }
+            return companyList;
+        }
+        public GuestCompanyBO GetCompanyBenefitsForFillForm(int companyId)
+        {
+            GuestCompanyBO companyInfo = new GuestCompanyBO();
+            companyInfo.CompanyId = companyId;
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyInformationByCompanyId_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.String, companyId);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                companyInfo.CreditLimit = Convert.ToDecimal(reader["CreditLimit"]);
+                                if (reader["CreditLimitExpire"] != DBNull.Value)
+                                    companyInfo.CreditLimitExpire = Convert.ToDateTime(reader["CreditLimitExpire"]);
+                                if (reader["ShortCreditLimit"] != DBNull.Value)
+                                    companyInfo.ShortCreditLimit = Convert.ToDecimal(reader["ShortCreditLimit"]);
+                                if (reader["ShortCreditLimitExpire"] != DBNull.Value)
+                                    companyInfo.ShortCreditLimitExpire = Convert.ToDateTime(reader["ShortCreditLimitExpire"]);
+                                if (reader["TransportFareFactory"] != DBNull.Value)
+                                    companyInfo.TransportFareFactory = Convert.ToDecimal(reader["TransportFareFactory"]);
+                                if (reader["TransportFareDepo"] != DBNull.Value)
+                                    companyInfo.TransportFareDepo = Convert.ToDecimal(reader["TransportFareDepo"]);
+                                if (reader["SalesCommission"] != DBNull.Value)
+                                    companyInfo.SalesCommission = Convert.ToDecimal(reader["SalesCommission"]);
+                                if (reader["LegalAction"] != DBNull.Value)
+                                    companyInfo.LegalAction = reader["LegalAction"].ToString();
+                            }
+                        }
+                    }
+                }
+            }
+            return companyInfo;
+        }
+
+        public List<GuestCompanyBO> GetCompanyLegalActionForFillForm(int companyId)
+        {
+            List<GuestCompanyBO> legalActionList = new List<GuestCompanyBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetLegalActionInfoByCompanyId_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.String, companyId);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                GuestCompanyBO legalAction = new GuestCompanyBO();
+                                legalAction.Id = Convert.ToInt64(reader["Id"]);
+                                legalAction.CompanyId = companyId;
+                                if (reader["TransactionDate"] != DBNull.Value)
+                                    legalAction.TransactionDate = Convert.ToDateTime(reader["TransactionDate"]);
+                                if (reader["Remarks"] != DBNull.Value)
+                                    legalAction.DetailDescription = reader["Remarks"].ToString();
+                                if (reader["CallToAction"] != DBNull.Value)
+                                    legalAction.CallToAction = reader["CallToAction"].ToString();
+                                legalActionList.Add(legalAction);
+                            }
+                        }
+                    }
+                }
+            }
+            return legalActionList;
+        }
+        public GuestCompanyBO GetLastLegalActionId()
+        {
+            GuestCompanyBO guestCompany = new GuestCompanyBO();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetLastLegalActionId_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                guestCompany.LastId = Convert.ToInt64(reader["LastId"]);
+                            }
+                        }
+                    }
+                }
+            }
+            return guestCompany;
+        }
 
         public List<GuestCompanyBO> GetGuestCompanyInfoByUserId(int userInfoId)
         {
@@ -80,6 +201,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestCompanyInfoByUserId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int64, userInfoId);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
@@ -115,6 +237,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestGroupNameInfo_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)
@@ -138,6 +261,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetAffiliatedGuestCompanyInfo_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)
@@ -453,6 +577,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestCompanyInfoById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -552,6 +677,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetSMGLCompanyAndGuestCompanyMappingInfoById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -576,6 +702,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyContactDetailsByCriteria_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (!string.IsNullOrEmpty(transType))
                         dbSmartAspects.AddInParameter(cmd, "@TransactionType", DbType.String, transType);
                     else
@@ -614,6 +741,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestCompanyInfoForSalesCallById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -667,6 +795,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestCompanyInfoByRegistrationId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@RegistrationId", DbType.Int32, registrationId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -823,7 +952,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetALLGuestCompanyInfo_SP"))
                 {
-
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)
@@ -1011,6 +1140,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestCompanyInfoByCompanyName_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyName", DbType.String, companyName);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -1117,6 +1247,84 @@ namespace HotelManagement.Data.HotelManagement
 
             return status > 0 ? true : false;
         }
+        public Boolean SaveCompanyAccountApprovalInfo(GuestCompanyBO BenefitList, List<GuestCompanyBO> LegalActions, List<int> deletedLegalActionInfoList, out int tmpCompanyId)
+        {
+            int status = 0;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand commBen = dbSmartAspects.GetStoredProcCommand("UpdateCompanyAccountApprovalBenefitInfo_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(commBen, "@CompanyId", DbType.Int32, BenefitList.CompanyId);
+                            dbSmartAspects.AddInParameter(commBen, "@CompanyName", DbType.String, BenefitList.CompanyName);
+                            dbSmartAspects.AddInParameter(commBen, "@CreditLimit", DbType.Decimal, BenefitList.CreditLimit);
+                            dbSmartAspects.AddInParameter(commBen, "@CreditLimitExpire", DbType.DateTime, BenefitList.CreditLimitExpire);
+                            dbSmartAspects.AddInParameter(commBen, "@ShortCreditLimit", DbType.Decimal, BenefitList.ShortCreditLimit);
+                            dbSmartAspects.AddInParameter(commBen, "@ShortCreditLimitExpire", DbType.DateTime, BenefitList.ShortCreditLimitExpire);
+                            dbSmartAspects.AddInParameter(commBen, "@TransportFareFactory", DbType.Decimal, BenefitList.TransportFareFactory);
+                            dbSmartAspects.AddInParameter(commBen, "@TransportFareDepo", DbType.Decimal, BenefitList.TransportFareDepo);
+                            dbSmartAspects.AddInParameter(commBen, "@SalesCommission", DbType.Decimal, BenefitList.SalesCommission);
+                            dbSmartAspects.AddInParameter(commBen, "@LegalAction", DbType.String, BenefitList.LegalAction);
+                            dbSmartAspects.AddInParameter(commBen, "@AccountsApprovedBy", DbType.Int32, BenefitList.AccountsApprovedBy);
+
+                            status = dbSmartAspects.ExecuteNonQuery(commBen, transaction);
+                            tmpCompanyId = Convert.ToInt32(BenefitList.CompanyId);
+                        }
+
+                        if (deletedLegalActionInfoList.Count > 0)
+                        {
+                            foreach (int ai in deletedLegalActionInfoList)
+                            {
+                                using (DbCommand cmdDelLa = dbSmartAspects.GetStoredProcCommand("DeleteLegalActionById_SP"))
+                                {
+                                    cmdDelLa.Parameters.Clear();
+                                    dbSmartAspects.AddInParameter(cmdDelLa, "@Id", DbType.Int64, ai);
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdDelLa, transaction);
+                                }
+                            }
+                        }
+
+                        if (LegalActions.Count > 0)
+                        {
+                            using (DbCommand commApprove = dbSmartAspects.GetStoredProcCommand("SaveCompanyAccountApprovalLegalActionInfo_SP"))
+                            {
+                                foreach (GuestCompanyBO gc in LegalActions)
+                                {
+                                    commApprove.Parameters.Clear();
+                                    dbSmartAspects.AddInParameter(commApprove, "@Id", DbType.Int64, gc.Id);
+                                    dbSmartAspects.AddInParameter(commApprove, "@CompanyId", DbType.Int32, gc.CompanyId);
+                                    dbSmartAspects.AddInParameter(commApprove, "@TransactionDate", DbType.DateTime, gc.TransactionDate);
+                                    dbSmartAspects.AddInParameter(commApprove, "@DetailDescription", DbType.String, gc.DetailDescription);
+                                    dbSmartAspects.AddInParameter(commApprove, "@CallToAction", DbType.String, gc.CallToAction);
+                                    dbSmartAspects.AddInParameter(commApprove, "@IsPreviousDataExists", DbType.Int32, gc.IsPreviousDataExists);
+                                    dbSmartAspects.AddInParameter(commApprove, "@CreatedBy", DbType.Int32, BenefitList.AccountsApprovedBy);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(commApprove, transaction);
+                                }
+                            }
+                        }
+
+                        if (status > 0)
+                        {
+                            transaction.Commit();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        status = 0;
+                        transaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+
+            return status > 0 ? true : false;
+        }
         public Boolean UpdateHotelCompanyPaymentLedger(HotelCompanyPaymentLedgerBO hotelCompanyPaymentLedgerBO, List<CompanyPaymentLedgerVwBo> companyPaymentLedger)
         {
             int status = 0;
@@ -1195,6 +1403,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetHotelCompanyPaymentLedger_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@DateFrom", DbType.DateTime, dateFrom);
                     dbSmartAspects.AddInParameter(cmd, "@DateTo", DbType.DateTime, dateTo);
                     dbSmartAspects.AddInParameter(cmd, "@PaymentId", DbType.String, paymentId);
@@ -1227,6 +1436,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyPaymentLedgerById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyPaymentId", DbType.Int64, id);
 
                     DataSet ds = new DataSet();
@@ -1270,6 +1480,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyPaymentLedgerReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int32, userInfoId);
 
                     if (glCompanyId != 0)
@@ -1336,6 +1547,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyARAging_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (reportType != "0")
                         dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                     else
@@ -1369,6 +1581,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyARAgingDetail_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (reportType != "0")
                         dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                     else
@@ -1404,6 +1617,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyPaymentInfoForReport_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (costcenterId > 0)
                         dbSmartAspects.AddInParameter(cmd, "@CostCenterId", DbType.Int32, costcenterId);
                     else
@@ -1491,6 +1705,7 @@ namespace HotelManagement.Data.HotelManagement
                 {
                     using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveCompanySite_SP"))
                     {
+                        command.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                         dbSmartAspects.AddInParameter(command, "@CompanyId", DbType.Int32, site.CompanyId);
                         dbSmartAspects.AddInParameter(command, "@SiteName", DbType.String, site.SiteName);
 
@@ -1567,6 +1782,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanySiteById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@SiteId", DbType.Int32, siteId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -1602,6 +1818,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanySiteBySearchCriteria_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (!string.IsNullOrEmpty(siteName))
                         dbSmartAspects.AddInParameter(cmd, "@SiteName", DbType.String, siteName);
                     else
@@ -1659,6 +1876,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanySiteByCompanyId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -1720,6 +1938,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyBillByPaymentRefId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@RefCompanyPaymentId", DbType.Int64, refCompanyPaymentId);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
 
@@ -1812,6 +2031,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("CompanyBillByCompanyIdAndBillGenerationFlag_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyBillId", DbType.Int64, companyBillId);
                     dbSmartAspects.AddInParameter(cmd, "@CurrencyId", DbType.Int64, currencyId);
@@ -1856,6 +2076,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyBillBySearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
 
                     DataSet ds = new DataSet();
@@ -1895,6 +2116,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyGeneratedBillById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyBillId", DbType.Int32, companyBillId);
 
@@ -2134,6 +2356,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyBillGenerationBySearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     if (dateFrom != null)
                         dbSmartAspects.AddInParameter(cmd, "@DateFrom", DbType.DateTime, dateFrom);
                     else
@@ -2181,6 +2404,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyBillGeneration_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyBillId", DbType.Int64, companyBillId);
 
                     DataSet ds = new DataSet();
@@ -2213,6 +2437,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyBillGenerationDetails_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyBillId", DbType.Int64, companyBillId);
 
                     DataSet ds = new DataSet();
@@ -2241,6 +2466,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyBillForBillGenerationEdit_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyBillId", DbType.Int64, companyBillId);
 
@@ -2283,6 +2509,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyGeneratedBill_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
 
                     DataSet ds = new DataSet();
@@ -2313,6 +2540,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyBillForReceivedPayment_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyBillId", DbType.Int64, companyBillId);
 
@@ -2918,6 +3146,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyPaymentBySearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int32, userInfoId);
                     if (companyId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
@@ -2977,6 +3206,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyPayment_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@PaymentId", DbType.Int64, paymentId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -3026,6 +3256,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyPaymentDetails_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@PaymentId", DbType.Int64, paymentId);
 
                     DataSet ds = new DataSet();
@@ -3061,6 +3292,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetHotelCompanyPaymentTransectionDetailsById_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@PaymentId", DbType.Int64, paymentId);
 
                     DataSet ds = new DataSet();
@@ -3290,6 +3522,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyAdvanceBillBySearch_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
 
                     DataSet ds = new DataSet();
@@ -3410,6 +3643,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyInfoByNameForAutoComplete_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@SearchText", DbType.String, searchText);
 
                     DataSet company = new DataSet();
@@ -3439,6 +3673,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyInfoByHierarchy_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
                     dbSmartAspects.AddInParameter(cmd, "@Hierarchy", DbType.String, hierarchy);
 
@@ -3470,6 +3705,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestCompanyInfoByCompanyNameAccountManagerIdAndIndustryId_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CompanyName", DbType.String, companyName);
                     if (AccountManagerId != 0)
                         dbSmartAspects.AddInParameter(cmd, "@AccountManagerId", DbType.Int32, AccountManagerId);
@@ -3488,7 +3724,6 @@ namespace HotelManagement.Data.HotelManagement
                             while (reader.Read())
                             {
                                 GuestCompanyBO guestCompany = new GuestCompanyBO();
-
                                 guestCompany.CompanyId = Convert.ToInt32(reader["CompanyId"]);
                                 guestCompany.CompanyName = reader["CompanyName"].ToString();
                                 guestCompany.EmailAddress = reader["EmailAddress"].ToString();
@@ -3523,6 +3758,7 @@ namespace HotelManagement.Data.HotelManagement
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestCompanyInfoByAccountManager_SP"))
                 {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@AccountManagerID", DbType.Int32, accountManagerId);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
@@ -3532,7 +3768,6 @@ namespace HotelManagement.Data.HotelManagement
                             while (reader.Read())
                             {
                                 GuestCompanyBO guestCompany = new GuestCompanyBO();
-
                                 guestCompany.CompanyId = Convert.ToInt32(reader["CompanyId"]);
                                 guestCompany.CompanyName = reader["CompanyName"].ToString();
                                 guestCompany.CompanyAddress = reader["CompanyAddress"].ToString();
@@ -3544,7 +3779,6 @@ namespace HotelManagement.Data.HotelManagement
                                 guestCompany.DiscountPercent = Convert.ToDecimal(reader["DiscountPercent"]);
                                 guestCompany.NodeId = Convert.ToInt32(reader["NodeId"]);
                                 guestCompany.Balance = Convert.ToDecimal(reader["Balance"]);
-
                                 roomTypeList.Add(guestCompany);
                             }
                         }

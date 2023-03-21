@@ -470,6 +470,32 @@ namespace HotelManagement.Data.PurchaseManagment
             }
             return overheadDetails;
         }
+        public List<OverheadExpensesBO> GetInvNutrientOEDetailsById(int finishProductId)
+        {
+            List<OverheadExpensesBO> overheadDetails = new List<OverheadExpensesBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvNutrientOEDetailsById_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@FinishProductId", DbType.Int32, finishProductId);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "FinishGoods");
+                    DataTable Table = ds.Tables["FinishGoods"];
+
+                    overheadDetails = Table.AsEnumerable().Select(r => new OverheadExpensesBO
+                    {
+                        NodeId = r.Field<Int32>("NodeId"),
+                        AccountHead = r.Field<string>("AccountHead"),
+                        OEAmount = r.Field<decimal>("OEAmount"),
+                        Remarks = r.Field<string>("OERemarks")
+
+                    }).ToList();
+                }
+            }
+            return overheadDetails;
+        }
         public List<FinishedProductBO> GetInventoryProductionSearch(int costCenterId, DateTime? dateFrom, DateTime? dateTo, string productionId, string status, int userInfoId)
         {
             List<FinishedProductBO> finishGoods = new List<FinishedProductBO>();

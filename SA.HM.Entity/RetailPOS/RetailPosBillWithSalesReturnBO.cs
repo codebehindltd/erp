@@ -33,7 +33,7 @@ namespace HotelManagement.Entity.RetailPOS
         public int KotId { get; set; }
         public Nullable<int> BearerId { get; set; }
         public Nullable<int> ReferenceKotId { get; set; }
-        public Nullable<int> BagWaight { get; set; }
+        public Nullable<decimal> BagWaight { get; set; }
         public Nullable<int> ItemId { get; set; }
         public string ItemName { get; set; }
         public Nullable<decimal> UnitRate { get; set; }
@@ -47,5 +47,13 @@ namespace HotelManagement.Entity.RetailPOS
         public string Attention { get; set; }
         public string PaymentInstruction { get; set; }
         public string BillSubject { get; set; }
+        public Nullable<System.DateTime> IssueDate { get; set; }
+        public string IssueDateDisplay { get; set; }
+        public Nullable<System.DateTime> FlightDate { get; set; }
+        public string FlightDateDisplay { get; set; }
+        public string TicketNumber { get; set; }
+        public string RoutePath { get; set; }
+        public string AirlineName { get; set; }
+        public string Remarks { get; set; }
     }
 }

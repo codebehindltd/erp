@@ -26,6 +26,7 @@ namespace HotelManagement.Presentation.Website.UserInformation
             {
                 this.LoginBackGroudImage();
                 SiteTitle.InnerText = System.Web.Configuration.WebConfigurationManager.AppSettings["InnboardTitleHead"].ToString();
+                CopyrightInfoName.InnerText = System.Web.Configuration.WebConfigurationManager.AppSettings["InnboardTitleHead"].ToString();
                 this.txtUserId.Focus();
             }
         }        
@@ -59,7 +60,7 @@ namespace HotelManagement.Presentation.Website.UserInformation
             UserInformationDA userInformationDA = new UserInformationDA();
 
             userInformationBO.UserId = this.txtUserId.Text.Trim();
-            userInformationBO.UserPassword = this.txtUserPassword.Text.Trim();
+            userInformationBO.UserPassword = this.passwordInput.Text.Trim();
 
             UserInformationBO userInformation = userInformationDA.GetUserInformationByUserNameNId(userInformationBO.UserId, userInformationBO.UserPassword);
             if (!userInformation.ActiveStat)
@@ -288,7 +289,7 @@ namespace HotelManagement.Presentation.Website.UserInformation
                 status = false;
             }
 
-            if (txtUserId.Text.Length < 0 || txtUserId.Text.Length > 20 || txtUserPassword.Text.Length < 0 || txtUserPassword.Text.Length > 20)
+            if (txtUserId.Text.Length < 0 || txtUserId.Text.Length > 20 || passwordInput.Text.Length < 0 || passwordInput.Text.Length > 20)
             {
                 isMessageBoxEnable = 1;
                 this.lblMessage.Text = "user name or password you entered is invalid.";

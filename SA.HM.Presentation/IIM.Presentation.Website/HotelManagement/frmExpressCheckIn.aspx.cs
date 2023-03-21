@@ -44,19 +44,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             CheckPermission();
         }
         //************************ User Defined Method ********************//
-        //private void LoadGroupInformation()
-        //{
-        //    RoomReservationDA roomReservationDA = new RoomReservationDA();
-        //    this.ddlGroupInformation.DataSource = roomReservationDA.GetGroupOrCompanyRoomReservationInfoForExpressCheckIn();
-        //    this.ddlGroupInformation.DataTextField = "CompanyName";
-        //    this.ddlGroupInformation.DataValueField = "ReservationId";
-        //    this.ddlGroupInformation.DataBind();
-
-        //    ListItem item = new ListItem();
-        //    item.Value = "0";
-        //    item.Text = hmUtility.GetDropDownFirstValue();
-        //    this.ddlGroupInformation.Items.Insert(0, item);
-        //}
         public static string GridHeader()
         {
             string gridHead = string.Empty;
@@ -135,7 +122,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         if (reservationDetailListBOForGrid.Count > 0)
                         {
                             {
-                                //string strTable = "";
                                 string reserVationDetailsId = string.Empty;
                                 strReservationDetailTable += "<table style='width:100%' class='table table-bordered table-condensed table-responsive' id='ReservationDetailGrid'> <thead> <tr style='color: White; background-color: #44545E; font-weight: bold;'>";
                                 strReservationDetailTable += "<th align='left' scope='col'>Room Type</th><th align='left' scope='col'>Room Count</th><th align='left' scope='col'>Pax</th><th align='left' scope='col'>Check In</th><th align='left' scope='col'>Exp. Check Out</th></tr></thead> <tbody>";
@@ -175,103 +161,50 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                                     strReservationDetailTable = "<tr><td colspan='5' align='center'>No Record Available !</td></tr>";
                                 }
                             }
-                        }
-                        //{
-                        //    //string strTable = "";
-                        //    string reserVationDetailsId = string.Empty;
-
-                        //    //List<ReservationDetailBO> detailList = HttpContext.Current.Session["ReservationDetailListForGrid"] as List<ReservationDetailBO>;
-                        //    //if (detailList != null)
-                        //    //{
-                        //    strReservationDetailTable += "<table style='width:100%' class='table table-bordered table-condensed table-responsive' id='ReservationDetailGrid'> <thead> <tr style='color: White; background-color: #44545E; font-weight: bold;'>";
-                        //    strReservationDetailTable += "<th align='left' scope='col'>Room Type</th><th align='left' scope='col'>Room Numbers</th></tr></thead> <tbody>";
-                        //    //int counter = 0;
-                        //    foreach (ReservationDetailBO dr in reservationDetailListBOForGrid)
-                        //    {
-                        //        if (counterReservationDetail % 2 == 0)
-                        //        {
-                        //            // It's even
-                        //            strReservationDetailTable += "<tr style='background-color:#E3EAEB;'>";
-                        //        }
-                        //        else
-                        //        {
-                        //            // It's odd
-                        //            strReservationDetailTable += "<tr style='background-color:White;'>";
-                        //        }
-
-                        //        if (dr.ReservationDetailId != 0)
-                        //            reserVationDetailsId = dr.ReservationDetailId.ToString();
-                        //        else
-                        //            reserVationDetailsId = "0";
-
-                        //        strReservationDetailTable += "<td align='left' style='display:none;'>" + dr.RoomTypeId + "</td>";
-                        //        strReservationDetailTable += "<td align='left' style='display:none;'>" + reserVationDetailsId + "</td>";
-                        //        strReservationDetailTable += "<td align='left' style='width: 40%;'>" + dr.RoomType + "</td>";
-                        //        strReservationDetailTable += "<td align='left' style='width: 40%;'>" + dr.RoomNumberListInfoWithCount + "</td>";
-                        //        //strReservationDetailTable += "<td align='center' style='width: 15%;'>";
-
-                        //        //if (dr.RoomTypeId > 0)
-                        //        //{
-                        //        //    strReservationDetailTable += "&nbsp;<img src='../Images/delete.png' onClick='javascript:return PerformReservationDetailDelete(" + dr.RoomTypeId + ")' alt='Delete Information' border='0' />";
-                        //        //    strReservationDetailTable += "&nbsp;<img src='../Images/edit.png' onClick='javascript:return PerformReservationDetailEdit(" + dr.RoomTypeId + "," + counterReservationDetail + ")' alt='Delete Information' border='0' />";
-                        //        //}
-
-                        //        strReservationDetailTable += "</td></tr>";
-                        //        counterReservationDetail++;
-                        //    }
-                        //    strReservationDetailTable += "</tbody></table>";
-                        //    if (strReservationDetailTable == "")
-                        //    {
-                        //        strReservationDetailTable = "<tr><td colspan='4' align='center'>No Record Available !</td></tr>";
-                        //    }
-                        //    //}
-                        //    //return strTable;
-                        //}
+                        }                        
                     }
 
                     adjvw.ReservationDetailGrid = strReservationDetailTable;
 
-                    List<RoomReservationBO> typeWisePaxQuantityListBO = new List<RoomReservationBO>();
+                    // // // Will Update Later For Reservation Pax Wise---------------------------------Pax Wise Extra Room generated
+                    //List<RoomReservationBO> typeWisePaxQuantityListBO = new List<RoomReservationBO>();
+                    //if (prmRoomTypeId == 0)
+                    //{
+                    //    typeWisePaxQuantityListBO = roomReservationDA.GetTypeWisePaxQuantityByReservationId(reservationDetailListBO[0].ReservationId);
+                    //}
+                    //else
+                    //{
+                    //    typeWisePaxQuantityListBO = roomReservationDA.GetTypeWisePaxQuantityByReservationId(reservationDetailListBO[0].ReservationId).Where(x => x.RoomTypeId == prmRoomTypeId).ToList();
+                    //}
 
-                    if (prmRoomTypeId == 0)
-                    {
-                        typeWisePaxQuantityListBO = roomReservationDA.GetTypeWisePaxQuantityByReservationId(reservationDetailListBO[0].ReservationId);
-                    }
-                    else
-                    {
-                        typeWisePaxQuantityListBO = roomReservationDA.GetTypeWisePaxQuantityByReservationId(reservationDetailListBO[0].ReservationId).Where(x => x.RoomTypeId == prmRoomTypeId).ToList();
-                    }
-
-                    if (typeWisePaxQuantityListBO != null)
-                    {
-                        if (typeWisePaxQuantityListBO.Count > 0)
-                        {
-                            foreach (RoomReservationBO row in typeWisePaxQuantityListBO)
-                            {
-                                int i = 0;
-                                while (i < row.TotalPaxQuantity)
-                                {
-                                    RoomReservationBO extraReservationDetailBO = new RoomReservationBO();
-                                    extraReservationDetailBO.ReservationDetailId = -1000 + row.RoomTypeId + i;
-                                    extraReservationDetailBO.IsRegistered = 100;
-                                    extraReservationDetailBO.ReservationId = reservationDetailListBO[0].ReservationId;
-                                    extraReservationDetailBO.RoomTypeCode = row.RoomTypeCode;
-                                    extraReservationDetailBO.PaxQuantity = row.PaxQuantity;
-                                    extraReservationDetailBO.TotalPaxQuantity = row.TotalPaxQuantity;
-                                    extraReservationDetailBO.UnitPrice = row.UnitPrice;
-                                    extraReservationDetailBO.DiscountType = row.DiscountType;
-                                    extraReservationDetailBO.DiscountAmount = row.DiscountAmount;
-                                    extraReservationDetailBO.RoomRate = row.RoomRate;
-                                    extraReservationDetailBO.RoomTypeId = row.RoomTypeId;
-                                    extraReservationDetailBO.TypeWiseRoomQuantity = row.TypeWiseRoomQuantity;
-                                    reservationDetailListBO.Add(extraReservationDetailBO);
-                                    i++;
-                                }
-                            }
-                        }
-                    }
-
-                    //reservationDetailListBO = reservationDetailListBO.OrderBy(x => x.RoomTypeCode).ToList();
+                    //if (typeWisePaxQuantityListBO != null)
+                    //{
+                    //    if (typeWisePaxQuantityListBO.Count > 0)
+                    //    {
+                    //        foreach (RoomReservationBO row in typeWisePaxQuantityListBO)
+                    //        {
+                    //            int i = 0;
+                    //            while (i < row.TotalPaxQuantity)
+                    //            {
+                    //                RoomReservationBO extraReservationDetailBO = new RoomReservationBO();
+                    //                extraReservationDetailBO.ReservationDetailId = -1000 + row.RoomTypeId + i;
+                    //                extraReservationDetailBO.IsRegistered = 100;
+                    //                extraReservationDetailBO.ReservationId = reservationDetailListBO[0].ReservationId;
+                    //                extraReservationDetailBO.RoomTypeCode = row.RoomTypeCode;
+                    //                extraReservationDetailBO.PaxQuantity = row.PaxQuantity;
+                    //                extraReservationDetailBO.TotalPaxQuantity = row.TotalPaxQuantity;
+                    //                extraReservationDetailBO.UnitPrice = row.UnitPrice;
+                    //                extraReservationDetailBO.DiscountType = row.DiscountType;
+                    //                extraReservationDetailBO.DiscountAmount = row.DiscountAmount;
+                    //                extraReservationDetailBO.RoomRate = row.RoomRate;
+                    //                extraReservationDetailBO.RoomTypeId = row.RoomTypeId;
+                    //                extraReservationDetailBO.TypeWiseRoomQuantity = row.TypeWiseRoomQuantity;
+                    //                reservationDetailListBO.Add(extraReservationDetailBO);
+                    //                i++;
+                    //            }
+                    //        }
+                    //    }
+                    //}
 
                     foreach (RoomReservationBO stck in reservationDetailListBO)
                     {
@@ -297,7 +230,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         });
 
                         tr += "<td style='text-align:center;width:5%'> <input type='checkbox'  TabIndex=" + (1000 + (rowCount + 1)).ToString() + " value = 'chkECIn" + (1000 + (rowCount + 1)).ToString() + "' onkeydown='if (event.keyCode == 13) {return true;}'  style='vertical-align: middle;' /> </td>";
-
                         tr += "<td style='width:5%; text-align:center;'>" + (rowCount + 1).ToString() + "</td>";
                         tr += "<td style='width:80%; text-align:center;'> <input type='text' class='form-control' TabIndex=" + (1000 + (rowCount + 1)).ToString() + " value = '" + (stck.GuestName == "" ? string.Empty : stck.GuestName) + "' onkeydown='if (event.keyCode == 13) {return true;}' maxlength='50' style='width:100%; padding:0; padding-left:2px; padding-right:2px; margin:0;' /> </td>";
                         tr += "<td style='width:10%; text-align:center;'> <input type='text' class='form-control' TabIndex=" + (2000 + (rowCount + 1)).ToString() + "  id='txt" + stck.ReservationDetailId.ToString() + "' value = '" + (stck.RoomNumber == "Unassinged" ? string.Empty : stck.RoomNumber) + "' placeholder = '" + stck.RoomTypeCode + "' onblur='CheckInputValue(this, " + stck.ReservationId.ToString() + "," + stck.RoomTypeId.ToString() + "," + stck.ReservationDetailId.ToString() + "," + rowCount + ")' maxlength='5' onkeydown='if (event.keyCode == 13) {return true;}' style='width:90px; padding:0; padding-left:2px; padding-right:2px; margin:0;' /> </td>";
@@ -310,7 +242,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         tr += "<td style='display:none'>" + stck.ConversionRate + "</td>";
                         tr += "<td style='display:none'>" + stck.DateIn + "</td>";
                         tr += "<td style='display:none'>" + stck.DateOut + "</td>";
-                        //tr += "<td style='display:none'>" + stck.PaxQuantity + "</td>";
                         tr += "<td style='display:none'>" + stck.ReservationDetailId + "</td>";
                         tr += "<td style='display:none'>" + stck.GuestId + "</td>";
                         tr += "<td style='display:none'>" + stck.ReservationId + "</td>";
@@ -326,7 +257,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     grid += GridHeader() + tr + "</tbody> </table>";
                     adjvw.ExpressCheckInnDetailsGrid = grid;
                     adjvw.DuplicateCheck = duplicateCheck;
-
 
                     //----------------------------------------------------------------------------------------------------------------------------------------------------------
                     DateTime dateTime = DateTime.Now;
@@ -344,7 +274,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                                 join rd in reservationDetailListBO on rc.RoomTypeId equals rd.RoomTypeId
                                 select rc).Distinct().ToList();
 
-                    //List<DateTime> DateList = GetDateArrayBetweenTwoDates(StartDate, EndDate);
                     List<DateTime> DateList = CommonHelper.GetDateArrayBetweenTwoDates(StartDate, EndDate);
                     List<RoomCalenderBO> calenderList = GetRoomCalenderList(StartDate, EndDate);
 
@@ -357,11 +286,13 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     strTable += "<thead><tr style='background-color:#E3EAEB;'>";
                     strTable += "<th color='white' bgcolor='#457EA4' align='left' style='width: 175px;cursor:pointer' ><font color='white'><b>Room No.</b></font> </th>";
                     strTable += "<th bgcolor='#457EA4' align='left' style='width: 175px;cursor:pointer' ><font color='white'><b>Type</b></font></th>";
+                    
                     foreach (DateTime date in DateList)
                     {
                         strTable += "<th bgcolor='#457EA4' align='left' style='width: 100px;cursor:pointer' ><font color='white'><b>" + hmUtility.GetStringFromDateTime(date) + "</b></font></th>";
                     }
                     strTable += "</tr></thead><tbody>";
+                    
                     foreach (RoomNumberBO dr in roomList)
                     {
                         if (dr.GroupByRowNo == 1)
@@ -369,7 +300,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                             strTable += "<tr style='background-color:#023C61; color:white;'>";
                             strTable += "<td align='left' colspan='" + totalCol.ToString() + "' style='width: 175;cursor:pointer' >" + dr.FloorAndBlockName + "</td>";
                             strTable += "</tr>";
-                            //maxGroupRnk = roomList.Where(c => c.FloorAndBlockName == dr.FloorAndBlockName).Select(s => s.GroupByRowNo).Max();
                         }
 
                         counter++;
@@ -425,7 +355,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                                 {
                                     strTable += "<td class='OutOfService' align='left' style='width: 100px;cursor:pointer' onClick=\"javascript:return RedirectToDetails(" + List[0].TransectionId + "," + reservation + ",'" + List[0].RoomNumber + "','" + date + "')\">" + List[0].GuestName + "</td>";
                                 }
-
                             }
                             else
                             {
@@ -450,7 +379,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         [WebMethod]
         public static ReturnInfo SaveExpressCheckInn(int reservationId, List<RoomReservationBO> reservationDetailBO)
         {
-            //long reservationDetailId = 0;
             Boolean IsReservationProcess = true;
             HMUtility hmUtility = new HMUtility();
             ReturnInfo rtninfo = new ReturnInfo();
@@ -488,7 +416,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                                     roomRegistrationBO.IsVatAmountEnable = rowDetails.IsVatAmountEnable;
                                     roomRegistrationBO.IsAdditionalChargeEnable = rowDetails.IsAdditionalChargeEnable;
                                     roomRegistrationBO.ReservationId = reservationId;
-
                                     roomRegistrationBO.ArriveDate = DateTime.Now;
                                     roomRegistrationBO.ExpectedCheckOutDate = reservationBO.DateOut;
 
@@ -727,7 +654,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         {
                             roomNumberBOList = roomNumberBOList.OrderBy(test => test.RoomTypeId).ThenBy(test => test.RoomNumber).ToList();
 
-                            //RoomInfo Updated.. 
+                            // // Room Information Updated.. 
                             roomNumberBOList = (roomNumberBOList.GroupBy(test => new { test.RoomTypeId, test.RoomNumber })
                                  .Select(group => group.First()).ToList())
                                  .GroupBy(i => i.RoomTypeId).Select(group => new RoomNumberBO

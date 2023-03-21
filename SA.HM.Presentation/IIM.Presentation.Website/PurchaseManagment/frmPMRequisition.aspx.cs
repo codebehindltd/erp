@@ -576,35 +576,54 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
             userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
             CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
             List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
+            List<CostCentreTabBO> customCostCentreTabBOList = new List<CostCentreTabBO>();
             List<CostCentreTabBO> requisitionToCostCentreList = new List<CostCentreTabBO>();
 
             HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
             HMCommonSetupBO invoiceTemplateBO = new HMCommonSetupBO();
             invoiceTemplateBO = commonSetupDA.GetCommonConfigurationInfo("IsUserpermissionAppliedToCostcenterFilteringForPOPR", "IsUserpermissionAppliedToCostcenterFilteringForPOPR");
 
-            //if (Convert.ToInt16(invoiceTemplateBO.SetupValue) != 0)
-            //{
-            //    costCentreTabBOList = costCentreTabDA.GetUserWisePRPOCostCentreTabInfo(userInformationBO.UserInfoId, HMConstants.CostcenterFilteringForPOPR.Requisition.ToString());
-            //}
-            //else
-            //{
-            //    costCentreTabBOList = costCentreTabDA.GetUserWisePRPOCostCentreTabInfo(userInformationBO.UserInfoId, null);
-            //}
+            //costCentreTabBOList = costCentreTabDA.GetCostCentreTabInfoByUserGroupId(userInformationBO.UserGroupId)
+            //                        .Where(o => o.OutletType == 1 && o.CostCenterType == "Inventory").ToList();
 
             costCentreTabBOList = costCentreTabDA.GetCostCentreTabInfoByUserGroupId(userInformationBO.UserGroupId)
-                                    .Where(o => o.OutletType == 1 && o.CostCenterType == "Inventory").ToList();
+                                    .Where(o => o.CostCenterType == "Inventory").ToList();
 
-            this.ddlCostCentre.DataSource = costCentreTabBOList;
+            if (costCentreTabBOList != null)
+            {
+                if (costCentreTabBOList.Count > 0)
+                {
+                    if ((costCentreTabBOList.Where(o => o.OutletType == 2).ToList()).Count > 1)
+                    {
+                        customCostCentreTabBOList.AddRange(costCentreTabBOList);
+                    }
+                    else
+                    {
+                        customCostCentreTabBOList = costCentreTabBOList.Where(o => o.OutletType == 1).ToList();
+                    }
+                }
+                else
+                {
+                    customCostCentreTabBOList.AddRange(costCentreTabBOList);
+                }
+            }
+            else
+            {
+                customCostCentreTabBOList.AddRange(costCentreTabBOList);
+            }
+
+            this.ddlCostCentre.DataSource = customCostCentreTabBOList;
             this.ddlCostCentre.DataTextField = "CostCenter";
             this.ddlCostCentre.DataValueField = "CostCenterId";
             this.ddlCostCentre.DataBind();
 
-            ddlLocation.DataSource = costCentreTabBOList;
+            ddlLocation.DataSource = customCostCentreTabBOList;
             ddlLocation.DataTextField = "CostCenterId";
             ddlLocation.DataValueField = "DefaultStockLocationId";
             ddlLocation.DataBind();
 
-            requisitionToCostCentreList = costCentreTabDA.GetCostCentreTabInfoByType("Inventory");
+            //requisitionToCostCentreList = costCentreTabBOList.Where(o => o.OutletType == 2).ToList();
+            requisitionToCostCentreList = costCentreTabDA.GetCostCentreTabInfoByType("Inventory").Where(o => o.OutletType == 2).ToList();
 
             ddlRequisitionTo.DataSource = requisitionToCostCentreList;
             ddlRequisitionTo.DataTextField = "CostCenter";
@@ -615,12 +634,21 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
             item.Value = "0";
             item.Text = hmUtility.GetDropDownFirstValue();
 
-            if (requisitionToCostCentreList.Count > 1)
-                ddlRequisitionTo.Items.Insert(0, item); 
-            if (costCentreTabBOList.Count > 1)
-            { 
-                ddlCostCentre.Items.Insert(0, item);
-                ddlLocation.Items.Insert(0, item);
+            if (requisitionToCostCentreList != null)
+            {
+                if (requisitionToCostCentreList.Count > 1)
+                {
+                    ddlRequisitionTo.Items.Insert(0, item);
+                }                
+            }
+
+            if (customCostCentreTabBOList != null)
+            {
+                if (customCostCentreTabBOList.Count > 1)
+                {
+                    ddlCostCentre.Items.Insert(0, item);
+                    ddlLocation.Items.Insert(0, item);
+                }
             }
         }
         private void LoadStockBy()
@@ -1042,7 +1070,7 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment
             InvItemAttributeDA DA = new InvItemAttributeDA();
             List<InvItemAttributeBO> InvItemAttributeBOList = new List<InvItemAttributeBO>();
             InvItemAttributeBOList = DA.GetInvItemAttributeByItemIdAndAttributeType(ItemId, attributeType);
-            
+
 
             return InvItemAttributeBOList;
         }

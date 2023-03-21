@@ -27,17 +27,40 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         {
             if (!IsPostBack)
             {
+                hfParentDoc.Value = "0";
                 Random rd = new Random();
                 int seatingId = rd.Next(100000, 999999);
                 RandomDocId.Value = seatingId.ToString();
                 tempDocId.Value = seatingId.ToString();
-                hfParentDoc.Value = "0";
-                FileUpload();
-                LoadCompany();
-                LoadProjectStage();
-                LoadSMCompany();
-                LoadCostCenter();
-                OnInit();
+                this.IsProjectCodeAutoGenerate();                
+                this.FileUpload();
+                this.LoadCompany();
+                this.LoadProjectStage();
+                this.LoadSMCompany();
+                this.LoadCostCenter();
+                this.OnInit();
+            }
+        }
+        private void IsProjectCodeAutoGenerate()
+        {
+            CodeModelLabel.Visible = true;
+            CodeModelControl.Visible = true;
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+            HMCommonSetupBO homePageSetupBO = new HMCommonSetupBO();
+            homePageSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsProjectCodeAutoGenerate", "IsProjectCodeAutoGenerate");
+            if (homePageSetupBO != null)
+            {
+                if (homePageSetupBO.SetupId > 0)
+                {
+                    hfIsProjectCodeAutoGenerate.Value = homePageSetupBO.SetupValue;
+                    if (homePageSetupBO.SetupValue == "1")
+                    {
+                        CodeModelLabel.Visible = false;
+                        CodeModelControl.Visible = false;
+                    }
+                }
             }
         }
         private void OnInit()
@@ -181,11 +204,34 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
         {
             ReturnInfo info = new ReturnInfo();
             bool status = false;
+            bool isProjectCodeAutoGenerate = true;
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+            HMCommonSetupBO homePageSetupBO = new HMCommonSetupBO();
+            homePageSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsProjectCodeAutoGenerate", "IsProjectCodeAutoGenerate");
+            if (homePageSetupBO != null)
+            {
+                if (homePageSetupBO.SetupId > 0)
+                {
+                    if (homePageSetupBO.SetupValue == "0")
+                    {
+                        isProjectCodeAutoGenerate = false;
+                    }
+                    else
+                    {
+                        GLProjectBO.Code = "123456789";
+                    }
+                }
+            }
 
             if (DuplicateCheckDynamicaly(GLProjectBO.ProjectId.ToString(), "Code", GLProjectBO.Code, 0, "CompanyId = " + GLProjectBO.CompanyId.ToString()) > 0)
             {
-                info.IsSuccess = false;
-                info.AlertMessage = CommonHelper.AlertInfo("Code" + AlertMessage.DuplicateValidation, AlertType.Warning);
+                if (isProjectCodeAutoGenerate == true)
+                {
+                    info.IsSuccess = false;
+                    info.AlertMessage = CommonHelper.AlertInfo("Code" + AlertMessage.DuplicateValidation, AlertType.Warning);
+                }
             }
             else
             {

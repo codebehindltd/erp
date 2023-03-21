@@ -396,7 +396,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.35417in</Height>
+              <Height>0.21875in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -475,7 +475,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.21875in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -488,7 +488,7 @@
                             <TextRun>
                               <Value>=Fields!CompanyName.Value</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
@@ -520,9 +520,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!DRAmount.Value) - Sum(Fields!CRAmount.Value)</Value>
+                              <Value>=Sum(Fields!ClosingBalance.Value)</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Format>#,0.00;(#,0.00)</Format>
                               </Style>
@@ -581,8 +581,8 @@
         <DataSetName>CompanyPaymentLedger</DataSetName>
         <Top>1.25285in</Top>
         <Left>0.00261in</Left>
-        <Height>0.60417in</Height>
-        <Width>7.89383in</Width>
+        <Height>0.4375in</Height>
+        <Width>7.89384in</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>

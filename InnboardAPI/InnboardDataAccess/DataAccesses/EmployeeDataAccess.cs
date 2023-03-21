@@ -61,8 +61,8 @@ namespace InnboardDataAccess.DataAccesses
             if (criteriaDto == null)
             {
                 criteriaDto = new PayrollEmpCriteriaDto();
-            }            
-            string query = string.Format($@"EXEC [dbo].[GetPayrollEmpLocationTracking_SP] {criteriaDto.EmpId}, '{criteriaDto.pageParams.SearchKey}', {criteriaDto.pageParams.PageNumber}, {criteriaDto.pageParams.PageSize}");
+            }
+            string query = string.Format($@"EXEC [dbo].[GetPayrollEmpLocationTracking_SP] {criteriaDto.UserInfoId}, '{criteriaDto.pageParams.SearchKey}', {criteriaDto.pageParams.PageNumber}, {criteriaDto.pageParams.PageSize}");
             var data = await InnboardDBContext.Database.SqlQuery<PayrollEmpLocationInfo>(query).ToListAsync();            
             return data;
         }

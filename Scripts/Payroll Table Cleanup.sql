@@ -21,6 +21,15 @@ TRUNCATE TABLE PayrollLoanCollection
 TRUNCATE TABLE PayrollLoanHoldup
 TRUNCATE TABLE PayrollEmployeePaymentLedger
 
+TRUNCATE TABLE PayrollEmpAttendance
+TRUNCATE TABLE PayrollEmpAttendanceLogSuprima
+TRUNCATE TABLE PayrollEmpLeaveInformation
+TRUNCATE TABLE PayrollEmpPF
+TRUNCATE TABLE PayrollEmpSalaryProcessDetail
+TRUNCATE TABLE PayrollEmpThana
+TRUNCATE TABLE PayrollLeaveBalanceClosing
+TRUNCATE TABLE PayrollSalaryFormula
+
 --SELECT * FROM PayrollEmployee pe WHERE pe.EmpCode = 'E165'
 UPDATE PayrollEmployee
 SET	

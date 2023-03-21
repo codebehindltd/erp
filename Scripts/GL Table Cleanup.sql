@@ -1,3 +1,9 @@
 TRUNCATE TABLE GLLedgerMaster
 TRUNCATE TABLE GLLedgerDetails
 TRUNCATE TABLE GLVoucherApprovedInfo
+TRUNCATE TABLE GLAccountTypeSetup
+TRUNCATE TABLE GLDealMaster
+TRUNCATE TABLE GLLedger
+TRUNCATE TABLE GLProfitLossSetup
+TRUNCATE TABLE GLReportConfiguration
+TRUNCATE TABLE GLReportConfigurationDetail

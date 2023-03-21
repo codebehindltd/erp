@@ -40,9 +40,14 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment.Reports
             rvTransaction.LocalReport.EnableExternalImages = true;
 
             var reportPath = "";
-
-            reportPath = Server.MapPath(@"~/PurchaseManagment/Reports/Rdlc/RptSupplierPaymentLedger.rdlc");
-
+            if (ddlReportType.SelectedValue == "0")
+            {
+                reportPath = Server.MapPath(@"~/PurchaseManagment/Reports/Rdlc/RptSupplierLedger.rdlc");
+            }
+            else
+            {
+                reportPath = Server.MapPath(@"~/PurchaseManagment/Reports/Rdlc/RptSupplierPaymentLedger.rdlc");
+            }
 
             if (!File.Exists(reportPath))
                 return;
@@ -99,7 +104,7 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment.Reports
             }
 
             paymentStatus = ddlPaymentStatus.SelectedValue;
-            reportType = ddlReportType.SelectedValue;
+            reportType = ddlReportFor.SelectedValue;
 
             string searchNarration = txtSearchNarration.Text;
             string fromAmount = txtFromAmount.Text;

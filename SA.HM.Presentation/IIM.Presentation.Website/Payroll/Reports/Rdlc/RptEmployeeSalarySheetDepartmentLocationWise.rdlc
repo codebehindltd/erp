@@ -2799,6 +2799,18 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="SalaryYearMonth">
+          <DataField>SalaryYearMonth</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SalaryMonth">
+          <DataField>SalaryMonth</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ProcessId">
+          <DataField>ProcessId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="EmpId">
           <DataField>EmpId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
@@ -2811,13 +2823,13 @@
           <DataField>EmployeeName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Position">
-          <DataField>Position</DataField>
+        <Field Name="Designation">
+          <DataField>Designation</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="LocationId">
           <DataField>LocationId</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Location">
           <DataField>Location</DataField>
@@ -2831,62 +2843,130 @@
           <DataField>DepartmentName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="DaysFrom">
-          <DataField>DaysFrom</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="SalaryDateFrom">
+          <DataField>SalaryDateFrom</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="DaysTo">
-          <DataField>DaysTo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="SalaryDateTo">
+          <DataField>SalaryDateTo</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
         <Field Name="PaidDays">
           <DataField>PaidDays</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="DonorId">
+          <DataField>DonorId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="DonorName">
+          <DataField>DonorName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Company">
+          <DataField>Company</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Project">
           <DataField>Project</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="GrossSalary">
-          <DataField>GrossSalary</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TaxableIncome">
-          <DataField>TaxableIncome</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="NetSalary">
-          <DataField>NetSalary</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="PayHeadId">
-          <DataField>PayHeadId</DataField>
+        <Field Name="PayrollCurrencyId">
+          <DataField>PayrollCurrencyId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="PayHead">
-          <DataField>PayHead</DataField>
+        <Field Name="CurrencyName">
+          <DataField>CurrencyName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="PayHeadType">
-          <DataField>PayHeadType</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PayHeadDescription">
-          <DataField>PayHeadDescription</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PayHeadAmount">
-          <DataField>PayHeadAmount</DataField>
+        <Field Name="ConvertionRate">
+          <DataField>ConvertionRate</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="BasicAmountInEmployeeCurrency">
+          <DataField>BasicAmountInEmployeeCurrency</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="BasicAmount">
+          <DataField>BasicAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SalaryHeadId">
+          <DataField>SalaryHeadId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="SalaryHead">
+          <DataField>SalaryHead</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SalaryType">
+          <DataField>SalaryType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SalaryAmount">
+          <DataField>SalaryAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="GrossAmount">
+          <DataField>GrossAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TotalAllowance">
+          <DataField>TotalAllowance</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TotalDeduction">
+          <DataField>TotalDeduction</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HomeTakenAmount">
+          <DataField>HomeTakenAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SalaryTypeRank">
+          <DataField>SalaryTypeRank</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ShowJoiningDate">
+          <DataField>ShowJoiningDate</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TotalDays">
+          <DataField>TotalDays</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TotalLeave">
+          <DataField>TotalLeave</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TotalHoliday">
+          <DataField>TotalHoliday</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TotalDayOff">
+          <DataField>TotalDayOff</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TotalAbsent">
+          <DataField>TotalAbsent</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TotalPresent">
+          <DataField>TotalPresent</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Gender">
+          <DataField>Gender</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>InnboardDataSetSalarySheet</rd:DataSetName>
-        <rd:SchemaPath>D:\Datagrid\Smart Aspect Source Code\Innboard\Trunk\SA.HM.Presentation\IIM.Presentation.Website\InnboardDataSetSalarySheet.xsd</rd:SchemaPath>
-        <rd:TableName>EmpSalarySheetReport_SP</rd:TableName>
+        <rd:DataSetName>InnboardDataSet</rd:DataSetName>
+        <rd:SchemaPath>D:\001 Source Code\ERP\SA.HM.Presentation\IIM.Presentation.Website\InnboardDataSet.xsd</rd:SchemaPath>
+        <rd:TableName>EmployeeSalarySheet_SP</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>EmpSalarySheetReport_SPTableAdapter</rd:TableAdapterName>
+        <rd:TableAdapterName>EmployeeSalarySheet_SPTableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

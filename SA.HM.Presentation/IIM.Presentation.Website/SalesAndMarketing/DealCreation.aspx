@@ -8,7 +8,7 @@
     <script type="text/javascript">
         var minEndDate;
         $(document).ready(function () {
-            GridPaging(1, 1);
+            //GridPaging(1, 1);
 
             $("#ContentPlaceHolder1_ddlSearchCompany").select2({
                 tags: false,

@@ -309,7 +309,7 @@
                 </div>
             </div>
             <asp:GridView ID="gvEmpPromotion" Width="100%" runat="server" AutoGenerateColumns="False"
-                CellPadding="4" PageSize="3" GridLines="None" AllowSorting="True" ForeColor="#333333" OnRowCommand="gvEmpPromotion_RowCommand"
+                CellPadding="4" PageSize="300000" GridLines="None" AllowSorting="True" ForeColor="#333333" OnRowCommand="gvEmpPromotion_RowCommand"
                 OnRowDataBound="gvEmpPromotion_RowDataBound" CssClass="table table-bordered table-condensed table-responsive" OnPageIndexChanging="gvEmpPromotion_PageIndexChanging">
                 <RowStyle BackColor="#E3EAEB" />
                 <Columns>

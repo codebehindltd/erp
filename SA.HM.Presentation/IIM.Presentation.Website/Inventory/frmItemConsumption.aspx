@@ -412,7 +412,7 @@
             }).autocomplete("option", "appendTo", "#SerialWindow");
 
             $("#ContentPlaceHolder1_txtItem").autocomplete({
-
+                minLength: 3,
                 source: function (request, response) {
                     var companyId = $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val();
                     var projectId = $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").val();
@@ -1990,7 +1990,7 @@
             }
         });
     }
-</script>
+    </script>
     <div id="detailsConsumptionDialog" style="display: none;">
         <div id="detailsConsumptionGridContainer">
         </div>
@@ -2221,7 +2221,7 @@
                                 <asp:Label ID="Label6" runat="server" class="control-label required-field" Text="Item"></asp:Label>
                             </div>
                             <div class="col-md-10">
-                                <asp:TextBox ID="txtItem" runat="server" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox ID="txtItem" runat="server" placeholder="Enter minimum 3 characters" CssClass="form-control"></asp:TextBox>
                             </div>
                         </div>
                         <div id="AttributeDiv">

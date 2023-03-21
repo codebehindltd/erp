@@ -83,27 +83,55 @@
                 }
             });
 
-            if ($("#ContentPlaceHolder1_ddlReportType").val() == "1") {
+            if ($("#ContentPlaceHolder1_ddlReportFor").val() == "1") {
                 $("#companysearch").show();
                 $("#CompanyLabelDiv").hide();
                 $("#CompanyControlDiv").hide();
             }
-            else if ($("#ContentPlaceHolder1_ddlReportType").val() == "0") {
+            else if ($("#ContentPlaceHolder1_ddlReportFor").val() == "0") {
                 $("#companysearch").hide();
                 $("#CompanyLabelDiv").show();
                 $("#CompanyControlDiv").show();
             }
 
-            $("#ContentPlaceHolder1_ddlReportType").change(function () {
-                if ($("#ContentPlaceHolder1_ddlReportType").val() == "1") {
+            $("#ContentPlaceHolder1_ddlReportFor").change(function () {
+                if ($("#ContentPlaceHolder1_ddlReportFor").val() == "1") {
                     $("#companysearch").show();
                     $("#CompanyLabelDiv").hide();
                     $("#CompanyControlDiv").hide();
                 }
-                else if ($("#ContentPlaceHolder1_ddlReportType").val() == "0") {
+                else if ($("#ContentPlaceHolder1_ddlReportFor").val() == "0") {
                     $("#companysearch").hide();
                     $("#CompanyLabelDiv").show();
                     $("#CompanyControlDiv").show();
+                }
+            });
+
+            if ($("#ContentPlaceHolder1_ddlReportType").val() == "0") {
+                $("#SearchNarrationDiv").hide();
+                $("#lblAmountDiv").hide();
+                $("#txtFromAmountDiv").hide();
+                $("#txtToAmountDiv").hide();
+            }
+            else if ($("#ContentPlaceHolder1_ddlReportType").val() == "1") {
+                $("#SearchNarrationDiv").show();
+                $("#lblAmountDiv").show();
+                $("#txtFromAmountDiv").show();
+                $("#txtToAmountDiv").show();
+            }
+
+            $("#ContentPlaceHolder1_ddlReportType").change(function () {
+                if ($("#ContentPlaceHolder1_ddlReportType").val() == "0") {
+                    $("#SearchNarrationDiv").hide();
+                    $("#lblAmountDiv").hide();
+                    $("#txtFromAmountDiv").hide();
+                    $("#txtToAmountDiv").hide();
+                }
+                else if ($("#ContentPlaceHolder1_ddlReportType").val() == "1") {
+                    $("#SearchNarrationDiv").show();
+                    $("#lblAmountDiv").show();
+                    $("#txtFromAmountDiv").show();
+                    $("#txtToAmountDiv").show();
                 }
             });
             $("#ContentPlaceHolder1_txtDateFrom").blur(function () {
@@ -136,7 +164,7 @@
             });
         });
         function ValidationSearch() {
-            reportType = $("#ContentPlaceHolder1_ddlReportType").val();
+            reportType = $("#ContentPlaceHolder1_ddlReportFor").val();
             supplier = $("#txtSearch").val();
             if (reportType == "1") {
                 if (supplier == "") {
@@ -156,10 +184,16 @@
                     <div class="col-md-2">
                         <asp:Label ID="Label2" runat="server" class="control-label required-field" Text="Report Type"></asp:Label>
                     </div>
-                    <div class="col-md-4">
-                        <asp:DropDownList ID="ddlReportType" runat="server" CssClass="form-control">
+                    <div class="col-md-2">
+                        <asp:DropDownList ID="ddlReportFor" runat="server" CssClass="form-control">
                             <asp:ListItem Text="Individual" Value="1"></asp:ListItem>
                             <asp:ListItem Text="All Supplier" Value="0"></asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:DropDownList ID="ddlReportType" runat="server" CssClass="form-control">                            
+                            <asp:ListItem Text="Summary" Value="0"></asp:ListItem>
+                            <asp:ListItem Text="Details" Value="1"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
                     <div class="col-md-2" id="CompanyLabelDiv">
@@ -204,19 +238,19 @@
                         <asp:TextBox ID="txtEndDateTo" placeholder="To From" CssClass="form-control" runat="server" TabIndex="8"></asp:TextBox><input
                             type="hidden" id="hidToDate" />
                     </div>
-                    <div class="col-md-2">
-                        <asp:Label ID="lblToDate" runat="server" class="control-label" Text="Amount"></asp:Label>
+                    <div id="lblAmountDiv" class="col-md-2" style="display:none;">
+                        <asp:Label ID="lblAmount" runat="server" class="control-label" Text="Amount"></asp:Label>
                     </div>
-                    <div class="col-md-2">
+                    <div id="txtFromAmountDiv" class="col-md-2" style="display:none;">
                         <asp:TextBox ID="txtFromAmount" placeholder="From Amount" CssClass="form-control" runat="server" TabIndex="7"></asp:TextBox><input
                             type="hidden" />
                     </div>
-                    <div class="col-md-2">
+                    <div id="txtToAmountDiv" class="col-md-2" style="display:none;">
                         <asp:TextBox ID="txtToAmount" placeholder="To Amount" CssClass="form-control" runat="server" TabIndex="8"></asp:TextBox><input
                             type="hidden" />
                     </div>
                 </div>
-                <div class="form-group">
+                <div id="SearchNarrationDiv" class="form-group" style="display:none;">
                     <div class="col-md-2">
                         <asp:Label ID="Label4" runat="server" class="control-label" Text="Narration"></asp:Label>
                     </div>

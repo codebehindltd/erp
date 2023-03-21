@@ -83,6 +83,7 @@
             });
             
             $("#ContentPlaceHolder1_txtContactName").autocomplete({
+                minLength: 3,
                 source: function (request, response) {
                     //debugger;
                     $.ajax({
@@ -332,6 +333,7 @@
             //LoadContactForSearch(1, 1);
 
             $("#ContentPlaceHolder1_txtCompany").autocomplete({
+                minLength: 3,
                 source: function (request, response) {
                     $.ajax({
                         type: "POST",
@@ -790,11 +792,11 @@
                     <div class="form-group">
                         <label class="control-label col-md-2 ">Contact Name</label>
                         <div class="col-md-4">
-                            <asp:TextBox ID="txtContactName" CssClass="form-control" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txtContactName" placeholder="Enter minimum 3 characters" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
                         <label class="control-label col-md-2 ">Company Name</label>
                         <div class="col-md-4">
-                            <asp:TextBox ID="txtCompany" runat="server" CssClass="form-control">
+                            <asp:TextBox ID="txtCompany" runat="server" placeholder="Enter minimum 3 characters" CssClass="form-control">
                             </asp:TextBox>
                             <asp:HiddenField ID="hfCompany" runat="server" Value="0"></asp:HiddenField>
                         </div>

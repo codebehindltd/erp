@@ -173,6 +173,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="AirTicketing\frmAirlineTicketInfo.aspx" />
+    <Content Include="AirTicketing\Reports\frmATBillInfo.aspx" />
     <Content Include="Banquet\frmBanquetCalendar.aspx" />
     <Content Include="Banquet\frmBanquetInformation.aspx" />
     <Content Include="Banquet\frmBanquetRefference.aspx" />
@@ -297,12 +298,21 @@
     <Content Include="Images\cashAdjustmentDetails.png" />
     <Content Include="Images\comparison.png" />
     <Content Include="Images\employeesearch.png" />
+    <Content Include="Images\LoginImage\circle.png" />
+    <Content Include="Images\LoginImage\polygon.png" />
+    <Content Include="Images\LoginImage\rectangle.png" />
+    <Content Include="Images\LoginImage\ring.png" />
     <Content Include="Images\quotation.png" />
     <Content Include="Images\TaskAssign.png" />
+    <Content Include="Inventory\frmInvIngredientNNutrientInfo.aspx" />
     <Content Include="Inventory\frmInvProduction.aspx" />
+    <Content Include="Inventory\frmNutrientInformation.aspx" />
+    <Content Include="Inventory\frmNutrientRequiredValues.aspx" />
+    <Content Include="Inventory\frmNutritionValue.aspx" />
     <Content Include="Inventory\InvItemAttributeSetup.aspx" />
     <Content Include="Inventory\InvItemAttributeSetupIframe.aspx" />
     <Content Include="Inventory\Reports\frmReportABCAnalysis.aspx" />
+    <Content Include="Inventory\Reports\frmReportNutrientInformation.aspx" />
     <Content Include="Inventory\Reports\frmReportProductConsumption.aspx" />
     <Content Include="Inventory\Reports\frmReportProductionInfo.aspx" />
     <Content Include="Inventory\Reports\frmReportXYZAnalysis.aspx" />
@@ -376,6 +386,7 @@
     <Content Include="HMCommon\Reports\CustomeNoticeReport.aspx" />
     <Content Include="Inventory\PackageInformation.aspx" />
     <Content Include="SalesAndMarketing\AccountManagerSalesTarget.aspx" />
+    <Content Include="SalesAndMarketing\frmCompanyAccountApproval.aspx" />
     <Content Include="SalesAndMarketing\frmCompanyBillAdjustment.aspx" />
     <Content Include="SalesAndMarketing\iFrameSourceInformation.aspx" />
     <Content Include="SalesAndMarketing\ContactTitle.aspx" />
@@ -838,6 +849,11 @@
     <Content Include="Inventory\Reports\Rdlc\rptProductOutInfoTransferNumberWiseItemSummary.rdlc" />
     <Content Include="HotelManagement\Reports\Rdlc\rptDivisionRevenueMonthWise.rdlc" />
     <Content Include="HotelManagement\Reports\Rdlc\rptRoomSalesRevenueMonthWise.rdlc" />
+    <Content Include="AirTicketing\Reports\Rdlc\rptATBillingInvoice.rdlc" />
+    <Content Include="Inventory\Reports\Rdlc\rptItemNutrientInformation.rdlc" />
+    <Content Include="Inventory\Reports\Rdlc\rptItemNutrientSummary.rdlc" />
+    <Content Include="Inventory\Reports\Rdlc\rptProductReceiveSummaryInfoByItem.rdlc" />
+    <Content Include="Inventory\Reports\Rdlc\rptProductReceiveDetailsInfoByItem.rdlc" />
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />
@@ -848,6 +864,10 @@
     <Content Include="Payroll\Reports\Rdlc\RptBankSalaryInstruction03.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptDepartmentWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptDesignationWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptDepartmentWiseEmployeeSalarySheetsForSingleCompanyWAS.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptDesignationWiseEmployeeSalarySheetsForSingleCompanyWAS.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptDepartmentWiseEmployeeSalarySheetsWAS.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptDesignationWiseEmployeeSalarySheetsWAS.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptEmpJoiningAgreement.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptEmpJoiningAgreementWTHF.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpPromotionLetter.rdlc" />
@@ -857,21 +877,32 @@
     <Content Include="Payroll\Reports\Rdlc\rptEmpServiceBondWTHF.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptEmployeeSalarySheetsForSingleCompany.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\RptEmpLateAttendanceIndividual.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptDepartmentWiseEmployeeAttendance.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\RptEmployeeAttendanceInOutIndividual.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\RptEmployeeAttendanceLogIndividual.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptEmployeeSalarySheetTempSouthSudan.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptEmployeeSalarySheetsForSingleCompanyWAS.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptEmployeeSalarySheetsWAS.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\RptEmployeeSalarySheetSouthSudan.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\RptEmpWithoutClockOutAttendanceIndividual.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptLeaveInformationIndividual.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptLeaveInformationType.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptGenderWiseEmployeeSalarySheetsForSingleCompanyWAS.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptGenderWiseEmployeeSalarySheetsWAS.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptLeaveInformationTypeIndividual.rdlc" />
     <EmbeddedResource Include="Payroll\Reports\Rdlc\rptLeaveYearlyInformationIndividual.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptWorkStationWiseEmployeeSalarySheets.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptWorkStationWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptGenderWiseEmployeeSalarySheetsForSingleCompany.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptGenderWiseEmployeeSalarySheets.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptWorkStationWiseEmployeeSalarySheetsForSingleCompanyWAS.rdlc" />
+    <Content Include="Payroll\Reports\Rdlc\RptWorkStationWiseEmployeeSalarySheetsWAS.rdlc" />
     <EmbeddedResource Include="POS\Reports\Rdlc\rptKotBill02.rdlc" />
     <Content Include="SMSTemplates\ReservationAmedmentSms.txt" />
     <Content Include="SMSTemplates\ReservationCancelSms.txt" />
     <Content Include="SMSTemplates\ReservationConfirmationSms.txt" />
+    <Content Include="StyleSheet\css\login.css" />
+    <Content Include="StyleSheet\css\ProductionPagination.css" />
     <Content Include="SupportAndTicket\Reports\Rdlc\rptSupportTicket.rdlc" />
     <Content Include="POS\Reports\Rdlc\rptRiceMillBillForA4Page.rdlc" />
     <Content Include="POS\Reports\Rdlc\rptRiceMillBillForA4PageWithoutHeader.rdlc" />
@@ -1930,7 +1961,6 @@
     <Content Include="SalesAndMarketing\Reports\Rdlc\DynamicCRMReport.rdlc" />
     <Content Include="SalesAndMarketing\Reports\Rdlc\rptQuotationDetailsForInventoryNTechnical.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptItemConsumption.rdlc" />
-    <Content Include="InnboardMembership.Master" />
     <Content Include="POS\Restaurant.Master" />
     <Content Include="POS\RestaurantMaster.Master" />
     <Content Include="POS\RestaurantMM.Master" />
@@ -2361,6 +2391,13 @@
     </Compile>
     <Compile Include="AirTicketing\frmAirlineTicketInfo.aspx.designer.cs">
       <DependentUpon>frmAirlineTicketInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AirTicketing\Reports\frmATBillInfo.aspx.cs">
+      <DependentUpon>frmATBillInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AirTicketing\Reports\frmATBillInfo.aspx.designer.cs">
+      <DependentUpon>frmATBillInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Banquet\Reports\frmReportAdvBanquetReservationForecast.aspx.cs">
       <DependentUpon>frmReportAdvBanquetReservationForecast.aspx</DependentUpon>
@@ -2828,12 +2865,40 @@
     <Compile Include="HouseKeeping\Reports\ReportHKLostNFound.aspx.designer.cs">
       <DependentUpon>ReportHKLostNFound.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Inventory\frmInvIngredientNNutrientInfo.aspx.cs">
+      <DependentUpon>frmInvIngredientNNutrientInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmInvIngredientNNutrientInfo.aspx.designer.cs">
+      <DependentUpon>frmInvIngredientNNutrientInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Inventory\frmInvProduction.aspx.cs">
       <DependentUpon>frmInvProduction.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Inventory\frmInvProduction.aspx.designer.cs">
       <DependentUpon>frmInvProduction.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmNutrientInformation.aspx.cs">
+      <DependentUpon>frmNutrientInformation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmNutrientInformation.aspx.designer.cs">
+      <DependentUpon>frmNutrientInformation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmNutrientRequiredValues.aspx.cs">
+      <DependentUpon>frmNutrientRequiredValues.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmNutrientRequiredValues.aspx.designer.cs">
+      <DependentUpon>frmNutrientRequiredValues.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\frmNutritionValue.aspx.cs">
+      <DependentUpon>frmNutritionValue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\frmNutritionValue.aspx.designer.cs">
+      <DependentUpon>frmNutritionValue.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventory\InvItemAttributeSetup.aspx.cs">
       <DependentUpon>InvItemAttributeSetup.aspx</DependentUpon>
@@ -2855,6 +2920,13 @@
     </Compile>
     <Compile Include="Inventory\Reports\frmReportABCAnalysis.aspx.designer.cs">
       <DependentUpon>frmReportABCAnalysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\Reports\frmReportNutrientInformation.aspx.cs">
+      <DependentUpon>frmReportNutrientInformation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\Reports\frmReportNutrientInformation.aspx.designer.cs">
+      <DependentUpon>frmReportNutrientInformation.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventory\Reports\frmReportProductConsumption.aspx.cs">
       <DependentUpon>frmReportProductConsumption.aspx</DependentUpon>
@@ -3309,6 +3381,13 @@
     <Compile Include="SalesAndMarketing\AccountManagerSalesTarget.aspx.designer.cs">
       <DependentUpon>AccountManagerSalesTarget.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SalesAndMarketing\frmCompanyAccountApproval.aspx.cs">
+      <DependentUpon>frmCompanyAccountApproval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SalesAndMarketing\frmCompanyAccountApproval.aspx.designer.cs">
+      <DependentUpon>frmCompanyAccountApproval.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SalesAndMarketing\frmCompanyBillAdjustment.aspx.cs">
       <DependentUpon>frmCompanyBillAdjustment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3652,13 +3731,6 @@
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportMarketSegmentWiseInformation.aspx.designer.cs">
       <DependentUpon>frmReportMarketSegmentWiseInformation.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="InnboardMembership.Master.cs">
-      <DependentUpon>InnboardMembership.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="InnboardMembership.Master.designer.cs">
-      <DependentUpon>InnboardMembership.Master</DependentUpon>
     </Compile>
     <Compile Include="Inventory\frmInventoryConfiguration.aspx.cs">
       <DependentUpon>frmInventoryConfiguration.aspx</DependentUpon>
@@ -7762,13 +7834,6 @@
     <Compile Include="HotelManagement\Reports\frmReportRoomWiseStatus.aspx.designer.cs">
       <DependentUpon>frmReportRoomWiseStatus.aspx</DependentUpon>
     </Compile>
-    <Compile Include="InnBoard.Master.cs">
-      <DependentUpon>InnBoard.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="InnBoard.Master.designer.cs">
-      <DependentUpon>InnBoard.Master</DependentUpon>
-    </Compile>
     <Compile Include="Logout.aspx.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -8209,7 +8274,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common\HMReport.Master" />
-    <Content Include="InnBoard.Master" />
     <Content Include="Handler.ashx" />
     <Content Include="Common\ReportViewer.Master" />
     <Content Include="Common\IRReportViewer.Master" />
@@ -8395,7 +8459,6 @@
     <Content Include="Payroll\Reports\Rdlc\rptEmployeeOvertime.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmployeeProfile.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptEmployeeSalarySheet.rdlc" />
-    <Content Include="Payroll\Reports\Rdlc\RptEmployeeSalarySheetDepartmentLocationWise.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptEmployeeSalarySheets.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptEmployeeServiceChargeBankAdvice.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\RptEmployeeServiceChargeDistribution.rdlc" />
@@ -8461,7 +8524,7 @@
     <Content Include="SalesManagment\Reports\Rdlc\SalesInvoice.rdlc" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AirTicketing\Reports\Rdlc\" />
+    <Folder Include="AirTicketing\Image\" />
     <Folder Include="App_Readme\" />
     <Folder Include="Banquet\SeatingPlanImage\" />
     <Folder Include="bin\" />

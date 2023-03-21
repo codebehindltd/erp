@@ -67,6 +67,10 @@ namespace HotelManagement.Presentation.Website.Payroll
         }
         protected void EmpDropDown_Change(object sender, EventArgs e)
         {
+            LoadPFInformation();
+        }
+        private void LoadPFInformation()
+        {
             int departId = Convert.ToInt32(ddlDepartment.SelectedValue);
             EmployeeDA empDA = new EmployeeDA();
             List<EmployeeBO> empList = new List<EmployeeBO>();
@@ -99,9 +103,9 @@ namespace HotelManagement.Presentation.Website.Payroll
                 strTable += "<td align='left' style=\"display:none;\">" + emp.EmpId + "</td>";
                 strTable += "<td align='left' style=\"'width:10%;\">" + emp.EmpCode + "</td>";
                 strTable += "<td align='left' style=\"'width:45%;\">" + emp.DisplayName + "</td>";
-                strTable += "<td align='left' style='width:15%;'><input type='text' class='form-control' style='width:100px;'/></td>";
-                strTable += "<td align='left' style='width: 15%;'><input type='text' class='form-control' style='width:100px;'/></td>";
-                strTable += "<td align='left' style='width: 15%;'><input type='text' class='form-control' style='width:100px;'/></td>";
+                strTable += "<td align='left' style='width:15%;'><input type='text' class='form-control' style='width:100px;' value='" + emp.EmpContribution.ToString() + "'/></td>";
+                strTable += "<td align='left' style='width: 15%;'><input type='text' class='form-control' style='width:100px;' value='" + emp.CompanyContribution.ToString() + "'/></td>";
+                strTable += "<td align='left' style='width: 15%;'><input type='text' class='form-control' style='width:100px;' value='" + emp.ProvidentFundInterest.ToString() + "'/></td>";
 
                 strTable += "</tr>";
             }
@@ -164,6 +168,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                             EntityTypeEnum.EntityType.PFSetting.ToString(), 0,
                             ProjectModuleEnum.ProjectModule.PayrollManagement.ToString(),
                             "Employee's Provident Fund is Saved");
+                    LoadPFInformation();
                 }
                 else
                 {

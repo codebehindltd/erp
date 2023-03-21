@@ -10,7 +10,6 @@
         ////Bread Crumbs Information-------------
         $(document).ready(function () {
 
-            //debugger;
             var IsItemOriginHide = $("#ContentPlaceHolder1_hfIsItemOriginHide").val();
 
             if (IsItemOriginHide == "1") {
@@ -67,7 +66,6 @@
             }
             $('#ImagePanel').hide();
             if ($("#ContentPlaceHolder1_hfEditedItemId").val() != "") {
-                debugger;
                 UploadComplete();
             }
 
@@ -418,7 +416,7 @@
             var ddlStockById = '<%=ddlItemStockBy.ClientID%>';
             var control = $('#' + ddlStockById);
             control.empty();
-
+            debugger;
             if (list != null) {
                 if (list.length > 0) {
                     control.removeAttr("disabled");
@@ -572,12 +570,13 @@
                 toastr.warning('Please Select Stock Type.');
                 return false;
             }
-    if ($("#<%=ddlClassification.ClientID %>").val() == "0") {
+
+            if ($("#<%=ddlClassification.ClientID %>").val() == "0") {
                 toastr.warning('Please Select Item Classification.');
                 return false;
             }
             else if ($("#<%=ddlCategory.ClientID %>").val() != "0") {
-        if ($("#<%=ddlStockType.ClientID %>").val() == "KitchenItem") {
+                if ($("#<%=ddlStockType.ClientID %>").val() == "KitchenItem") {
                     if (rowLength == 0 && saveObj.length == 0 && deleteSalesObj.length == 0) {
                         toastr.warning('Please add at least one recipe item.');
                         return false;
@@ -1165,7 +1164,6 @@
                     $("#Styletbl tbody tr").find("td:eq(0)").find("input").prop("checked", false);
                 }
             });
-            debugger;
             var str = $("#ContentPlaceHolder1_hfItemAttributeList").val();
             var array = new Array();
             $.each(str.split(","), function () {

@@ -7,6 +7,7 @@ using System.Data.Common;
 using System.Data;
 using HotelManagement.Entity.SalesManagment;
 using HotelManagement.Entity.Banquet;
+using HotelManagement.Entity.PurchaseManagment;
 
 namespace HotelManagement.Data.Inventory
 {
@@ -19,6 +20,47 @@ namespace HotelManagement.Data.Inventory
             {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvItemInfo_SP"))
                 {
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                InvItemBO productBO = new InvItemBO();
+                                productBO.ItemId = Convert.ToInt32(reader["ItemId"]);
+                                productBO.Name = reader["Name"].ToString();
+                                productBO.Code = reader["Code"].ToString();
+                                productBO.CodeAndName = reader["Code"].ToString() + " - " + reader["Name"].ToString();
+                                productBO.Description = reader["Description"].ToString();
+                                productBO.CategoryId = Convert.ToInt32(reader["CategoryId"]);
+                                productBO.ManufacturerId = Convert.ToInt32(reader["ManufacturerId"]);
+                                productBO.ProductType = reader["ProductType"].ToString();
+                                productBO.PurchasePrice = Convert.ToDecimal(reader["PurchasePrice"]);
+                                productBO.SellingLocalCurrencyId = Int32.Parse(reader["SellingLocalCurrencyId"].ToString());
+                                productBO.UnitPriceLocal = Convert.ToDecimal(reader["UnitPriceLocal"]);
+                                productBO.SellingUsdCurrencyId = Int32.Parse(reader["SellingUsdCurrencyId"].ToString());
+                                productBO.UnitPriceUsd = Convert.ToDecimal(reader["UnitPriceUsd"]);
+                                productBO.ServiceWarranty = Int32.Parse(reader["ServiceWarranty"].ToString());
+                                productBO.StockType = reader["StockType"].ToString();
+                                productBO.ServiceType = reader["ServiceType"].ToString();
+                                productBO.StockBy = Int32.Parse(reader["StockBy"].ToString());
+                                productBO.IsSupplierItem = Convert.ToBoolean(reader["IsSupplierItem"].ToString());
+                                productList.Add(productBO);
+                            }
+                        }
+                    }
+                }
+            }
+            return productList;
+        }
+        public List<InvItemBO> GetInvItemInformationByCustomCategoryIdList(string categoryType)
+        {
+            List<InvItemBO> productList = new List<InvItemBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvItemInformationByCustomCategoryIdList_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@CategoryType", DbType.String, categoryType);
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
                         if (reader != null)
@@ -236,6 +278,7 @@ namespace HotelManagement.Data.Inventory
                                 productBO.ItemId = Convert.ToInt32(reader["ItemId"]);
                                 productBO.Name = reader["Name"].ToString();
                                 productBO.Code = reader["Code"].ToString();
+                                productBO.CodeAndName = reader["CodeAndName"].ToString();
                                 productBO.Description = reader["Description"].ToString();
                                 productBO.CategoryId = Convert.ToInt32(reader["CategoryId"]);
                                 productBO.ManufacturerId = Convert.ToInt32(reader["ManufacturerId"]);
@@ -2237,6 +2280,7 @@ namespace HotelManagement.Data.Inventory
                         RecipeId = r.Field<Int32>("RecipeId"),
                         RecipeItemId = r.Field<Int32>("RecipeItemId"),
                         RecipeItemName = r.Field<string>("RecipeItemName"),
+                        RecipeItemCodeAndName = r.Field<string>("RecipeItemCodeAndName"),
                         ItemUnit = r.Field<decimal>("ItemUnit"),
                         ItemCost = r.Field<decimal>("ItemCost"),
                         UnitHeadId = r.Field<Int32>("UnitHeadId"),
@@ -2247,6 +2291,34 @@ namespace HotelManagement.Data.Inventory
                 }
             }
             return recipeItemList;
+        }
+        
+        public List<OverheadExpensesBO> GetInvFGNNutrientRequiredOEById(int itemId)
+        {
+            List<OverheadExpensesBO> accountHeadList = new List<OverheadExpensesBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvFGNNutrientRequiredOEById_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, itemId);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "OEInfo");
+                    DataTable Table = ds.Tables["OEInfo"];
+
+                    accountHeadList = Table.AsEnumerable().Select(r => new OverheadExpensesBO
+                    {
+                        FinishProductId = r.Field<Int32>("FGId"),
+                        NodeId = r.Field<Int32>("NodeId"),
+                        AccountHead = r.Field<string>("AccountHead"),
+                        Amount = r.Field<decimal>("OEAmount"),
+                        Remarks = r.Field<string>("OERemarks"),
+                        HeadWithCode = r.Field<string>("HeadWithCode")
+                    }).ToList();
+                }
+            }
+            return accountHeadList;
         }
         public RestaurantRecipeDetailBO GetReceipeItemCost(int itemId, int stockById, decimal quantity)
         {
@@ -2629,6 +2701,7 @@ namespace HotelManagement.Data.Inventory
                         ItemName = r.Field<string>("ItemName"),
                         RecipeItemId = r.Field<Int32>("RecipeItemId"),
                         RecipeItemName = r.Field<string>("RecipeItemName"),
+                        RecipeItemCodeAndName = r.Field<string>("RecipeItemCodeAndName"),
                         ItemUnit = r.Field<decimal>("ItemUnit"),
                         ItemCost = r.Field<decimal>("ItemCost"),
                         HeadName = r.Field<string>("HeadName"),
@@ -2636,6 +2709,77 @@ namespace HotelManagement.Data.Inventory
                         ServingInstructions = r.Field<string>("ServingInstructions"),
                         IngredientPrepComments = r.Field<string>("IngredientPrepComments"),
                         ItemRank = r.Field<Int64>("ItemRank")
+
+                    }).ToList();
+                }
+            }
+
+            return itemRecipe;
+        }
+        public List<RecipeReportBO> GetFinishedGoodsNutrientSummaryInformation(int itemId)
+        {
+            List<RecipeReportBO> itemRecipe = new List<RecipeReportBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetFinishedGoodsNutrientSummaryInformation_SP"))
+                {
+                    if (itemId != 0)
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, itemId);
+                    }
+                    else
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, DBNull.Value);
+                    }
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "PMProductOut");
+                    DataTable Table = ds.Tables["PMProductOut"];
+
+                    itemRecipe = Table.AsEnumerable().Select(r => new RecipeReportBO
+                    {
+                        ItemId = r.Field<Int32>("ItemId"),
+                        FinishedGoodsCode = r.Field<string>("FinishedGoodsCode"),
+                        FinishedGoodsName = r.Field<string>("FinishedGoodsName"),
+                        FinishedGoodsCodeAndName = r.Field<string>("FinishedGoodsCodeAndName"),
+                        TotalRawMaterialsCost = r.Field<decimal>("TotalRawMaterialsCost"),
+                        TotalOverheadCost = r.Field<decimal>("TotalOverheadCost"),
+                        TotalCost = r.Field<decimal>("TotalCost"),
+                        SalesRate = r.Field<decimal>("SalesRate"),
+                        ProfitAndLoss = r.Field<decimal>("ProfitAndLoss"),
+                    }).ToList();
+                }
+            }
+
+            return itemRecipe;
+        }
+        public List<RecipeReportBO> GetItemNutrientInformationReport(int itemId)
+        {
+            List<RecipeReportBO> itemRecipe = new List<RecipeReportBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvNutrientInformationByFGId_SP"))
+                {                    
+                    dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, itemId);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "PMProductOut");
+                    DataTable Table = ds.Tables["PMProductOut"];
+
+                    itemRecipe = Table.AsEnumerable().Select(r => new RecipeReportBO
+                    {
+                        ItemId = r.Field<Int32>("ItemId"),
+                        FinishedGoodsName = r.Field<string>("FinishedGoodsName"),
+                        FinishedGoodsCode = r.Field<string>("FinishedGoodsCode"),
+                        NutrientTypeName = r.Field<string>("NutrientTypeName"),
+                        NutrientTypeCode = r.Field<string>("NutrientTypeCode"),
+                        NutrientName = r.Field<string>("NutrientName"),
+                        NutrientCode = r.Field<string>("NutrientCode"),
+                        RequiredValue = r.Field<decimal>("RequiredValue"),
+                        CalculatedFormula = r.Field<decimal>("CalculatedFormula"),
+                        CalculatedValue = r.Field<decimal>("CalculatedValue"),
 
                     }).ToList();
                 }
@@ -2690,6 +2834,91 @@ namespace HotelManagement.Data.Inventory
 
             return itemInfo;
         }
+
+        
+        public List<InvItemAutoSearchBO> RawMaterialAutoSearch(string itemName)
+        {
+            List<InvItemAutoSearchBO> itemInfo = new List<InvItemAutoSearchBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("RawMaterialAutoSearch_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@ItemName", DbType.String, itemName);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "ItemInfo");
+                    DataTable Table = ds.Tables["ItemInfo"];
+
+                    itemInfo = Table.AsEnumerable().Select(r => new InvItemAutoSearchBO
+                    {
+                        ItemId = r.Field<int>("ItemId"),
+                        Name = r.Field<string>("Name") + " (" + r.Field<string>("CategoryName") + ")",
+                        Code = r.Field<string>("Code"),
+                        ItemNameAndCode = r.Field<string>("ItemNameAndCode"),
+                        CategoryId = r.Field<int>("CategoryId"),
+                        IsRecipe = r.Field<bool>("IsRecipe"),
+                        StockBy = r.Field<int>("StockBy"),
+                        UnitPriceLocal = r.Field<decimal>("UnitPriceLocal"),
+                        UnitPriceUsd = r.Field<decimal>("UnitPriceUsd"),
+                        UnitHead = r.Field<string>("HeadName")
+
+                    }).ToList();
+                }
+            }
+
+            return itemInfo;
+        }
+
+
+        public List<InvItemAutoSearchBO> RawMaterialAutoSearch(string itemName, int categoryId, bool? isCustomerItem, string itemType)
+        {
+            List<InvItemAutoSearchBO> itemInfo = new List<InvItemAutoSearchBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetItemNameNCategoryForRecipeAutoSearch_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@ItemName", DbType.String, itemName);
+
+                    if (categoryId != 0)
+                        dbSmartAspects.AddInParameter(cmd, "@CategoryId", DbType.Int32, categoryId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@CategoryId", DbType.Int32, DBNull.Value);
+
+                    if (isCustomerItem != null)
+                        dbSmartAspects.AddInParameter(cmd, "@IsCutomerItem", DbType.Boolean, isCustomerItem);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@IsCutomerItem", DbType.Boolean, DBNull.Value);
+
+                    if (!string.IsNullOrEmpty(itemType))
+                        dbSmartAspects.AddInParameter(cmd, "@ItemType", DbType.String, itemType);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@ItemType", DbType.String, DBNull.Value);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "ItemInfo");
+                    DataTable Table = ds.Tables["ItemInfo"];
+
+                    itemInfo = Table.AsEnumerable().Select(r => new InvItemAutoSearchBO
+                    {
+                        ItemId = r.Field<int>("ItemId"),
+                        Name = r.Field<string>("Name") + " (" + r.Field<string>("CategoryName") + ")",
+                        Code = r.Field<string>("Code"),
+                        CategoryId = r.Field<int>("CategoryId"),
+                        IsRecipe = r.Field<bool>("IsRecipe"),
+                        StockBy = r.Field<int>("StockBy"),
+                        UnitPriceLocal = r.Field<decimal>("UnitPriceLocal"),
+                        UnitPriceUsd = r.Field<decimal>("UnitPriceUsd"),
+                        UnitHead = r.Field<string>("HeadName")
+
+                    }).ToList();
+                }
+            }
+
+            return itemInfo;
+        }
+
         public List<InvItemAutoSearchBO> GetItemNameNCategoryForRecipeModifierAutoSearch(string itemName, int categoryId)
         {
             List<InvItemAutoSearchBO> itemInfo = new List<InvItemAutoSearchBO>();
@@ -5404,6 +5633,196 @@ namespace HotelManagement.Data.Inventory
             }
 
             return itemInfo;
+        }
+        public List<InvItemBO> GetInvFinishedItemInformation()
+        {
+            List<InvItemBO> productList = new List<InvItemBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInvFinishedItemInformation_SP"))
+                {
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                InvItemBO productBO = new InvItemBO();
+                                productBO.ItemId = Convert.ToInt32(reader["ItemId"]);
+                                productBO.Name = reader["Name"].ToString();
+                                productBO.Code = reader["Code"].ToString();
+                                productBO.CodeAndName = reader["Code"].ToString() + " - " + reader["Name"].ToString();
+                                productBO.Description = reader["Description"].ToString();
+                                productBO.CategoryId = Convert.ToInt32(reader["CategoryId"]);
+                                productBO.ManufacturerId = Convert.ToInt32(reader["ManufacturerId"]);
+                                productBO.ProductType = reader["ProductType"].ToString();
+                                productBO.PurchasePrice = Convert.ToDecimal(reader["PurchasePrice"]);
+                                productBO.SellingLocalCurrencyId = Int32.Parse(reader["SellingLocalCurrencyId"].ToString());
+                                productBO.UnitPriceLocal = Convert.ToDecimal(reader["UnitPriceLocal"]);
+                                productBO.SellingUsdCurrencyId = Int32.Parse(reader["SellingUsdCurrencyId"].ToString());
+                                productBO.UnitPriceUsd = Convert.ToDecimal(reader["UnitPriceUsd"]);
+                                productBO.ServiceWarranty = Int32.Parse(reader["ServiceWarranty"].ToString());
+                                productBO.StockType = reader["StockType"].ToString();
+                                productBO.ServiceType = reader["ServiceType"].ToString();
+                                productBO.StockBy = Int32.Parse(reader["StockBy"].ToString());
+                                productBO.IsSupplierItem = Convert.ToBoolean(reader["IsSupplierItem"].ToString());
+                                productList.Add(productBO);
+                            }
+                        }
+                    }
+                }
+            }
+            return productList;
+        }
+
+        public bool SaveIngredientNNutrientInfo(List<RestaurantRecipeDetailBO> AddedIngredientInfo, List<RestaurantRecipeDetailBO> DeletedItemList,
+                                                            InvNutrientInfoBO NutrientRequiredMasterInfo, List<InvNutrientInfoBO> AddedNutrientRequiredValueInfo,
+                                                            List<InvNutrientInfoBO> DeletedNutrientRequiredValueList, List<OverheadExpensesBO> AddedOverheadExpenses,
+                                                            List<OverheadExpensesBO> DeletedAccountHead, int userInfoId)
+        {
+            Int64 status = 0, Id = 0;
+            bool retVal = false;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        if(DeletedItemList.Count > 0)
+                        {
+                            using(DbCommand cmdDelItem = dbSmartAspects.GetStoredProcCommand("DeleteInvRMItem_SP"))
+                            {
+                                foreach(RestaurantRecipeDetailBO rd in DeletedItemList)
+                                {
+                                    cmdDelItem.Parameters.Clear();
+
+                                    dbSmartAspects.AddInParameter(cmdDelItem, "@ItemId", DbType.Int32, rd.ItemId);
+                                    dbSmartAspects.AddInParameter(cmdDelItem, "@RecipeItemId", DbType.Int32, rd.RecipeItemId);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdDelItem, transction);
+                                }
+                            }
+                        }
+                        if (AddedIngredientInfo.Count > 0)
+                        {
+                            using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("UpdateRestaurantRecipeDetailInfo_SP"))
+                            {
+                                foreach (RestaurantRecipeDetailBO detailBO in AddedIngredientInfo)
+                                {
+                                    cmd.Parameters.Clear();
+
+                                    dbSmartAspects.AddInParameter(cmd, "@ItemId", DbType.Int32, detailBO.RecipeId);
+                                    dbSmartAspects.AddInParameter(cmd, "@RecipeItemId", DbType.Int32, detailBO.RecipeItemId);
+                                    dbSmartAspects.AddInParameter(cmd, "@RecipeItemName", DbType.String, detailBO.RecipeItemName);
+                                    dbSmartAspects.AddInParameter(cmd, "@UnitHeadId", DbType.Int32, detailBO.UnitHeadId);
+                                    dbSmartAspects.AddInParameter(cmd, "@ItemUnit", DbType.Decimal, detailBO.ItemUnit);
+                                    dbSmartAspects.AddInParameter(cmd, "@ItemCost", DbType.Decimal, detailBO.ItemCost);
+                                    dbSmartAspects.AddInParameter(cmd, "@IsGradientCanChange", DbType.Boolean, detailBO.IsGradientCanChange);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(cmd, transction);
+                                }
+                            }
+                        }
+                        if (DeletedNutrientRequiredValueList.Count > 0)
+                        {
+                            using (DbCommand cmdDelNRV = dbSmartAspects.GetStoredProcCommand("DeleteInvRMRequiredValueItem_SP"))
+                            {
+                                foreach (InvNutrientInfoBO ni in DeletedNutrientRequiredValueList)
+                                {
+                                    cmdDelNRV.Parameters.Clear();
+
+                                    dbSmartAspects.AddInParameter(cmdDelNRV, "@ItemId", DbType.Int32, ni.ItemId);
+                                    dbSmartAspects.AddInParameter(cmdDelNRV, "@NutrientId", DbType.Int32, ni.NutrientId);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdDelNRV, transction);
+                                }
+                            }
+                        }
+                        using (DbCommand cmdOut = dbSmartAspects.GetStoredProcCommand("SaveNRVMasterInfo_SP"))
+                        {
+                            cmdOut.Parameters.Clear();
+                            dbSmartAspects.AddInParameter(cmdOut, "@ItemId", DbType.Int32, NutrientRequiredMasterInfo.ItemId);
+                            dbSmartAspects.AddInParameter(cmdOut, "@ItemName", DbType.String, NutrientRequiredMasterInfo.ItemName);
+                            dbSmartAspects.AddInParameter(cmdOut, "@CreatedBy", DbType.Int64, userInfoId);
+
+                            dbSmartAspects.AddOutParameter(cmdOut, "@Id", DbType.Int64, sizeof(Int64));
+                            status = dbSmartAspects.ExecuteNonQuery(cmdOut, transction);
+
+                            Id = Convert.ToInt64(cmdOut.Parameters["@Id"].Value);
+                        }
+                        if (AddedNutrientRequiredValueInfo.Count > 0)
+                        {
+                            foreach (InvNutrientInfoBO ni in AddedNutrientRequiredValueInfo)
+                            {
+                                using (DbCommand cmdSave = dbSmartAspects.GetStoredProcCommand("SaveNutrientRequiredValues_SP"))
+                                {
+                                    cmdSave.Parameters.Clear();
+
+                                    dbSmartAspects.AddInParameter(cmdSave, "@Id", DbType.Int64, Id);
+                                    dbSmartAspects.AddInParameter(cmdSave, "@NutrientId", DbType.Int32, ni.NutrientId);
+                                    dbSmartAspects.AddInParameter(cmdSave, "@NutrientName", DbType.String, ni.NutrientName);
+                                    dbSmartAspects.AddInParameter(cmdSave, "@RequiredValue", DbType.Decimal, ni.RequiredValue);
+                                    dbSmartAspects.AddInParameter(cmdSave, "@CreatedBy", DbType.Int32, userInfoId);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdSave, transction);
+                                }
+                            }
+                        }
+                        if (DeletedAccountHead.Count > 0)
+                        {
+                            using (DbCommand cmdDelOE = dbSmartAspects.GetStoredProcCommand("DeleteInvRMOverheadExpenseItem_SP"))
+                            {
+                                foreach (OverheadExpensesBO oe in DeletedAccountHead)
+                                {
+                                    cmdDelOE.Parameters.Clear();
+
+                                    dbSmartAspects.AddInParameter(cmdDelOE, "@FinishProductId", DbType.Int32, oe.FinishProductId);
+                                    dbSmartAspects.AddInParameter(cmdDelOE, "@NodeId", DbType.Int32, oe.NodeId);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(cmdDelOE, transction);
+                                }
+                            }
+                        }
+                        if (AddedOverheadExpenses.Count > 0)
+                        {
+                            foreach (OverheadExpensesBO oe in AddedOverheadExpenses)
+                            {
+                                using (DbCommand oEDetails = dbSmartAspects.GetStoredProcCommand("SaveInvIngredientNNutrientOEDetails_SP"))
+                                {
+                                    oEDetails.Parameters.Clear();
+
+                                    dbSmartAspects.AddInParameter(oEDetails, "@FGId", DbType.Int64, oe.FinishProductId);
+                                    dbSmartAspects.AddInParameter(oEDetails, "@NodeId", DbType.Int32, oe.NodeId);
+                                    dbSmartAspects.AddInParameter(oEDetails, "@Amount", DbType.Decimal, oe.Amount);
+                                    dbSmartAspects.AddInParameter(oEDetails, "@Remarks", DbType.String, oe.Remarks);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(oEDetails, transction);
+                                }
+                            }
+                        }
+
+                        if (status > 0)
+                        {
+                            retVal = true;
+                            transction.Commit();
+                        }
+                        else
+                        {
+                            retVal = false;
+                            transction.Rollback();
+                        }
+                    }
+                    catch
+                    {
+                        retVal = false;
+                        transction.Rollback();
+                    }
+                }
+            }
+
+            return retVal;
         }
     }
 }

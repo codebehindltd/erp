@@ -15,5 +15,6 @@ namespace InnboardDomain.CriteriaDtoModel
         }
         public int EmpId { get; set; }
         public PageParams pageParams { get; set; }
+        public int UserInfoId { get; set; }
     }
 }

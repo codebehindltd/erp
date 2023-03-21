@@ -141,6 +141,7 @@ namespace HotelManagement.Data.Payroll
 
                                 bo.RepotingTo = Convert.ToInt32(reader["RepotingTo"]);
                                 bo.RepotingTo2 = Convert.ToInt32(reader["RepotingTo2"]);
+                                bo.EmployeeStatusId = Convert.ToInt32(reader["EmployeeStatusId"]);
                                 
                                 boList.Add(bo);
                             }
@@ -5696,7 +5697,10 @@ namespace HotelManagement.Data.Payroll
                         EmpCode = r.Field<string>("EmpCode"),
                         DisplayName = r.Field<string>("DisplayName"),
                         DepartmentId = r.Field<int>("DepartmentId"),
-                        Department = r.Field<string>("Department")
+                        Department = r.Field<string>("Department"),
+                        EmpContribution = r.Field<decimal>("EmpContribution"),
+                        CompanyContribution = r.Field<decimal>("CompanyContribution"),
+                        ProvidentFundInterest = r.Field<decimal>("ProvidentFundInterest")
 
                     }).ToList();
                 }

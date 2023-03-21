@@ -691,18 +691,20 @@
         function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
             var companyId = $("#ContentPlaceHolder1_srcCompanyProjectUserControl_ddlGLCompany").val();
             var projectId = $("#ContentPlaceHolder1_srcCompanyProjectUserControl_ddlGLProject").val();
-
+            debugger;
             if (companyId == null) {
-                companyId = "1";
+                //companyId = "1";
+                companyId = "0";
             }
 
             if (projectId == null) {
-                projectId = "1";
+                //projectId = "1";
+                projectId = "0";
             }
 
-            if (projectId == "0") {
-                projectId = "1";
-            }
+            //if (projectId == "0") {
+            //    projectId = "1";
+            //}
 
             var gridRecordsCount = $("#gvGustIngormation tbody tr").length;
             var empName = $("#<%=txtEmployeeName.ClientID %>").val();

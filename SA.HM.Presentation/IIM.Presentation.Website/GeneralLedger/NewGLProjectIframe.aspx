@@ -96,7 +96,6 @@
             $("#<%=ddlCompanyId.ClientID%>").val(data.CompanyId);
             $("#<%=txtStartDate.ClientID%>").val(CommonHelper.DateFromStringToDisplay(data.StartDate, innBoarDateFormat));
             $("#<%=txtEndDate.ClientID%>").val(CommonHelper.DateFromStringToDisplay(data.EndDate, innBoarDateFormat));
-
             $("#<%=ddlProjectStage.ClientID%>").val(data.StageId);
             $("#<%=txtProjectAmount.ClientID%>").val(data.ProjectAmount);
             if (data.ProjectCompanyId != 0) {
@@ -289,16 +288,12 @@
             $("#<%=ddlCompanyId.ClientID%>").val("");
             $("#<%=txtStartDate.ClientID%>").val("");
             $("#<%=txtEndDate.ClientID%>").val("");
-
             $("#<%=ddlProjectStage.ClientID%>").val("0");
             $("#<%=txtProjectAmount.ClientID%>").val("");
-
             $("#ContentPlaceHolder1_cbCompanyProject").prop("checked", false).trigger('change');
-
             $("#<%=ddlCompanyName.ClientID%>").val("0");
 
             $("#TableCostCenterInformation tbody tr").each(function () {
-
                 $(this).find("td:eq(0)").find("input").prop("checked", false);
             });
             return false;
@@ -344,10 +339,6 @@
                     imagePath = "";
 
                 DocTable += "<td align='left' style='width: 40%'><a javascript:void();' onclick= \"ShowDocument('" + result[row].Path + "','" + result[row].Name + "');\">" + imagePath + "</td>";
-
-                //DocTable += "<td align='left' style='width: 20%'>";
-                //DocTable += "&nbsp;<img src='../Images/delete.png' style=\"cursor: pointer; cursor: hand;\" onClick=\"javascript:return DeleteDoc('" + result[row].DocumentId + "', '" + row + "')\" alt='Delete Information' border='0' />";
-                //DocTable += "</td>";
                 DocTable += "</tr>";
             }
             DocTable += "</table>";
@@ -358,18 +349,6 @@
 
             return false;
         }
-        <%--function DeleteDoc(docId, rowIndex) {
-            var deletedDoc = $("#<%=hfDeletedDoc.ClientID %>").val();
-
-            if (deletedDoc != "")
-                deletedDoc += "," + docId;
-            else
-                deletedDoc = docId;
-
-            $("#<%=hfDeletedDoc.ClientID %>").val(deletedDoc);
-
-            $("#trdoc" + rowIndex).remove();
-        }--%>
         function OnGetUploadedDocByWebMethodFailed(error) {
             alert(error.get_message());
         }
@@ -380,12 +359,11 @@
     <asp:HiddenField ID="hfSelectedCostCenter" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfProjectId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfDeletedDoc" runat="server" Value="0"></asp:HiddenField>
-
     <asp:HiddenField ID="hfSavePermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfViewPermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfEditPermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfDeletePermission" runat="server" Value="0" />
-
+    <asp:HiddenField ID="hfIsProjectCodeAutoGenerate" runat="server" />
     <div>
         <div style="padding: 10px 30px 10px 30px">
             <div class="form-horizontal">
@@ -408,10 +386,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-2">
+                    <div class="col-md-2" id="CodeModelLabel" runat="server">
                         <asp:Label ID="lblCode" runat="server" class="control-label required-field" Text="Project Code"></asp:Label>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" id="CodeModelControl" runat="server">
                         <asp:TextBox ID="txtCode" CssClass="form-control" runat="server" autocomplete="off"></asp:TextBox>
                     </div>
                     <div class="col-md-2">
@@ -503,7 +481,6 @@
 
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="row" style="padding-bottom: 0; padding-top: 10px;">
@@ -517,12 +494,6 @@
             </div>
         </div>
     </div>
-    <%-- <div id="popUpImage" style="display: none">
-        <asp:Panel ID="pnlUpload" runat="server" Style="text-align: center;">
-            <cc1:ClientUploader ID="flashUpload" runat="server" UploadPage="Upload.axd" OnUploadComplete="UploadComplete()"
-                FileTypeDescription="Images" FileTypes="" UploadFileSizeLimit="0" TotalUploadSizeLimit="0" />
-        </asp:Panel>
-    </div>--%>
     <div id="DocumentDialouge" style="display: none;">
         <iframe id="frmPrint" name="IframeName" width="100%" height="100%" runat="server"
             clientidmode="static" scrolling="yes"></iframe>
