@@ -55,8 +55,6 @@ TRUNCATE TABLE HotelDayProcessing
 TRUNCATE TABLE RestaurantSalesReturn
 TRUNCATE TABLE RestaurantSalesReturnDetails
 TRUNCATE TABLE RestaurantSalesReturnItem
-
-TRUNCATE TABLE CommonCheckedByApprovedBy
 TRUNCATE TABLE CommonDeleteLedgerLog
 TRUNCATE TABLE ContributionAnalysis
 

@@ -213,6 +213,7 @@
             CommonHelper.SpinnerOpen();
             var companyId = $("#ContentPlaceHolder1_ddlCompany").val();
             $("#BillInfo tbody").html("");
+            $("#ContentPlaceHolder1_txtBalanceAmount").val("");
             PageMethods.CompanyGeneratedBillBySearch(companyId, OnLoadGeneratedBillSucceeded, OnGeneratedBillFailed);
             CompanyBillAdvanceBySearch();
         }
@@ -681,24 +682,31 @@
                 else
                     tr += "<td style='width: 30%'></td>";
 
-                if (result[row].ApprovedStatus == null) {
-                    tr += "<td style='width:10%;'>";
-                    tr += "<a href='javascript:void();' onclick= \"javascript:return ApprovedPayment(" + result[row].PaymentId + ", '" + result[row].AdjustmentType + "')\" ><img alt='approved' src='../Images/approved.png' /></a>";
-                    tr += "&nbsp;&nbsp;";
-                    if (isUpdatepermission) {
-                        tr += "<a onclick=\"javascript:return FIllForEdit(" + result[row].PaymentId + ");\" title='Edit' href='javascript:void();'><img src='../Images/edit.png' alt='Edit'></a>"
-                        tr += "&nbsp;&nbsp;";
-                    }
-                    if (isDeletePermission) {
-                        tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteCompanyPayment(" + result[row].PaymentId + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
-                        tr += "</td>";
-                    }
 
-                }
-                else {
-                    tr += "<td style='width:10%;'>";
-                    tr += "</td>";
-                }
+
+                tr += "<td style='width:10%;'>";
+                tr += "<a href='javascript:void();' onclick= \"javascript:return ApprovedPayment(" + result[row].PaymentId + ", '" + result[row].AdjustmentType + "')\" ><img alt='approved' src='../Images/approved.png' /></a>";
+                tr += "&nbsp;&nbsp;";
+                tr += "</td>";
+
+                //if (result[row].ApprovedStatus == null) {
+                //    tr += "<td style='width:10%;'>";
+                //    tr += "<a href='javascript:void();' onclick= \"javascript:return ApprovedPayment(" + result[row].PaymentId + ", '" + result[row].AdjustmentType + "')\" ><img alt='approved' src='../Images/approved.png' /></a>";
+                //    tr += "&nbsp;&nbsp;";
+                //    if (isUpdatepermission) {
+                //        tr += "<a onclick=\"javascript:return FIllForEdit(" + result[row].PaymentId + ");\" title='Edit' href='javascript:void();'><img src='../Images/edit.png' alt='Edit'></a>"
+                //        tr += "&nbsp;&nbsp;";
+                //    }
+                //    if (isDeletePermission) {
+                //        tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteCompanyPayment(" + result[row].PaymentId + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                //        tr += "</td>";
+                //    }
+
+                //}
+                //else {
+                //    tr += "<td style='width:10%;'>";
+                //    tr += "</td>";
+                //}
 
                 tr += "<td style=display:none;'>" + result[row].PaymentId + "</td>";
                 tr += "</tr>";
