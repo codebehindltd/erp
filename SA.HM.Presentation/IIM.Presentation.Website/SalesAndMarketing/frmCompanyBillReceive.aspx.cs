@@ -1375,7 +1375,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             return rtninfo;
         }
         [WebMethod]
-        public static List<CompanyPaymentBO> GetCompanyPaymentBySearch(string transactionType, int companyId, DateTime? dateFrom, DateTime? dateTo)
+        public static List<CompanyPaymentBO> GetCompanyPaymentBySearch(string transactionType, int companyId, DateTime? dateFrom, DateTime? dateTo, string transactionStatus)
         {
             HMUtility hmUtility = new HMUtility();
             UserInformationBO userInformationBO = new UserInformationBO();
@@ -1383,7 +1383,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             GuestCompanyDA companyDa = new GuestCompanyDA();
             List<CompanyPaymentBO> paymentInfo = new List<CompanyPaymentBO>();
-            paymentInfo = companyDa.GetCompanyPaymentBySearch(userInformationBO.UserInfoId, companyId, dateFrom, dateTo, transactionType);
+            paymentInfo = companyDa.GetCompanyPaymentBySearch(userInformationBO.UserInfoId, companyId, dateFrom, dateTo, transactionType, transactionStatus);
 
             return paymentInfo;
         }

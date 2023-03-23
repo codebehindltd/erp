@@ -344,7 +344,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
 
             GuestCompanyDA companyDa = new GuestCompanyDA();
             List<CompanyPaymentBO> paymentInfo = new List<CompanyPaymentBO>();
-            paymentInfo = companyDa.GetCompanyPaymentBySearch(userInformationBO.UserInfoId, companyId, dateFrom, dateTo, "Adjustment");
+            paymentInfo = companyDa.GetCompanyPaymentBySearch(userInformationBO.UserInfoId, companyId, dateFrom, dateTo, "Adjustment", "0");
 
             return paymentInfo;
         }

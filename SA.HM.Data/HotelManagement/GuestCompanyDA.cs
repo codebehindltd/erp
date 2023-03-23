@@ -3138,7 +3138,7 @@ namespace HotelManagement.Data.HotelManagement
             return status > 0 ? true : false;
         }
 
-        public List<CompanyPaymentBO> GetCompanyPaymentBySearch(int userInfoId, int companyId, DateTime? dateFrom, DateTime? dateTo, string paymentFor)
+        public List<CompanyPaymentBO> GetCompanyPaymentBySearch(int userInfoId, int companyId, DateTime? dateFrom, DateTime? dateTo, string paymentFor, string transactionStatus)
         {
             List<CompanyPaymentBO> paymentInfo = new List<CompanyPaymentBO>();
 
@@ -3167,6 +3167,11 @@ namespace HotelManagement.Data.HotelManagement
                         dbSmartAspects.AddInParameter(cmd, "@PaymentFor", DbType.String, paymentFor);
                     else
                         dbSmartAspects.AddInParameter(cmd, "@PaymentFor", DbType.String, DBNull.Value);
+
+                    if (transactionStatus != "0")
+                        dbSmartAspects.AddInParameter(cmd, "@ApprovedStatus", DbType.String, transactionStatus);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@ApprovedStatus", DbType.String, DBNull.Value);
 
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "PaymentInfo");

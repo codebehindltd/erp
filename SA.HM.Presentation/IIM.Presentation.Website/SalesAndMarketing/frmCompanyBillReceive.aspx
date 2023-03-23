@@ -1210,7 +1210,8 @@ function OnProjectsPopulated(response) {
 
             $("#BillInfoSearch tbody").html("");
             var transactionType = $("#ContentPlaceHolder1_ddlSrcTransactionType").val();
-            PageMethods.GetCompanyPaymentBySearch(transactionType, companyId, dateFrom, dateTo, OnSearchPaymentSucceeded, OnSearchPaymentFailed);
+            var transactionStatus = $("#ContentPlaceHolder1_ddlStatus").val();
+            PageMethods.GetCompanyPaymentBySearch(transactionType, companyId, dateFrom, dateTo, transactionStatus, OnSearchPaymentSucceeded, OnSearchPaymentFailed);
 
             return false;
         }
@@ -2978,9 +2979,21 @@ function OnProjectsPopulated(response) {
                             <div class="col-md-2">
                                 <asp:Label ID="Label8" runat="server" class="control-label" Text="Company"></asp:Label>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-4">
                                 <asp:DropDownList ID="ddlCompanyForSearch" runat="server" CssClass="form-control">
                                 </asp:DropDownList>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="Label18" runat="server" class="control-label" Text="Transaction Type"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <div>
+                                    <asp:DropDownList ID="ddlSrcTransactionType" TabIndex="1" CssClass="form-control" runat="server">
+                                        <asp:ListItem Value="0">--- All ---</asp:ListItem>
+                                        <asp:ListItem>Receive</asp:ListItem>
+                                        <asp:ListItem>Payment</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -2994,14 +3007,15 @@ function OnProjectsPopulated(response) {
                                 <asp:TextBox ID="txtToDate" placeholder="To Date" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-md-2">
-                                <asp:Label ID="Label18" runat="server" class="control-label" Text="Transaction Type"></asp:Label>
+                                <asp:Label ID="Label19" runat="server" class="control-label" Text="Status"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <div>
-                                    <asp:DropDownList ID="ddlSrcTransactionType" TabIndex="1" CssClass="form-control" runat="server">
+                                    <asp:DropDownList ID="ddlStatus" TabIndex="1" CssClass="form-control" runat="server">
                                         <asp:ListItem Value="0">--- All ---</asp:ListItem>
-                                        <asp:ListItem>Receive</asp:ListItem>
-                                        <asp:ListItem>Payment</asp:ListItem>
+                                        <asp:ListItem Value="Pending">Pending/ Submitted</asp:ListItem>
+                                        <asp:ListItem>Checked</asp:ListItem>
+                                        <asp:ListItem>Approved</asp:ListItem>
                                     </asp:DropDownList>
                                 </div>
                             </div>
