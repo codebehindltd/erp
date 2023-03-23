@@ -3198,6 +3198,66 @@ namespace HotelManagement.Data.HotelManagement
 
             return paymentInfo;
         }
+        public List<CompanyPaymentBO> GetCompanyAdvanceAdjustmentBySearch(int userInfoId, int companyId, DateTime? dateFrom, DateTime? dateTo, string paymentFor)
+        {
+            List<CompanyPaymentBO> paymentInfo = new List<CompanyPaymentBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetCompanyAdvanceAdjustmentBySearch_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int32, userInfoId);
+                    if (companyId != 0)
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, DBNull.Value);
+
+                    if (dateFrom != null)
+                        dbSmartAspects.AddInParameter(cmd, "@DateFrom", DbType.DateTime, dateFrom);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@DateFrom", DbType.DateTime, DBNull.Value);
+
+                    if (dateTo != null)
+                        dbSmartAspects.AddInParameter(cmd, "@DateTo", DbType.DateTime, dateTo);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@DateTo", DbType.DateTime, DBNull.Value);
+
+                    if (paymentFor != "0")
+                        dbSmartAspects.AddInParameter(cmd, "@PaymentFor", DbType.String, paymentFor);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@PaymentFor", DbType.String, DBNull.Value);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "PaymentInfo");
+                    DataTable Table = ds.Tables["PaymentInfo"];
+
+                    paymentInfo = Table.AsEnumerable().Select(r => new CompanyPaymentBO
+                    {
+                        PaymentId = r.Field<Int64>("PaymentId"),
+                        LedgerNumber = r.Field<string>("LedgerNumber"),
+                        PaymentDate = r.Field<DateTime>("PaymentDate"),
+                        PaymentFor = r.Field<string>("PaymentFor"),
+                        CompanyId = r.Field<int>("CompanyId"),
+                        AdvanceAmount = r.Field<decimal>("AdvanceAmount"),
+                        Remarks = r.Field<string>("Remarks"),
+                        CompanyName = r.Field<string>("CompanyName"),
+                        ApprovedStatus = r.Field<string>("ApprovedStatus"),
+                        AdjustmentType = r.Field<string>("AdjustmentType"),
+                        CreatedBy = r.Field<Int32>("CreatedBy"),
+                        CheckedBy = r.Field<Int32>("CheckedBy"),
+                        ApprovedBy = r.Field<Int32>("ApprovedBy"),
+                        IsCanEdit = r.Field<bool>("IsCanEdit"),
+                        IsCanDelete = r.Field<bool>("IsCanDelete"),
+                        IsCanChecked = r.Field<bool>("IsCanChecked"),
+                        IsCanApproved = r.Field<bool>("IsCanApproved")
+
+                    }).ToList();
+                }
+            }
+
+            return paymentInfo;
+        }
 
         public CompanyPaymentBO GetCompanyPayment(Int64 paymentId)
         {
@@ -3397,6 +3457,50 @@ namespace HotelManagement.Data.HotelManagement
             }
 
             return status > 0 ? true : false;
+        }
+        public bool CheckedPaymentAdjustment(long paymentId, string approvedStatus)
+        {
+            int status = 0;
+            bool retVal = false;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand cmdOutDetails = dbSmartAspects.GetStoredProcCommand("CheckedPaymentAdjustment_SP"))
+                        {
+                            cmdOutDetails.Parameters.Clear();
+
+                            dbSmartAspects.AddInParameter(cmdOutDetails, "@PaymentId", DbType.Int64, paymentId);
+                            dbSmartAspects.AddInParameter(cmdOutDetails, "@ApprovedStatus", DbType.String, approvedStatus);
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmdOutDetails, transction);
+                        }
+
+                        if (status > 0)
+                        {
+                            retVal = true;
+                            transction.Commit();
+                        }
+                        else
+                        {
+                            retVal = false;
+                            transction.Rollback();
+                        }
+                    }
+                    catch
+                    {
+                        retVal = false;
+                        transction.Rollback();
+                    }
+                }
+            }
+
+            return retVal;
         }
 
         public bool ApprovedPaymentAdjustment(Int64 paymentId, int createdBy)

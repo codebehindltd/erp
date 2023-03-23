@@ -638,6 +638,83 @@ namespace HotelManagement.Data.Restaurant
             }
             return entityBOList;
         }
+        public List<KotBillDetailBO> GetSalesOrderDetailsId(int costCenterId, int SOrderId)
+        {
+            List<KotBillDetailBO> entityBOList = new List<KotBillDetailBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetSalesOrderDetailsId_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@CostCenterId", DbType.Int32, costCenterId);
+                    dbSmartAspects.AddInParameter(cmd, "@SOrderId", DbType.Int32, SOrderId);
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                KotBillDetailBO entityBO = new KotBillDetailBO();
+
+                                entityBO.KotId = Convert.ToInt32(reader["SOrderId"]);
+                                entityBO.KotDetailId = Convert.ToInt32(reader["DetailId"]);
+                                if (reader["Quantity"] != DBNull.Value)
+                                {
+                                    entityBO.PaxQuantity = Convert.ToInt32(reader["Quantity"]);
+                                }
+                                
+                                if (reader["ColorId"] != DBNull.Value)
+                                {
+                                    entityBO.ColorId = Convert.ToInt32(reader["ColorId"]);
+                                }
+                                if (reader["SizeId"] != DBNull.Value)
+                                {
+                                    entityBO.SizeId = Convert.ToInt32(reader["SizeId"]);
+                                }
+                                if (reader["StyleId"] != DBNull.Value)
+                                {
+                                    entityBO.StyleId = Convert.ToInt32(reader["StyleId"]);
+                                }
+
+                                entityBO.ColorName = reader["ColorName"].ToString();
+
+                                entityBO.SizeName = reader["SizeName"].ToString();
+                                
+                                entityBO.StyleName = reader["StyleName"].ToString();
+                                
+                                if(reader["StockById"] != DBNull.Value)
+                                {
+                                    entityBO.StockBy = Convert.ToInt32(reader["StockById"]);
+                                }
+
+                                entityBO.Remarks = reader["Remarks"].ToString();
+
+                                entityBO.ItemType = reader["ItemType"].ToString();
+                                entityBO.ItemId = Convert.ToInt32(reader["ItemId"]);
+                                entityBO.ItemName = reader["ItemName"].ToString();
+                                entityBO.ItemCode = reader["ItemCode"].ToString();
+                                entityBO.ItemUnit = Convert.ToDecimal(reader["ItemUnit"]);
+                                entityBO.UnitRate = Convert.ToDecimal(reader["UnitRate"]);
+                                entityBO.Amount = Convert.ToDecimal(reader["Amount"]);
+                                if (reader["ServiceCharge"] != DBNull.Value)
+                                {
+                                    entityBO.ServiceCharge = Convert.ToDecimal(reader["ServiceCharge"]);
+                                }
+                                if (reader["VatAmount"] != DBNull.Value)
+                                {
+                                    entityBO.VatAmount = Convert.ToDecimal(reader["VatAmount"]);
+                                }                                
+
+                                entityBOList.Add(entityBO);
+                            }
+                        }
+                    }
+                }
+            }
+            return entityBOList;
+        }
         public List<KotBillDetailBO> GetKotBillDetailInfoForBillNumber(string billNumber)
         {
             List<KotBillDetailBO> entityBOList = new List<KotBillDetailBO>();

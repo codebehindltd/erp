@@ -1,606 +1,1392 @@
-﻿using System;
+﻿using HotelManagement.Data.HMCommon;
+using HotelManagement.Data.Inventory;
+using HotelManagement.Data.Restaurant;
+using HotelManagement.Entity.HMCommon;
+using HotelManagement.Entity.HotelManagement;
+using HotelManagement.Entity.Inventory;
+using HotelManagement.Entity.Payroll;
+using HotelManagement.Entity.Restaurant;
+using HotelManagement.Entity.UserInformation;
+using HotelManagement.Presentation.Website.Common;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Microsoft.Reporting.WebForms;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
-using System.Collections;
 using System.Web.UI.WebControls;
-using HotelManagement.Entity.Inventory;
-using HotelManagement.Data.Inventory;
+using HotelManagement.Entity.RetailPOS;
+using HotelManagement.Entity.Membership;
+using HotelManagement.Data.HotelManagement;
+using HotelManagement.Entity.TaskManagement;
+using HotelManagement.Data.TaskManagment;
+using HotelManagement.Entity.SalesAndMarketing;
+using HotelManagement.Data.SalesAndMarketing;
+using HotelManagement.Data.GeneralLedger;
+using HotelManagement.Entity.GeneralLedger;
+using HotelManagement.Data.Payroll;
 using HotelManagement.Entity.PurchaseManagment;
 using HotelManagement.Data.PurchaseManagment;
-using HotelManagement.Presentation.Website.Common;
-using HotelManagement.Entity.UserInformation;
-using HotelManagement.Data.UserInformation;
-using HotelManagement.Data.HMCommon;
-using System.Web.Services;
-using HotelManagement.Entity.HMCommon;
-using HotelManagement.Entity.SalesManagment;
-using HotelManagement.Data.HotelManagement;
-using HotelManagement.Entity.HotelManagement;
 
 namespace HotelManagement.Presentation.Website.SalesAndMarketing
 {
     public partial class frmSalesOrder : System.Web.UI.Page
     {
         HiddenField innboardMessage;
-        int UserId = 1;
-        ArrayList arrayDelete;
-        protected int _OrderId;
         HMUtility hmUtility = new HMUtility();
-        private int IsPurchaseOrderApprovalEnable;
-        //**************************** Handlers ****************************//
+        public static object RestaurantKotBillMaster { get; private set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            innboardMessage = (HiddenField)this.Master.FindControl("InnboardMessageHiddenField");
-            UserInformationBO userInformationBO = new UserInformationBO();
-            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
-            UserId = userInformationBO.UserInfoId;
-            POrderTemplate1.Visible = true;
-            POrderTemplate2.Visible = false;
-            hfpurchaseOrderTemplate.Value = "1";
-            //CheckNApproveDiv.Visible = true;
+            innboardMessage = (HiddenField)Master.FindControl("InnboardMessageHiddenField");
 
             if (!IsPostBack)
             {
-                LoadCurrency();
-                LoadAffiliatedCompany();
-                LoadPRNumber();
-                LoadCategory();
-                LoadCommonDropDownHiddenField();
-                LoadAllCostCentreTabInfo();
-                LoadStockBy();
-                IsPurchaseOrderApprovalEnable = 0;
-                LoadIsPurchaseOrderApprovalEnable();
-                //LoadUserInformation();
-                if (Session["PurchaseOrderEditId"] != null)
-                {
-                    hfPOrderId.Value = Session["PurchaseOrderEditId"].ToString();
-                    hfIsEditedFromApprovedForm.Value = "1";
-                    hfpurchaseOrderTemplate.Value = "1";
-                    Session.Remove("PurchaseOrderEditId");
-                }
-            }
-        }
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            hfIsEditedFromApprovedForm.Value = "0";
-            hfPOrderId.Value = "0";
-            LoadSearchInformation();
-        }
-        protected void gvOrderInfo_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            try
-            {
-                int POrderId = 0, supplierId = 0;
-                POrderId = Convert.ToInt32(e.CommandArgument.ToString());
-
-                GridViewRow row = (GridViewRow)(((Control)e.CommandSource).NamingContainer);
-                Label lblSupplier = (Label)row.FindControl("lblSupplierId");
-
-                supplierId = Convert.ToInt32(lblSupplier.Text);
-
+                LoadBillingType();
+                LoadIsBillingTypeEnable();
+                LoadIsItemAttributeEnable();
+                getPOSRefundConfiguration();
+                getIsMembershipPaymentEnable();
+                GetBillingConfiguration();
                 UserInformationBO userInformationBO = new UserInformationBO();
                 userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
-                int approvedBy = userInformationBO.UserInfoId;
-                string approvedStatus = string.Empty;
-                PMPurchaseOrderDA orderDetailsDA = new PMPurchaseOrderDA();
-                Boolean status = false;
 
-                if (e.CommandName == "CmdDelete")
-                {
-                    CommonHelper.AlertInfo(innboardMessage, AlertMessage.Delete, AlertType.Success);
-                    status = orderDetailsDA.DeleteSMSalesOrder(POrderId);
-                    LoadSearchInformation();
-                }
-                else if (e.CommandName == "CmdReportPO")
-                {
-                    string url = "/SalesAndMarketing/Reports/frmReportSalesOrderInvoice.aspx?POrderId=" + POrderId + "&SupId=" + supplierId;
-                    string s = "window.open('" + url + "', 'popup_window', 'width=770,height=680,left=300,top=50,resizable=yes');";
-                    ClientScript.RegisterStartupScript(this.GetType(), "script", s, true);
-                }
-            }
-            catch (Exception ex)
-            {
-                CommonHelper.AlertInfo(innboardMessage, AlertMessage.Error, AlertType.Error);
-            }
-        }
-        protected void gvOrderInfo_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gvOrderInfo.PageIndex = e.NewPageIndex;
-        }
-        protected void gvOrderInfo_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.DataItem != null)
-            {
-                ImageButton imgUpdate = (ImageButton)e.Row.FindControl("ImgUpdate");
-                ImageButton imgDelete = (ImageButton)e.Row.FindControl("ImgDelete");
-                Label lblApprovedStatusValue = (Label)e.Row.FindControl("lblApprovedStatus");
-                ImageButton imgReportPO = (ImageButton)e.Row.FindControl("ImgReportPO");
-                Label lblDeliveryStatusValue = (Label)e.Row.FindControl("lblDeliveryStatus");
-                ImageButton imgBillStatus = (ImageButton)e.Row.FindControl("ImgBillStatus");
+                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                HMCommonSetupBO invoiceTemplateBO = new HMCommonSetupBO();
+                invoiceTemplateBO = commonSetupDA.GetCommonConfigurationInfo("IsRestaurantIntegrateWithGuestCompany", "IsRestaurantIntegrateWithGuestCompany");
+                if (invoiceTemplateBO.SetupId > 0) { hfIsRestaurantIntegrateWithCompany.Value = invoiceTemplateBO.SetupValue; }
 
-                if (lblDeliveryStatusValue.Text == "Full")
+                HMCommonSetupBO setUpBO = new HMCommonSetupBO();
+                setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsItemAutoSave", "IsItemAutoSave");
+                if (setUpBO.SetupId > 0) { hfIsItemAutoSave.Value = setUpBO.SetupValue; }
+
+                setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsTaskAutoGenarate", "IsTaskAutoGenarate");
+                if (setUpBO.SetupId > 0) { hfIsTaskAutoGenarate.Value = setUpBO.SetupValue; }
+
+                HMCommonSetupBO isRestaurantPaxConfirmationEnableBO = new HMCommonSetupBO();
+                isRestaurantPaxConfirmationEnableBO = commonSetupDA.GetCommonConfigurationInfo("IsCostCenterWiseBillNumberGenerate", "IsCostCenterWiseBillNumberGenerate");
+                hfIsCostCenterWiseBillNumberGenerate.Value = isRestaurantPaxConfirmationEnableBO.SetupValue;
+
+                if (Request.QueryString["cid"] != null)
                 {
-                    imgBillStatus.Visible = true;
+                    int costCenterId = Convert.ToInt32(Request.QueryString["cid"].ToString());
+                    LoadNSetBasicInfo(costCenterId);
                 }
                 else
                 {
-                    imgBillStatus.Visible = false;
-                }
-
-                if (lblApprovedStatusValue.Text != "Approved")
-                {
-                    imgUpdate.Visible = true;
-                    imgDelete.Visible = true;
-                    imgReportPO.Visible = true;
-                }
-                else
-                {
-                    imgUpdate.Visible = false;
-                    imgDelete.Visible = false;
-                    imgReportPO.Visible = true;
+                    LoadNSetBasicInfo(0);
                 }
             }
         }
-        protected void gvOrderDetails_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            //     gvOrderDetails.PageIndex = e.NewPageIndex;
-        }
-        protected void gvOrderDetails_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.DataItem != null)
-            {
-                Label lblQuantityValue = (Label)e.Row.FindControl("lblQuantity");
-                Label lblPurchasePriceValue = (Label)e.Row.FindControl("lblPurchasePrice");
-                Label lblTotalPriceValue = (Label)e.Row.FindControl("lblTotalPrice");
-
-                lblTotalPriceValue.Text = (Convert.ToDecimal(lblQuantityValue.Text) * Convert.ToDecimal(lblPurchasePriceValue.Text)).ToString();
-            }
-        }
-        //************************ User Defined Function ********************//
-        private void LoadIsPurchaseOrderApprovalEnable()
-        {
-            IsPurchaseOrderApprovalEnable = 1;
-        }
-        private void LoadCommonDropDownHiddenField()
-        {
-            CommonDropDownHiddenField.Value = hmUtility.GetDropDownFirstValue();
-        }
-        private void LoadCurrency()
+        private void LoadBillingType()
         {
             HMCommonDA commonDA = new HMCommonDA();
             CustomFieldBO customField = new CustomFieldBO();
             List<CustomFieldBO> fields = new List<CustomFieldBO>();
-            fields = commonDA.GetCustomField("Currency", hmUtility.GetDropDownFirstValue());
-            if (fields != null)
+            fields = commonDA.GetCustomField("BillingType", hmUtility.GetDropDownFirstValue());
+
+            ddlBillingType.DataSource = fields;
+            ddlBillingType.DataTextField = "FieldValue";
+            ddlBillingType.DataValueField = "FieldValue";
+            ddlBillingType.DataBind();
+        }
+        private void LoadIsBillingTypeEnable()
+        {
+            BillingTypeUpperDividerDiv.Visible = false;
+            BillingTypeDiv.Visible = false;
+            BillingTypeBottomDividerDiv.Visible = false;
+            HMCommonSetupBO setUpBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsBillingTypeEnable", "IsBillingTypeEnable");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
             {
-                if (fields.Count > 1)
+                hfIsBillingTypeEnable.Value = setUpBO.SetupValue;
+                if (setUpBO.SetupValue == "1")
                 {
-                    fields.RemoveAt(0);
+                    BillingTypeUpperDividerDiv.Visible = true;
+                    BillingTypeDiv.Visible = true;
+                    BillingTypeBottomDividerDiv.Visible = true;
                 }
             }
-            ddlPurchasePriceLocal.DataSource = fields;
-            ddlPurchasePriceLocal.DataTextField = "FieldValue";
-            ddlPurchasePriceLocal.DataValueField = "FieldId";
-            ddlPurchasePriceLocal.DataBind();
-            ddlPurchasePriceLocal.SelectedIndex = 0;
-
-            ShowHideCurrencyInformation();
         }
-        private void AddEditODeleteDetail()
+        private void LoadIsItemAttributeEnable()
         {
-            //Delete------------
-            if (Session["arrayDelete"] == null)
-            {
-                arrayDelete = new ArrayList();
-                Session.Add("arrayDelete", arrayDelete);
-            }
-            else
-                arrayDelete = Session["arrayDelete"] as ArrayList;
-        }
-        private bool IsOrderFormValid()
-        {
-            int Count = 0;
-            bool status = true;
-            List<PMPurchaseOrderDetailsBO> List = Session["PMPurchaseOrderDetails"] as List<PMPurchaseOrderDetailsBO>;
-            if (List != null)
-            {
-                Count = List.Count;
-            }
+            HMCommonSetupBO setUpBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
 
-            if (string.IsNullOrEmpty(txtReceivedByDate.Text))
+            List<HMCommonSetupBO> setUpBOList = new List<HMCommonSetupBO>();
+            setUpBOList = commonSetupDA.GetAllCommonConfigurationInfo();
+
+
+            setUpBO = setUpBOList.Where(x => x.TypeName == "IsItemAttributeEnable" && x.SetupName == "IsItemAttributeEnable").FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
             {
-                CommonHelper.AlertInfo(innboardMessage, "Please Enter Delivery Date", AlertType.Warning);
-                txtReceivedByDate.Focus();
-                status = false;
+                hfIsItemAttributeEnable.Value = setUpBO.SetupValue;
             }
-            else if (ddlSupplier.SelectedIndex == 0)
+        }
+        private void getPOSRefundConfiguration()
+        {
+            HMCommonSetupBO setUpBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("POSRefundConfiguration", "POSRefundConfiguration");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
             {
-                CommonHelper.AlertInfo(innboardMessage, "Please Select Company Name", AlertType.Warning);
-                ddlSupplier.Focus();
-                status = false;
-            }
-            else if (Count == 0)
-            {
-                CommonHelper.AlertInfo(innboardMessage, "Please Add Order Detail Information", AlertType.Warning);
-                ddlPRNumber.Focus();
-                status = false;
+                hfPOSRefundConfiguration.Value = setUpBO.SetupValue;
             }
 
-            return status;
         }
-        private bool IsDetailsFormValid()
-        {
-            bool status = true;
-            Decimal number;
-            if (ddlProductId.SelectedIndex == 0)
-            {
-                CommonHelper.AlertInfo(innboardMessage, "Please Select Product", AlertType.Warning);
-                ddlProductId.Focus();
-                status = false;
-            }
-            else if (string.IsNullOrEmpty(txtQuantity.Text))
-            {
-                txtQuantity.Text = "";
-                CommonHelper.AlertInfo(innboardMessage, "Please Enter Valid Quantity", AlertType.Warning);
-                txtQuantity.Focus();
-                status = false;
-            }
-            else if (!Decimal.TryParse(txtQuantity.Text, out number))
-            {
-                CommonHelper.AlertInfo(innboardMessage, "Please Enter Valid Quantity", AlertType.Warning);
-                txtQuantity.Focus();
-                status = false;
-            }
-            else if (string.IsNullOrEmpty(txtPurchasePrice.Text))
-            {
-                txtPurchasePrice.Text = "";
-                CommonHelper.AlertInfo(innboardMessage, "Please Enter Valid Unit Price", AlertType.Warning);
-                txtPurchasePrice.Focus();
-                status = false;
-            }
-            else if (!Decimal.TryParse(txtPurchasePrice.Text, out number))
-            {
-                txtPurchasePrice.Text = "";
-                CommonHelper.AlertInfo(innboardMessage, "Please Enter Valid Unit Price", AlertType.Warning);
-                txtPurchasePrice.Focus();
-                status = false;
-            }
-            return status;
-        }
-        public void LoadAffiliatedCompany()
-        {
-            GuestCompanyDA guestCompanyDA = new GuestCompanyDA();
-            List<GuestCompanyBO> files = guestCompanyDA.GetAffiliatedGuestCompanyInfo();
-            ddlSupplier.DataSource = files;
-            ddlSupplier.DataTextField = "CompanyName";
-            ddlSupplier.DataValueField = "CompanyId";
-            ddlSupplier.DataBind();
 
-            ListItem item = new ListItem();
-            item.Value = "0";
-            item.Text = hmUtility.GetDropDownFirstValue();
+        private void GetBillingConfiguration()
+        {
+            HMCommonSetupBO setUpBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
 
-            ddlSupplier2.DataSource = files;
-            ddlSupplier2.DataTextField = "CompanyName";
-            ddlSupplier2.DataValueField = "CompanyId";
-            ddlSupplier2.DataBind();
-            ddlSupplier2.Items.Insert(0, item);
-        }
-        private void LoadPRNumber()
-        {
-            ListItem item = new ListItem();
-            item.Value = "0";
-            item.Text = "Ad Hoc Purchase";
-            ddlPRNumber.Items.Insert(0, item);
-        }
-        private void LoadCategory()
-        {
-            List<InvCategoryBO> List = new List<InvCategoryBO>();
-            InvCategoryDA da = new InvCategoryDA();
-            List = da.GetAllInvItemCatagoryInfoByServiceType("Product");
-            ddlCategory.DataSource = List;
-            ddlCategory.DataTextField = "Name";
-            ddlCategory.DataValueField = "CategoryId";
-            ddlCategory.DataBind();
-            ListItem item = new ListItem();
-            item.Value = "0";
-            item.Text = "---All---";
-            ddlCategory.Items.Insert(0, item);
-        }
-        private void LoadProductInfo()
-        {
-            if (ddlPRNumber.SelectedValue == "0")
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsItemCodeHideForBilling", "IsItemCodeHideForBilling");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
             {
-                InvItemDA productDA = new InvItemDA();
-                ddlProductId.DataSource = productDA.GetInvItemInfoByCategoryId(0, Convert.ToInt32(ddlCategory.SelectedValue));
-                ddlProductId.DataTextField = "NAME";
-                ddlProductId.DataValueField = "ItemId";
+                hfIsItemCodeHideForBilling.Value = setUpBO.SetupValue;
             }
-            else
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsStockHideForBilling", "IsStockHideForBilling");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
             {
-                PMRequisitionDA entityDA = new PMRequisitionDA();
-                ddlProductId.DataSource = entityDA.GetPMRequisitionDetailInfoById(Convert.ToInt32(ddlPRNumber.SelectedValue));
-                ddlProductId.DataTextField = "ProductName";
-                ddlProductId.DataValueField = "ProductId";
+                hfIsStockHideForBilling.Value = setUpBO.SetupValue;
+            }
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsStockByHideForBilling", "IsStockByHideForBilling");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
+            {
+                hfIsStockByHideForBilling.Value = setUpBO.SetupValue;
+            }
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsRemarksHideForBilling", "IsRemarksHideForBilling");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
+            {
+                hfIsRemarksHideForBilling.Value = setUpBO.SetupValue;
             }
 
-            ddlProductId.DataBind();
-        }
-        private void LoadAllCostCentreTabInfo()
-        {
-            CostCentreTabDA entityDA = new CostCentreTabDA();
-            List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
 
-            costCentreTabBOList = entityDA.GetAllRestaurantTypeCostCentreTabInfo();
+            //
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsCashPaymentShow", "IsCashPaymentShow");
 
-            this.ddlCostCentre.DataSource = costCentreTabBOList;
-            this.ddlCostCentre.DataTextField = "CostCenter";
-            this.ddlCostCentre.DataValueField = "CostCenterId";
-            this.ddlCostCentre.DataBind();
-
-            ListItem item = new ListItem();
-            item.Value = "0";
-            item.Text = hmUtility.GetDropDownFirstValue();
-            this.ddlCostCentre.Items.Insert(0, item);
-
-            this.ddlCostCentre2.DataSource = costCentreTabBOList;
-            this.ddlCostCentre2.DataTextField = "CostCenter";
-            this.ddlCostCentre2.DataValueField = "CostCenterId";
-            this.ddlCostCentre2.DataBind();
-            this.ddlCostCentre2.Items.Insert(0, item);
-
-            ListItem item2 = new ListItem();
-            item2.Value = "0";
-            item2.Text = hmUtility.GetDropDownFirstAllValue();
-
-            this.ddlSrcCostCenter.DataSource = costCentreTabBOList;
-            this.ddlSrcCostCenter.DataTextField = "CostCenter";
-            this.ddlSrcCostCenter.DataValueField = "CostCenterId";
-            this.ddlSrcCostCenter.DataBind();
-            this.ddlSrcCostCenter.Items.Insert(0, item2);            
-        }
-        private void LoadStockBy()
-        {
-            List<InvUnitHeadBO> headListBO = new List<InvUnitHeadBO>();
-            InvUnitHeadDA da = new InvUnitHeadDA();
-            headListBO = da.GetInvUnitHeadInfo();
-
-            this.ddlStockBy.DataSource = headListBO;
-            this.ddlStockBy.DataTextField = "HeadName";
-            this.ddlStockBy.DataValueField = "UnitHeadId";
-            this.ddlStockBy.DataBind();
-
-            ListItem item = new ListItem();
-            item.Value = "0";
-            item.Text = hmUtility.GetDropDownFirstValue();
-            this.ddlStockBy.Items.Insert(0, item);
-        }
-        //private void LoadUserInformation()
-        //{
-        //    UserInformationDA entityDA = new UserInformationDA();
-        //    List<UserInformationBO> userInformationListBO = new List<UserInformationBO>();
-        //    userInformationListBO = entityDA.GetUserInformation().Where(x => x.UserGroupId != 8 && x.UserGroupId != 9).ToList();
-
-        //    this.ddlCheckedBy.DataSource = userInformationListBO;
-        //    this.ddlCheckedBy.DataTextField = "UserName";
-        //    this.ddlCheckedBy.DataValueField = "UserInfoId";
-        //    this.ddlCheckedBy.DataBind();
-
-        //    ListItem itemEmployee = new ListItem();
-        //    itemEmployee.Value = "0";
-        //    itemEmployee.Text = hmUtility.GetDropDownFirstValue();
-        //    this.ddlCheckedBy.Items.Insert(0, itemEmployee);
-
-        //    this.ddlApprovedBy.DataSource = userInformationListBO;
-        //    this.ddlApprovedBy.DataTextField = "UserName";
-        //    this.ddlApprovedBy.DataValueField = "UserInfoId";
-        //    this.ddlApprovedBy.DataBind();
-
-        //    this.ddlApprovedBy.Items.Insert(0, itemEmployee);
-        //}
-        //private void SetTab(string TabName)
-        //{
-        //    if (TabName == "SearchTab")
-        //    {
-        //        B.Attributes.Add("class", "ui-state-default ui-corner-top ui-tabs-active ui-state-active");
-        //        A.Attributes.Add("class", "ui-state-default ui-corner-top");
-        //    }
-        //    else if (TabName == "EntryTab")
-        //    {
-        //        A.Attributes.Add("class", "ui-state-default ui-corner-top ui-tabs-active ui-state-active");
-        //        B.Attributes.Add("class", "ui-state-default ui-corner-top");
-        //    }
-        //}
-        private void ShowHideCurrencyInformation()
-        {
-            CommonCurrencyDA headDA = new CommonCurrencyDA();
-            List<CommonCurrencyBO> currencyListBO = new List<CommonCurrencyBO>();
-            currencyListBO = headDA.GetConversionHeadInfoByType("LocalNUsd");
-
-            List<CommonCurrencyBO> localCurrencyListBO = new List<CommonCurrencyBO>();
-            localCurrencyListBO = currencyListBO.Where(x => x.CurrencyType == "Local").ToList();
-
-            ddlPurchasePriceLocal.DataSource = localCurrencyListBO;
-            ddlPurchasePriceLocal.DataTextField = "CurrencyName";
-            ddlPurchasePriceLocal.DataValueField = "CurrencyId";
-            ddlPurchasePriceLocal.DataBind();
-            ddlPurchasePriceLocal.SelectedIndex = 0;
-            lblPurchasePriceLocal.Text = "Unit Price(" + ddlPurchasePriceLocal.SelectedItem.Text + ")";
-        }
-        private void LoadSearchInformation()
-        {
-            DateTime fromDate = DateTime.Now;
-            DateTime toDate = DateTime.Now;
-            if (!string.IsNullOrWhiteSpace(txtFromDate.Text))
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
             {
-                fromDate = CommonHelper.DateTimeToMMDDYYYY(txtFromDate.Text);
+                hfIsCashPaymentShow.Value = setUpBO.SetupValue;
             }
-            if (!string.IsNullOrWhiteSpace(txtToDate.Text))
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsAmexCardPaymentShow", "IsAmexCardPaymentShow");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
             {
-                toDate = CommonHelper.DateTimeToMMDDYYYY(txtToDate.Text);
+                hfIsAmexCardPaymentShow.Value = setUpBO.SetupValue;
+            }
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsMasterCardPaymentShow", "IsMasterCardPaymentShow");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
+            {
+                hfIsMasterCardPaymentShow.Value = setUpBO.SetupValue;
+            }
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsVisaCardPaymentShow", "IsVisaCardPaymentShow");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
+            {
+                hfIsVisaCardPaymentShow.Value = setUpBO.SetupValue;
+            }
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsDiscoverCardPaymentShow", "IsDiscoverCardPaymentShow");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
+            {
+                hfIsDiscoverCardPaymentShow.Value = setUpBO.SetupValue;
+            }
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsCompanyPaymentShow", "IsCompanyPaymentShow");
+
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
+            {
+                hfIsCompanyPaymentShow.Value = setUpBO.SetupValue;
             }
 
-            string PONumber = txtSPONumber.Text;
-            string status = ddlStatus.SelectedValue;
-
-            Int32 costCenterId = Convert.ToInt32(ddlSrcCostCenter.SelectedValue);
-
-            PMPurchaseOrderDA detalisDA = new PMPurchaseOrderDA();
-            List<PMPurchaseOrderBO> orderList = new List<PMPurchaseOrderBO>();
-            orderList = detalisDA.GetSMSalesOrderInfoBySearchCriteria("Product", fromDate, toDate, PONumber, costCenterId, status);
-            gvOrderInfo.DataSource = orderList;
-            gvOrderInfo.DataBind();
-
-            //SetTab("SearchTab");
-        }
-        protected string GetStringFromDateTime(DateTime dateTime)
-        {
-            return dateTime.ToString(hmUtility.GetFormat(true));
-        }
-        public static void OpenNewBrowserWindow(string Url, Control control)
-        {
-            ScriptManager.RegisterStartupScript(control, control.GetType(), "Open", "window.open('" + Url + "');", true);
-        }
-        //************************ User Defined Web Method ********************//
-        [WebMethod]
-        public static InvItemBO GetPurchasePrice(int itemId, int requisitionId)
-        {
-            PMRequisitionDA productDA = new PMRequisitionDA();
-            InvItemBO productBO = new InvItemBO();
-            PMPurchaseOrderDA detailsDA = new PMPurchaseOrderDA();
-            PMPurchaseOrderDetailsBO Details = new PMPurchaseOrderDetailsBO();
-
-            if (requisitionId == 0)
-                productBO = productDA.GetInvItemInfoWithAdhocPurchaseQuantityById(itemId);
-            else if (requisitionId > 0)
-                productBO = productDA.GetInvItemInfoWithRequsitionQuantityById(itemId, requisitionId);
-
-            return productBO;
-        }
-        [WebMethod]
-        public static List<ItemViewBO> LoadProductListOnPONumberChange(string Category, string PRNumber)
-        {
-            List<ItemViewBO> viewList = new List<ItemViewBO>();
-            if (PRNumber == "0")
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsSubjectShow", "IsSubjectShow");
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
             {
-                InvItemDA productDA = new InvItemDA();
-                var productList = productDA.GetInventoryItemInformationByCategory(0, Convert.ToInt32(Category), null, null);
+                hfIsSubjectShow.Value = setUpBO.SetupValue;
+            }
 
-                for (int i = 0; i < productList.Count; i++)
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsRemarkShow", "IsRemarkShow");
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
+            {
+                hfIsRemarkShow.Value = setUpBO.SetupValue;
+            }
+
+            CustomFieldBO fieldBO = new CustomFieldBO();
+            HMCommonDA commonDA = new HMCommonDA();
+
+            fieldBO = commonDA.GetCustomFieldByFieldName("RemarksDetailsForBilling");
+            if (fieldBO.FieldId != 0 && setUpBO.SetupValue == "1")
+            {
+                hfIsRemarkHasDefaultValue.Value = "1";
+                txtRemarks.Text = fieldBO.FieldValue;
+            }
+        }
+
+        private void getIsMembershipPaymentEnable()
+        {
+            HMCommonSetupBO setUpBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsMembershipPaymentEnable", "IsMembershipPaymentEnable");
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
+            {
+                hfIsMembershipPaymentEnable.Value = setUpBO.SetupValue;
+
+
+            }
+
+        }
+
+        private void LoadNSetBasicInfo(int costCenterId)
+        {
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            CostCentreTabBO costCentreTabBO = new CostCentreTabBO();
+            CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
+
+            if (costCenterId == 0)
+            {
+                List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
+                costCentreTabBOList = costCentreTabDA.GetCostCentreTabInfoByType("Billing");
+
+                if (costCentreTabBOList.Count > 0)
                 {
-                    ItemViewBO viewBO = new ItemViewBO();
-                    viewBO.ItemId = productList[i].ItemId;
-                    viewBO.ItemName = productList[i].Name;
-                    viewList.Add(viewBO);
-                }
-            }
-            else
-            {
-                PMRequisitionDA entityDA = new PMRequisitionDA();
-                var requisitionList = entityDA.GetPMRequisitionDetailInfoById(Convert.ToInt32(PRNumber));
-                for (int i = 0; i < requisitionList.Count; i++)
-                {
-                    ItemViewBO viewBO = new ItemViewBO();
-                    viewBO.ItemId = requisitionList[i].ItemId;
-                    viewBO.ItemName = requisitionList[i].ItemName;
-                    viewList.Add(viewBO);
-                }
-            }
+                    var vc = costCentreTabBOList.Where(c => c.CostCenterType == "Billing").ToList();
 
-            return viewList;
-        }
-        [WebMethod]
-        public static List<PMPurchaseOrderDetailsBO> PerformLoadPMProductDetailOnDisplayMode(string pOrderId)
-        {
-            PMPurchaseOrderBO orderBO = new PMPurchaseOrderBO();
-            PMPurchaseOrderDA orderDetailDA = new PMPurchaseOrderDA();
-            List<PMPurchaseOrderDetailsBO> orderDetailListBO = new List<PMPurchaseOrderDetailsBO>();
-            orderDetailListBO = orderDetailDA.GetSMSalesOrderDetailByOrderId(Int32.Parse(pOrderId));
-            return orderDetailListBO;
-        }
-        [WebMethod]
-        public static ReturnInfo SavePurchaseOrder(PMPurchaseOrderBO PurchaseOrder, List<PMPurchaseOrderDetailsBO> AddedPurchaseOrderDetails, List<PMPurchaseOrderDetailsBO> EditedPurchaseOrderDetails, List<PMPurchaseOrderDetailsBO> DeletedPurchaseOrderDetails)
-        {
-            ReturnInfo rtninf = new ReturnInfo();
-            int tmpOrderId = 0;
-            string porderNumber = string.Empty;
-            bool status = false;
-
-            try
-            {
-                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-                HMCommonSetupBO invoiceTemplateBO = new HMCommonSetupBO();
-                invoiceTemplateBO = commonSetupDA.GetCommonConfigurationInfo("IsPurchaseOrderApprovalEnable", "IsPurchaseOrderApprovalEnable");
-
-                HMUtility hmUtility = new HMUtility();
-                UserInformationBO userInformationBO = new UserInformationBO();
-                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
-
-                PMPurchaseOrderDA orderDetailsDA = new PMPurchaseOrderDA();
-
-                //PurchaseOrder.ApprovedBy = userInformationBO.UserInfoId;
-                PurchaseOrder.POType = "Product";
-
-                if (Convert.ToInt32(invoiceTemplateBO.SetupValue) == Convert.ToInt32(HMConstants.PurchaseOrderTemplate.ApprovedEnable))
-                {
-                    PurchaseOrder.ApprovedStatus = HMConstants.ApprovalStatus.Pending.ToString();
-                }
-                else if (Convert.ToInt32(invoiceTemplateBO.SetupValue) == Convert.ToInt32(HMConstants.PurchaseOrderTemplate.ApprovedDisable))
-                {
-                    PurchaseOrder.ApprovedStatus = HMConstants.ApprovalStatus.Approved.ToString();
-                }
-
-                if (PurchaseOrder.POrderId == 0)
-                {
-                    PurchaseOrder.CreatedBy = userInformationBO.UserInfoId;
-                    status = orderDetailsDA.SaveSMSalesOrderInfo(PurchaseOrder, AddedPurchaseOrderDetails, out tmpOrderId, out porderNumber);
-
-                    if (status && Convert.ToInt32(invoiceTemplateBO.SetupValue) == Convert.ToInt32(HMConstants.PurchaseOrderTemplate.ApprovedDisable))
+                    if (vc.Count > 1)
                     {
-                        orderDetailsDA.UpdatePurchaseOrderStatus(tmpOrderId, HMConstants.ApprovalStatus.Approved.ToString(), userInformationBO.UserInfoId);
+                        CommonHelper.AlertInfo(innboardMessage, "Cost Center Is Not Setup Properly. Please Setup Cost Center and Try Again.", AlertType.Error);
+                        return;
                     }
 
-                    if (status)
+                    costCenterId = costCentreTabBOList[0].CostCenterId;
+                }
+                else
+                {
+                    CommonHelper.AlertInfo(innboardMessage, "Cost Center Is Not Setup Properly. Please Setup Cost Center and Try Again.", AlertType.Error);
+                    return;
+                }
+            }
+
+            hfCostcenterId.Value = costCenterId.ToString();
+
+            costCentreTabBO = costCentreTabDA.GetCostCentreTabInfoById(costCenterId);
+            if (costCentreTabBO.CostCenterId > 0)
+            {
+                DeliveredByDiv.Visible = false;
+                hfIsRiceMillBillingEnable.Value = "0";
+                if (costCentreTabBO.CompanyType == "RiceMill")
+                {
+                    hfIsAttributeItem.Value = "0";
+                    hfIsItemAttributeEnable.Value = "0";
+                    hfIsRiceMillBillingEnable.Value = "1";
+                    DeliveredByDiv.Visible = false;
+                }
+
+                hfBillPrefixCostcentrwise.Value = costCentreTabBO.BillNumberPrefix;
+
+                hfIsCustomerDetailsEnable.Value = "0";
+                if (costCentreTabBO.IsCustomerDetailsEnable == true)
+                {
+                    hfIsCustomerDetailsEnable.Value = "1";
+                }
+
+                hfIsDeliveredByEnable.Value = "0";
+                if (costCentreTabBO.IsDeliveredByEnable == true)
+                {
+                    DeliveredByDiv.Visible = true;
+                    hfIsDeliveredByEnable.Value = "1";
+
+                    // // ---- Employee Information --------------------
+                    int deliveredByDepartmentId = 1;
+                    EmployeeDA empDa = new EmployeeDA();
+                    List<EmployeeBO> empList = new List<EmployeeBO>();
+
+                    HMCommonSetupBO DeliveredByDepartmentIdBO = new HMCommonSetupBO();
+                    DeliveredByDepartmentIdBO = commonSetupDA.GetCommonConfigurationInfo("DeliveredByDepartmentId", "DeliveredByDepartmentId");
+                    if (DeliveredByDepartmentIdBO != null)
                     {
-                        Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(), EntityTypeEnum.EntityType.ProductPurchaseOrder.ToString(), tmpOrderId,
-                                ProjectModuleEnum.ProjectModule.PurchaseManagement.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.ProductPurchaseOrder));
-                        rtninf.IsSuccess = true;
-                        rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
+                        if (DeliveredByDepartmentIdBO.SetupValue != "0")
+                        {
+                            deliveredByDepartmentId = Convert.ToInt32(DeliveredByDepartmentIdBO.SetupValue);
+                        }
+                    }
+
+                    empList = empDa.GetEmployeeByDepartment(deliveredByDepartmentId);
+                    ddlDeliveredBy.DataSource = empList;
+                    ddlDeliveredBy.DataTextField = "DisplayName";
+                    ddlDeliveredBy.DataValueField = "EmpId";
+                    ddlDeliveredBy.DataBind();
+
+                    System.Web.UI.WebControls.ListItem FirstItemEmployee = new System.Web.UI.WebControls.ListItem();
+                    FirstItemEmployee.Value = "0";
+                    FirstItemEmployee.Text = hmUtility.GetDropDownFirstValue();
+                    ddlDeliveredBy.Items.Insert(0, FirstItemEmployee);
+                }
+
+                if (costCentreTabBO.IsVatEnable == true)
+                {
+                    hfIsVatEnable.Value = "1";
+                    cbTPVatAmount.Checked = true;
+                    hfRestaurantVatAmount.Value = costCentreTabBO.VatAmount.ToString();
+                    txtRemarks.Text = txtRemarks.Text.Replace("@CompanyName", costCentreTabBO.CostCenter);
+                }
+                else
+                {
+                    hfIsVatEnable.Value = "0";
+                    cbTPVatAmount.Checked = false;
+                    hfRestaurantVatAmount.Value = "0";
+                }
+
+                //if (costCentreTabBO.IsVatSChargeInclusive == 1)
+                //    hfIsRestaurantBillInclusive.Value = "1";
+                //else
+                //    hfIsRestaurantBillInclusive.Value = "0";
+
+                if (costCentreTabBO.IsVatSChargeInclusive == 0)
+                {
+                    hfIsRestaurantBillInclusive.Value = "0";
+                    ddlInclusiveOrExclusive.SelectedValue = "Exclusive";
+                }
+                else if (costCentreTabBO.IsVatSChargeInclusive == 1)
+                {
+                    hfIsRestaurantBillInclusive.Value = "1";
+                    ddlInclusiveOrExclusive.SelectedValue = "Inclusive";
+                }
+                else
+                {
+                    hfIsRestaurantBillInclusive.Value = "1";
+                    ddlInclusiveOrExclusive.SelectedValue = "Inclusive";
+                }
+
+                HMCommonSetupBO isRestaurantBillAmountWillRoundBO = new HMCommonSetupBO();
+                isRestaurantBillAmountWillRoundBO = commonSetupDA.GetCommonConfigurationInfo("IsRestaurantBillAmountWillRound", "IsRestaurantBillAmountWillRound");
+
+                hfIsRestaurantBillAmountWillRound.Value = isRestaurantBillAmountWillRoundBO.SetupValue.ToString();
+
+                if (costCentreTabBO.GLCompanyId > 0)
+                {
+                    GLProjectDA projectDA = new GLProjectDA();
+                    List<GLProjectBO> projectListBO = new List<GLProjectBO>();
+                    projectListBO = projectDA.GetProjectByCompanyId(costCentreTabBO.GLCompanyId);
+
+                    if (projectListBO != null)
+                    {
+                        if (projectListBO.Count == 1)
+                        {
+                            ddlProject.DataSource = projectListBO;
+                            ddlProject.DataTextField = "Name";
+                            ddlProject.DataValueField = "ProjectId";
+                            ddlProject.DataBind();
+                        }
+                        else
+                        {
+                            ddlProject.DataSource = projectListBO;
+                            ddlProject.DataTextField = "Name";
+                            ddlProject.DataValueField = "ProjectId";
+                            ddlProject.DataBind();
+
+                            System.Web.UI.WebControls.ListItem FirstItem = new System.Web.UI.WebControls.ListItem();
+                            FirstItem.Value = "0";
+                            FirstItem.Text = hmUtility.GetDropDownFirstValue();
+                            ddlProject.Items.Insert(0, FirstItem);
+                        }
                     }
                 }
                 else
                 {
-                    PurchaseOrder.LastModifiedBy = userInformationBO.UserInfoId;
-                    status = orderDetailsDA.UpdateSMSalesOrderInfo(PurchaseOrder, AddedPurchaseOrderDetails, EditedPurchaseOrderDetails, DeletedPurchaseOrderDetails);
+                    CommonHelper.AlertInfo(innboardMessage, "Cost Center Is Not Setup Properly for Company & Project. Please Setup Cost Center and Try Again.", AlertType.Error);
+                    return;
+                }
+            }
+        }
 
-                    if (status)
+        protected void btnPrintPreview_Click(object sender, EventArgs e)
+        {
+            string reportName = "rptRetailPosBill";
+            hfBillIdControl.Value = "1";
+
+            string queryStringId = hfBillId.Value;
+            int billID = Int32.Parse(queryStringId);
+
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+            if (!string.IsNullOrEmpty(queryStringId))
+            {
+                rvTransactionShow.ProcessingMode = ProcessingMode.Local;
+                rvTransactionShow.LocalReport.DataSources.Clear();
+                List<ReportParameter> reportParam = new List<ReportParameter>();
+
+                string companyName = string.Empty;
+                string companyAddress = string.Empty;
+                string binNumber = string.Empty;
+                string tinNumber = string.Empty;
+                string projectName = string.Empty;
+
+                CompanyDA companyDA = new CompanyDA();
+                List<CompanyBO> files = companyDA.GetCompanyInfo();
+                if (files[0].CompanyId > 0)
+                {
+                    companyName = files[0].CompanyName;
+                    companyAddress = files[0].CompanyAddress;
+                    binNumber = files[0].VatRegistrationNo;
+                    tinNumber = files[0].TinNumber;
+
+                    reportParam.Add(new ReportParameter("VatRegistrationNo", files[0].VatRegistrationNo));
+                    reportParam.Add(new ReportParameter("CompanyType", files[0].CompanyType));
+
+                    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
                     {
-                        Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(), EntityTypeEnum.EntityType.ProductPurchaseOrder.ToString(), PurchaseOrder.POrderId,
-                               ProjectModuleEnum.ProjectModule.PurchaseManagement.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.ProductPurchaseOrder));
-                        rtninf.IsSuccess = true;
-                        rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
+                        reportParam.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
+                    }
+
+                    reportParam.Add(new ReportParameter("ContactNumber", files[0].ContactNumber));
+                }
+
+                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+                CostCentreTabBO costCentreTabBO = new CostCentreTabBO();
+                CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
+                costCentreTabBO = costCentreTabDA.GetCostCenterDetailInformation("Restaurant", billID);
+                int billTempleteId = 1;
+
+                if (costCentreTabBO != null)
+                {
+                    if (costCentreTabBO.InvoiceTemplate > 0)
+                    {
+                        if (costCentreTabBO.InvoiceTemplate == 5)
+                        {
+                            if (costCentreTabBO.CompanyType == "RiceMill")
+                            {
+                                reportName = "rptRiceMillBillForA4Page";
+                            }
+                            else
+                            {
+                                reportName = "rptRestaurentBillForA4Page";
+                            }
+
+
+                            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsBillingInvoiceTemplateWithoutHeader", "IsBillingInvoiceTemplateWithoutHeader");
+
+                            if (commonSetupBO != null)
+                            {
+                                if (commonSetupBO.SetupValue != "0")
+                                {
+                                    if (costCentreTabBO.CompanyType == "RiceMill")
+                                    {
+                                        reportName = "rptRiceMillBillForA4PageWithoutHeader";
+                                    }
+                                    else
+                                    {
+                                        reportName = "rptRestaurentBillForA4PageWithoutHeader";
+                                    }
+                                }
+                            }
+                        }
+
+                        if (costCentreTabBO.IsCostCenterNameShowOnInvoice)
+                        {
+                            companyName = costCentreTabBO.CostCenter;
+                            if (!string.IsNullOrWhiteSpace(costCentreTabBO.CompanyAddress))
+                            {
+                                companyAddress = costCentreTabBO.CompanyAddress;
+                            }
+                        }
+                    }
+                    billTempleteId = costCentreTabBO.InvoiceTemplate;
+                }
+                hfBillTemplate.Value = billTempleteId.ToString();
+
+                RestaurantBillBO billBO = new RestaurantBillBO();
+                RestaurentBillDA billDA = new RestaurentBillDA();
+                billBO = billDA.GetBillInfoByBillId(billID);
+
+                string billRemarks = string.Empty;
+                string billDeclaration = string.Empty;
+                string imagePreparedBySignature = string.Empty;
+                string DeliveredByInfo = string.Empty;
+
+                if (billBO != null)
+                {
+                    if (billBO.BillId > 0)
+                    {
+                        billRemarks = billBO.Remarks;
+                        binNumber = billBO.BinNumber;
+                        tinNumber = billBO.TinNumber;
+                        projectName = billBO.ProjectName;
+                        billDeclaration = billBO.BillDeclaration;
+                        imagePreparedBySignature = billBO.UserSignature;
+                        DeliveredByInfo = billBO.DeliveredByInfo;
+                        if (billBO.IsInvoiceVatAmountEnable == false)
+                        {
+                            if (billBO.CompanyType == "RiceMill")
+                            {
+                                reportName = "rptRiceMillBillForA4Page";
+                            }
+                            else
+                            {
+                                if (reportName == "rptRestaurentBillForA4Page")
+                                {
+                                    reportName = "rptRestaurentBillForA402Page";
+                                }
+                                else
+                                {
+                                    reportName = "rptRestaurentBillForA402PageWithoutHeader";
+                                }
+                            }
+                        }
                     }
                 }
 
-                //HMCommonDA commonDa = new HMCommonDA();
-                //CustomFieldBO customFieldObject = new CustomFieldBO();
-                //customFieldObject = commonDa.GetCustomFieldByFieldName("PurchaseOrderApprovedByEmail");
+                var reportPath = Server.MapPath(@"~/POS/Reports/Rdlc/" + reportName + ".rdlc");
+                if (!File.Exists(reportPath))
+                    return;
 
-                //if (customFieldObject != null)
+                rvTransactionShow.LocalReport.ReportPath = reportPath;
+                reportParam.Add(new ReportParameter("CompanyProfile", companyName));
+                reportParam.Add(new ReportParameter("CompanyAddress", companyAddress));
+                reportParam.Add(new ReportParameter("VatRegistrationNo", binNumber));
+                reportParam.Add(new ReportParameter("TinNumber", tinNumber));
+                reportParam.Add(new ReportParameter("ProjectName", projectName));
+                reportParam.Add(new ReportParameter("BillRemarks", billRemarks));
+                reportParam.Add(new ReportParameter("BillDeclaration", billDeclaration));
+                reportParam.Add(new ReportParameter("DeliveredByInfo", DeliveredByInfo));
+
+                rvTransactionShow.LocalReport.EnableExternalImages = true;
+                HMCommonDA hmCommonDA = new HMCommonDA();
+                //reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderMiddleImagePath"))));
+
+                string imageName = hmCommonDA.GetOutletImageNameByCostCenterId(billBO.CostCenterId);
+                if (!string.IsNullOrWhiteSpace(imageName))
+                {
+                    reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + imageName)));
+                }
+                else
+                {
+                    reportParam.Add(new ReportParameter("Path", "Hide"));
+                }
+
+                //if (!string.IsNullOrWhiteSpace(imagePreparedBySignature))
                 //{
-                //    var po = orderDetailsDA.GetSMSalesOrderInfoByOrderId(PurchaseOrder.POrderId);
-
-                //    EmailHelper.SendEmail(string.Empty, customFieldObject.FieldValue.ToString(), "Approval Pending For Sales Order No " + po.PONumber,
-                //        "Please Approved The Sales Order.", string.Empty);
+                //    reportParam.Add(new ReportParameter("BillingDefaultPreparedBySignature", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/UserSignature/" + imagePreparedBySignature)));
+                //}
+                //else
+                //{
+                //    reportParam.Add(new ReportParameter("BillingDefaultPreparedBySignature", "Hide"));
                 //}
 
-                if (!status)
+                //HMCommonSetupBO setUpBOApprovedBySignature = new HMCommonSetupBO();
+                //string imageApprovedBySignature = string.Empty;
+                //setUpBOApprovedBySignature = commonSetupDA.GetCommonConfigurationInfo("BillingDefaultApprovedBySignature", "BillingDefaultApprovedBySignature");
+                //if (!string.IsNullOrWhiteSpace(setUpBOApprovedBySignature.SetupValue))
+                //{
+                //    imageApprovedBySignature = setUpBOApprovedBySignature.SetupValue;
+                //}
+
+                //if (imageApprovedBySignature != "0")
+                //{
+                //    reportParam.Add(new ReportParameter("BillingDefaultApprovedBySignature", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/UserSignature/" + imageApprovedBySignature)));
+                //}
+                //else
+                //{
+                //    reportParam.Add(new ReportParameter("BillingDefaultApprovedBySignature", "Hide"));
+                //}
+
+                reportParam.Add(new ReportParameter("BillingDefaultPreparedBySignature", "Hide"));
+                reportParam.Add(new ReportParameter("BillingDefaultApprovedBySignature", "Hide"));
+
+                reportParam.Add(new ReportParameter("ThankYouMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIThankYouMessege")));
+                reportParam.Add(new ReportParameter("CorporateAddress", hmCommonDA.GetCustomFieldValueByFieldName("paramGICorporateAddress")));
+                reportParam.Add(new ReportParameter("AggrimentMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIAggrimentMessege")));
+
+                reportParam.Add(new ReportParameter("RestaurantMushakInfo", hmCommonDA.GetCustomFieldValueByFieldName("RestaurantMushakInfo")));
+
+                HMCommonSetupBO isCompanyNameShowOnRestaurantInvoice = new HMCommonSetupBO();
+                isCompanyNameShowOnRestaurantInvoice = commonSetupDA.GetCommonConfigurationInfo("IsCompanyNameShowOnRestaurantInvoice", "IsCompanyNameShowOnRestaurantInvoice");
+                if (Convert.ToInt32(isCompanyNameShowOnRestaurantInvoice.SetupValue) == 1)
                 {
-                    rtninf.IsSuccess = false;
-                    rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                    reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "1"));
                 }
+                else
+                {
+                    reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "0"));
+                }
+
+                //reportParam.Add(new ReportParameter("IsRestaurantOrderSubmitDisable", "Yes"));
+                //reportParam.Add(new ReportParameter("IsRestaurantTokenInfoDisable", "Yes"));
+                //reportParam.Add(new ReportParameter("IsGuestNameAndRoomNoTextShowInInvoice", "0"));
+
+                DateTime currentDate = DateTime.Now;
+                HMCommonDA printDateDA = new HMCommonDA();
+                string printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);
+
+                reportParam.Add(new ReportParameter("PrintDateTime", printDate));
+
+                rvTransactionShow.LocalReport.SetParameters(reportParam);
+
+                //RestaurentBillDA rda = new RestaurentBillDA();
+                //List<RestaurantBillReportBO> restaurantBill = new List<RestaurantBillReportBO>();
+                //restaurantBill = rda.GetRestaurantBillReport(billID);
+
+                RetailPosBillReturnBO restaurantBill = new RetailPosBillReturnBO();
+                RestaurentPosDA rda = new RestaurentPosDA();
+                restaurantBill = rda.RetailPosBill(billID);
+
+                var dataSet = rvTransactionShow.LocalReport.GetDataSourceNames();
+                rvTransactionShow.LocalReport.DataSources.Add(new ReportDataSource(dataSet[0], restaurantBill.PosBillWithSalesReturn));
+                rvTransactionShow.LocalReport.DataSources.Add(new ReportDataSource(dataSet[1], restaurantBill.PosSalesReturnPayment));
+
+                rvTransactionShow.LocalReport.DisplayName = "Bill Invoice";
+                rvTransactionShow.LocalReport.Refresh();
+
+                string url = "$('#reportContainer').dialog({ " +
+                       " autoOpen: true, " +
+                       " modal: true, " +
+                       " minWidth: 500, " +
+                       " minHeight: 555, " +
+                       " width: 'auto', " +
+                       " closeOnEscape: false, " +
+                       " resizable: false, " +
+                       " height: 'auto', " +
+                       " fluid: true, " +
+                       " title: 'Invoice Preview', " +
+                       " show: 'slide', " +
+                       " close: ClosePrintDialog " +
+                       "});" + "$('.ui-dialog-titlebar-close').css({ " +
+                        " 'top': '27%', " +
+                        " 'width': '40', " +
+                        " 'height': '40', " +
+                        " 'background-repeat': 'no-repeat', " +
+                        " 'background-position': 'center center' " +
+                        " }); " +
+                        " $('.ui-dialog-titlebar').css('padding','0.8em 1em'); " +
+                        " setTimeout(function () { ScrollToDown(); }, 1000); ";
+
+                ClientScript.RegisterStartupScript(this.GetType(), "script", url, true);
+
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType;
+                string encoding;
+                string extension;
+
+                byte[] bytes = rvTransactionShow.LocalReport.Render("PDF", null, out mimeType,
+                               out encoding, out extension, out streamids, out warnings);
+
+                string fileName = string.Empty, fileNamePrint = string.Empty;
+                DateTime dateTime = DateTime.Now;
+
+                fileName = "OutPut" + String.Format("{0:ddMMMyyyyHHmmssffff}", dateTime) + userInformationBO.UserInfoId.ToString() + ".pdf";
+                fileNamePrint = "Print" + String.Format("{0:ddMMMyyyyHHmmssffff}", dateTime) + userInformationBO.UserInfoId.ToString() + ".pdf";
+
+                FileStream fs = new FileStream(HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileName), FileMode.Create);
+                fs.Write(bytes, 0, bytes.Length);
+                fs.Close();
+
+                //Open exsisting pdf
+                Document document = new Document(PageSize.LETTER);
+                PdfReader reader = new PdfReader(HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileName));
+                //Getting a instance of new pdf wrtiter
+                PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(
+                   HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileNamePrint), FileMode.Create));
+                document.Open();
+                PdfContentByte cb = writer.DirectContent;
+
+                int i = 0;
+                int p = 0;
+                int n = reader.NumberOfPages;
+                Rectangle psize = reader.GetPageSize(1);
+
+                float width = psize.Width;
+                float height = psize.Height;
+
+                //Add Page to new document
+                while (i < n)
+                {
+                    document.NewPage();
+                    p++;
+                    i++;
+
+                    PdfImportedPage page1 = writer.GetImportedPage(reader, i);
+                    cb.AddTemplate(page1, 0, 0);
+                }
+
+                //Attach javascript to the document
+                PdfAction jAction = PdfAction.JavaScript("this.print(true);\r", writer);
+                //PdfAction jAction = PdfAction.JavaScript("var pp = getPrintParams();pp.interactive = pp.constants.interactionLevel.automatic;pp.printerName = getPrintParams().printerName;print(pp);\r", writer);
+                writer.AddJavaScript(jAction);
+
+                document.Close();
+
+                IframeReportPrint.Attributes["src"] = "../../PrintDocument/" + fileNamePrint;
+
+                //rrp.PrintForPos();
+
+                //string url = "/Restaurant/Reports/frmReportTPRestaurantBillInfo.aspx?billID=" + this.hfBillId.Value;
+                //string s = "window.open('" + url + "', 'popup_window', 'width=750,height=680,left=300,top=50,resizable=yes'); window.onunload = CloseWindow();";
+                ////Page.ClientScript.RegisterOnSubmitStatement(typeof(Page), "closePage", "window.onunload = CloseWindow();");
+                //ClientScript.RegisterStartupScript(this.GetType(), "script", s, true);
+
+            }
+        }
+
+        //Pos Printing
+        //Dot Matrix
+
+        protected void btnPrinReturnBillPreview_Click(object sender, EventArgs e)
+        {
+            string reportName = "rptRetailPosReturnBill";
+
+            string queryStringId = hfBillId.Value;
+            int billID = Int32.Parse(queryStringId);
+
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+            if (!string.IsNullOrEmpty(queryStringId))
+            {
+                rvTransactionShow.ProcessingMode = ProcessingMode.Local;
+                rvTransactionShow.LocalReport.DataSources.Clear();
+
+                var reportPath = Server.MapPath(@"~/POS/Reports/Rdlc/" + reportName + ".rdlc");
+                if (!File.Exists(reportPath))
+                    return;
+
+                rvTransactionShow.LocalReport.ReportPath = reportPath;
+
+                RestaurantBillBO billBO = new RestaurantBillBO();
+                RestaurentBillDA billDA = new RestaurentBillDA();
+                billBO = billDA.GetBillInfoByBillId(billID);
+
+                CompanyDA companyDA = new CompanyDA();
+                List<CompanyBO> files = companyDA.GetCompanyInfo();
+                List<ReportParameter> reportParam = new List<ReportParameter>();
+
+                if (files[0].CompanyId > 0)
+                {
+                    reportParam.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
+                    reportParam.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
+                    reportParam.Add(new ReportParameter("VatRegistrationNo", files[0].VatRegistrationNo));
+                    reportParam.Add(new ReportParameter("CompanyType", files[0].CompanyType));
+
+                    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
+                    {
+                        reportParam.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
+                    }
+
+                    reportParam.Add(new ReportParameter("ContactNumber", files[0].ContactNumber));
+                }
+
+                rvTransactionShow.LocalReport.EnableExternalImages = true;
+                HMCommonDA hmCommonDA = new HMCommonDA();
+                //reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderMiddleImagePath"))));
+
+                string imageName = hmCommonDA.GetOutletImageNameByCostCenterId(billBO.CostCenterId);
+                if (!string.IsNullOrWhiteSpace(imageName))
+                {
+                    reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + imageName)));
+                }
+                else
+                {
+                    reportParam.Add(new ReportParameter("Path", "Hide"));
+                }
+
+                reportParam.Add(new ReportParameter("ThankYouMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIThankYouMessege")));
+                reportParam.Add(new ReportParameter("CorporateAddress", hmCommonDA.GetCustomFieldValueByFieldName("paramGICorporateAddress")));
+                reportParam.Add(new ReportParameter("AggrimentMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIAggrimentMessege")));
+
+                reportParam.Add(new ReportParameter("RestaurantMushakInfo", hmCommonDA.GetCustomFieldValueByFieldName("RestaurantMushakInfo")));
+
+                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                HMCommonSetupBO isCompanyNameShowOnRestaurantInvoice = new HMCommonSetupBO();
+                isCompanyNameShowOnRestaurantInvoice = commonSetupDA.GetCommonConfigurationInfo("IsCompanyNameShowOnRestaurantInvoice", "IsCompanyNameShowOnRestaurantInvoice");
+                if (Convert.ToInt32(isCompanyNameShowOnRestaurantInvoice.SetupValue) == 1)
+                {
+                    reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "1"));
+                }
+                else
+                {
+                    reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "0"));
+                }
+
+                //reportParam.Add(new ReportParameter("IsRestaurantOrderSubmitDisable", "Yes"));
+                //reportParam.Add(new ReportParameter("IsRestaurantTokenInfoDisable", "Yes"));
+                //reportParam.Add(new ReportParameter("IsGuestNameAndRoomNoTextShowInInvoice", "0"));
+
+                DateTime currentDate = DateTime.Now;
+                HMCommonDA printDateDA = new HMCommonDA();
+                string printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);
+
+                reportParam.Add(new ReportParameter("PrintDateTime", printDate));
+
+                rvTransactionShow.LocalReport.SetParameters(reportParam);
+
+                RestaurentPosDA rda = new RestaurentPosDA();
+                RetailPosBillReturnBO restaurantBill = new RetailPosBillReturnBO();
+                restaurantBill = rda.GetRetailPosBillWithSalesReturn(billID);
+
+                var dataSet = rvTransactionShow.LocalReport.GetDataSourceNames();
+                rvTransactionShow.LocalReport.DataSources.Add(new ReportDataSource(dataSet[0], restaurantBill.PosBillWithSalesReturn));
+                rvTransactionShow.LocalReport.DataSources.Add(new ReportDataSource(dataSet[1], restaurantBill.PosSalesReturnItem));
+                rvTransactionShow.LocalReport.DataSources.Add(new ReportDataSource(dataSet[2], restaurantBill.PosSalesReturnPayment));
+
+                rvTransactionShow.LocalReport.DisplayName = "Bill Invoice";
+                rvTransactionShow.LocalReport.Refresh();
+
+                string url = "$('#reportContainer').dialog({ " +
+                       " autoOpen: true, " +
+                       " modal: true, " +
+                       " minWidth: 500, " +
+                       " minHeight: 555, " +
+                       " width: 'auto', " +
+                       " closeOnEscape: false, " +
+                       " resizable: false, " +
+                       " height: 'auto', " +
+                       " fluid: true, " +
+                       " title: 'Invoice Preview', " +
+                       " show: 'slide', " +
+                       " close: ClosePrintDialog " +
+                       "});" + "$('.ui-dialog-titlebar-close').css({ " +
+                        " 'top': '27%', " +
+                        " 'width': '40', " +
+                        " 'height': '40', " +
+                        " 'background-repeat': 'no-repeat', " +
+                        " 'background-position': 'center center' " +
+                        " }); " +
+                        " $('.ui-dialog-titlebar').css('padding','0.8em 1em'); " +
+                        " setTimeout(function () { ScrollToDown(); }, 1000); ";
+
+                ClientScript.RegisterStartupScript(this.GetType(), "script", url, true);
+
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType;
+                string encoding;
+                string extension;
+
+                byte[] bytes = rvTransactionShow.LocalReport.Render("PDF", null, out mimeType,
+                               out encoding, out extension, out streamids, out warnings);
+
+                string fileName = string.Empty, fileNamePrint = string.Empty;
+                DateTime dateTime = DateTime.Now;
+
+                fileName = "OutPut" + String.Format("{0:ddMMMyyyyHHmmssffff}", dateTime) + userInformationBO.UserInfoId.ToString() + ".pdf";
+                fileNamePrint = "Print" + String.Format("{0:ddMMMyyyyHHmmssffff}", dateTime) + userInformationBO.UserInfoId.ToString() + ".pdf";
+
+                FileStream fs = new FileStream(HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileName), FileMode.Create);
+                fs.Write(bytes, 0, bytes.Length);
+                fs.Close();
+
+                //Open exsisting pdf
+                Document document = new Document(PageSize.LETTER);
+                PdfReader reader = new PdfReader(HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileName));
+                //Getting a instance of new pdf wrtiter
+                PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(
+                   HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileNamePrint), FileMode.Create));
+                document.Open();
+                PdfContentByte cb = writer.DirectContent;
+
+                int i = 0;
+                int p = 0;
+                int n = reader.NumberOfPages;
+                Rectangle psize = reader.GetPageSize(1);
+
+                float width = psize.Width;
+                float height = psize.Height;
+
+                //Add Page to new document
+                while (i < n)
+                {
+                    document.NewPage();
+                    p++;
+                    i++;
+
+                    PdfImportedPage page1 = writer.GetImportedPage(reader, i);
+                    cb.AddTemplate(page1, 0, 0);
+                }
+
+                //Attach javascript to the document
+                PdfAction jAction = PdfAction.JavaScript("this.print(true);\r", writer);
+                //PdfAction jAction = PdfAction.JavaScript("var pp = getPrintParams();pp.interactive = pp.constants.interactionLevel.automatic;pp.printerName = getPrintParams().printerName;print(pp);\r", writer);
+                writer.AddJavaScript(jAction);
+
+                document.Close();
+
+                IframeReportPrint.Attributes["src"] = "../../PrintDocument/" + fileNamePrint;
+
+                //rrp.PrintForPos();
+
+                //string url = "/Restaurant/Reports/frmReportTPRestaurantBillInfo.aspx?billID=" + this.hfBillId.Value;
+                //string s = "window.open('" + url + "', 'popup_window', 'width=750,height=680,left=300,top=50,resizable=yes'); window.onunload = CloseWindow();";
+                ////Page.ClientScript.RegisterOnSubmitStatement(typeof(Page), "closePage", "window.onunload = CloseWindow();");
+                //ClientScript.RegisterStartupScript(this.GetType(), "script", s, true);
+            }
+        }
+
+        private bool IsRestaurantTokenInfoDisableInfo()
+        {
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            bool IsRestaurantTokenInfoDisable = false;
+
+            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsRestaurantTokenInfoDisable", "IsRestaurantTokenInfoDisable");
+            if (commonSetupBO != null)
+            {
+                if (!string.IsNullOrEmpty(commonSetupBO.SetupValue))
+                {
+                    if (commonSetupBO.SetupValue == "0")
+                    {
+                        IsRestaurantTokenInfoDisable = false;
+                    }
+                    else
+                    {
+                        IsRestaurantTokenInfoDisable = true;
+                    }
+                }
+            }
+
+            return IsRestaurantTokenInfoDisable;
+        }
+        private bool IsRestaurantOrderSubmitDisableInfo()
+        {
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            bool IsRestaurantOrderSubmitDisable = false;
+
+            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsRestaurantOrderSubmitDisable", "IsRestaurantOrderSubmitDisable");
+            if (commonSetupBO != null)
+            {
+                if (!string.IsNullOrEmpty(commonSetupBO.SetupValue))
+                {
+                    if (commonSetupBO.SetupValue == "0")
+                    {
+                        //this.btnOrderSubmit.Visible = false;
+                        IsRestaurantOrderSubmitDisable = false;
+                    }
+                    else
+                    {
+                        //this.btnOrderSubmit.Visible = true;
+                        IsRestaurantOrderSubmitDisable = true;
+                    }
+                }
+            }
+
+            return IsRestaurantOrderSubmitDisable;
+        }
+
+        [WebMethod]
+        public static List<InvItemAutoSearchBO> GetItemByCodeCategoryNameWiseItemDetailsForAutoSearch(string itemCode, string itemName, string categoryName, int costCenterId)
+        {
+            List<InvItemAutoSearchBO> itemInfo = new List<InvItemAutoSearchBO>();
+            CostCentreTabDA costCenterDa = new CostCentreTabDA();
+            List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
+            InvItemDA itemDa = new InvItemDA();
+
+            costCentreTabBOList = costCenterDa.GetCostCentreTabInfoByType("Billing");
+
+            itemInfo = itemDa.GetItemByCodeCategoryNameWiseItemDetailsForAutoSearchForBilling(itemCode, itemName, categoryName, costCenterId);
+
+            return itemInfo;
+        }
+        [WebMethod]
+        public static List<SerialDuplicateBO> SerialSearch(string serialNumber, int costcenterId, int projectId, int itemId)
+        {
+            List<SerialDuplicateBO> serial = new List<SerialDuplicateBO>();
+            PMProductOutDA outDA = new PMProductOutDA();
+            serial = outDA.GetCostcenterProjectWiseAvailableSerialForAutoSearch(serialNumber, costcenterId, projectId, itemId);
+            return serial;
+        }
+        [WebMethod]
+        public static List<InvItemAutoSearchBO> GetItemByCodeColorSizeStyleCategoryNameWiseItemDetailsForAutoSearch(string itemCode, string itemName, int colorId, int sizeId, int styleId, string categoryName, int costCenterId)
+        {
+            List<InvItemAutoSearchBO> itemInfo = new List<InvItemAutoSearchBO>();
+            CostCentreTabDA costCenterDa = new CostCentreTabDA();
+            List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
+            InvItemDA itemDa = new InvItemDA();
+
+            costCentreTabBOList = costCenterDa.GetCostCentreTabInfoByType("Billing");
+
+            itemInfo = itemDa.GetItemByCodeColorSizeStyleCategoryNameWiseItemDetailsForAutoSearchForBilling(itemCode, itemName, colorId, sizeId, styleId, categoryName, costCenterId);
+
+            return itemInfo;
+        }
+        [WebMethod]
+        public static List<InvItemAttributeBO> GetInvItemAttributeByItemIdAndAttributeType(int ItemId, string attributeType)
+        {
+            InvItemAttributeDA DA = new InvItemAttributeDA();
+            List<InvItemAttributeBO> InvItemAttributeBOList = new List<InvItemAttributeBO>();
+            InvItemAttributeBOList = DA.GetInvItemAttributeByItemIdAndAttributeType(ItemId, attributeType);
+
+
+            return InvItemAttributeBOList;
+        }
+        [WebMethod]
+        public static List<GetDiscountDetailsBO> GetAllDiscount(int costcenter)
+        {
+            List<GetDiscountDetailsBO> GetDiscountDetailsBOs = new List<GetDiscountDetailsBO>();
+            DiscountDA discountDa = new DiscountDA();
+
+            GetDiscountDetailsBOs = discountDa.GetAllDiscountByCostcenterId(costcenter);
+
+            return GetDiscountDetailsBOs;
+        }
+
+
+        [WebMethod]
+        public static ReturnInfo FullBillRefundSettlement(int memberId, RestaurantBillBO RestaurantBill, GuestBillPaymentBO BillPayment)
+        {
+            ReturnInfo rtninf = new ReturnInfo();
+            HMUtility hmUtility = new HMUtility();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            try
+            {
+                RestaurentPosDA posda = new RestaurentPosDA();
+                RestaurantBill.LastModifiedBy = userInformationBO.UserInfoId;
+                if (RestaurantBill.IsBillReSettlement && RestaurantBill.RefundId == 1)
+                {
+                    posda.UpdateBillForFullRefund(memberId, RestaurantBill, BillPayment);
+                    //RestaurantBill.BillId
+                }
+
+                //rtninf.Pk = billId;
+                rtninf.IsSuccess = true;
+                rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillRefund, AlertType.Success);
+
+            }
+            catch (Exception ex)
+            {
+                rtninf.IsSuccess = false;
+                rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            return rtninf;
+        }
+
+        [WebMethod]
+        public static ReturnInfo BillSettlement(int kotId, int memberId, RestaurantBillBO RestaurantBill, List<GuestBillPaymentBO> BillPayment,
+                                                List<KotBillDetailBO> BillDetails, List<KotBillDetailBO> EditeDetails,
+                                                List<KotBillDetailBO> DeletedDetails, List<RestaurantSalesReturnItemBO> SalesReturnItem, string EstimatedDoneDate, int IsTaskAutoGenarate,
+                                                List<PMProductOutSerialInfoBO> AddedSerialzableProduct, List<PMProductOutSerialInfoBO> DeletedSerialzableProduct)
+        {
+
+
+
+
+
+            ReturnInfo rtninfo = new ReturnInfo();
+            KotBillMasterBO billmaster = new KotBillMasterBO();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            CostCentreTabDA costCenterDa = new CostCentreTabDA();
+            RestaurentPosDA posda = new RestaurentPosDA();
+            HMUtility hmUtility = new HMUtility();
+            InvItemBO productBO = new InvItemBO();
+            InvItemDA productDA = new InvItemDA();
+
+            // // Serial Product Related Code
+            string serialId = string.Empty, message = string.Empty;
+            List<SerialDuplicateBO> serial = new List<SerialDuplicateBO>();
+            foreach (PMProductOutSerialInfoBO srl in AddedSerialzableProduct.Where(s => s.OutSerialId == 0))
+            {
+                if (serialId != string.Empty)
+                {
+                    serialId += "," + srl.SerialNumber;
+                }
+                else
+                {
+                    serialId = srl.SerialNumber;
+                }
+            }
+
+            PMProductOutDA outDa = new PMProductOutDA();
+            CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
+            CostCentreTabBO costCentreTabBO = new CostCentreTabBO();
+            costCentreTabBO = costCentreTabDA.GetCostCentreTabInfoById(RestaurantBill.CostCenterId);
+            if (costCentreTabBO.CostCenterId > 0)
+            {
+                if (!string.IsNullOrEmpty(serialId))
+                    serial = outDa.SerialAvailabilityCheck(serialId, Convert.ToInt64(costCentreTabBO.DefaultStockLocationId));
+
+                foreach (SerialDuplicateBO p in serial)
+                {
+                    if (message != "")
+                        message = ", " + p.ItemName + "(" + p.SerialNumber + ")";
+                    else
+                        message = p.ItemName + "(" + p.SerialNumber + ")";
+                }
+
+                if (!string.IsNullOrEmpty(message))
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo("This Item Serial Does Not Exists. " + message, AlertType.Error);
+                    return rtninfo;
+                }
+
+            }
+            // // End Serial Product Related Code
+
+            List<InvItemAutoSearchBO> itemInfo = new List<InvItemAutoSearchBO>();
+            List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
+            InvItemDA itemDa = new InvItemDA();
+
+            costCentreTabBOList = costCenterDa.GetCostCentreTabInfoByType("Billing");
+            var costCenterId = RestaurantBill.CostCenterId;
+            itemInfo = itemDa.GetItemByCodeCategoryNameWiseItemDetailsForAutoSearchForBilling("", "", "", costCenterId);
+
+            List<InvItemCostCenterMappingBO> costListKitchenItem = new List<InvItemCostCenterMappingBO>();
+            InvItemCostCenterMappingDA costKitchenItemDA = new InvItemCostCenterMappingDA();
+
+            if (itemInfo.Count > 0)
+            {
+                productBO = productDA.GetInvItemInfoById(0, itemInfo[0].ItemId);
+                costListKitchenItem = costKitchenItemDA.GetInvItemCostCenterMappingByItemId(itemInfo[0].ItemId);
+            }
+
+            for (int i = 0; i < BillDetails.Count; i++)
+            {
+                if (BillDetails[i].ItemId == 0)
+                {
+                    productBO.ItemId = 0;
+                    productBO.Code = "";
+                    productBO.Name = BillDetails[i].ItemName;
+                    productBO.DisplayName = BillDetails[i].ItemName;
+                    productBO.ItemType = BillDetails[i].ItemType;
+                    int tmpProductId = 0;
+
+                    Boolean status = productDA.SaveInvItemInfo(productBO, null, costListKitchenItem, null, out tmpProductId);
+                    if (status)
+                    {
+                        BillDetails[i].ItemId = tmpProductId;
+                    }
+                }
+            }
+
+            int billId = 0;
+
+            try
+            {
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                billmaster.KotId = kotId;
+                RestaurantBill.BearerId = userInformationBO.UserInfoId;
+                RestaurantBill.CreatedBy = userInformationBO.UserInfoId;
+                RestaurantBill.BillDate = DateTime.Now;
+                RestaurantBill.BillPaymentDate = DateTime.Now;
+                billmaster.CostCenterId = costCenterId;
+
+                if (RestaurantBill.IsBillReSettlement)
+                {
+                    billmaster.ReferenceKotId = kotId;
+                    billmaster.IsKotReturn = true;
+                    kotId = 0;
+                }
+
+                RestaurantBill.CostCenterId = billmaster.CostCenterId;
+
+                if (kotId == 0)
+                {
+                    billmaster.SourceId = 1;
+                    billmaster.PaxQuantity = 1;
+                    billmaster.SourceName = "RestaurantToken";
+                    billmaster.BearerId = userInformationBO.UserInfoId;
+                    billmaster.KotStatus = ConstantHelper.KotStatus.settled.ToString();
+                    billmaster.CreatedBy = userInformationBO.UserInfoId;
+                    billmaster.IsBillHoldup = false;
+                    posda.SaveRestaurantBillForSalesOrder("SalesOrder", billmaster, BillDetails, AddedSerialzableProduct, DeletedSerialzableProduct, RestaurantBill, BillPayment, SalesReturnItem, null, true, true, out billId, memberId);
+                }
+                else if (kotId > 0 && RestaurantBill.BillId == 0)
+                {
+                    billmaster.IsBillHoldup = false;
+                    billmaster.IsBillProcessed = true;
+                    billmaster.KotStatus = "settled";
+                    RestaurantBill.LastModifiedBy = userInformationBO.UserInfoId;
+                    RestaurantBill.BillPaidBySourceId = kotId;
+                    RestaurantBill.CreatedBy = userInformationBO.UserInfoId;
+                    posda.UpdateRestaurantBillForPos("Billing", kotId, billmaster, BillDetails, EditeDetails, DeletedDetails, RestaurantBill, BillPayment, null, true, true, out billId);
+                }
+                else if (kotId > 0 && RestaurantBill.BillId > 0)
+                {
+                    billId = RestaurantBill.BillId;
+                    RestaurantBill.BillPaidBySourceId = kotId;
+                    posda.UpdateForRestauranBillReSettlement("Billing", kotId, RestaurantBill, BillDetails, EditeDetails, DeletedDetails, BillPayment);
+                }
+
+                CommonDA commonDA = new CommonDA();
+                bool autoProcessStatus = commonDA.AutoCompanyBillGenerationProcess("Restaurant", billId, userInformationBO.UserInfoId);
+
+                if (IsTaskAutoGenarate > 0)
+                {
+                    RetailPosBillReturnBO restaurantBill = new RetailPosBillReturnBO();
+                    RestaurentPosDA rda = new RestaurentPosDA();
+                    restaurantBill = rda.RetailPosBill(billId);
+
+                    AssignTaskDA taskDA = new AssignTaskDA();
+                    SMTask task = new SMTask();
+                    bool status = false;
+                    long id;
+                    task.Id = 0;
+                    task.TaskName = "Auto New Task (" + restaurantBill.PosBillWithSalesReturn[0].BillNumber + ")";
+                    task.TaskDate = DateTime.Now;
+                    task.StartTime = DateTime.Now;
+                    task.TaskType = "Billing";
+                    task.TaskStage = 0;
+                    task.ParentTaskId = 0;
+                    task.DependentTaskId = 0;
+                    task.SourceNameId = billId;
+                    task.EstimatedDoneDate = Convert.ToDateTime(EstimatedDoneDate);
+                    task.EstimatedDoneHour = 0;
+                    task.EndTime = Convert.ToDateTime(EstimatedDoneDate);
+                    task.CreatedBy = userInformationBO.UserInfoId;
+                    status = taskDA.SaveOrUpdateTask(task, "", out id);
+                }
+
+                posda.SaveMembershipPointDetails(RestaurantBill, memberId, billId);
+                if (IsTaskAutoGenarate > 0)
+                {
+                    rtninfo.Pk = billId;
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillSettlement + " AND " + AlertMessage.TaskCreate, AlertType.Success);
+                }
+                else
+                {
+                    rtninfo.Pk = billId;
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillSettlement, AlertType.Success);
+                }
+
+                posda.BillingAccountsVoucherPostingProcess(billId);
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            return rtninfo;
+        }
+
+        [WebMethod]
+        public static RestaurantBillPaymentResume GetBillById(int SOrderId)
+        {
+            string kotIdList = string.Empty, tableIdList = string.Empty;
+            //KotBillMasterBO kotBillMaster = new KotBillMasterBO();
+            List<KotBillDetailBO> kotDetails = new List<KotBillDetailBO>();
+            //List<RestaurantBillDetailBO> billDetailList = new List<RestaurantBillDetailBO>();
+            List<ItemClassificationBO> classificationLst = new List<ItemClassificationBO>();
+            RestaurantBillBO kotBill = new RestaurantBillBO();
+            List<GuestBillPaymentBO> kotBillPayment = new List<GuestBillPaymentBO>();
+            GuestExtraServiceBillApprovedBO roomWisePayment = new GuestExtraServiceBillApprovedBO();
+
+            KotBillMasterDA kotDa = new KotBillMasterDA();
+            RestaurentBillDA billDa = new RestaurentBillDA();
+            KotBillDetailDA kotDetailsDA = new KotBillDetailDA();
+            InvCategoryDA catDa = new InvCategoryDA();
+            RestaurentPosDA posDa = new RestaurentPosDA();
+
+            //kotBillMaster = kotBillMaster = kotDa.GetKotBillMasterInfoByKotIdNSourceName(Convert.ToInt32(kotId), sourceName);
+            kotBill = billDa.GetSalesOrderBySOrderId(SOrderId);
+            kotBillPayment = billDa.GetBillPaymentByBillId(kotBill.BillId, "Restaurant");
+            roomWisePayment = posDa.GetRoomWiseRestaurantBillPaymentByBillIdServiceTypePaymentMode(kotBill.BillId);
+
+            //billDetailList = billDa.GetRestaurantBillDetailsByBillId(kotBill.BillId);
+            classificationLst = catDa.GetRestaurantBillClassificationDetailsByBillId(kotBill.BillId);
+
+            //billDetailList = billDetailList.Where(b => b.KotId != kotBillMaster.KotId).ToList();
+
+            //if (billDetailList.Count > 0)
+            //{
+            //    foreach (RestaurantBillDetailBO bd in billDetailList)
+            //    {
+            //        if (!string.IsNullOrEmpty(kotIdList))
+            //        {
+            //            kotIdList += "," + bd.KotId.ToString();
+            //            tableIdList += "," + bd.TableId.ToString();
+            //        }
+            //        else
+            //        {
+            //            kotIdList = bd.KotId.ToString();
+            //            tableIdList = bd.TableId.ToString();
+            //        }
+            //    }
+            //}
+
+            //if (!string.IsNullOrEmpty(kotIdList))
+            //{
+            //    kotIdList += "," + kotBillMaster.KotId.ToString();
+            //}
+            //else
+            //{
+            //    kotIdList = kotBillMaster.KotId.ToString();
+            //}
+
+            kotDetails = kotDetailsDA.GetSalesOrderDetailsId(kotBill.CostCenterId, kotBill.BillId);
+
+            RestaurantBillPaymentResume paymentResume = new RestaurantBillPaymentResume();
+            //paymentResume.KotBillMaster = kotBillMaster;
+            paymentResume.KotBillDetails = kotDetails;
+            paymentResume.RestaurantKotBill = kotBill;
+            //paymentResume.RestaurantKotBillPayment = kotBillPayment;
+            //paymentResume.RoomWiseBillPayment = roomWisePayment;
+            return paymentResume;
+        }
+
+        [WebMethod]
+        public static ReturnInfo BillHoldup(int kotId, List<KotBillDetailBO> BillDetails, List<KotBillDetailBO> EditeDetails, List<KotBillDetailBO> DeletedDetails)
+        {
+            ReturnInfo rtninf = new ReturnInfo();
+            KotBillMasterBO billmaster = new KotBillMasterBO();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            CostCentreTabDA costCenterDa = new CostCentreTabDA();
+            RestaurentPosDA posda = new RestaurentPosDA();
+
+            HMUtility hmUtility = new HMUtility();
+            List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
+
+            foreach (KotBillDetailBO row in BillDetails)
+            {
+                row.CreatedBy = userInformationBO.UserInfoId;
+            }
+
+            int newKotId = 0;
+
+            try
+            {
+                costCentreTabBOList = costCenterDa.GetCostCentreTabInfoByType("Billing");
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+                if (kotId == 0)
+                {
+                    billmaster.SourceId = 1;
+                    billmaster.PaxQuantity = 1;
+                    billmaster.SourceName = "RestaurantToken";
+                    billmaster.BearerId = userInformationBO.UserInfoId;
+                    billmaster.CostCenterId = costCentreTabBOList[0].CostCenterId;
+                    billmaster.CreatedBy = userInformationBO.UserInfoId;
+                    billmaster.IsBillHoldup = true;
+                    billmaster.KotStatus = ConstantHelper.KotStatus.pending.ToString();
+                    posda.SaveRestaurantBillHoldUpForPos(billmaster, BillDetails, out newKotId);
+                }
+                else
+                {
+                    posda.UpdateRestaurantBillHoldUpForPos(kotId, BillDetails, EditeDetails, DeletedDetails);
+                }
+
+                rtninf.IsSuccess = true;
+                rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.HoldUp, AlertType.Success);
+
             }
             catch (Exception ex)
             {
@@ -611,221 +1397,309 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             return rtninf;
         }
         [WebMethod]
-        public static PurchaseOrderViewBO FillForms(int pOrderId)
+        public static List<RestaurantTokenBO> GetHoldUpPosInfo()
         {
-            PurchaseOrderViewBO viewBo = new PurchaseOrderViewBO();
-            PMPurchaseOrderDA orderDetailDA = new PMPurchaseOrderDA();
+            RestaurentPosDA tokenDa = new RestaurentPosDA();
+            List<RestaurantTokenBO> tokenList = new List<RestaurantTokenBO>();
 
-            viewBo.PurchaseOrder = orderDetailDA.GetSMSalesOrderInfoByOrderId(pOrderId);
-            viewBo.PurchaseOrderDetails = orderDetailDA.GetSMSalesOrderDetailByOrderId(pOrderId);
+            tokenList = tokenDa.GetHoldUpPosInfo();
 
-            return viewBo;
+            return tokenList;
         }
+
         [WebMethod]
-        public static PurchaseOrderViewBO FillFormForTemplate2(int pOrderId)
+        public static MemMemberBasicsBO GetPointsByCustomerCode(string customerCode)
         {
-            PurchaseOrderViewBO viewBo = new PurchaseOrderViewBO();
-            PMPurchaseOrderDA orderDetailDA = new PMPurchaseOrderDA();
+            RestaurentPosDA posDA = new RestaurentPosDA();
+            MemMemberBasicsBO memberBO = posDA.GetPointsByCustomerCode(customerCode);
 
-            viewBo.PurchaseOrder = orderDetailDA.GetPMPurchaseOrderInfoByOrderId(pOrderId);
-            viewBo.PurchaseOrderDetails = orderDetailDA.GetPMPurchaseOrderDetailByOrderId(pOrderId);
-
-            viewBo.CostCenterId = viewBo.PurchaseOrderDetails[0].CostCenterId;
-
-            string grid = string.Empty, tr = string.Empty;
-            int rowCount = 0, poDetailId = 0, isEdited = 0;
-            decimal grandTotal = 0;
-
-            foreach (PMPurchaseOrderDetailsBO pod in viewBo.PurchaseOrderDetails)
-            {
-                if (rowCount % 2 == 0)
-                {
-                    tr += "<tr style='background-color:#FFFFFF;'>";
-                }
-                else
-                {
-                    tr += "<tr style='background-color:#E3EAEB;'>";
-                }
-
-                tr += "<td style='width:25%;'>" + pod.ProductName + "</td>";
-                tr += "<td style='width:15%;'>" + pod.StockBy + "</td>";
-                tr += "<td style='width:15%;'>" + pod.StockQuantity + "</td>";
-                tr += "<td style='width:15%;'>" + pod.PurchasePrice + "</td>";
-
-                tr += "<td style='width:15%; text-align:center;'> <input type='text' id='txt" + pod.ProductId.ToString() + "' value = '" + pod.Quantity + "' onblur='CheckInputValue(this)' style='width:65px; padding:0; padding-left:2px; padding-right:2px; margin:0;' /> </td>";
-
-                tr += "<td style='width:15%; text-align:right; font-weight: bold;'>" + (pod.Quantity * pod.PurchasePrice).ToString("0.00") + "</td>";
-
-                tr += "<td style='display:none'>" + pod.DetailId + "</td>";
-                tr += "<td style='display:none'>" + pod.ProductId + "</td>";
-                tr += "<td style='display:none'>" + pod.StockById + "</td>";
-                tr += "<td style='display:none'>" + pod.Quantity + "</td>";
-                tr += "<td style='display:none'>" + isEdited + "</td>";
-                tr += "</tr>";
-
-                grandTotal += (pod.Quantity * pod.PurchasePrice);
-                rowCount++;
-            }
-
-            grid += GridHeader() + tr + "</tbody> " + GridFooter(grandTotal) + " </table>";
-            viewBo.PurchaseOrderGrid = grid;
-
-            viewBo.PurchaseOrderDetails = null;
-
-            return viewBo;
+            return memberBO;
         }
+
         [WebMethod]
-        public static string LoadItemForPurchaseBySupplier(int supplierId, int costCenterId)
+        public static List<InvItemAutoSearchBO> GetOrderedItemByKotId(int kotId)
         {
-            InvItemDA itemDa = new InvItemDA();
-            List<InvItemBO> item = new List<InvItemBO>();
-            item = itemDa.GetItemBySupplier(supplierId, costCenterId);
+            RestaurentPosDA posda = new RestaurentPosDA();
+            CostCentreTabDA costCenterDa = new CostCentreTabDA();
+            List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
+            List<InvItemAutoSearchBO> itemInfo = new List<InvItemAutoSearchBO>();
 
-            string grid = string.Empty, tr = string.Empty;
-            int rowCount = 0, poDetailId = 0, isEdited = 0;
+            costCentreTabBOList = costCenterDa.GetCostCentreTabInfoByType("Billing");
 
-            foreach (InvItemBO itm in item)
-            {
-                if (rowCount % 2 == 0)
-                {
-                    tr += "<tr style='background-color:#FFFFFF;'>";
-                }
-                else
-                {
-                    tr += "<tr style='background-color:#E3EAEB;'>";
-                }
+            itemInfo = posda.GetOrderedItemByKotId(kotId, costCentreTabBOList[0].CostCenterId);
 
-                tr += "<td style='width:25%;'>" + itm.Name + "</td>";
-                tr += "<td style='width:15%;'>" + itm.HeadName + "</td>";
-                tr += "<td style='width:15%;'>" + itm.StockQuantity + "</td>";
-                tr += "<td style='width:15%;'>" + itm.PurchasePrice + "</td>";
-
-                tr += "<td style='width:15%; text-align:center;'> <input type='text' id='txt" + itm.ItemId.ToString() + "' value = '" + itm.Quantity + "' onblur='CheckInputValue(this)' style='width:65px; padding:0; padding-left:2px; padding-right:2px; margin:0;' /> </td>";
-
-                tr += "<td style='width:15%; text-align:right; font-weight: bold;'></td>";
-
-                tr += "<td style='display:none'>" + poDetailId + "</td>";
-                tr += "<td style='display:none'>" + itm.ItemId + "</td>";
-                tr += "<td style='display:none'>" + itm.StockBy + "</td>";
-                tr += "<td style='display:none'>0</td>";
-                tr += "<td style='display:none'>" + isEdited + "</td>";
-
-                tr += "</tr>";
-
-                rowCount++;
-            }
-
-            grid += GridHeader() + tr + "</tbody> " + GridFooter(0) + " </table>";
-            return grid;
-        }
-        public static string GridHeader()
-        {
-            string gridHead = string.Empty;
-            gridHead += "<table id='ProductPurchaseGrid' class='table table-bordered table-condensed table-responsive' style='width: 100%;'>" +
-                         "       <thead>" +
-                         "           <tr style='color: White; background-color: #44545E; text-align: left; font-weight: bold;'>" +
-                         "               <th style='width: 25%;'>" +
-                         "                   Item" +
-                         "               </th>" +
-                         "               <th style='width: 15%;'>" +
-                         "                   Stock By" +
-                         "               </th>" +
-                         "               <th style='width: 15%;'>" +
-                         "                   Current Stock" +
-                         "               </th>" +
-                         "               <th style='width: 15%;'>" +
-                         "                   Purchase Price" +
-                         "               </th>" +
-                         "               <th style='width: 15%;'>" +
-                         "                   Quantity" +
-                         "               </th>" +
-                         "               <th style='width: 15%'>" +
-                         "                   Total Amount" +
-                         "               </th>" +
-                         "               <th style='display: none'>" +
-                         "                   poDetailId" +
-                         "               </th>" +
-                         "               <th style='display: none'>" +
-                         "                   ItemId" +
-                         "               </th>" +
-                         "               <th style='display: none'>" +
-                         "                   StockById" +
-                         "               </th>" +
-                         "               <th style='display: none'>" +
-                         "                   DBQuantity" +
-                         "               </th>" +
-                         "               <th style='display: none'>" +
-                         "                   IsEdited" +
-                         "               </th>" +
-                         "           </tr>" +
-                         "       </thead>" +
-                         "       <tbody>";
-
-            return gridHead;
-        }
-        public static string GridFooter(decimal totalPrice)
-        {
-            string gridFooter = string.Empty;
-            gridFooter += "<tfoot>" +
-                            "<tr style='color: White; background-color: #62737D; text-align: left; font-weight: bold;'>" +
-                              "<td colspan='5' style='height:21px; text-align:right;'>Grand Total: </td> " +
-                              "<td style='height:21px; text-align:right;'>" + totalPrice.ToString("0.00") + "</td> " +
-                            "</tr>" +
-                            "</tfoot>";
-
-            return gridFooter;
-        }
-        [WebMethod]
-        public static List<InvItemCostCenterMappingBO> LoadCurrentStockQuantity(int costcenterId, int itemId)
-        {
-            InvItemCostCenterMappingDA mappingDA = new InvItemCostCenterMappingDA();
-            List<InvItemCostCenterMappingBO> boList = new List<InvItemCostCenterMappingBO>();
-            boList = mappingDA.GetInvItemCostCenterMappingInfo(costcenterId, itemId);
-            return boList;
-        }
-        [WebMethod]
-        public static InvItemAutoSearchBO GetItemNameForAutoSearch(string itemName, int costcenterId)
-        {
-            List<InvItemAutoSearchBO> itemInfoListBO = new List<InvItemAutoSearchBO>();
-            int categoryId = 0;
-
-            InvItemDA itemDA = new InvItemDA();
-            InvItemAutoSearchBO itemInfo = new InvItemAutoSearchBO();
-            itemInfoListBO = itemDA.GetItemNameForAutoSearch(itemName, categoryId, costcenterId);
-            if (itemInfoListBO != null)
-            {
-                if (itemInfoListBO.Count > 0)
-                {
-                    itemInfo = itemInfoListBO[0];
-                }
-            }
             return itemInfo;
         }
         [WebMethod]
-        public static InvItemAutoSearchBO GetItemInformationForAutoSearch(int companyId, int itemId, int costcenterId)
+        public static RestaurantBillPaymentResume BillEdit(string billNumberOrId)
         {
-            List<InvItemAutoSearchBO> itemInfoListBO = new List<InvItemAutoSearchBO>();
-            int categoryId = 0;
 
-            InvItemDA itemDA = new InvItemDA();
-            InvItemAutoSearchBO itemInfo = new InvItemAutoSearchBO();
-            itemInfoListBO = itemDA.GetItemInformationForAutoSearch(companyId, itemId, categoryId, costcenterId);
-            if (itemInfoListBO != null)
+            int billId = 0;
+            RestaurentBillDA rda = new RestaurentBillDA();
+
+            if (billNumberOrId.Take(2).All(char.IsDigit))
             {
-                if (itemInfoListBO.Count > 0)
-                {
-                    itemInfo = itemInfoListBO[0];
-                }
+                billId = Int32.Parse(billNumberOrId);
             }
-            return itemInfo;
+            else
+            {
+                billId = rda.GetBillPaymentByBillId(billNumberOrId);
+            }
+
+            RestaurantBillPaymentResume paymentResume = new RestaurantBillPaymentResume();
+
+            if (billId == 0)
+            {
+                paymentResume.IsSuccess = false;
+                return paymentResume;
+            }
+
+            KotBillMasterDA kotBillMasterDA = new KotBillMasterDA();
+            RestaurentPosDA posda = new RestaurentPosDA();
+            KotBillMasterDA kotDa = new KotBillMasterDA();
+            RestaurentBillDA billDa = new RestaurentBillDA();
+            RestaurentPosDA posDa = new RestaurentPosDA();
+            KotBillDetailDA kotDetailsDA = new KotBillDetailDA();
+            InvCategoryDA catDa = new InvCategoryDA();
+
+            KotBillMasterBO kotBillMaster = new KotBillMasterBO();
+            List<KotBillDetailBO> kotDetails = new List<KotBillDetailBO>();
+
+            RestaurantBillBO kotBill = new RestaurantBillBO();
+            List<GuestBillPaymentBO> kotBillPayment = new List<GuestBillPaymentBO>();
+            List<RestaurantBillDetailBO> billDetailList = new List<RestaurantBillDetailBO>();
+            List<ItemClassificationBO> classificationLst = new List<ItemClassificationBO>();
+            GuestCompanyDA bpDA = new GuestCompanyDA();
+            GuestCompanyBO guestCompany = new GuestCompanyBO();
+
+            string kotIdList = string.Empty, tableIdList = string.Empty;
+
+            billDetailList = billDa.GetRestaurantBillDetailsByBillId(billId);
+            kotBillMaster = kotBillMasterDA.GetKotBillMasterInfoKotId(billDetailList[0].KotId);
+            kotBill = posda.GetRetailsPosBillByKotId(kotBillMaster.KotId, kotBillMaster.SourceName);
+
+            if (kotBill.IsBillReSettlement)
+            {
+                paymentResume.IsSuccess = false;
+                return paymentResume;
+            }
+
+            List<InvItemAutoSearchBO> itemInfo = new List<InvItemAutoSearchBO>();
+            itemInfo = posda.GetOrderedItemByKotId(billDetailList[0].KotId, kotBillMaster.CostCenterId);
+
+            if (kotBill != null)
+            {
+                kotBillPayment = billDa.GetBillPaymentByBillId(kotBill.BillId, "Billing");
+                billDetailList = billDa.GetRestaurantBillDetailsByBillId(kotBill.BillId);
+                classificationLst = catDa.GetRestaurantBillClassificationDetailsByBillId(kotBill.BillId);
+            }
+
+            billDetailList = billDetailList.Where(b => b.KotId != kotBillMaster.KotId).ToList();
+            kotDetails = kotDetailsDA.GetRestaurantOrderItemByMultipleKotId(kotBillMaster.CostCenterId.ToString(), kotIdList, kotBillMaster.SourceName);
+
+            MembershipPointDetailsBO membershipPointDetails = new MembershipPointDetailsBO();
+            membershipPointDetails = posda.GetMembershipPointDetails(billId);
+
+            paymentResume.KotBillMaster = kotBillMaster;
+            paymentResume.OrderItem = itemInfo;
+            paymentResume.KotBillDetails = kotDetails;
+            paymentResume.RestaurantKotBill = kotBill;
+            paymentResume.RestaurantKotBillPayment = kotBillPayment;
+            paymentResume.membershipPointDetails = membershipPointDetails;
+            if (kotBill.TransactionType == "Company")
+            {
+                paymentResume.guestCompanyBO = bpDA.GetGuestCompanyInfoById((int)(kotBill.TransactionId));
+
+            }
+
+            paymentResume.IsSuccess = true;
+
+            HttpContext.Current.Session["RestaurantKotBillResumeForPos"] = paymentResume;
+
+            return paymentResume;
+        }
+
+        protected void btnPrintReportTemplate1_Click1(object sender, EventArgs e)
+        {
+            //hfBillIdControl.Value = "";
+            //UserInformationBO userInformationBO = new UserInformationBO();
+            //userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+            //Warning[] warnings;
+            //string[] streamids;
+            //string mimeType;
+            //string encoding;
+            //string extension;
+
+            //byte[] bytes = rvTransactionShow.LocalReport.Render("PDF", null, out mimeType,
+            //               out encoding, out extension, out streamids, out warnings);
+
+            //string fileName = string.Empty, fileNamePrint = string.Empty;
+            //DateTime dateTime = DateTime.Now;
+            //fileName = "OutPut" + String.Format("{0:ddMMMyyyyHHmmssffff}", dateTime) + (userInformationBO == null ? "0" : userInformationBO.UserInfoId.ToString()) + ".pdf";
+            //fileNamePrint = "Print" + String.Format("{0:ddMMMyyyyHHmmssffff}", dateTime) + (userInformationBO == null ? "0" : userInformationBO.UserInfoId.ToString()) + ".pdf";
+
+            //FileStream fs = new FileStream(HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileName), FileMode.Create);
+            //fs.Write(bytes, 0, bytes.Length);
+            //fs.Close();
+
+            ////Open exsisting pdf
+            //Document document = new Document(PageSize.LETTER);
+            //PdfReader reader = new PdfReader(HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileName));
+            ////Getting a instance of new pdf wrtiter
+            //PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(
+            //   HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileNamePrint), FileMode.Create));
+            //document.Open();
+            //PdfContentByte cb = writer.DirectContent;
+
+            //int i = 0;
+            //int p = 0;
+            //int n = reader.NumberOfPages;
+            //Rectangle psize = reader.GetPageSize(1);
+
+            //float width = psize.Width;
+            //float height = psize.Height;
+
+            ////Add Page to new document
+            //while (i < n)
+            //{
+            //    document.NewPage();
+            //    p++;
+            //    i++;
+
+            //    PdfImportedPage page1 = writer.GetImportedPage(reader, i);
+            //    cb.AddTemplate(page1, 0, 0);
+            //}
+
+            ////Attach javascript to the document
+            //PdfAction jAction = PdfAction.JavaScript("this.print(true);\r", writer);
+            ////PdfAction jAction = PdfAction.JavaScript("var pp = getPrintParams();pp.interactive = pp.constants.interactionLevel.automatic;pp.printerName = getPrintParams().printerName;print(pp);\r", writer);
+            //writer.AddJavaScript(jAction);
+
+            //document.Close();
+
+            //frmPrint.Attributes["src"] = "../PrintDocument/" + fileNamePrint;
+
+            ////writer.Close();
+            ////document.Close();
+            ////reader.Close();
+            ////bytes = null;
+            ////cb = null;
+
+
+        }
+
+        [WebMethod]
+        public static List<BankBO> GetBankInfoForAutoComplete(string bankName)
+        {
+            BankDA bpDA = new BankDA();
+            return bpDA.GetBankInfoForAutoComplete(bankName);
         }
         [WebMethod]
-        public static List<InvUnitHeadBO> LoadRelatedStockBy(int stockById)
+        public static List<ContactInformationBO> GetContactInfoForAutoComplete(string contactName, int companyId)
         {
-            InvUnitHeadDA unitHeadDA = new InvUnitHeadDA();
-            List<InvUnitHeadBO> unitHeadList = new List<InvUnitHeadBO>();
-            unitHeadList = unitHeadDA.GetRelatedStockBy(stockById);
-            return unitHeadList;
+            ContactInformationDA DA = new ContactInformationDA();
+            return DA.GetContactInfoForAutoComplete(contactName, companyId, "Billing");
+        }
+
+        [WebMethod]
+        public static List<GuestCompanyBO> GetGLCompanyWiseGuestCompanyInfo(string companyName, int costcenterId)
+        {
+            HMUtility hmUtility = new HMUtility();
+            GuestCompanyDA bpDA = new GuestCompanyDA();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            return bpDA.GetGLCompanyWiseGuestCompanyInfo(userInformationBO.UserInfoId, companyName, costcenterId);
+        }
+        protected void btnPrintReportTemplate2_Click1(object sender, EventArgs e)
+        {
+            hfBillIdControl.Value = "";
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            string extension;
+            string deviceInfo =
+             @"<DeviceInfo>
+                <OutputFormat>PDF</OutputFormat>
+                <PageWidth>5.5in</PageWidth>
+                <PageHeight>8.5in</PageHeight>
+                <MarginTop>0.0in</MarginTop>
+                <MarginLeft>0.0in</MarginLeft>
+                <MarginRight>0.0in</MarginRight>
+                <MarginBottom>0.0in</MarginBottom>
+            </DeviceInfo>";
+
+            byte[] bytes = rvTransactionShow.LocalReport.Render("PDF", deviceInfo, out mimeType,
+                           out encoding, out extension, out streamids, out warnings);
+
+            string fileName = string.Empty, fileNamePrint = string.Empty;
+            DateTime dateTime = DateTime.Now;
+            fileName = "OutPut" + String.Format("{0:ddMMMyyyyHHmmssffff}", dateTime) + (userInformationBO == null ? "0" : userInformationBO.UserInfoId.ToString()) + ".pdf";
+            fileNamePrint = "Print" + String.Format("{0:ddMMMyyyyHHmmssffff}", dateTime) + (userInformationBO == null ? "0" : userInformationBO.UserInfoId.ToString()) + ".pdf";
+
+            FileStream fs = new FileStream(HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileName), FileMode.Create);
+            fs.Write(bytes, 0, bytes.Length);
+            fs.Close();
+
+            var pgSize = new Rectangle(396.0f, 612.0f);
+            //var doc = new iTextSharp.text.Document(pgSize, leftMargin, rightMargin, topMargin, bottomMargin);
+
+            Document document = new Document(pgSize, 0f, 0f, 0f, 0f); //PageSize.A5.Rotate()
+            PdfReader reader = new PdfReader(HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileName));
+
+            //Getting a instance of new pdf wrtiter
+            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(
+               HttpContext.Current.Server.MapPath("~/PrintDocument/" + fileNamePrint), FileMode.Create));
+            document.Open();
+            PdfContentByte cb = writer.DirectContentUnder;
+
+            int i = 0;
+            int p = 0;
+            int n = reader.NumberOfPages;
+
+            //Rectangle psize = reader.GetPageSizeWithRotation(1);
+
+            //float width = Utilities.InchesToPoints(3.5f);
+            //float height = Utilities.InchesToPoints(8.5f);
+
+            //iTextSharp.text.Rectangle rec = new iTextSharp.text.Rectangle(width, height);
+            //document.SetMargins(0f, 0f, 0f, 0f);
+            //document.SetPageSize(psize);
+            //Add Page to new document
+
+            while (i < n)
+            {
+                document.NewPage();
+                p++;
+                i++;
+
+                PdfImportedPage page1 = writer.GetImportedPage(reader, i);
+                //cb.AddTemplate(page1, 0, 1, -1, 0, page1.Width, 0); //270
+                //cb.AddTemplate(page1, -1f, 0, 0, -1f, page1.Width, page1.Height); //180
+                //cb.AddTemplate(page1, 0, -1f, 1f, 0, 0, page1.Height);
+
+                cb.AddTemplate(page1, 0, 0);
+            }
+
+            //Attach javascript to the document
+            PdfAction jAction = PdfAction.JavaScript("this.print(true);\r", writer);
+            //PdfAction jAction = PdfAction.JavaScript("var pp = getPrintParams();pp.interactive = pp.constants.interactionLevel.automatic;pp.printerName = getPrintParams().printerName;print(pp);\r", writer);
+            writer.AddJavaScript(jAction);
+
+            document.Close();
+
+            frmPrint.Attributes["src"] = "../PrintDocument/" + fileNamePrint;
+
+            //writer.Close();
+            //document.Close();
+            //reader.Close();
+            //bytes = null;
+            //cb = null;
+
         }
     }
 }

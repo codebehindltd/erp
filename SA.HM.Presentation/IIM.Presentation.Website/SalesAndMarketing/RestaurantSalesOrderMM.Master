@@ -1,0 +1,177 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="RestaurantSalesOrderMM.Master.cs"
+    Inherits="HotelManagement.Presentation.Website.SalesAndMarketing.RestaurantSalesOrderMM" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head id="Head1" runat="server">
+    <title runat="server" id="SiteTitle"></title>
+    <link href="/Content/bootstrap.css" type="text/css" rel="stylesheet" />
+    <link href="/StyleSheet/lib/font-awesome/css/font-awesome.css" type="text/css" rel="stylesheet" />
+
+    <link href="/StyleSheet/css/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/css/select2.css" rel="stylesheet" type="text/css" />
+    <link href="/Scripts/uploadify.css" rel="stylesheet" type="text/css" />
+    <link href="/StyleSheet/css/toastr.css" rel="stylesheet" type="text/css" />
+    <link href="../JSLibrary/JqueryTouchKeyBoard/css/keyboard.css" rel="Stylesheet" type="text/css" />
+    <link href="/StyleSheet/menucss/menuStyle.css" rel="stylesheet" type="text/css" />
+    <link href="/StyleSheet/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/SiteStyle.css" rel="stylesheet" type="text/css" />
+    <script src="/Scripts/jquery-3.1.0.js" type="text/javascript"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/jquery-ui.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.ui.timepicker.js" type="text/javascript"></script>
+    <script src="../JSLibrary/JqueryTouchKeyBoard/js/jquery.keyboard.js" type="text/javascript"></script>
+    <script src="/Scripts/underscore.js" type="text/javascript"></script>
+    <script src="/Scripts/toastr.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/Content/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/dataTables.bootstrap.min.css" />
+    <script type="text/javascript" src="/Scripts/datatables.min.js"></script>
+    <script src="/Scripts/js.cookie.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/Scripts/select2.js"></script>
+    <link href="/Scripts/JqueryAlert/jquery-confirm.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Scripts/JqueryAlert/jquery-confirm.min.js"></script>
+    <link rel="stylesheet" href="/Content/subjx.css" />
+    <script src="/Scripts/HMCommonScript.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var innBoarDateFormat = "";
+        $(document).ready(function () {
+            //$('textarea').keypress(function (event) {
+            //    if (event.which == 13) {
+            //        event.preventDefault();
+            //        var s = $(this).val();
+            //        $(this).val(s + "\n");
+            //        return false;
+            //    }
+            //});
+
+            innBoarDateFormat = '<%=innBoardDateFormat%>';
+            let file = document.getElementById("frmPrint");
+            let fileName = file != null ? file.getAttribute("src") : '';
+
+            if (fileName) {
+
+                var iFrameControl = document.getElementById("frmPrint");
+                if (CommonHelper.BrowserType().chrome)
+                    iFrameControl.contentWindow.print();
+                else (CommonHelper.BrowserType().mozilla)
+                {
+                    let currentUrl = window.location.href;
+                    currentUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+                    currentUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+                    currentUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+                    fileName = fileName.substring(fileName.indexOf('/') + 1, fileName.length);
+                    fileName = fileName.substring(fileName.indexOf('/'), fileName.length);
+                    fileName = currentUrl + fileName;
+                    print_pdf(fileName);
+                }
+            }
+        });
+
+        function print_pdf(url) {
+            var id = 'iframe', html = '<iframe id="' + id + '" src="' + url + '" style="visibility: hidden;"></iframe>';
+            $('body').append(html);
+            // wait for the iFrame to fully load and call the print() function afterwards
+            $('#' + id).on(function () {
+                document.getElementById(id).contentWindow.print();
+            });
+        }
+    </script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:HiddenField ID="InnboardMessageHiddenField" runat="server" Value="" ClientIDMode="Static" />
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+        </asp:ScriptManager>
+        <div class="content-wrapper">
+            <div class="container-fluid restaurant-wrapper">
+                <header>
+                    <div class="row page-header">
+                        <div class="col-xs-12 col-sm-2 col-md-2 site-logo">
+                            <a class="brand" href="javascript:void()">
+                                <%--<img src="../StyleSheet/images/Innboard-Logo_White.png" class=" InnBoardIcon" alt="logo" />--%>
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <nav class="navbar navbar-default">
+                                <div class="container-fluid">
+                                    <div class="navbar-static-top">
+                                        <ul class="nav navbar-nav navbar-right">
+                                            <li><a href="/HMCommon/frmInnboardDashboard.aspx">
+                                                <i class="icon-home" title="Home"></i></a></li>
+                                            <li class="divider"></li>
+                                            <li></li>
+                                            <li class="divider"></li>
+                                            <li><a href="javascript:void()">Date:&nbsp;<asp:Label ID="lblDayOpenDate" runat="server" Text=""></asp:Label></a></li>
+                                            <li class="divider"></li>
+                                            <li></li>
+                                            <li class="divider"></li>
+                                            <li><a href="/Logout.aspx?LoginType=RestaurentLogin">
+                                                <i class="icon-book"></i>Logout</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+            </div>
+            <div class="container-fluid">
+                <div id="spinner" class="spinner" style="display: none;">
+                    <img id="img-spinner" src="../Images/spinner.gif" alt="Loading ..." />
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="width: 100%;">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+            <div class="container-fluid">
+                <div class="row footer">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <hr />
+                        <div class="footer-padding contents-padding">
+                            <p class="pull-right">
+                                <%--User:&nbsp; <span style="color: Blue; font-weight: bold;">
+                                    <asp:Label ID="lblLoggedInUser" runat="server" Text=""></asp:Label></span>--%>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                    <%--Developed by <a href="#" target="_blank"><span style="color: Blue; font-weight: bold;"></span></a>--%>
+                            </p>
+                            <p>
+                                <%--&copy; 2013 <a href="#" target="_blank"><span style="color: Blue; font-weight: bold;"></span></a>--%>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+        var $loading = $('#spinner').hide();
+        $(document)
+          .ajaxStart(function () {
+              $loading.show();
+          })
+          .ajaxStop(function () {
+              $loading.hide();
+          })
+          .ajaxError(function () {
+              $loading.hide();
+          });
+
+    </script>
+</body>
+</html>

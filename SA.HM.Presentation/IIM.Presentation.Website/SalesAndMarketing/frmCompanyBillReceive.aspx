@@ -1217,6 +1217,7 @@ function OnProjectsPopulated(response) {
 
         function OnSearchPaymentSucceeded(result) {
             var tr = "";
+            debugger;
             $.each(result, function (count, gridObject) {
 
                 tr += "<tr>";

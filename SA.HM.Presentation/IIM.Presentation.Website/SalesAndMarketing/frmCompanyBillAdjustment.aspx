@@ -3,8 +3,13 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
+        var IsCanSave = false, IsCanEdit = false, IsCanDelete = false, IsCanView = false;
 
         $(document).ready(function () {
+            IsCanSave = $('#ContentPlaceHolder1_hfSavePermission').val() == '1' ? true : false;
+            IsCanEdit = $('#ContentPlaceHolder1_hfEditPermission').val() == '1' ? true : false;
+            IsCanDelete = $('#ContentPlaceHolder1_hfDeletePermission').val() == '1' ? true : false;
+            IsCanView = $('#ContentPlaceHolder1_hfViewPermission').val() == '1' ? true : false;
 
             if ($("#ContentPlaceHolder1_hfIsSavePermission").val() == "0")
                 $("#btnAdjustment").hide();
@@ -661,7 +666,7 @@
                 isUpdatepermission = true;
             if ($("#ContentPlaceHolder1_hfIsDeletePermission").val() == "1")
                 isDeletePermission = true;
-
+            debugger;
             for (row = 0; row < result.length; row++) {
 
                 if ((row + 1) % 2 == 0) {
@@ -681,24 +686,49 @@
                 else
                     tr += "<td style='width: 30%'></td>";
 
-                if (result[row].ApprovedStatus == null) {
-                    tr += "<td style='width:10%;'>";
-                    tr += "<a href='javascript:void();' onclick= \"javascript:return ApprovedPayment(" + result[row].PaymentId + ", '" + result[row].AdjustmentType + "')\" ><img alt='approved' src='../Images/approved.png' /></a>";
-                    tr += "&nbsp;&nbsp;";
-                    if (isUpdatepermission) {
-                        tr += "<a onclick=\"javascript:return FIllForEdit(" + result[row].PaymentId + ");\" title='Edit' href='javascript:void();'><img src='../Images/edit.png' alt='Edit'></a>"
-                        tr += "&nbsp;&nbsp;";
-                    }
-                    if (isDeletePermission) {
-                        tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteCompanyPayment(" + result[row].PaymentId + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
-                        tr += "</td>";
-                    }
+                //if (result[row].ApprovedStatus == null) {
+                //    tr += "<td style='width:10%;'>";
+                //    tr += "<a href='javascript:void();' onclick= \"javascript:return ApprovedPayment(" + result[row].PaymentId + ", '" + result[row].AdjustmentType + "')\" ><img alt='approved' src='../Images/approved.png' /></a>";
+                //    tr += "&nbsp;&nbsp;";
+                //    if (isUpdatepermission) {
+                //        tr += "<a onclick=\"javascript:return FIllForEdit(" + result[row].PaymentId + ");\" title='Edit' href='javascript:void();'><img src='../Images/edit.png' alt='Edit'></a>"
+                //        tr += "&nbsp;&nbsp;";
+                //    }
+                //    if (isDeletePermission) {
+                //        tr += "<a href='javascript:void();' onclick= 'javascript:return DeleteCompanyPayment(" + result[row].PaymentId + ")' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                //        tr += "</td>";
+                //    }
 
+                //}
+                //else {
+                //    tr += "<td style='width:10%;'>";
+                //    tr += "</td>";
+                //}
+                tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
+
+
+                if (result[row].IsCanEdit && IsCanEdit) {
+                    tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return FIllForEdit(" + result[row].PaymentId + ")\" alt='Edit'  title='Edit' border='0' />";
                 }
-                else {
-                    tr += "<td style='width:10%;'>";
-                    tr += "</td>";
+
+                if (result[row].IsCanDelete && IsCanDelete) {
+                    tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return DeleteCompanyPayment(" + result[row].PaymentId + ")\" alt='Delete'  title='Delete' border='0' />";
                 }
+
+                if (result[row].IsCanChecked && IsCanSave) {
+
+                    tr += "&nbsp;&nbsp;<img src='../Images/checked.png' onClick= \"javascript:return CheckedPayment(" + result[row].PaymentId + ")\" alt='Check'  title='Check' border='0' />";
+                }
+
+                if (result[row].IsCanApproved && IsCanSave) {
+
+                    tr += "&nbsp;&nbsp;<img src='../Images/approved.png' onClick= \"javascript:return ApprovedPayment('" + result[row].PaymentId + "','" + result[row].AdjustmentType + "')\" alt='Approve'  title='Approve' border='0' />";
+                }
+
+
+                //tr += "&nbsp;&nbsp;<img src='../Images/ReportDocument.png'  onClick= \"javascript:return ShowReport('" + gridObject.ReceiveType + "'," + gridObject.ReceivedId + ",'" + gridObject.Status + "'," + gridObject.SupplierId + "," + gridObject.CostCenterId + "," + gridObject.CreatedBy + ")\" alt='Invoice' title='Receive Order Info' border='0' />";
+                //tr += "&nbsp;&nbsp;<img src='../Images/note.png'  onClick= \"javascript:return ShowDealDocuments('" + gridObject.ReceivedId + "')\" alt='Invoice' title='Receive Order Info' border='0' />";
+                tr += "</td>";
 
                 tr += "<td style=display:none;'>" + result[row].PaymentId + "</td>";
                 tr += "</tr>";
@@ -1019,6 +1049,25 @@
             toastr.error(error.get_message());
         }
 
+        function GoToAdvanceAdjustmentPage() {
+            window.location = "/SalesAndMarketing/frmCompanyBillAdjustment.aspx";
+            return false;
+        }
+
+        function CheckedPayment(PaymentId) {
+            PageMethods.CheckedPaymentAdjustment(PaymentId, OnCheckedPaymentAdjustmentSucceded, OnCheckedPaymentAdjustmentFailed);
+            return false;
+        }
+        function OnCheckedPaymentAdjustmentSucceded(result) {
+            if (result.IsSuccess) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                GoToAdvanceAdjustmentPage();
+            }
+        }
+        function OnCheckedPaymentAdjustmentFailed(result) {
+
+        }
+
         function ApprovedPayment(paymentId, adjustmentType) {
             PageMethods.ApprovedPaymentAdjustment(paymentId, adjustmentType, OnApporavalSucceed, OnApporavalFailed);
             return false;
@@ -1174,7 +1223,11 @@
             }
         }
 
-    </script>
+    </script>    
+    <asp:HiddenField ID="hfSavePermission" runat="server" Value="0" />
+    <asp:HiddenField ID="hfEditPermission" runat="server" Value="0" />
+    <asp:HiddenField ID="hfDeletePermission" runat="server" Value="0" />
+    <asp:HiddenField ID="hfViewPermission" runat="server" Value="0" />
     <asp:HiddenField ID="CommonDropDownHiddenField" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfPaymentId" runat="server" Value="0" />
     <asp:HiddenField ID="hfCompanyPaymentId" runat="server" Value="0" />
