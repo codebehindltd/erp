@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frmCostCenterSelectionForAll.aspx.cs" MasterPageFile="~/POS/RestaurantMM.Master"
-    Inherits="HotelManagement.Presentation.Website.POS.frmCostCenterSelectionForAll" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frmCostCenterSelectionForSalesOrder.aspx.cs" MasterPageFile="~/SalesAndMarketing/RestaurantSalesOrderMM.Master" Inherits="HotelManagement.Presentation.Website.SalesAndMarketing.frmCostCenterSelectionForSalesOrder" %>
 
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
     Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
@@ -401,7 +400,7 @@
                     beararId = $("#ContentPlaceHolder1_hfBillOrderTakingWaiterId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfBillOrderTakingWaiterId").val();
                 }
 
-                window.location = "/POS/frmOrderManagement.aspx?st= " + result[0].SourceType + "&sid=" + result[0].TokenNumber + "&cc=" + result[0].CostcenterId + "&kid=0" + "&bid=" + beararId;
+                window.location = "/SalesAndMarketing/frmOrderManagement.aspx?st= " + result[0].SourceType + "&sid=" + result[0].TokenNumber + "&cc=" + result[0].CostcenterId + "&kid=0" + "&bid=" + beararId;
             }
         }
 
@@ -487,10 +486,10 @@
                         var paxQuantity = $("#ContentPlaceHolder1_hfPaxConfirmationQuantity").val();
                         if (paxQuantity == "") { paxQuantity = "1"; }
 
-                        window.location = "/POS/frmOrderManagement.aspx?ot=no&st= " + $.trim(OrderDetailsFlag.SourceType) + "&sid=" + OrderDetailsFlag.SourceId + "&cc=" + OrderDetailsFlag.CostCenterId + "&kid=" + OrderDetailsFlag.KotId + "&pax=" + paxQuantity + "&bid=" + beararId;
+                        window.location = "/SalesAndMarketing/frmOrderManagement.aspx?ot=no&st= " + $.trim(OrderDetailsFlag.SourceType) + "&sid=" + OrderDetailsFlag.SourceId + "&cc=" + OrderDetailsFlag.CostCenterId + "&kid=" + OrderDetailsFlag.KotId + "&pax=" + paxQuantity + "&bid=" + beararId;
                     }
                     else {
-                        window.location = "/POS/frmOrderManagement.aspx?ot=no&st= " + $.trim(OrderDetailsFlag.SourceType) + "&sid=" + OrderDetailsFlag.SourceId + "&cc=" + OrderDetailsFlag.CostCenterId + "&kid=" + OrderDetailsFlag.KotId + "&bid=" + beararId;
+                        window.location = "/SalesAndMarketing/frmOrderManagement.aspx?ot=no&st= " + $.trim(OrderDetailsFlag.SourceType) + "&sid=" + OrderDetailsFlag.SourceId + "&cc=" + OrderDetailsFlag.CostCenterId + "&kid=" + OrderDetailsFlag.KotId + "&bid=" + beararId;
                     }
                 }
                 else {
@@ -529,16 +528,17 @@
             return false;
         }
         function RetailPosInfo(costcenterId, costcenter) {
-            window.location = "/POS/frmRetailPos.aspx?cid=" + costcenterId;
+            window.location = "/SalesAndMarketing/frmRetailPos.aspx?cid=" + costcenterId;
             return false;
         }
 
         function PosBillingInfo(costcenterId, costcenter) {
-            window.location = "/POS/Billing.aspx?cid=" + costcenterId;
+            debugger;
+            window.location = "/SalesAndMarketing/frmSalesOrder.aspx?cid=" + costcenterId;
             return false;
         }
         function SOBillingInfo(costcenterId, costcenter) {
-            window.location = "/POS/frmSOBilling.aspx?cid=" + costcenterId;
+            window.location = "/SalesAndMarketing/frmSOBilling.aspx?cid=" + costcenterId;
             return false;
         }
         function LoadTableInfo(costcenterId, costcenter) {
@@ -761,7 +761,7 @@
             var billNumber = billPrefix + CommonHelper.padLeft(billNo, 8, '0');
 
             var iframeid = 'printDoc';
-            var url = "/POS/Reports/frmReportTPBillInfo.aspx?billID=" + billNumber + "&RePrint=1";
+            var url = "/SalesAndMarketing/Reports/frmReportTPBillInfo.aspx?billID=" + billNumber + "&RePrint=1";
             parent.document.getElementById(iframeid).src = url;
 
             $("#displayBill").dialog({
@@ -798,7 +798,7 @@
         function KotPrintPreview(kotId, sourceId, sourceType) {
 
             var iframeid = 'printDoc';
-            var url = "/POS/Reports/frmTReportKotBillInfo.aspx?st=" + sourceType + "&kotId=" + kotId + "&kotIdLst=" + kotId + "&tno=" + sourceId + "&kbm=" + "kotb" + "&isrp=" + "rp";
+            var url = "/SalesAndMarketing/Reports/frmTReportKotBillInfo.aspx?st=" + sourceType + "&kotId=" + kotId + "&kotIdLst=" + kotId + "&tno=" + sourceId + "&kbm=" + "kotb" + "&isrp=" + "rp";
             parent.document.getElementById(iframeid).src = url;
 
             $("#displayBill").dialog({
@@ -1115,7 +1115,7 @@
             //$("#ContentPlaceHolder1_hfRestaurantKitchenId").val(KitchenId);
             //PageMethods.LoadKitchenInfo(KitchenId, gridRecordsCount, pageNumber, IsCurrentOrPreviousPage, OnLoadKitchenInfoSucceeded, OnLoadKitchenInfoFailed);
 
-            window.location = "/POS/frmKitchenInformationDetails.aspx?kid=" + KitchenId + "&k=" + Kitchen;
+            window.location = "/SalesAndMarketing/frmKitchenInformationDetails.aspx?kid=" + KitchenId + "&k=" + Kitchen;
             return false;
         }
 

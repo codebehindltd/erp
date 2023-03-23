@@ -388,6 +388,8 @@
     <Content Include="SalesAndMarketing\AccountManagerSalesTarget.aspx" />
     <Content Include="SalesAndMarketing\frmCompanyAccountApproval.aspx" />
     <Content Include="SalesAndMarketing\frmCompanyBillAdjustment.aspx" />
+    <Content Include="SalesAndMarketing\frmCostCenterSelectionForSalesOrder.aspx" />
+    <Content Include="SalesAndMarketing\frmSalesOrderSearch.aspx" />
     <Content Include="SalesAndMarketing\iFrameSourceInformation.aspx" />
     <Content Include="SalesAndMarketing\ContactTitle.aspx" />
     <Content Include="SalesAndMarketing\LogActivityInformation.aspx" />
@@ -915,6 +917,7 @@
     <Content Include="SalesAndMarketing\Reports\Rdlc\RptCompanyLedger.rdlc" />
     <Content Include="PurchaseManagment\Reports\Rdlc\RptSupplierLedger.rdlc" />
     <None Include="Properties\PublishProfiles\LeadingEdge.pubxml" />
+    <Content Include="SalesAndMarketing\RestaurantSalesOrderMM.Master" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\select2.js" />
@@ -3395,6 +3398,20 @@
     <Compile Include="SalesAndMarketing\frmCompanyBillAdjustment.aspx.designer.cs">
       <DependentUpon>frmCompanyBillAdjustment.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SalesAndMarketing\frmCostCenterSelectionForSalesOrder.aspx.cs">
+      <DependentUpon>frmCostCenterSelectionForSalesOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SalesAndMarketing\frmCostCenterSelectionForSalesOrder.aspx.designer.cs">
+      <DependentUpon>frmCostCenterSelectionForSalesOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SalesAndMarketing\frmSalesOrderSearch.aspx.cs">
+      <DependentUpon>frmSalesOrderSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SalesAndMarketing\frmSalesOrderSearch.aspx.designer.cs">
+      <DependentUpon>frmSalesOrderSearch.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SalesAndMarketing\iFrameSourceInformation.aspx.cs">
       <DependentUpon>iFrameSourceInformation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3478,6 +3495,13 @@
     </Compile>
     <Compile Include="SalesAndMarketing\Reports\LogActivityReport.aspx.designer.cs">
       <DependentUpon>LogActivityReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SalesAndMarketing\RestaurantSalesOrderMM.Master.cs">
+      <DependentUpon>RestaurantSalesOrderMM.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SalesAndMarketing\RestaurantSalesOrderMM.Master.designer.cs">
+      <DependentUpon>RestaurantSalesOrderMM.Master</DependentUpon>
     </Compile>
     <Compile Include="SalesManagment\frmPMSalesReturn.aspx.cs">
       <DependentUpon>frmPMSalesReturn.aspx</DependentUpon>

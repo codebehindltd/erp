@@ -18,8 +18,11 @@ namespace HotelManagement.Entity.Restaurant
         public int CategoryId { get; set; }
         public string Category { get; set; }
         public int ColorId { get; set; }
+        public string ColorName { get; set; }
         public int SizeId { get; set; }
+        public string SizeName { get; set; }
         public int StyleId { get; set; }
+        public string StyleName { get; set; }
         public int BagQuantity { get; set; }
         public decimal kgQuantity { get; set; }
         public decimal ItemUnit { get; set; }

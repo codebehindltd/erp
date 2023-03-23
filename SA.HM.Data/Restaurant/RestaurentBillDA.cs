@@ -2069,6 +2069,69 @@ namespace HotelManagement.Data.Restaurant
 
             return entityBOList;
         }
+        public List<RestaurantBillBO> GetSalesOrderInfoBySearchCriteriaForpagination(DateTime FromDate, DateTime ToDate, string SalesOrderNumber, string CustomerInfo, string Remarks, int userInfoId, int costCenterId, int recordPerPage, int pageIndex, out int totalRecords)
+        {
+            string Where = GenarateWhereConditionstring(FromDate, ToDate, SalesOrderNumber, CustomerInfo, Remarks, userInfoId, costCenterId);
+            List<RestaurantBillBO> entityBOList = new List<RestaurantBillBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetSalesOrderInfoBySearchCriteriaForpagination_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, FromDate);
+                    dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, ToDate);
+
+                    if (!string.IsNullOrEmpty(SalesOrderNumber))
+                        dbSmartAspects.AddInParameter(cmd, "@SalesOrderNumber", DbType.String, SalesOrderNumber);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@SalesOrderNumber", DbType.String, DBNull.Value);
+
+                    if (!string.IsNullOrEmpty(CustomerInfo))
+                        dbSmartAspects.AddInParameter(cmd, "@CustomerInfo", DbType.String, CustomerInfo);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@CustomerInfo", DbType.String, DBNull.Value);
+
+                    if (!string.IsNullOrEmpty(Remarks))
+                        dbSmartAspects.AddInParameter(cmd, "@Remarks", DbType.String, Remarks);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@Remarks", DbType.String, DBNull.Value);
+
+                    dbSmartAspects.AddInParameter(cmd, "@UserInfoId", DbType.Int32, userInfoId);
+                    dbSmartAspects.AddInParameter(cmd, "@CostCenterId", DbType.Int32, costCenterId);
+
+                    dbSmartAspects.AddInParameter(cmd, "@RecordPerPage", DbType.Int32, recordPerPage);
+                    dbSmartAspects.AddInParameter(cmd, "@PageIndex", DbType.Int32, pageIndex);
+                    dbSmartAspects.AddOutParameter(cmd, "@RecordCount", DbType.Int32, sizeof(Int32));
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                RestaurantBillBO entityBO = new RestaurantBillBO();
+                                entityBO.BillId = Convert.ToInt32(reader["SOrderId"]);
+                                entityBO.CustomerName = reader["CustomerName"].ToString();
+                                entityBO.BillNumber = reader["SONumber"].ToString();
+                                entityBO.CostCenterId = Convert.ToInt32(reader["CostCenterId"]);
+                                entityBO.GrandTotal = Convert.ToDecimal(reader["GrandTotal"]);
+                                entityBO.CheckOutDate = reader["CheckOutDate"].ToString();
+                                entityBO.IsDayClosed = Convert.ToInt32(reader["IsDayClosed"]);
+                                entityBO.Remarks = Convert.ToString(reader["Remarks"]);
+                                entityBO.CostCenterType = Convert.ToString(reader["CostCenterType"]);
+                                entityBO.CompanyName = Convert.ToString(reader["CompanyName"]);
+                                entityBO.ProjectName = Convert.ToString(reader["ProjectName"]);
+
+                                entityBOList.Add(entityBO);
+                            }
+                        }
+                    }
+                    totalRecords = (int)cmd.Parameters["@RecordCount"].Value;
+                }
+            }
+
+            return entityBOList;
+        }
         public List<RestaurantBillBO> GetBillNoByText(string searchTerm)
         {
             List<RestaurantBillBO> entityBOList = new List<RestaurantBillBO>();
@@ -3064,6 +3127,60 @@ namespace HotelManagement.Data.Restaurant
                 }
             }
             return kotBill;
+        }
+        public RestaurantBillBO GetSalesOrderBySOrderId(int SOrderId)
+        {
+            RestaurantBillBO SalesOrder = new RestaurantBillBO();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetSalesOrderBySOrderId_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@SOrderId", DbType.Int32, SOrderId);
+
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "SalesOrder");
+                    DataTable Table = ds.Tables["SalesOrder"];
+
+                    SalesOrder = Table.AsEnumerable().Select(r => new RestaurantBillBO
+                    {
+                        BillId = r.Field<Int32>("SOrderId"),
+                        RoundedAmount = r.Field<decimal>("RoundedAmount"),
+                        RoundedGrandTotal = r.Field<decimal>("RoundedGrandTotal"),
+                        ProjectId = r.Field<Int32>("ProjectId"),
+                        PaymentInstructionId = r.Field<Int32>("PaymentInstructionId"),
+                        ContactId = r.Field<Int32>("ContactId"),
+                        BillType = r.Field<string>("BillType"),
+                        BillingType = r.Field<string>("BillingType"),
+                        Remarks = r.Field<string>("Remarks"),
+                        Subject = r.Field<string>("Subject"),
+                        BillDate = r.Field<DateTime>("SODate"),
+                        BillNumber = r.Field<string>("SONumber"),
+                        CostCenterId = r.Field<Int32>("CostCenterId"),
+                        PaxQuantity = r.Field<Int32>("PaxQuantity"),
+                        CustomerName = r.Field<string>("CustomerName"),
+                        RegistrationId = r.Field<Int32>("RegistrationId"),
+                        SalesAmount = r.Field<decimal>("SalesAmount"),
+                        DiscountType = r.Field<string>("DiscountType"),
+                        DiscountTransactionId = r.Field<Int32>("DiscountTransactionId"),
+                        DiscountAmount = r.Field<decimal>("DiscountAmount"),
+                        CalculatedDiscountAmount = r.Field<decimal>("CalculatedDiscountAmount"),
+                        IsInvoiceServiceChargeEnable = r.Field<bool>("IsInvoiceServiceChargeEnable"),
+                        ServiceCharge = r.Field<decimal>("ServiceCharge"),
+                        IsInvoiceVatAmountEnable = r.Field<bool>("IsInvoiceVatAmountEnable"),
+                        VatAmount = r.Field<decimal>("VatAmount"),
+                        IsInvoiceCitySDChargeEnable = r.Field<bool>("IsInvoiceCitySDChargeEnable"),
+                        CitySDCharge = r.Field<decimal>("CitySDCharge"),
+                        IsInvoiceAdditionalChargeEnable = r.Field<bool>("IsInvoiceAdditionalChargeEnable"),
+                        AdditionalCharge = r.Field<decimal>("AdditionalCharge"),
+                        AdditionalChargeType = r.Field<string>("AdditionalChargeType"),
+                        GrandTotal = r.Field<decimal>("GrandTotal"),
+                        TransactionType = r.Field<string>("TransactionType"),
+                        TransactionId = r.Field<Int64?>("TransactionId")
+                    }).FirstOrDefault();
+                }
+            }
+            return SalesOrder;
         }
         public List<GuestBillPaymentBO> GetBillPaymentByBillId(int billId, string moduleName)
         {
