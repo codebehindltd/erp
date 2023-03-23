@@ -194,13 +194,14 @@ namespace InnboardAPI.Controllers
         {
             
             AppsLoginDataAccess dbLogin = new AppsLoginDataAccess();
-            
+            //var d = appAttModel.AttDateTime.ToString("dd/MM/yyyy HH:mm:ss");            
+            //var c = Convert.ToDateTime(d);
             appAttModel.Image = UploadByteArrayToFileForAttd(appAttModel.ImageName, appAttModel.ImageByte);
             appAttModel.GoogleMapUrl = "https://www.google.com/maps/place/" + appAttModel.Latitude + "+" + appAttModel.Longitude;
 
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            TimeSpan diff = appAttModel.AttDateTime.ToUniversalTime() - origin;
-            double intDateTime = Math.Floor(diff.TotalSeconds);
+            TimeSpan diff = appAttModel.AttDateTime - origin;
+            appAttModel.IntAttDateTime = Math.Floor(diff.TotalSeconds);
 
             bool isSuccess = dbLogin.AppUserAttendanceSave(appAttModel);
             if(isSuccess)

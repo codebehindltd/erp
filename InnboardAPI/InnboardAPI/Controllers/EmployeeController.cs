@@ -62,10 +62,10 @@ namespace InnboardAPI.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("GetEmpTrackingList")]
-        public async Task<IHttpActionResult> GetEmpTrackingList()
+        public async Task<IHttpActionResult> GetEmpTrackingList(int? EmpId, DateTime FromDate, DateTime ToDate)
         {
             EmployeeDataAccess db = new EmployeeDataAccess();            
-            var result = await db.GetEmpTrackingList();
+            var result = await db.GetEmpTrackingList(EmpId, FromDate, ToDate);
             return Ok(result);
         }
 
