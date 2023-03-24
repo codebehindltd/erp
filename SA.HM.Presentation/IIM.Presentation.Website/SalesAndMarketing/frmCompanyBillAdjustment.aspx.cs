@@ -43,7 +43,13 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
                 CheckPermission();
             }
         }
-
+        private void CheckPermission()
+        {
+            hfSavePermission.Value = isSavePermission ? "1" : "0";
+            hfDeletePermission.Value = isDeletePermission ? "1" : "0";
+            hfEditPermission.Value = isUpdatePermission ? "1" : "0";
+            hfViewPermission.Value = isViewPermission ? "1" : "0";
+        }
         private void LoadCompany()
         {
             GuestCompanyDA companyDA = new GuestCompanyDA();
@@ -70,12 +76,6 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
         private void LoadCommonDropDownHiddenField()
         {
             CommonDropDownHiddenField.Value = hmUtility.GetDropDownFirstValue();
-        }
-        private void CheckPermission()
-        {
-            hfIsSavePermission.Value = isSavePermission ? "1" : "0";
-            hfIsUpdatePermission.Value = isUpdatePermission ? "1" : "0";
-            hfIsDeletePermission.Value = isDeletePermission ? "1" : "0";
         }
         private void LoadPaymentMode()
         {
@@ -344,10 +344,10 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
 
             GuestCompanyDA companyDa = new GuestCompanyDA();
             List<CompanyPaymentBO> paymentInfo = new List<CompanyPaymentBO>();
-            paymentInfo = companyDa.GetCompanyPaymentBySearch(userInformationBO.UserInfoId, companyId, dateFrom, dateTo, "Adjustment", "0");
+            paymentInfo = companyDa.GetCompanyAdvanceAdjustmentBySearch(userInformationBO.UserInfoId, companyId, dateFrom, dateTo, "Adjustment");
 
             return paymentInfo;
-        }
+        }        
 
         [WebMethod]
         public static CompanyPaymentViewBO FillForm(Int64 paymentId)
@@ -439,6 +439,60 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             }
 
             return rtninfo;
+        }
+        [WebMethod]
+        public static ReturnInfo CheckedPaymentAdjustment(long paymentId)
+        {
+            ReturnInfo rtninf = new ReturnInfo();
+            GuestCompanyDA companyDa = new GuestCompanyDA();
+            string approvedStatus = "Checked";
+            string TransactionNo = "";
+            string TransactionType = "";
+            string ApproveStatus = "";
+
+            try
+            {
+                HMUtility hmUtility = new HMUtility();
+                UserInformationBO userInformationBO = new UserInformationBO();
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+                rtninf.IsSuccess = companyDa.CheckedPaymentAdjustment(paymentId, approvedStatus);
+
+                if (!rtninf.IsSuccess)
+                {
+                    rtninf.IsSuccess = false;
+                    rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+                else
+                {
+                    rtninf.IsSuccess = true;
+                    rtninf.PrimaryKeyValue = paymentId.ToString();
+                    rtninf.TransactionNo = TransactionNo;
+                    rtninf.TransactionType = TransactionType;
+                    rtninf.TransactionStatus = ApproveStatus;
+
+                    if (approvedStatus == HMConstants.ApprovalStatus.Checked.ToString())
+                    {
+                        rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Checked, AlertType.Success);
+                    }
+                    else
+                    {
+                        rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Approved, AlertType.Success);
+                    }
+
+                    //Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Approve.ToString(), EntityTypeEnum.EntityType.ProductReceive.ToString(), receivedId,
+                    //           ProjectModuleEnum.ProjectModule.PurchaseManagement.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.ProductReceive));
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninf.IsSuccess = false;
+                rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            return rtninf;
         }
 
         [WebMethod]
