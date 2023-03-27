@@ -90,3 +90,5 @@ TRUNCATE TABLE ATTicketPaymentDetails
 
 TRUNCATE TABLE CashRequisition
 TRUNCATE TABLE CashRequisitionDetails
+
+TRUNCATE TABLE GLSupplierCompanyBalanceTransfer
