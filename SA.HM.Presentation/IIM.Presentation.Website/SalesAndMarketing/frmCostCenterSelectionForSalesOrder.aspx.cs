@@ -209,7 +209,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
 
                         if (costCenterList.Count == 1 && vc.Count == 1)
                         {
-                            Response.Redirect("/SalesAndMarketing/Billing.aspx?cid=" + vc[0].CostCenterId);
+                            Response.Redirect("/SalesAndMarketing/frmSalesOrder.aspx?cid=" + vc[0].CostCenterId);
                         }
                     }
                     if (costCenterList.Count > 0)

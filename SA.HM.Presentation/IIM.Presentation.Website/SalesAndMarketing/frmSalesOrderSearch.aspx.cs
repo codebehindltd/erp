@@ -45,6 +45,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
                 this.LoadRoomNumber();
                 this.LoadCommonDropDownHiddenField();
                 this.LoadCostCenter();
+                CheckPermission();
             }
         }
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -65,6 +66,13 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
                 string s = "window.open('" + url + "', 'popup_window', 'width=750,height=680,left=300,top=50,resizable=yes');";
                 ClientScript.RegisterStartupScript(this.GetType(), "script", s, true);
             }
+        }
+        private void CheckPermission()
+        {
+            hfSavePermission.Value = isSavePermission ? "1" : "0";
+            hfDeletePermission.Value = isDeletePermission ? "1" : "0";
+            hfEditPermission.Value = isUpdatePermission ? "1" : "0";
+            hfViewPermission.Value = isViewPermission ? "1" : "0";
         }
         //************************ User Defined Function ********************//
         private void CheckObjectPermission()
@@ -894,6 +902,72 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             }
 
             return rtninf;
+        }
+        [WebMethod]
+        public static ReturnInfo SalesOrderCheck(long SOrderId)
+        {
+            ReturnInfo rtninfo = new ReturnInfo();
+            Boolean status = false;
+            try
+            {
+                HMUtility hmUtility = new HMUtility();
+                UserInformationBO userInformationBO = new UserInformationBO();
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+                RestaurentPosDA atDa = new RestaurentPosDA();
+                status = atDa.SalesOrderCheck(SOrderId, userInformationBO.UserInfoId);
+                if (status)
+                {
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Checked, AlertType.Success);
+                }
+
+                if (!status)
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+
+            return rtninfo;
+
+        }
+        [WebMethod]
+        public static ReturnInfo SalesOrderApproval(long SOrderId)
+        {
+            ReturnInfo rtninfo = new ReturnInfo();
+            Boolean status = false;
+            try
+            {
+                HMUtility hmUtility = new HMUtility();
+                UserInformationBO userInformationBO = new UserInformationBO();
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                RestaurentPosDA atDa = new RestaurentPosDA();
+                status = atDa.SalesOrderApproval(SOrderId, userInformationBO.UserInfoId);
+                if (status)
+                {
+                    CommonDA commonDA = new CommonDA();
+                    bool autoProcessStatus = commonDA.AutoCompanyBillGenerationProcess("Sales Order", SOrderId, userInformationBO.UserInfoId);
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Approved, AlertType.Success);
+                }
+                if (!status)
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+            return rtninfo;
         }
     }
 }

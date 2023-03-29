@@ -1076,6 +1076,63 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
 
             return rtninf;
         }
+        [WebMethod]
+        public static ReturnInfo SaveSalesOrder(RestaurantBill restaurantBill, List<KotBillDetailBO> billDetails)
+        {
+            ReturnInfo rtninfo = new ReturnInfo();
+            Boolean status = false;
+            try
+            {
+                HMUtility hmUtility = new HMUtility();
+                UserInformationBO userInformationBO = new UserInformationBO();
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                RestaurentPosDA posda = new RestaurentPosDA();
+                Boolean IsUpdate = false;
+                if(restaurantBill.BillId > 0)
+                {
+                    IsUpdate = true;
+                }
+
+                HMCommonDA hmCommonDA = new HMCommonDA();
+                int SOrderId = 0;
+                restaurantBill.CreatedBy = userInformationBO.UserInfoId;
+                restaurantBill.BearerId = userInformationBO.UserInfoId;
+                restaurantBill.BillDate = DateTime.Now;
+                if (restaurantBill.BillId > 0)
+                {
+                    status = posda.UpdateRestaurantBillForSalesOrder(restaurantBill, billDetails);
+                }
+                else
+                {
+                    status = posda.SaveRestaurantBillForSalesOrder(restaurantBill, billDetails, out SOrderId);
+                }
+                
+                if (status)
+                {
+                    rtninfo.IsSuccess = true;
+                    if (IsUpdate)
+                    {
+                        rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Update, AlertType.Success);
+                    }
+                    else
+                    {
+                        rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
+                    }
+                }
+
+                if (!status)
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+            }
+            return rtninfo;
+        }
 
         [WebMethod]
         public static ReturnInfo BillSettlement(int kotId, int memberId, RestaurantBillBO RestaurantBill, List<GuestBillPaymentBO> BillPayment,
@@ -1205,7 +1262,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
                     billmaster.KotStatus = ConstantHelper.KotStatus.settled.ToString();
                     billmaster.CreatedBy = userInformationBO.UserInfoId;
                     billmaster.IsBillHoldup = false;
-                    posda.SaveRestaurantBillForSalesOrder("SalesOrder", billmaster, BillDetails, AddedSerialzableProduct, DeletedSerialzableProduct, RestaurantBill, BillPayment, SalesReturnItem, null, true, true, out billId, memberId);
+                    //posda.SaveRestaurantBillForSalesOrder("SalesOrder", billmaster, BillDetails, AddedSerialzableProduct, DeletedSerialzableProduct, RestaurantBill, BillPayment, SalesReturnItem, null, true, true, out billId, memberId);
                 }
                 else if (kotId > 0 && RestaurantBill.BillId == 0)
                 {

@@ -153,7 +153,7 @@ namespace HotelManagement.Data.Restaurant
                                     using (DbCommand commandGuestBillPayment = dbSmartAspects.GetStoredProcCommand("SaveGuestBillPaymentInfoModarate_SP"))
                                     {
                                         commandGuestBillPayment.Parameters.Clear();
-                                        guestBillPaymentBO.CreatedBy = restaurentBillBO.CreatedBy;
+                                        guestBillPaymentBO.CreatedBy = (int)restaurentBillBO.CreatedBy;
                                         guestBillPaymentBO.PaymentDate = DateTime.Now;
 
                                         int companyId = 0;
@@ -2121,6 +2121,10 @@ namespace HotelManagement.Data.Restaurant
                                 entityBO.CostCenterType = Convert.ToString(reader["CostCenterType"]);
                                 entityBO.CompanyName = Convert.ToString(reader["CompanyName"]);
                                 entityBO.ProjectName = Convert.ToString(reader["ProjectName"]);
+                                entityBO.IsCanEdit = Convert.ToBoolean(reader["IsCanEdit"]);
+                                entityBO.IsCanDelete = Convert.ToBoolean(reader["IsCanDelete"]);
+                                entityBO.IsCanChecked = Convert.ToBoolean(reader["IsCanChecked"]);
+                                entityBO.IsCanApproved = Convert.ToBoolean(reader["IsCanApproved"]);
 
                                 entityBOList.Add(entityBO);
                             }

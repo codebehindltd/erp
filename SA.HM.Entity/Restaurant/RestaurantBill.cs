@@ -9,6 +9,8 @@ namespace HotelManagement.Entity.Restaurant
     public class RestaurantBill
     {
         public int BillId { get; set; }
+        public int ProjectId { get; set; }
+        public string CustomerMobile { get; set; }
 
         public DateTime? BillDate { get; set; }
 
@@ -32,6 +34,9 @@ namespace HotelManagement.Entity.Restaurant
 
         [StringLength(200)]
         public string CustomerName { get; set; }
+        public string CustomerAddress { get; set; }
+        public int? BearerId { get; set; }
+        public int? DeliveredBy { get; set; }
 
         [StringLength(100)]
         public string PayMode { get; set; }

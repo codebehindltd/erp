@@ -125,5 +125,9 @@ namespace HotelManagement.Entity.Restaurant
         public string QRCode { get; set; }
         public int DeliveredBy { get; set; }
         public string DeliveredByInfo { get; set; }
+        public bool IsCanEdit { get; set; }
+        public bool IsCanDelete { get; set; }
+        public bool IsCanChecked { get; set; }
+        public bool IsCanApproved { get; set; }
     }
 }

@@ -10,9 +10,14 @@
             $("#<%=txtBillId.ClientID %>").val("");
             //toastr.info($("#<%=txtBillId.ClientID %>").val());
         }
-
+        var IsCanSave = false, IsCanEdit = false, IsCanDelete = false, IsCanView = false;
         //Bread Crumbs Information-------------
         $(document).ready(function () {
+            IsCanSave = $('#ContentPlaceHolder1_hfSavePermission').val() == '1' ? true : false;
+            IsCanEdit = $('#ContentPlaceHolder1_hfEditPermission').val() == '1' ? true : false;
+            IsCanDelete = $('#ContentPlaceHolder1_hfDeletePermission').val() == '1' ? true : false;
+            IsCanView = $('#ContentPlaceHolder1_hfViewPermission').val() == '1' ? true : false;
+
             CommonHelper.AutoSearchClientDataSource("txtBankId", "ContentPlaceHolder1_ddlBankId", "ContentPlaceHolder1_ddlBankId");
 
             if ($("#InnboardMessageHiddenField").val() != "") {
@@ -504,14 +509,32 @@ function PopulateProjects() {
                 tr += "<td align='left' style=\"width:60%; cursor:pointer;\">" + gridObject.CustomerName + "</td>";
                 //tr += "<td align='left' style=\"width:30%; cursor:pointer;\">" + gridObject.Remarks + "</td>";
                 tr += "<td align='left' style=\"width:10%; cursor:pointer;\">" + gridObject.GrandTotal + "</td>";
+                tr += "<td style=\"text-align: center; width:10%; cursor:pointer;\">";
+                if (gridObject.IsCanEdit && IsCanEdit) {
+                    tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return EditSalesOrderWithBillNCostCenterId('" + gridObject.BillId + "','" + gridObject.CostCenterId + "')\" alt='Edit'  title='Edit' border='0' />";
+                }
 
-                if (gridObject.IsDayClosed == 0) {
+                if (gridObject.IsCanDelete && IsCanDelete) {
+                    tr += "&nbsp;&nbsp;<img src='../Images/delete.png' onClick= \"javascript:return AddRemarks(" + gridObject.BillId + "," + gridObject.CostCenterId + ")\" alt='Delete'  title='Delete' border='0' />";
+                }
+
+                if (gridObject.IsCanChecked && IsCanSave) {
+
+                    tr += "&nbsp;&nbsp;<img src='../Images/checked.png' onClick= \"javascript:return SalesOrderCheckWithConfirmation(" + gridObject.BillId + "," + gridObject.CostCenterId + ")\" alt='Check'  title='Check' border='0' />";
+                }
+
+                if (gridObject.IsCanApproved && IsCanSave) {
+
+                    tr += "&nbsp;&nbsp;<img src='../Images/approved.png' onClick= \"javascript:return SalesOrderApprovalWithConfirmation(" + gridObject.BillId + "," + gridObject.CostCenterId + ")\" alt='Approve'  title='Approve' border='0' />";
+                }
+
+                <%--if (gridObject.IsDayClosed == 0) {
                     var editBill = "<img  src='../Images/edit.png' onClick= \"javascript:return PerformEditBill('" + gridObject.BillId + "')\" alt='Edit Bill' Title='Edit Bill'  border='0'/>";
                     editBill = "";
                     var resettlementBill = "";
 
                     if (gridObject.CostCenterType == "Billing") {
-                        resettlementBill = "&nbsp;&nbsp;<img id='preview' src='../Images/edit.png' onClick= \"javascript:return BillReSettlementForBilling('" + gridObject.BillId + "','" + gridObject.CostCenterId + "')\" alt='Edit Sales Order' Title='Sales Order Edit' border='0'/>";
+                        resettlementBill = "&nbsp;&nbsp;<img id='preview' src='../Images/edit.png' onClick= \"javascript:return EditSalesOrderWithBillNCostCenterId('" + gridObject.BillId + "','" + gridObject.CostCenterId + "')\" alt='Edit Sales Order' Title='Sales Order Edit' border='0'/>";
                     }
                     else
                         if (gridObject.CostCenterType != "RetailPos") {
@@ -587,8 +610,8 @@ function PopulateProjects() {
 
                     tr += "&nbsp;&nbsp;<img id='preview' src='../Images/detailsInfo.png' onClick= \"javascript:return LoadOthersDocumentUploader(" + gridObject.BillId + ") \" alt='Image' Title='Preview' border='0'/>";
 
-                }
-
+                }--%>
+                tr += "</td>";
                 tr += "</tr>"
 
                 $("#tblRstBillSearch tbody ").append(tr);
@@ -600,6 +623,53 @@ function PopulateProjects() {
             $("#GridPagingContainer ul").append(result.GridPageLinks.NextButton);
             
             return false;
+        }
+        function SalesOrderCheckWithConfirmation(SOrderId, CostCenterId) {
+            if (!confirm("Do you Want To Check?")) {
+                return false;
+            }
+            SalesOrderCheck(SOrderId);
+
+        }
+        function SalesOrderCheck(SOrderId) {
+            PageMethods.SalesOrderCheck(SOrderId, OnSalesOrderCheckSucceed, OnSalesOrderCheckFailed);
+        }
+        function OnSalesOrderCheckSucceed(result) {
+            if (result.IsSuccess) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                GridPaging(1, 1);
+            }
+            else {
+                CommonHelper.AlertMessage(result.AlertMessage);
+            }
+            return false;
+        }
+        function OnSalesOrderCheckFailed() {
+            toastr.error(error.get_message());
+        }
+        function SalesOrderApprovalWithConfirmation(SOrderId, CostCenterId) {
+
+            if (!confirm("Do you Want To Approve?")) {
+                return false;
+            }
+            SalesOrderApproval(SOrderId);
+        }
+        function SalesOrderApproval(SOrderId) {
+
+            PageMethods.SalesOrderApproval(SOrderId, OnSalesOrderApprovalSucceed, OnSalesOrderApprovalFailed);
+        }
+        function OnSalesOrderApprovalSucceed(result) {
+            if (result.IsSuccess) {
+                CommonHelper.AlertMessage(result.AlertMessage);
+                GridPaging(1, 1);
+            }
+            else {
+                CommonHelper.AlertMessage(result.AlertMessage);
+            }
+            return false;
+        }
+        function OnSalesOrderApprovalFailed() {
+            toastr.error(error.get_message());
         }
 
         function LoadOthersDocumentUploader(billId) {
@@ -1174,7 +1244,7 @@ function PopulateProjects() {
             }
             PageMethods.BillResettlement(billId, OnBillResettlementSucceeded, OnBillResettlementFailed);
         }
-        function BillReSettlementForBilling(billId, CostCenterId) {
+        function EditSalesOrderWithBillNCostCenterId(billId, CostCenterId) {
             if (!confirm("Do you want to Edit?")) {
                 return false;
             }
@@ -1192,6 +1262,10 @@ function PopulateProjects() {
 
 
     </script>
+    <asp:HiddenField ID="hfSavePermission" runat="server" Value="0" />
+    <asp:HiddenField ID="hfEditPermission" runat="server" Value="0" />
+    <asp:HiddenField ID="hfDeletePermission" runat="server" Value="0" />
+    <asp:HiddenField ID="hfViewPermission" runat="server" Value="0" />
     <asp:HiddenField ID="hfIsSavePermission" runat="server" />
     <asp:HiddenField ID="hfIsUpdatePermission" runat="server" />
     <asp:HiddenField ID="hfImageApprovedBySignature" runat="server" />
@@ -1227,7 +1301,7 @@ function PopulateProjects() {
     </div>
     <div id="EntryPanel" class="panel panel-default">
         <div class="panel-heading">
-            Bill Information
+            Sales Order Information
         </div>
         <div class="panel-body">
             <div class="form-horizontal">
@@ -1244,7 +1318,7 @@ function PopulateProjects() {
                         <asp:TextBox ID="txtSrcToDate" CssClass="form-control" placeholder="To Date" runat="server" TabIndex="3"></asp:TextBox>
                     </div>
                     <div class="col-md-2">
-                        <asp:Label ID="lblBillNumber" runat="server" class="control-label" Text="Bill Number"></asp:Label>
+                        <asp:Label ID="lblBillNumber" runat="server" class="control-label" Text="Sales Order Number"></asp:Label>
                     </div>
                     <div class="col-md-4">
                         <asp:TextBox ID="txtBillNumber" runat="server" CssClass="form-control" TabIndex="5"></asp:TextBox>

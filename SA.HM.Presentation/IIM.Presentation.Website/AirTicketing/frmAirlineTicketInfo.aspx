@@ -25,9 +25,10 @@
         var AddedSerialzableProduct = new Array();
         var DeletedSerialzableProduct = new Array();
         var IsCanSave = false, IsCanEdit = false, IsCanDelete = false, IsCanView = false;
+        var deletedAirlineInfoList = [];
 
         $(document).ready(function () {
-
+            deletedAirlineInfoList = [];
             IsCanSave = $('#ContentPlaceHolder1_hfSavePermission').val() == '1' ? true : false;
             IsCanEdit = $('#ContentPlaceHolder1_hfEditPermission').val() == '1' ? true : false;
             IsCanDelete = $('#ContentPlaceHolder1_hfDeletePermission').val() == '1' ? true : false;
@@ -1152,7 +1153,7 @@
             CommonHelper.SpinnerClose();
         }
 
-        var deletedAirlineInfoList = [];
+        deletedAirlineInfoList = [];
         function DeleteAirlineInfoItem(control) {
             if (!confirm("Do you want to delete item?")) { return false; }
 

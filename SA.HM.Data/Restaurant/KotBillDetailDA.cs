@@ -705,7 +705,10 @@ namespace HotelManagement.Data.Restaurant
                                 if (reader["VatAmount"] != DBNull.Value)
                                 {
                                     entityBO.VatAmount = Convert.ToDecimal(reader["VatAmount"]);
-                                }                                
+                                }
+                                entityBO.ItemCost = Convert.ToDecimal(reader["ItemCost"]);
+                                entityBO.BagWeight = Convert.ToInt32(reader["BagWeight"]);
+                                entityBO.NoOfBag = Convert.ToInt32(reader["NoOfBag"]);
 
                                 entityBOList.Add(entityBO);
                             }

@@ -871,15 +871,11 @@ namespace HotelManagement.Data.Restaurant
 
             return billID;
         }
-        public int SaveRestaurantBillForSalesOrder(string formName, KotBillMasterBO billmaster, List<KotBillDetailBO> billDetails,
-                                            List<PMProductOutSerialInfoBO> AddedSerialzableProduct, List<PMProductOutSerialInfoBO> DeletedSerialzableProduct,
-                                            RestaurantBillBO restaurentBillBO, List<GuestBillPaymentBO> paymentDetail,
-                                            List<RestaurantSalesReturnItemBO> salesReturnItem,
-                                            string categoryIdList, bool isAmountWillDistribution, bool isBillWillSettle, out int billID, int memberId)
+        public bool SaveRestaurantBillForSalesOrder(RestaurantBill restaurentBillBO, List<KotBillDetailBO> billDetails, out int SOrderId)
         {
             int status = 0;
-            //int kotId = 0;
-            billID = 0;
+            SOrderId = 0;
+            bool retVal = false;
 
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
@@ -888,85 +884,9 @@ namespace HotelManagement.Data.Restaurant
                 using (DbTransaction transction = conn.BeginTransaction())
                 {
                     try
-                    {
-                        //using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveKotBillMasterForRetailPos_SP"))
-                        //{
-                        //    dbSmartAspects.AddInParameter(command, "@BearerId", DbType.Int32, billmaster.BearerId);
-                        //    dbSmartAspects.AddInParameter(command, "@CostCenterId", DbType.Int32, billmaster.CostCenterId);
-                        //    dbSmartAspects.AddInParameter(command, "@SourceName", DbType.String, billmaster.SourceName);
-                        //    dbSmartAspects.AddInParameter(command, "@SourceId", DbType.Int32, billmaster.SourceId);
-                        //    dbSmartAspects.AddInParameter(command, "@TokenNumber", DbType.String, billmaster.TokenNumber);
-                        //    dbSmartAspects.AddInParameter(command, "@TotalAmount", DbType.Decimal, billmaster.TotalAmount);
-                        //    dbSmartAspects.AddInParameter(command, "@PaxQuantity", DbType.Int32, billmaster.PaxQuantity);
-                        //    dbSmartAspects.AddInParameter(command, "@IsBillHoldup", DbType.Boolean, billmaster.IsBillHoldup);
-                        //    dbSmartAspects.AddInParameter(command, "@KotStatus", DbType.String, billmaster.KotStatus);
-                        //    dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, billmaster.CreatedBy);
-
-                        //    dbSmartAspects.AddOutParameter(command, "@KotId", DbType.Int32, sizeof(Int32));
-
-                        //    status = dbSmartAspects.ExecuteNonQuery(command, transction);
-
-                        //    kotId = Convert.ToInt32(command.Parameters["@KotId"].Value);
-                        //}
-
-                        //if (status > 0 && restaurentBillBO.IsBillReSettlement)
-                        //{
-                        //    using (DbCommand command = dbSmartAspects.GetStoredProcCommand("UpdateKotBillMasterForRetailPOSReturn_SP"))
-                        //    {
-                        //        dbSmartAspects.AddInParameter(command, "@KotId", DbType.Int32, billmaster.ReferenceKotId);
-                        //        dbSmartAspects.AddInParameter(command, "@IsKotReturn", DbType.Boolean, billmaster.IsKotReturn);
-                        //        dbSmartAspects.AddInParameter(command, "@ReferenceKotId", DbType.Int32, kotId);
-
-                        //        status = dbSmartAspects.ExecuteNonQuery(command, transction);
-                        //    }
-                        //}
-
-                        
-
-                        //if (status > 0 && salesReturnItem.Count > 0 && restaurentBillBO.IsBillReSettlement)
-                        //{
-                        //    using (DbCommand command = dbSmartAspects.GetStoredProcCommand("UpdateKotBillDetailsForRetailPOSReturn_SP"))
-                        //    {
-                        //        foreach (RestaurantSalesReturnItemBO kbd in salesReturnItem)
-                        //        {
-                        //            command.Parameters.Clear();
-
-                        //            dbSmartAspects.AddInParameter(command, "@KotDetailId", DbType.Int32, kbd.KotDetailId);
-                        //            dbSmartAspects.AddInParameter(command, "@KotId", DbType.Int32, kbd.KotId);
-                        //            dbSmartAspects.AddInParameter(command, "@IsItemReturn", DbType.Boolean, true);
-                        //            dbSmartAspects.AddInParameter(command, "@ReturnQuantity", DbType.Decimal, kbd.ItemUnit);
-
-                        //            status = dbSmartAspects.ExecuteNonQuery(command, transction);
-                        //        }
-                        //    }
-                        //}
-                        //if (status > 0 && restaurentBillBO.IsBillReSettlement)
-                        //{
-                        //    using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveRestaurantSalesReturnItemForRetailPOS_SP"))
-                        //    {
-                        //        foreach (RestaurantSalesReturnItemBO kbd in salesReturnItem)
-                        //        {
-                        //            command.Parameters.Clear();
-
-                        //            dbSmartAspects.AddInParameter(command, "@BillId", DbType.Int32, restaurentBillBO.BillId);
-                        //            dbSmartAspects.AddInParameter(command, "@KotId", DbType.Int32, kbd.KotId);
-                        //            dbSmartAspects.AddInParameter(command, "@CostCenterId", DbType.Int32, restaurentBillBO.CostCenterId);
-                        //            dbSmartAspects.AddInParameter(command, "@ItemId", DbType.Int32, kbd.ItemId);
-                        //            dbSmartAspects.AddInParameter(command, "@ItemName", DbType.String, kbd.ItemName);
-                        //            dbSmartAspects.AddInParameter(command, "@ItemUnit", DbType.Decimal, kbd.ItemUnit);
-                        //            dbSmartAspects.AddInParameter(command, "@UnitRate", DbType.Decimal, kbd.UnitRate);
-                        //            dbSmartAspects.AddInParameter(command, "@Amount", DbType.Decimal, kbd.Amount);
-                        //            dbSmartAspects.AddInParameter(command, "@InvoiceDiscount", DbType.Decimal, kbd.InvoiceDiscount);
-
-                        //            status = dbSmartAspects.ExecuteNonQuery(command, transction);
-                        //        }
-                        //    }
-                        //}
-
-                        
+                    {                                                
                         using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveRestaurentBillForSalesOrder_SP"))
                         {
-                            dbSmartAspects.AddInParameter(command, "@TableId", DbType.Int32, restaurentBillBO.TableId);
                             dbSmartAspects.AddInParameter(command, "@CostCenterId", DbType.Int32, restaurentBillBO.CostCenterId);
                             dbSmartAspects.AddInParameter(command, "@BillDate", DbType.DateTime, restaurentBillBO.BillDate);
                             dbSmartAspects.AddInParameter(command, "@PaxQuantity", DbType.Int32, restaurentBillBO.PaxQuantity);
@@ -995,10 +915,7 @@ namespace HotelManagement.Data.Restaurant
                             dbSmartAspects.AddInParameter(command, "@CitySDCharge", DbType.Decimal, restaurentBillBO.CitySDCharge);
                             dbSmartAspects.AddInParameter(command, "@AdditionalChargeType", DbType.String, restaurentBillBO.AdditionalChargeType);
                             dbSmartAspects.AddInParameter(command, "@AdditionalCharge", DbType.Decimal, restaurentBillBO.AdditionalCharge);
-                            dbSmartAspects.AddInParameter(command, "@RefundId", DbType.Int32, restaurentBillBO.RefundId);
-                            dbSmartAspects.AddInParameter(command, "@RefundRemarks", DbType.String, restaurentBillBO.RefundRemarks);
                             dbSmartAspects.AddInParameter(command, "@SourceName", DbType.String, restaurentBillBO.SourceName);
-                            dbSmartAspects.AddInParameter(command, "@BillDeclaration", DbType.String, restaurentBillBO.BillDeclaration);
 
                             if (!string.IsNullOrEmpty(restaurentBillBO.TransactionType))
                                 dbSmartAspects.AddInParameter(command, "@TransactionType", DbType.String, restaurentBillBO.TransactionType);
@@ -1010,45 +927,17 @@ namespace HotelManagement.Data.Restaurant
                             else
                                 dbSmartAspects.AddInParameter(command, "@TransactionId", DbType.Int64, DBNull.Value);
 
-                            if (restaurentBillBO.PaymentInstructionId != null && restaurentBillBO.PaymentInstructionId != 0)
-                                dbSmartAspects.AddInParameter(command, "@PaymentInstructionId", DbType.Int32, restaurentBillBO.PaymentInstructionId);
-                            else
-                                dbSmartAspects.AddInParameter(command, "@PaymentInstructionId", DbType.Int32, DBNull.Value);
-                            if (restaurentBillBO.ContactId != null && restaurentBillBO.ContactId != 0)
-                                dbSmartAspects.AddInParameter(command, "@ContactId", DbType.Int32, restaurentBillBO.ContactId);
-                            else
-                                dbSmartAspects.AddInParameter(command, "@ContactId", DbType.Int32, DBNull.Value);
-
-
-                            //dbSmartAspects.AddInParameter(command, "@BillPaidBySourceId", DbType.Int32, kotId);
-                            //dbSmartAspects.AddInParameter(command, "@KotId", DbType.Int32, kotId);
-
                             if (!string.IsNullOrEmpty(restaurentBillBO.Remarks))
                                 dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, restaurentBillBO.Remarks);
                             else
                                 dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, DBNull.Value);
 
-                            dbSmartAspects.AddInParameter(command, "@ProjectId", DbType.String, restaurentBillBO.ProjectId);
-
-                            if (!string.IsNullOrEmpty(restaurentBillBO.Subject))
-                                dbSmartAspects.AddInParameter(command, "@Subject", DbType.String, restaurentBillBO.Subject);
-                            else
-                                dbSmartAspects.AddInParameter(command, "@Subject", DbType.String, DBNull.Value);
+                            dbSmartAspects.AddInParameter(command, "@ProjectId", DbType.Int32, restaurentBillBO.ProjectId);
 
                             if (!string.IsNullOrEmpty(restaurentBillBO.PaymentRemarks))
                                 dbSmartAspects.AddInParameter(command, "@PaymentRemarks", DbType.String, restaurentBillBO.PaymentRemarks);
                             else
                                 dbSmartAspects.AddInParameter(command, "@PaymentRemarks", DbType.String, DBNull.Value);
-
-                            if (!string.IsNullOrEmpty(restaurentBillBO.BillType))
-                                dbSmartAspects.AddInParameter(command, "@BillType", DbType.String, restaurentBillBO.BillType);
-                            else
-                                dbSmartAspects.AddInParameter(command, "@BillType", DbType.String, DBNull.Value);
-
-                            if (!string.IsNullOrEmpty(restaurentBillBO.BillingType))
-                                dbSmartAspects.AddInParameter(command, "@BillingType", DbType.String, restaurentBillBO.BillingType);
-                            else
-                                dbSmartAspects.AddInParameter(command, "@BillingType", DbType.String, DBNull.Value);
 
                             dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, restaurentBillBO.CreatedBy);
 
@@ -1056,7 +945,7 @@ namespace HotelManagement.Data.Restaurant
 
                             status = dbSmartAspects.ExecuteNonQuery(command, transction);
 
-                            billID = Convert.ToInt32(command.Parameters["@SOrderId"].Value);
+                            SOrderId = Convert.ToInt32(command.Parameters["@SOrderId"].Value);
 
                         }
 
@@ -1068,7 +957,7 @@ namespace HotelManagement.Data.Restaurant
                                 {
                                     command.Parameters.Clear();
 
-                                    dbSmartAspects.AddInParameter(command, "@SOrderId", DbType.Int32, billID);
+                                    dbSmartAspects.AddInParameter(command, "@SOrderId", DbType.Int32, SOrderId);
                                     dbSmartAspects.AddInParameter(command, "@ItemType", DbType.String, kbd.ItemType);
                                     dbSmartAspects.AddInParameter(command, "@ItemId", DbType.Int32, kbd.ItemId);
 
@@ -1081,237 +970,165 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@Amount", DbType.Decimal, kbd.Amount);
                                     dbSmartAspects.AddInParameter(command, "@InvoiceDiscount", DbType.Decimal, kbd.InvoiceDiscount);
                                     dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, kbd.Remarks);
+                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, kbd.BagWeight);
+                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
 
                                     status = dbSmartAspects.ExecuteNonQuery(command, transction);
                                 }
                             }
                         }
 
-                        //if (status > 0 && restaurentBillBO.IsBillReSettlement)
-                        //{
-                        //    using (DbCommand command = dbSmartAspects.GetStoredProcCommand("UpdateRestaurentBillForRetailPOSReturn_SP"))
-                        //    {
-                        //        dbSmartAspects.AddInParameter(command, "@BillId", DbType.Int32, restaurentBillBO.BillId);
-                        //        dbSmartAspects.AddInParameter(command, "@ExchangeItemVatAmount", DbType.Decimal, restaurentBillBO.ExchangeItemVatAmount);
-                        //        dbSmartAspects.AddInParameter(command, "@ExchangeItemTotal", DbType.Decimal, restaurentBillBO.ExchangeItemTotal);
-                        //        dbSmartAspects.AddInParameter(command, "@ReferenceBillId", DbType.Int32, billID);
-                        //        dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, restaurentBillBO.CreatedBy);
-
-                        //        status = dbSmartAspects.ExecuteNonQuery(command, transction);
-                        //    }
-                        //}
-
-                        ////Save Kot Information ------------------------------------
-                        //if (status > 0)
-                        //{
-                        //    using (DbCommand commandBillDetails = dbSmartAspects.GetStoredProcCommand("SaveRestaurantBillDetail_SP"))
-                        //    {
-                        //        dbSmartAspects.AddInParameter(commandBillDetails, "@BillId", DbType.Int32, billID);
-                        //        dbSmartAspects.AddInParameter(commandBillDetails, "@KotId", DbType.Int32, kotId);
-
-                        //        if (restaurentBillBO.BearerId > 0)
-                        //        {
-                        //            dbSmartAspects.AddInParameter(commandBillDetails, "@BearerId", DbType.Int32, restaurentBillBO.BearerId);
-                        //        }
-                        //        else
-                        //        {
-                        //            dbSmartAspects.AddInParameter(commandBillDetails, "@BearerId", DbType.Int32, DBNull.Value);
-                        //        }
-
-                        //        dbSmartAspects.AddOutParameter(commandBillDetails, "@DetailId", DbType.Int32, sizeof(Int32));
-
-                        //        status = dbSmartAspects.ExecuteNonQuery(commandBillDetails, transction);
-                        //    }
-                        //}
-
-                        //if (status > 0 && AddedSerialzableProduct.Count > 0)
-                        //{
-
-                        //    using (DbCommand cmdReceiveDetails = dbSmartAspects.GetStoredProcCommand("SaveRestaurantBillItemSerialInfo_SP"))
-                        //    {
-                        //        foreach (PMProductOutSerialInfoBO rd in AddedSerialzableProduct)
-                        //        {
-                        //            cmdReceiveDetails.Parameters.Clear();
-
-                        //            dbSmartAspects.AddInParameter(cmdReceiveDetails, "@BillId", DbType.Int64, billID);
-                        //            dbSmartAspects.AddInParameter(cmdReceiveDetails, "@ItemId", DbType.Int32, rd.ItemId);
-                        //            dbSmartAspects.AddInParameter(cmdReceiveDetails, "@SerialNumber", DbType.String, rd.SerialNumber);
-                        //            dbSmartAspects.AddInParameter(cmdReceiveDetails, "@CreatedBy", DbType.Int32, billmaster.CreatedBy);
-
-                        //            status = dbSmartAspects.ExecuteNonQuery(cmdReceiveDetails, transction);
-                        //        }
-                        //    }
-                        //}
-
-                        //if (status > 0 && paymentDetail != null)
-                        //{
-                        //    using (DbCommand commandGuestBillPayment = dbSmartAspects.GetStoredProcCommand("SaveGuestBillPaymentInfoModarate_SP"))
-                        //    {
-                        //        foreach (GuestBillPaymentBO guestBillPaymentBO in paymentDetail)
-                        //        {
-                        //            if (guestBillPaymentBO.PaidServiceId == 0)
-                        //            {
-                        //                commandGuestBillPayment.Parameters.Clear();
-
-                        //                guestBillPaymentBO.CreatedBy = restaurentBillBO.CreatedBy;
-                        //                guestBillPaymentBO.PaymentDate = DateTime.Now;
-
-                        //                int companyId = 0;
-                        //                if (guestBillPaymentBO.CompanyId != null)
-                        //                {
-                        //                    companyId = guestBillPaymentBO.CompanyId;
-                        //                    if (guestBillPaymentBO.PaymentMode == "Company")
-                        //                    {
-                        //                        guestBillPaymentBO.PaymentType = "Company";
-                        //                    }
-                        //                }
-
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@PaymentDate", DbType.DateTime, guestBillPaymentBO.PaymentDate);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@ModuleName", DbType.String, "Restaurant");
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@PaymentType", DbType.String, guestBillPaymentBO.PaymentType);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@BillId", DbType.Int32, billID);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@BillNumber", DbType.String, restaurentBillBO.BillNumber);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@ServiceBillId", DbType.Int32, billID);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@RegistrationId", DbType.Int32, guestBillPaymentBO.RegistrationId);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@FieldId", DbType.Int32, guestBillPaymentBO.FieldId);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@CurrencyAmount", DbType.Decimal, guestBillPaymentBO.CurrencyAmount);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@PaymentAmount", DbType.Decimal, guestBillPaymentBO.PaymentAmount);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@PaymentMode", DbType.String, guestBillPaymentBO.PaymentMode);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@AccountsPostingHeadId", DbType.Int32, guestBillPaymentBO.AccountsPostingHeadId);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@CompanyId", DbType.Int32, companyId);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@BankId", DbType.Int32, guestBillPaymentBO.BankId);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@BranchName", DbType.String, guestBillPaymentBO.BranchName);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@ChecqueNumber", DbType.String, guestBillPaymentBO.ChecqueNumber);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@ChecqueDate", DbType.DateTime, guestBillPaymentBO.ChecqueDate);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@CardType", DbType.String, guestBillPaymentBO.CardType);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@CardNumber", DbType.String, guestBillPaymentBO.CardNumber);
-                        //                if (guestBillPaymentBO.PaymentMode == "Card")
-                        //                {
-                        //                    dbSmartAspects.AddInParameter(commandGuestBillPayment, "@ExpireDate", DbType.DateTime, guestBillPaymentBO.ExpireDate);
-                        //                }
-
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@CardReference", DbType.String, guestBillPaymentBO.CardReference);
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@CardHolderName", DbType.String, guestBillPaymentBO.CardHolderName);
-                        //                if (guestBillPaymentBO.PaymentDescription == "")
-                        //                {
-                        //                    dbSmartAspects.AddInParameter(commandGuestBillPayment, "@PaymentDescription", DbType.String, "Bill Detail: " + restaurentBillBO.Remarks);
-                        //                }
-                        //                else
-                        //                {
-                        //                    string PaymentDescription = guestBillPaymentBO.PaymentDescription + "[Bill Detail: " + restaurentBillBO.Remarks + "]";
-                        //                    dbSmartAspects.AddInParameter(commandGuestBillPayment, "@PaymentDescription", DbType.String, PaymentDescription);
-                        //                }
-
-                        //                dbSmartAspects.AddInParameter(commandGuestBillPayment, "@CreatedBy", DbType.Int32, guestBillPaymentBO.CreatedBy);
-                        //                dbSmartAspects.AddOutParameter(commandGuestBillPayment, "@PaymentId", DbType.Int32, sizeof(Int32));
-
-                        //                status = dbSmartAspects.ExecuteNonQuery(commandGuestBillPayment, transction);
-                        //            }
-                        //        }
-                        //    }
-                        //}
-
-                        //if (isAmountWillDistribution)
-                        //{
-                        //    if (status > 0)
-                        //    {
-                        //        if (formName == "Billing")
-                        //        {
-                        //            using (DbCommand cmdVSCSR = dbSmartAspects.GetStoredProcCommand("ServiceRateNVatNServiceChargeProcessForBilling_SP"))
-                        //            {
-                        //                dbSmartAspects.AddInParameter(cmdVSCSR, "@BillId", DbType.Int32, billID);
-
-                        //                if (!string.IsNullOrEmpty(categoryIdList))
-                        //                {
-                        //                    dbSmartAspects.AddInParameter(cmdVSCSR, "@CategoryIdList", DbType.String, categoryIdList.Trim());
-                        //                }
-                        //                else
-                        //                {
-                        //                    dbSmartAspects.AddInParameter(cmdVSCSR, "@CategoryIdList", DbType.String, DBNull.Value);
-                        //                }
-
-                        //                dbSmartAspects.AddInParameter(cmdVSCSR, "@DiscountType", DbType.String, restaurentBillBO.DiscountType);
-                        //                dbSmartAspects.AddInParameter(cmdVSCSR, "@DiscountPercent", DbType.Decimal, restaurentBillBO.DiscountAmount);
-                        //                dbSmartAspects.AddInParameter(cmdVSCSR, "@CostCenterId", DbType.Int32, restaurentBillBO.CostCenterId);
-
-                        //                status = dbSmartAspects.ExecuteNonQuery(cmdVSCSR, transction);
-                        //            }
-                        //        }
-                        //        else
-                        //        {
-                        //            using (DbCommand cmdVSCSR = dbSmartAspects.GetStoredProcCommand("ServiceRateNVatNServiceChargeProcess_SP"))
-                        //            {
-                        //                dbSmartAspects.AddInParameter(cmdVSCSR, "@BillId", DbType.Int32, billID);
-
-                        //                if (!string.IsNullOrEmpty(categoryIdList))
-                        //                {
-                        //                    dbSmartAspects.AddInParameter(cmdVSCSR, "@CategoryIdList", DbType.String, categoryIdList.Trim());
-                        //                }
-                        //                else
-                        //                {
-                        //                    dbSmartAspects.AddInParameter(cmdVSCSR, "@CategoryIdList", DbType.String, DBNull.Value);
-                        //                }
-
-                        //                dbSmartAspects.AddInParameter(cmdVSCSR, "@DiscountType", DbType.String, restaurentBillBO.DiscountType);
-                        //                dbSmartAspects.AddInParameter(cmdVSCSR, "@DiscountPercent", DbType.Decimal, restaurentBillBO.DiscountAmount);
-                        //                dbSmartAspects.AddInParameter(cmdVSCSR, "@CostCenterId", DbType.Int32, restaurentBillBO.CostCenterId);
-
-                        //                status = dbSmartAspects.ExecuteNonQuery(cmdVSCSR, transction);
-                        //            }
-                        //        }
-
-                        //    }
-                        //}
-
-                        //if (status > 0 && restaurentBillBO.IsBillReSettlement)
-                        //{
-                        //    using (DbCommand cmdVSCSR = dbSmartAspects.GetStoredProcCommand("ServiceRateNVatNServiceChargeProcessForRetailPosSalesReturn_SP"))
-                        //    {
-                        //        dbSmartAspects.AddInParameter(cmdVSCSR, "@BillId", DbType.Int32, restaurentBillBO.BillId);
-                        //        dbSmartAspects.AddInParameter(cmdVSCSR, "@CategoryIdList", DbType.String, DBNull.Value);
-                        //        dbSmartAspects.AddInParameter(cmdVSCSR, "@DiscountType", DbType.String, "Percentage");
-                        //        dbSmartAspects.AddInParameter(cmdVSCSR, "@DiscountPercent", DbType.Decimal, 0.00);
-                        //        dbSmartAspects.AddInParameter(cmdVSCSR, "@CostCenterId", DbType.Int32, restaurentBillBO.CostCenterId);
-
-                        //        status = dbSmartAspects.ExecuteNonQuery(cmdVSCSR, transction);
-                        //    }
-                        //}
-
-                        //if (isAmountWillDistribution && isBillWillSettle)
-                        //{
-                        //    if (status > 0)
-                        //    {
-                        //        using (DbCommand command = dbSmartAspects.GetStoredProcCommand("RestaurantBillSettlementInfoByBillId_SP"))
-                        //        {
-                        //            command.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
-                        //            dbSmartAspects.AddInParameter(command, "@BillId", DbType.Int32, billID);
-                        //            dbSmartAspects.AddInParameter(command, "@BillStatus", DbType.String, DBNull.Value);
-
-                        //            status = dbSmartAspects.ExecuteNonQuery(command, transction);
-                        //        }
-                        //    }
-                        //}
 
                         if (status > 0)
                         {
+                            retVal = true;
                             transction.Commit();
                         }
                         else
                         {
+                            retVal = false;
                             transction.Rollback();
                         }
                     }
                     catch (Exception ex)
                     {
+                        retVal = false;
                         transction.Rollback();
-                        billID = 0;
                         throw ex;
 
                     }
                 }
             }
 
-            return billID;
+            return retVal;
+        }
+        
+        public bool UpdateRestaurantBillForSalesOrder(RestaurantBill restaurentBillBO, List<KotBillDetailBO> billDetails)
+        {
+            int status = 0;
+            bool retVal = false;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand command = dbSmartAspects.GetStoredProcCommand("UpdateRestaurantBillForSalesOrder_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(command, "@SOrderId", DbType.Int64, restaurentBillBO.BillId);
+                            dbSmartAspects.AddInParameter(command, "@CostCenterId", DbType.Int32, restaurentBillBO.CostCenterId);
+                            dbSmartAspects.AddInParameter(command, "@BillDate", DbType.DateTime, restaurentBillBO.BillDate);
+                            dbSmartAspects.AddInParameter(command, "@PaxQuantity", DbType.Int32, restaurentBillBO.PaxQuantity);
+                            dbSmartAspects.AddInParameter(command, "@CustomerName", DbType.String, restaurentBillBO.CustomerName);
+                            dbSmartAspects.AddInParameter(command, "@CustomerMobile", DbType.String, restaurentBillBO.CustomerMobile);
+                            dbSmartAspects.AddInParameter(command, "@CustomerAddress", DbType.String, restaurentBillBO.CustomerAddress);
+                            dbSmartAspects.AddInParameter(command, "@BearerId", DbType.Int32, restaurentBillBO.BearerId);
+                            dbSmartAspects.AddInParameter(command, "@DeliveredBy", DbType.Int32, restaurentBillBO.DeliveredBy);
+                            dbSmartAspects.AddInParameter(command, "@RegistrationId", DbType.Int32, restaurentBillBO.RegistrationId);
+                            dbSmartAspects.AddInParameter(command, "@SalesAmount", DbType.Decimal, restaurentBillBO.SalesAmount);
+                            dbSmartAspects.AddInParameter(command, "@DiscountType", DbType.String, restaurentBillBO.DiscountType);
+                            dbSmartAspects.AddInParameter(command, "@DiscountTransactionId", DbType.Int32, restaurentBillBO.DiscountTransactionId);
+                            dbSmartAspects.AddInParameter(command, "@DiscountAmount", DbType.Decimal, restaurentBillBO.DiscountAmount);
+                            dbSmartAspects.AddInParameter(command, "@CalculatedDiscountAmount", DbType.Decimal, restaurentBillBO.CalculatedDiscountAmount);
+                            dbSmartAspects.AddInParameter(command, "@ServiceCharge", DbType.Decimal, restaurentBillBO.ServiceCharge);
+                            dbSmartAspects.AddInParameter(command, "@VatAmount", DbType.Decimal, restaurentBillBO.VatAmount);
+                            dbSmartAspects.AddInParameter(command, "@GrandTotal", DbType.Decimal, restaurentBillBO.GrandTotal);
+                            dbSmartAspects.AddInParameter(command, "@RoundedAmount", DbType.Decimal, restaurentBillBO.RoundedAmount);
+                            dbSmartAspects.AddInParameter(command, "@RoundedGrandTotal", DbType.Decimal, restaurentBillBO.RoundedGrandTotal);
+                            dbSmartAspects.AddInParameter(command, "@InvoiceServiceRate", DbType.Decimal, restaurentBillBO.InvoiceServiceRate);
+
+                            dbSmartAspects.AddInParameter(command, "@IsInvoiceServiceChargeEnable", DbType.Boolean, restaurentBillBO.IsInvoiceServiceChargeEnable);
+                            dbSmartAspects.AddInParameter(command, "@IsInvoiceVatAmountEnable", DbType.Boolean, restaurentBillBO.IsInvoiceVatAmountEnable);
+                            dbSmartAspects.AddInParameter(command, "@IsInvoiceCitySDChargeEnable", DbType.Boolean, restaurentBillBO.IsInvoiceCitySDChargeEnable);
+                            dbSmartAspects.AddInParameter(command, "@IsInvoiceAdditionalChargeEnable", DbType.Boolean, restaurentBillBO.IsInvoiceAdditionalChargeEnable);
+                            dbSmartAspects.AddInParameter(command, "@CitySDCharge", DbType.Decimal, restaurentBillBO.CitySDCharge);
+                            dbSmartAspects.AddInParameter(command, "@AdditionalChargeType", DbType.String, restaurentBillBO.AdditionalChargeType);
+                            dbSmartAspects.AddInParameter(command, "@AdditionalCharge", DbType.Decimal, restaurentBillBO.AdditionalCharge);
+                            dbSmartAspects.AddInParameter(command, "@SourceName", DbType.String, restaurentBillBO.SourceName);
+
+                            if (!string.IsNullOrEmpty(restaurentBillBO.TransactionType))
+                                dbSmartAspects.AddInParameter(command, "@TransactionType", DbType.String, restaurentBillBO.TransactionType);
+                            else
+                                dbSmartAspects.AddInParameter(command, "@TransactionType", DbType.String, DBNull.Value);
+
+                            if (restaurentBillBO.TransactionId != null)
+                                dbSmartAspects.AddInParameter(command, "@TransactionId", DbType.Int64, restaurentBillBO.TransactionId);
+                            else
+                                dbSmartAspects.AddInParameter(command, "@TransactionId", DbType.Int64, DBNull.Value);
+
+                            if (!string.IsNullOrEmpty(restaurentBillBO.Remarks))
+                                dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, restaurentBillBO.Remarks);
+                            else
+                                dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, DBNull.Value);
+
+                            dbSmartAspects.AddInParameter(command, "@ProjectId", DbType.Int32, restaurentBillBO.ProjectId);
+
+                            if (!string.IsNullOrEmpty(restaurentBillBO.PaymentRemarks))
+                                dbSmartAspects.AddInParameter(command, "@PaymentRemarks", DbType.String, restaurentBillBO.PaymentRemarks);
+                            else
+                                dbSmartAspects.AddInParameter(command, "@PaymentRemarks", DbType.String, DBNull.Value);
+
+                            dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, restaurentBillBO.CreatedBy);
+
+                            status = dbSmartAspects.ExecuteNonQuery(command, transction);
+
+                        }
+
+                        if (status > 0)
+                        {
+                            using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveRestaurentBillForSalesOrderDetail_SP"))
+                            {
+                                foreach (KotBillDetailBO kbd in billDetails)
+                                {
+                                    command.Parameters.Clear();
+
+                                    dbSmartAspects.AddInParameter(command, "@SOrderId", DbType.Int32, restaurentBillBO.BillId);
+                                    dbSmartAspects.AddInParameter(command, "@ItemType", DbType.String, kbd.ItemType);
+                                    dbSmartAspects.AddInParameter(command, "@ItemId", DbType.Int32, kbd.ItemId);
+
+                                    dbSmartAspects.AddInParameter(command, "@ColorId", DbType.Int32, kbd.ColorId);
+                                    dbSmartAspects.AddInParameter(command, "@SizeId", DbType.Int32, kbd.SizeId);
+                                    dbSmartAspects.AddInParameter(command, "@StyleId", DbType.Int32, kbd.StyleId);
+
+                                    dbSmartAspects.AddInParameter(command, "@ItemUnit", DbType.Decimal, kbd.ItemUnit);
+                                    dbSmartAspects.AddInParameter(command, "@UnitRate", DbType.Decimal, kbd.UnitRate);
+                                    dbSmartAspects.AddInParameter(command, "@Amount", DbType.Decimal, kbd.Amount);
+                                    dbSmartAspects.AddInParameter(command, "@InvoiceDiscount", DbType.Decimal, kbd.InvoiceDiscount);
+                                    dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, kbd.Remarks);
+                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, kbd.BagWeight);
+                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(command, transction);
+                                }
+                            }
+                        }
+
+
+                        if (status > 0)
+                        {
+                            retVal = true;
+                            transction.Commit();
+                        }
+                        else
+                        {
+                            retVal = false;
+                            transction.Rollback();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        retVal = false;
+                        transction.Rollback();
+                        throw ex;
+
+                    }
+                }
+            }
+
+            return retVal;
         }
         public void BillingAccountsVoucherPostingProcess(int billID)
         {
@@ -4591,6 +4408,109 @@ namespace HotelManagement.Data.Restaurant
                 }
             }
             return salesList;
+        }
+        public bool SalesOrderCheck(long SOrderId, int userInfoId)
+        {
+            Int64 status = 0;
+            bool retVal = false;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand cmdCheck = dbSmartAspects.GetStoredProcCommand("SalesOrderCheck_SP"))
+                        {
+                            cmdCheck.Parameters.Clear();
+
+                            dbSmartAspects.AddInParameter(cmdCheck, "@SOrderId", DbType.Int64, SOrderId);
+                            dbSmartAspects.AddInParameter(cmdCheck, "@UserInfoId", DbType.Int32, userInfoId);
+
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmdCheck, transction);
+                        }
+
+
+                        if (status > 0)
+                        {
+                            retVal = true;
+                            transction.Commit();
+                        }
+                        else
+                        {
+                            retVal = false;
+                            transction.Rollback();
+                        }
+                    }
+                    catch
+                    {
+                        retVal = false;
+                        transction.Rollback();
+                    }
+                }
+            }
+
+            return retVal;
+        }
+        public bool SalesOrderApproval(long SOrderId, int userInfoId)
+        {
+            Int64 status = 0;
+            bool retVal = false;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand cmdApprove = dbSmartAspects.GetStoredProcCommand("SalesOrderApproval_SP"))
+                        {
+                            cmdApprove.Parameters.Clear();
+
+                            dbSmartAspects.AddInParameter(cmdApprove, "@SOrderId", DbType.Int64, SOrderId);
+                            dbSmartAspects.AddInParameter(cmdApprove, "@UserInfoId", DbType.Int32, userInfoId);
+
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmdApprove, transction);
+                        }
+
+                        if (status > 0)
+                        {
+                            using (DbCommand cmdAfterApproved = dbSmartAspects.GetStoredProcCommand("ATBillingAccountsVoucherPostingProcess_SP"))
+                            {
+                                cmdAfterApproved.Parameters.Clear();
+
+                                dbSmartAspects.AddInParameter(cmdAfterApproved, "@BillId", DbType.Int32, SOrderId);
+                                dbSmartAspects.AddOutParameter(cmdAfterApproved, "@mErr", DbType.Int32, sizeof(Int32));
+
+                                status = dbSmartAspects.ExecuteNonQuery(cmdAfterApproved, transction);
+                            }
+                        }
+
+
+                        if (status > 0)
+                        {
+                            retVal = true;
+                            transction.Commit();
+                        }
+                        else
+                        {
+                            retVal = false;
+                            transction.Rollback();
+                        }
+                    }
+                    catch
+                    {
+                        retVal = false;
+                        transction.Rollback();
+                    }
+                }
+            }
+
+            return retVal;
         }
     }
 }
