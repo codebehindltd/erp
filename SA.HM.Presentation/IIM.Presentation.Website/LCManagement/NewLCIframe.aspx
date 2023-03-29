@@ -624,12 +624,12 @@
             var PaymentAmount = $("#ContentPlaceHolder1_txtTotalPaymentAmount").val() == "" ? 0.0 : $("#ContentPlaceHolder1_txtTotalPaymentAmount").val();
             var totalPaymentAmount = parseFloat(PaymentAmount) + (parseFloat(amount) * parseFloat(convertionRate));
             var purchaseAmount = $("#ContentPlaceHolder1_txtTotalPurchaseAmount").val() == "" ? 0.0 : parseFloat($("#ContentPlaceHolder1_txtTotalPurchaseAmount").val());
-            if (totalPaymentAmount > purchaseAmount) {
-                isClose = false;
-                toastr.warning("Can not add greater than purchase amount.");
-                $("#ContentPlaceHolder1_txtAmount").focus();
-                return false;
-            }
+            //if (totalPaymentAmount > purchaseAmount) {
+            //    isClose = false;
+            //    toastr.warning("Can not add greater than purchase amount.");
+            //    $("#ContentPlaceHolder1_txtAmount").focus();
+            //    return false;
+            //}
 
             var remarks = $("#ContentPlaceHolder1_txtRemarks").val();
             //if (remarks == "") {

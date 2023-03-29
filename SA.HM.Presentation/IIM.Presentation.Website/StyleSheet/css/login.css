@@ -1519,9 +1519,9 @@ input:checked+.slider:before {
         justify-content: space-evenly;
     }
 
-    .single-login-content {
+    /*.single-login-content {
         flex-basis: auto;
-    }
+    }*/
 
 }
 

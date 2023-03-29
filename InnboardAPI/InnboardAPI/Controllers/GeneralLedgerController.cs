@@ -47,5 +47,16 @@ namespace InnboardAPI.Controllers
             
             return Ok(result);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetVoucherInformation")]
+        public async Task<IHttpActionResult> GetVoucherInformation(int userId, int ledgerMasterId)
+        {
+            GLLedgerMasterDataAccess db = new GLLedgerMasterDataAccess();
+            var result = await db.GetVoucherInformation(userId, ledgerMasterId);
+
+            return Ok(result);
+        }
     }
 }

@@ -380,7 +380,7 @@
 				<TablixBody>
 					<TablixColumns>
 						<TablixColumn>
-							<Width>1.71643in</Width>
+							<Width>1.46643in</Width>
 						</TablixColumn>
 						<TablixColumn>
 							<Width>0.09483in</Width>
@@ -389,7 +389,7 @@
 							<Width>1.87688in</Width>
 						</TablixColumn>
 						<TablixColumn>
-							<Width>1.76042in</Width>
+							<Width>2.01042in</Width>
 						</TablixColumn>
 						<TablixColumn>
 							<Width>2.46431in</Width>
@@ -907,11 +907,11 @@
 							</TablixCells>
 						</TablixRow>
 						<TablixRow>
-							<Height>0.77084in</Height>
+							<Height>0.25in</Height>
 							<TablixCells>
 								<TablixCell>
 									<CellContents>
-										<Textbox Name="Textbox6">
+										<Textbox Name="Textbox8">
 											<CanGrow>true</CanGrow>
 											<KeepTogether>true</KeepTogether>
 											<Paragraphs>
@@ -927,6 +927,36 @@
 													</TextRuns>
 													<Style />
 												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox8</rd:DefaultName>
+											<Style>
+												<Border>
+													<Style>None</Style>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+										<ColSpan>5</ColSpan>
+									</CellContents>
+								</TablixCell>
+								<TablixCell />
+								<TablixCell />
+								<TablixCell />
+								<TablixCell />
+							</TablixCells>
+						</TablixRow>
+						<TablixRow>
+							<Height>0.18981in</Height>
+							<TablixCells>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox2">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
 												<Paragraph>
 													<TextRuns>
 														<TextRun>
@@ -939,17 +969,49 @@
 													</TextRuns>
 													<Style />
 												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox2</rd:DefaultName>
+											<Style>
+												<Border>
+													<Style>None</Style>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+										<ColSpan>5</ColSpan>
+									</CellContents>
+								</TablixCell>
+								<TablixCell />
+								<TablixCell />
+								<TablixCell />
+								<TablixCell />
+							</TablixCells>
+						</TablixRow>
+						<TablixRow>
+							<Height>0.33103in</Height>
+							<TablixCells>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="DisplayName">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
 												<Paragraph>
 													<TextRuns>
 														<TextRun>
-															<Value />
+															<Value xml:space="preserve">															</Value>
 															<Style>
 																<FontSize>8pt</FontSize>
 																<FontWeight>Normal</FontWeight>
 															</Style>
 														</TextRun>
 													</TextRuns>
-													<Style />
+													<Style>
+														<TextAlign>Left</TextAlign>
+													</Style>
 												</Paragraph>
 												<Paragraph>
 													<TextRuns>
@@ -964,7 +1026,7 @@
 													<Style />
 												</Paragraph>
 											</Paragraphs>
-											<rd:DefaultName>Textbox6</rd:DefaultName>
+											<rd:DefaultName>DisplayName</rd:DefaultName>
 											<Style>
 												<Border>
 													<Style>None</Style>
@@ -1097,7 +1159,7 @@
 												<Paragraph>
 													<TextRuns>
 														<TextRun>
-															<Value>Process Date</Value>
+															<Value>Process Month</Value>
 															<Style>
 																<FontSize>8pt</FontSize>
 																<FontWeight>Bold</FontWeight>
@@ -1648,7 +1710,20 @@
 												<Paragraph>
 													<TextRuns>
 														<TextRun>
-															<Value>WE TRUST THAT YOR ARE IN AGREEMENT WITH THE BALANCE SOWN ABOVE. IF SO, PLEASE SIGN WHILE RECEIVING THIS STATEMENT. SHOULD YOU HAVE ANY QUERIES, WHATSOEVER, REGARDING YOUR PROVIDENT FUND, PLEASE CONTACT THE SECRETARY OF THE BOARD OF TRUSTEES.</Value>
+															<Value />
+															<Style>
+																<FontSize>8pt</FontSize>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style>
+														<TextAlign>Left</TextAlign>
+													</Style>
+												</Paragraph>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>WE TRUST THAT YOR ARE IN AGREEMENT WITH THE BALANCE SOWN ABOVE. IF SO, PLEASE SIGN WHILE RECEIVING THIS STATEMENT. SHOULD YOU HAVE ANY QUERIES, WHATSOEVER, REGARDING YOUR PROVIDENT FUND, PLEASE CONTACT THE HR DEPARTMENT.</Value>
 															<Style>
 																<FontSize>8pt</FontSize>
 															</Style>
@@ -1687,7 +1762,7 @@
 												<Paragraph>
 													<TextRuns>
 														<TextRun>
-															<Value>THANKING YOU</Value>
+															<Value>THANK YOU FOR YOUR CONTINUED SERVICE TO THE COMPANY</Value>
 															<Style>
 																<FontSize>8pt</FontSize>
 															</Style>
@@ -1888,181 +1963,6 @@
 								</TablixCell>
 							</TablixCells>
 						</TablixRow>
-						<TablixRow>
-							<Height>0.5625in</Height>
-							<TablixCells>
-								<TablixCell>
-									<CellContents>
-										<Textbox Name="Textbox62">
-											<CanGrow>true</CanGrow>
-											<KeepTogether>true</KeepTogether>
-											<Paragraphs>
-												<Paragraph>
-													<TextRuns>
-														<TextRun>
-															<Value>Authorized Signature</Value>
-															<Style>
-																<FontSize>9pt</FontSize>
-																<FontWeight>Bold</FontWeight>
-															</Style>
-														</TextRun>
-													</TextRuns>
-													<Style>
-														<TextAlign>Left</TextAlign>
-													</Style>
-												</Paragraph>
-											</Paragraphs>
-											<rd:DefaultName>Textbox50</rd:DefaultName>
-											<ZIndex>5</ZIndex>
-											<Style>
-												<Border>
-													<Style>None</Style>
-												</Border>
-												<TopBorder>
-													<Style>Solid</Style>
-												</TopBorder>
-												<PaddingLeft>2pt</PaddingLeft>
-												<PaddingRight>2pt</PaddingRight>
-												<PaddingTop>2pt</PaddingTop>
-												<PaddingBottom>2pt</PaddingBottom>
-											</Style>
-										</Textbox>
-									</CellContents>
-								</TablixCell>
-								<TablixCell>
-									<CellContents>
-										<Textbox Name="Textbox133">
-											<CanGrow>true</CanGrow>
-											<KeepTogether>true</KeepTogether>
-											<Paragraphs>
-												<Paragraph>
-													<TextRuns>
-														<TextRun>
-															<Value />
-															<Style>
-																<FontSize>8pt</FontSize>
-															</Style>
-														</TextRun>
-													</TextRuns>
-													<Style>
-														<TextAlign>Left</TextAlign>
-													</Style>
-												</Paragraph>
-											</Paragraphs>
-											<rd:DefaultName>Textbox126</rd:DefaultName>
-											<Style>
-												<Border>
-													<Style>None</Style>
-												</Border>
-												<PaddingLeft>2pt</PaddingLeft>
-												<PaddingRight>2pt</PaddingRight>
-												<PaddingTop>2pt</PaddingTop>
-												<PaddingBottom>2pt</PaddingBottom>
-											</Style>
-										</Textbox>
-									</CellContents>
-								</TablixCell>
-								<TablixCell>
-									<CellContents>
-										<Textbox Name="Textbox131">
-											<CanGrow>true</CanGrow>
-											<KeepTogether>true</KeepTogether>
-											<Paragraphs>
-												<Paragraph>
-													<TextRuns>
-														<TextRun>
-															<Value />
-															<Style>
-																<FontSize>8pt</FontSize>
-															</Style>
-														</TextRun>
-													</TextRuns>
-													<Style>
-														<TextAlign>Left</TextAlign>
-													</Style>
-												</Paragraph>
-											</Paragraphs>
-											<rd:DefaultName>Textbox126</rd:DefaultName>
-											<Style>
-												<Border>
-													<Style>None</Style>
-												</Border>
-												<PaddingLeft>2pt</PaddingLeft>
-												<PaddingRight>2pt</PaddingRight>
-												<PaddingTop>2pt</PaddingTop>
-												<PaddingBottom>2pt</PaddingBottom>
-											</Style>
-										</Textbox>
-									</CellContents>
-								</TablixCell>
-								<TablixCell>
-									<CellContents>
-										<Textbox Name="Textbox58">
-											<CanGrow>true</CanGrow>
-											<KeepTogether>true</KeepTogether>
-											<Paragraphs>
-												<Paragraph>
-													<TextRuns>
-														<TextRun>
-															<Value />
-															<Style>
-																<FontSize>8pt</FontSize>
-															</Style>
-														</TextRun>
-													</TextRuns>
-													<Style>
-														<TextAlign>Left</TextAlign>
-													</Style>
-												</Paragraph>
-											</Paragraphs>
-											<rd:DefaultName>Textbox58</rd:DefaultName>
-											<Style>
-												<Border>
-													<Style>None</Style>
-												</Border>
-												<PaddingLeft>2pt</PaddingLeft>
-												<PaddingRight>2pt</PaddingRight>
-												<PaddingTop>2pt</PaddingTop>
-												<PaddingBottom>2pt</PaddingBottom>
-											</Style>
-										</Textbox>
-									</CellContents>
-								</TablixCell>
-								<TablixCell>
-									<CellContents>
-										<Textbox Name="Textbox129">
-											<CanGrow>true</CanGrow>
-											<KeepTogether>true</KeepTogether>
-											<Paragraphs>
-												<Paragraph>
-													<TextRuns>
-														<TextRun>
-															<Value />
-															<Style>
-																<FontSize>8pt</FontSize>
-															</Style>
-														</TextRun>
-													</TextRuns>
-													<Style>
-														<TextAlign>Left</TextAlign>
-													</Style>
-												</Paragraph>
-											</Paragraphs>
-											<rd:DefaultName>Textbox126</rd:DefaultName>
-											<Style>
-												<Border>
-													<Style>None</Style>
-												</Border>
-												<PaddingLeft>2pt</PaddingLeft>
-												<PaddingRight>2pt</PaddingRight>
-												<PaddingTop>2pt</PaddingTop>
-												<PaddingBottom>2pt</PaddingBottom>
-											</Style>
-										</Textbox>
-									</CellContents>
-								</TablixCell>
-							</TablixCells>
-						</TablixRow>
 					</TablixRows>
 				</TablixBody>
 				<TablixColumnHierarchy>
@@ -2131,6 +2031,12 @@
 											<KeepWithGroup>After</KeepWithGroup>
 										</TablixMember>
 										<TablixMember>
+											<KeepWithGroup>After</KeepWithGroup>
+										</TablixMember>
+										<TablixMember>
+											<KeepWithGroup>After</KeepWithGroup>
+										</TablixMember>
+										<TablixMember>
 											<Group Name="Details1" />
 										</TablixMember>
 									</TablixMembers>
@@ -2152,15 +2058,12 @@
 						<TablixMember>
 							<KeepWithGroup>Before</KeepWithGroup>
 						</TablixMember>
-						<TablixMember>
-							<KeepWithGroup>Before</KeepWithGroup>
-						</TablixMember>
 					</TablixMembers>
 				</TablixRowHierarchy>
 				<RepeatRowHeaders>true</RepeatRowHeaders>
 				<DataSetName>PFReport</DataSetName>
 				<Top>1.16919in</Top>
-				<Height>4.91372in</Height>
+				<Height>4.35122in</Height>
 				<Width>7.91287in</Width>
 				<ZIndex>2</ZIndex>
 				<Style>
@@ -2176,7 +2079,7 @@
 					<Paragraph>
 						<TextRuns>
 							<TextRun>
-								<Value>Provident Fund Statement</Value>
+								<Value>Statement of Employee Provident Fund (PF)</Value>
 								<Style>
 									<FontFamily>Tahoma</FontFamily>
 									<FontSize>12pt</FontSize>
@@ -2209,10 +2112,10 @@
 		<Height>6.65879in</Height>
 		<Style />
 	</Body>
-	<Width>7.91287in</Width>
+	<Width>7.9175in</Width>
 	<Page>
 		<PageFooter>
-			<Height>0.26041in</Height>
+			<Height>0.66435in</Height>
 			<PrintOnFirstPage>true</PrintOnFirstPage>
 			<PrintOnLastPage>true</PrintOnLastPage>
 			<ReportItems>
@@ -2238,7 +2141,7 @@
 						</Paragraph>
 					</Paragraphs>
 					<rd:DefaultName>Textbox7</rd:DefaultName>
-					<Top>0.02084in</Top>
+					<Top>0.39584in</Top>
 					<Left>0.00745in</Left>
 					<Height>0.20833in</Height>
 					<Width>4.57249in</Width>
@@ -2271,7 +2174,7 @@
 						</Paragraph>
 					</Paragraphs>
 					<rd:DefaultName>Textbox1</rd:DefaultName>
-					<Top>0.02084in</Top>
+					<Top>0.39584in</Top>
 					<Left>5.78889in</Left>
 					<Height>0.20833in</Height>
 					<Width>0.58412in</Width>
@@ -2307,7 +2210,7 @@
 						</Paragraph>
 					</Paragraphs>
 					<rd:DefaultName>Textbox67</rd:DefaultName>
-					<Top>0.02084in</Top>
+					<Top>0.39584in</Top>
 					<Left>6.38639in</Left>
 					<Height>0.20833in</Height>
 					<Width>0.12944in</Width>
@@ -2342,11 +2245,49 @@
 						</Paragraph>
 					</Paragraphs>
 					<rd:DefaultName>RoomNumber</rd:DefaultName>
-					<Top>0.02084in</Top>
+					<Top>0.39584in</Top>
 					<Left>6.53112in</Left>
 					<Height>0.20833in</Height>
 					<Width>1.3618in</Width>
 					<ZIndex>3</ZIndex>
+					<Style>
+						<Border>
+							<Style>None</Style>
+						</Border>
+						<PaddingLeft>2pt</PaddingLeft>
+						<PaddingRight>2pt</PaddingRight>
+						<PaddingTop>2pt</PaddingTop>
+						<PaddingBottom>2pt</PaddingBottom>
+					</Style>
+				</Textbox>
+				<Textbox Name="Textbox1">
+					<CanGrow>true</CanGrow>
+					<KeepTogether>true</KeepTogether>
+					<Paragraphs>
+						<Paragraph>
+							<TextRuns>
+								<TextRun>
+									<Value>[Note: This is a computer generated copy and does not require signature and stamp]</Value>
+									<Style>
+										<FontStyle>Normal</FontStyle>
+										<FontFamily>Times New Roman</FontFamily>
+										<FontWeight>Normal</FontWeight>
+										<TextDecoration>None</TextDecoration>
+										<Color>#000000</Color>
+									</Style>
+								</TextRun>
+							</TextRuns>
+							<Style>
+								<TextAlign>Center</TextAlign>
+							</Style>
+						</Paragraph>
+					</Paragraphs>
+					<rd:DefaultName>Textbox1</rd:DefaultName>
+					<Top>0.0306in</Top>
+					<Left>0.00463in</Left>
+					<Height>0.25in</Height>
+					<Width>7.91287in</Width>
+					<ZIndex>4</ZIndex>
 					<Style>
 						<Border>
 							<Style>None</Style>

@@ -38,11 +38,21 @@ namespace InnboardDataAccess.DataAccesses
             var narration = string.IsNullOrEmpty(criteriaDto.narration) ? "null" : "'" + criteriaDto.narration + "'";
             var voucherType = string.IsNullOrEmpty(criteriaDto.voucherType) ? "null" : "'" + criteriaDto.voucherType + "'";
             var voucherStatus = string.IsNullOrEmpty(criteriaDto.voucherStatus) ? "null" : "'" + criteriaDto.voucherStatus + "'";
+            var fromDate = criteriaDto.fromDate==null ? "null" : "'" + criteriaDto.fromDate + "'";
+            var toDate = criteriaDto.toDate==null ? "null" : "'" + criteriaDto.toDate + "'";
 
-            string query = $@"EXEC [dbo].[GetVoucherBySearchCriteria_SP] {criteriaDto.companyId}, {criteriaDto.projectId}, {criteriaDto.userGroupId}, {criteriaDto.userInfoId}, '{criteriaDto.fromDate}', '{criteriaDto.toDate}'," + voucherNo + $", " + referenceNo + $", " + referenceVoucherNo + $", " + narration + $", " + voucherType + $", " + voucherStatus + $", {criteriaDto.pageParams.PageSize}, {criteriaDto.pageParams.PageNumber}, NULL";
+            string query = $@"EXEC [dbo].[GetVoucherBySearchCriteria_SP] {criteriaDto.companyId}, {criteriaDto.projectId}, {criteriaDto.userGroupId}, {criteriaDto.userInfoId}, " + fromDate+ $", " + toDate + $", " + voucherNo + $", " + referenceNo + $", " + referenceVoucherNo + $", " + narration + $", " + voucherType + $", " + voucherStatus + $", {criteriaDto.pageParams.PageSize}, {criteriaDto.pageParams.PageNumber}, NULL";
             voucherSearch = await InnboardDBContext.Database.SqlQuery<GLLedgerMasterVwBO>(query).ToListAsync();
 
             return voucherSearch;
+        }
+
+        public async Task<List<GLLedgerMasterVwBO>> GetVoucherInformation(int userId, int ledgerMasterId)
+        {
+            
+            string query = $@"EXEC [dbo].[GetVoucherInformationForApps_SP] {userId}, {ledgerMasterId}";
+            var result= await InnboardDBContext.Database.SqlQuery<GLLedgerMasterVwBO>(query).ToListAsync();
+            return result;
         }
     }
 }

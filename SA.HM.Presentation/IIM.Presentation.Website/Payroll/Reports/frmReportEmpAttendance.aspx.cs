@@ -308,14 +308,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 reportType = "-1";
                 if (employeeId == 0)
                 {
-                    if (rosterDateFrom.Date == rosterDateTo.Date)
-                    {
-                        reportPath = Server.MapPath(@"~/Payroll/Reports/Rdlc/RptEmployeeAttendanceSingleDay.rdlc");
-                    }
-                    else
-                    {
-                        reportPath = Server.MapPath(@"~/Payroll/Reports/Rdlc/RptDepartmentWiseEmployeeAttendance.rdlc");
-                    }
+                    reportPath = Server.MapPath(@"~/Payroll/Reports/Rdlc/RptDepartmentWiseEmployeeAttendance.rdlc");
                 }
                 else
                 {
