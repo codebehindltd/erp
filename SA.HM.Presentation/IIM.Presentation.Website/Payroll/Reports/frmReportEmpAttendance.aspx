@@ -210,7 +210,7 @@
                             <%--<asp:ListItem Value="1" Text="Attendance Log"></asp:ListItem>--%>
                             <%--<asp:ListItem Value="2" Text="Without Clock Out"></asp:ListItem>--%>
                             <asp:ListItem Value="3" Text="Late Attendance"></asp:ListItem>
-                           <%-- <asp:ListItem Value="4" Text="Overtime Report"></asp:ListItem>--%>
+                            <asp:ListItem Value="4" Text="Overtime Report"></asp:ListItem>
                             <asp:ListItem Value="5" Text="Department Wise Attendance"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
