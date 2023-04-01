@@ -305,6 +305,7 @@ namespace HotelManagement.Data.Payroll
                         {
                             using (DbCommand command = dbSmartAspects.GetStoredProcCommand("MonthlySalaryProcessTemp_SP"))
                             {
+                                command.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                                 dbSmartAspects.AddInParameter(command, "@CompanyId", DbType.Int16, companyId);
                                 dbSmartAspects.AddInParameter(command, "@ProjectId", DbType.Int16, projectId);
                                 dbSmartAspects.AddInParameter(command, "@SalaryDateFrom", DbType.DateTime, salaryMonthStartDate);
@@ -319,6 +320,7 @@ namespace HotelManagement.Data.Payroll
                         {
                             using (DbCommand command = dbSmartAspects.GetStoredProcCommand("MonthlySalaryProcessForRedcrossTemp_SP"))
                             {
+                                command.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                                 dbSmartAspects.AddInParameter(command, "@SalaryDateFrom", DbType.DateTime, salaryMonthStartDate);
                                 dbSmartAspects.AddInParameter(command, "@SalaryDateTo", DbType.DateTime, salaryMonthEndDate);
                                 dbSmartAspects.AddInParameter(command, "@SalaryYear", DbType.Int16, salaryYear);
@@ -331,6 +333,7 @@ namespace HotelManagement.Data.Payroll
                         {
                             using (DbCommand command = dbSmartAspects.GetStoredProcCommand("MonthlySalaryProcessIPTechTemp_SP"))
                             {
+                                command.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                                 dbSmartAspects.AddInParameter(command, "@SalaryDateFrom", DbType.DateTime, salaryMonthStartDate);
                                 dbSmartAspects.AddInParameter(command, "@SalaryDateTo", DbType.DateTime, salaryMonthEndDate);
                                 dbSmartAspects.AddInParameter(command, "@SalaryYear", DbType.Int16, salaryYear);
@@ -343,6 +346,7 @@ namespace HotelManagement.Data.Payroll
                         {
                             using (DbCommand command = dbSmartAspects.GetStoredProcCommand("MonthlySalaryProcessForSouthSudanTemp_SP"))
                             {
+                                command.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                                 dbSmartAspects.AddInParameter(command, "@SalaryDateFrom", DbType.DateTime, salaryMonthStartDate);
                                 dbSmartAspects.AddInParameter(command, "@SalaryDateTo", DbType.DateTime, salaryMonthEndDate);
                                 dbSmartAspects.AddInParameter(command, "@SalaryYear", DbType.Int16, salaryYear);
