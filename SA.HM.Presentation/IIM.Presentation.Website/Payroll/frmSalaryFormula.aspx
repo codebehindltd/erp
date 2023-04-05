@@ -696,14 +696,16 @@
         function ResetForm() {
             $("#ContentPlaceHolder1_searchEmployee_hfEmployeeId").val("0");
             $("#EmployeeWiseSalaryFormulatbl tbody").html("");
-            $("#ContentPlaceHolder1_ddlTransactionType").val("Individual");
+            $("#ContentPlaceHolder1_ddlBasicGrossTransactionType").val("Grade");
+            $("#ContentPlaceHolder1_ddlTransactionType").val("Grade");
+            $("#EmplyeeWiseSalaryFormula").hide();
+            $("#GroupWiseSalaryFormula").show();
         }
     </script>
     <asp:HiddenField ID="hfGLCompanyId" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfGLProjectId" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfGLCompanyName" runat="server"></asp:HiddenField>
-    <asp:HiddenField ID="hfGLProjectName" runat="server"></asp:HiddenField>
-   
+    <asp:HiddenField ID="hfGLProjectName" runat="server"></asp:HiddenField>   
     <asp:HiddenField ID="CommonDropDownHiddenField" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="selectedDependsOn" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="txtIsIndividual" runat="server"></asp:HiddenField>
