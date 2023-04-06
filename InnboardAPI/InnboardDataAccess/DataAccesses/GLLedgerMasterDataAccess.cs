@@ -55,5 +55,24 @@ namespace InnboardDataAccess.DataAccesses
             var result= await InnboardDBContext.Database.SqlQuery<GLLedgerMasterVwBO>("EXEC [dbo].[GetVoucherInformationForApps_SP] @UserInfoId, @LedgerMasterId", param1, param2).ToListAsync();
             return result;
         }
+
+        public bool VoucherApproval(GLLedgerMasterVwBO model)
+        {
+            
+            SqlParameter param1 = new SqlParameter("@LedgerMasterId", model.LedgerMasterId);
+            SqlParameter param2 = new SqlParameter("@GLStatus", model.GLStatus);
+            SqlParameter param3 = new SqlParameter("@ApprovedBy", model.UserInfoId);
+            //string query = $@"EXEC [dbo].[GetVoucherInformationForApps_SP] {userId}, {ledgerMasterId}";
+            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[UpdateVoucherApprovalStatus_SP]  @LedgerMasterId, @GLStatus, @ApprovedBy", param1, param2, param3);
+            
+            if(result> 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

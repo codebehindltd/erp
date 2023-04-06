@@ -1,6 +1,7 @@
 ﻿using InnboardDataAccess.DataAccesses;
 using InnboardDomain.CriteriaDtoModel;
 using InnboardDomain.Models;
+using InnboardDomain.ViewModel;
 using InnboardService.Services;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,42 @@ namespace InnboardAPI.Controllers
             var result = await db.GetVoucherInformation(userId, ledgerMasterId);
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("VoucherApproval")]
+        public async Task<HttpResponseMessage> VoucherApproval([FromBody] GLLedgerMasterVwBO model)
+        {
+            try { 
+                GLLedgerMasterDataAccess db = new GLLedgerMasterDataAccess();
+                var isSuccess = db.VoucherApproval(model);
+
+                if (isSuccess)
+                {
+                    var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                    {
+                        Content = new StringContent("Succesfully Done")
+                    };
+                    return responseMsg;
+                }
+                else
+                {
+                    var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+                    {
+                        Content = new StringContent("Bad Request")
+                    };
+                    return responseMsg;
+                }
+            }
+             catch (Exception ex)
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent(ex.Message)
+                };
+                return responseMsg;
+            }
         }
     }
 }

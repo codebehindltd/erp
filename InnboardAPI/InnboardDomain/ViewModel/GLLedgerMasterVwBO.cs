@@ -10,6 +10,7 @@ namespace InnboardDomain.ViewModel
     public class GLLedgerMasterVwBO
     {
         public long LedgerMasterId { get; set; }
+        public int UserInfoId { get; set; }
         public int CompanyId { get; set; }
         public int ProjectId { get; set; }
         public Nullable<int> DonorId { get; set; }
