@@ -28,6 +28,8 @@ using HotelManagement.Entity.SalesAndMarketing;
 using HotelManagement.Data.SalesAndMarketing;
 using HotelManagement.Data.GeneralLedger;
 using HotelManagement.Entity.GeneralLedger;
+using HotelManagement.Entity.PurchaseManagment;
+using HotelManagement.Data.PurchaseManagment;
 
 namespace HotelManagement.Presentation.Website.POS
 {
@@ -267,6 +269,14 @@ namespace HotelManagement.Presentation.Website.POS
             costCentreTabBO = costCentreTabDA.GetCostCentreTabInfoById(costCenterId);
             if (costCentreTabBO.CostCenterId > 0)
             {
+                hfIsRiceMillBillingEnable.Value = "0";
+                if (costCentreTabBO.CompanyType == "RiceMill")
+                {
+                    hfIsAttributeItem.Value = "0";
+                    hfIsItemAttributeEnable.Value = "0";
+                    hfIsRiceMillBillingEnable.Value = "1";
+                }
+
                 hfBillPrefixCostcentrwise.Value = costCentreTabBO.BillNumberPrefix;
                 if (costCentreTabBO.IsVatEnable == true)
                 {
@@ -1012,13 +1022,13 @@ namespace HotelManagement.Presentation.Website.POS
 
             return rtninf;
         }
-
         [WebMethod]
         public static ReturnInfo BillSettlement(int kotId, int memberId, RestaurantBillBO RestaurantBill, List<GuestBillPaymentBO> BillPayment,
                                                 List<KotBillDetailBO> BillDetails, List<KotBillDetailBO> EditeDetails,
-                                                List<KotBillDetailBO> DeletedDetails, List<RestaurantSalesReturnItemBO> SalesReturnItem, string EstimatedDoneDate, int IsTaskAutoGenarate)
+                                                List<KotBillDetailBO> DeletedDetails, List<RestaurantSalesReturnItemBO> SalesReturnItem, string EstimatedDoneDate, int IsTaskAutoGenarate,
+                                                List<PMProductOutSerialInfoBO> AddedSerialzableProduct, List<PMProductOutSerialInfoBO> DeletedSerialzableProduct)
         {
-            ReturnInfo rtninf = new ReturnInfo();
+            ReturnInfo rtninfo = new ReturnInfo();
             KotBillMasterBO billmaster = new KotBillMasterBO();
             UserInformationBO userInformationBO = new UserInformationBO();
             CostCentreTabDA costCenterDa = new CostCentreTabDA();
@@ -1027,34 +1037,64 @@ namespace HotelManagement.Presentation.Website.POS
             InvItemBO productBO = new InvItemBO();
             InvItemDA productDA = new InvItemDA();
 
-            // productBO = productDA.GetInvItemInfoById(0, 1);
+            // // Serial Product Related Code
+            string serialId = string.Empty, message = string.Empty;
+            List<SerialDuplicateBO> serial = new List<SerialDuplicateBO>();
+            foreach (PMProductOutSerialInfoBO srl in AddedSerialzableProduct.Where(s => s.OutSerialId == 0))
+            {
+                if (serialId != string.Empty)
+                {
+                    serialId += "," + srl.SerialNumber;
+                }
+                else
+                {
+                    serialId = srl.SerialNumber;
+                }
+            }
 
-            //
+            PMProductOutDA outDa = new PMProductOutDA();
+            CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
+            CostCentreTabBO costCentreTabBO = new CostCentreTabBO();
+            costCentreTabBO = costCentreTabDA.GetCostCentreTabInfoById(RestaurantBill.CostCenterId);
+            if (costCentreTabBO.CostCenterId > 0)
+            {
+                if (!string.IsNullOrEmpty(serialId))
+                    serial = outDa.SerialAvailabilityCheck(serialId, Convert.ToInt64(costCentreTabBO.DefaultStockLocationId));
+
+                foreach (SerialDuplicateBO p in serial)
+                {
+                    if (message != "")
+                        message = ", " + p.ItemName + "(" + p.SerialNumber + ")";
+                    else
+                        message = p.ItemName + "(" + p.SerialNumber + ")";
+                }
+
+                if (!string.IsNullOrEmpty(message))
+                {
+                    rtninfo.IsSuccess = false;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo("This Item Serial Does Not Exists. " + message, AlertType.Error);
+                    return rtninfo;
+                }
+
+            }
+            // // End Serial Product Related Code
 
             List<InvItemAutoSearchBO> itemInfo = new List<InvItemAutoSearchBO>();
-            // CostCentreTabDA costCenterDa = new CostCentreTabDA();
             List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
             InvItemDA itemDa = new InvItemDA();
 
             costCentreTabBOList = costCenterDa.GetCostCentreTabInfoByType("Billing");
-
             var costCenterId = RestaurantBill.CostCenterId;
-
             itemInfo = itemDa.GetItemByCodeCategoryNameWiseItemDetailsForAutoSearchForBilling("", "", "", costCenterId);
 
             List<InvItemCostCenterMappingBO> costListKitchenItem = new List<InvItemCostCenterMappingBO>();
             InvItemCostCenterMappingDA costKitchenItemDA = new InvItemCostCenterMappingDA();
-
-
-            //
 
             if (itemInfo.Count > 0)
             {
                 productBO = productDA.GetInvItemInfoById(0, itemInfo[0].ItemId);
                 costListKitchenItem = costKitchenItemDA.GetInvItemCostCenterMappingByItemId(itemInfo[0].ItemId);
             }
-
-
 
             for (int i = 0; i < BillDetails.Count; i++)
             {
@@ -1073,26 +1113,18 @@ namespace HotelManagement.Presentation.Website.POS
                         BillDetails[i].ItemId = tmpProductId;
                     }
                 }
-
             }
-
-
-            //List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
 
             int billId = 0;
 
             try
             {
-                // costCentreTabBOList = costCenterDa.GetCostCentreTabInfoByType("Billing");
-
                 userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
                 billmaster.KotId = kotId;
-
                 RestaurantBill.BearerId = userInformationBO.UserInfoId;
                 RestaurantBill.CreatedBy = userInformationBO.UserInfoId;
                 RestaurantBill.BillDate = DateTime.Now;
                 RestaurantBill.BillPaymentDate = DateTime.Now;
-
                 billmaster.CostCenterId = costCenterId;
 
                 if (RestaurantBill.IsBillReSettlement)
@@ -1104,14 +1136,6 @@ namespace HotelManagement.Presentation.Website.POS
 
                 RestaurantBill.CostCenterId = billmaster.CostCenterId;
 
-                RestaurantBillBO billBO = new RestaurantBillBO();
-                billBO = posda.GetBillInfoForRetailPosByBillId(RestaurantBill.BillId);
-                if (billBO.BillId > 0)
-                {
-                    RestaurantBill.BillDate = billBO.BillDate;
-                }
-
-
                 if (kotId == 0)
                 {
                     billmaster.SourceId = 1;
@@ -1121,26 +1145,22 @@ namespace HotelManagement.Presentation.Website.POS
                     billmaster.KotStatus = ConstantHelper.KotStatus.settled.ToString();
                     billmaster.CreatedBy = userInformationBO.UserInfoId;
                     billmaster.IsBillHoldup = false;
-
-                    posda.SaveRestaurantBillForPos("Billing", billmaster, BillDetails, RestaurantBill, BillPayment, SalesReturnItem, null, true, true, out billId, memberId);
+                    posda.SaveRestaurantBillForBilling("Billing", billmaster, BillDetails, AddedSerialzableProduct, DeletedSerialzableProduct, RestaurantBill, BillPayment, SalesReturnItem, null, true, true, out billId, memberId);
                 }
                 else if (kotId > 0 && RestaurantBill.BillId == 0)
                 {
                     billmaster.IsBillHoldup = false;
                     billmaster.IsBillProcessed = true;
                     billmaster.KotStatus = "settled";
-
                     RestaurantBill.LastModifiedBy = userInformationBO.UserInfoId;
                     RestaurantBill.BillPaidBySourceId = kotId;
                     RestaurantBill.CreatedBy = userInformationBO.UserInfoId;
-
                     posda.UpdateRestaurantBillForPos("Billing", kotId, billmaster, BillDetails, EditeDetails, DeletedDetails, RestaurantBill, BillPayment, null, true, true, out billId);
                 }
                 else if (kotId > 0 && RestaurantBill.BillId > 0)
                 {
                     billId = RestaurantBill.BillId;
                     RestaurantBill.BillPaidBySourceId = kotId;
-
                     posda.UpdateForRestauranBillReSettlement("Billing", kotId, RestaurantBill, BillDetails, EditeDetails, DeletedDetails, BillPayment);
                 }
 
@@ -1149,7 +1169,6 @@ namespace HotelManagement.Presentation.Website.POS
 
                 if (IsTaskAutoGenarate > 0)
                 {
-
                     RetailPosBillReturnBO restaurantBill = new RetailPosBillReturnBO();
                     RestaurentPosDA rda = new RestaurentPosDA();
                     restaurantBill = rda.RetailPosBill(billId);
@@ -1170,48 +1189,234 @@ namespace HotelManagement.Presentation.Website.POS
                     task.EstimatedDoneDate = Convert.ToDateTime(EstimatedDoneDate);
                     task.EstimatedDoneHour = 0;
                     task.EndTime = Convert.ToDateTime(EstimatedDoneDate);
-
                     task.CreatedBy = userInformationBO.UserInfoId;
                     status = taskDA.SaveOrUpdateTask(task, "", out id);
-
                 }
 
                 posda.SaveMembershipPointDetails(RestaurantBill, memberId, billId);
-                if (IsTaskAutoGenarate > 0 && RestaurantBill.BillId == 0)
+                if (IsTaskAutoGenarate > 0)
                 {
-                    rtninf.Pk = billId;
-                    rtninf.IsSuccess = true;
-                    rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillSettlement + " AND " + AlertMessage.TaskCreate, AlertType.Success);
-                }
-                else if (IsTaskAutoGenarate > 0 && RestaurantBill.BillId > 0)
-                {
-                    rtninf.Pk = billId;
-                    rtninf.IsSuccess = true;
-                    rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillReSettlement + " AND " + AlertMessage.TaskCreate, AlertType.Success);
-                }
-                if (RestaurantBill.BillId > 0)
-                {
-                    rtninf.Pk = billId;
-                    rtninf.IsSuccess = true;
-                    rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillReSettlement, AlertType.Success);
+                    rtninfo.Pk = billId;
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillSettlement + " AND " + AlertMessage.TaskCreate, AlertType.Success);
                 }
                 else
                 {
-                    rtninf.Pk = billId;
-                    rtninf.IsSuccess = true;
-                    rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillSettlement, AlertType.Success);
+                    rtninfo.Pk = billId;
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillSettlement, AlertType.Success);
                 }
 
-
+                posda.BillingAccountsVoucherPostingProcess(billId);
             }
             catch (Exception ex)
             {
-                rtninf.IsSuccess = false;
-                rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                rtninfo.IsSuccess = false;
+                rtninfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
             }
 
-            return rtninf;
+            return rtninfo;
         }
+
+        //[WebMethod]
+        //public static ReturnInfo BillSettlement(int kotId, int memberId, RestaurantBillBO RestaurantBill, List<GuestBillPaymentBO> BillPayment,
+        //                                        List<KotBillDetailBO> BillDetails, List<KotBillDetailBO> EditeDetails,
+        //                                        List<KotBillDetailBO> DeletedDetails, List<RestaurantSalesReturnItemBO> SalesReturnItem, string EstimatedDoneDate, int IsTaskAutoGenarate)
+        //{
+        //    ReturnInfo rtninf = new ReturnInfo();
+        //    KotBillMasterBO billmaster = new KotBillMasterBO();
+        //    UserInformationBO userInformationBO = new UserInformationBO();
+        //    CostCentreTabDA costCenterDa = new CostCentreTabDA();
+        //    RestaurentPosDA posda = new RestaurentPosDA();
+        //    HMUtility hmUtility = new HMUtility();
+        //    InvItemBO productBO = new InvItemBO();
+        //    InvItemDA productDA = new InvItemDA();
+
+        //    // productBO = productDA.GetInvItemInfoById(0, 1);
+
+        //    //
+
+        //    List<InvItemAutoSearchBO> itemInfo = new List<InvItemAutoSearchBO>();
+        //    // CostCentreTabDA costCenterDa = new CostCentreTabDA();
+        //    List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
+        //    InvItemDA itemDa = new InvItemDA();
+
+        //    costCentreTabBOList = costCenterDa.GetCostCentreTabInfoByType("Billing");
+
+        //    var costCenterId = RestaurantBill.CostCenterId;
+
+        //    itemInfo = itemDa.GetItemByCodeCategoryNameWiseItemDetailsForAutoSearchForBilling("", "", "", costCenterId);
+
+        //    List<InvItemCostCenterMappingBO> costListKitchenItem = new List<InvItemCostCenterMappingBO>();
+        //    InvItemCostCenterMappingDA costKitchenItemDA = new InvItemCostCenterMappingDA();
+
+
+        //    //
+
+        //    if (itemInfo.Count > 0)
+        //    {
+        //        productBO = productDA.GetInvItemInfoById(0, itemInfo[0].ItemId);
+        //        costListKitchenItem = costKitchenItemDA.GetInvItemCostCenterMappingByItemId(itemInfo[0].ItemId);
+        //    }
+
+
+
+        //    for (int i = 0; i < BillDetails.Count; i++)
+        //    {
+        //        if (BillDetails[i].ItemId == 0)
+        //        {
+        //            productBO.ItemId = 0;
+        //            productBO.Code = "";
+        //            productBO.Name = BillDetails[i].ItemName;
+        //            productBO.DisplayName = BillDetails[i].ItemName;
+        //            productBO.ItemType = BillDetails[i].ItemType;
+        //            int tmpProductId = 0;
+
+        //            Boolean status = productDA.SaveInvItemInfo(productBO, null, costListKitchenItem, null, out tmpProductId);
+        //            if (status)
+        //            {
+        //                BillDetails[i].ItemId = tmpProductId;
+        //            }
+        //        }
+
+        //    }
+
+
+        //    //List<CostCentreTabBO> costCentreTabBOList = new List<CostCentreTabBO>();
+
+        //    int billId = 0;
+
+        //    try
+        //    {
+        //        // costCentreTabBOList = costCenterDa.GetCostCentreTabInfoByType("Billing");
+
+        //        userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+        //        billmaster.KotId = kotId;
+
+        //        RestaurantBill.BearerId = userInformationBO.UserInfoId;
+        //        RestaurantBill.CreatedBy = userInformationBO.UserInfoId;
+        //        RestaurantBill.BillDate = DateTime.Now;
+        //        RestaurantBill.BillPaymentDate = DateTime.Now;
+
+        //        billmaster.CostCenterId = costCenterId;
+
+        //        if (RestaurantBill.IsBillReSettlement)
+        //        {
+        //            billmaster.ReferenceKotId = kotId;
+        //            billmaster.IsKotReturn = true;
+        //            kotId = 0;
+        //        }
+
+        //        RestaurantBill.CostCenterId = billmaster.CostCenterId;
+
+        //        RestaurantBillBO billBO = new RestaurantBillBO();
+        //        billBO = posda.GetBillInfoForRetailPosByBillId(RestaurantBill.BillId);
+        //        if (billBO.BillId > 0)
+        //        {
+        //            RestaurantBill.BillDate = billBO.BillDate;
+        //        }
+
+
+        //        if (kotId == 0)
+        //        {
+        //            billmaster.SourceId = 1;
+        //            billmaster.PaxQuantity = 1;
+        //            billmaster.SourceName = "RestaurantToken";
+        //            billmaster.BearerId = userInformationBO.UserInfoId;
+        //            billmaster.KotStatus = ConstantHelper.KotStatus.settled.ToString();
+        //            billmaster.CreatedBy = userInformationBO.UserInfoId;
+        //            billmaster.IsBillHoldup = false;
+
+        //            posda.SaveRestaurantBillForPos("Billing", billmaster, BillDetails, RestaurantBill, BillPayment, SalesReturnItem, null, true, true, out billId, memberId);
+        //        }
+        //        else if (kotId > 0 && RestaurantBill.BillId == 0)
+        //        {
+        //            billmaster.IsBillHoldup = false;
+        //            billmaster.IsBillProcessed = true;
+        //            billmaster.KotStatus = "settled";
+
+        //            RestaurantBill.LastModifiedBy = userInformationBO.UserInfoId;
+        //            RestaurantBill.BillPaidBySourceId = kotId;
+        //            RestaurantBill.CreatedBy = userInformationBO.UserInfoId;
+
+        //            posda.UpdateRestaurantBillForPos("Billing", kotId, billmaster, BillDetails, EditeDetails, DeletedDetails, RestaurantBill, BillPayment, null, true, true, out billId);
+        //        }
+        //        else if (kotId > 0 && RestaurantBill.BillId > 0)
+        //        {
+        //            billId = RestaurantBill.BillId;
+        //            RestaurantBill.BillPaidBySourceId = kotId;
+
+        //            posda.UpdateForRestauranBillReSettlement("Billing", kotId, RestaurantBill, BillDetails, EditeDetails, DeletedDetails, BillPayment);
+        //        }
+
+        //        CommonDA commonDA = new CommonDA();
+        //        bool autoProcessStatus = commonDA.AutoCompanyBillGenerationProcess("Restaurant", billId, userInformationBO.UserInfoId);
+
+        //        if (IsTaskAutoGenarate > 0)
+        //        {
+
+        //            RetailPosBillReturnBO restaurantBill = new RetailPosBillReturnBO();
+        //            RestaurentPosDA rda = new RestaurentPosDA();
+        //            restaurantBill = rda.RetailPosBill(billId);
+
+        //            AssignTaskDA taskDA = new AssignTaskDA();
+        //            SMTask task = new SMTask();
+        //            bool status = false;
+        //            long id;
+        //            task.Id = 0;
+        //            task.TaskName = "Auto New Task (" + restaurantBill.PosBillWithSalesReturn[0].BillNumber + ")";
+        //            task.TaskDate = DateTime.Now;
+        //            task.StartTime = DateTime.Now;
+        //            task.TaskType = "Billing";
+        //            task.TaskStage = 0;
+        //            task.ParentTaskId = 0;
+        //            task.DependentTaskId = 0;
+        //            task.SourceNameId = billId;
+        //            task.EstimatedDoneDate = Convert.ToDateTime(EstimatedDoneDate);
+        //            task.EstimatedDoneHour = 0;
+        //            task.EndTime = Convert.ToDateTime(EstimatedDoneDate);
+
+        //            task.CreatedBy = userInformationBO.UserInfoId;
+        //            status = taskDA.SaveOrUpdateTask(task, "", out id);
+
+        //        }
+
+        //        posda.SaveMembershipPointDetails(RestaurantBill, memberId, billId);
+        //        if (IsTaskAutoGenarate > 0 && RestaurantBill.BillId == 0)
+        //        {
+        //            rtninf.Pk = billId;
+        //            rtninf.IsSuccess = true;
+        //            rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillSettlement + " AND " + AlertMessage.TaskCreate, AlertType.Success);
+        //        }
+        //        else if (IsTaskAutoGenarate > 0 && RestaurantBill.BillId > 0)
+        //        {
+        //            rtninf.Pk = billId;
+        //            rtninf.IsSuccess = true;
+        //            rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillReSettlement + " AND " + AlertMessage.TaskCreate, AlertType.Success);
+        //        }
+        //        if (RestaurantBill.BillId > 0)
+        //        {
+        //            rtninf.Pk = billId;
+        //            rtninf.IsSuccess = true;
+        //            rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillReSettlement, AlertType.Success);
+        //        }
+        //        else
+        //        {
+        //            rtninf.Pk = billId;
+        //            rtninf.IsSuccess = true;
+        //            rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.BillSettlement, AlertType.Success);
+        //        }
+
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        rtninf.IsSuccess = false;
+        //        rtninf.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+        //    }
+
+        //    return rtninf;
+        //}
         [WebMethod]
         public static ReturnInfo BillHoldup(int kotId, List<KotBillDetailBO> BillDetails, List<KotBillDetailBO> EditeDetails, List<KotBillDetailBO> DeletedDetails)
         {

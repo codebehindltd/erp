@@ -13,6 +13,33 @@ namespace HotelManagement.Presentation.Website.POS {
     public partial class BillingResettlement {
         
         /// <summary>
+        /// hfIsAttributeItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsAttributeItem;
+        
+        /// <summary>
+        /// hfIsItemAttributeEnable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsItemAttributeEnable;
+        
+        /// <summary>
+        /// hfIsRiceMillBillingEnable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsRiceMillBillingEnable;
+        
+        /// <summary>
         /// hfIsRestaurantIntegrateWithCompany control.
         /// </summary>
         /// <remarks>

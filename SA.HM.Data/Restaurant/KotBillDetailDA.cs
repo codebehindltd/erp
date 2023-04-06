@@ -607,6 +607,8 @@ namespace HotelManagement.Data.Restaurant
                                 entityBO.CategoryId = Convert.ToInt32(reader["CategoryId"]);
                                 entityBO.UnitHead = reader["UnitHead"].ToString();
                                 entityBO.Remarks = reader["Remarks"].ToString();
+                                entityBO.BagWeight = Convert.ToInt32(reader["BagWeight"]);
+                                entityBO.NoOfBag = Convert.ToInt32(reader["NoOfBag"]);
 
                                 entityBO.ItemType = reader["ItemType"].ToString();
                                 entityBO.ItemId = Convert.ToInt32(reader["ItemId"]);

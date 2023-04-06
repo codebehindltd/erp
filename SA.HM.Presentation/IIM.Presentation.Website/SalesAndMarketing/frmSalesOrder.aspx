@@ -135,12 +135,12 @@
                 document.getElementById("stIdd").style.display = "none";
             }
 
-            if ($("#ContentPlaceHolder1_hfIsCashPaymentShow").val() == "1") {
-                $("#cashDiv").show();
-            }
-            else {
-                $("#cashDiv").hide();
-            }
+            //if ($("#ContentPlaceHolder1_hfIsCashPaymentShow").val() == "1") {
+            //    $("#cashDiv").show();
+            //}
+            //else {
+            //    $("#cashDiv").hide();
+            //}
 
             if ($("#ContentPlaceHolder1_hfIsAmexCardPaymentShow").val() == "1") {
                 $("#amexCardDiv").show();
@@ -916,6 +916,9 @@
                     tr += "<td style='display:none'>" + result.KotBillDetails[i].CitySDCharge + "</td>";
                     tr += "<td style='display:none'>" + result.KotBillDetails[i].VatAmount + "</td>";
                     tr += "<td style='display:none'>" + result.KotBillDetails[i].AdditionalCharge + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ColorId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].SizeId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].StyleId + "</td>";
 
 
                     tr += "<td style='width:6%;' class='text-center'>"
@@ -1049,7 +1052,7 @@
                 $("#rbFixedDiscount").prop("checked", false);
                 $("#rbPercentageDiscount").prop("checked", true);
             }
-
+            debugger;
             $("#txtDiscountAmount").val(result.RestaurantKotBill.DiscountAmount);
             $("#txtAfterDiscountAmount").val(result.RestaurantKotBill.GrandTotal - result.RestaurantKotBill.VatAmount);
             $("#txtVat").val(result.RestaurantKotBill.VatAmount);
@@ -1063,6 +1066,9 @@
             $("#ContentPlaceHolder1_ddlBillingType").val(result.RestaurantKotBill.BillingType);
             $("#ContentPlaceHolder1_hfBillId").val(result.RestaurantKotBill.BillId);
             $("#ContentPlaceHolder1_hfResumedKotId").val(result.KotBillMaster.KotId);
+            $("#ContentPlaceHolder1_txtCustomerName").val(result.RestaurantKotBill.CustomerName);
+            $("#ContentPlaceHolder1_txtCustomerMobile").val(result.RestaurantKotBill.CustomerMobile);
+            $("#ContentPlaceHolder1_txtCustomerAddress").val(result.RestaurantKotBill.CustomerAddress);
             
             $("#ContentPlaceHolder1_hfCompanyId").val(result.RestaurantKotBill.TransactionId);
             $("#lblCompanyName").text(result.RestaurantKotBill.CustomerName);
@@ -1933,6 +1939,7 @@
         }
 
         function calculateTotalQuantity() {
+            debugger;
             var totalQuantity = 0.0, totalItem = 0.0;
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 $("#AddedItem > tbody > tr").each(function () {
@@ -1947,7 +1954,11 @@
             }
             else {
                 $("#AddedRiceMillBillingItem tbody tr").each(function () {
+                    debugger;
                     totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(6)").text() == null ? 0 : $(this).find("td:eq(6)").text());
+                    if (totalQuantity == 'NaN') {
+                        totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(6)").find("input").val() == null ? 0 : $(this).find("td:eq(6)").find("input").val());
+                    }
                     totalItem++;
                 });
             }

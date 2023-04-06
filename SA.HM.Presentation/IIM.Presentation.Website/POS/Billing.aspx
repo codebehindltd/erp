@@ -242,7 +242,6 @@
                 }, 2000);
             }
 
-            //debugger;
             var costcenter = $("#ContentPlaceHolder1_hfCostcenterId").val();
             //var costcenter = 11;
 
@@ -253,7 +252,6 @@
                 data: "{ 'costcenter':'" + costcenter + "'}",
                 dataType: "json",
                 success: function (data) {
-                    //debugger;
                     DiscountDetails = data.d;
 
                     //$("#txtDiscountAmount").val(data.d.Discount);
@@ -398,7 +396,6 @@
                     //$(this).val(ui.item.label);
                 },
                 select: function (event, ui) {
-                    // debugger;
                     // prevent autocomplete from updating the textbox
                     event.preventDefault();
                     // manually update the textbox and hidden field
@@ -492,7 +489,6 @@
                     //$(this).val(ui.item.label);
                 },
                 select: function (event, ui) {
-                    // debugger;
                     // prevent autocomplete from updating the textbox
                     event.preventDefault();
                     // manually update the textbox and hidden field
@@ -854,14 +850,12 @@
         function OnLoadAttributeColorFailed(error) {
         }
         function PerformEdit(id) {
-            // debugger;
             PageMethods.GetBillById(id, OnSuccessLoading, OnFailLoading)
             return false;
         }
 
         function AddRemarks() {
 
-            // debugger;
             var refundRemarks = $('#ContentPlaceHolder1_txtRemarksForFullRefund').val();
 
             if (refundRemarks == "") {
@@ -1624,7 +1618,6 @@
             }
 
             CommonHelper.ApplyDecimalValidation();
-            //debugger;
             IsDiscountApplicable();
             ClearItemSearchNAddItemDetails();
             SalesNDiscountCalculation();
@@ -1633,7 +1626,6 @@
         }
 
         function IsDiscountApplicable() {
-            //debugger;
             if (ItemDetails == null) {
                 return false;
             }
@@ -1841,7 +1833,6 @@
                 totalDiscountAmount = MaxItemDiscountTotal;
             }
 
-            debugger;
             afterDiscountAmount = totalAmount - totalDiscountAmount;
             var IsInclusiveOrExclusiveBill = '', IsInclusiveBill = 0, vatAmount = 0.00, IsVatEnable = 1;
             var vatPercentAmount = 0.0, totalItemAmount = 0.0, totalItemDiscount = 0.00, totalAmountAfterDiscount = 0.0;
@@ -1855,7 +1846,6 @@
                 IsVatEnable = false;
             }
 
-            debugger;
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 $("#AddedItem tbody tr").each(function () {
                     if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "0") {
@@ -1903,7 +1893,6 @@
                 });
             }
 
-            debugger;
             $("#txtTotalSales").val(toFixed(totalAmount, 2));
             if ($("#rbPercentageDiscount").is(":checked") == false) {
                 $("#txtDiscountAmount").val(toFixed(totalDiscountAmount, 2));
@@ -2168,7 +2157,7 @@
                 itemId = parseInt($.trim($(tr).find("td:eq(11)").text()), 10);
             }
             else {
-                itemId = parseInt($.trim($(tr).find("td:eq(8)").text()), 10);
+                itemId = parseInt($.trim($(tr).find("td:eq(9)").text()), 10);
             }
 
             index = _.findIndex(AddedItemList, { ItemId: itemId });
@@ -2304,7 +2293,6 @@
             var BillDetails = new Array();
             var SalesReturnItem = new Array();
             EditedItemList = new Array();
-            //debugger;
 
             costCenterId = $("#ContentPlaceHolder1_hfCostcenterId").val();
 
@@ -2439,9 +2427,8 @@
                     itemCode = $(this).find("td:eq(0)").text();
                     itemName = $(this).find("td:eq(1)").text();
                     stockBy = $(this).find("td:eq(10)").text();
-
-                    quantity = $(this).find("td:eq(4)").find("input").val();
-                    quantity = $(this).find("td:eq(5)").find("input").val();
+                    BagWeight = $(this).find("td:eq(4)").find("input").val();
+                    NoOfBag = $(this).find("td:eq(5)").find("input").val();
 
                     quantity = $(this).find("td:eq(6)").text();
                     unitPrice = $(this).find("td:eq(7)").find("input").val();
@@ -2468,7 +2455,9 @@
                             Amount: totalPrice,
                             ItemCost: unitPrice,
                             InvoiceDiscount: discountAmount,
-                            Remarks: remarks
+                            Remarks: remarks,
+                            BagWeight: BagWeight,
+                            NoOfBag: NoOfBag
                         });
                     }
                     else if (kotDetailId != "0" && quantity != dbQuantity) {
@@ -2488,7 +2477,9 @@
                             Amount: totalPrice,
                             ItemCost: unitPrice,
                             InvoiceDiscount: discountAmount,
-                            Remarks: remarks
+                            Remarks: remarks,
+                            BagWeight: BagWeight,
+                            NoOfBag: NoOfBag
                         });
                     }
                 });
@@ -3409,13 +3400,11 @@
 
             var totalPrice = parseFloat(unitPrice) * parseFloat(quantity);
             $(tr).find("td:eq(6)").text(toFixed(totalPrice, 2));
-            //debugger;
             PreviousBillSalesNDiscountCalculation();
             PaymentCalculation(0);
         }
 
         function PreviousBillSalesNDiscountCalculation() {
-            //debugger;
             if ($("#PreviousBillItem tbody tr").length == 0) {
                 toastr.info("Please Load Previous Bill Item First.");
                 return false;
@@ -3529,7 +3518,6 @@
         }
 
         function PreviousBillItemDialogOkay() {
-            // debugger;
             var exchangeVal = 0, total = 0.00;
             $("#PreviousBillItem tbody > tr").each(function () {
                 exchangeVal = $(this).find("td:eq(4)").find('input').val();
