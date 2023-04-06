@@ -20,10 +20,11 @@
         var DiscountDetails = new Array();
         var IsMembershipPaymentEnableFlag = false;
         var dataForEditForBillingBillId = new Array();
+        var AddedSerialzableProduct = new Array();
+        var DeletedSerialzableProduct = new Array();
 
         $(document).ready(function () {
             if ($("#ContentPlaceHolder1_hfBillId").val() != '' && $("#ContentPlaceHolder1_hfBillIdControl").val() != '1') {
-                debugger;
                 $('#btnPrintPreview').trigger('click');
             }
             $('#txtEstimatedTaskDoneDate').keypress(function (event) {
@@ -44,6 +45,11 @@
                 allowClear: true,
                 width: "99.75%"
             });
+            if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == '0') {
+                document.getElementById("cIdd").style.display = "none";
+                document.getElementById("sIdd").style.display = "none";
+                document.getElementById("stIdd").style.display = "none";
+            }
 
             if ($("#ContentPlaceHolder1_hfIsItemCodeHideForBilling").val() == '1') {
                 document.getElementById("codeCol").style.display = "none";
@@ -52,9 +58,11 @@
             }
             if ($("#ContentPlaceHolder1_hfIsStockHideForBilling").val() == '1') {
                 document.getElementById("stockCol").style.display = "none";
+                document.getElementById("stockARMCol").style.display = "none";
             }
             if ($("#ContentPlaceHolder1_hfIsStockByHideForBilling").val() == '1') {
                 document.getElementById("stockByCol").style.display = "none";
+                document.getElementById("stockByARMCol").style.display = "none";
             }
             if ($("#ContentPlaceHolder1_hfIsRemarksHideForBilling").val() == '1') {
                 document.getElementById("remarksCol").style.display = "none";
@@ -77,7 +85,7 @@
             else {
                 $("#cashDiv").hide();
             }
-            //debugger;
+
             if ($("#ContentPlaceHolder1_hfIsAmexCardPaymentShow").val() == "1") {
                 $("#amexCardDiv").show();
             }
@@ -155,8 +163,7 @@
                     window.location = "/POS/Login.aspx";
                 }, 2000);
             }
-
-            //debugger;
+            
             var costcenter = $("#ContentPlaceHolder1_hfCostcenterId").val();
             //var costcenter = 11;
 
@@ -167,7 +174,6 @@
                 data: "{ 'costcenter':'" + costcenter + "'}",
                 dataType: "json",
                 success: function (data) {
-                    //debugger;
                     DiscountDetails = data.d;
 
                     //$("#txtDiscountAmount").val(data.d.Discount);
@@ -187,7 +193,6 @@
             //        var Amount = parseFloat($('#PointsInAmounts').val());
             //        var point = parseFloat($('#PointWiseMoney').val());
             //        $('#txtPointAmount').val("");
-            //        debugger;
             //        if(Amount > point )
             //            toastr.info("Amount can not be grater than Point.")
             //        else
@@ -258,6 +263,97 @@
             CommonHelper.ApplyIntigerValidation();
 
             $("#ItemCode").focus();
+            $("#ItemCode").autocomplete({
+                source: function (request, response) {
+
+                    var itemName = "";
+                    var categoryName = "";
+                    var costCenterId = $("#ContentPlaceHolder1_hfCostcenterId").val();
+
+                    if ($.trim(request.term) == "") { return false; }
+
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: '../POS/Billing.aspx/GetItemByCodeCategoryNameWiseItemDetailsForAutoSearch',
+                        data: "{'itemCode':'" + $.trim(request.term) + "','itemName':'" + itemName + "','categoryName':'" + categoryName + "','costCenterId':'" + costCenterId + "'}",
+                        dataType: "json",
+                        success: function (data) {
+                            var searchData = data.error ? [] : $.map(data.d, function (m) {
+                                return {
+                                    label: m.Code,
+                                    value: m.ItemId,
+                                    Name: m.Name,
+                                    ItemId: m.ItemId,
+                                    Code: m.Code,
+                                    UnitHead: m.UnitHead,
+                                    UnitPriceLocal: m.UnitPriceLocal,
+                                    StockBy: m.StockBy,
+                                    CategoryId: m.CategoryId,
+                                    DiscountType: m.DiscountType,
+                                    DiscountAmount: m.DiscountAmount,
+                                    StockQuantity: m.StockQuantity,
+                                    IsItemEditable: m.IsItemEditable,
+                                    ServiceCharge: m.ServiceCharge,
+                                    SDCharge: m.SDCharge,
+                                    VatAmount: m.VatAmount,
+                                    AdditionalCharge: m.AdditionalCharge,
+                                    IsAttributeItem: m.IsAttributeItem,
+                                    ProductType: m.ProductType
+                                };
+                            });
+
+                            if (data.d == "") {
+                                //toastr.info("Item Not Found. Please Give Valid Item Name");
+                                ItemDetails = null;
+                            }
+
+                            response(searchData);
+                        },
+                        error: function (result) {
+                            //alert("Error");
+                        }
+                    });
+                },
+                focus: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox
+                    //$(this).val(ui.item.label);
+                },
+                select: function (event, ui) {
+                    // prevent autocomplete from updating the textbox
+                    event.preventDefault();
+                    // manually update the textbox and hidden field
+                    $(this).val(ui.item.label);
+                    ItemDetails = ui.item;
+                    $("#ItemName").val(ui.item.Name);
+                    $("#ContentPlaceHolder1_ddlProductType").val(ui.item.ProductType);
+
+                    if (ui.item.IsAttributeItem) {
+                        $("#itemColorInputNameCol").show();
+                        $("#itemColorInputCol").show();
+                        $("#itemSizeInputNameCol").show();
+                        $("#itemSizeInputCol").show();
+                        $("#itemStyleInputNameCol").show();
+                        $("#itemStyleInputCol").show();
+                        GetInvItemAttributeByItemIdAndAttributeType(ui.item.value, 'Color');
+                        GetInvItemAttributeByItemIdAndAttributeType(ui.item.value, 'Size');
+                        GetInvItemAttributeByItemIdAndAttributeType(ui.item.value, 'Style');
+                        GetInvItemStockInfoByItemAndAttributeId();
+                        $("#ContentPlaceHolder1_hfIsAttributeItem").val('1');
+                    }
+                    else {
+                        $("#itemColorInputNameCol").hide();
+                        $("#itemColorInputCol").hide();
+                        $("#itemSizeInputNameCol").hide();
+                        $("#itemSizeInputCol").hide();
+                        $("#itemStyleInputNameCol").hide();
+                        $("#itemStyleInputCol").hide();
+                        $("#ContentPlaceHolder1_hfIsAttributeItem").val('0');
+                    }
+                }
+            });
 
             $("#ItemName").autocomplete({
                 source: function (request, response) {
@@ -317,7 +413,6 @@
                     //$(this).val(ui.item.label);
                 },
                 select: function (event, ui) {
-                    // debugger;
                     // prevent autocomplete from updating the textbox
                     event.preventDefault();
                     // manually update the textbox and hidden field
@@ -372,7 +467,6 @@
             });
 
             $("#ItemCode").keypress(function (event) {
-                //debugger;
                 var keycode = event.keyCode || event.which;
                 if (keycode == '13') {
 
@@ -479,97 +573,189 @@
         }
         
         function PerformEdit(id) {
-            // debugger;
             PageMethods.GetBillById(id, "RestaurantToken", OnSuccessLoading, OnFailLoading)
             return false;
         }
         function OnSuccessLoading(result) {
             dataForEditForBillingBillId = result.RestaurantKotBill;
             var str = result;
-
             var tr = "";
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                for (var i = 0; i < result.KotBillDetails.length; i++) {
+                    tr += "<tr>";
 
-            for (var i = 0; i < result.KotBillDetails.length; i++) {
-                tr += "<tr>";
+                    if ($("#ContentPlaceHolder1_hfIsItemCodeHideForBilling").val() == '0') {
+                        tr += "<td style='width:12%;'>" + result.KotBillDetails[i].ItemCode + "</td>";
+                    }
+                    else {
+                        tr += "<td style='display:none; width:12%;'>" + result.KotBillDetails[i].ItemCode + "</td>";
+                    }
 
-                if ($("#ContentPlaceHolder1_hfIsItemCodeHideForBilling").val() == '0') {
-                    tr += "<td style='width:12%;'>" + result.KotBillDetails[i].ItemCode + "</td>";
+
+                    tr += "<td style='width:20%;'>" + result.KotBillDetails[i].ItemName + "</td>";
+                    if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                        tr += "<td style='width:5%;'>" + result.KotBillDetails[i].ColorName + "</td>";
+                        tr += "<td style='width:5%;'>" + result.KotBillDetails[i].SizeName + "</td>";
+                        tr += "<td style='width:5%;'>" + result.KotBillDetails[i].StyleName + "</td>";
+                    }
+                    
+
+                    if ($("#ContentPlaceHolder1_hfIsStockHideForBilling").val() == '0') {
+                        tr += "<td style='width:10%;'>" + '' + "</td>";
+                    }
+                    else {
+                        tr += "<td style='display:none; width:10%;'>" + '' + "</td>";
+                    }
+                    if ($("#ContentPlaceHolder1_hfIsStockByHideForBilling").val() == '0') {
+                        tr += "<td style='width:10%;'>" + result.KotBillDetails[i].UnitHead + "</td>";
+                    }
+                    else {
+                        tr += "<td style='display:none; width:10%;'>" + result.KotBillDetails[i].UnitHead + "</td>";
+                    }
+
+                    tr += "<td style='width:8%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].ItemUnit + "' onblur='CheckQuantity(this)' />" + "</td>";
+                    tr += "<td style='width:12%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].UnitRate + "' onblur='CheckQuantity(this)' />" + "</td>";
+
+                    tr += "<td style='width:12%;' class='text-right'>" + result.KotBillDetails[i].Amount + "</td>";
+                    if ($("#ContentPlaceHolder1_hfIsRemarksHideForBilling").val() == '0') {
+                        tr += "<td style='width:10%;'>" + "<textarea type='text' style='width:100%;'  class='form-control '  value='" + "' onblur='CheckQuantity(this)' >" + result.KotBillDetails[i].Remarks + "</textarea> </td>";
+                    }
+                    else {
+                        tr += "<td style='display:none; width:10%;'>" + "<textarea type='text' style='width:100%;'  class='form-control ' value='" + + "' onblur='CheckQuantity(this)' >" + result.KotBillDetails[i].Remarks + "</textarea></td>";
+                    }
+
+
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ItemId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].StockBy /*(ItemDetails == null ? 0 : ItemDetails.StockBy)*/ + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].CategoryId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].KotDetailId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ItemUnit + "</td>";
+                    tr += "<td style='display:none'>0</td>";//unit discount
+                    tr += "<td style='display:none'>0</td>";//total discount
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ServiceCharge + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].CitySDCharge + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].VatAmount + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].AdditionalCharge + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ColorId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].SizeId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].StyleId + "</td>";
+
+
+                    tr += "<td style='width:6%;' class='text-center'>"
+                    tr += "<a href='javascript:void(0)' onclick= 'DeleteItemOrder(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                    tr += "</td>";
+
+                    tr += "</td>";
+                    tr += "</tr>";
+
+                    AddedItemList.push({
+                        KotDetailId: result.KotBillDetails[i].KotDetailId,
+                        KotId: result.KotBillDetails[i].KotId,
+                        ItemId: result.KotBillDetails[i].ItemId,
+                        ItemName: result.KotBillDetails[i].ItemName,
+                        Code: result.KotBillDetails[i].ItemCode,
+                        UnitHead: result.KotBillDetails[i].UnitHead,
+                        UnitPriceLocal: result.KotBillDetails[i].UnitRate,
+                        StockBy: result.KotBillDetails[i].StockBy,
+                        CategoryId: result.KotBillDetails[i].CategoryId,
+                        DiscountType: '',
+                        DiscountAmount: 0.0,
+                        Remarks: result.KotBillDetails[i].Remarks,
+                        ServiceCharge: result.KotBillDetails[i].ServiceCharge,
+                        SDCharge: result.KotBillDetails[i].CitySDCharge,
+                        VatAmount: result.KotBillDetails[i].VatAmount,
+                        AdditionalCharge: result.KotBillDetails[i].AdditionalCharge
+                    });
+
                 }
-                else {
-                    tr += "<td style='display:none; width:12%;'>" + result.KotBillDetails[i].ItemCode + "</td>";
-                }
 
-
-                tr += "<td style='width:20%;'>" + result.KotBillDetails[i].ItemName + "</td>";
-
-                if ($("#ContentPlaceHolder1_hfIsStockHideForBilling").val() == '0') {
-                    tr += "<td style='width:10%;'>" + '' + "</td>";
-                }
-                else {
-                    tr += "<td style='display:none; width:10%;'>" + '' + "</td>";
-                }
-                if ($("#ContentPlaceHolder1_hfIsStockByHideForBilling").val() == '0') {
-                    tr += "<td style='width:10%;'>" + result.KotBillDetails[i].UnitHead + "</td>";
-                }
-                else {
-                    tr += "<td style='display:none; width:10%;'>" + result.KotBillDetails[i].UnitHead + "</td>";
-                }
-
-                tr += "<td style='width:8%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].ItemUnit + "' onblur='CheckQuantity(this)' />" + "</td>";
-                tr += "<td style='width:12%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].UnitRate + "' onblur='CheckQuantity(this)' />" + "</td>";
-
-                tr += "<td style='width:12%;' class='text-right'>" + result.KotBillDetails[i].Amount + "</td>";
-                debugger;
-                if ($("#ContentPlaceHolder1_hfIsRemarksHideForBilling").val() == '0') {
-                    tr += "<td style='width:10%;'>" + "<textarea type='text' style='width:100%;'  class='form-control '  value='" + "' onblur='CheckQuantity(this)' >" + result.KotBillDetails[i].Remarks + "</textarea> </td>";
-                }
-                else {
-                    tr += "<td style='display:none; width:10%;'>" + "<textarea type='text' style='width:100%;'  class='form-control ' value='" + + "' onblur='CheckQuantity(this)' >" + result.KotBillDetails[i].Remarks + "</textarea></td>";
-                }
-
-
-                tr += "<td style='display:none'>" + result.KotBillDetails[i].ItemId + "</td>";
-                tr += "<td style='display:none'>" + result.KotBillDetails[i].StockBy /*(ItemDetails == null ? 0 : ItemDetails.StockBy)*/ + "</td>";
-                tr += "<td style='display:none'>" + result.KotBillDetails[i].CategoryId + "</td>";
-                tr += "<td style='display:none'>" + result.KotBillDetails[i].KotDetailId + "</td>";
-                tr += "<td style='display:none'>" + result.KotBillDetails[i].ItemUnit + "</td>";
-                tr += "<td style='display:none'>0</td>";//unit discount
-                tr += "<td style='display:none'>0</td>";//total discount
-                tr += "<td style='display:none'>" + result.KotBillDetails[i].ServiceCharge + "</td>";
-                tr += "<td style='display:none'>" + result.KotBillDetails[i].CitySDCharge + "</td>";
-                tr += "<td style='display:none'>" + result.KotBillDetails[i].VatAmount + "</td>";
-                tr += "<td style='display:none'>" + result.KotBillDetails[i].AdditionalCharge + "</td>";
-
-
-                tr += "<td style='width:6%;' class='text-center'>"
-                tr += "<a href='javascript:void(0)' onclick= 'DeleteItemOrder(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
-                tr += "</td>";
-
-                tr += "</td>";
-                tr += "</tr>";
-
-                AddedItemList.push({
-                    KotDetailId: result.KotBillDetails[i].KotDetailId,
-                    KotId: result.KotBillDetails[i].KotId,
-                    ItemId: result.KotBillDetails[i].ItemId,
-                    ItemName: result.KotBillDetails[i].ItemName,
-                    Code: result.KotBillDetails[i].ItemCode,
-                    UnitHead: result.KotBillDetails[i].UnitHead,
-                    UnitPriceLocal: result.KotBillDetails[i].UnitRate,
-                    StockBy: result.KotBillDetails[i].StockBy,
-                    CategoryId: result.KotBillDetails[i].CategoryId,
-                    DiscountType: '',
-                    DiscountAmount: 0.0,
-                    Remarks: result.KotBillDetails[i].Remarks,
-                    ServiceCharge: result.KotBillDetails[i].ServiceCharge,
-                    SDCharge: result.KotBillDetails[i].CitySDCharge,
-                    VatAmount: result.KotBillDetails[i].VatAmount,
-                    AdditionalCharge: result.KotBillDetails[i].AdditionalCharge
-                });
-
+                $("#AddedItem tbody").append(tr);
             }
+            else {
+                for (var i = 0; i < result.KotBillDetails.length; i++) {
+                    tr += "<tr>";
 
-            $("#AddedItem tbody").append(tr);
+                    if ($("#ContentPlaceHolder1_hfIsItemCodeHideForBilling").val() == '0') {
+                        tr += "<td style='width:12%;'>" + result.KotBillDetails[i].ItemCode + "</td>";
+                    }
+                    else {
+                        tr += "<td style='display:none; width:12%;'>" + result.KotBillDetails[i].ItemCode + "</td>";
+                    }
+
+
+                    tr += "<td style='width:20%;'>" + result.KotBillDetails[i].ItemName + "</td>";
+                    tr += "<td style='display:none; width:10%;'>" + '' + "</td>";
+                    tr += "<td style='display:none; width:10%;'>" + '' + "</td>";
+                    tr += "<td style='width:10%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].BagWeight + "' onblur='CheckQuantity(this)' />" + "</td>";
+                    tr += "<td style='width:10%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].NoOfBag + "' onblur='CheckQuantity(this)' />" + "</td>";
+                    //tr += "<td style='width:10%;'>" + result.KotBillDetails[i].Quantity + "</td>";
+
+                    //if ($("#ContentPlaceHolder1_hfIsStockHideForBilling").val() == '0') {
+                    //    tr += "<td style='width:10%;'>" + '' + "</td>";
+                    //}
+                    //else {
+                    //    tr += "<td style='display:none; width:10%;'>" + '' + "</td>";
+                    //}
+                    //if ($("#ContentPlaceHolder1_hfIsStockByHideForBilling").val() == '0') {
+                    //    tr += "<td style='width:10%;'>" + result.KotBillDetails[i].UnitHead + "</td>";
+                    //}
+                    //else {
+                    //    tr += "<td style='display:none; width:10%;'>" + result.KotBillDetails[i].UnitHead + "</td>";
+                    //}
+
+                    tr += "<td style='width:8%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].ItemUnit + "' onblur='CheckQuantity(this)' />" + "</td>";
+                    tr += "<td style='width:12%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].UnitRate + "' onblur='CheckQuantity(this)' />" + "</td>";
+
+                    tr += "<td style='width:12%;' class='text-right'>" + result.KotBillDetails[i].Amount + "</td>";
+                    //if ($("#ContentPlaceHolder1_hfIsRemarksHideForBilling").val() == '0') {
+                    //    tr += "<td style='width:10%;'>" + "<textarea type='text' style='width:100%;'  class='form-control '  value='" + "' onblur='CheckQuantity(this)' >" + result.KotBillDetails[i].Remarks + "</textarea> </td>";
+                    //}
+                    //else {
+                    //    tr += "<td style='display:none; width:10%;'>" + "<textarea type='text' style='width:100%;'  class='form-control ' value='" + + "' onblur='CheckQuantity(this)' >" + result.KotBillDetails[i].Remarks + "</textarea></td>";
+                    //}
+
+
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ItemId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].StockBy /*(ItemDetails == null ? 0 : ItemDetails.StockBy)*/ + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].CategoryId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].KotDetailId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ItemUnit + "</td>";
+                    tr += "<td style='display:none'>0</td>";//unit discount
+                    tr += "<td style='display:none'>0</td>";//total discount
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ServiceCharge + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].CitySDCharge + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].VatAmount + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].AdditionalCharge + "</td>";
+
+
+                    tr += "<td style='width:6%;' class='text-center'>"
+                    tr += "<a href='javascript:void(0)' onclick= 'DeleteItemOrder(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                    tr += "</td>";
+
+                    tr += "</td>";
+                    tr += "</tr>";
+
+                    AddedItemList.push({
+                        KotDetailId: result.KotBillDetails[i].KotDetailId,
+                        KotId: result.KotBillDetails[i].KotId,
+                        ItemId: result.KotBillDetails[i].ItemId,
+                        ItemName: result.KotBillDetails[i].ItemName,
+                        Code: result.KotBillDetails[i].ItemCode,
+                        UnitHead: result.KotBillDetails[i].UnitHead,
+                        UnitPriceLocal: result.KotBillDetails[i].UnitRate,
+                        StockBy: result.KotBillDetails[i].StockBy,
+                        CategoryId: result.KotBillDetails[i].CategoryId,
+                        DiscountType: '',
+                        DiscountAmount: 0.0,
+                        Remarks: result.KotBillDetails[i].Remarks,
+                        ServiceCharge: result.KotBillDetails[i].ServiceCharge,
+                        SDCharge: result.KotBillDetails[i].CitySDCharge,
+                        VatAmount: result.KotBillDetails[i].VatAmount,
+                        AdditionalCharge: result.KotBillDetails[i].AdditionalCharge
+                    });
+                }
+                $("#AddedRiceMillBillingItem tbody").append(tr);
+            }
 
             if (result.RestaurantKotBill.IsInvoiceVatAmountEnable) {
                 $("#" + "ContentPlaceHolder1_cbTPVatAmount").prop('checked', true);
@@ -632,13 +818,10 @@
             return false;
         }
         function OnFailLoading(error) {
-            debugger;
             toastr.error(error.get_message());
         }
 
         function AddRemarks() {
-
-            // debugger;
             var refundRemarks = $('#ContentPlaceHolder1_txtRemarksForFullRefund').val();
 
             if (refundRemarks == "") {
@@ -1066,7 +1249,341 @@
         }
 
         function AddItem() {
-            debugger;
+            var alreadyAddedItem, itemId, itemName, colorId = 0, colorText = '', sizeId = 0, sizeText = '', styleId = 0, styleText = '', productType = 'Non Serial Product';
+
+            productType = $("#ContentPlaceHolder1_ddlProductType option:selected").val();
+
+            var IsItemAutoSave = $("#<%=hfIsItemAutoSave.ClientID %>").val();
+            if (IsItemAutoSave == '0' && ItemDetails == null) {
+                return false;
+            }
+
+            if (ItemDetails == null)
+                return;
+
+            //if (ItemDetails == null) {
+            itemId = 0;
+            itemId = ItemDetails == null ? itemId : ItemDetails.ItemId
+            itemName = $("#ItemName").val();
+
+            if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                var colorddlLength = $('#ContentPlaceHolder1_ddlColorAttribute > option').length;
+                var sizeddlLength = $('#ContentPlaceHolder1_ddlSizeAttribute > option').length;
+                var styleddlLength = $('#ContentPlaceHolder1_ddlStyleAttribute > option').length;
+
+                colorId = 0;
+                if (colorddlLength > 0) {
+                    colorId = $("#ContentPlaceHolder1_ddlColorAttribute option:selected").val();
+                }
+                colorText = $("#ContentPlaceHolder1_ddlColorAttribute option:selected").text();
+
+                sizeId = 0;
+                if (sizeddlLength > 0) {
+                    sizeId = $("#ContentPlaceHolder1_ddlSizeAttribute option:selected").val();
+                }
+                sizeText = $("#ContentPlaceHolder1_ddlSizeAttribute option:selected").text();
+
+                styleId = 0;
+                if (styleddlLength > 0) {
+                    styleId = $("#ContentPlaceHolder1_ddlStyleAttribute option:selected").val();
+                }
+                styleText = $("#ContentPlaceHolder1_ddlStyleAttribute option:selected").text();
+
+                if (colorText != "") {
+                    itemName += " (Color: " + colorText;
+                }
+
+                if (sizeText != "") {
+                    itemName += ", Size: " + sizeText;
+                }
+
+                if (styleText != "") {
+                    itemName += ", Style: " + styleText + ")";
+                }
+            }
+
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                    alreadyAddedItem = _.findWhere(AddedItemList, { ItemId: itemId, ColorId: colorId, SizeId: sizeId, StyleId: styleId, ItemName: itemName });
+                }
+                else {
+                    alreadyAddedItem = _.findWhere(AddedItemList, { ItemId: itemId, ItemName: itemName });
+                }
+            }
+
+            var tr = "", quantity = 1, totalQuantity = 0.00, itemCode = "", kotId = "0", kotDetailId = "0";
+            itemCode = $("#ItemCode").val();
+
+            var index = 0;
+
+            if ($("#ContentPlaceHolder1_hfResumedKotId").val() != "") {
+                kotId = $("#ContentPlaceHolder1_hfResumedKotId").val();
+            }
+
+            if (alreadyAddedItem != null) {
+                if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                    if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                        index = _.findIndex(AddedItemList, { ItemId: itemId, ColorId: colorId, SizeId: sizeId, StyleId: styleId, ItemName: itemName });
+                    }
+                    else {
+                        index = _.findIndex(AddedItemList, { ItemId: itemId, ItemName: itemName });
+                    }
+
+                    var trAlreadyAdded = $("#AddedItem tbody tr:eq(" + index + ")");
+                    var addedQuantity = 0.00, addedUnitPrice = 0.00, addedTotalPrice = 0.00, totalDiscount = 0.0, unitDiscount = 0.0;
+
+                    addedQuantity = parseFloat($(trAlreadyAdded).find("td:eq(7)").find("input").val()) + quantity;
+                    addedUnitPrice = parseFloat($.trim($(trAlreadyAdded).find("td:eq(8)").find("input").val()));
+                    addedTotalPrice = toFixed((addedQuantity * addedUnitPrice), 2);
+                    unitDiscount = parseFloat($.trim($(trAlreadyAdded).find("td:eq(16)").text()));
+
+                    if (isNaN(unitDiscount)) {
+                        unitDiscount = 0;
+                    }
+                    totalDiscount = toFixed((addedQuantity * unitDiscount), 2);
+
+                    $(trAlreadyAdded).find("td:eq(17)").text(totalDiscount);
+                    $(trAlreadyAdded).find("td:eq(7)").find("input").val(addedQuantity);
+                    $(trAlreadyAdded).find("td:eq(9)").text(addedTotalPrice);
+                }
+                else {
+                    var trAlreadyAddedItem = $("#AddedRiceMillBillingItem tbody tr:eq(" + index + ")");
+                    var addedRiceMillBillingBagWaaightQuantity = 0.00, addedRiceMillBillingBagQuantity = 0.00, addedRiceMillBillingQuantity = 0.00, addedRiceMillBillingUnitPrice = 0.00, addedRiceMillBillingTotalPrice = 0.00, totalRiceMillBillingDiscount = 0.0, unitRiceMillBillingDiscount = 0.0;
+
+                    addedRiceMillBillingBagWaaightQuantity = parseFloat($(trAlreadyAddedItem).find("td:eq(3)").find("input").val()) + quantity;
+                    addedRiceMillBillingBagQuantity = parseFloat($(trAlreadyAddedItem).find("td:eq(4)").find("input").val()) + quantity;
+
+                    addedQuantity = (addedRiceMillBillingBagWaaightQuantity * addedRiceMillBillingBagQuantity) + quantity;
+
+                    addedRiceMillBillingUnitPrice = parseFloat($.trim($(trAlreadyAddedItem).find("td:eq(6)").find("input").val()));
+                    addedRiceMillBillingTotalPrice = toFixed((addedQuantity * addedUnitPrice), 2);
+                    unitRiceMillBillingDiscount = parseFloat(0);
+
+                    if (isNaN(unitDiscount)) {
+                        unitDiscount = 0;
+                    }
+                    totalDiscount = toFixed((addedQuantity * unitDiscount), 2);
+
+                    //$(trAlreadyAddedItem).find("td:eq(17)").text(totalDiscount);
+                    //$(trAlreadyAddedItem).find("td:eq(7)").find("input").val(addedQuantity);
+                    //$(trAlreadyAddedItem).find("td:eq(9)").text(addedRiceMillBillingTotalPrice);
+                }
+
+                ClearItemSearchNAddItemDetails();
+                //SalesNDiscountCalculation();
+                //PaymentCalculation(0);
+
+                return false;
+            }
+
+            if (ItemDetails == null) {
+                AddedItemList.push({
+                    KotDetailId: kotDetailId,
+                    KotId: kotId,
+                    ItemId: itemId,
+                    ColorId: colorId,
+                    SizeId: sizeId,
+                    StyleId: styleId,
+                    ItemName: itemName,
+                    Code: itemCode,
+                    ColorId: colorId,
+                    ColorText: colorText,
+                    SizeId: sizeId,
+                    SizeText: sizeText,
+                    StyleId: styleId,
+                    StyleText: styleText,
+                    UnitHead: '',
+                    UnitPriceLocal: 0.0,
+                    StockBy: 0,
+                    CategoryId: 0,
+                    DiscountType: '',
+                    DiscountAmount: 0.0,
+                    Remarks: '',
+                    ServiceCharge: 0.0,
+                    SDCharge: 0.0,
+                    VatAmount: 0.0,
+                    AdditionalCharge: 0.0
+                });
+            }
+            else {
+                AddedItemList.push({
+                    KotDetailId: kotDetailId,
+                    KotId: kotId,
+                    ItemId: itemId,
+                    ColorId: colorId,
+                    ColorText: colorText,
+                    SizeId: sizeId,
+                    SizeText: sizeText,
+                    StyleId: styleId,
+                    StyleText: styleText,
+                    ItemName: itemName,
+                    Code: ItemDetails.Code,
+                    UnitHead: ItemDetails.UnitHead,
+                    UnitPriceLocal: ItemDetails.UnitPriceLocal,
+                    StockBy: ItemDetails.StockBy,
+                    CategoryId: ItemDetails.CategoryId,
+                    DiscountType: ItemDetails.DiscountType,
+                    DiscountAmount: ItemDetails.DiscountAmount,
+                    Remarks: ItemDetails.Remarks,
+                    ServiceCharge: ItemDetails.ServiceCharge,
+                    SDCharge: ItemDetails.SDCharge,
+                    VatAmount: ItemDetails.VatAmount,
+                    AdditionalCharge: ItemDetails.AdditionalCharge
+                });
+            }
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                var rowLength = $("#AddedItem tbody tr").length;
+                totalQuantity = quantity * (ItemDetails == null ? 0.00 : ItemDetails.UnitPriceLocal);
+                tr += "<tr>";
+
+                if ($("#ContentPlaceHolder1_hfIsItemCodeHideForBilling").val() == '0') {
+                    tr += "<td style='width:12%;'>" + (ItemDetails == null ? itemCode : ItemDetails.Code) + "</td>";
+                }
+                else {
+                    tr += "<td style='display:none; width:12%;'>" + (ItemDetails == null ? itemCode : ItemDetails.Code) + "</td>";
+                }
+
+                tr += "<td style='width:20%;'>" + (ItemDetails == null ? itemName : ItemDetails.label) + "</td>";
+
+                if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                    tr += "<td style='width:10%;'>" + colorText + "</td>";
+                    tr += "<td style='width:10%;'>" + sizeText + "</td>";
+                    tr += "<td style='width:10%;'>" + styleText + "</td>";
+                }
+
+                if ($("#ContentPlaceHolder1_hfIsStockHideForBilling").val() == '0') {
+                    tr += "<td style='width:10%;'>" + (ItemDetails == null ? 0.0 : ItemDetails.StockQuantity) + "</td>";
+                }
+                else {
+                    tr += "<td style='display:none; width:10%;'>" + (ItemDetails == null ? 0.0 : ItemDetails.StockQuantity) + "</td>";
+                }
+
+                if ($("#ContentPlaceHolder1_hfIsStockByHideForBilling").val() == '0') {
+                    tr += "<td style='width:10%;'>" + (ItemDetails == null ? '' : ItemDetails.UnitHead) + "</td>";
+                }
+                else {
+                    tr += "<td style='display:none; width:10%;'>" + (ItemDetails == null ? '' : ItemDetails.UnitHead) + "</td>";
+                }
+
+                tr += "<td style='width:8%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + quantity + "' onblur='CheckQuantity(this)' />" + "</td>";
+                tr += "<td style='width:12%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + (ItemDetails == null ? 0.0 : ItemDetails.UnitPriceLocal) + "' onblur='CheckQuantity(this)' />" + "</td>";
+                tr += "<td style='width:12%;' class='text-right'>" + totalQuantity + "</td>";
+
+                if ($("#ContentPlaceHolder1_hfIsRemarksHideForBilling").val() == '0') {
+                    if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                        tr += "<td style='width:10%;' class='text-right'>" + "<textarea type='text' style='width:100%;'  class='form-control ' sty value='" + "" + "' onblur='CheckQuantity(this)' />" + "</td>";
+                    }
+                    else {
+                        tr += "<td style='width:10%;' class='text-right'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + "" + "' onblur='CheckQuantity(this)' />" + "</td>";
+                    }
+                }
+                else {
+                    if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                        tr += "<td style='display:none; width:10%;' class='text-right'>" + "<textarea type='text' style='width:100%;'  class='form-control ' value='" + "" + "' onblur='CheckQuantity(this)' />" + "</td>";
+                    }
+                    else {
+                        tr += "<td style='width:10%;' class='text-right'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + "" + "' onblur='CheckQuantity(this)' />" + "</td>";
+                    }
+                }
+
+                tr += "<td style='display:none'>" + (ItemDetails == null ? itemId : ItemDetails.ItemId) + "</td>";
+                tr += "<td style='display:none'>" + (ItemDetails == null ? 0 : ItemDetails.StockBy) + "</td>";
+                tr += "<td style='display:none'>" + (ItemDetails == null ? 0 : ItemDetails.CategoryId) + "</td>";
+                tr += "<td style='display:none'>" + kotDetailId + "</td>";
+                tr += "<td style='display:none'>0</td>";
+                tr += "<td style='display:none'>0</td>";//unit discount
+                tr += "<td style='display:none'>0</td>";//total discount
+                tr += "<td style='display:none'>" + (ItemDetails == null ? 0.0 : ItemDetails.ServiceCharge) + "</td>";
+                tr += "<td style='display:none'>" + (ItemDetails == null ? 0.0 : ItemDetails.SDCharge) + "</td>";
+                tr += "<td style='display:none'>" + (ItemDetails == null ? 0.0 : ItemDetails.VatAmount) + "</td>";
+                tr += "<td style='display:none'>" + (ItemDetails == null ? 0.0 : ItemDetails.AdditionalCharge) + "</td>";
+
+                tr += "<td style='display:none'>" + colorId + "</td>";
+                tr += "<td style='display:none'>" + sizeId + "</td>";
+                tr += "<td style='display:none'>" + styleId + "</td>";
+                tr += "<td style='width:6%;' class='text-center'>"
+
+                if (productType == "Non Serial Product") {
+                    tr += "<a href='javascript:void(0)' onclick= 'DeleteItemOrder(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                }
+                else {
+                    tr += "<a href='javascript:void(0)' onclick= 'DeleteItemOrder(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                    tr += "&nbsp;&nbsp;<a href='javascript:void()' onclick= 'AddSerialForAdHocItem(this)' ><img alt='serial' src='../Images/serial.png' title='Serial' /></a>";
+                }
+
+                tr += "</td>";
+                tr += "</td>";
+                tr += "</tr>";
+
+                $("#AddedItem tbody").append(tr);
+            }
+            else {
+                var rowLength = $("#AddedRiceMillBillingItem tbody tr").length;
+                totalQuantity = quantity * (ItemDetails == null ? 0.00 : ItemDetails.UnitPriceLocal);
+                tr += "<tr>";
+
+                if ($("#ContentPlaceHolder1_hfIsItemCodeHideForBilling").val() == '0') {
+                    tr += "<td style='width:12%;'>" + (ItemDetails == null ? itemCode : ItemDetails.Code) + "</td>";
+                }
+                else {
+                    tr += "<td style='display:none; width:12%;'>" + (ItemDetails == null ? itemCode : ItemDetails.Code) + "</td>";
+                }
+
+                tr += "<td style='width:20%;'>" + (ItemDetails == null ? itemName : ItemDetails.label) + "</td>";
+
+                if ($("#ContentPlaceHolder1_hfIsStockHideForBilling").val() == '0') {
+                    tr += "<td style='width:10%;'>" + (ItemDetails == null ? 0.0 : ItemDetails.StockQuantity) + "</td>";
+                }
+                else {
+                    tr += "<td style='display:none; width:10%;'>" + (ItemDetails == null ? 0.0 : ItemDetails.StockQuantity) + "</td>";
+                }
+
+                if ($("#ContentPlaceHolder1_hfIsStockByHideForBilling").val() == '0') {
+                    tr += "<td style='width:10%;'>" + (ItemDetails == null ? '' : ItemDetails.UnitHead) + "</td>";
+                }
+                else {
+                    tr += "<td style='display:none; width:10%;'>" + (ItemDetails == null ? '' : ItemDetails.UnitHead) + "</td>";
+                }
+
+                var bagWaight = 1, bagQuantity = 1;
+                tr += "<td style='width:8%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + bagWaight + "' onblur='CheckQuantity(this)' />" + "</td>";
+                tr += "<td style='width:8%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + bagQuantity + "' onblur='CheckQuantity(this)' />" + "</td>";
+
+                tr += "<td style='width:12%;' class='text-right'>" + (bagWaight * bagQuantity) + "</td>";
+                tr += "<td style='width:12%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + (ItemDetails == null ? 0.0 : ItemDetails.UnitPriceLocal) + "' onblur='CheckQuantity(this)' />" + "</td>";
+                tr += "<td style='width:12%;' class='text-right'>" + totalQuantity + "</td>";
+
+                tr += "<td style='display:none'>" + (ItemDetails == null ? itemId : ItemDetails.ItemId) + "</td>";
+                tr += "<td style='display:none'>" + (ItemDetails == null ? 0 : ItemDetails.StockBy) + "</td>";
+                tr += "<td style='display:none'>" + (ItemDetails == null ? 0 : ItemDetails.CategoryId) + "</td>";
+                tr += "<td style='display:none'>" + kotDetailId + "</td>";
+
+                tr += "<td style='width:6%;' class='text-center'>"
+
+                if (productType == "Non Serial Product") {
+                    tr += "<a href='javascript:void(0)' onclick= 'DeleteItemOrder(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                }
+                else {
+                    tr += "<a href='javascript:void(0)' onclick= 'DeleteItemOrder(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                    tr += "&nbsp;&nbsp;<a href='javascript:void()' onclick= 'AddSerialForAdHocItem(this)' ><img alt='serial' src='../Images/serial.png' title='Serial' /></a>";
+                }
+
+                tr += "</td>";
+                tr += "</td>";
+                tr += "</tr>";
+
+                $("#AddedRiceMillBillingItem tbody").append(tr);
+            }
+
+            CommonHelper.ApplyDecimalValidation();
+            IsDiscountApplicable();
+            ClearItemSearchNAddItemDetails();
+            SalesNDiscountCalculation();
+            PaymentCalculation(0);
+            return false;
+        }
+
+        <%--function AddItem() {
             var alreadyAddedItem, itemId, itemName;
 
             var IsItemAutoSave = $("#<%=hfIsItemAutoSave.ClientID %>").val();
@@ -1241,17 +1758,16 @@
 
             $("#AddedItem tbody").append(tr);
             CommonHelper.ApplyDecimalValidation();
-            //debugger;
+
             IsDiscountApplicable();
             ClearItemSearchNAddItemDetails();
             SalesNDiscountCalculation();
             PaymentCalculation(0);
 
             return false;
-        }
+        }--%>
 
         function IsDiscountApplicable() {
-            //debugger;
             if (ItemDetails == null) {
                 return false;
             }
@@ -1346,35 +1862,58 @@
 
         }
 
+        //function calculateTotalQuantity() {
+        //    var totalQuantity = 0.0, totalItem = 0.0;
+        //    $("#AddedItem tbody tr").each(function () {
+        //        totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(4)").find("input").val() == null ? 0 : $(this).find("td:eq(4)").find("input").val());
+        //        totalItem++;
+        //    });
+        //    //$('#lblTotalItemTypes').Text = "Total Item = " + totalItem;
+        //    //$('#lblTotalItemQuantity').Text = "Total Quantity = " + totalQuantity;
+        //    document.getElementById('ContentPlaceHolder1_lblTotalItemTypes').innerHTML = "Total Item : " + totalItem + "";
+        //    document.getElementById('ContentPlaceHolder1_lblTotalItemQuantity').innerHTML = "Total Quantity : " + totalQuantity + "";
+
+        //}
+
         function calculateTotalQuantity() {
-            //debugger;
             var totalQuantity = 0.0, totalItem = 0.0;
-            $("#AddedItem tbody tr").each(function () {
-                totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(4)").find("input").val() == null ? 0 : $(this).find("td:eq(4)").find("input").val());
-                totalItem++;
-            });
-            //$('#lblTotalItemTypes').Text = "Total Item = " + totalItem;
-            //$('#lblTotalItemQuantity').Text = "Total Quantity = " + totalQuantity;
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                $("#AddedItem > tbody > tr").each(function () {
+                    if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                        totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(7)").find("input").val() == null ? 0 : $(this).find("td:eq(7)").find("input").val());
+                    }
+                    else {
+                        totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(4)").find("input").val() == null ? 0 : $(this).find("td:eq(4)").find("input").val());
+                    }
+                    totalItem++;
+                });
+            }
+            else {
+                $("#AddedRiceMillBillingItem tbody tr").each(function () {
+                    totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(6)").text() == null ? 0 : $(this).find("td:eq(6)").text());
+                    totalItem++;
+                });
+            }
+
             document.getElementById('ContentPlaceHolder1_lblTotalItemTypes').innerHTML = "Total Item : " + totalItem + "";
             document.getElementById('ContentPlaceHolder1_lblTotalItemQuantity').innerHTML = "Total Quantity : " + totalQuantity + "";
-
         }
 
         function SalesNDiscountCalculation() {
-            calculateTotalQuantity();
+            /*if ($("#AddedItem tbody tr").length == 0) {
+                toastr.info("Please Add Item First.");
+                return false;
+            }*/
 
-            //if ($("#AddedItem tbody tr").length == 0) {
-            //    toastr.info("Please Add Item First.");
-            //    return false;
-            //}
+            calculateTotalQuantity();
 
             var totalAmount = 0.00, amount = 0.00, index = 0;
             var discountAmount = 0.00, afterDiscountAmount = 0.00;
-            var vat = 0.00, totalDiscountAmount = 0.00, grandTotal = 0.00, exchangeTotal = 0.00;
+            var vat = 0.00, ServiceCharge = 0.00, totalDiscountAmount = 0.00, grandTotal = 0.00, exchangeTotal = 0.00;
             var discountType = "Percentage", discount = 0.00;
 
             var discountType = "Percentage", discount = 0.00, roundedGrandTotal = 0.00;
-            //discount = $("#txtDiscountAmount").val() == "" ? 0.00 : parseFloat($("#txtDiscountAmount").val());
+            discount = $("#txtDiscountAmount").val() == "" ? 0.00 : parseFloat($("#txtDiscountAmount").val());
             roundedGrandTotal = $("#txtRoundedGrandTotal").val() == "" ? 0.00 : parseFloat($("#txtRoundedGrandTotal").val());
 
             //if ($("#rbPercentageDiscount").is(":checked") == true && discount > 100) {
@@ -1388,75 +1927,83 @@
             //    discount = 0.00;
             //}
 
-            $("#AddedItem tbody tr").each(function () {
-                debugger;
-                amount = parseFloat($(this).find("td:eq(6)").text());
-                let discountType;
-                if ($("#rbFixedDiscount").is(":checked")) {
-                    discountType = "Fixed";
-                }
-                else if ($("#rbPercentageDiscount").is(":checked")) {
-                    discountType = "Percentage";
-                }
-                if (AddedItemList[index].DiscountType == "Fixed") {
-                    discountAmount = AddedItemList[index].DiscountAmount;
-                }
-                else if (discountType == "Fixed") {
-                    discountAmount = parseFloat($("#txtDiscountAmount").val());
-                }
-                else if (AddedItemList[index].DiscountType == "Percentage") {
-                    discountAmount = amount * (AddedItemList[index].DiscountAmount / 100.00);
-                }
-                else if (discountType == "Percentage") {
-                    discountAmount = amount * (parseFloat($("#txtDiscountAmount").val()) / 100.00);
-                }
 
-                totalAmount += amount;
-                totalDiscountAmount += discountAmount;
-                afterDiscountAmount += (amount - discountAmount);
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                $("#AddedItem tbody tr").each(function () {
+                    if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                        amount = parseFloat($(this).find("td:eq(9)").text());
+                    }
+                    else {
+                        amount = parseFloat($(this).find("td:eq(6)").text());
+                    }
 
-                index++;
+                    if (AddedItemList[index].DiscountType == "Fixed") {
+                        discountAmount = AddedItemList[index].DiscountAmount;
+                    }
+                    else if (AddedItemList[index].DiscountType == "Percentage") {
+                        discountAmount = amount * (AddedItemList[index].DiscountAmount / 100.00);
+                    }
 
-                discountAmount = 0.00;
-            });
+                    totalAmount += amount;
+                    totalDiscountAmount += discountAmount;
+                    afterDiscountAmount += (amount - discountAmount);
+                    index++;
+                    discountAmount = 0.00;
+                });
+            }
+            else {
+                $("#AddedRiceMillBillingItem tbody tr").each(function () {
+                    amount = parseFloat($(this).find("td:eq(8)").text());
 
-            //if ($("#rbPercentageDiscount").is(":checked") == true && discount != 0) {
-            //    discountType = "Percentage";
-            //    discountAmount = totalAmount * (discount / 100.00);
-            //}
-            //else if ($("#rbFixedDiscount").is(":checked") == true && discount != 0) {
-            //    discountType = "Fixed";
-            //    discountAmount = discount;
-            //}
-            //totalDiscountAmount = discountAmount;
+                    if (AddedItemList[index].DiscountType == "Fixed") {
+                        discountAmount = AddedItemList[index].DiscountAmount;
+                    }
+                    else if (AddedItemList[index].DiscountType == "Percentage") {
+                        discountAmount = amount * (AddedItemList[index].DiscountAmount / 100.00);
+                    }
 
+                    totalAmount += amount;
+                    totalDiscountAmount += discountAmount;
+                    afterDiscountAmount += (amount - discountAmount);
+                    index++;
+                    discountAmount = 0.00;
+                });
+            }
 
-            //var MaxItemDiscountTotal = 0.0;
+            if ($("#rbPercentageDiscount").is(":checked") == true && discount != 0) {
+                discountType = "Percentage";
+                discountAmount = totalAmount * (discount / 100.00);
+            }
+            else if ($("#rbFixedDiscount").is(":checked") == true && discount != 0) {
+                discountType = "Fixed";
+                discountAmount = discount;
+            }
+            totalDiscountAmount = discountAmount;
 
-            //$("#AddedItem tbody tr").each(function () {
+            var MaxItemDiscountTotal = 0.0;
 
-            //    var itemDiscountAmount = parseFloat($(this).find("td:eq(14)").text());
-            //    MaxItemDiscountTotal = MaxItemDiscountTotal + itemDiscountAmount;
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                $("#AddedItem tbody tr").each(function () {
+                    var itemDiscountAmount = parseFloat($(this).find("td:eq(14)").text());
+                    MaxItemDiscountTotal = MaxItemDiscountTotal + itemDiscountAmount;
+                });
+            }
+            else {
+                $("#AddedRiceMillBillingItem tbody tr").each(function () {
+                    var itemDiscountAmount = parseFloat(0);
+                    MaxItemDiscountTotal = MaxItemDiscountTotal + itemDiscountAmount;
+                });
+            }
 
-            //});
-            //totalDiscountAmount = MaxItemDiscountTotal;
-
-            //debugger;
-            //afterDiscountAmount = totalAmount - discountAmount;
+            if (MaxItemDiscountTotal > 0) {
+                totalDiscountAmount = MaxItemDiscountTotal;
+            }
+            
             afterDiscountAmount = totalAmount - totalDiscountAmount;
-
             var IsInclusiveOrExclusiveBill = '', IsInclusiveBill = 0, vatAmount = 0.00, IsVatEnable = 1;
-
             var vatPercentAmount = 0.0, totalItemAmount = 0.0, totalItemDiscount = 0.00, totalAmountAfterDiscount = 0.0;
 
-            //IsInclusiveBill = parseInt($("#ContentPlaceHolder1_hfIsRestaurantBillInclusive").val(), 10);
-            //vatAmount = parseFloat($("#ContentPlaceHolder1_hfRestaurantVatAmount").val());
-            //IsVatEnable = parseFloat($("#ContentPlaceHolder1_hfIsVatEnable").val());
-
-
             IsInclusiveOrExclusiveBill = $("#ContentPlaceHolder1_ddlInclusiveOrExclusive").val();
-
-            //IsVatEnable = parseFloat($("#ContentPlaceHolder1_hfIsVatEnable").val());
 
             if ($("#ContentPlaceHolder1_cbTPVatAmount").is(":checked")) {
                 IsVatEnable = true;
@@ -1465,52 +2012,63 @@
                 IsVatEnable = false;
             }
 
-            $("#AddedItem tbody tr").each(function () {
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                $("#AddedItem tbody tr").each(function () {
+                    if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "0") {
+                        vatPercentAmount = parseFloat($(this).find("td:eq(17)").text());
+                        totalItemAmount = parseFloat($(this).find("td:eq(6)").text());
+                        totalItemDiscount = parseFloat($(this).find("td:eq(14)").text());
+                    }
+                    else {
+                        vatPercentAmount = parseFloat($(this).find("td:eq(20)").text());
+                        totalItemAmount = parseFloat($(this).find("td:eq(9)").text());
+                        totalItemDiscount = parseFloat($(this).find("td:eq(17)").text());
+                    }
 
-                vatPercentAmount = parseFloat($(this).find("td:eq(17)").text());
-                totalItemAmount = parseFloat($(this).find("td:eq(6)").text());
-                totalItemDiscount = parseFloat($(this).find("td:eq(14)").text());
-                totalAmountAfterDiscount = totalItemAmount - totalItemDiscount;
+                    totalAmountAfterDiscount = totalItemAmount - totalItemDiscount;
 
+                    if (IsInclusiveOrExclusiveBill == 'Exclusive') {
+                        vat += parseFloat((((totalAmountAfterDiscount) * vatPercentAmount) / (100)) * IsVatEnable);
+                        grandTotal = afterDiscountAmount + vat;
 
+                    }
+                    else {
+                        vat += parseFloat(((totalAmountAfterDiscount * vatPercentAmount) / (100 + vatPercentAmount)) * IsVatEnable);
+                        grandTotal = afterDiscountAmount;
+                        ServiceRate = parseFloat(discountedAmount - ServiceCharge - vat);
+                    }
 
-                if (IsInclusiveOrExclusiveBill == 'Exclusive') {
-                    vat += parseFloat((((totalAmountAfterDiscount) * vatPercentAmount) / (100)) * IsVatEnable);
-                    //grandTotal = afterDiscountAmount + vat;
-
-                }
-                else {
-                    vat += parseFloat(((totalAmountAfterDiscount * vatPercentAmount) / (100 + vatPercentAmount)) * IsVatEnable);
-                    //grandTotal = afterDiscountAmount;
-                    //ServiceRate = parseFloat(discountedAmount - ServiceCharge - vat);
-                }
-
-            });
-
-            if (IsInclusiveOrExclusiveBill == 'Exclusive') {
-                grandTotal = afterDiscountAmount + vat;
-
+                });
             }
             else {
+                $("#AddedRiceMillBillingItem tbody tr").each(function () {
+                    vatPercentAmount = parseFloat(0);
+                    totalItemAmount = parseFloat($(this).find("td:eq(8)").text());
+                    totalItemDiscount = parseFloat(0);
+                    totalAmountAfterDiscount = totalItemAmount - totalItemDiscount;
 
-                grandTotal = afterDiscountAmount;
+                    if (IsInclusiveOrExclusiveBill == 'Exclusive') {
+                        vat += parseFloat((((totalAmountAfterDiscount) * vatPercentAmount) / (100)) * IsVatEnable);
+                        grandTotal = afterDiscountAmount + vat;
+                    }
+                    else {
+                        vat += parseFloat(((totalAmountAfterDiscount * vatPercentAmount) / (100 + vatPercentAmount)) * IsVatEnable);
+                        grandTotal = afterDiscountAmount;
+                        ServiceRate = parseFloat(discountedAmount - ServiceCharge - vat);
+                    }
+                });
             }
 
-            //if (IsInclusiveBill == 0) {
-            //    vat = parseFloat((((afterDiscountAmount) * vatAmount) / (100)) * IsVatEnable);
-            //    grandTotal = afterDiscountAmount + vat;
-            //}
-            //else {
-            //    vat = parseFloat(((afterDiscountAmount * vatAmount) / (100 + vatAmount)) * IsVatEnable);
-            //    grandTotal = afterDiscountAmount;
-            //    //ServiceRate = parseFloat(discountedAmount - ServiceCharge - vat);
-            //}
-
-
             $("#txtTotalSales").val(toFixed(totalAmount, 2));
-            $("#txtDiscountAmount").val(toFixed(totalDiscountAmount, 2));
+            if ($("#rbPercentageDiscount").is(":checked") == false) {
+                $("#txtDiscountAmount").val(toFixed(totalDiscountAmount, 2));
+                $("#ContentPlaceHolder1_hfTotalDiscountAmount").val(toFixed(totalDiscountAmount, 2));
+            }
+
+            $("#ContentPlaceHolder1_hfTotalDiscountAmount").val(toFixed(totalDiscountAmount, 2));
             $("#txtAfterDiscountAmount").val(toFixed(afterDiscountAmount, 2));
             $("#txtVat").val(toFixed(vat, 2));
+            console.log(grandTotal);
             $("#txtGrandTotal").val(toFixed(grandTotal, 2));
 
             exchangeTotal = parseFloat($("#txtReturnItemTotal").val() == "" ? 0 : ($("#txtReturnItemTotal").val()));
@@ -1523,7 +2081,6 @@
             var fractionalAmount = 0.00, roundedGrandTotal = toFixed(grandTotal, 2);
 
             if (isRestaurantBillAmountWillRound == "1") {
-
                 var roundedGrandTotal = Math.round(grandTotal)
                 var fractionalAmount = toFixed((roundedGrandTotal - toFixed(grandTotal, 2)), 2);
 
@@ -1544,40 +2101,307 @@
             }
         }
 
+        //function SalesNDiscountCalculation() {
+        //    calculateTotalQuantity();
+
+        //    //if ($("#AddedItem tbody tr").length == 0) {
+        //    //    toastr.info("Please Add Item First.");
+        //    //    return false;
+        //    //}
+
+        //    var totalAmount = 0.00, amount = 0.00, index = 0;
+        //    var discountAmount = 0.00, afterDiscountAmount = 0.00;
+        //    var vat = 0.00, totalDiscountAmount = 0.00, grandTotal = 0.00, exchangeTotal = 0.00;
+        //    var discountType = "Percentage", discount = 0.00;
+
+        //    var discountType = "Percentage", discount = 0.00, roundedGrandTotal = 0.00;
+        //    //discount = $("#txtDiscountAmount").val() == "" ? 0.00 : parseFloat($("#txtDiscountAmount").val());
+        //    roundedGrandTotal = $("#txtRoundedGrandTotal").val() == "" ? 0.00 : parseFloat($("#txtRoundedGrandTotal").val());
+
+        //    //if ($("#rbPercentageDiscount").is(":checked") == true && discount > 100) {
+        //    //    toastr.info("Discount Percentage Cannot Greater Than (>) 100.");
+        //    //    $("#txtDiscountAmount").val("");
+        //    //    discount = 0.00;
+        //    //}
+        //    //else if ($("#rbFixedDiscount").is(":checked") == true && discount > roundedGrandTotal) {
+        //    //    toastr.info("Fixed Discount Cannot Greater Than Grand Total.");
+        //    //    $("#txtDiscountAmount").val("");
+        //    //    discount = 0.00;
+        //    //}
+
+        //    $("#AddedItem tbody tr").each(function () {
+        //        amount = parseFloat($(this).find("td:eq(6)").text());
+        //        let discountType;
+        //        if ($("#rbFixedDiscount").is(":checked")) {
+        //            discountType = "Fixed";
+        //        }
+        //        else if ($("#rbPercentageDiscount").is(":checked")) {
+        //            discountType = "Percentage";
+        //        }
+        //        if (AddedItemList[index].DiscountType == "Fixed") {
+        //            discountAmount = AddedItemList[index].DiscountAmount;
+        //        }
+        //        else if (discountType == "Fixed") {
+        //            discountAmount = parseFloat($("#txtDiscountAmount").val());
+        //        }
+        //        else if (AddedItemList[index].DiscountType == "Percentage") {
+        //            discountAmount = amount * (AddedItemList[index].DiscountAmount / 100.00);
+        //        }
+        //        else if (discountType == "Percentage") {
+        //            discountAmount = amount * (parseFloat($("#txtDiscountAmount").val()) / 100.00);
+        //        }
+
+        //        totalAmount += amount;
+        //        totalDiscountAmount += discountAmount;
+        //        afterDiscountAmount += (amount - discountAmount);
+
+        //        index++;
+
+        //        discountAmount = 0.00;
+        //    });
+
+        //    //if ($("#rbPercentageDiscount").is(":checked") == true && discount != 0) {
+        //    //    discountType = "Percentage";
+        //    //    discountAmount = totalAmount * (discount / 100.00);
+        //    //}
+        //    //else if ($("#rbFixedDiscount").is(":checked") == true && discount != 0) {
+        //    //    discountType = "Fixed";
+        //    //    discountAmount = discount;
+        //    //}
+        //    //totalDiscountAmount = discountAmount;
+
+
+        //    //var MaxItemDiscountTotal = 0.0;
+
+        //    //$("#AddedItem tbody tr").each(function () {
+
+        //    //    var itemDiscountAmount = parseFloat($(this).find("td:eq(14)").text());
+        //    //    MaxItemDiscountTotal = MaxItemDiscountTotal + itemDiscountAmount;
+
+        //    //});
+        //    //totalDiscountAmount = MaxItemDiscountTotal;
+
+        //    //afterDiscountAmount = totalAmount - discountAmount;
+        //    afterDiscountAmount = totalAmount - totalDiscountAmount;
+
+        //    var IsInclusiveOrExclusiveBill = '', IsInclusiveBill = 0, vatAmount = 0.00, IsVatEnable = 1;
+
+        //    var vatPercentAmount = 0.0, totalItemAmount = 0.0, totalItemDiscount = 0.00, totalAmountAfterDiscount = 0.0;
+
+        //    //IsInclusiveBill = parseInt($("#ContentPlaceHolder1_hfIsRestaurantBillInclusive").val(), 10);
+        //    //vatAmount = parseFloat($("#ContentPlaceHolder1_hfRestaurantVatAmount").val());
+        //    //IsVatEnable = parseFloat($("#ContentPlaceHolder1_hfIsVatEnable").val());
+
+
+        //    IsInclusiveOrExclusiveBill = $("#ContentPlaceHolder1_ddlInclusiveOrExclusive").val();
+
+        //    //IsVatEnable = parseFloat($("#ContentPlaceHolder1_hfIsVatEnable").val());
+
+        //    if ($("#ContentPlaceHolder1_cbTPVatAmount").is(":checked")) {
+        //        IsVatEnable = true;
+        //    }
+        //    else {
+        //        IsVatEnable = false;
+        //    }
+
+        //    $("#AddedItem tbody tr").each(function () {
+
+        //        vatPercentAmount = parseFloat($(this).find("td:eq(17)").text());
+        //        totalItemAmount = parseFloat($(this).find("td:eq(6)").text());
+        //        totalItemDiscount = parseFloat($(this).find("td:eq(14)").text());
+        //        totalAmountAfterDiscount = totalItemAmount - totalItemDiscount;
+
+
+
+        //        if (IsInclusiveOrExclusiveBill == 'Exclusive') {
+        //            vat += parseFloat((((totalAmountAfterDiscount) * vatPercentAmount) / (100)) * IsVatEnable);
+        //            //grandTotal = afterDiscountAmount + vat;
+
+        //        }
+        //        else {
+        //            vat += parseFloat(((totalAmountAfterDiscount * vatPercentAmount) / (100 + vatPercentAmount)) * IsVatEnable);
+        //            //grandTotal = afterDiscountAmount;
+        //            //ServiceRate = parseFloat(discountedAmount - ServiceCharge - vat);
+        //        }
+
+        //    });
+
+        //    if (IsInclusiveOrExclusiveBill == 'Exclusive') {
+        //        grandTotal = afterDiscountAmount + vat;
+
+        //    }
+        //    else {
+
+        //        grandTotal = afterDiscountAmount;
+        //    }
+
+        //    //if (IsInclusiveBill == 0) {
+        //    //    vat = parseFloat((((afterDiscountAmount) * vatAmount) / (100)) * IsVatEnable);
+        //    //    grandTotal = afterDiscountAmount + vat;
+        //    //}
+        //    //else {
+        //    //    vat = parseFloat(((afterDiscountAmount * vatAmount) / (100 + vatAmount)) * IsVatEnable);
+        //    //    grandTotal = afterDiscountAmount;
+        //    //    //ServiceRate = parseFloat(discountedAmount - ServiceCharge - vat);
+        //    //}
+
+
+        //    $("#txtTotalSales").val(toFixed(totalAmount, 2));
+        //    $("#txtDiscountAmount").val(toFixed(totalDiscountAmount, 2));
+        //    $("#txtAfterDiscountAmount").val(toFixed(afterDiscountAmount, 2));
+        //    $("#txtVat").val(toFixed(vat, 2));
+        //    $("#txtGrandTotal").val(toFixed(grandTotal, 2));
+
+        //    exchangeTotal = parseFloat($("#txtReturnItemTotal").val() == "" ? 0 : ($("#txtReturnItemTotal").val()));
+        //    exchangeTotal += parseFloat($("#txtPointAmount").val() == "" ? 0 : ($("#txtPointAmount").val()));
+        //    grandTotal = grandTotal - exchangeTotal;
+
+        //    $("#txtRoundedGrandTotal").val(toFixed(grandTotal, 2));
+
+        //    var isRestaurantBillAmountWillRound = $("#ContentPlaceHolder1_hfIsRestaurantBillAmountWillRound").val();
+        //    var fractionalAmount = 0.00, roundedGrandTotal = toFixed(grandTotal, 2);
+
+        //    if (isRestaurantBillAmountWillRound == "1") {
+
+        //        var roundedGrandTotal = Math.round(grandTotal)
+        //        var fractionalAmount = toFixed((roundedGrandTotal - toFixed(grandTotal, 2)), 2);
+
+        //        if (fractionalAmount > 0) {
+        //            $("#roundedSign").text("+");
+        //            $("#txtRoundedAmount").val(fractionalAmount);
+        //        }
+        //        else {
+        //            $("#roundedSign").text("-");
+        //            $("#txtRoundedAmount").val((fractionalAmount * -1.00));
+        //        }
+
+        //        $("#txtRoundedGrandTotal").val(roundedGrandTotal);
+        //    }
+
+        //    if ($("#ContentPlaceHolder1_hfBillId").val() != "") {
+        //        PaymentCalculation(roundedGrandTotal);
+        //    }
+        //}
+
+        //function CheckQuantity(control) {
+
+
+        //    tt = control;
+
+        //    var tr = $(control).parent().parent();
+        //    var quantity = $.trim($(tr).find("td:eq(4)").find("input").val());
+        //    var unitPrice = $.trim($(tr).find("td:eq(5)").find("input").val());
+        //    if (quantity == "" || quantity == "0") {
+        //        toastr.info("Please Give Proper Quantity.");
+        //        $(control).val("1");
+        //    }
+        //    //var remarks = $.trim($(tr).find("td:eq(7)").find("input").val());
+
+        //    var totalPrice = parseFloat(unitPrice) * parseFloat(quantity);
+        //    $(tr).find("td:eq(6)").text(toFixed(totalPrice, 2));
+        //    ItemDetails = {
+        //        ItemId: +$.trim($(tr).find("td:eq(8)").text()),
+        //        UnitPriceLocal: unitPrice,
+        //        CategoryId: +$.trim($(tr).find("td:eq(10)").text())
+        //    };
+
+
+        //    IsDiscountApplicable();
+        //    ItemDetails = null;
+
+        //    unitDiscount = $.trim($(tr).find("td:eq(13)").text());
+        //    totalDiscount = parseFloat(unitDiscount) * parseFloat(quantity);
+        //    $(tr).find("td:eq(14)").text(toFixed(totalDiscount, 2));
+
+        //    SalesNDiscountCalculation();
+        //    PaymentCalculation(0);
+
+        //    //toastr.info("CheckQuantity");
+        //}
+
         function CheckQuantity(control) {
-
-
             tt = control;
-
             var tr = $(control).parent().parent();
-            var quantity = $.trim($(tr).find("td:eq(4)").find("input").val());
-            var unitPrice = $.trim($(tr).find("td:eq(5)").find("input").val());
+
+            var bagWaight = 1;
+            var bagQuantity = 1;
+            var quantity = 0;
+            var unitPrice = 0;
+
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                    quantity = $.trim($(tr).find("td:eq(7)").find("input").val());
+                    unitPrice = $.trim($(tr).find("td:eq(8)").find("input").val());
+                }
+                else {
+                    quantity = $.trim($(tr).find("td:eq(4)").find("input").val());
+                    unitPrice = $.trim($(tr).find("td:eq(5)").find("input").val());
+                }
+            }
+            else {
+                bagWaight = $.trim($(tr).find("td:eq(4)").find("input").val());
+                bagQuantity = $.trim($(tr).find("td:eq(5)").find("input").val());
+                quantity = parseFloat(bagWaight) * parseFloat(bagQuantity);
+                unitPrice = $.trim($(tr).find("td:eq(7)").find("input").val());
+            }
+
             if (quantity == "" || quantity == "0") {
                 toastr.info("Please Give Proper Quantity.");
                 $(control).val("1");
             }
-            //var remarks = $.trim($(tr).find("td:eq(7)").find("input").val());
 
             var totalPrice = parseFloat(unitPrice) * parseFloat(quantity);
-            $(tr).find("td:eq(6)").text(toFixed(totalPrice, 2));
-            ItemDetails = {
-                ItemId: +$.trim($(tr).find("td:eq(8)").text()),
-                UnitPriceLocal: unitPrice,
-                CategoryId: +$.trim($(tr).find("td:eq(10)").text())
-            };
 
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                    $(tr).find("td:eq(9)").text(toFixed(totalPrice, 2));
+                    ItemDetails = {
+                        ItemId: +$.trim($(tr).find("td:eq(11)").text()),
+                        UnitPriceLocal: unitPrice,
+                        CategoryId: +$.trim($(tr).find("td:eq(13)").text())
+                    };
+                }
+                else {
+                    $(tr).find("td:eq(6)").text(toFixed(totalPrice, 2));
+                    ItemDetails = {
+                        ItemId: +$.trim($(tr).find("td:eq(8)").text()),
+                        UnitPriceLocal: unitPrice,
+                        CategoryId: +$.trim($(tr).find("td:eq(10)").text())
+                    };
+                }
+            }
+            else {
+                $(tr).find("td:eq(6)").text(toFixed(quantity, 2));
+                $(tr).find("td:eq(8)").text(toFixed(totalPrice, 2));
+                ItemDetails = {
+                    ItemId: +$.trim($(tr).find("td:eq(9)").text()),
+                    UnitPriceLocal: unitPrice,
+                    CategoryId: +$.trim($(tr).find("td:eq(11)").text())
+                };
+            }
 
             IsDiscountApplicable();
             ItemDetails = null;
 
-            unitDiscount = $.trim($(tr).find("td:eq(13)").text());
-            totalDiscount = parseFloat(unitDiscount) * parseFloat(quantity);
-            $(tr).find("td:eq(14)").text(toFixed(totalDiscount, 2));
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                    unitDiscount = $.trim($(tr).find("td:eq(16)").text());
+                    totalDiscount = parseFloat(unitDiscount) * parseFloat(quantity);
+                    $(tr).find("td:eq(17)").text(toFixed(totalDiscount, 2));
+                }
+                else {
+                    unitDiscount = $.trim($(tr).find("td:eq(13)").text());
+                    totalDiscount = parseFloat(unitDiscount) * parseFloat(quantity);
+                    $(tr).find("td:eq(14)").text(toFixed(totalDiscount, 2));
+                }
+            }
+            else {
+                unitDiscount = parseFloat(0);
+                totalDiscount = parseFloat(0);
+            }
 
             SalesNDiscountCalculation();
             PaymentCalculation(0);
-
-            //toastr.info("CheckQuantity");
         }
 
         function PaymentCalculation(paymentAmount) {
@@ -1595,7 +2419,6 @@
             var companyAmount = $.trim($("#txtCompanyPayment").val()) == "" ? "0" : $("#txtCompanyPayment").val();
 
 
-            debugger;
             grandTotal = parseFloat($("#txtRoundedGrandTotal").val() == "" ? 0 : ($("#txtRoundedGrandTotal").val()));
             if (companyAmount != "0") {
                 if ($("#ContentPlaceHolder1_hfCompanyId").val() == "" || $("#ContentPlaceHolder1_hfCompanyId").val() == "0") {
@@ -1720,14 +2543,43 @@
             $("#txtRoundedGrandTotal").val(roundedGrandTotal);
         }
 
-        function DeleteItemOrder(control) {
+        //function DeleteItemOrder(control) {
 
+        //    var index = 0;
+        //    var tr = $(control).parent().parent();
+        //    var itemId = parseInt($.trim($(tr).find("td:eq(8)").text()), 10);
+
+        //    //var itemName = $.trim($(tr).find("td:eq(1)").text());
+        //    //index = _.findIndex(AddedItemList, { ItemId: itemId, ItemName: itemName });
+
+        //    index = _.findIndex(AddedItemList, { ItemId: itemId });
+        //    console.log(index);
+        //    if (AddedItemList[index].KotDetailId != "0") {
+        //        DeletedItemList.push(JSON.parse(JSON.stringify(AddedItemList[index])));
+        //    }
+
+        //    $(tr).remove();
+        //    AddedItemList.splice(index, 1);
+        //    SalesNDiscountCalculation();
+        //    PaymentCalculation(0);
+
+        //    if (AddedItemList.length == 0) {
+        //        ClearAfterAllItemDelete();
+        //    }
+        //}
+
+        function DeleteItemOrder(control) {
             var index = 0;
             var tr = $(control).parent().parent();
-            var itemId = parseInt($.trim($(tr).find("td:eq(8)").text()), 10);
+            var itemId = 0;
 
-            //var itemName = $.trim($(tr).find("td:eq(1)").text());
-            //index = _.findIndex(AddedItemList, { ItemId: itemId, ItemName: itemName });
+            if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                itemId = parseInt($.trim($(tr).find("td:eq(11)").text()), 10);
+            }
+            else {
+                itemId = parseInt($.trim($(tr).find("td:eq(9)").text()), 10);
+            }
+            console.log(itemId);
 
             index = _.findIndex(AddedItemList, { ItemId: itemId });
 
@@ -1746,7 +2598,6 @@
         }
 
         function BillSettlement() {
-
             PaymentCalculation(0);
 
             if ($("#ContentPlaceHolder1_ddlProject").val() == "0") {
@@ -1778,16 +2629,18 @@
 
             isBillExchange = $("#ContentPlaceHolder1_hfIsBillExchange").val() == "0" ? false : true;
             if (!isBillExchange) {
-                if ($("#AddedItem tbody tr").length == 0) { toastr.warning("Please Add Item For Settlement."); return false; }
+                if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                    if ($("#AddedItem tbody tr").length == 0) { toastr.warning("Please Add Item For Settlement."); return false; }
+                }
+                else {
+                    if ($("#AddedRiceMillBillingItem tbody tr").length == 0) { toastr.warning("Please Add Item For Settlement."); return false; }
+                }
             }
             if ($.trim($("#DueRChnageAmount").text()) == "Due/Change") { toastr.warning("Please Payment For The Bill."); return false; }
             else if ($.trim($("#DueRChnageAmount").text()) == "Due Amount" && parseFloat($("#txtDueRChnage").val()) != 0) { toastr.warning("Please Payment For The Bill."); return false; }
 
             var grandTotal = $("#txtGrandTotal").val() == "" ? 0 : parseFloat($("#txtGrandTotal").val());
             var roundedTotal = $("#txtRoundedGrandTotal").val() == "" ? 0 : parseFloat($("#txtRoundedGrandTotal").val());
-            //if (roundedTotal < 0) { toastr.info("Excahnge amount cannot be refunded."); return false; }
-            //
-
 
             if ($("#ContentPlaceHolder1_hfPOSRefundConfiguration").val() == "2") {
                 if (roundedTotal < 0 && grandTotal == 0) { toastr.info("Full excahnge amount cannot be refunded."); return false; }
@@ -1803,7 +2656,6 @@
             }
             else if (roundedTotal >= 0) {
                 refundId = 3;
-
             }
 
             if (refundId == 1) {
@@ -1823,28 +2675,23 @@
                 });
                 //ok te ajax call kore update kore dite hobe.../.....
                 var remarks = $('#ContentPlaceHolder1_txtRemarksForFullRefund').val("");
-
-                //if (remarks == "") {
-                //    toastr.info("Please input the Remarks.")
-                //    return false;
-                //}
                 refundRemarks = remarks;
                 return false;
             }
-
-
-            //
-
-
 
             var isBillExchange = false;
             isBillExchange = $("#ContentPlaceHolder1_hfIsBillExchange").val() == "0" ? false : true;
 
             if (isBillExchange) {
-
                 var exchangeVal = 0, total = 0.00;
                 $("#PreviousBillItem tbody > tr").each(function () {
-                    exchangeVal = $(this).find("td:eq(4)").find('input').val();
+                    if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                        exchangeVal = $(this).find("td:eq(7)").find('input').val();
+                    }
+                    else {
+                        exchangeVal = $(this).find("td:eq(4)").find('input').val();
+                    }
+
                     total = total + (exchangeVal == "" ? 0.00 : parseFloat(exchangeVal));
                 });
 
@@ -1854,7 +2701,7 @@
                 }
             }
 
-            var kotDetailId = "0", kotId = "0", itemId, itemCode, itemName, stockBy, quantity, unitPrice, remarks,
+            var kotDetailId = "0", kotId = "0", itemId, colorId, sizeId, styleId, itemCode, itemName, stockBy, quantity, unitPrice, remarks,
                 totalPrice, totalSales, discountAmount, afterDiscountAmount, vat, grandTotal, roundedAmount,
                 roundedGrandTotal, paymodeCount = 0, row = 0, paymentAmount = "0", dbQuantity;
 
@@ -1867,8 +2714,7 @@
             var BillDetails = new Array();
             var SalesReturnItem = new Array();
             EditedItemList = new Array();
-            //debugger;
-            
+
             costCenterId = $("#ContentPlaceHolder1_hfCostcenterId").val();
 
             if ($("#rbFixedDiscount").is(":checked")) {
@@ -1877,10 +2723,7 @@
             else if ($("#rbPercentageDiscount").is(":checked")) {
                 discountType = "Percentage";
             }
-            if (dataForEditForBillingBillId.DiscountType == "Fixed" || dataForEditForBillingBillId.DiscountType == "Percentage") {
-                discountType = dataForEditForBillingBillId.DiscountType;
-            }
-            
+
             if ($("#ContentPlaceHolder1_hfResumedKotId").val() != "") {
                 kotId = $("#ContentPlaceHolder1_hfResumedKotId").val();
             }
@@ -1888,65 +2731,182 @@
             if ($("#ContentPlaceHolder1_hfBillId").val() != "") {
                 billId = $("#ContentPlaceHolder1_hfBillId").val();
             }
-            var discountAmount = 0.0;
 
+            var discountAmount = 0.0;
             var companyAmount = $("#txtCompanyPayment").val();
             var companyName = $("#lblCompanyName").text();
 
-            debugger;
             var companyId = $("#ContentPlaceHolder1_hfCompanyId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfCompanyId").val();
             var paymentId = $("#ContentPlaceHolder1_hfPaymentId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfPaymentId").val();
             var contactId = $("#ContentPlaceHolder1_hfContactId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfContactId").val();
 
-            $("#AddedItem tbody tr").each(function () {
-                debugger;
-                kotDetailId = $(this).find("td:eq(11)").text();
-                itemId = $(this).find("td:eq(8)").text();
-                itemCode = $(this).find("td:eq(0)").text();
-                itemName = $(this).find("td:eq(1)").text();
-                stockBy = $(this).find("td:eq(9)").text();
-                quantity = $(this).find("td:eq(4)").find("input").val();
-                unitPrice = $(this).find("td:eq(5)").find("input").val();
-                remarks = $(this).find("td:eq(7)").find("textarea").val();
-                totalPrice = $(this).find("td:eq(6)").text();
-                dbQuantity = $(this).find("td:eq(12)").text();
-                discountAmount = $(this).find("td:eq(14)").text();
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                $("#AddedItem tbody tr").each(function () {
 
-                if (kotDetailId == "0") {
-                    BillDetails.push({
-                        KotDetailId: kotDetailId,
-                        KotId: kotId,
-                        ItemId: itemId,
-                        Code: itemCode,
-                        ItemName: itemName,
-                        ItemType: 'IndividualItem',
-                        StockBy: stockBy,
-                        ItemUnit: quantity,
-                        UnitRate: unitPrice,
-                        Amount: totalPrice,
-                        ItemCost: unitPrice,
-                        InvoiceDiscount: discountAmount,
-                        Remarks: remarks
-                    });
-                }
-                else if (kotDetailId != "0") {
-                    EditedItemList.push({
-                        KotDetailId: kotDetailId,
-                        KotId: kotId,
-                        ItemId: itemId,
-                        Code: itemCode,
-                        ItemName: itemName,
-                        ItemType: 'IndividualItem',
-                        StockBy: stockBy,
-                        ItemUnit: quantity,
-                        UnitRate: unitPrice,
-                        Amount: totalPrice,
-                        ItemCost: unitPrice,
-                        InvoiceDiscount: discountAmount,
-                        Remarks: remarks
-                    });
-                }
-            });
+                    if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                        kotDetailId = $(this).find("td:eq(14)").text();
+                        itemId = $(this).find("td:eq(11)").text();
+
+                        colorId = $(this).find("td:eq(22)").text();
+                        sizeId = $(this).find("td:eq(23)").text();
+                        styleId = $(this).find("td:eq(24)").text();
+
+                        itemCode = $(this).find("td:eq(0)").text();
+                        itemName = $(this).find("td:eq(1)").text();
+                        stockBy = $(this).find("td:eq(12)").text();
+                        quantity = $(this).find("td:eq(7)").find("input").val();
+                        unitPrice = $(this).find("td:eq(8)").find("input").val();
+
+                        if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '1') {
+                            remarks = $(this).find("td:eq(10)").find("input").val();
+                        }
+                        else {
+                            remarks = $(this).find("td:eq(10)").find("textarea").val();
+                        }
+
+                        totalPrice = $(this).find("td:eq(9)").text();
+                        dbQuantity = $(this).find("td:eq(15)").text();
+                        discountAmount = $(this).find("td:eq(17)").text();
+                    }
+                    else {
+                        kotDetailId = $(this).find("td:eq(11)").text();
+                        itemId = $(this).find("td:eq(8)").text();
+
+                        colorId = 0;
+                        sizeId = 0;
+                        styleId = 0;
+
+                        itemCode = $(this).find("td:eq(0)").text();
+                        itemName = $(this).find("td:eq(1)").text();
+                        stockBy = $(this).find("td:eq(9)").text();
+                        quantity = $(this).find("td:eq(4)").find("input").val();
+                        unitPrice = $(this).find("td:eq(5)").find("input").val();
+
+                        if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '1') {
+                            remarks = $(this).find("td:eq(7)").find("input").val();
+                        }
+                        else {
+                            remarks = $(this).find("td:eq(7)").find("textarea").val();
+                        }
+
+                        totalPrice = $(this).find("td:eq(6)").text();
+                        dbQuantity = $(this).find("td:eq(12)").text();
+                        discountAmount = $(this).find("td:eq(14)").text();
+                    }
+
+                    if (kotDetailId == "0") {
+                        BillDetails.push({
+                            KotDetailId: kotDetailId,
+                            KotId: kotId,
+                            ItemId: itemId,
+                            ColorId: colorId,
+                            SizeId: sizeId,
+                            StyleId: styleId,
+                            Code: itemCode,
+                            ItemName: itemName,
+                            ItemType: 'IndividualItem',
+                            StockBy: stockBy,
+                            ItemUnit: quantity,
+                            UnitRate: unitPrice,
+                            Amount: totalPrice,
+                            ItemCost: unitPrice,
+                            InvoiceDiscount: discountAmount,
+                            Remarks: remarks
+                        });
+                    }
+                    else if (kotDetailId != "0") {
+                        EditedItemList.push({
+                            KotDetailId: kotDetailId,
+                            KotId: kotId,
+                            ItemId: itemId,
+                            ColorId: colorId,
+                            SizeId: sizeId,
+                            StyleId: styleId,
+                            Code: itemCode,
+                            ItemName: itemName,
+                            ItemType: 'IndividualItem',
+                            StockBy: stockBy,
+                            ItemUnit: quantity,
+                            UnitRate: unitPrice,
+                            Amount: totalPrice,
+                            ItemCost: unitPrice,
+                            InvoiceDiscount: discountAmount,
+                            Remarks: remarks
+                        });
+                    }
+                });
+            }
+            else {
+                $("#AddedRiceMillBillingItem tbody tr").each(function () {
+                    kotDetailId = $(this).find("td:eq(12)").text();
+                    itemId = $(this).find("td:eq(9)").text();
+
+                    colorId = 0;
+                    sizeId = 0;
+                    styleId = 0;
+
+                    itemCode = $(this).find("td:eq(0)").text();
+                    itemName = $(this).find("td:eq(1)").text();
+                    stockBy = $(this).find("td:eq(10)").text();
+                    BagWeight = $(this).find("td:eq(4)").find("input").val();
+                    NoOfBag = $(this).find("td:eq(5)").find("input").val();
+
+                    quantity = $(this).find("td:eq(6)").text();
+                    if (quantity == "") {
+                        quantity = $(this).find("td:eq(6)").find("input").val();
+                    }
+                    unitPrice = $(this).find("td:eq(7)").find("input").val();
+                    remarks = $(this).find("td:eq(4)").find("input").val();
+
+                    totalPrice = $(this).find("td:eq(8)").text();
+                    dbQuantity = $(this).find("td:eq(6)").find("input").val();
+                    discountAmount = 0;
+                    if (kotDetailId == "0") {
+                        BillDetails.push({
+                            KotDetailId: kotDetailId,
+                            KotId: kotId,
+                            ItemId: itemId,
+                            ColorId: colorId,
+                            SizeId: sizeId,
+                            StyleId: styleId,
+                            Code: itemCode,
+                            ItemName: itemName,
+                            ItemType: 'IndividualItem',
+                            StockBy: stockBy,
+                            ItemUnit: quantity,
+                            UnitRate: unitPrice,
+                            Amount: totalPrice,
+                            ItemCost: unitPrice,
+                            InvoiceDiscount: discountAmount,
+                            Remarks: remarks,
+                            BagWeight: BagWeight,
+                            NoOfBag: NoOfBag
+                        });
+                    }
+                    else if (kotDetailId != "0") {
+                        EditedItemList.push({
+                            KotDetailId: kotDetailId,
+                            KotId: kotId,
+                            ItemId: itemId,
+                            ColorId: colorId,
+                            SizeId: sizeId,
+                            StyleId: styleId,
+                            Code: itemCode,
+                            ItemName: itemName,
+                            ItemType: 'IndividualItem',
+                            StockBy: stockBy,
+                            ItemUnit: quantity,
+                            UnitRate: unitPrice,
+                            Amount: totalPrice,
+                            ItemCost: unitPrice,
+                            InvoiceDiscount: discountAmount,
+                            Remarks: remarks,
+                            BagWeight: BagWeight,
+                            NoOfBag: NoOfBag
+                        });
+                    }
+                });
+            }
 
             var invoiceDiscount = 0.0;
 
@@ -1956,22 +2916,30 @@
 
                     kotDetailId = $(this).find("td:eq(9)").text();
                     itemId = $(this).find("td:eq(7)").text();
-                    stockBy = $(this).find("td:eq(8)").text();
 
+                    colorId = 0;
+                    sizeId = 0;
+                    styleId = 0;
+
+                    stockBy = $(this).find("td:eq(8)").text();
                     itemCode = $(this).find("td:eq(0)").text();
                     itemName = $(this).find("td:eq(1)").text();
-
                     quantity = $(this).find("td:eq(4)").find("input").val();
                     unitPrice = $(this).find("td:eq(5)").text();
                     totalPrice = $(this).find("td:eq(6)").text();
                     dbQuantity = $(this).find("td:eq(10)").text();
                     invoiceDiscount = PreviousBillItemList[index].InvoiceDiscount / PreviousBillItemList[index].Quantity * quantity;
-                    //arpon11
+
                     if (quantity != "0" && quantity != '') {
                         SalesReturnItem.push({
                             KotDetailId: kotDetailId,
                             KotId: kotId,
                             ItemId: itemId,
+
+                            ColorId: colorId,
+                            SizeId: sizeId,
+                            StyleId: styleId,
+
                             Code: itemCode,
                             ItemName: itemName,
                             ItemType: 'IndividualItem',
@@ -1989,7 +2957,8 @@
             }
 
             totalSales = $("#txtTotalSales").val();
-            discountAmount = $("#txtDiscountAmount").val() == "" ? 0.00 : $("#txtDiscountAmount").val();
+            discountAmount = $("#ContentPlaceHolder1_hfTotalDiscountAmount").val() == "" ? 0.00 : $("#ContentPlaceHolder1_hfTotalDiscountAmount").val();
+
             afterDiscountAmount = $("#txtAfterDiscountAmount").val();
             vat = $("#txtVat").val();
             grandTotal = $("#txtGrandTotal").val();
@@ -2017,7 +2986,6 @@
                 calculatedDiscountAmount = parseFloat(totalSales) - parseFloat(afterDiscountAmount);
 
             var projectId = $("#ContentPlaceHolder1_ddlProject").val();
-
             var billType = $("#ContentPlaceHolder1_ddlInclusiveOrExclusive").val();
 
             var IsVatEnable = true;
@@ -2026,6 +2994,15 @@
             }
             else {
                 IsVatEnable = false;
+            }
+
+            var customerName = $("#ContentPlaceHolder1_txtCustomerName").val();
+            var customerMobile = $("#ContentPlaceHolder1_txtCustomerMobile").val();
+            var customerAddress = $("#ContentPlaceHolder1_txtCustomerAddress").val();
+
+            var deliveredBy = 0;
+            if ($("#ContentPlaceHolder1_hfIsDeliveredByEnable").val() == "1") {
+                deliveredBy = $("#ContentPlaceHolder1_ddlDeliveredBy").val();
             }
 
             var billingType = "";
@@ -2046,7 +3023,9 @@
                 BillPaidBySourceId: 0,
                 CostCenterId: costCenterId,
                 PaxQuantity: "1",
-                CustomerName: $("#ContentPlaceHolder1_hfMemberId").val(),
+                CustomerName: customerName,
+                CustomerMobile: customerMobile,
+                CustomerAddress: customerAddress,
                 SalesAmount: totalSales,
                 DiscountType: discountType,
                 DiscountAmount: discountAmount,
@@ -2058,9 +3037,7 @@
                 CitySDCharge: 0.00,
                 AdditionalCharge: 0.00,
                 AdditionalChargeType: 'Percentage',
-
                 IsInvoiceServiceChargeEnable: false,
-                //IsInvoiceVatAmountEnable: ($("#ContentPlaceHolder1_hfIsVatEnable").val() == "0" ? false : true),
                 IsInvoiceVatAmountEnable: IsVatEnable,
                 IsInvoiceCitySDChargeEnable: false,
                 IsInvoiceAdditionalChargeEnable: false,
@@ -2079,13 +3056,20 @@
                 RefundRemarks: refundRemarks,
                 ProjectId: projectId,
                 BillType: billType,
+                DeliveredBy: deliveredBy,
                 BillingType: billingType
             };
 
             if (companyId != "0") {
                 RestaurantBill.TransactionType = 'Company';
                 RestaurantBill.TransactionId = companyId;
-                RestaurantBill.CustomerName = companyName;
+
+                if ($("#ContentPlaceHolder1_hfIsCustomerDetailsEnable").val() == "1") {
+                    RestaurantBill.CustomerName = customerName;
+                }
+                else {
+                    RestaurantBill.CustomerName = companyName;
+                }
 
                 RestaurantBill.PaymentInstructionId = paymentId;
                 RestaurantBill.ContactId = contactId;
@@ -2133,18 +3117,14 @@
                         CompanyId: companyId
                     });
                 }
-                //var paymentAmount = $("#" + PaymentMode[row].Control).val();
-
             }
 
             if ($("#txtRoundedAmount").val() != "0" && $("#txtRoundedAmount").val() != "") {
-
                 roundedAmount = $("#txtRoundedAmount").val();
                 var roundedSign = $("#roundedSign").text();
                 roundedAmount = roundedSign == "-" ? parseFloat(roundedAmount) * (-1) : parseFloat(roundedAmount);
 
                 if (roundedAmount != "" || roundedAmount != "0") {
-
                     BillPayment.push({
                         NodeId: 0,
                         PaymentType: "Rounded",
@@ -2201,16 +3181,39 @@
                 }
             }
 
+            var row = 0;
+            rowCount = BillDetails.length;
+
+            for (row = 0; row < rowCount; row++) {
+                if (BillDetails[row].ProductType == "Serial Product") {
+                    var serialTotal = _.where(AddedSerialzableProduct, { ItemId: BillDetails[row].ItemId });
+
+                    if (BillDetails[row].Quantity > serialTotal.length) {
+                        toastr.warning("Please Give Serial Of Product " + BillDetails[row].ItemName);
+                        break;
+                    }
+                    else if (serialTotal.length > BillDetails[row].Quantity) {
+                        toastr.warning("Please Remove Serial Of Product " + BillDetails[row].ItemName);
+                        break;
+                    }
+                }
+            }
+
+            if (row != rowCount) {
+                return false;
+            }
 
             var MemberId = $("#ContentPlaceHolder1_hfMemberId").val() == '' ? 0 : +$("#ContentPlaceHolder1_hfMemberId").val();
-
+            console.log(kotId, MemberId, RestaurantBill, BillPayment, BillDetails, EditedItemList, DeletedItemList, SalesReturnItem, estimatedDoneDate, isTaskAutoGenarate, AddedSerialzableProduct, DeletedSerialzableProduct);
+            console.log("kot: " + kotId, "MemberId: " + MemberId, "RestaurantBill: " + RestaurantBill, "BillPayment: " + BillPayment, "BillDetails: " + BillDetails, "EditedItemList: " + EditedItemList, "DeletedItemList: " + DeletedItemList, "SalesReturnItem: " + SalesReturnItem, "estimatedDoneDate: " + estimatedDoneDate, "isTaskAutoGenarate: " + isTaskAutoGenarate, "AddedSerialzableProduct: " + AddedSerialzableProduct, "DeletedSerialzableProduct: " + DeletedSerialzableProduct);
             $.ajax({
                 type: "POST",
                 url: "BillingResettlement.aspx/BillSettlement",
                 data: JSON.stringify({
                     kotId: kotId, memberId: MemberId,
                     RestaurantBill: RestaurantBill, BillPayment: BillPayment, BillDetails: BillDetails,
-                    EditeDetails: EditedItemList, DeletedDetails: DeletedItemList, SalesReturnItem: SalesReturnItem, EstimatedDoneDate: estimatedDoneDate, IsTaskAutoGenarate: isTaskAutoGenarate
+                    EditeDetails: EditedItemList, DeletedDetails: DeletedItemList, SalesReturnItem: SalesReturnItem, EstimatedDoneDate: estimatedDoneDate, IsTaskAutoGenarate: isTaskAutoGenarate,
+                    AddedSerialzableProduct: AddedSerialzableProduct, DeletedSerialzableProduct: DeletedSerialzableProduct
                 }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -2239,6 +3242,499 @@
                 }
             });
         }
+
+        //function BillSettlement() {
+
+        //    PaymentCalculation(0);
+
+        //    if ($("#ContentPlaceHolder1_ddlProject").val() == "0") {
+        //        toastr.warning("Please Select Project.");
+        //        $("#ContentPlaceHolder1_ddlProject").focus();
+        //        return false;
+        //    }
+
+        //    if ($("#txtCompanyPayment").val() != "") { // && $("#txtCompanyPayment").val() != "0"
+        //        if ($("#ContentPlaceHolder1_hfCompanyId").val() == "" || $("#ContentPlaceHolder1_hfCompanyId").val() == "0") {
+        //            toastr.warning("Please Select Compnay To Give Company Payment.");
+        //            return false;
+        //        }
+        //    }
+
+        //    var estimatedDoneDate = $("#txtEstimatedTaskDoneDate").val();
+        //    var isTaskAutoGenarate = $("#ContentPlaceHolder1_hfIsTaskAutoGenarate").val();
+
+        //    if ($("#ContentPlaceHolder1_hfIsTaskAutoGenarate").val() == '1') {
+        //        if (estimatedDoneDate == "") {
+        //            toastr.warning("Select Estimated Done Date");
+        //            $("#txtEstimatedTaskDoneDate").focus();
+        //            return false;
+        //        }
+        //    }
+
+        //    if (estimatedDoneDate != "")
+        //        estimatedDoneDate = CommonHelper.DateFormatToMMDDYYYY(estimatedDoneDate, '/');
+
+        //    isBillExchange = $("#ContentPlaceHolder1_hfIsBillExchange").val() == "0" ? false : true;
+        //    if (!isBillExchange) {
+        //        if ($("#AddedItem tbody tr").length == 0) { toastr.warning("Please Add Item For Settlement."); return false; }
+        //    }
+        //    if ($.trim($("#DueRChnageAmount").text()) == "Due/Change") { toastr.warning("Please Payment For The Bill."); return false; }
+        //    else if ($.trim($("#DueRChnageAmount").text()) == "Due Amount" && parseFloat($("#txtDueRChnage").val()) != 0) { toastr.warning("Please Payment For The Bill."); return false; }
+
+        //    var grandTotal = $("#txtGrandTotal").val() == "" ? 0 : parseFloat($("#txtGrandTotal").val());
+        //    var roundedTotal = $("#txtRoundedGrandTotal").val() == "" ? 0 : parseFloat($("#txtRoundedGrandTotal").val());
+        //    //if (roundedTotal < 0) { toastr.info("Excahnge amount cannot be refunded."); return false; }
+        //    //
+
+
+        //    if ($("#ContentPlaceHolder1_hfPOSRefundConfiguration").val() == "2") {
+        //        if (roundedTotal < 0 && grandTotal == 0) { toastr.info("Full excahnge amount cannot be refunded."); return false; }
+        //    }
+        //    else if ($("#ContentPlaceHolder1_hfPOSRefundConfiguration").val() == "3") {
+        //        if (roundedTotal < 0) { toastr.info("Excahnge amount cannot be refunded."); return false; }
+        //    }
+        //    var refundId = 1;
+        //    var refundRemarks;
+        //    if (roundedTotal < 0 && grandTotal != 0) {
+        //        refundId = 2;
+        //        refundRemarks = 'Pertial Amount Refund';
+        //    }
+        //    else if (roundedTotal >= 0) {
+        //        refundId = 3;
+
+        //    }
+
+        //    if (refundId == 1) {
+        //        $("#FullRefundRemarksDialog").dialog({
+        //            width: 600,
+        //            height: 280,
+        //            autoOpen: true,
+        //            modal: true,
+        //            closeOnEscape: false,
+        //            resizable: false,
+        //            fluid: true,
+        //            title: "Remarks For Full Refund",
+        //            show: 'slide',
+        //            open: function (event, ui) {
+        //                $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+        //            }
+        //        });
+        //        //ok te ajax call kore update kore dite hobe.../.....
+        //        var remarks = $('#ContentPlaceHolder1_txtRemarksForFullRefund').val("");
+
+        //        //if (remarks == "") {
+        //        //    toastr.info("Please input the Remarks.")
+        //        //    return false;
+        //        //}
+        //        refundRemarks = remarks;
+        //        return false;
+        //    }
+
+
+        //    //
+
+
+
+        //    var isBillExchange = false;
+        //    isBillExchange = $("#ContentPlaceHolder1_hfIsBillExchange").val() == "0" ? false : true;
+
+        //    if (isBillExchange) {
+
+        //        var exchangeVal = 0, total = 0.00;
+        //        $("#PreviousBillItem tbody > tr").each(function () {
+        //            exchangeVal = $(this).find("td:eq(4)").find('input').val();
+        //            total = total + (exchangeVal == "" ? 0.00 : parseFloat(exchangeVal));
+        //        });
+
+        //        if (total == 0) {
+        //            toastr.info("Please Give Exchange Quantity.");
+        //            return false;
+        //        }
+        //    }
+
+        //    var kotDetailId = "0", kotId = "0", itemId, itemCode, itemName, stockBy, quantity, unitPrice, remarks,
+        //        totalPrice, totalSales, discountAmount, afterDiscountAmount, vat, grandTotal, roundedAmount,
+        //        roundedGrandTotal, paymodeCount = 0, row = 0, paymentAmount = "0", dbQuantity;
+
+        //    var billId = "0", defaultCurrency = 1, discountType = 'Percentage', calculatedDiscountAmount = 0,
+        //        isBillReSettlement = false, exchangeItemVatAmount = 0, exchangeItemTotal = 0, referenceBillId = 0,
+        //        costCenterId = 0;
+
+        //    var PaymentMode = new Array();
+        //    var BillPayment = new Array();
+        //    var BillDetails = new Array();
+        //    var SalesReturnItem = new Array();
+        //    EditedItemList = new Array();
+
+            
+        //    costCenterId = $("#ContentPlaceHolder1_hfCostcenterId").val();
+
+        //    if ($("#rbFixedDiscount").is(":checked")) {
+        //        discountType = "Fixed";
+        //    }
+        //    else if ($("#rbPercentageDiscount").is(":checked")) {
+        //        discountType = "Percentage";
+        //    }
+        //    if (dataForEditForBillingBillId.DiscountType == "Fixed" || dataForEditForBillingBillId.DiscountType == "Percentage") {
+        //        discountType = dataForEditForBillingBillId.DiscountType;
+        //    }
+            
+        //    if ($("#ContentPlaceHolder1_hfResumedKotId").val() != "") {
+        //        kotId = $("#ContentPlaceHolder1_hfResumedKotId").val();
+        //    }
+
+        //    if ($("#ContentPlaceHolder1_hfBillId").val() != "") {
+        //        billId = $("#ContentPlaceHolder1_hfBillId").val();
+        //    }
+        //    var discountAmount = 0.0;
+
+        //    var companyAmount = $("#txtCompanyPayment").val();
+        //    var companyName = $("#lblCompanyName").text();
+
+        //    var companyId = $("#ContentPlaceHolder1_hfCompanyId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfCompanyId").val();
+        //    var paymentId = $("#ContentPlaceHolder1_hfPaymentId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfPaymentId").val();
+        //    var contactId = $("#ContentPlaceHolder1_hfContactId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfContactId").val();
+
+        //    $("#AddedItem tbody tr").each(function () {
+        //        kotDetailId = $(this).find("td:eq(11)").text();
+        //        itemId = $(this).find("td:eq(8)").text();
+        //        itemCode = $(this).find("td:eq(0)").text();
+        //        itemName = $(this).find("td:eq(1)").text();
+        //        stockBy = $(this).find("td:eq(9)").text();
+        //        quantity = $(this).find("td:eq(4)").find("input").val();
+        //        unitPrice = $(this).find("td:eq(5)").find("input").val();
+        //        remarks = $(this).find("td:eq(7)").find("textarea").val();
+        //        totalPrice = $(this).find("td:eq(6)").text();
+        //        dbQuantity = $(this).find("td:eq(12)").text();
+        //        discountAmount = $(this).find("td:eq(14)").text();
+
+        //        if (kotDetailId == "0") {
+        //            BillDetails.push({
+        //                KotDetailId: kotDetailId,
+        //                KotId: kotId,
+        //                ItemId: itemId,
+        //                Code: itemCode,
+        //                ItemName: itemName,
+        //                ItemType: 'IndividualItem',
+        //                StockBy: stockBy,
+        //                ItemUnit: quantity,
+        //                UnitRate: unitPrice,
+        //                Amount: totalPrice,
+        //                ItemCost: unitPrice,
+        //                InvoiceDiscount: discountAmount,
+        //                Remarks: remarks
+        //            });
+        //        }
+        //        else if (kotDetailId != "0") {
+        //            EditedItemList.push({
+        //                KotDetailId: kotDetailId,
+        //                KotId: kotId,
+        //                ItemId: itemId,
+        //                Code: itemCode,
+        //                ItemName: itemName,
+        //                ItemType: 'IndividualItem',
+        //                StockBy: stockBy,
+        //                ItemUnit: quantity,
+        //                UnitRate: unitPrice,
+        //                Amount: totalPrice,
+        //                ItemCost: unitPrice,
+        //                InvoiceDiscount: discountAmount,
+        //                Remarks: remarks
+        //            });
+        //        }
+        //    });
+
+        //    var invoiceDiscount = 0.0;
+
+        //    if ($("#PreviousBillItem tbody tr").length > 0) {
+        //        var index = 0;
+        //        $("#PreviousBillItem tbody tr").each(function () {
+
+        //            kotDetailId = $(this).find("td:eq(9)").text();
+        //            itemId = $(this).find("td:eq(7)").text();
+        //            stockBy = $(this).find("td:eq(8)").text();
+
+        //            itemCode = $(this).find("td:eq(0)").text();
+        //            itemName = $(this).find("td:eq(1)").text();
+
+        //            quantity = $(this).find("td:eq(4)").find("input").val();
+        //            unitPrice = $(this).find("td:eq(5)").text();
+        //            totalPrice = $(this).find("td:eq(6)").text();
+        //            dbQuantity = $(this).find("td:eq(10)").text();
+        //            invoiceDiscount = PreviousBillItemList[index].InvoiceDiscount / PreviousBillItemList[index].Quantity * quantity;
+        //            //arpon11
+        //            if (quantity != "0" && quantity != '') {
+        //                SalesReturnItem.push({
+        //                    KotDetailId: kotDetailId,
+        //                    KotId: kotId,
+        //                    ItemId: itemId,
+        //                    Code: itemCode,
+        //                    ItemName: itemName,
+        //                    ItemType: 'IndividualItem',
+        //                    StockBy: stockBy,
+        //                    ItemUnit: quantity,
+        //                    UnitRate: unitPrice,
+        //                    Amount: totalPrice,
+        //                    ItemCost: unitPrice,
+        //                    InvoiceDiscount: invoiceDiscount
+        //                });
+        //            }
+        //            index++;
+        //        });
+
+        //    }
+
+        //    totalSales = $("#txtTotalSales").val();
+        //    discountAmount = $("#txtDiscountAmount").val() == "" ? 0.00 : $("#txtDiscountAmount").val();
+        //    afterDiscountAmount = $("#txtAfterDiscountAmount").val();
+        //    vat = $("#txtVat").val();
+        //    grandTotal = $("#txtGrandTotal").val();
+        //    roundedAmount = $("#txtRoundedAmount").val() == "" ? "0" : $("#txtRoundedAmount").val();
+        //    roundedGrandTotal = $("#txtRoundedGrandTotal").val();
+
+        //    var pointAmount = $('#txtPointAmount').val() == '' ? 0 : parseFloat($('#txtPointAmount').val());
+
+        //    if ($("#ContentPlaceHolder1_hfIsBillExchange").val() == "1" && pointAmount > 0) {
+        //        pointAmount = pointAmount - previousPoint;
+        //    }
+
+        //    isBillExchange = $("#ContentPlaceHolder1_hfIsBillExchange").val() == "0" ? false : true;
+        //    if (isBillExchange) {
+        //        isBillReSettlement = true;
+        //        exchangeItemVatAmount = $("#txtReturnItemVatTotal").val();
+        //        exchangeItemTotal = $("#txtReturnItemTotal").val();
+        //        referenceBillId = $("#ContentPlaceHolder1_hfBillId").val();
+        //    }
+
+        //    var remarks = $("#ContentPlaceHolder1_txtRemarks").val();
+        //    var subject = $("#ContentPlaceHolder1_txtSubject").val();
+
+        //    if (parseFloat(discountAmount) != "0" && parseFloat(discountAmount) != "")
+        //        calculatedDiscountAmount = parseFloat(totalSales) - parseFloat(afterDiscountAmount);
+
+        //    var projectId = $("#ContentPlaceHolder1_ddlProject").val();
+
+        //    var billType = $("#ContentPlaceHolder1_ddlInclusiveOrExclusive").val();
+
+        //    var IsVatEnable = true;
+        //    if ($("#ContentPlaceHolder1_cbTPVatAmount").is(":checked")) {
+        //        IsVatEnable = true;
+        //    }
+        //    else {
+        //        IsVatEnable = false;
+        //    }
+
+        //    var billingType = "";
+        //    if ($("#ContentPlaceHolder1_hfIsBillingTypeEnable").val() == "1") {
+
+        //        if ($("#ContentPlaceHolder1_ddlBillingType").val() == "--- Please Select ---") {
+        //            toastr.warning("Please Select Billing Type.");
+        //            return false;
+        //        }
+
+        //        billingType = $("#ContentPlaceHolder1_ddlBillingType").val();
+        //    }
+
+        //    var RestaurantBill = {
+        //        BillId: billId,
+        //        IsBillSettlement: false,
+        //        SourceName: 'RestaurantToken',
+        //        BillPaidBySourceId: 0,
+        //        CostCenterId: costCenterId,
+        //        PaxQuantity: "1",
+        //        CustomerName: $("#ContentPlaceHolder1_hfMemberId").val(),
+        //        SalesAmount: totalSales,
+        //        DiscountType: discountType,
+        //        DiscountAmount: discountAmount,
+        //        CalculatedDiscountAmount: calculatedDiscountAmount,
+        //        Remarks: remarks,
+        //        Subject: subject,
+        //        ServiceCharge: 0.00,
+        //        VatAmount: vat,
+        //        CitySDCharge: 0.00,
+        //        AdditionalCharge: 0.00,
+        //        AdditionalChargeType: 'Percentage',
+
+        //        IsInvoiceServiceChargeEnable: false,
+        //        //IsInvoiceVatAmountEnable: ($("#ContentPlaceHolder1_hfIsVatEnable").val() == "0" ? false : true),
+        //        IsInvoiceVatAmountEnable: IsVatEnable,
+        //        IsInvoiceCitySDChargeEnable: false,
+        //        IsInvoiceAdditionalChargeEnable: false,
+
+        //        InvoiceServiceRate: grandTotal,
+        //        GrandTotal: grandTotal,
+        //        RoundedAmount: roundedAmount,
+        //        RoundedGrandTotal: roundedGrandTotal,
+
+        //        IsBillReSettlement: isBillReSettlement,
+        //        ExchangeItemVatAmount: exchangeItemVatAmount,
+        //        ExchangeItemTotal: exchangeItemTotal,
+        //        ReferenceBillId: referenceBillId,
+        //        PointAmount: pointAmount,
+        //        RefundId: refundId,
+        //        RefundRemarks: refundRemarks,
+        //        ProjectId: projectId,
+        //        BillType: billType,
+        //        BillingType: billingType
+        //    };
+
+        //    if (companyId != "0") {
+        //        RestaurantBill.TransactionType = 'Company';
+        //        RestaurantBill.TransactionId = companyId;
+        //        RestaurantBill.CustomerName = companyName;
+
+        //        RestaurantBill.PaymentInstructionId = paymentId;
+        //        RestaurantBill.ContactId = contactId;
+        //    }
+
+        //    PaymentMode.push({ CardType: '', PaymentMode: 'Cash', Control: "txtCash" });
+        //    PaymentMode.push({ CardType: 'a', PaymentMode: 'Card', Control: "txtAmexCard" });
+        //    PaymentMode.push({ CardType: 'm', PaymentMode: 'Card', Control: "txtMasterCard" });
+        //    PaymentMode.push({ CardType: 'v', PaymentMode: 'Card', Control: "txtVisaCard" });
+        //    PaymentMode.push({ CardType: 'd', PaymentMode: 'Card', Control: "txtDiscoverCard" });
+        //    PaymentMode.push({ CardType: '', PaymentMode: 'Company', Control: "txtCompanyPayment" });
+
+        //    paymodeCount = PaymentMode.length, row = 0;
+        //    paymentAmount = "0";
+        //    var paymentCounter = 1;
+
+        //    for (row = 0; row < paymodeCount; row++) {
+
+        //        if ($("#" + PaymentMode[row].Control).val() != "" && $("#" + PaymentMode[row].Control).val() != "0") {
+        //            paymentAmount = $("#" + PaymentMode[row].Control).val();
+
+        //            if (paymentAmount == "" || paymentAmount == "0")
+        //                continue;
+
+        //            BillPayment.push({
+        //                NodeId: 0,
+        //                PaymentType: "Advance",
+        //                AccountsPostingHeadId: 0,
+        //                BillPaidBy: 0,
+        //                BankId: 0,
+        //                RegistrationId: 0,
+        //                FieldId: defaultCurrency,
+        //                ConvertionRate: 1,
+        //                CurrencyAmount: paymentAmount,
+        //                PaymentAmount: paymentAmount,
+        //                ChecqueDate: new Date(),
+        //                PaymentMode: PaymentMode[row].PaymentMode,
+        //                PaymentId: 1,
+        //                CardNumber: "",
+        //                CardType: PaymentMode[row].CardType,
+        //                ExpireDate: null,
+        //                ChecqueNumber: "",
+        //                CardHolderName: "",
+        //                PaymentDescription: "",
+        //                CompanyId: companyId
+        //            });
+        //        }
+        //        //var paymentAmount = $("#" + PaymentMode[row].Control).val();
+
+        //    }
+
+        //    if ($("#txtRoundedAmount").val() != "0" && $("#txtRoundedAmount").val() != "") {
+
+        //        roundedAmount = $("#txtRoundedAmount").val();
+        //        var roundedSign = $("#roundedSign").text();
+        //        roundedAmount = roundedSign == "-" ? parseFloat(roundedAmount) * (-1) : parseFloat(roundedAmount);
+
+        //        if (roundedAmount != "" || roundedAmount != "0") {
+
+        //            BillPayment.push({
+        //                NodeId: 0,
+        //                PaymentType: "Rounded",
+        //                AccountsPostingHeadId: 0,
+        //                BillPaidBy: 0,
+        //                BankId: 0,
+        //                RegistrationId: 0,
+        //                FieldId: defaultCurrency,
+        //                ConvertionRate: 1,
+        //                CurrencyAmount: roundedAmount,
+        //                PaymentAmount: roundedAmount,
+        //                ChecqueDate: new Date(),
+        //                PaymentMode: "Rounded",
+        //                PaymentId: 1,
+        //                CardNumber: "",
+        //                CardType: "",
+        //                ExpireDate: null,
+        //                ChecqueNumber: "",
+        //                CardHolderName: "",
+        //                PaymentDescription: ""
+        //            });
+        //        }
+        //    }
+
+        //    if ($.trim($("#DueRChnageAmount").text()) == "Change Amount") {
+        //        if ($("#txtDueRChnage").val() != "0" && $("#txtDueRChnage").val() != "") {
+
+        //            var changeAmount = $("#txtDueRChnage").val();
+
+        //            if (changeAmount != "" || changeAmount != "0") {
+
+        //                BillPayment.push({
+        //                    NodeId: 0,
+        //                    PaymentType: "Refund",
+        //                    AccountsPostingHeadId: 0,
+        //                    BillPaidBy: 0,
+        //                    BankId: 0,
+        //                    RegistrationId: 0,
+        //                    FieldId: defaultCurrency,
+        //                    ConvertionRate: 1,
+        //                    CurrencyAmount: changeAmount,
+        //                    PaymentAmount: changeAmount,
+        //                    ChecqueDate: new Date(),
+        //                    PaymentMode: "Refund",
+        //                    PaymentId: 1,
+        //                    CardNumber: "",
+        //                    CardType: "",
+        //                    ExpireDate: null,
+        //                    ChecqueNumber: "",
+        //                    CardHolderName: "",
+        //                    PaymentDescription: ""
+        //                });
+        //            }
+        //        }
+        //    }
+
+
+        //    var MemberId = $("#ContentPlaceHolder1_hfMemberId").val() == '' ? 0 : +$("#ContentPlaceHolder1_hfMemberId").val();
+
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "BillingResettlement.aspx/BillSettlement",
+        //        data: JSON.stringify({
+        //            kotId: kotId, memberId: MemberId,
+        //            RestaurantBill: RestaurantBill, BillPayment: BillPayment, BillDetails: BillDetails,
+        //            EditeDetails: EditedItemList, DeletedDetails: DeletedItemList, SalesReturnItem: SalesReturnItem, EstimatedDoneDate: estimatedDoneDate, IsTaskAutoGenarate: isTaskAutoGenarate
+        //        }),
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (result) {
+        //            if (result.d.IsSuccess == true) {
+        //                $("#ContentPlaceHolder1_hfBillId").val(result.d.Pk);
+        //                CommonHelper.AlertMessage(result.d.AlertMessage);
+        //                $("#companyInfo").show();
+        //                $("#companyPaymentDiv").removeClass("col-md-12").addClass("col-md-6");
+
+        //                if ($("#ContentPlaceHolder1_hfIsBillExchange").val() == "1") {
+        //                    $('#btnPrinReturnBillPreview').trigger('click');
+        //                }
+        //                else {
+        //                    $('#btnPrintPreview').trigger('click');
+        //                }
+
+        //                ClearAll();
+        //            }
+        //            else {
+        //                CommonHelper.AlertMessage(result.d.AlertMessage);
+        //            }
+        //        },
+        //        error: function (error) {
+        //            toastr.error("error");
+        //        }
+        //    });
+        //}
 
         function CompanyPayment() {
             //toastr.info($("#ContentPlaceHolder1_hfCompanyId").val());
@@ -2827,13 +4323,12 @@
 
             var totalPrice = parseFloat(unitPrice) * parseFloat(quantity);
             $(tr).find("td:eq(6)").text(toFixed(totalPrice, 2));
-            //debugger;
+
             PreviousBillSalesNDiscountCalculation();
             PaymentCalculation(0);
         }
 
         function PreviousBillSalesNDiscountCalculation() {
-            //debugger;
             if ($("#PreviousBillItem tbody tr").length == 0) {
                 toastr.info("Please Load Previous Bill Item First.");
                 return false;
@@ -2952,7 +4447,6 @@
         }
 
         function PreviousBillItemDialogOkay() {
-            // debugger;
             var exchangeVal = 0, total = 0.00;
             $("#PreviousBillItem tbody > tr").each(function () {
                 exchangeVal = $(this).find("td:eq(4)").find('input').val();
@@ -3061,11 +4555,188 @@
         }
 
         function FocusDiscountField() {
-            debugger;
             $("#txtDiscountAmount").focus();
         }
 
+        function AddSerialForAdHocItem(control) {
+            var tr = $(control).parent().parent();
+
+            if ($("#ContentPlaceHolder1_ddlProject").val() == "0") {
+                toastr.warning("Please Select Project.");
+                $("#ContentPlaceHolder1_ddlProject").focus();
+                return false;
+            }
+
+            var itemId = 0, quantity = 0;
+            if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
+                itemId = parseInt($.trim($(tr).find("td:eq(11)").text()), 10);
+                quantity = $(tr).find("td:eq(7)").find("input").val();
+            }
+            else {
+                itemId = parseInt($.trim($(tr).find("td:eq(8)").text()), 10);
+                quantity = $(tr).find("td:eq(4)").find("input").val();
+            }
+
+            var itemName = $(tr).find("td:eq(1)").text();
+            SearialAddedWindow(itemName, itemId, quantity);
+        }
+
+        function SearialAddedWindow(itemName, itemId, quantity) {
+            $("#ContentPlaceHolder1_hfItemIdForSerial").val(itemId);
+            $("#lblAddedQuantity").text('0');
+            $("#lblItemQuantity").text(quantity);
+
+            $("#SerialItemTable tbody tr").remove();
+            $("#SerialItemTable tbody").html("");
+
+            if (AddedSerialzableProduct.length > 0) {
+                var addedSerial = _.where(AddedSerialzableProduct, { ItemId: parseInt(itemId, 10) });
+                var row = 0; rowCount = 0;
+                var tr = "";
+
+                if (addedSerial.length > 0) {
+                    rowCount = addedSerial.length;
+                    $("#lblAddedQuantity").text(rowCount);
+                    AddedSerialCount = rowCount;
+
+                    for (row = 0; row < rowCount; row++) {
+                        tr += "<tr>";
+                        tr += "<td style='width:90%;'>" + addedSerial[row].SerialNumber + "</td>";
+                        tr += "<td style='width:10%;'>" +
+                            "<a href='javascript:void()' onclick= 'DeleteItemSerial(this)' ><img alt='Delete' src='../Images/delete.png' /></a>" +
+                            "</td>";
+                        tr += "<td style='display:none;'>" + addedSerial[row].ItemId + "</td>";
+                        tr += "<td style='display:none;'>" + addedSerial[row].OutSerialId + "</td>";
+
+                        $("#SerialItemTable tbody").append(tr);
+                        tr = "";
+                    }
+                }
+            }
+
+            $("#SerialWindow").dialog({
+                width: 900,
+                height: 650,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: true,
+                resizable: false,
+                title: "Serial Of Item: " + itemName,
+                show: 'slide',
+                open: function (event, ui) {
+                    $('#SerialWindow').css('overflow', 'hidden');
+                    $(this).closest('.ui-dialog').find('.ui-dialog-titlebar-close').hide();
+                }
+            });
+        }
+
+        function AddSerialNumber() {
+            var itemId = $("#ContentPlaceHolder1_hfItemIdForSerial").val();
+            var addedQuantity = $("#lblAddedQuantity").text();
+            var totalQuantity = $("#lblItemQuantity").text();
+            var serial = serialNumber;
+
+            if (serial == "") {
+                toastr.warning("Please Give Serial.");
+                return false;
+            }
+            else if ((parseInt(addedQuantity, 10) + 1) > parseInt(totalQuantity, 10)) {
+                toastr.warning("Number Of Serial Cannot Greater Than Item Quantity.");
+                return false;
+            }
+
+            var alreadySaved = _.findWhere(AddedSerialzableProduct, { SerialNumber: serial });
+            var newAlreadyAdded = _.findWhere(NewAddedSerial, { SerialNumber: serial });
+
+            if (alreadySaved != null || newAlreadyAdded != null) {
+                toastr.warning("This Serial Already Added.");
+                return false;
+            }
+
+            var outId = $("#ContentPlaceHolder1_hfOutId").val();
+            var tr = "";
+
+            tr += "<tr>";
+            tr += "<td style='width:90%;'>" + serial + "</td>";
+            tr += "<td style='width:10%;'>" +
+                "<a href='javascript:void()' onclick= 'DeleteItemSerial(this)' ><img alt='Delete' src='../Images/delete.png' /></a>" +
+                "</td>";
+            tr += "<td style='display:none;'>" + itemId + "</td>";
+            tr += "<td style='display:none;'>0</td>";
+
+            $("#SerialItemTable tbody").append(tr);
+
+            NewAddedSerial.push({
+                OutSerialId: 0,
+                ItemId: parseInt(itemId, 10),
+                SerialNumber: serial
+            });
+
+            AddedSerialCount = AddedSerialCount + 1;
+            $("#lblAddedQuantity").text(AddedSerialCount);
+
+            tr = "";
+            $("#txtSerial").val("");
+        }
+        function ClearSerial() {
+            $("#txtSerial").val("");
+        }
+        function ApplySerialForPurchaseItem() {
+            var addedQuantity = $("#lblAddedQuantity").text();
+            var totalQuantity = $("#lblItemQuantity").text();
+
+            if (parseInt(addedQuantity, 10) < parseInt(totalQuantity, 10)) {
+                toastr.warning("Number Of Serial Must Added As Equall Item Quantity.");
+                return false;
+            }
+
+            $(NewAddedSerial).each(function (index, obj) {
+                AddedSerialzableProduct.push({
+                    OutSerialId: obj.OutSerialId,
+                    ItemId: obj.ItemId,
+                    SerialNumber: obj.SerialNumber
+                });
+            });
+
+            $("#SerialWindow").dialog("close");
+            $("#ContentPlaceHolder1_hfItemIdForSerial").val("");
+            AddedSerialCount = 0;
+            NewAddedSerial = new Array();
+        }
+        function DeleteItemSerial(control) {
+            var tr = $(control).parent().parent();
+            var itemId = parseInt($(tr).find("td:eq(2)").text(), 10);
+            var outSerialId = parseInt($(tr).find("td:eq(3)").text(), 10);
+
+            var addedQuantity = $("#lblAddedQuantity").text();
+            AddedSerialCount = parseInt(addedQuantity, 10) - 1;
+
+            var item = _.findWhere(AddedSerialzableProduct, { ItemId: itemId });
+            var index = _.indexOf(AddedSerialzableProduct, item);
+            AddedSerialzableProduct.splice(index, 1);
+
+            var itemNew = _.findWhere(NewAddedSerial, { ItemId: itemId });
+            var indexNew = _.indexOf(NewAddedSerial, itemNew);
+            NewAddedSerial.splice(indexNew, 1);
+
+            if (outSerialId > 0) {
+                DeletedSerialzableProduct.push(JSON.parse(JSON.stringify(item)));
+            }
+
+            $("#lblAddedQuantity").text(AddedSerialCount);
+            $(tr).remove();
+        }
+        function CancelAddSerial() {
+            $("#SerialWindow").dialog("close");
+            $("#ContentPlaceHolder1_hfItemIdForSerial").val("");
+            AddedSerialCount = 0;
+            NewAddedSerial = new Array();
+        }
+
     </script>
+    <asp:HiddenField ID="hfIsAttributeItem" runat="server"></asp:HiddenField>
+    <asp:HiddenField ID="hfIsItemAttributeEnable" runat="server" Value="0"></asp:HiddenField>
+    <asp:HiddenField ID="hfIsRiceMillBillingEnable" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfIsRestaurantIntegrateWithCompany" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfIsItemAutoSave" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfIsTaskAutoGenarate" runat="server" Value="0"></asp:HiddenField>
@@ -3171,41 +4842,57 @@
             <div class="row">
                 <div class="col-md-12" style="height: 410px;">
                     <div style="height: 400px; overflow-y: scroll;">
-                        <table id="AddedItem" class="table table-bordered table-condensed table-hover table-responsive">
+                        <div id="BillingItemDiv" style="height: 310px; overflow-y: scroll;">
+                            <table id="AddedItem" class="table table-bordered table-condensed table-hover table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th id="codeCol" style="width: 12%;">Code</th>
+                                        <th style="width: 20%;">Item Name</th>
+                                        <th id="cIdd" style="width: 10%;">Color</th>
+                                        <th id="sIdd" style="width: 10%;">Size</th>
+                                        <th id="stIdd" style="width: 10%;">Style</th>
+                                        <th id="stockCol" style="width: 10%;">Stock</th>
+                                        <th id="stockByCol" style="width: 10%;">Stock By</th>
+                                        <th style="width: 8%;">Quantity</th>
+                                        <th style="width: 12%;">Unit Price</th>
+                                        <th style="width: 12%;">Total Price</th>
+                                        <th id="remarksCol" style="width: 10%;">Remarks</th>
+                                        <th style='display: none'>ItemId</th>
+                                        <th style='display: none'>StockById</th>
+                                        <th style='display: none'>CategoryId</th>
+                                        <th style='display: none'>KotDetailId</th>
+                                        <th style='display: none'>DBQuantity</th>
+                                        <th style="width: 6%;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="RiceMillBillingItemDiv" style="height: 310px; overflow-y: scroll;">
+                        <table id="AddedRiceMillBillingItem" class="table table-bordered table-condensed table-hover table-responsive">
                             <thead>
                                 <tr>
-                                    <th id="codeCol" style="width: 12%;">Code
-                                    </th>
-                                    <th style="width: 20%;">Item Name
-                                    </th>
-                                    <th id="stockCol" style="width: 10%;">Stock</th>
-                                    <th id="stockByCol" style="width: 10%;">Stock By
-                                    </th>
-                                    <th style="width: 8%;">Quantity
-                                    </th>
-                                    <th style="width: 12%;">Unit Price
-                                    </th>
-                                    <th style="width: 12%;">Total Price
-                                    </th>
-                                    <th id="remarksCol" style="width: 10%;">Remarks
-                                    </th>
-                                    <th style='display: none'>ItemId
-                                    </th>
-                                    <th style='display: none'>StockById
-                                    </th>
-                                    <th style='display: none'>CategoryId
-                                    </th>
-                                    <th style='display: none'>KotDetailId
-                                    </th>
-                                    <th style='display: none'>DBQuantity
-                                    </th>
-                                    <th style="width: 6%;">Action
-                                    </th>
+                                    <th id="codeARMCol" style="width: 12%;">Code</th>
+                                    <th style="width: 20%;">Item Name</th>
+                                    <th id="stockARMCol" style="width: 10%;">Stock</th>
+                                    <th id="stockByARMCol" style="width: 10%;">Stock By</th>
+                                    <th style="width: 8%;">Bag Waight</th>
+                                    <th style="width: 8%;">Bag</th>
+                                    <th style="width: 8%;">Quantity</th>
+                                    <th style="width: 12%;">Unit Price</th>
+                                    <th style="width: 12%;">Total Price</th>
+                                    <th style='display: none'>ItemId</th>
+                                    <th style='display: none'>StockById</th>
+                                    <th style='display: none'>CategoryId</th>
+                                    <th style='display: none'>KotDetailId</th>
+                                    <th style="width: 6%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -3865,6 +5552,15 @@
         clientidmode="static" scrolling="yes"></iframe>
     <script type="text/javascript">
         $(document).ready(function () {
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '1') {
+                document.getElementById("remarksCol").innerText = "Bag";
+                $("#BillingItemDiv").hide();
+                $("#RiceMillBillingItemDiv").show();
+            }
+            else {
+                $("#BillingItemDiv").show();
+                $("#RiceMillBillingItemDiv").hide();
+            }
             if (CommonHelper.BrowserType().mozilla || CommonHelper.BrowserType().chrome) {
 
                 var barControlId = CommonHelper.GetReportViewerControlId($("#<%=rvTransactionShow.ClientID %>"));
@@ -3879,7 +5575,6 @@
         });
 
         function PrintDocumentFunc(printTemplate) {
-            debugger;
             if (printTemplate == "1") {
                 $('#btnPrintReportTemplate1').trigger('click');
             }
