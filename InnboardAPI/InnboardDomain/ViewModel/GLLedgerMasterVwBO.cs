@@ -36,7 +36,18 @@ namespace InnboardDomain.ViewModel
         public string ChequeNumber { get; set; }
         public Nullable<System.DateTime> ChequeDate { get; set; }
 
-
+        public string NodeHead { get; set; }
+        public bool NodeMode { get; set; }
+        public string NodeNarration { get; set; }
+        public decimal Amount { get; set; }
+        public decimal DebitAmount { get; set; }
+        public decimal CreditAmount { get; set; }
+        public int LedgerMode { get; set; }
+        public string CheckedByName { get; set; }
+        public string ApprovedByName { get; set; }
+        public string VoucherDateDisplay { get; set; }
+        public string CreatedDateDisplay { get; set; }
+        public string CreatedByName { get; set; }		
         public string CompanyName { get; set; }
         public string ProjectName { get; set; }
         public string VoucherTypeName { get; set; }

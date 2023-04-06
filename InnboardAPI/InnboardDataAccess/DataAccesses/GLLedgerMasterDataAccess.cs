@@ -49,9 +49,10 @@ namespace InnboardDataAccess.DataAccesses
 
         public async Task<List<GLLedgerMasterVwBO>> GetVoucherInformation(int userId, int ledgerMasterId)
         {
-            
-            string query = $@"EXEC [dbo].[GetVoucherInformationForApps_SP] {userId}, {ledgerMasterId}";
-            var result= await InnboardDBContext.Database.SqlQuery<GLLedgerMasterVwBO>(query).ToListAsync();
+            SqlParameter param1 = new SqlParameter("@UserInfoId", userId);
+            SqlParameter param2 = new SqlParameter("@LedgerMasterId", ledgerMasterId);
+            //string query = $@"EXEC [dbo].[GetVoucherInformationForApps_SP] {userId}, {ledgerMasterId}";
+            var result= await InnboardDBContext.Database.SqlQuery<GLLedgerMasterVwBO>("EXEC [dbo].[GetVoucherInformationForApps_SP] @UserInfoId, @LedgerMasterId", param1, param2).ToListAsync();
             return result;
         }
     }
