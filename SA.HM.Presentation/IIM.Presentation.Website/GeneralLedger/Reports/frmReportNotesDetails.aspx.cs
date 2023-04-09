@@ -31,11 +31,16 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
         }
         private void GenerateReport()
         {
-            string startDate = string.Empty, endDate = string.Empty, fiscalYearId = string.Empty;
+            string reportType = "bl", startDate = string.Empty, endDate = string.Empty, fiscalYearId = string.Empty;
             int companyId = 0, projectId = 0, donorId = 0;
             string withOrWithoutOpening = string.Empty;
 
             int nodeId = Convert.ToInt32(Request.QueryString["nd"]);
+
+            if (Request.QueryString["rt"] != "")
+            {
+                reportType = Request.QueryString["rt"];
+            }
 
             if (Request.QueryString["fy"] != "0")
             {
@@ -190,7 +195,15 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                 {
                     if (isAccountNodesBreakdownDetailsLedgerEnable == 0)
                     {
-                        generalLedger = commonReportDa.GetIndividualGroupLedgerBookReportDateRangeWise(FromDate, ToDate, nodeId, companyId, projectId, donorId, withOrWithoutOpening);
+                        if (reportType == "pl")
+                        {
+                            generalLedger = commonReportDa.GetIndividualGroupLedgerBookReportDateRangeWiseForPL(FromDate, ToDate, nodeId, companyId, projectId, donorId, withOrWithoutOpening);
+                        }
+                        else
+                        {
+                            generalLedger = commonReportDa.GetIndividualGroupLedgerBookReportDateRangeWise(FromDate, ToDate, nodeId, companyId, projectId, donorId, withOrWithoutOpening);
+                        }
+                        
                     }
                     else
                     {

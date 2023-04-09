@@ -1215,8 +1215,10 @@
                     $('#ListedCompany').hide();
                     $('#ReservedCompany').show();
                     $("#<%=ddlCompanyName.ClientID %>").val(0);
-                    $("#<%=txtContactPerson.ClientID %>").val('');
-                    $("#<%=txtContactNumber.ClientID %>").val('');
+                    $("#<%=txtContactPerson.ClientID %>").val(result.ContactPerson);
+                    $("#<%=txtContactNumber.ClientID %>").val(result.MobileNumber);
+                    $("#<%=txtGuestPhone.ClientID %>").val(result.MobileNumber);
+                    $("#<%=txtGuestEmail.ClientID %>").val(result.ContactEmail);
                 }
 
                 var chkIsLitedCompany = '<%=chkIsLitedCompany.ClientID%>'

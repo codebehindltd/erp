@@ -635,6 +635,63 @@ namespace HotelManagement.Data.GeneralLedger
 
             return entityBOList;
         }
+        public List<LedgerBookReportBO> GetIndividualGroupLedgerBookReportDateRangeWiseForPL(DateTime voucherDateFrom, DateTime voucherDateTo, Int64 nodeId, Int32 companyId, Int32 projectId, Int32 donorId, string withOrWithoutOpening)
+        {
+            List<LedgerBookReportBO> entityBOList = new List<LedgerBookReportBO>();
+
+            DataSet entityBODS = new DataSet();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand command = dbSmartAspects.GetStoredProcCommand("GetIndividualGroupLedgerBookReportDateRangeWiseForPL_SP"))
+                {
+                    command.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(command, "@VoucherDateFrom", DbType.DateTime, voucherDateFrom.Date);
+                    dbSmartAspects.AddInParameter(command, "@VoucherDateTo", DbType.DateTime, voucherDateTo.Date);
+                    dbSmartAspects.AddInParameter(command, "@NodeId", DbType.Int64, nodeId);
+
+                    if (companyId != 0)
+                        dbSmartAspects.AddInParameter(command, "@CompanyId", DbType.Int64, companyId);
+                    else
+                        dbSmartAspects.AddInParameter(command, "@CompanyId", DbType.Int64, DBNull.Value);
+
+                    if (projectId != 0)
+                        dbSmartAspects.AddInParameter(command, "@ProjectId", DbType.Int64, projectId);
+                    else
+                        dbSmartAspects.AddInParameter(command, "@ProjectId", DbType.Int64, DBNull.Value);
+
+                    if (donorId != 0)
+                        dbSmartAspects.AddInParameter(command, "@DonorId", DbType.Int64, donorId);
+                    else
+                        dbSmartAspects.AddInParameter(command, "@DonorId", DbType.Int64, DBNull.Value);
+
+                    dbSmartAspects.AddInParameter(command, "@WithOrWithoutOpening", DbType.String, withOrWithoutOpening);
+
+                    dbSmartAspects.LoadDataSet(command, entityBODS, "LedgerBook");
+                    DataTable table = entityBODS.Tables["LedgerBook"];
+
+                    entityBOList = table.AsEnumerable().Select(r => new LedgerBookReportBO
+                    {
+                        NodeId = r.Field<Int64?>("NodeId"),
+                        NodeNumber = r.Field<string>("NodeNumber"),
+                        NodeHead = r.Field<string>("NodeHead"),
+                        Narration = r.Field<string>("Narration"),
+                        OpeningBalance = r.Field<decimal?>("OpeningBalance"),
+                        DRAmount = r.Field<decimal?>("DRAmount"),
+                        CRAmount = r.Field<decimal?>("CRAmount"),
+                        ClosingBalance = r.Field<decimal?>("ClosingBalance"),
+                        ParentNodeId = r.Field<Int64?>("ParentNodeId"),
+                        ParentNodeHead = r.Field<string>("ParentNodeHead"),
+                        ParentNodeNumber = r.Field<string>("ParentNodeNumber")
+
+                    }).ToList();
+
+                    entityBODS.Dispose();
+                }
+            }
+
+            return entityBOList;
+        }
         public List<LedgerBookReportBO> GetIndividualGroupLedgerBookReportDateRangeWise(DateTime voucherDateFrom, DateTime voucherDateTo, Int64 nodeId, Int32 companyId, Int32 projectId, Int32 donorId, string withOrWithoutOpening)
         {
             List<LedgerBookReportBO> entityBOList = new List<LedgerBookReportBO>();

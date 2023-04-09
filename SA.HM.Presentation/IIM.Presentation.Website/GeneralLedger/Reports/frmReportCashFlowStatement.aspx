@@ -267,7 +267,7 @@
         }
 
         var iframeid = 'printDoc';
-        var url = "/GeneralLedger/Reports/frmReportNotesDetails.aspx?nd=" + nodeId + "&sd=" + startDate + "&ed=" + endDate + "&fy=" + fiscalYearId
+        var url = "/GeneralLedger/Reports/frmReportNotesDetails.aspx?rt=cf" + "&nd=" + nodeId + "&sd=" + startDate + "&ed=" + endDate + "&fy=" + fiscalYearId
             + "&cp=" + companyId + "&pj=" + projectId + "&dr=" + donorId + "&wop=" + withOrWithoutOpening;
         parent.document.getElementById(iframeid).src = url;
 

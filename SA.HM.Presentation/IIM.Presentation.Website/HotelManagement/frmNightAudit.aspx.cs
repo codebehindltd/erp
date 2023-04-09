@@ -1167,13 +1167,18 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
                 if (registrationId == "0")
                 {
-                    //List<RoomRegistrationBO> ActiveRoomRegistrationInfoBO = new List<RoomRegistrationBO>();
                     ActiveRoomRegistrationInfoBO = roomRegistrationDA.GetActiveRoomRegistrationInfo();
                     foreach (RoomRegistrationBO row in ActiveRoomRegistrationInfoBO)
                     {
                         if (registrationId == "0")
                         {
                             registrationId = row.RegistrationId.ToString();
+
+                            List<RoomRegistrationBO> GetActiveRoomRegistrationInfoByTransactionDateListBO = roomRegistrationDA.GetActiveRoomRegistrationInfoByTransactionDate(hmUtility.GetDateTimeFromString(this.txtApprovedDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat));
+                            foreach (RoomRegistrationBO rowTransactionDateList in GetActiveRoomRegistrationInfoByTransactionDateListBO)
+                            {
+                                registrationId += "," + rowTransactionDateList.RegistrationId.ToString();
+                            }
                         }
                         else
                         {
