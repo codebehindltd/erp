@@ -20,5 +20,12 @@ namespace InnboardDomain.Models
         public string GoogleMapUrl { get; set; }
         //public  HttpPostedFileBase ImageFile { get; set; }
 
+        public DateTime AttendanceDate { get; set; }
+        public DateTime? EntryTime { get; set; }
+        public DateTime? ExitTime { get; set; }
+        public int UserInfoId { get; set; }
+        public string Remark { get; set; }
+
+
     }
 }

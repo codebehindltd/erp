@@ -222,6 +222,34 @@ namespace InnboardAPI.Controllers
             }
         }
 
+        // Attendance application
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("AppsAttendanceApplication")]
+        public async Task<HttpResponseMessage> AppsAttendanceApplication(AppAttendanceModel appAttModel)
+        {
+
+            AppsLoginDataAccess dbLogin = new AppsLoginDataAccess();
+            
+            bool isSuccess = dbLogin.SaveUpdateEmpAttendenceInfoForMobileApps(appAttModel);
+            if (isSuccess)
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Succesfully Attendance Application Recorded")
+                };
+                return responseMsg;
+            }
+            else
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent("Bad Request")
+                };
+                return responseMsg;
+            }
+        }
+
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()

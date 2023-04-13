@@ -47,6 +47,38 @@ namespace InnboardDataAccess.DataAccesses
             }
         }
 
+        public bool SaveUpdateEmpAttendenceInfoForMobileApps(AppAttendanceModel appAttModel)
+        {
+            SqlParameter empId = new SqlParameter("@EmpId", appAttModel.EmpId);            
+            SqlParameter attendanceDate = new SqlParameter("@AttendanceDate", appAttModel.AttendanceDate);
+            SqlParameter entryTime = new SqlParameter("@EntryTime", appAttModel.EntryTime);
+            if (appAttModel.EntryTime == null)
+            {
+                entryTime.Value = DBNull.Value;
+            }
+            SqlParameter exitTime = new SqlParameter("@ExitTime", appAttModel.ExitTime);
+            if (appAttModel.ExitTime == null)
+            {
+                exitTime.Value = DBNull.Value;
+            }
+            SqlParameter remark = new SqlParameter("@Remark", appAttModel.Remark);
+            SqlParameter userInfoId = new SqlParameter("@UserInfoId", appAttModel.UserInfoId);
+
+            //string reservationNumber = InnboardDBContext.Database.SqlQuery<string>("EXEC [dbo].[PayrollEmpAttendanceLogMobileApp_Insert_SP] @EmpId,@Latitude,@Longitude, @AttDateTime, @Image", param1, param2, param3, param4, param5);
+            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveUpdateEmpAttendenceInfoForMobileApps_SP] @EmpId,@AttendanceDate,@EntryTime, @ExitTime, @Remark, @UserInfoId", empId, attendanceDate, entryTime, exitTime, remark, userInfoId);
+
+            if (result > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+        
+
 
     }
     
