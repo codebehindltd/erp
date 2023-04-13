@@ -349,6 +349,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\Innboard.pubxml" />
     <None Include="Properties\PublishProfiles\InnboardAPI.pubxml" />
     <None Include="Properties\PublishProfiles\MobileApps.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
