@@ -673,6 +673,7 @@ namespace HotelManagement.Presentation.Website.POS
                 RestaurantBill.CreatedBy = userInformationBO.UserInfoId;
                 RestaurantBill.BillDate = DateTime.Now;
                 RestaurantBill.BillPaymentDate = DateTime.Now;
+                RestaurantBill.SOrderId = 0;
 
                 billmaster.CostCenterId = costCentreTabBOList[0].CostCenterId;
 
