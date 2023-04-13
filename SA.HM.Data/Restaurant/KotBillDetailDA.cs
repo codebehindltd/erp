@@ -34,6 +34,9 @@ namespace HotelManagement.Data.Restaurant
                     dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, entityBO.CreatedBy);
                     dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, entityBO.Remarks);
 
+                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, 0);
+                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, 0);
+
 
                     status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
                 }
