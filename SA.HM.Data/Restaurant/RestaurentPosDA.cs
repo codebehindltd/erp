@@ -552,6 +552,7 @@ namespace HotelManagement.Data.Restaurant
                         {
                             using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveRestaurentBillForRetailPOS_SP"))
                             {
+                                dbSmartAspects.AddInParameter(command, "@SOrderId", DbType.Int32, restaurentBillBO.SOrderId);
                                 dbSmartAspects.AddInParameter(command, "@TableId", DbType.Int32, restaurentBillBO.TableId);
                                 dbSmartAspects.AddInParameter(command, "@CostCenterId", DbType.Int32, restaurentBillBO.CostCenterId);
                                 dbSmartAspects.AddInParameter(command, "@BillDate", DbType.DateTime, restaurentBillBO.BillDate);
@@ -4494,18 +4495,18 @@ namespace HotelManagement.Data.Restaurant
                             status = dbSmartAspects.ExecuteNonQuery(cmdApprove, transction);
                         }
 
-                        if (status > 0)
-                        {
-                            using (DbCommand cmdAfterApproved = dbSmartAspects.GetStoredProcCommand("ATBillingAccountsVoucherPostingProcess_SP"))
-                            {
-                                cmdAfterApproved.Parameters.Clear();
+                        //if (status > 0)
+                        //{
+                        //    using (DbCommand cmdAfterApproved = dbSmartAspects.GetStoredProcCommand("ATBillingAccountsVoucherPostingProcess_SP"))
+                        //    {
+                        //        cmdAfterApproved.Parameters.Clear();
 
-                                dbSmartAspects.AddInParameter(cmdAfterApproved, "@BillId", DbType.Int32, SOrderId);
-                                dbSmartAspects.AddOutParameter(cmdAfterApproved, "@mErr", DbType.Int32, sizeof(Int32));
+                        //        dbSmartAspects.AddInParameter(cmdAfterApproved, "@BillId", DbType.Int32, SOrderId);
+                        //        dbSmartAspects.AddOutParameter(cmdAfterApproved, "@mErr", DbType.Int32, sizeof(Int32));
 
-                                status = dbSmartAspects.ExecuteNonQuery(cmdAfterApproved, transction);
-                            }
-                        }
+                        //        status = dbSmartAspects.ExecuteNonQuery(cmdAfterApproved, transction);
+                        //    }
+                        //}
 
 
                         if (status > 0)

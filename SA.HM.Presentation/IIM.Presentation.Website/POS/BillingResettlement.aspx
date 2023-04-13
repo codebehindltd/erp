@@ -22,6 +22,7 @@
         var dataForEditForBillingBillId = new Array();
         var AddedSerialzableProduct = new Array();
         var DeletedSerialzableProduct = new Array();
+        var discountedAmount = 0;
 
         $(document).ready(function () {
             if ($("#ContentPlaceHolder1_hfBillId").val() != '' && $("#ContentPlaceHolder1_hfBillIdControl").val() != '1') {

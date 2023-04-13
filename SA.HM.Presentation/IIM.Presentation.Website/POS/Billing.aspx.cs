@@ -1540,6 +1540,72 @@ namespace HotelManagement.Presentation.Website.POS
             userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
             return bpDA.GetGLCompanyWiseGuestCompanyInfo(userInformationBO.UserInfoId, companyName, costcenterId);
         }
+
+        [WebMethod]
+        public static RestaurantBillPaymentResume GetBillById(int SOrderId)
+        {
+            string kotIdList = string.Empty, tableIdList = string.Empty;
+            //KotBillMasterBO kotBillMaster = new KotBillMasterBO();
+            List<KotBillDetailBO> kotDetails = new List<KotBillDetailBO>();
+            //List<RestaurantBillDetailBO> billDetailList = new List<RestaurantBillDetailBO>();
+            List<ItemClassificationBO> classificationLst = new List<ItemClassificationBO>();
+            RestaurantBillBO kotBill = new RestaurantBillBO();
+            List<GuestBillPaymentBO> kotBillPayment = new List<GuestBillPaymentBO>();
+            GuestExtraServiceBillApprovedBO roomWisePayment = new GuestExtraServiceBillApprovedBO();
+
+            KotBillMasterDA kotDa = new KotBillMasterDA();
+            RestaurentBillDA billDa = new RestaurentBillDA();
+            KotBillDetailDA kotDetailsDA = new KotBillDetailDA();
+            InvCategoryDA catDa = new InvCategoryDA();
+            RestaurentPosDA posDa = new RestaurentPosDA();
+
+            //kotBillMaster = kotBillMaster = kotDa.GetKotBillMasterInfoByKotIdNSourceName(Convert.ToInt32(kotId), sourceName);
+            kotBill = billDa.GetSalesOrderBySOrderId(SOrderId);
+            kotBillPayment = billDa.GetBillPaymentByBillId(kotBill.BillId, "Restaurant");
+            roomWisePayment = posDa.GetRoomWiseRestaurantBillPaymentByBillIdServiceTypePaymentMode(kotBill.BillId);
+
+            //billDetailList = billDa.GetRestaurantBillDetailsByBillId(kotBill.BillId);
+            classificationLst = catDa.GetRestaurantBillClassificationDetailsByBillId(kotBill.BillId);
+
+            //billDetailList = billDetailList.Where(b => b.KotId != kotBillMaster.KotId).ToList();
+
+            //if (billDetailList.Count > 0)
+            //{
+            //    foreach (RestaurantBillDetailBO bd in billDetailList)
+            //    {
+            //        if (!string.IsNullOrEmpty(kotIdList))
+            //        {
+            //            kotIdList += "," + bd.KotId.ToString();
+            //            tableIdList += "," + bd.TableId.ToString();
+            //        }
+            //        else
+            //        {
+            //            kotIdList = bd.KotId.ToString();
+            //            tableIdList = bd.TableId.ToString();
+            //        }
+            //    }
+            //}
+
+            //if (!string.IsNullOrEmpty(kotIdList))
+            //{
+            //    kotIdList += "," + kotBillMaster.KotId.ToString();
+            //}
+            //else
+            //{
+            //    kotIdList = kotBillMaster.KotId.ToString();
+            //}
+
+            kotDetails = kotDetailsDA.GetSalesOrderDetailsId(kotBill.CostCenterId, kotBill.BillId);
+
+            RestaurantBillPaymentResume paymentResume = new RestaurantBillPaymentResume();
+            //paymentResume.KotBillMaster = kotBillMaster;
+            paymentResume.KotBillDetails = kotDetails;
+            paymentResume.RestaurantKotBill = kotBill;
+            //paymentResume.RestaurantKotBillPayment = kotBillPayment;
+            //paymentResume.RoomWiseBillPayment = roomWisePayment;
+            return paymentResume;
+        }
+
         protected void btnPrintReportTemplate2_Click1(object sender, EventArgs e)
         {
             hfBillIdControl.Value = "";

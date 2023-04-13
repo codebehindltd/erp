@@ -10,6 +10,7 @@ namespace HotelManagement.Entity.Restaurant
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
         public int BillId { get; set; }
+        public int SOrderId { get; set; }
         public int RefundId { get; set; }
         public string RefundRemarks { get; set; }
         public bool IsBillSettlement { get; set; }
@@ -96,6 +97,7 @@ namespace HotelManagement.Entity.Restaurant
         public string ModifiedByUser { get; set; }
         public string LastModifiedDateString { get; set; }
         public string KotStatus { get; set; }
+        public string ApprovedStatus { get; set; }
         public string PaymentRemarks { get; set; }
         public string BillType { get; set; }
         public string BillingType { get; set; }

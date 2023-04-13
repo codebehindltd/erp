@@ -2121,6 +2121,7 @@ namespace HotelManagement.Data.Restaurant
                                 entityBO.CostCenterType = Convert.ToString(reader["CostCenterType"]);
                                 entityBO.CompanyName = Convert.ToString(reader["CompanyName"]);
                                 entityBO.ProjectName = Convert.ToString(reader["ProjectName"]);
+                                entityBO.ApprovedStatus = Convert.ToString(reader["ApprovedStatus"]);
                                 entityBO.IsCanEdit = Convert.ToBoolean(reader["IsCanEdit"]);
                                 entityBO.IsCanDelete = Convert.ToBoolean(reader["IsCanDelete"]);
                                 entityBO.IsCanChecked = Convert.ToBoolean(reader["IsCanChecked"]);

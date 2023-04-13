@@ -850,8 +850,232 @@
         function OnLoadAttributeColorFailed(error) {
         }
         function PerformEdit(id) {
+            id = parseInt(id);
             PageMethods.GetBillById(id, OnSuccessLoading, OnFailLoading)
             return false;
+        }
+        function OnSuccessLoading(result) {
+            dataForEditForBillingBillId = result.RestaurantKotBill;
+            var str = result;
+            var tr = "";
+            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+                for (var i = 0; i < result.KotBillDetails.length; i++) {
+                    tr += "<tr>";
+
+                    if ($("#ContentPlaceHolder1_hfIsItemCodeHideForBilling").val() == '0') {
+                        tr += "<td style='width:12%;'>" + result.KotBillDetails[i].ItemCode + "</td>";
+                    }
+                    else {
+                        tr += "<td style='display:none; width:12%;'>" + result.KotBillDetails[i].ItemCode + "</td>";
+                    }
+
+
+                    tr += "<td style='width:20%;'>" + result.KotBillDetails[i].ItemName + "</td>";
+                    tr += "<td style='width:5%;'>" + result.KotBillDetails[i].ColorName + "</td>";
+                    tr += "<td style='width:5%;'>" + result.KotBillDetails[i].SizeName + "</td>";
+                    tr += "<td style='width:5%;'>" + result.KotBillDetails[i].StyleName + "</td>";
+
+                    if ($("#ContentPlaceHolder1_hfIsStockHideForBilling").val() == '0') {
+                        tr += "<td style='width:10%;'>" + '' + "</td>";
+                    }
+                    else {
+                        tr += "<td style='display:none; width:10%;'>" + '' + "</td>";
+                    }
+                    if ($("#ContentPlaceHolder1_hfIsStockByHideForBilling").val() == '0') {
+                        tr += "<td style='width:10%;'>" + result.KotBillDetails[i].UnitHead + "</td>";
+                    }
+                    else {
+                        tr += "<td style='display:none; width:10%;'>" + result.KotBillDetails[i].UnitHead + "</td>";
+                    }
+
+                    tr += "<td style='width:8%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].ItemUnit + "' onblur='CheckQuantity(this)' />" + "</td>";
+                    tr += "<td style='width:12%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].UnitRate + "' onblur='CheckQuantity(this)' />" + "</td>";
+
+                    tr += "<td style='width:12%;' class='text-right'>" + result.KotBillDetails[i].Amount + "</td>";
+                    if ($("#ContentPlaceHolder1_hfIsRemarksHideForBilling").val() == '0') {
+                        tr += "<td style='width:10%;'>" + "<textarea type='text' style='width:100%;'  class='form-control '  value='" + "' onblur='CheckQuantity(this)' >" + result.KotBillDetails[i].Remarks + "</textarea> </td>";
+                    }
+                    else {
+                        tr += "<td style='display:none; width:10%;'>" + "<textarea type='text' style='width:100%;'  class='form-control ' value='" + + "' onblur='CheckQuantity(this)' >" + result.KotBillDetails[i].Remarks + "</textarea></td>";
+                    }
+
+
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ItemId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].StockBy /*(ItemDetails == null ? 0 : ItemDetails.StockBy)*/ + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].CategoryId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].KotDetailId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ItemUnit + "</td>";
+                    tr += "<td style='display:none'>0</td>";//unit discount
+                    tr += "<td style='display:none'>0</td>";//total discount
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ServiceCharge + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].CitySDCharge + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].VatAmount + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].AdditionalCharge + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ColorId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].SizeId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].StyleId + "</td>";
+
+
+                    tr += "<td style='width:6%;' class='text-center'>"
+                    tr += "<a href='javascript:void(0)' onclick= 'DeleteItemOrder(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                    tr += "</td>";
+
+                    tr += "</td>";
+                    tr += "</tr>";
+
+                    AddedItemList.push({
+                        KotDetailId: result.KotBillDetails[i].KotDetailId,
+                        KotId: result.KotBillDetails[i].KotId,
+                        ItemId: result.KotBillDetails[i].ItemId,
+                        ItemName: result.KotBillDetails[i].ItemName,
+                        Code: result.KotBillDetails[i].ItemCode,
+                        UnitHead: result.KotBillDetails[i].UnitHead,
+                        UnitPriceLocal: result.KotBillDetails[i].UnitRate,
+                        StockBy: result.KotBillDetails[i].StockBy,
+                        CategoryId: result.KotBillDetails[i].CategoryId,
+                        DiscountType: '',
+                        DiscountAmount: 0.0,
+                        Remarks: result.KotBillDetails[i].Remarks,
+                        ServiceCharge: result.KotBillDetails[i].ServiceCharge,
+                        SDCharge: result.KotBillDetails[i].CitySDCharge,
+                        VatAmount: result.KotBillDetails[i].VatAmount,
+                        AdditionalCharge: result.KotBillDetails[i].AdditionalCharge
+                    });
+
+                }
+
+                $("#AddedItem tbody").append(tr);
+            }
+            else {
+                for (var i = 0; i < result.KotBillDetails.length; i++) {
+                    tr += "<tr>";
+
+                    if ($("#ContentPlaceHolder1_hfIsItemCodeHideForBilling").val() == '0') {
+                        tr += "<td style='width:12%;'>" + result.KotBillDetails[i].ItemCode + "</td>";
+                    }
+                    else {
+                        tr += "<td style='display:none; width:12%;'>" + result.KotBillDetails[i].ItemCode + "</td>";
+                    }
+                    debugger;
+
+                    tr += "<td style='width:20%;'>" + result.KotBillDetails[i].ItemName + "</td>";
+                    tr += "<td style='display:none; width:10%;'>" + '' + "</td>";
+                    tr += "<td style='display:none; width:10%;'>" + '' + "</td>";
+                    tr += "<td style='width:10%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].BagWeight + "' onblur='CheckQuantity(this)' />" + "</td>";
+                    tr += "<td style='width:10%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].NoOfBag + "' onblur='CheckQuantity(this)' />" + "</td>";
+                    //tr += "<td style='width:10%;'>" + result.KotBillDetails[i].Quantity + "</td>";
+
+                    //if ($("#ContentPlaceHolder1_hfIsStockHideForBilling").val() == '0') {
+                    //    tr += "<td style='width:10%;'>" + '' + "</td>";
+                    //}
+                    //else {
+                    //    tr += "<td style='display:none; width:10%;'>" + '' + "</td>";
+                    //}
+                    //if ($("#ContentPlaceHolder1_hfIsStockByHideForBilling").val() == '0') {
+                    //    tr += "<td style='width:10%;'>" + result.KotBillDetails[i].UnitHead + "</td>";
+                    //}
+                    //else {
+                    //    tr += "<td style='display:none; width:10%;'>" + result.KotBillDetails[i].UnitHead + "</td>";
+                    //}
+
+                    tr += "<td style='width:8%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].ItemUnit + "' onblur='CheckQuantity(this)' />" + "</td>";
+                    tr += "<td style='width:12%;'>" + "<input type='text' class='form-control text-right quantitydecimal' value='" + result.KotBillDetails[i].UnitRate + "' onblur='CheckQuantity(this)' />" + "</td>";
+
+                    tr += "<td style='width:12%;' class='text-right'>" + result.KotBillDetails[i].Amount + "</td>";
+                    //if ($("#ContentPlaceHolder1_hfIsRemarksHideForBilling").val() == '0') {
+                    //    tr += "<td style='width:10%;'>" + "<textarea type='text' style='width:100%;'  class='form-control '  value='" + "' onblur='CheckQuantity(this)' >" + result.KotBillDetails[i].Remarks + "</textarea> </td>";
+                    //}
+                    //else {
+                    //    tr += "<td style='display:none; width:10%;'>" + "<textarea type='text' style='width:100%;'  class='form-control ' value='" + + "' onblur='CheckQuantity(this)' >" + result.KotBillDetails[i].Remarks + "</textarea></td>";
+                    //}
+
+
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ItemId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].StockBy /*(ItemDetails == null ? 0 : ItemDetails.StockBy)*/ + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].CategoryId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].KotDetailId + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ItemUnit + "</td>";
+                    tr += "<td style='display:none'>0</td>";//unit discount
+                    tr += "<td style='display:none'>0</td>";//total discount
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].ServiceCharge + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].CitySDCharge + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].VatAmount + "</td>";
+                    tr += "<td style='display:none'>" + result.KotBillDetails[i].AdditionalCharge + "</td>";
+
+
+                    tr += "<td style='width:6%;' class='text-center'>"
+                    tr += "<a href='javascript:void(0)' onclick= 'DeleteItemOrder(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                    tr += "</td>";
+
+                    tr += "</td>";
+                    tr += "</tr>";
+
+                    AddedItemList.push({
+                        KotDetailId: result.KotBillDetails[i].KotDetailId,
+                        KotId: result.KotBillDetails[i].KotId,
+                        ItemId: result.KotBillDetails[i].ItemId,
+                        ItemName: result.KotBillDetails[i].ItemName,
+                        Code: result.KotBillDetails[i].ItemCode,
+                        UnitHead: result.KotBillDetails[i].UnitHead,
+                        UnitPriceLocal: result.KotBillDetails[i].UnitRate,
+                        StockBy: result.KotBillDetails[i].StockBy,
+                        CategoryId: result.KotBillDetails[i].CategoryId,
+                        DiscountType: '',
+                        DiscountAmount: 0.0,
+                        Remarks: result.KotBillDetails[i].Remarks,
+                        ServiceCharge: result.KotBillDetails[i].ServiceCharge,
+                        SDCharge: result.KotBillDetails[i].CitySDCharge,
+                        VatAmount: result.KotBillDetails[i].VatAmount,
+                        AdditionalCharge: result.KotBillDetails[i].AdditionalCharge
+                    });
+                }
+                $("#AddedRiceMillBillingItem tbody").append(tr);
+            }
+            if (result.RestaurantKotBill.IsInvoiceVatAmountEnable) {
+                $("#" + "ContentPlaceHolder1_cbTPVatAmount").prop('checked', true);
+            }
+            else {
+                $("#" + "ContentPlaceHolder1_cbTPVatAmount").prop('checked', false);
+            }
+
+            $("#txtTotalSales").val(result.RestaurantKotBill.GrandTotal - result.RestaurantKotBill.VatAmount - result.RestaurantKotBill.DiscountAmount);
+            if (result.RestaurantKotBill.DiscountType == "Fixed") {
+                $("#rbFixedDiscount").prop("checked", true);
+                $("#rbPercentageDiscount").prop("checked", false);
+            }
+            else if (result.RestaurantKotBill.DiscountType == "Percentage") {
+                $("#rbFixedDiscount").prop("checked", false);
+                $("#rbPercentageDiscount").prop("checked", true);
+            }
+            debugger;
+            $("#txtDiscountAmount").val(result.RestaurantKotBill.DiscountAmount);
+            $("#txtAfterDiscountAmount").val(result.RestaurantKotBill.GrandTotal - result.RestaurantKotBill.VatAmount);
+            $("#txtVat").val(result.RestaurantKotBill.VatAmount);
+            $("#txtGrandTotal").val(result.RestaurantKotBill.GrandTotal);
+            $("#txtRoundedAmount").val(result.RestaurantKotBill.RoundedAmount);
+            $("#txtRoundedGrandTotal").val(result.RestaurantKotBill.RoundedGrandTotal);
+            $("#ContentPlaceHolder1_ddlProject").val(result.RestaurantKotBill.ProjectId).change();
+            $("#ContentPlaceHolder1_ddlInclusiveOrExclusive").val(result.RestaurantKotBill.BillType).change();
+            $("#ContentPlaceHolder1_txtRemarks").val(result.RestaurantKotBill.Remarks);
+            $("#ContentPlaceHolder1_txtSubject").val(result.RestaurantKotBill.Subject);
+            $("#ContentPlaceHolder1_ddlBillingType").val(result.RestaurantKotBill.BillingType);
+            $("#ContentPlaceHolder1_hfBillId").val(result.RestaurantKotBill.BillId);
+            $("#ContentPlaceHolder1_hfResumedKotId").val(result.KotBillMaster.KotId);
+            $("#ContentPlaceHolder1_txtCustomerName").val(result.RestaurantKotBill.CustomerName);
+            $("#ContentPlaceHolder1_txtCustomerMobile").val(result.RestaurantKotBill.CustomerMobile);
+            $("#ContentPlaceHolder1_txtCustomerAddress").val(result.RestaurantKotBill.CustomerAddress);
+
+            $("#ContentPlaceHolder1_hfCompanyId").val(result.RestaurantKotBill.TransactionId);
+            $("#lblCompanyName").text(result.RestaurantKotBill.CustomerName);
+            $("#ContentPlaceHolder1_hfPaymentId").val(result.RestaurantKotBill.PaymentInstructionId);
+            $("#ContentPlaceHolder1_hfContactId").val(result.RestaurantKotBill.ContactId);
+
+            PaymentCalculation(0);
+
+            return false;
+        }
+        function OnFailLoading(error) {
+            toastr.error(error.get_message());
         }
 
         function AddRemarks() {
@@ -2318,7 +2542,11 @@
             var companyId = $("#ContentPlaceHolder1_hfCompanyId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfCompanyId").val();
             var paymentId = $("#ContentPlaceHolder1_hfPaymentId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfPaymentId").val();
             var contactId = $("#ContentPlaceHolder1_hfContactId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfContactId").val();
-
+            var SOrderId = $.trim(CommonHelper.GetParameterByName("SOrderID"));
+            if (SOrderId != "") {
+                SOrderId = parseInt(SOrderId, 10);
+            }
+            debugger
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 $("#AddedItem tbody tr").each(function () {
 
@@ -2373,7 +2601,7 @@
                         discountAmount = $(this).find("td:eq(14)").text();
                     }
 
-                    if (kotDetailId == "0") {
+                    if (kotDetailId == "0" || SOrderId > 0) {
                         BillDetails.push({
                             KotDetailId: kotDetailId,
                             KotId: kotId,
@@ -2431,14 +2659,16 @@
                     NoOfBag = $(this).find("td:eq(5)").find("input").val();
 
                     quantity = $(this).find("td:eq(6)").text();
+                    if (quantity == "") {
+                        quantity = $(this).find("td:eq(6)").find("input").val();
+                    }
                     unitPrice = $(this).find("td:eq(7)").find("input").val();
                     remarks = $(this).find("td:eq(4)").find("input").val();
 
                     totalPrice = $(this).find("td:eq(8)").text();
                     dbQuantity = $(this).find("td:eq(6)").find("input").val();
                     discountAmount = 0;
-
-                    if (kotDetailId == "0") {
+                    if (kotDetailId == "0" || SOrderId > 0) {
                         BillDetails.push({
                             KotDetailId: kotDetailId,
                             KotId: kotId,
@@ -2484,6 +2714,7 @@
                     }
                 });
             }
+            console.log(BillDetails);
 
             var invoiceDiscount = 0.0;
 
@@ -2592,9 +2823,11 @@
 
                 billingType = $("#ContentPlaceHolder1_ddlBillingType").val();
             }
+                      
 
             var RestaurantBill = {
                 BillId: billId,
+                SOrderId: SOrderId,
                 IsBillSettlement: false,
                 SourceName: 'RestaurantToken',
                 BillPaidBySourceId: 0,
@@ -2781,7 +3014,7 @@
             }
 
             var MemberId = $("#ContentPlaceHolder1_hfMemberId").val() == '' ? 0 : +$("#ContentPlaceHolder1_hfMemberId").val();
-
+            debugger;
             $.ajax({
                 type: "POST",
                 url: "Billing.aspx/BillSettlement",
@@ -2799,7 +3032,7 @@
                         CommonHelper.AlertMessage(result.d.AlertMessage);
                         $("#companyInfo").show();
                         $("#companyPaymentDiv").removeClass("col-md-12").addClass("col-md-6");
-
+                        debugger;
                         if ($("#ContentPlaceHolder1_hfIsBillExchange").val() == "1") {
                             $('#btnPrinReturnBillPreview').trigger('click');
                         }
@@ -3161,7 +3394,7 @@
         //}
 
         function ClosePrintDialog() {
-            window.location = "";
+            window.location = "/SalesAndMarketing/frmSalesOrderSearch.aspx";
         }
 
         function EditBill() {
@@ -3563,6 +3796,7 @@
             PreviousBillItemList = new Array();
 
             $("#AddedItem tbody").html("");
+            $("#AddedRiceMillBillingItem tbody").html("");
             $("#PreviousBillItem  tbody").html("");
             $("#ContentPlaceHolder1_hfResumedKotId").val("");
             $("#ContentPlaceHolder1_hfBillId").val("");
@@ -4664,9 +4898,9 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            var billingBillID = $.trim(CommonHelper.GetParameterByName("billingBillID"));
-            if (billingBillID != "") {
-                PerformEdit(billingBillID);
+            var SOrderID = $.trim(CommonHelper.GetParameterByName("SOrderID"));
+            if (SOrderID != "") {
+                PerformEdit(SOrderID);
             }
 
             var IsShowBillReturnExchangeButton = false;

@@ -483,7 +483,7 @@ function PopulateProjects() {
             return false;
         }
         function OnSuccess(result) {
-            
+            debugger;
             $("#tblRstBillSearch tbody tr").remove();
             $("#GridPagingContainer ul").html("");
 
@@ -526,6 +526,9 @@ function PopulateProjects() {
                 if (gridObject.IsCanApproved && IsCanSave) {
 
                     tr += "&nbsp;&nbsp;<img src='../Images/approved.png' onClick= \"javascript:return SalesOrderApprovalWithConfirmation(" + gridObject.BillId + "," + gridObject.CostCenterId + ")\" alt='Approve'  title='Approve' border='0' />";
+                }
+                if (gridObject.ApprovedStatus == 'Approved') {
+                    tr += "&nbsp;&nbsp;<img id='billing' src='../Images/billresettlement.png' onClick= \"javascript:return LoadSalesOrderForBilling(" + gridObject.BillId + "," + gridObject.CostCenterId + ") \" alt='Image' Title='billing' border='0'/>";
                 }
 
                 <%--if (gridObject.IsDayClosed == 0) {
@@ -670,6 +673,12 @@ function PopulateProjects() {
         }
         function OnSalesOrderApprovalFailed() {
             toastr.error(error.get_message());
+        }
+        function LoadSalesOrderForBilling(SOrderId, CostCenterId) {
+            if (!confirm("Do you want to Bill this order?")) {
+                return false;
+            }
+            window.location = "/POS/Billing.aspx?cid=" + CostCenterId + "&SOrderID=" + SOrderId;
         }
 
         function LoadOthersDocumentUploader(billId) {

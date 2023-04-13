@@ -2466,6 +2466,10 @@
             if (parseFloat(discountAmount) != "0" && parseFloat(discountAmount) != "")
                 calculatedDiscountAmount = parseFloat(totalSales) - parseFloat(afterDiscountAmount);
 
+            var companyId = $("#ContentPlaceHolder1_hfCompanyId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfCompanyId").val();
+            var paymentId = $("#ContentPlaceHolder1_hfPaymentId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfPaymentId").val();
+            var contactId = $("#ContentPlaceHolder1_hfContactId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfContactId").val();
+                        
             var RestaurantBill = {
                 BillId: salesOrderId,
                 CostCenterId: costCenterId,
@@ -2477,12 +2481,26 @@
                 GrandTotal: grandTotal,
                 RoundedAmount: roundedAmount,
                 RoundedGrandTotal: roundedGrandTotal,
-                CustomerName: customerName,
                 CustomerMobile: customerMobile,
                 CustomerAddress: customerAddress,
                 Remarks: remarks,
                 CalculatedDiscountAmount: calculatedDiscountAmount
             };
+
+            if (companyId != "0") {
+                RestaurantBill.TransactionType = "Company";
+                RestaurantBill.TransactionId = companyId;
+
+                if ($("#ContentPlaceHolder1_hfIsCustomerDetailsEnable").val() == "1") {
+                    RestaurantBill.CustomerName = customerName;
+                }
+                else {
+                    RestaurantBill.CustomerName = companyName;
+                }
+
+                RestaurantBill.PaymentInstructionId = paymentId;
+                RestaurantBill.ContactId = contactId;
+            }
 
             var kotDetailId = 0, itemId = 0, colorId = 0, sizeId = 0, styleId = 0, itemCode, itemName, itemType, stockBy, quantity, unitPrice, totalPrice, unitPrice, discountAmount, remarks,
                 BagWeight = 0, NoOfBag = 0;
@@ -4722,8 +4740,8 @@
                                     Company</label>
                                 <div class="col-sm-7">
                                     <div class="row">
-                                        <div class="col-sm-7" id="companyPaymentDiv">
-                                            <input type="text" class="form-control quantitydecimal" tabindex="7" id="txtCompanyPayment" placeholder="Com." onfocus="lastFocused=this;" onblur="PaymentCalculation(this.value)" />
+                                        <div class="col-sm-7" id="companyPaymentDiv" style="display:none;">
+                                            <input type="text" class="form-control quantitydecimal" disabled="disabled" tabindex="7" id="txtCompanyPayment" placeholder="Com." onfocus="lastFocused=this;" onblur="PaymentCalculation(this.value)" />
                                         </div>
                                         <div class="col-sm-5" id="companyInfo">
                                             <img border="0" alt="Company Search" onclick="javascript:return LoadCompanyInfo()"
