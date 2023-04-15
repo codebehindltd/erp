@@ -18,7 +18,7 @@
         });
 
     </script>
-
+    <asp:HiddenField ID="hfReportType" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="SingleprojectId" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfCompanyIsProfitable" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfCompanyAll" runat="server" />

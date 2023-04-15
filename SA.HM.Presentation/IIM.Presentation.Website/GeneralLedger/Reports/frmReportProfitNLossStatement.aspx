@@ -53,7 +53,7 @@
                 notesNodes = $("#ContentPlaceHolder1_hfNotesNodes").val();
 
                 var iframeid = 'printDocNotes';
-                var url = "/GeneralLedger/Reports/frmReportNotesBreakDownShow.aspx?&sd=" + startDate + "&ed=" + endDate + "&st=" + searchType + "&fy=" + fiscalYearId
+                var url = "/GeneralLedger/Reports/frmReportNotesBreakDownShow.aspx?rt=pl&sd=" + startDate + "&ed=" + endDate + "&st=" + searchType + "&fy=" + fiscalYearId
                     + "&cp=" + companyId + "&pj=" + projectId + "&dr=" + donorId + "&wop=" + withOrWithoutOpening
                     + "&nod=" + notesNodes;
                 parent.document.getElementById(iframeid).src = url;

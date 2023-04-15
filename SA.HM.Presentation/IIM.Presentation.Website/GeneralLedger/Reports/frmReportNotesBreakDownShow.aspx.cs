@@ -29,6 +29,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
         {
             if (!IsPostBack)
             {
+                hfReportType.Value = Request.QueryString["rt"] != null ? Request.QueryString["rt"].ToString() : string.Empty;
                 txtStartDate = Request.QueryString["sd"] != null ? Request.QueryString["sd"].ToString() : string.Empty;
                 txtEndDate = Request.QueryString["ed"] != null ? Request.QueryString["ed"].ToString() : string.Empty;
                 ddlSearchType = Request.QueryString["st"] != null ? Request.QueryString["st"].ToString() : string.Empty;
@@ -164,13 +165,20 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
 
             paramReport.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
 
-            paramReport.Add(new ReportParameter("ReportDateFrom", FromDate.ToString("dd-MMM-yyyy")));
-            paramReport.Add(new ReportParameter("ReportDateTo", ToDate.ToString("dd-MMM-yyyy")));
+            paramReport.Add(new ReportParameter("ReportDateFrom", hmUtility.GetStringFromDateTime(FromDate)));
+            paramReport.Add(new ReportParameter("ReportDateTo", hmUtility.GetStringFromDateTime(ToDate)));
 
             //-- Company Logo ------------------End----------
             GLCommonReportDA commonReportDa = new GLCommonReportDA();
             List<LedgerBookReportBO> generalLedger = new List<LedgerBookReportBO>();
-            generalLedger = commonReportDa.GetNotesBreakdownReport(FromDate, ToDate, nodeId, companyId, projectId, donorId, notesNodeId, withOrWithoutOpening);
+            if (hfReportType.Value == "pl")
+            {
+                generalLedger = commonReportDa.GetNotesBreakdownReportForPL(FromDate, ToDate, nodeId, companyId, projectId, donorId, notesNodeId, withOrWithoutOpening);
+            }
+            else
+            {
+                generalLedger = commonReportDa.GetNotesBreakdownReport(FromDate, ToDate, nodeId, companyId, projectId, donorId, notesNodeId, withOrWithoutOpening);
+            }
 
             string companyName = string.Empty, companyProject = string.Empty, reportCurrency = string.Empty, printDateTime = string.Empty;
             // // // ------- Multi Currency Related Effects -------------------------- Start
