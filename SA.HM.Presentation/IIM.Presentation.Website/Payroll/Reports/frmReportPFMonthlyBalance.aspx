@@ -41,7 +41,7 @@
         }        
     </script>
     <div id="SearchPanel" class="panel panel-default">      
-        <div class="panel-heading">PF Monthly Balance</div>
+        <div class="panel-heading" runat="server" id="PanelHeadingTitleText">PF Monthly Balance</div>
         <div class="panel-body">
             <div class="form-horizontal">
             <div class="form-group">
@@ -70,7 +70,7 @@
         </div>
     </div>    
     <div id="ReportPanel" class="panel panel-default" style="display: none;">       
-        <div class="panel-heading">PF Monthly Balance</div> 
+        <div class="panel-heading" runat="server" id="PanelHeadingTitleText2">PF Monthly Balance</div> 
         <div class="panel-body">
             <rsweb:ReportViewer ID="rvTransaction" runat="server" ShowFindControls="false" ShowWaitControlCancelLink="false"
                 Font-Names="Verdana" Font-Size="8pt" InteractiveDeviceInfos="(Collection)" WaitMessageFont-Names="Verdana"

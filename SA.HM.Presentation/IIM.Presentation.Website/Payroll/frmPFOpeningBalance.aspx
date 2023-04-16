@@ -66,8 +66,9 @@
         }        
     </script>
     <asp:HiddenField ID="hfSaveObj" runat="server" />
+    <asp:HiddenField ID="hfPayrollProvidentFundTitleText" runat="server" />
     <div id="" class="panel panel-default">        
-        <div class="panel-heading">PF Opening Balance</div>
+        <div class="panel-heading" runat="server" id="PanelHeadingTitleText">PF Opening Balance</div>
         <div class="panel-body">
         <div class="form-horizontal">   
             <div class="form-group">

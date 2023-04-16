@@ -24,13 +24,20 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
         protected void Page_Load(object sender, EventArgs e)
         {
             innboardMessage = (HiddenField)this.Master.FindControl("InnboardMessageHiddenField");
+            LoadPayrollProvidentFundTitleText();
             if (!Page.IsPostBack)
-            {
+            {                
                 LoadDepartment();
                 LoadCommonDropDownHiddenField();
             }
         }
-
+        private void LoadPayrollProvidentFundTitleText()
+        {
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            PanelHeadingTitleText.InnerText = userInformationBO.PayrollProvidentFundTitleText + "  Loan Collection";
+            PanelHeadingTitleText2.InnerText = userInformationBO.PayrollProvidentFundTitleText + "  Loan Collection";
+        }
         private void LoadDepartment()
         {
             DepartmentDA entityDA = new DepartmentDA();
@@ -129,6 +136,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
 
             HMCommonDA hmCommonDA = new HMCommonDA();
             string ImageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
+            reportParam.Add(new ReportParameter("ReportTitleText", userInformationBO.PayrollProvidentFundTitleText + " Loan Collection"));
             reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
             reportParam.Add(new ReportParameter("PrintDateTime", printDate));
             reportParam.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
@@ -141,7 +149,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], viewList));
 
-            rvTransaction.LocalReport.DisplayName = "PF Loan Collection";
+            rvTransaction.LocalReport.DisplayName = userInformationBO.PayrollProvidentFundTitleText + " Loan Collection";
             rvTransaction.LocalReport.Refresh();
         }        
     }

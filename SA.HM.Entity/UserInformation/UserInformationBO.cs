@@ -56,6 +56,7 @@ namespace HotelManagement.Entity.UserInformation
         public byte DefaultPanel { get; set; }
         public string UserSignature { get; set; }
         public string CompanyType { get; set; }
+        public string PayrollProvidentFundTitleText { get; set; }
         public int IsPaymentBillInfoHideInCompanyBillReceive { get; set; }
         public int IsReceiveBillInfoHideInSupplierBillPayment { get; set; }
         public bool IsItemAverageCostUpdateEnable { get; set; }

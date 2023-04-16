@@ -104,6 +104,10 @@ namespace HotelManagement.Presentation.Website.UserInformation
                 HMCommonSetupBO homePageSetupBO = new HMCommonSetupBO();
                 homePageSetupBO = commonSetupDA.GetCommonConfigurationInfo("InnboardHomePage", "InnboardHomePage");
 
+                HMCommonSetupBO PayrollProvidentFundTitleTextBO = new HMCommonSetupBO();
+                PayrollProvidentFundTitleTextBO = commonSetupDA.GetCommonConfigurationInfo("PayrollProvidentFundTitleText", "PayrollProvidentFundTitleText");
+                userInformation.PayrollProvidentFundTitleText = PayrollProvidentFundTitleTextBO.SetupValue;
+
                 HMCommonSetupBO oldMenuEnbale = new HMCommonSetupBO();
                 oldMenuEnbale = commonSetupDA.GetCommonConfigurationInfo("IsOldMenuEnable", "IsOldMenuEnable");
 

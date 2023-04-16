@@ -23,11 +23,15 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
         protected void Page_Load(object sender, EventArgs e)
         {
             innboardMessage = (HiddenField)this.Master.FindControl("InnboardMessageHiddenField");
-            if (!IsPostBack)
-            {
-            }
+            LoadPayrollProvidentFundTitleText();
         }
-
+        private void LoadPayrollProvidentFundTitleText()
+        {
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            PanelHeadingTitleText.InnerText = userInformationBO.PayrollProvidentFundTitleText + "  Member List";
+            PanelHeadingTitleText2.InnerText = userInformationBO.PayrollProvidentFundTitleText + "  Member List";
+        }
         protected void btnGenerate_Click(object sender, EventArgs e)
         {
             dispalyReport = 1;
@@ -74,21 +78,22 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
 
             HMCommonDA hmCommonDA = new HMCommonDA();
             string ImageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
+            //reportParam.Add(new ReportParameter("PayrollProvidentFundTitleText", userInformationBO.PayrollProvidentFundTitleText));
             reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
             reportParam.Add(new ReportParameter("PrintDateTime", printDate));
             reportParam.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
 
             if (this.ddlMemberType.SelectedValue == "Active")
             {
-                reportParam.Add(new ReportParameter("ReportTitle", "Provident Fund Active Member List"));
+                reportParam.Add(new ReportParameter("ReportTitle", userInformationBO.PayrollProvidentFundTitleText + " Active Member List"));
             }
             else if (this.ddlMemberType.SelectedValue == "Inactive")
             {
-                reportParam.Add(new ReportParameter("ReportTitle", "Provident Fund Terminated Member List"));
+                reportParam.Add(new ReportParameter("ReportTitle", userInformationBO.PayrollProvidentFundTitleText + " Terminated Member List"));
             }
             else if (this.ddlMemberType.SelectedValue == "Eligible")
             {
-                reportParam.Add(new ReportParameter("ReportTitle", "Provident Fund Eligible Member List"));
+                reportParam.Add(new ReportParameter("ReportTitle", userInformationBO.PayrollProvidentFundTitleText + " Eligible Member List"));
             }
 
 
@@ -104,7 +109,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], viewList));
 
-            rvTransaction.LocalReport.DisplayName = "PF Member List";
+            rvTransaction.LocalReport.DisplayName = userInformationBO.PayrollProvidentFundTitleText + " Member List";
             rvTransaction.LocalReport.Refresh();
         }
     }

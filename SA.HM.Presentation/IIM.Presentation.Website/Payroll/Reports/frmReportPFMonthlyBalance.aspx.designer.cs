@@ -7,11 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Presentation.Website.Payroll.Reports {
-    
-    
-    public partial class frmReportPFMonthlyBalance {
-        
+namespace HotelManagement.Presentation.Website.Payroll.Reports
+{
+
+
+    public partial class frmReportPFMonthlyBalance
+    {
+
+        /// <summary>
+        /// PanelHeadingTitleText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PanelHeadingTitleText;
+
         /// <summary>
         /// lblFromDate control.
         /// </summary>
@@ -20,7 +31,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFromDate;
-        
+
         /// <summary>
         /// txtFromDate control.
         /// </summary>
@@ -29,7 +40,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFromDate;
-        
+
         /// <summary>
         /// lblToDate control.
         /// </summary>
@@ -38,7 +49,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblToDate;
-        
+
         /// <summary>
         /// txtToDate control.
         /// </summary>
@@ -47,7 +58,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtToDate;
-        
+
         /// <summary>
         /// btnGenerate control.
         /// </summary>
@@ -56,7 +67,16 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGenerate;
-        
+
+        /// <summary>
+        /// PanelHeadingTitleText2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PanelHeadingTitleText2;
+
         /// <summary>
         /// rvTransaction control.
         /// </summary>

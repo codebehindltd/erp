@@ -23,13 +23,20 @@ namespace HotelManagement.Presentation.Website.Payroll
             innboardMessage = (HiddenField)this.Master.FindControl("InnboardMessageHiddenField");
             if (!IsPostBack)
             {
+                LoadPayrollProvidentFundTitleText();
                 LoadSalaryProcessMonth();
                 LoadYearList();
                 LoadDepartment();
                 CheckObjectPermission();
             }
         }
-
+        private void LoadPayrollProvidentFundTitleText()
+        {
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            hfPayrollProvidentFundTitleText.Value = userInformationBO.PayrollProvidentFundTitleText;
+            PanelHeadingTitleText.InnerText = userInformationBO.PayrollProvidentFundTitleText + " Opening Balance";
+        }
         private void LoadSalaryProcessMonth()
         {
             EmpSalaryProcessDA entityDA = new EmpSalaryProcessDA();
@@ -167,12 +174,12 @@ namespace HotelManagement.Presentation.Website.Payroll
                     bool logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Delete.ToString(),
                             EntityTypeEnum.EntityType.PFSetting.ToString(), 0,
                             ProjectModuleEnum.ProjectModule.PayrollManagement.ToString(),
-                            "Employee's Provident Fund is Saved");
+                            "Employee's Opening Balance is Saved");
                     LoadPFInformation();
                 }
                 else
                 {
-                    CommonHelper.AlertInfo(innboardMessage, "Employee's Provident Fund is not Saved. Emp Contribution, Cmp Contribution or Interest amount cannot be blank.", AlertType.Warning);
+                    CommonHelper.AlertInfo(innboardMessage, "Employee's Opening Balance is not Saved. Emp Contribution, Cmp Contribution or Interest amount cannot be blank.", AlertType.Warning);
                 }
 
             }

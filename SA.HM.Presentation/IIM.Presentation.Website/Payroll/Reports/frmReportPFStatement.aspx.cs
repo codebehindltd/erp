@@ -13,6 +13,8 @@ using Microsoft.Reporting.WebForms;
 using HotelManagement.Entity.HMCommon;
 using System.IO;
 using HotelManagement.Entity.UserInformation;
+using HotelManagement.Data.GeneralLedger;
+using HotelManagement.Entity.GeneralLedger;
 
 namespace HotelManagement.Presentation.Website.Payroll.Reports
 {
@@ -26,6 +28,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             innboardMessage = (HiddenField)this.Master.FindControl("InnboardMessageHiddenField");
             if (!Page.IsPostBack)
             {
+                LoadPayrollProvidentFundTitleText();
                 LoadDepartment();
                 LoadCommonDropDownHiddenField();
                 LoadYearList();
@@ -34,6 +37,13 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 ddlEmployee.Visible = false;
                 lblEmployee.Visible = false;
             }
+        }
+        private void LoadPayrollProvidentFundTitleText()
+        {
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            PanelHeadingTitleText.InnerText = userInformationBO.PayrollProvidentFundTitleText + "  Statement";
+            PanelHeadingTitleText2.InnerText = userInformationBO.PayrollProvidentFundTitleText + "  Statement";
         }
         private void ControlShowHide()
         {
@@ -168,30 +178,96 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 rvTransaction.ProcessingMode = ProcessingMode.Local;
                 rvTransaction.LocalReport.EnableExternalImages = true;
 
+                HMCommonDA hmCommonDA = new HMCommonDA();
+                string imageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
+
                 string reportPath = Server.MapPath(@"~/Payroll/Reports/Rdlc/RptPFStatement.rdlc");
 
                 if (!File.Exists(reportPath))
                     return;
 
                 rvTransaction.LocalReport.ReportPath = reportPath;
+                int glCompanyId = 0;
+                string companyName = string.Empty;
+                string companyAddress = string.Empty;
+                string webAddress = string.Empty;
+                string telephoneNumber = string.Empty;
+                string hotLineNumber = string.Empty;
 
-                CompanyDA companyDA = new CompanyDA();
+                CompanyDA companyDA = new CompanyDA();                
                 List<CompanyBO> files = companyDA.GetCompanyInfo();
+                if (files[0].CompanyId > 0)
+                {
+                    companyName = files[0].CompanyName;
+                    companyAddress = files[0].CompanyAddress;
+                    webAddress = files[0].WebAddress;
+                    telephoneNumber = files[0].Telephone;
+                    hotLineNumber = files[0].HotLineNumber;
+                }
 
                 List<ReportParameter> reportParam = new List<ReportParameter>();
 
-                if (files[0].CompanyId > 0)
-                {
-                    reportParam.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
-                    reportParam.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
+                //if (files[0].CompanyId > 0)
+                //{
+                //    reportParam.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
+                //    reportParam.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
 
-                    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
+                //    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
+                //    {
+                //        reportParam.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
+                //    }
+                //    else
+                //    {
+                //        reportParam.Add(new ReportParameter("CompanyWeb", files[0].ContactNumber));
+                //    }
+                //}
+
+                
+                if (glCompanyId == 0)
+                {
+                    if (empId != 0)
                     {
-                        reportParam.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
+                        EmployeeBO employeeBO = new EmployeeBO();
+                        EmployeeDA employeeDA = new EmployeeDA();
+                        employeeBO = employeeDA.GetEmployeeInfoById(empId);
+                        if (employeeBO.EmpId > 0)
+                        {
+                            glCompanyId = employeeBO.EmpCompanyId;
+                        }
                     }
-                    else
+                }
+
+                if (glCompanyId > 0)
+                {
+                    GLCompanyBO glCompanyBO = new GLCompanyBO();
+                    GLCompanyDA glCompanyDA = new GLCompanyDA();
+                    glCompanyBO = glCompanyDA.GetGLCompanyInfoById(glCompanyId);
+                    if (glCompanyBO != null)
                     {
-                        reportParam.Add(new ReportParameter("CompanyWeb", files[0].ContactNumber));
+                        if (glCompanyBO.CompanyId > 0)
+                        {
+                            companyName = glCompanyBO.Name;
+                            if (!string.IsNullOrWhiteSpace(glCompanyBO.CompanyAddress))
+                            {
+                                companyAddress = glCompanyBO.CompanyAddress;
+                            }
+                            if (!string.IsNullOrWhiteSpace(glCompanyBO.WebAddress))
+                            {
+                                webAddress = glCompanyBO.WebAddress;
+                            }
+                            if (!string.IsNullOrWhiteSpace(glCompanyBO.Telephone))
+                            {
+                                telephoneNumber = glCompanyBO.Telephone;
+                            }
+                            if (!string.IsNullOrWhiteSpace(glCompanyBO.HotLineNumber))
+                            {
+                                hotLineNumber = glCompanyBO.HotLineNumber;
+                            }
+                            if (!string.IsNullOrWhiteSpace(glCompanyBO.ImageName))
+                            {
+                                imageName = glCompanyBO.ImageName;
+                            }
+                        }
                     }
                 }
 
@@ -200,22 +276,36 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 string footerPoweredByInfo = string.Empty;
                 footerPoweredByInfo = userInformationBO.FooterPoweredByInfo;
 
-                HMCommonDA hmCommonDA = new HMCommonDA();
-                string ImageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
-                reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
+                reportParam.Add(new ReportParameter("CompanyProfile", companyName));
+                reportParam.Add(new ReportParameter("CompanyAddress", companyAddress));
+                reportParam.Add(new ReportParameter("CompanyWeb", webAddress));
+                reportParam.Add(new ReportParameter("TelephoneNumber", telephoneNumber));
+                reportParam.Add(new ReportParameter("HotLineNumber", hotLineNumber));
+
+                reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + imageName)));
                 reportParam.Add(new ReportParameter("PrintDateTime", printDate));
                 reportParam.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
+                reportParam.Add(new ReportParameter("PoweredByQrCode", Convert.ToBase64String(userInformationBO.PoweredByQrCode)));
                 reportParam.Add(new ReportParameter("ReportYear", year.ToString()));
+                reportParam.Add(new ReportParameter("PayrollProvidentFundTitleText", userInformationBO.PayrollProvidentFundTitleText));
                 rvTransaction.LocalReport.SetParameters(reportParam);
 
                 EmpPFDA empPFDA = new EmpPFDA();
                 List<PFStatementReportViewBO> viewList = new List<PFStatementReportViewBO>();
                 viewList = empPFDA.GetPFStatementReportInfo(processDateTo, year, departmentId, empId);
 
+                HMCommonDA hmCommonQrImageDA = new HMCommonDA();
+                foreach (PFStatementReportViewBO row in viewList)
+                {
+                    string strQrCode = string.Empty;
+                    strQrCode = userInformationBO.PayrollProvidentFundTitleText + "; " + row.LastDeductedMonthYear + "; " + row.EmpCode + "; " + row.TotalContribution + "; " + printDate + ";";
+                    row.QrEmployeeImage = hmCommonQrImageDA.GenerateQrCode(strQrCode);
+                }
+
                 var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
                 rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], viewList));
 
-                rvTransaction.LocalReport.DisplayName = "PF Statement";
+                rvTransaction.LocalReport.DisplayName = userInformationBO.PayrollProvidentFundTitleText + "Statement";
                 rvTransaction.LocalReport.Refresh();
             }
         }

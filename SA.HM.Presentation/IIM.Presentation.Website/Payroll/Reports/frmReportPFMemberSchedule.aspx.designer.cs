@@ -7,11 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Presentation.Website.Payroll.Reports {
-    
-    
-    public partial class frmReportPFMemberSchedule {
-        
+namespace HotelManagement.Presentation.Website.Payroll.Reports
+{
+
+
+    public partial class frmReportPFMemberSchedule
+    {
+
+        /// <summary>
+        /// PanelHeadingTitleText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PanelHeadingTitleText;
+
         /// <summary>
         /// lblMemberType control.
         /// </summary>
@@ -20,7 +31,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMemberType;
-        
+
         /// <summary>
         /// ddlMemberType control.
         /// </summary>
@@ -29,7 +40,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlMemberType;
-        
+
         /// <summary>
         /// btnGenerate control.
         /// </summary>
@@ -38,7 +49,16 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGenerate;
-        
+
+        /// <summary>
+        /// PanelHeadingTitleText2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PanelHeadingTitleText2;
+
         /// <summary>
         /// rvTransaction control.
         /// </summary>

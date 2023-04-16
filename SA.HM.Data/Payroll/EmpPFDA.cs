@@ -285,6 +285,7 @@ namespace HotelManagement.Data.Payroll
                         EmpId = r.Field<Int32>("EmpId"),
                         EmpCode = r.Field<string>("EmpCode"),
                         DisplayName = r.Field<string>("DisplayName"),
+                        ShowJoinDate = r.Field<string>("ShowJoinDate"),
                         Department = r.Field<string>("Department"),
                         Designation = r.Field<string>("Designation"),
                         ProcessDate = r.Field<string>("ProcessDate"),
@@ -294,11 +295,10 @@ namespace HotelManagement.Data.Payroll
                         CurrentYearBalance = r.Field<decimal?>("CurrentYearBalance"),
                         PreviousYearBalance = r.Field<decimal?>("PreviousYearBalance"),
                         Interest = r.Field<decimal?>("Interest"),
-                        ShowPFEligibilityDate = r.Field<string>("ShowPFEligibilityDate")
-
-                        //InterestRate = r.Field<decimal?>("InterestRate"),
-                        //TotalAmount = r.Field<decimal?>("TotalAmount"),
-
+                        ShowPFEligibilityDate = r.Field<string>("ShowPFEligibilityDate"),
+                        TotalContribution = r.Field<decimal?>("TotalContribution"),
+                        LastDeductedMonthYear = r.Field<string>("LastDeductedMonthYear"),
+                        CurrencyName = r.Field<string>("CurrencyName")
                     }).ToList();
                 }
             }

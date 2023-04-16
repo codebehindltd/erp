@@ -12,6 +12,7 @@ using HotelManagement.Data.HMCommon;
 using HotelManagement.Entity.HMCommon;
 using HotelManagement.Data.Payroll;
 using HotelManagement.Entity.Payroll;
+using Microsoft.SqlServer.Management.Smo;
 
 namespace HotelManagement.Presentation.Website.Payroll.Reports
 {
@@ -22,9 +23,15 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
         protected int dispalyReport = -1;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            LoadPayrollProvidentFundTitleText();
         }
-
+        private void LoadPayrollProvidentFundTitleText()
+        {
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            PanelHeadingTitleText.InnerText = userInformationBO.PayrollProvidentFundTitleText + "  Monthly Balance";
+            PanelHeadingTitleText2.InnerText = userInformationBO.PayrollProvidentFundTitleText + "  Monthly Balance";
+        }
         protected void btnGenerate_Click(object sender, EventArgs e)
         {
             dispalyReport = 1;            
@@ -81,6 +88,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
 
             HMCommonDA hmCommonDA = new HMCommonDA();
             string ImageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
+            reportParam.Add(new ReportParameter("ReportTitleText", userInformationBO.PayrollProvidentFundTitleText + " MonthlyBalance"));
             reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
             reportParam.Add(new ReportParameter("PrintDateTime", printDate));
             reportParam.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
@@ -93,7 +101,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], viewList));
 
-            rvTransaction.LocalReport.DisplayName = "PF Monthly Balance";
+            rvTransaction.LocalReport.DisplayName = userInformationBO.PayrollProvidentFundTitleText + " Monthly Balance";
             rvTransaction.LocalReport.Refresh();
         }
     }

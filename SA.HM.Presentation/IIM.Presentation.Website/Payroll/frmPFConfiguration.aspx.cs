@@ -28,6 +28,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             {
                 if (!IsPostBack)
                 {
+                    this.LoadPayrollProvidentFundTitleText();
                     this.CheckObjectPermission();
                     this.LoadCompanyContributionOn();
                     this.LoadAttendanceDevice();
@@ -60,6 +61,12 @@ namespace HotelManagement.Presentation.Website.Payroll
                 throw ex;
             }
             
+        }
+        private void LoadPayrollProvidentFundTitleText()
+        {
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            PanelHeadingTitleText.InnerText = "Employee " + userInformationBO.PayrollProvidentFundTitleText + "  Information";
         }
         private void CheckObjectPermission()
         {
