@@ -1955,10 +1955,13 @@
             else {
                 $("#AddedRiceMillBillingItem tbody tr").each(function () {
                     debugger;
-                    totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(6)").text() == null ? 0 : $(this).find("td:eq(6)").text());
-                    if (totalQuantity == 'NaN') {
-                        totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(6)").find("input").val() == null ? 0 : $(this).find("td:eq(6)").find("input").val());
+                    var currentQuantity = parseFloat($(this).find("td:eq(6)").text() == null ? 0 : $(this).find("td:eq(6)").text());
+                    if (isNaN(currentQuantity)) {
+                        currentQuantity = parseFloat($(this).find("td:eq(6)").find("input").val() == null ? 0 : $(this).find("td:eq(6)").find("input").val());
                     }
+
+                    totalQuantity = totalQuantity + currentQuantity;
+                    //totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(6)").find("input").val() == null ? 0 : $(this).find("td:eq(6)").find("input").val());
                     totalItem++;
                 });
             }
@@ -2394,7 +2397,7 @@
                 itemId = parseInt($.trim($(tr).find("td:eq(11)").text()), 10);
             }
             else {
-                itemId = parseInt($.trim($(tr).find("td:eq(8)").text()), 10);
+                itemId = parseInt($.trim($(tr).find("td:eq(9)").text()), 10);
             }
 
             index = _.findIndex(AddedItemList, { ItemId: itemId });
@@ -2632,7 +2635,7 @@
                 });
             }
             console.log(RestaurantBill, BillDetails);
-            PageMethods.SaveSalesOrder(RestaurantBill, BillDetails, OnSaveSalesOrderSucceeded, OnSaveSalesOrderFailed);
+            PageMethods.SaveSalesOrder(RestaurantBill, BillDetails, DeletedItemList, OnSaveSalesOrderSucceeded, OnSaveSalesOrderFailed);
             return false;
         }
         function OnSaveSalesOrderSucceeded(result) {

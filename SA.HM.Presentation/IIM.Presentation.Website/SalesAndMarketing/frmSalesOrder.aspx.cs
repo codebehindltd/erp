@@ -1077,7 +1077,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             return rtninf;
         }
         [WebMethod]
-        public static ReturnInfo SaveSalesOrder(RestaurantBill restaurantBill, List<KotBillDetailBO> billDetails)
+        public static ReturnInfo SaveSalesOrder(RestaurantBill restaurantBill, List<KotBillDetailBO> billDetails, List<KotBillDetailBO> DeletedDetails)
         {
             ReturnInfo rtninfo = new ReturnInfo();
             Boolean status = false;
@@ -1100,7 +1100,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
                 restaurantBill.BillDate = DateTime.Now;
                 if (restaurantBill.BillId > 0)
                 {
-                    status = posda.UpdateRestaurantBillForSalesOrder(restaurantBill, billDetails);
+                    status = posda.UpdateRestaurantBillForSalesOrder(restaurantBill, billDetails, DeletedDetails);
                 }
                 else
                 {

@@ -1891,7 +1891,8 @@
             }
             else {
                 $("#AddedRiceMillBillingItem tbody tr").each(function () {
-                    totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(6)").text() == null ? 0 : $(this).find("td:eq(6)").text());
+                    totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(6)").find("input").val() == null ? 0 : $(this).find("td:eq(6)").find("input").val());
+                    // totalQuantity = totalQuantity + parseFloat($(this).find("td:eq(6)").text() == null ? 0 : $(this).find("td:eq(6)").text());
                     totalItem++;
                 });
             }

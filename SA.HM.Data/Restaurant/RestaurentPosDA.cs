@@ -1008,7 +1008,7 @@ namespace HotelManagement.Data.Restaurant
             return retVal;
         }
         
-        public bool UpdateRestaurantBillForSalesOrder(RestaurantBill restaurentBillBO, List<KotBillDetailBO> billDetails)
+        public bool UpdateRestaurantBillForSalesOrder(RestaurantBill restaurentBillBO, List<KotBillDetailBO> billDetails, List<KotBillDetailBO> DeletedDetails)
         {
             int status = 0;
             bool retVal = false;
@@ -1107,6 +1107,22 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
 
                                     status = dbSmartAspects.ExecuteNonQuery(command, transction);
+                                }
+                            }
+                        }
+                        if (status > 0 && DeletedDetails.Count > 0)
+                        {
+                            using (DbCommand commandGuestBillPayment = dbSmartAspects.GetStoredProcCommand("DeleteDataDynamically_SP"))
+                            {
+                                foreach (KotBillDetailBO pd in DeletedDetails)
+                                {
+                                    commandGuestBillPayment.Parameters.Clear();
+
+                                    dbSmartAspects.AddInParameter(commandGuestBillPayment, "@TableName", DbType.String, "SMSalesOrderDetails");
+                                    dbSmartAspects.AddInParameter(commandGuestBillPayment, "@TablePKField", DbType.String, "DetailId");
+                                    dbSmartAspects.AddInParameter(commandGuestBillPayment, "@TablePKId", DbType.String, pd.KotDetailId);
+
+                                    status = dbSmartAspects.ExecuteNonQuery(commandGuestBillPayment, transction);
                                 }
                             }
                         }
