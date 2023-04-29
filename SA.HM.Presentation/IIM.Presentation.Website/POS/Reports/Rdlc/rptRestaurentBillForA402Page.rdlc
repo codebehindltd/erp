@@ -984,7 +984,6 @@
 																			<PaddingBottom>2pt</PaddingBottom>
 																		</Style>
 																	</Textbox>
-																	<rd:Selected>true</rd:Selected>
 																</CellContents>
 															</TablixCell>
 															<TablixCell>
@@ -3539,6 +3538,12 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="BillingDefaultApprovedBySignature">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="DeliveredByInfo">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>

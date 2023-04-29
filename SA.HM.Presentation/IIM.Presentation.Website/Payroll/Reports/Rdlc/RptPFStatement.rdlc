@@ -1509,7 +1509,7 @@
 												<Paragraph>
 													<TextRuns>
 														<TextRun>
-															<Value>="Your total contribution in Employee " + Parameters!PayrollProvidentFundTitleText.Value + " is " + Fields!CurrencyName.Value + ""  + Fields!TotalContribution.Value.ToString() + " till " + Fields!LastDeductedMonthYear.Value + ". This includes your contribution only."</Value>
+															<Value>="Your total contribution in Employee " + Parameters!PayrollProvidentFundTitleText.Value + " is " + Fields!CurrencyName.Value + " "  + Fields!TotalContribution.Value.ToString() + " till " + Fields!LastDeductedMonthYear.Value + ". This includes your contribution only."</Value>
 															<Style>
 																<FontStyle>Normal</FontStyle>
 																<FontSize>9pt</FontSize>
@@ -1888,21 +1888,14 @@
 							<TablixCells>
 								<TablixCell>
 									<CellContents>
-										<Textbox Name="Textbox64">
+										<Textbox Name="Textbox1">
 											<CanGrow>true</CanGrow>
 											<KeepTogether>true</KeepTogether>
 											<Paragraphs>
 												<Paragraph>
 													<TextRuns>
 														<TextRun>
-															<Value>PF Balance </Value>
-															<Style>
-																<FontSize>8pt</FontSize>
-																<FontWeight>Bold</FontWeight>
-															</Style>
-														</TextRun>
-														<TextRun>
-															<Value>=Parameters!ReportYear.Value</Value>
+															<Value>=Parameters!PayrollProvidentFundTitleText.Value + " balance till " + Fields!LastDeductedMonthYear.Value</Value>
 															<Style>
 																<FontSize>8pt</FontSize>
 																<FontWeight>Bold</FontWeight>
@@ -1914,7 +1907,7 @@
 													</Style>
 												</Paragraph>
 											</Paragraphs>
-											<rd:DefaultName>Textbox63</rd:DefaultName>
+											<rd:DefaultName>Textbox1</rd:DefaultName>
 											<Style>
 												<Border>
 													<Style>None</Style>

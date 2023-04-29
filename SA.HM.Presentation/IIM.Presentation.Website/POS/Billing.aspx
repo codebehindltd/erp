@@ -1985,7 +1985,7 @@
             //    discount = 0.00;
             //}
 
-
+            debugger;
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 $("#AddedItem tbody tr").each(function () {
                     if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
@@ -2039,10 +2039,11 @@
             totalDiscountAmount = discountAmount;
 
             var MaxItemDiscountTotal = 0.0;
-
+            debugger;
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 $("#AddedItem tbody tr").each(function () {
-                    var itemDiscountAmount = parseFloat($(this).find("td:eq(14)").text());
+                    //var itemDiscountAmount = parseFloat($(this).find("td:eq(14)").text());
+                    var itemDiscountAmount = parseFloat(0);
                     MaxItemDiscountTotal = MaxItemDiscountTotal + itemDiscountAmount;
                 });
             }
@@ -2545,6 +2546,10 @@
             var SOrderId = $.trim(CommonHelper.GetParameterByName("SOrderID"));
             if (SOrderId != "") {
                 SOrderId = parseInt(SOrderId, 10);
+            }
+            else
+            {
+                SOrderId = parseInt(0);
             }
             debugger
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {

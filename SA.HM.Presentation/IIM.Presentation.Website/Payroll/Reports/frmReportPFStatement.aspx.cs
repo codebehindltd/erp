@@ -298,14 +298,14 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 foreach (PFStatementReportViewBO row in viewList)
                 {
                     string strQrCode = string.Empty;
-                    strQrCode = userInformationBO.PayrollProvidentFundTitleText + "; " + row.LastDeductedMonthYear + "; " + row.EmpCode + "; " + row.TotalContribution + "; " + printDate + ";";
+                    strQrCode = userInformationBO.PayrollProvidentFundTitleText + " Balance; " + row.LastDeductedMonthYear + "; " + row.EmpCode + "; " + row.CurrencyName + " " + row.TotalContribution + "; " + printDate + ";";
                     row.QrEmployeeImage = hmCommonQrImageDA.GenerateQrCode(strQrCode);
                 }
 
                 var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
                 rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], viewList));
 
-                rvTransaction.LocalReport.DisplayName = userInformationBO.PayrollProvidentFundTitleText + "Statement";
+                rvTransaction.LocalReport.DisplayName = userInformationBO.PayrollProvidentFundTitleText + " Statement";
                 rvTransaction.LocalReport.Refresh();
             }
         }
