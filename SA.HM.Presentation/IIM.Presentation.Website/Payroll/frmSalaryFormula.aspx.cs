@@ -290,6 +290,10 @@ namespace HotelManagement.Presentation.Website.Payroll
             }
 
             salryHeadSetup = new HMCommonSetupBO();
+            salryHeadSetup = commonSetupDA.GetCommonConfigurationInfo("PayrollAttendanceAbsentHeadId", "PayrollAttendanceAbsentHeadId");
+            salarySettingHeadId.Add(salryHeadSetup);
+
+            salryHeadSetup = new HMCommonSetupBO();
             salryHeadSetup = commonSetupDA.GetCommonConfigurationInfo("PayrollPFEmployeeContributionId", "PayrollPFEmployeeContributionId");
             salarySettingHeadId.Add(salryHeadSetup);
 
@@ -500,6 +504,10 @@ namespace HotelManagement.Presentation.Website.Payroll
                 salryHeadSetup = commonSetupDA.GetCommonConfigurationInfo("Basic Salary Head", "Basic Salary Setup");
                 salarySettingHeadId.Add(salryHeadSetup);
             }
+
+            salryHeadSetup = new HMCommonSetupBO();
+            salryHeadSetup = commonSetupDA.GetCommonConfigurationInfo("PayrollAttendanceAbsentHeadId", "PayrollAttendanceAbsentHeadId");
+            salarySettingHeadId.Add(salryHeadSetup);
 
             salryHeadSetup = new HMCommonSetupBO();
             salryHeadSetup = commonSetupDA.GetCommonConfigurationInfo("PayrollPFEmployeeContributionId", "PayrollPFEmployeeContributionId");
