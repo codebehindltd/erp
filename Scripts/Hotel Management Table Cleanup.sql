@@ -66,7 +66,6 @@ TRUNCATE TABLE HotelTaskAssignmentRoomWise
 TRUNCATE TABLE HotelTaskAssignmentToEmployee
 
 TRUNCATE TABLE RegistrationSync
-TRUNCATE TABLE RestaurantBearer
 TRUNCATE TABLE RestaurantBillSync
 TRUNCATE TABLE RestaurantResettlementLog
 TRUNCATE TABLE SecurityObjectPermission

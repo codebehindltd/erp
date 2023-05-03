@@ -1244,10 +1244,10 @@
         function PerformTPOkButton() {
             var sourceType = $.trim(CommonHelper.GetParameterByName("st"));
 
-            if ($("#ContentPlaceHolder1_txtTPGrandTotal").val() == "0") {
+            if ($("#ContentPlaceHolder1_txtTotalSales").val() != $("#ContentPlaceHolder1_txtTPDiscountedAmount").val()) {
                 if ($("#ContentPlaceHolder1_txtRemarks").val() == "") {
                     $("#ContentPlaceHolder1_txtRemarks").focus();
-                    toastr.warning("Please Enter Remarks for Complementary Bill.");
+                    toastr.warning("Please Enter Remarks for Discount/ Complementary Bill.");
                     return false;
                 }
             }
