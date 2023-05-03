@@ -596,6 +596,8 @@ namespace HotelManagement.Data.HMCommon
                                 costCentreTabBO.IsCustomerDetailsEnable = Convert.ToBoolean(reader["IsCustomerDetailsEnable"]);
                                 costCentreTabBO.IsDeliveredByEnable = Convert.ToBoolean(reader["IsDeliveredByEnable"]);
                                 costCentreTabBO.CompanyType = reader["CompanyType"].ToString();
+                                costCentreTabBO.VatRegistrationNo = reader["VatRegistrationNo"].ToString();
+                                costCentreTabBO.ContactNumber = reader["ContactNumber"].ToString();
                             }
                         }
                     }

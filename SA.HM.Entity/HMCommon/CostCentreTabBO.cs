@@ -48,5 +48,7 @@ namespace HotelManagement.Entity.HMCommon
         public Boolean IsCostCenterNameShowOnInvoice { get; set; }
         public Boolean IsCustomerDetailsEnable { get; set; }
         public Boolean IsDeliveredByEnable { get; set; }
+        public string VatRegistrationNo { get; set; }
+        public string ContactNumber { get; set; }
     }
 }

@@ -114,11 +114,15 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                 List<CompanyBO> files = companyDA.GetCompanyInfo();
                 List<ReportParameter> reportParam = new List<ReportParameter>();
 
+                string strVatRegistrationNo = string.Empty;
+                string strContactNumber = string.Empty;
+
                 if (files[0].CompanyId > 0)
                 {
                     reportParam.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
                     reportParam.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
-                    reportParam.Add(new ReportParameter("VatRegistrationNo", files[0].VatRegistrationNo));
+                    //reportParam.Add(new ReportParameter("VatRegistrationNo", files[0].VatRegistrationNo));
+                    strVatRegistrationNo = files[0].VatRegistrationNo;
                     reportParam.Add(new ReportParameter("CompanyType", files[0].CompanyType));
 
                     if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
@@ -126,7 +130,8 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                         reportParam.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
                     }
 
-                    reportParam.Add(new ReportParameter("ContactNumber", files[0].ContactNumber));
+                    //reportParam.Add(new ReportParameter("ContactNumber", files[0].ContactNumber));
+                    strContactNumber = files[0].ContactNumber;
                 }
 
                 rvTransaction.LocalReport.EnableExternalImages = true;
@@ -244,6 +249,16 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                     {
                         costCentreTabBO = costCentreTabDA.GetCostCentreTabInfoById(restaurantBill[0].CostCenterId);
 
+                        if (!string.IsNullOrWhiteSpace(costCentreTabBO.VatRegistrationNo))
+                        {
+                            strVatRegistrationNo = costCentreTabBO.VatRegistrationNo;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(costCentreTabBO.ContactNumber))
+                        {
+                            strContactNumber = costCentreTabBO.ContactNumber;
+                        }
+
                         IsServiceChargeEnableConfig = costCentreTabBO.IsServiceChargeEnable ? "1" : "0";
                         IsCitySDChargeEnableConfig = costCentreTabBO.IsCitySDChargeEnable ? "1" : "0";
                         IsVatAmountEnableConfig = costCentreTabBO.IsVatEnable ? "1" : "0";
@@ -251,6 +266,10 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                         IsCostCenterNameShowOnInvoice = costCentreTabBO.IsCostCenterNameShowOnInvoice ? "1" : "0";
                     }
                 }
+
+                reportParam.Add(new ReportParameter("VatRegistrationNo", strVatRegistrationNo));
+                reportParam.Add(new ReportParameter("ContactNumber", strContactNumber));
+
                 reportParam.Add(new ReportParameter("ServiceChargeEnableConfig", IsServiceChargeEnableConfig));
                 reportParam.Add(new ReportParameter("CitySDChargeEnableConfig", IsCitySDChargeEnableConfig));
                 reportParam.Add(new ReportParameter("VatAmountEnableConfig", IsVatAmountEnableConfig));
