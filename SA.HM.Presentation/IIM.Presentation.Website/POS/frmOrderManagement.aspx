@@ -1349,6 +1349,14 @@
         function PerformTPOkButton() {
             var sourceType = $.trim(CommonHelper.GetParameterByName("st"));
 
+            if ($("#ContentPlaceHolder1_txtTPGrandTotal").val() == "0") {
+                if ($("#ContentPlaceHolder1_txtRemarks").val() == "") {
+                    $("#ContentPlaceHolder1_txtRemarks").focus();
+                    toastr.warning("Please Enter Remarks for Complementary Bill.");
+                    return false;
+                }
+            }
+
             if ($("#ContentPlaceHolder1_txtAmexCard").val() != "") {
                 if ($("#ContentPlaceHolder1_hfAmexCardId").val() == "" || $("#ContentPlaceHolder1_hfAmexCardId").val() == "0") {
                     toastr.warning("Please Select Amex Card Bank To Give Amex Card Payment.");
