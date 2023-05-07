@@ -65,7 +65,7 @@ namespace HotelManagement.Data.Restaurant
 
                         if (status > 0)
                         {
-                            using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveKotBillDetailInfo_SP"))
+                            using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveKotBillDetailInfoForBilling_SP"))
                             {
                                 foreach (KotBillDetailBO kbd in billDetails)
                                 {
@@ -1380,7 +1380,7 @@ namespace HotelManagement.Data.Restaurant
 
                         if (status > 0 && billDetails.Count > 0)
                         {
-                            using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveKotBillDetailInfo_SP"))
+                            using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveKotBillDetailInfoForBilling_SP"))
                             {
                                 foreach (KotBillDetailBO kbd in billDetails)
                                 {
@@ -1744,7 +1744,7 @@ namespace HotelManagement.Data.Restaurant
 
                         if (status > 0)
                         {
-                            using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveKotBillDetailInfo_SP"))
+                            using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveKotBillDetailInfoForBilling_SP"))
                             {
                                 foreach (KotBillDetailBO kbd in billDetails)
                                 {
@@ -1808,7 +1808,7 @@ namespace HotelManagement.Data.Restaurant
                     {
                         if (billDetails.Count > 0)
                         {
-                            using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveKotBillDetailInfo_SP"))
+                            using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveKotBillDetailInfoForBilling_SP"))
                             {
                                 foreach (KotBillDetailBO kbd in billDetails)
                                 {
@@ -2011,7 +2011,7 @@ namespace HotelManagement.Data.Restaurant
 
                         if (billDetails.Count > 0)
                         {
-                            using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveKotBillDetailInfo_SP"))
+                            using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveKotBillDetailInfoForBilling_SP"))
                             {
                                 foreach (KotBillDetailBO kbd in billDetails)
                                 {
@@ -2090,6 +2090,10 @@ namespace HotelManagement.Data.Restaurant
                             {
                                 status = dbSmartAspects.ExecuteNonQuery(commandPaymentDeletet, transction);
                             }
+                            if(status == 0)
+                            {
+                                status = 1;
+                            }
                         }
 
                         if (status > 0)
@@ -2097,6 +2101,10 @@ namespace HotelManagement.Data.Restaurant
                             using (DbCommand commandPaymentDeletet = dbSmartAspects.GetSqlStringCommand(companyPaymentDeleteQuery))
                             {
                                 status = dbSmartAspects.ExecuteNonQuery(commandPaymentDeletet, transction);
+                            }
+                            if (status == 0)
+                            {
+                                status = 1;
                             }
                         }
 

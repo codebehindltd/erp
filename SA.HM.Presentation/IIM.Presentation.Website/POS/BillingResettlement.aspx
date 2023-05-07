@@ -130,6 +130,12 @@
             else {
                 $("#ContentPlaceHolder1_txtRemarks").hide();
             }
+            //if ($("#ContentPlaceHolder1_hfIsCustomerDetailsEnable").val() == "1") {
+            //    $("#CustomerDetailsDiv").show();
+            //}
+            //else {
+            //    $("#CustomerDetailsDiv").hide();
+            //}
 
             $('#txtEstimatedTaskDoneDate').datepicker({
                 changeMonth: true,
@@ -787,7 +793,16 @@
             $("#ContentPlaceHolder1_ddlBillingType").val(result.RestaurantKotBill.BillingType);
             $("#ContentPlaceHolder1_hfBillId").val(result.RestaurantKotBill.BillId);
             $("#ContentPlaceHolder1_hfResumedKotId").val(result.KotBillMaster.KotId);
+            $("#ContentPlaceHolder1_txtCustomerName").val(result.RestaurantKotBill.CustomerName);
+            $("#ContentPlaceHolder1_txtCustomerMobile").val(result.RestaurantKotBill.CustomerMobile);
+            $("#ContentPlaceHolder1_txtCustomerAddress").val(result.RestaurantKotBill.CustomerAddress);
 
+
+            $("#ContentPlaceHolder1_hfCompanyId").val(result.RestaurantKotBill.TransactionId);
+            $("#lblCompanyName").text(result.RestaurantKotBill.CustomerName);
+            $("#ContentPlaceHolder1_hfPaymentId").val(result.RestaurantKotBill.PaymentInstructionId);
+            $("#ContentPlaceHolder1_hfContactId").val(result.RestaurantKotBill.ContactId);
+            debugger;
             for (var i = 0; i < result.RestaurantKotBillPayment.length; i++) {
 
                 if (result.RestaurantKotBillPayment[i].PaymentMode == "Cash") {
@@ -2573,17 +2588,19 @@
         function DeleteItemOrder(control) {
             var index = 0;
             var tr = $(control).parent().parent();
-            var itemId = 0;
+            var itemId = 0, kotDetailId = 0;
 
             if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
                 itemId = parseInt($.trim($(tr).find("td:eq(11)").text()), 10);
+                kotDetailId = parseInt($.trim($(tr).find("td:eq(14)").text()), 10);
             }
             else {
                 itemId = parseInt($.trim($(tr).find("td:eq(9)").text()), 10);
+                kotDetailId = parseInt($.trim($(tr).find("td:eq(12)").text()), 10);
             }
-            console.log(itemId);
+            console.log(itemId, kotDetailId);
 
-            index = _.findIndex(AddedItemList, { ItemId: itemId });
+            index = _.findIndex(AddedItemList, { ItemId: itemId, KotDetailId: kotDetailId });
 
             if (AddedItemList[index].KotDetailId != "0") {
                 DeletedItemList.push(JSON.parse(JSON.stringify(AddedItemList[index])));
@@ -3016,6 +3033,16 @@
                 }
 
                 billingType = $("#ContentPlaceHolder1_ddlBillingType").val();
+            }
+
+            if (discountType == "Percentage") {
+                discountAmount = $("#txtDiscountAmount").val();
+            }
+
+            if ($("#ContentPlaceHolder1_txtCustomerName").val() == "") {
+                toastr.warning("Select a Company.");
+                $("#ContentPlaceHolder1_txtCustomerName").focus();
+                return false;
             }
 
             var RestaurantBill = {
@@ -4736,6 +4763,7 @@
         }
 
     </script>
+    <asp:HiddenField ID="hfTotalDiscountAmount" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfIsAttributeItem" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfIsItemAttributeEnable" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfIsRiceMillBillingEnable" runat="server" Value="0"></asp:HiddenField>
@@ -4777,6 +4805,11 @@
     <asp:HiddenField ID="hfCompanyId" runat="server" Value=""></asp:HiddenField>
     <asp:HiddenField ID="hfPaymentId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfContactId" runat="server" Value="0"></asp:HiddenField>
+    <asp:HiddenField ID="hfItemIdForSerial" runat="server" Value="0" />
+    <asp:HiddenField ID="hfIsSerializableItem" runat="server" Value="0" />
+    <asp:HiddenField ID="hfIsValidSerial" runat="server" Value="0" />
+    <asp:HiddenField ID="hfIsCustomerDetailsEnable" runat="server" />
+    <asp:HiddenField ID="hfIsDeliveredByEnable" runat="server" />
     <div style="height: 555px; overflow-y: scroll; display: none" id="reportContainer">
         <rsweb:ReportViewer ID="rvTransactionShow" ShowFindControls="false" ShowWaitControlCancelLink="false"
             PageCountMode="Actual" SizeToReportContent="true" ShowPrintButton="true" runat="server"
@@ -5355,11 +5388,11 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-2">
+                            <%--<div class="col-md-2">
                                 <input type="button" id="BillReturnExchangeButton" value="Bill Return/Exchange" class="btn btn-primary" onclick="EditBill()" />
                                 <input type="button" id="btnPreviousBillDialog" value="Previous Bill" class="btn btn-primary" onclick="PreviousBillDialog()" style="display: none;" />
                                 <input type="button" id="BillPrintButton" value="Bill Print" class="btn btn-primary" onclick="BillPrint()" />
-                            </div>
+                            </div>--%>
                             <%--<div class="col-md-6" id="ProjectDiv">
                                 <div class="col-md-2">
                                     <asp:Label ID="lblProject" runat="server" class="control-label required-field" Text="Project"></asp:Label>
@@ -5369,6 +5402,20 @@
                                     </asp:DropDownList>
                                 </div>
                             </div>--%>
+                            <div class="col-md-8" id="CustomerDetailsDiv">
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtCustomerName" Width="100%" TabIndex="2" placeholder="Customer Name" CssClass="form-control"
+                                        runat="server"></asp:TextBox>
+                                </div>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtCustomerMobile" Width="100%" TabIndex="2" placeholder="Customer Mobile" CssClass="form-control"
+                                        runat="server"></asp:TextBox>
+                                </div>
+                                <div class="col-md-4">
+                                    <asp:TextBox ID="txtCustomerAddress" Width="100%" TabIndex="2" TextMode="MultiLine" placeholder="Customer Address" CssClass="form-control"
+                                        runat="server"></asp:TextBox>
+                                </div>
+                            </div>
                             <div class="col-md-4 pull-right">
                                 <div class="pull-right">
                                     <input type="button" id="btnHoldUpList" value="Hold-Up List" class="btn btn-primary" onclick="GetHoldUpPosInfo()" />

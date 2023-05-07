@@ -2719,7 +2719,6 @@
                     }
                 });
             }
-            console.log(BillDetails);
 
             var invoiceDiscount = 0.0;
 
@@ -2768,10 +2767,10 @@
                 });
 
             }
-
+            debugger;
             totalSales = $("#txtTotalSales").val();
             discountAmount = $("#ContentPlaceHolder1_hfTotalDiscountAmount").val() == "" ? 0.00 : $("#ContentPlaceHolder1_hfTotalDiscountAmount").val();
-
+            console.log(discountAmount);
             afterDiscountAmount = $("#txtAfterDiscountAmount").val();
             vat = $("#txtVat").val();
             grandTotal = $("#txtGrandTotal").val();
@@ -2828,7 +2827,21 @@
 
                 billingType = $("#ContentPlaceHolder1_ddlBillingType").val();
             }
-                      
+                    
+            if (discountType == "Percentage") {
+                discountAmount = $("#txtDiscountAmount").val();
+            } else if (discountType == "Fixed") {
+                discountAmount = $("#ContentPlaceHolder1_hfTotalDiscountAmount").val() == "" ? 0.00 : $("#ContentPlaceHolder1_hfTotalDiscountAmount").val();
+            }
+            if (discountAmount == "") {
+                discountAmount = 0;
+            }
+
+            if ($("#ContentPlaceHolder1_txtCustomerName").val() == "") {
+                toastr.warning("Select a Company.");
+                $("#ContentPlaceHolder1_txtCustomerName").focus();
+                return false;
+            }
 
             var RestaurantBill = {
                 BillId: billId,
@@ -3020,6 +3033,7 @@
 
             var MemberId = $("#ContentPlaceHolder1_hfMemberId").val() == '' ? 0 : +$("#ContentPlaceHolder1_hfMemberId").val();
             debugger;
+            console.log(RestaurantBill, BillPayment, BillDetails);
             $.ajax({
                 type: "POST",
                 url: "Billing.aspx/BillSettlement",
@@ -3399,7 +3413,7 @@
         //}
 
         function ClosePrintDialog() {
-            window.location = "/SalesAndMarketing/frmSalesOrderSearch.aspx";
+            window.location = "/POS/frmBillSearch.aspx";
         }
 
         function EditBill() {
@@ -3835,6 +3849,9 @@
             $("#spendPoint").prop("checked", false);
             $("#ContentPlaceHolder1_hfMemberId").val("");
             $("#ContentPlaceHolder1_hfMemberName").val("");
+            $("#ContentPlaceHolder1_txtCustomerName").val("");
+            $("#ContentPlaceHolder1_txtCustomerMobile").val("");
+            $("#ContentPlaceHolder1_txtCustomerAddress").val("");
             ClearPayment('Company');
         }
 

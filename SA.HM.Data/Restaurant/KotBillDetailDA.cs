@@ -587,7 +587,7 @@ namespace HotelManagement.Data.Restaurant
 
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
-                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetRestaurantOrderItemByMultipleKotId_SP"))
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetRestaurantOrderItemByMultipleKotIdForBilling_SP"))
                 {
                     cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
                     dbSmartAspects.AddInParameter(cmd, "@CostCenterId", DbType.String, costCenterId);

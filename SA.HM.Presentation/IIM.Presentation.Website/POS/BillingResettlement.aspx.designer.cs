@@ -13,6 +13,15 @@ namespace HotelManagement.Presentation.Website.POS {
     public partial class BillingResettlement {
         
         /// <summary>
+        /// hfTotalDiscountAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfTotalDiscountAmount;
+        
+        /// <summary>
         /// hfIsAttributeItem control.
         /// </summary>
         /// <remarks>
@@ -382,6 +391,51 @@ namespace HotelManagement.Presentation.Website.POS {
         protected global::System.Web.UI.WebControls.HiddenField hfContactId;
         
         /// <summary>
+        /// hfItemIdForSerial control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfItemIdForSerial;
+        
+        /// <summary>
+        /// hfIsSerializableItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsSerializableItem;
+        
+        /// <summary>
+        /// hfIsValidSerial control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsValidSerial;
+        
+        /// <summary>
+        /// hfIsCustomerDetailsEnable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsCustomerDetailsEnable;
+        
+        /// <summary>
+        /// hfIsDeliveredByEnable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsDeliveredByEnable;
+        
+        /// <summary>
         /// rvTransactionShow control.
         /// </summary>
         /// <remarks>
@@ -659,6 +713,33 @@ namespace HotelManagement.Presentation.Website.POS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl BillingTypeBottomDividerDiv;
+        
+        /// <summary>
+        /// txtCustomerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCustomerName;
+        
+        /// <summary>
+        /// txtCustomerMobile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCustomerMobile;
+        
+        /// <summary>
+        /// txtCustomerAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCustomerAddress;
         
         /// <summary>
         /// txtBillId control.
