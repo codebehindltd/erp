@@ -286,6 +286,7 @@
     <Content Include="HMCommon\UserControl\CallToActionUserControl.ascx" />
     <Content Include="HMCommon\UserControl\CompanyProjectUserControl.ascx" />
     <Content Include="HMCommon\UserControl\CompanyProjectUserControlVertical.ascx" />
+    <Content Include="HotelManagement\frmGroupRoomReservation.aspx" />
     <Content Include="HotelManagement\frmInHouseGuestBreakfast.aspx" />
     <Content Include="HotelManagement\frmGuestPaymentTransfer.aspx" />
     <Content Include="HotelManagement\Reports\frmReportComplimentaryGuest.aspx" />
@@ -2811,6 +2812,13 @@
     </Compile>
     <Compile Include="HMCommon\UserControl\CompanyProjectUserControlVertical.ascx.designer.cs">
       <DependentUpon>CompanyProjectUserControlVertical.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="HotelManagement\frmGroupRoomReservation.aspx.cs">
+      <DependentUpon>frmGroupRoomReservation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HotelManagement\frmGroupRoomReservation.aspx.designer.cs">
+      <DependentUpon>frmGroupRoomReservation.aspx</DependentUpon>
     </Compile>
     <Compile Include="HotelManagement\frmInHouseGuestBreakfast.aspx.cs">
       <DependentUpon>frmInHouseGuestBreakfast.aspx</DependentUpon>

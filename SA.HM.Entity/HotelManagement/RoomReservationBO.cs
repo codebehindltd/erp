@@ -14,8 +14,11 @@ namespace HotelManagement.Entity.HotelManagement
         public int OnlineReservationId { get; set; }
         public string ReservationNumber { get; set; }
         public DateTime ReservationDate { get; set; }
-        public DateTime DateIn { get; set; }
+        public string ReservationDateDisplay { get; set; }
+        public DateTime DateIn { get; set; }        
+        public string DateInDisplay { get; set; }        
         public DateTime DateOut { get; set; }
+        public string DateOutDisplay { get; set; }
         public string InvoiceNo { get; set; }
         public string ReceivedBy { get; set; }
         public DateTime ProbableArrivalTime { get; set; }
@@ -83,6 +86,7 @@ namespace HotelManagement.Entity.HotelManagement
         public string ShowDateIn { get; set; }
 
         ////-------------------For Express Check In
+        public string RoomReservationGrid { get; set; }
         public string ExpressCheckInnDetailsGrid { get; set; }
         public string ExpressCheckInnCalenderDetailsGrid { get; set; }
         public string ReservationDetailGrid { get; set; }
@@ -115,6 +119,6 @@ namespace HotelManagement.Entity.HotelManagement
         public bool IsServiceChargeEnable { get; set; }
         public bool IsCityChargeEnable { get; set; }
         public bool IsVatAmountEnable { get; set; }
-        public bool IsAdditionalChargeEnable { get; set; }
+        public bool IsAdditionalChargeEnable { get; set; }        
     }
 }

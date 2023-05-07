@@ -2996,6 +2996,43 @@ namespace HotelManagement.Data.HotelManagement
 
             return roomreservationList;
         }
+        public List<RoomReservationBO> GetRoomReservationInfoByStringSearchCriteria(DateTime? fromDate, DateTime? toDate, string guestName, string reserveNo, string companyName, string contactPerson, string contactPhone, string contactEmail, int srcMarketSegment, int srcGuestSource, int srcReferenceId, string status)
+        {
+            string Where = GenerateReservationSearchWhereCondition(fromDate, toDate, guestName, companyName, reserveNo, contactPerson, contactPhone, contactEmail, srcMarketSegment, srcGuestSource, srcReferenceId, status);
+            List<RoomReservationBO> roomreservationList = new List<RoomReservationBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetRoomReservationInfoByStringSearchCriteria_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@SearchCriteria", DbType.String, Where);
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                RoomReservationBO roomreservationBO = new RoomReservationBO();
+                                roomreservationBO.ReservationId = Convert.ToInt32(reader["ReservationId"]);
+                                roomreservationBO.ReservationNumber = reader["ReservationNumber"].ToString();
+                                roomreservationBO.ReservationDateDisplay = reader["ReservationDateDisplay"].ToString();
+                                roomreservationBO.DateInDisplay = reader["DateInDisplay"].ToString();
+                                roomreservationBO.DateOutDisplay = reader["DateOutDisplay"].ToString();
+                                roomreservationBO.GuestName = reader["GuestName"].ToString();
+                                roomreservationBO.CompanyName = reader["CompanyName"].ToString();
+                                roomreservationBO.Reason = reader["Reason"].ToString();
+                                roomreservationList.Add(roomreservationBO);
+                            }
+                        }
+                    }
+
+                    //totalRecords = (int)cmd.Parameters["@RecordCount"].Value;
+                }
+            }
+
+            return roomreservationList;
+        }
         public string GenerateReservationSearchWhereCondition(DateTime? fromDate, DateTime? toDate, string guestName, string companyName, string reserveNo, string contactPerson, string contactPhone, string contactEmail, int srcMarketSegment, int srcGuestSource, int srcReferenceId, string status)
         {
             string Where = string.Empty;
