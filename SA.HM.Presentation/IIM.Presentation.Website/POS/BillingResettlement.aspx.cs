@@ -429,14 +429,21 @@ namespace HotelManagement.Presentation.Website.POS
                     {
                         if (costCentreTabBO.InvoiceTemplate == 5)
                         {
-                            reportName = "rptRestaurentBillForA4Page";
-                            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsBillingInvoiceTemplateWithoutHeader", "IsBillingInvoiceTemplateWithoutHeader");
-
-                            if (commonSetupBO != null)
+                            if (costCentreTabBO.CompanyType == "RiceMill")
                             {
-                                if (commonSetupBO.SetupValue != "0")
+                                reportName = "rptRiceMillBillForA4Page";
+                            }
+                            else
+                            {
+                                reportName = "rptRestaurentBillForA4Page";
+                                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsBillingInvoiceTemplateWithoutHeader", "IsBillingInvoiceTemplateWithoutHeader");
+
+                                if (commonSetupBO != null)
                                 {
-                                    reportName = "rptRestaurentBillForA4PageWithoutHeader";
+                                    if (commonSetupBO.SetupValue != "0")
+                                    {
+                                        reportName = "rptRestaurentBillForA4PageWithoutHeader";
+                                    }
                                 }
                             }
                         }
@@ -565,15 +572,36 @@ namespace HotelManagement.Presentation.Website.POS
 
                 reportParam.Add(new ReportParameter("PrintDateTime", printDate));
 
-                rvTransactionShow.LocalReport.SetParameters(reportParam);
-
-                //RestaurentBillDA rda = new RestaurentBillDA();
-                //List<RestaurantBillReportBO> restaurantBill = new List<RestaurantBillReportBO>();
-                //restaurantBill = rda.GetRestaurantBillReport(billID);
-
                 RetailPosBillReturnBO restaurantBill = new RetailPosBillReturnBO();
                 RestaurentPosDA rda = new RestaurentPosDA();
                 restaurantBill = rda.RetailPosBill(billID);
+
+                string discountTitle = string.Empty;
+                string billDescription = string.Empty;
+                if (billID > 0)
+                {
+                    if (restaurantBill.PosBillWithSalesReturn != null)
+                    {
+                        if (restaurantBill.PosBillWithSalesReturn.Count > 0)
+                        {
+                            billDescription = restaurantBill.PosBillWithSalesReturn[0].BillDescription;
+                            billRemarks = restaurantBill.PosBillWithSalesReturn[0].BillDescription;
+
+                            if (restaurantBill.PosBillWithSalesReturn[0].DiscountType == "Percentage")
+                            {
+                                discountTitle = "Discount (" + restaurantBill.PosBillWithSalesReturn[0].DiscountAmount + "%)";
+                            }
+                            else
+                            {
+                                discountTitle = "Discount";
+                            }
+                        }
+                    }
+                }
+
+                reportParam.Add(new ReportParameter("DiscountTitle", discountTitle));
+                reportParam.Add(new ReportParameter("BillRemarks", billRemarks));
+                rvTransactionShow.LocalReport.SetParameters(reportParam);
 
                 var dataSet = rvTransactionShow.LocalReport.GetDataSourceNames();
                 rvTransactionShow.LocalReport.DataSources.Add(new ReportDataSource(dataSet[0], restaurantBill.PosBillWithSalesReturn));
@@ -962,7 +990,7 @@ namespace HotelManagement.Presentation.Website.POS
                     }
                 }
             }
-            
+
             if (!string.IsNullOrEmpty(kotIdList))
             {
                 kotIdList += "," + kotBillMaster.KotId.ToString();

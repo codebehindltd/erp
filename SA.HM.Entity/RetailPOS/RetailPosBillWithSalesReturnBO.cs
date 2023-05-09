@@ -18,6 +18,7 @@ namespace HotelManagement.Entity.RetailPOS
         public string CashierName { get; set; }
         public string CustomerName { get; set; }
         public Nullable<decimal> SalesAmount { get; set; }
+        public string DiscountType { get; set; }
         public Nullable<decimal> DiscountAmount { get; set; }
         public Nullable<decimal> CalculatedDiscountAmount { get; set; }
         public Nullable<decimal> AmountAfterDiscount { get; set; }
@@ -55,5 +56,6 @@ namespace HotelManagement.Entity.RetailPOS
         public string RoutePath { get; set; }
         public string AirlineName { get; set; }
         public string Remarks { get; set; }
+        public string BillDescription { get; set; }        
     }
 }

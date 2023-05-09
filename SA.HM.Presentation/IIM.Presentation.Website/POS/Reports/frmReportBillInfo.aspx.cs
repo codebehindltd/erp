@@ -250,7 +250,7 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                 reportParam.Add(new ReportParameter("VatRegistrationNo", binNumber));
                 reportParam.Add(new ReportParameter("TinNumber", tinNumber));
                 reportParam.Add(new ReportParameter("ProjectName", projectName));
-                reportParam.Add(new ReportParameter("BillRemarks", billRemarks));
+
                 reportParam.Add(new ReportParameter("BillDeclaration", billDeclaration));
 
                 rvTransaction.LocalReport.EnableExternalImages = true;
@@ -319,12 +319,39 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                 string printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);
 
                 reportParam.Add(new ReportParameter("PrintDateTime", printDate));
-                rvTransaction.LocalReport.SetParameters(reportParam);
+
 
                 RetailPosBillReturnBO restaurantBill = new RetailPosBillReturnBO();
                 RestaurentPosDA rda = new RestaurentPosDA();
                 restaurantBill = rda.RetailPosBill(billID);
 
+                string discountTitle = string.Empty;
+                string billDescription = string.Empty;
+                if (billID > 0)
+                {
+                    if (restaurantBill.PosBillWithSalesReturn != null)
+                    {
+                        if (restaurantBill.PosBillWithSalesReturn.Count > 0)
+                        {
+                            billDescription = restaurantBill.PosBillWithSalesReturn[0].BillDescription;
+                            billRemarks = restaurantBill.PosBillWithSalesReturn[0].BillDescription;
+
+                            if (restaurantBill.PosBillWithSalesReturn[0].DiscountType == "Percentage")
+                            {
+                                discountTitle = "Discount (" + restaurantBill.PosBillWithSalesReturn[0].DiscountAmount + "%)";
+                            }
+                            else
+                            {
+                                discountTitle = "Discount";
+                            }
+                        }
+                    }
+                }
+
+                reportParam.Add(new ReportParameter("DiscountTitle", discountTitle));
+                reportParam.Add(new ReportParameter("BillRemarks", billRemarks));
+
+                rvTransaction.LocalReport.SetParameters(reportParam);
                 var dataSet = rvTransaction.LocalReport.GetDataSourceNames();
                 rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(dataSet[0], restaurantBill.PosBillWithSalesReturn));
                 rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(dataSet[1], restaurantBill.PosSalesReturnPayment));
@@ -520,7 +547,7 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                         if (!string.IsNullOrWhiteSpace(costCentreTabBO.ContactNumber))
                         {
                             strContactNumber = costCentreTabBO.ContactNumber;
-                        }                        
+                        }
 
                         IsServiceChargeEnableConfig = costCentreTabBO.IsServiceChargeEnable ? "1" : "0";
                         IsCitySDChargeEnableConfig = costCentreTabBO.IsCitySDChargeEnable ? "1" : "0";
