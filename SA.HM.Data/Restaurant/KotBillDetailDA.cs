@@ -634,6 +634,12 @@ namespace HotelManagement.Data.Restaurant
                                 entityBO.CitySDCharge = Convert.ToDecimal(reader["SDCharge"]);
                                 entityBO.VatAmount = Convert.ToDecimal(reader["VatAmount"]);
                                 entityBO.AdditionalCharge = Convert.ToDecimal(reader["AdditionalCharge"]);
+                                entityBO.ColorName = Convert.ToString(reader["ColorName"]);
+                                entityBO.SizeName = Convert.ToString(reader["SizeName"]);
+                                entityBO.StyleName = Convert.ToString(reader["StyleName"]);
+                                entityBO.ColorId = Convert.ToInt32(reader["ColorId"]);
+                                entityBO.SizeId = Convert.ToInt32(reader["SizeId"]);
+                                entityBO.StyleId = Convert.ToInt32(reader["StyleId"]);
 
                                 entityBOList.Add(entityBO);
                             }

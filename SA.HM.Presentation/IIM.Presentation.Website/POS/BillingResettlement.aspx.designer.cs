@@ -463,6 +463,51 @@ namespace HotelManagement.Presentation.Website.POS {
         protected global::System.Web.UI.WebControls.Button btnPrinReturnBillPreview;
         
         /// <summary>
+        /// ddlColorAttribute control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlColorAttribute;
+        
+        /// <summary>
+        /// ddlSizeAttribute control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSizeAttribute;
+        
+        /// <summary>
+        /// ddlStyleAttribute control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlStyleAttribute;
+        
+        /// <summary>
+        /// lblCurrentStock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCurrentStock;
+        
+        /// <summary>
+        /// ddlProductType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlProductType;
+        
+        /// <summary>
         /// lblTotalItemTypes control.
         /// </summary>
         /// <remarks>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/POS/RestaurantMM.Master" AutoEventWireup="true" CodeBehind="BillingResettlement.aspx.cs" Inherits="HotelManagement.Presentation.Website.POS.BillingResettlement" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/POS/RestaurantMM.Master" enableEventValidation="false" AutoEventWireup="true" CodeBehind="BillingResettlement.aspx.cs" Inherits="HotelManagement.Presentation.Website.POS.BillingResettlement" %>
 
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
     Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
@@ -34,7 +34,7 @@
             });
 
             $("#ContentPlaceHolder1_ddlInclusiveOrExclusive").change(function () {
-
+                debugger;
                 SalesNDiscountCalculation();
                 PaymentCalculation(0);
 
@@ -334,6 +334,7 @@
                     // manually update the textbox and hidden field
                     $(this).val(ui.item.label);
                     ItemDetails = ui.item;
+
                     $("#ItemName").val(ui.item.Name);
                     $("#ContentPlaceHolder1_ddlProductType").val(ui.item.ProductType);
 
@@ -378,7 +379,6 @@
                         data: "{'itemCode':'" + itemCode + "','itemName':'" + $.trim(request.term) + "','categoryName':'" + categoryName + "','costCenterId':'" + costCenterId + "'}",
                         dataType: "json",
                         success: function (data) {
-
                             var searchData = data.error ? [] : $.map(data.d, function (m) {
                                 return {
                                     label: m.Name,
@@ -397,7 +397,9 @@
                                     ServiceCharge: m.ServiceCharge,
                                     SDCharge: m.SDCharge,
                                     VatAmount: m.VatAmount,
-                                    AdditionalCharge: m.AdditionalCharge
+                                    AdditionalCharge: m.AdditionalCharge,
+                                    IsAttributeItem: m.IsAttributeItem,
+                                    ProductType: m.ProductType
                                 };
                             });
 
@@ -424,18 +426,61 @@
                     event.preventDefault();
                     // manually update the textbox and hidden field
                     $(this).val(ui.item.label);
-
                     ItemDetails = ui.item;
 
                     $("#ItemCode").val(ui.item.Code);
+                    $("#ContentPlaceHolder1_ddlProductType").val(ui.item.ProductType);
+
+                    if (ui.item.IsAttributeItem) {
+                        $("#itemColorInputNameCol").show();
+                        $("#itemColorInputCol").show();
+                        $("#itemSizeInputNameCol").show();
+                        $("#itemSizeInputCol").show();
+                        $("#itemStyleInputNameCol").show();
+                        $("#itemStyleInputCol").show();
+                        GetInvItemAttributeByItemIdAndAttributeType(ui.item.value, 'Color');
+                        GetInvItemAttributeByItemIdAndAttributeType(ui.item.value, 'Size');
+                        GetInvItemAttributeByItemIdAndAttributeType(ui.item.value, 'Style');
+                        GetInvItemStockInfoByItemAndAttributeId();
+                        $("#ContentPlaceHolder1_hfIsAttributeItem").val('1');
+                    }
+                    else {
+                        $("#itemColorInputNameCol").hide();
+                        $("#itemColorInputCol").hide();
+                        $("#itemSizeInputNameCol").hide();
+                        $("#itemSizeInputCol").hide();
+                        $("#itemStyleInputNameCol").hide();
+                        $("#itemStyleInputCol").hide();
+                        GetInvItemStockInfoByItemAndAttributeId();
+                        $("#ContentPlaceHolder1_hfIsAttributeItem").val('0');
+                    }
+                }
+            });
+
+            $("#ItemCode").keypress(function (event) {
+                var keycode = event.keyCode || event.which;
+                if (keycode == '13') {
+                    if ($("#ContentPlaceHolder1_hfIsAttributeItem").val() == "0") {
+                        AddItem();
+                    }
                 }
             });
 
             $("#ItemName").keypress(function (event) {
-
                 var keycode = event.keyCode || event.which;
                 if (keycode == '13') {
-                    AddItem();
+                    if ($("#ContentPlaceHolder1_hfIsAttributeItem").val() == "0") {
+                        AddItem();
+                    }
+                }
+            });
+
+            $("#ContentPlaceHolder1_ddlStyleAttribute").keypress(function (event) {
+                var keycode = event.keyCode || event.which;
+                if (keycode == '13') {
+                    if ($("#ContentPlaceHolder1_hfIsAttributeItem").val() == "1") {
+                        AddItem();
+                    }
                 }
             });
 
@@ -578,6 +623,188 @@
                 return false;
             }
         }
+
+        function GetInvItemStockInfoByItemAndAttributeId() {
+            var itemCode = $("#ItemCode").val();
+            //var itemName = $("#ItemName").val();
+            var itemName = $("#ItemName").val().replace("'", "");
+
+            var locationId = parseInt($('#ContentPlaceHolder1_ddlLocation').val(), 10);
+            var colorddlLength = $('#ContentPlaceHolder1_ddlColorAttribute > option').length;
+            var sizeddlLength = $('#ContentPlaceHolder1_ddlSizeAttribute > option').length;
+            var styleddlLength = $('#ContentPlaceHolder1_ddlStyleAttribute > option').length;
+            var colorId = 0;
+            if (colorddlLength > 0) {
+                colorId = parseInt($("#ContentPlaceHolder1_ddlColorAttribute option:selected").val(), 10);
+            }
+            var sizeId = 0;
+            if (sizeddlLength > 0) {
+                sizeId = parseInt($("#ContentPlaceHolder1_ddlSizeAttribute option:selected").val(), 10);
+            }
+            var styleId = 0;
+            if (styleddlLength > 0) {
+                styleId = parseInt($("#ContentPlaceHolder1_ddlStyleAttribute option:selected").val(), 10);
+            }
+            var itemId = parseInt($("#ContentPlaceHolder1_hfProductId").val(), 10);
+
+            var categoryName = "";
+            var costCenterId = $("#ContentPlaceHolder1_hfCostcenterId").val();
+
+            return $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: '../POS/Billing.aspx/GetItemByCodeColorSizeStyleCategoryNameWiseItemDetailsForAutoSearch',
+                data: "{'itemCode':'" + $.trim(itemCode) + "','itemName':'" + $.trim(itemName) + "','colorId':'" + colorId + "','sizeId':'" + sizeId + "','styleId':'" + styleId + "','categoryName':'" + categoryName + "','costCenterId':'" + costCenterId + "'}",
+                dataType: "json",
+                success: function (data) {
+                    tt = data;
+                    if (data.d.length == 0) { toastr.info("Item Not Found. Please Give Valid Item Code"); return false; }
+
+
+                    if (data.d != null) {
+                        var str = data.d[0].StockQuantity;
+                        $("#ContentPlaceHolder1_lblCurrentStock").text(str);
+                    }
+                    else {
+                        var str = 0;
+                        $("#ContentPlaceHolder1_lblCurrentStock").text(str);
+                    }
+
+
+                    ItemDetails = {
+                        label: data.d[0].Name,
+                        value: data.d[0].ItemId,
+                        Name: data.d[0].Name,
+                        ItemId: data.d[0].ItemId,
+                        Code: data.d[0].Code,
+                        ColorId: data.d[0].ColorId,
+                        ColorText: data.d[0].ColorText,
+                        SizeId: data.d[0].SizeId,
+                        SizeText: data.d[0].SizeText,
+                        StyleId: data.d[0].StyleId,
+                        StyleText: data.d[0].StyleText,
+                        UnitHead: data.d[0].UnitHead,
+                        UnitPriceLocal: data.d[0].UnitPriceLocal,
+                        StockBy: data.d[0].StockBy,
+                        CategoryId: data.d[0].CategoryId,
+                        DiscountType: data.d[0].DiscountType,
+                        DiscountAmount: data.d[0].DiscountAmount,
+                        StockQuantity: data.d[0].StockQuantity,
+                        IsItemEditable: data.d[0].IsItemEditable,
+                        ServiceCharge: data.d[0].ServiceCharge,
+                        SDCharge: data.d[0].SDCharge,
+                        VatAmount: data.d[0].VatAmount,
+                        AdditionalCharge: data.d[0].AdditionalCharge,
+                        IsAttributeItem: data.d[0].IsAttributeItem
+                    };
+
+                },
+                error: function (result) {
+                    //alert("Error");
+                }
+            });
+
+            return false;
+        }
+
+        function GetInvItemAttributeByItemIdAndAttributeType(itemId, type) {
+            return $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: '../POS/Billing.aspx/GetInvItemAttributeByItemIdAndAttributeType',
+                data: "{'ItemId':'" + itemId + "','attributeType':'" + type + "'}",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    if (data.d != null) {
+                        if (type == 'Color')
+                            OnLoadAttributeColorSucceeded(data.d);
+                        if (type == 'Size')
+                            OnLoadAttributeSizeSucceeded(data.d);
+                        if (type == 'Style')
+                            OnLoadAttributeStyleSucceeded(data.d);
+                    }
+                },
+                error: function (result) {
+                    toastr.error("Please Contact With Admin");
+                }
+            });
+        }
+        function OnLoadAttributeStyleSucceeded(result) {
+            var list = result;
+            var ddlStyleAttributeId = '<%=ddlStyleAttribute.ClientID%>';
+            var control = $('#' + ddlStyleAttributeId);
+            control.empty();
+
+            if (list != null) {
+                if (list.length > 0) {
+
+                    control.attr("disabled", false);
+                    //control.removeAttr("disabled");
+                    for (i = 0; i < list.length; i++) {
+                        control.append('<option title="' + list[i].Name + '" value="' + list[i].Id + '">' + list[i].Name + '</option>');
+                    }
+                }
+                else {
+
+                    control.attr("disabled", true);
+                    //control.removeAttr("disabled");
+                }
+            }
+            return false;
+        }
+        function OnLoadAttributeStyleFailed(error) {
+        }
+        function OnLoadAttributeSizeSucceeded(result) {
+            var list = result;
+            var ddlSizeAttributeId = '<%=ddlSizeAttribute.ClientID%>';
+            var control = $('#' + ddlSizeAttributeId);
+            control.empty();
+
+            if (list != null) {
+                if (list.length > 0) {
+
+                    control.attr("disabled", false);
+                    //control.removeAttr("disabled");
+                    for (i = 0; i < list.length; i++) {
+                        control.append('<option title="' + list[i].Name + '" value="' + list[i].Id + '">' + list[i].Name + '</option>');
+                    }
+                }
+                else {
+
+                    control.attr("disabled", true);
+                    //control.removeAttr("disabled");
+                }
+            }
+            return false;
+        }
+        function OnLoadAttributeSizeFailed(error) {
+        }
+
+        function OnLoadAttributeColorSucceeded(result) {
+            var list = result;
+            var ddlColorAttributeId = '<%=ddlColorAttribute.ClientID%>';
+            var control = $('#' + ddlColorAttributeId);
+            control.empty();
+
+            if (list != null) {
+                if (list.length > 0) {
+                    control.attr("disabled", false);
+                    //control.removeAttr("disabled");
+                    for (i = 0; i < list.length; i++) {
+                        control.append('<option title="' + list[i].Name + '" value="' + list[i].Id + '">' + list[i].Name + '</option>');
+                    }
+                }
+                else {
+
+                    control.attr("disabled", true);
+                    //control.removeAttr("disabled");
+                }
+            }
+            return false;
+        }
+        function OnLoadAttributeColorFailed(error) {
+        }
         
         function PerformEdit(id) {
             PageMethods.GetBillById(id, "RestaurantToken", OnSuccessLoading, OnFailLoading)
@@ -587,6 +814,7 @@
             dataForEditForBillingBillId = result.RestaurantKotBill;
             var str = result;
             var tr = "";
+            debugger;
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 for (var i = 0; i < result.KotBillDetails.length; i++) {
                     tr += "<tr>";
@@ -771,7 +999,8 @@
                 $("#" + "ContentPlaceHolder1_cbTPVatAmount").prop('checked', false);
             }
 
-            $("#txtTotalSales").val(result.RestaurantKotBill.GrandTotal - result.RestaurantKotBill.VatAmount - result.RestaurantKotBill.DiscountAmount);
+            //  $("#txtTotalSales").val(result.RestaurantKotBill.GrandTotal - result.RestaurantKotBill.VatAmount - result.RestaurantKotBill.DiscountAmount);
+            $("#txtTotalSales").val(result.RestaurantKotBill.GrandTotal - result.RestaurantKotBill.VatAmount);
             if (result.RestaurantKotBill.DiscountType == "Fixed") {
                 $("#rbFixedDiscount").prop("checked", true);
                 $("#rbPercentageDiscount").prop("checked", false);
@@ -1790,7 +2019,7 @@
             var DiscountItem = _.where(DiscountDetails, { DiscountForId: ItemDetails.ItemId, DiscountFor: 'Item' });
             var discountAmount = 0.0;
 
-
+            debugger;
             if (DiscountItem != null) {
 
                 if (DiscountItem.length > 1) {
@@ -1872,9 +2101,8 @@
             index = _.findIndex(AddedItemList, { ItemId: ItemDetails.ItemId });
             var AddedItemDiscount = $("#AddedItem tbody tr:eq(" + index + ")");
 
-            $(AddedItemDiscount).find("td:eq(13)").text(discountAmount);
-            $(AddedItemDiscount).find("td:eq(14)").text(discountAmount);
-
+            //$(AddedItemDiscount).find("td:eq(13)").text(discountAmount);
+            //$(AddedItemDiscount).find("td:eq(14)").text(discountAmount);
 
         }
 
@@ -1921,7 +2149,7 @@
                 toastr.info("Please Add Item First.");
                 return false;
             }*/
-
+            debugger;
             calculateTotalQuantity();
 
             var totalAmount = 0.00, amount = 0.00, index = 0;
@@ -1997,24 +2225,24 @@
             }
             totalDiscountAmount = discountAmount;
 
-            var MaxItemDiscountTotal = 0.0;
+            //var MaxItemDiscountTotal = 0.0;
 
-            if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
-                $("#AddedItem tbody tr").each(function () {
-                    var itemDiscountAmount = parseFloat($(this).find("td:eq(14)").text());
-                    MaxItemDiscountTotal = MaxItemDiscountTotal + itemDiscountAmount;
-                });
-            }
-            else {
-                $("#AddedRiceMillBillingItem tbody tr").each(function () {
-                    var itemDiscountAmount = parseFloat(0);
-                    MaxItemDiscountTotal = MaxItemDiscountTotal + itemDiscountAmount;
-                });
-            }
+            //if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
+            //    $("#AddedItem tbody tr").each(function () {
+            //        var itemDiscountAmount = parseFloat($(this).find("td:eq(14)").text());
+            //        MaxItemDiscountTotal = MaxItemDiscountTotal + itemDiscountAmount;
+            //    });
+            //}
+            //else {
+            //    $("#AddedRiceMillBillingItem tbody tr").each(function () {
+            //        var itemDiscountAmount = parseFloat(0);
+            //        MaxItemDiscountTotal = MaxItemDiscountTotal + itemDiscountAmount;
+            //    });
+            //}
 
-            if (MaxItemDiscountTotal > 0) {
-                totalDiscountAmount = MaxItemDiscountTotal;
-            }
+            //if (MaxItemDiscountTotal > 0) {
+            //    totalDiscountAmount = MaxItemDiscountTotal;
+            //}
             
             afterDiscountAmount = totalAmount - totalDiscountAmount;
             var IsInclusiveOrExclusiveBill = '', IsInclusiveBill = 0, vatAmount = 0.00, IsVatEnable = 1;
@@ -2085,7 +2313,6 @@
             $("#ContentPlaceHolder1_hfTotalDiscountAmount").val(toFixed(totalDiscountAmount, 2));
             $("#txtAfterDiscountAmount").val(toFixed(afterDiscountAmount, 2));
             $("#txtVat").val(toFixed(vat, 2));
-            console.log(grandTotal);
             $("#txtGrandTotal").val(toFixed(grandTotal, 2));
 
             exchangeTotal = parseFloat($("#txtReturnItemTotal").val() == "" ? 0 : ($("#txtReturnItemTotal").val()));
@@ -2337,6 +2564,7 @@
         //}
 
         function CheckQuantity(control) {
+            debugger;
             tt = control;
             var tr = $(control).parent().parent();
 
@@ -2397,9 +2625,8 @@
                 };
             }
 
-            IsDiscountApplicable();
+            //IsDiscountApplicable();
             ItemDetails = null;
-
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
                     unitDiscount = $.trim($(tr).find("td:eq(16)").text());
@@ -2761,9 +2988,24 @@
 
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 $("#AddedItem tbody tr").each(function () {
-
+                    debugger;
                     if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
                         kotDetailId = $(this).find("td:eq(14)").text();
+                        console.log($(this).find("td:eq(10)").text());
+                        console.log($(this).find("td:eq(11)").text());
+                        console.log($(this).find("td:eq(12)").text());
+                        console.log($(this).find("td:eq(13)").text());
+                        console.log($(this).find("td:eq(14)").text());
+                        console.log($(this).find("td:eq(15)").text());
+                        console.log($(this).find("td:eq(16)").text());
+                        console.log($(this).find("td:eq(17)").text());
+                        console.log($(this).find("td:eq(18)").text());
+                        console.log($(this).find("td:eq(19)").text());
+                        console.log($(this).find("td:eq(20)").text());
+                        console.log($(this).find("td:eq(21)").text());
+                        console.log($(this).find("td:eq(22)").text());
+                        console.log($(this).find("td:eq(23)").text());
+                        console.log($(this).find("td:eq(24)").text());
                         itemId = $(this).find("td:eq(11)").text();
 
                         colorId = $(this).find("td:eq(22)").text();
@@ -4828,18 +5070,43 @@
             <div class="panel panel-default">
                 <div class="panel-body" style="padding: 0;">
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-12">
                             <table id="RetaurantTableTop" class="table table-responsive">
                                 <tbody>
                                     <tr>
-                                        <td id="itemCodeInputNameCol" style="width: 35%;">Item Code / BarCode</td>
-                                        <td style="width: 65%;">Item Name</td>
+                                        <td id="itemCodeInputNameCol" style="width: 15%;">Item Code / BarCode</td>
+                                        <td style="width: 35%;">Item Name</td>
+                                        <td id="itemColorInputNameCol" style="width: 15%; display: none;">Color</td>
+                                        <td id="itemSizeInputNameCol" style="width: 15%; display: none;">Size</td>
+                                        <td id="itemStyleInputNameCol" style="width: 15%; display: none;">Style</td>
+                                        <td id="itemStyleInputQtyCol" style="width: 15%;">Qty.</td>
                                     </tr>
                                     <tr>
-                                        <td id="itemCodeInputCol" style="width: 35%;">
+                                        <td id="itemCodeInputCol" style="width: 15%;">
                                             <input type="text" class="form-control" id="ItemCode" placeholder="Code" /></td>
-                                        <td style="width: 65%;">
+                                        <td style="width: 30%;">
                                             <input type="text" class="form-control" id="ItemName" placeholder="Name" /></td>
+                                        <td id="itemColorInputCol" style="width: 10%; display: none;">
+                                            <asp:DropDownList ID="ddlColorAttribute" runat="server" CssClass="form-control">
+                                            </asp:DropDownList>
+                                        </td>
+                                        <td id="itemSizeInputCol" style="width: 10%; display: none;">
+                                            <asp:DropDownList ID="ddlSizeAttribute" runat="server" CssClass="form-control">
+                                            </asp:DropDownList>
+                                        </td>
+                                        <td id="itemStyleInputCol" style="width: 15%; display: none;">
+                                            <asp:DropDownList ID="ddlStyleAttribute" runat="server" CssClass="form-control">
+                                            </asp:DropDownList>
+                                        </td>
+                                        <td id="itemCurrentStock" style="width: 10%;">
+                                            <asp:Label ID="lblCurrentStock" runat="server" class="form-control" Text="00"></asp:Label>
+                                        </td>
+                                        <td id="itemProductTypeCol" style="width: 10%; display: none;">
+                                            <asp:DropDownList ID="ddlProductType" runat="server" CssClass="form-control">
+                                                <asp:ListItem>Non Serial Product</asp:ListItem>
+                                                <asp:ListItem>Serial Product</asp:ListItem>
+                                            </asp:DropDownList>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

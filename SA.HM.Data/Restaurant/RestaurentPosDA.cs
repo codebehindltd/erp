@@ -2020,9 +2020,9 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@ItemType", DbType.String, kbd.ItemType);
                                     dbSmartAspects.AddInParameter(command, "@ItemId", DbType.Int32, kbd.ItemId);
 
-                                    dbSmartAspects.AddInParameter(command, "@ColorId", DbType.Int32, 0);
-                                    dbSmartAspects.AddInParameter(command, "@SizeId", DbType.Int32, 0);
-                                    dbSmartAspects.AddInParameter(command, "@StyleId", DbType.Int32, 0);
+                                    dbSmartAspects.AddInParameter(command, "@ColorId", DbType.Int32, kbd.ColorId);
+                                    dbSmartAspects.AddInParameter(command, "@SizeId", DbType.Int32, kbd.SizeId);
+                                    dbSmartAspects.AddInParameter(command, "@StyleId", DbType.Int32, kbd.StyleId);
 
                                     dbSmartAspects.AddInParameter(command, "@ItemUnit", DbType.Decimal, kbd.ItemUnit);
                                     dbSmartAspects.AddInParameter(command, "@UnitRate", DbType.Decimal, kbd.UnitRate);

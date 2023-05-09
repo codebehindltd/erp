@@ -49,6 +49,7 @@ namespace HotelManagement.Presentation.Website.POS
                 getPOSRefundConfiguration();
                 getIsMembershipPaymentEnable();
                 GetBillingConfiguration();
+                LoadIsItemAttributeEnable();
                 UserInformationBO userInformationBO = new UserInformationBO();
                 userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
 
@@ -77,6 +78,22 @@ namespace HotelManagement.Presentation.Website.POS
                 {
                     LoadNSetBasicInfo(0);
                 }
+            }
+        }
+
+        private void LoadIsItemAttributeEnable()
+        {
+            HMCommonSetupBO setUpBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+            List<HMCommonSetupBO> setUpBOList = new List<HMCommonSetupBO>();
+            setUpBOList = commonSetupDA.GetAllCommonConfigurationInfo();
+
+
+            setUpBO = setUpBOList.Where(x => x.TypeName == "IsItemAttributeEnable" && x.SetupName == "IsItemAttributeEnable").FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
+            {
+                hfIsItemAttributeEnable.Value = setUpBO.SetupValue;
             }
         }
 
