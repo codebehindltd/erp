@@ -587,6 +587,66 @@ namespace HotelManagement.Data.Restaurant
 
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetRestaurantOrderItemByMultipleKotId_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@CostCenterId", DbType.String, costCenterId);
+                    dbSmartAspects.AddInParameter(cmd, "@KotIdList", DbType.String, kotId);
+                    dbSmartAspects.AddInParameter(cmd, "@SourceName", DbType.String, sourceName);
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                KotBillDetailBO entityBO = new KotBillDetailBO();
+
+                                entityBO.KotId = Convert.ToInt32(reader["KotId"]);
+                                entityBO.KotDetailId = Convert.ToInt32(reader["KotDetailId"]);
+
+
+                                entityBO.StockBy = Convert.ToInt32(reader["StockBy"]);
+                                entityBO.CategoryId = Convert.ToInt32(reader["CategoryId"]);
+                                entityBO.UnitHead = reader["UnitHead"].ToString();
+                                entityBO.Remarks = reader["Remarks"].ToString();
+
+                                entityBO.ItemType = reader["ItemType"].ToString();
+                                entityBO.ItemId = Convert.ToInt32(reader["ItemId"]);
+                                entityBO.ItemName = reader["ItemName"].ToString();
+                                entityBO.ItemCode = reader["ItemCode"].ToString();
+                                entityBO.Category = reader["Category"].ToString();
+                                entityBO.ItemUnit = Convert.ToDecimal(reader["ItemUnit"]);
+                                entityBO.UnitRate = Convert.ToDecimal(reader["UnitRate"]);
+                                entityBO.Amount = Convert.ToDecimal(reader["Amount"]);
+                                entityBO.PrintFlag = Convert.ToBoolean(reader["PrintFlag"]);
+                                entityBO.IsItemEditable = Convert.ToBoolean(reader["IsItemEditable"]);
+
+                                entityBO.ClassificationId = Convert.ToInt32(reader["ClassificationId"]);
+
+                                entityBO.ItemWiseDiscountType = Convert.ToString(reader["ItemWiseDiscountType"]);
+                                entityBO.ItemWiseIndividualDiscount = Convert.ToDecimal(reader["ItemWiseIndividualDiscount"]);
+                                entityBO.IsBillPreviewButtonEnable = Convert.ToBoolean(reader["IsBillPreviewButtonEnable"]);
+
+                                entityBO.ServiceCharge = Convert.ToDecimal(reader["ServiceCharge"]);
+                                entityBO.CitySDCharge = Convert.ToDecimal(reader["SDCharge"]);
+                                entityBO.VatAmount = Convert.ToDecimal(reader["VatAmount"]);
+                                entityBO.AdditionalCharge = Convert.ToDecimal(reader["AdditionalCharge"]);
+
+                                entityBOList.Add(entityBO);
+                            }
+                        }
+                    }
+                }
+            }
+            return entityBOList;
+        }
+        public List<KotBillDetailBO> GetRestaurantOrderItemByMultipleKotIdForBilling(string costCenterId, string kotId, string sourceName)
+        {
+            List<KotBillDetailBO> entityBOList = new List<KotBillDetailBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetRestaurantOrderItemByMultipleKotIdForBilling_SP"))
                 {
                     cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
@@ -621,7 +681,7 @@ namespace HotelManagement.Data.Restaurant
                                 entityBO.ItemUnit = Convert.ToDecimal(reader["ItemUnit"]);
                                 entityBO.UnitRate = Convert.ToDecimal(reader["UnitRate"]);
                                 entityBO.Amount = Convert.ToDecimal(reader["Amount"]);
-                                entityBO.PrintFlag = Convert.ToBoolean(reader["PrintFlag"]);                               
+                                entityBO.PrintFlag = Convert.ToBoolean(reader["PrintFlag"]);
                                 entityBO.IsItemEditable = Convert.ToBoolean(reader["IsItemEditable"]);
 
                                 entityBO.ClassificationId = Convert.ToInt32(reader["ClassificationId"]);

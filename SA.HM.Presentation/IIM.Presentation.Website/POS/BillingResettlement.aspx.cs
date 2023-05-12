@@ -1000,7 +1000,8 @@ namespace HotelManagement.Presentation.Website.POS
                 kotIdList = kotBillMaster.KotId.ToString();
             }
 
-            kotDetails = kotDetailsDA.GetRestaurantOrderItemByMultipleKotId(kotBillMaster.CostCenterId.ToString(), kotIdList, kotBillMaster.SourceName);
+            //kotDetails = kotDetailsDA.GetRestaurantOrderItemByMultipleKotId(kotBillMaster.CostCenterId.ToString(), kotIdList, kotBillMaster.SourceName);
+            kotDetails = kotDetailsDA.GetRestaurantOrderItemByMultipleKotIdForBilling(kotBillMaster.CostCenterId.ToString(), kotIdList, kotBillMaster.SourceName);
 
             RestaurantBillPaymentResume paymentResume = new RestaurantBillPaymentResume();
             paymentResume.KotBillMaster = kotBillMaster;
@@ -1614,7 +1615,8 @@ namespace HotelManagement.Presentation.Website.POS
             }
 
             billDetailList = billDetailList.Where(b => b.KotId != kotBillMaster.KotId).ToList();
-            kotDetails = kotDetailsDA.GetRestaurantOrderItemByMultipleKotId(kotBillMaster.CostCenterId.ToString(), kotIdList, kotBillMaster.SourceName);
+            //kotDetails = kotDetailsDA.GetRestaurantOrderItemByMultipleKotId(kotBillMaster.CostCenterId.ToString(), kotIdList, kotBillMaster.SourceName);
+            kotDetails = kotDetailsDA.GetRestaurantOrderItemByMultipleKotIdForBilling(kotBillMaster.CostCenterId.ToString(), kotIdList, kotBillMaster.SourceName);
 
             MembershipPointDetailsBO membershipPointDetails = new MembershipPointDetailsBO();
             membershipPointDetails = posda.GetMembershipPointDetails(billId);

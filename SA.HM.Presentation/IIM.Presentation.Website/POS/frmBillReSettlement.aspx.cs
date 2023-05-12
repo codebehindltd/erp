@@ -345,7 +345,8 @@ namespace HotelManagement.Presentation.Website.POS
 
             KotBillDetailDA kotDetailsDA = new KotBillDetailDA();
             List<KotBillDetailBO> kotDetails = new List<KotBillDetailBO>();
-            kotDetails = kotDetailsDA.GetRestaurantOrderItemByMultipleKotId(costCenter, kotIdNew.ToString(), sourceType);
+            //kotDetails = kotDetailsDA.GetRestaurantOrderItemByMultipleKotId(costCenter, kotIdNew.ToString(), sourceType);
+            kotDetails = kotDetailsDA.GetRestaurantOrderItemByMultipleKotIdForBilling(costCenter, kotIdNew.ToString(), sourceType);
 
             var printedItem = kotDetails.Where(s => s.PrintFlag == true).FirstOrDefault();
             if (printedItem != null) { hfIsBillAlreadyPrint.Value = "1"; }
@@ -490,7 +491,7 @@ namespace HotelManagement.Presentation.Website.POS
                 kotIdList = kotBillMaster.KotId.ToString();
             }
 
-            kotDetails = kotDetailsDA.GetRestaurantOrderItemByMultipleKotId(kotBillMaster.CostCenterId.ToString(), kotIdList, kotBillMaster.SourceName);
+            kotDetails = kotDetailsDA.GetRestaurantOrderItemByMultipleKotIdForBilling(kotBillMaster.CostCenterId.ToString(), kotIdList, kotBillMaster.SourceName);
 
             RestaurantBillPaymentResume paymentResume = new RestaurantBillPaymentResume();
             paymentResume.KotBillMaster = kotBillMaster;
@@ -2554,7 +2555,8 @@ namespace HotelManagement.Presentation.Website.POS
                     }
 
                     KotBillDetailDA entityDA = new KotBillDetailDA();
-                    List<KotBillDetailBO> files = entityDA.GetRestaurantOrderItemByMultipleKotId(costCenterId, kotIdList, costCenterDefaultView).Where(x => x.ItemUnit > 0).ToList();
+                    //List<KotBillDetailBO> files = entityDA.GetRestaurantOrderItemByMultipleKotId(costCenterId, kotIdList, costCenterDefaultView).Where(x => x.ItemUnit > 0).ToList();
+                    List<KotBillDetailBO> files = entityDA.GetRestaurantOrderItemByMultipleKotIdForBilling(costCenterId, kotIdList, costCenterDefaultView).Where(x => x.ItemUnit > 0).ToList();
 
                     Boolean isChangedExist = false;
 
