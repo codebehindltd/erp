@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Presentation.Website.Payroll.Reports {
-    
-    
-    public partial class frmReportEmpRoster {
-        
+namespace HotelManagement.Presentation.Website.Payroll.Reports
+{
+
+
+    public partial class frmReportEmpRoster
+    {
+
         /// <summary>
         /// lblMessage control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMessage;
-        
+
         /// <summary>
         /// lblEmployee control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblEmployee;
-        
+
         /// <summary>
         /// ddlRosterId control.
         /// </summary>
@@ -38,7 +40,25 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlRosterId;
-        
+
+        /// <summary>
+        /// lblDepartmentId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDepartmentId;
+
+        /// <summary>
+        /// ddlDepartmentId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDepartmentId;
+
         /// <summary>
         /// btnGenarate control.
         /// </summary>
@@ -47,7 +67,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGenarate;
-        
+
         /// <summary>
         /// btnPrintReportFromClient control.
         /// </summary>
@@ -56,7 +76,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPrintReportFromClient;
-        
+
         /// <summary>
         /// frmPrint control.
         /// </summary>
@@ -65,7 +85,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl frmPrint;
-        
+
         /// <summary>
         /// pnlRoomReservation control.
         /// </summary>
@@ -74,7 +94,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlRoomReservation;
-        
+
         /// <summary>
         /// rvTransaction control.
         /// </summary>

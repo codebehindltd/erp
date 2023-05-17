@@ -3033,6 +3033,37 @@ namespace HotelManagement.Data.HotelManagement
 
             return roomreservationList;
         }
+        public List<RoomReservationBO> GetGroupRoomReservationInfoByStringSearchCriteria(DateTime? fromDate, DateTime? toDate, string groupName)
+        {
+            string Where = GenerateGroupRoomReservationSearchWhereCondition(fromDate, toDate, groupName);
+            List<RoomReservationBO> roomreservationList = new List<RoomReservationBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGroupRoomReservationInfoByStringSearchCriteria_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@SearchCriteria", DbType.String, Where);
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                RoomReservationBO roomreservationBO = new RoomReservationBO();
+                                roomreservationBO.Id = Convert.ToInt32(reader["Id"]);
+                                roomreservationBO.ReservationDetails = reader["ReservationDetails"].ToString();
+                                roomreservationList.Add(roomreservationBO);
+                            }
+                        }
+                    }
+
+                    //totalRecords = (int)cmd.Parameters["@RecordCount"].Value;
+                }
+            }
+
+            return roomreservationList;
+        }
         public string GenerateReservationSearchWhereCondition(DateTime? fromDate, DateTime? toDate, string guestName, string companyName, string reserveNo, string contactPerson, string contactPhone, string contactEmail, int srcMarketSegment, int srcGuestSource, int srcReferenceId, string status)
         {
             string Where = string.Empty;
@@ -3192,6 +3223,49 @@ namespace HotelManagement.Data.HotelManagement
             {
                 Where = " WHERE " + Where;
             }
+
+            return Where;
+        }
+        public string GenerateGroupRoomReservationSearchWhereCondition(DateTime? fromDate, DateTime? toDate, string groupName)
+        {
+            string Where = string.Empty;
+            groupName = groupName.Trim();
+
+            ////Date
+            //if (fromDate != null)
+            //{
+            //    string strFromDate = fromDate.HasValue ? fromDate.Value.ToString("yyyy-MM-dd") : string.Empty;
+            //    Where = "(dbo.FnDate(rr.DateIn) BETWEEN dbo.FnDate('" + strFromDate + "') AND dbo.FnDate('" + strFromDate + "') )";
+            //}
+            //if (toDate != null)
+            //{
+            //    string strToDate = toDate.HasValue ? toDate.Value.ToString("yyyy-MM-dd") : string.Empty;
+            //    Where = "(dbo.FnDate(rr.DateIn) BETWEEN dbo.FnDate('" + strToDate + "') AND dbo.FnDate('" + strToDate + "') )";
+            //}
+            //if (fromDate != null && toDate != null)
+            //{
+            //    string strFromDate = fromDate.HasValue ? fromDate.Value.ToString("yyyy-MM-dd") : string.Empty;
+            //    string strToDate = toDate.HasValue ? toDate.Value.ToString("yyyy-MM-dd") : string.Empty;
+            //    Where = "(dbo.FnDate(rr.DateIn) BETWEEN dbo.FnDate('" + strFromDate + "') AND dbo.FnDate('" + strToDate + "') )";
+            //}
+
+            ////Group Name
+            //if (!string.IsNullOrWhiteSpace(groupName))
+            //{
+            //    if (!string.IsNullOrWhiteSpace(Where))
+            //    {
+            //        Where += " AND dbo.FnGuestInformationListWithCommaSeperator(rr.ReservationId, 'Reservation') LIKE '%" + groupName + "%'";
+            //    }
+            //    else
+            //    {
+            //        Where += "dbo.FnGuestInformationListWithCommaSeperator(rr.ReservationId, 'Reservation') LIKE '%" + groupName + "%'";
+            //    }
+            //}
+
+            //if (!string.IsNullOrWhiteSpace(Where))
+            //{
+            //    Where = " WHERE " + Where;
+            //}
 
             return Where;
         }
@@ -4365,6 +4439,49 @@ namespace HotelManagement.Data.HotelManagement
 
 
                     if (roomReservationPaymentTransferList.Count == transactionCount)
+                        transaction.Commit();
+                    else
+                        transaction.Rollback();
+                }
+            }
+
+            return status;
+        }
+        public bool SaveGroupRoomReservation(int userInfoId, int companyId, string groupName, List<RoomReservationBO> groupRoomReservationList)
+        {
+            Boolean status = false;
+            int transactionCount = 0;
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+
+                using (DbTransaction transaction = conn.BeginTransaction())
+                {
+                    using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveUpdateGroupRoomReservation_SP"))
+                    {
+                        foreach (RoomReservationBO groupRoomReservationBO in groupRoomReservationList)
+                        {
+                            cmd.Parameters.Clear();
+                            dbSmartAspects.AddInParameter(cmd, "@ReservationId", DbType.Int32, groupRoomReservationBO.ReservationId);
+                            dbSmartAspects.AddInParameter(cmd, "@GroupName", DbType.String, groupName);
+                            dbSmartAspects.AddInParameter(cmd, "@CheckInDate", DbType.String, groupRoomReservationBO.DateInDisplay);
+                            dbSmartAspects.AddInParameter(cmd, "@CheckOutDate", DbType.String, groupRoomReservationBO.DateOutDisplay);
+                            dbSmartAspects.AddInParameter(cmd, "@ReservationDetails", DbType.String, groupRoomReservationBO.ReservationDetails);
+                            dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
+                            dbSmartAspects.AddInParameter(cmd, "@CreatedBy", DbType.Int32, userInfoId);
+
+                            status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0 ? true : false;
+                            transactionCount = transactionCount + 1;
+
+                            //if (status)
+                            //{
+                            //    transactionCount = transactionCount + 1;
+                            //}
+                        }
+                    }
+
+
+                    if (groupRoomReservationList.Count == transactionCount)
                         transaction.Commit();
                     else
                         transaction.Rollback();

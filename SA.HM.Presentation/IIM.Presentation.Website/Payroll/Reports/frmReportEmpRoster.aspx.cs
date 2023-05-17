@@ -24,10 +24,24 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
         {
             if (!IsPostBack)
             {
-                this.LoadRosterInformation();
+                this.LoadDepartment();
+                this.LoadRosterInformation();                
             }
         }
 
+        private void LoadDepartment()
+        {
+            DepartmentDA entityDA = new DepartmentDA();
+            ddlDepartmentId.DataSource = entityDA.GetDepartmentInfo();
+            ddlDepartmentId.DataTextField = "Name";
+            ddlDepartmentId.DataValueField = "DepartmentId";
+            ddlDepartmentId.DataBind();
+
+            ListItem item = new ListItem();
+            item.Value = "0";
+            item.Text = hmUtility.GetDropDownFirstAllValue();
+            ddlDepartmentId.Items.Insert(0, item);
+        }
         private void LoadRosterInformation()
         {
             RosterHeadDA entityDA = new RosterHeadDA();
@@ -93,22 +107,23 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             //rvTransaction.LocalReport.Refresh();
 
             int roasterId = Convert.ToInt32(this.ddlRosterId.SelectedValue);
+            int departmentId = Convert.ToInt32(this.ddlDepartmentId.SelectedValue);
 
             EmpRosterDA roasterDA = new EmpRosterDA();
             List<EmpRoasterReportViewBO> roasterviewBO = new List<EmpRoasterReportViewBO>();
-            roasterviewBO = roasterDA.GetEmpRoasterForReport(roasterId);
+            roasterviewBO = roasterDA.GetEmpRoasterForReport(roasterId, departmentId);
 
-            EmpRoasterReportViewBO header = new EmpRoasterReportViewBO();
-            if (roasterviewBO.Count > 0)
-            {
-                foreach (EmpRoasterReportViewBO roaster in roasterviewBO)
-                {
-                    if (roaster.Code == "1")
-                    {
-                        header = roaster;
-                    }
-                }
-            }            
+            //EmpRoasterReportViewBO header = new EmpRoasterReportViewBO();
+            //if (roasterviewBO.Count > 0)
+            //{
+            //    foreach (EmpRoasterReportViewBO roaster in roasterviewBO)
+            //    {
+            //        if (roaster.Code == "1")
+            //        {
+            //            header = roaster;
+            //        }
+            //    }
+            //}            
 
             rvTransaction.LocalReport.DataSources.Clear();
             rvTransaction.ProcessingMode = ProcessingMode.Local;
@@ -156,13 +171,13 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             paramReport.Add(new ReportParameter("PrintDateTime", printDate));
             paramReport.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
 
-            paramReport.Add(new ReportParameter("Date1", header.Date1));
-            paramReport.Add(new ReportParameter("Date2", header.Date2));
-            paramReport.Add(new ReportParameter("Date3", header.Date3));
-            paramReport.Add(new ReportParameter("Date4", header.Date4));
-            paramReport.Add(new ReportParameter("Date5", header.Date5));
-            paramReport.Add(new ReportParameter("Date6", header.Date6));
-            paramReport.Add(new ReportParameter("Date7", header.Date7));            
+            //paramReport.Add(new ReportParameter("Date1", header.Date1));
+            //paramReport.Add(new ReportParameter("Date2", header.Date2));
+            //paramReport.Add(new ReportParameter("Date3", header.Date3));
+            //paramReport.Add(new ReportParameter("Date4", header.Date4));
+            //paramReport.Add(new ReportParameter("Date5", header.Date5));
+            //paramReport.Add(new ReportParameter("Date6", header.Date6));
+            //paramReport.Add(new ReportParameter("Date7", header.Date7));            
 
             rvTransaction.LocalReport.SetParameters(paramReport);
            

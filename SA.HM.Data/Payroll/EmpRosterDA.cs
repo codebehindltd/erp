@@ -87,7 +87,7 @@ namespace HotelManagement.Data.Payroll
             }
             return entityBO;
         }
-        public List<EmpRoasterReportViewBO> GetEmpRoasterForReport(int roasterId)
+        public List<EmpRoasterReportViewBO> GetEmpRoasterForReport(int roasterId, int departmentId)
         {
             List<EmpRoasterReportViewBO> empList = new List<EmpRoasterReportViewBO>();
 
@@ -96,6 +96,14 @@ namespace HotelManagement.Data.Payroll
                 using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeeRosterInformation_SP"))
                 {
                     dbSmartAspects.AddInParameter(cmd, "@RosterId", DbType.Int32, roasterId);
+                    if (departmentId > 0)
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, departmentId);
+                    }
+                    else
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, DBNull.Value);
+                    }
 
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "EmployeeRoaster");
@@ -104,15 +112,13 @@ namespace HotelManagement.Data.Payroll
                     empList = Table.AsEnumerable().Select(r => new EmpRoasterReportViewBO
                     {
                         RosterName = r.Field<string>("RosterName"),
-                        Code = r.Field<string>("Code"),
-                        NAME = r.Field<string>("NAME"),
-                        Date1 = r.Field<string>("Date1"),
-                        Date2 = r.Field<string>("Date2"),
-                        Date3 = r.Field<string>("Date3"),
-                        Date4 = r.Field<string>("Date4"),
-                        Date5 = r.Field<string>("Date5"),
-                        Date6 = r.Field<string>("Date6"),
-                        Date7 = r.Field<string>("Date7")
+                        EmpCode = r.Field<string>("EmpCode"),
+                        EmployeeName = r.Field<string>("EmployeeName"),
+                        DepartmentName = r.Field<string>("DepartmentName"),
+                        RosterDate = r.Field<DateTime>("RosterDate"),
+                        RosterDateDisplay = r.Field<string>("RosterDateDisplay"),
+                        RosterDateDayName = r.Field<string>("RosterDateDayName"),
+                        TimeSlabHead = r.Field<string>("TimeSlabHead")
                     }).ToList();
                 }
             }

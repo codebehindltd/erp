@@ -16,6 +16,13 @@
             $("#ContentPlaceHolder1_pnlExpressCheckInnGrid").hide();
             $("#ContentPlaceHolder1_pnlRoomCalender").hide();
 
+            $("#ContentPlaceHolder1_ddlCompany").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             $("#ContentPlaceHolder1_txtFromDate").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -33,6 +40,35 @@
                     $("#ContentPlaceHolder1_txtFromDate").datepicker("option", "maxDate", selectedDate);
                 }
             });
+
+            $("#ContentPlaceHolder1_txtCheckInDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $("#ContentPlaceHolder1_txtCheckOutDate").datepicker("option", "minDate", selectedDate);
+                }
+            });
+
+            $("#ContentPlaceHolder1_txtCheckOutDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat,
+                onClose: function (selectedDate) {
+                    $("#ContentPlaceHolder1_txtCheckInDate").datepicker("option", "maxDate", selectedDate);
+                }
+            });
+
+            var ddlCompany = '<%=ddlCompany.ClientID%>'
+            $('#' + ddlCompany).change(function () {
+                if ($('#' + ddlCompany).val() != "0") {
+                    $("#ContentPlaceHolder1_txtGroupName").val($("#<%=ddlCompany.ClientID %> option:selected").text());
+                }
+                else {
+                    $("#ContentPlaceHolder1_txtGroupName").val("");
+
+                }
+            })
 
             $(document).on('keypress', 'input,select', function (e) {
                 if (e.which == 13) {
@@ -56,6 +92,48 @@
             }
         }
 
+        function PerformGroupRoomReservationSearchButton() {
+            var groupName = "";
+            var checkInDate = $.trim($("#<%=txtSrcCheckInDate.ClientID %>").val());
+            var checkOutDate = $.trim($("#<%=txtSrcCheckOutDate.ClientID %>").val());
+
+            if (checkInDate == "") {
+                toastr.warning("Please Provide Search Date (From Date).");
+                $("#ContentPlaceHolder1_txtSrcCheckInDate").val("");
+                $("#ContentPlaceHolder1_txtSrcCheckInDate").focus();
+                return false;
+            }
+
+            if (checkOutDate == "") {
+                toastr.warning("Please Provide Search Date (To Date).");
+                $("#ContentPlaceHolder1_txtSrcCheckOutDate").val("");
+                $("#ContentPlaceHolder1_txtSrcCheckOutDate").focus();
+                return false;
+            }
+
+            $("#GroupRoomReservationGridContainer").show();
+            CommonHelper.SpinnerOpen();
+            PageMethods.GetGroupRoomReservationInfoByStringSearchCriteria(groupName, checkInDate, checkOutDate, OnLoadGroupRoomReservationGridInformationSucceed, OnLoadGroupRoomReservationGridInformationFailed);
+            return false;
+        }
+
+        function OnLoadGroupRoomReservationGridInformationSucceed(result) {
+            //$("#GroupReservationDetailDiv").show();
+            $("#GroupRoomReservationGridContainer").html(result.RoomReservationGrid);
+            CommonHelper.SpinnerClose();
+            return false;
+        }
+        function PerformBillPreviewAction(reservationId) {
+            var apdId = $("#ContentPlaceHolder1_hfAPDId").val();
+            var url = "/HotelManagement/Reports/frmReportReservationBillInfo.aspx?GuestBillInfo=" + reservationId + "&APDInfo=" + apdId;
+            var popup_window = "Print Preview";
+            window.open(url, popup_window, "width=745,height=780,left=300,top=50,location=no,toolbar=no,menubar=no,resizable=yes, scrollbars=1");
+        }
+        function OnLoadGroupRoomReservationGridInformationFailed(error) {
+
+            CommonHelper.SpinnerClose();
+        }
+        
         function PerformRoomReservationSearchButton() {
            <%-- var guestName = $.trim($("#<%=txtResvGuestName.ClientID %>").val());
             var companyName = $.trim($("#<%=txtResvCompanyName.ClientID %>").val());
@@ -95,14 +173,41 @@
         }
 
         function ValidationBeforeGroupReservationPosting() {
-            
-            var IsPermitForSave = confirm("Do You Want To Psting Group Reservation?");
+
+            var IsPermitForSave = confirm("Do You Want To Posting Group Reservation?");
             var IsCheckedMinimumOneReservation = false;
             if (IsPermitForSave == true) {
-                var groupId = "0", reservationId = "0", guestName = "", roomNumber = "", roomRate = "", unitPrice = "", discountType = "", discountAmount = "", roomId = "", currencyType = "", conversionRate = "", dateIn = "", dateOut = "", transactionType = "Save"
-                    , roomType = "", typeWiseRoomQuantity = "", roomTypeId = "";
+                var companyId = 0, groupName = "", reservationId = 0, reservationDetails = "", checkInDate = "", checkOutDate = "";
 
-                groupId = 1;
+                companyId = $("#<%=ddlCompany.ClientID %>").val();
+                if (companyId == "0") {
+                    toastr.info("Please select Company Name.");
+                    $("#<%=ddlCompany.ClientID %>").focus();
+                    return false;
+                }
+
+                groupName = $("#ContentPlaceHolder1_txtGroupName").val();
+                if (groupName == "") {
+                    toastr.info("Please enter Group Name.");
+                    $("#ContentPlaceHolder1_txtGroupName").focus();
+                    return false;
+                }
+
+                checkInDate = $("#ContentPlaceHolder1_txtCheckInDate").val();
+                if (checkInDate == "") {
+                    toastr.info("Please enter Check In Date.");
+                    $("#ContentPlaceHolder1_txtCheckInDate").focus();
+                    return false;
+                }
+
+                checkOutDate = $("#ContentPlaceHolder1_txtCheckOutDate").val();
+                if (checkOutDate == "") {
+                    toastr.info("Please enter Check Out Date.");
+                    $("#ContentPlaceHolder1_txtCheckOutDate").focus();
+                    return false;
+                }
+
+                reservationDetails = $("#ContentPlaceHolder1_txtGroupReservationDescription").val();
 
                 var GroupRoomReservationDetails = [];
                 $("#RoomReservationGrid tbody tr").each(function (index, item) {
@@ -117,8 +222,11 @@
                     }
 
                     if ((transactionType == "Save") || (transactionType == "Update")) {
-                        GroupRoomReservationDetails.push({                            
-                            ReservationId: reservationId
+                        GroupRoomReservationDetails.push({
+                            ReservationId: reservationId,
+                            DateInDisplay: checkInDate,
+                            DateOutDisplay: checkOutDate,
+                            ReservationDetails: reservationDetails
                         });
                     }
 
@@ -137,7 +245,7 @@
                 debugger;
                 CommonHelper.SpinnerOpen();
 
-                PageMethods.SaveOrUpdateGroupRoomReservation(groupId, GroupRoomReservationDetails, OnSaveGroupReservationPostingSucceeded, OnSaveGroupReservationPostingFailed);
+                PageMethods.SaveOrUpdateGroupRoomReservation(companyId, groupName, GroupRoomReservationDetails, OnSaveGroupReservationPostingSucceeded, OnSaveGroupReservationPostingFailed);
                 return false;
             } else {
                 CommonHelper.SpinnerClose();
@@ -146,7 +254,9 @@
         }
         function OnSaveGroupReservationPostingSucceeded(result) {
             $("#GroupReservationDetailDiv").hide();
-            toastr.success('Successfully Updated Group Reservation.')
+            toastr.success('Updated Group Reservation Successfully.')
+            CloseCompanyDialog();
+            $("#<%=ddlCompany.ClientID %>").val("0");
             CommonHelper.SpinnerClose();
             return false;
         }
@@ -155,7 +265,7 @@
         function RedirectToDetails(TransectionId, reservation, roomNumber, date) {
         }
         function ToggleListedGroupInfo() {
-            var ctrl = '#<%=chkIsLitedGroup.ClientID%>';
+            <%--var ctrl = '#<%=chkIsLitedGroup.ClientID%>';
 
             if ($(ctrl).is(':checked')) {
                 $('#ReservedContact').hide("slow");
@@ -167,13 +277,90 @@
                 $('#ReservedContact').show("slow");
                 $(ctrl).prop('checked', false)
                 $("#ContentPlaceHolder1_hfContactId").val("0");
-            }
+            }--%>
+        }
+        function NewGroupRoomReservation() {
+            $("#GroupRoomReservationDiv").dialog({
+                autoOpen: true,
+                modal: true,
+                width: 990,
+                height: 690,
+                minWidth: 550,
+                minHeight: 580,
+                closeOnEscape: true,
+                resizable: false,
+                title: "New Group Room Reservation",
+                show: 'slide'
+            });
+            return;
+        }
+        function CloseCompanyDialog() {
+            $('#GroupRoomReservationDiv').dialog('close');
+            return false;
         }
     </script>
     <div class="panel panel-default">
         <div class="panel-heading">
-            Search Room Reservation
+            Search Group Room Reservation
         </div>
+        <div class="panel-body">
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="GuestCompany" class="control-label col-md-2 required-field">
+                            Company Name</label>
+                        <div class="col-md-10">
+                            <asp:DropDownList ID="ddlSrcCompany" runat="server" CssClass="form-control" AutoPostBack="false">
+                            </asp:DropDownList>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2" style="text-align: right;">
+                            <asp:Label ID="Label1" runat="server" class="control-label" Text="Group Name"></asp:Label>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="input-group col-md-12">
+                                <div style="width: 100%;">
+                                    <asp:TextBox ID="txtSrcGroupName" CssClass="form-control" runat="server" TabIndex="1" placeholder="Group Name"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="CheckInDate" class="control-label col-md-2">
+                            Date</label>
+                        <div class="col-md-2">
+                            <asp:TextBox ID="txtSrcCheckInDate" runat="server" CssClass="form-control" placeholder="Check In Date" TabIndex="63"></asp:TextBox>
+                        </div>
+                        <div class="col-md-2">
+                            <asp:TextBox ID="txtSrcCheckOutDate" runat="server" TabIndex="64" CssClass="form-control" placeholder="Check Out Date"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <asp:Button ID="btnSrcSearch" runat="server" TabIndex="4" Text="Search" CssClass="TransactionalButton btn btn-primary btn-sm"
+                                OnClientClick="javascript: return PerformGroupRoomReservationSearchButton();" />
+                            <button type="button" id="btnSrcClearSearch" class="btn btn-primary btn-sm" onclick="PerformClearSearchAction()">Clear</button>
+                            <button type="button" id="btnNewGroupRoomReservation" class="btn btn-primary btn-sm" onclick="javascript: return NewGroupRoomReservation();">New Group Reservation</button>
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-top: 5px;">
+                            <div class="col-md-12">
+                                <asp:Panel ID="Panel1" runat="server" ScrollBars="Both" Height="400px">
+                                    <div id="GroupRoomReservationGridContainer">
+                                    </div>
+                                </asp:Panel>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="GroupRoomReservationDiv" class="panel panel-default" style="display:none;">        
         <div class="panel-body">
             <div class="panel-body">
                 <div class="form-horizontal">
@@ -285,37 +472,47 @@
                 </div>
             </div>
         </div>
-        <div id="GroupReservationDetailDiv" style="display:none;">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Reservation List
-            </div>
-            <div class="panel-body">
-                <div class="form-horizontal">
-                    <div class="form-group" style="padding-top: 5px;">
-                        <div class="col-md-12">
-                            <asp:Panel ID="pnlRoomReservationList" runat="server" ScrollBars="Both" Height="400px">
-                                <div id="RoomReservationGridContainer">
-                                </div>
-                            </asp:Panel>
+        <div id="GroupReservationDetailDiv" style="display: none;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Reservation List
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group" style="padding-top: 5px;">
+                            <div class="col-md-12">
+                                <asp:Panel ID="pnlRoomReservationList" runat="server" ScrollBars="Both" Height="400px">
+                                    <div id="RoomReservationGridContainer">
+                                    </div>
+                                </asp:Panel>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Group Information
-            </div>
-            <div class="panel-body">
-                <div class="form-horizontal">
-                    <div id="ListedGroupInfo" class="form-group">
-                        <div id="GroupLabel" class="col-md-2" style="text-align: right;">
-                            <asp:Label ID="Label7" runat="server" class="control-label required-field" Text="Group Name"></asp:Label>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Group Information
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label for="GuestCompany" class="control-label col-md-2 required-field">
+                                Company Name</label>
+                            <div class="col-md-10">
+                                <asp:DropDownList ID="ddlCompany" runat="server" CssClass="form-control" AutoPostBack="false">
+                                </asp:DropDownList>
+                            </div>
                         </div>
-                        <div id="GroupControl" class="col-md-10">
-                            <div class="input-group col-md-12">
-                                <span id="chkIsLitedGroupDiv" class="input-group-addon" style="text-align: left;">
+
+                        <div id="ListedGroupInfo" class="form-group">
+                            <div id="GroupLabel" class="col-md-2" style="text-align: right;">
+                                <asp:Label ID="Label7" runat="server" class="control-label required-field" Text="Group Name"></asp:Label>
+                            </div>
+                            <div id="GroupControl" class="col-md-10">
+                                <div class="input-group col-md-12">
+                                    <%--<span id="chkIsLitedGroupDiv" class="input-group-addon" style="text-align: left;">
                                     <asp:CheckBox ID="chkIsLitedGroup" runat="server" Text="" onclick="javascript: return ToggleListedGroupInfo();"
                                         TabIndex="8" />
                                 </span>
@@ -324,48 +521,48 @@
                                     <div style="display: none;">
                                         <asp:HiddenField runat="server" ID="hfGroupId" Value="0" />
                                     </div>
-                                </div>
-                                <div id="ReservedContact" style="display: none; width: 100%;">
-                                    <asp:TextBox ID="txtGroupName" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                                </div>--%>
+                                    <div id="ReservedContact" style="width: 100%;">
+                                        <asp:TextBox ID="txtGroupName" CssClass="form-control" runat="server" TabIndex="1" placeholder="Group Name"></asp:TextBox>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="CheckInDate" class="control-label required-field col-md-2">
-                            Date</label>
-                        <div class="col-md-2">
-                            <asp:TextBox ID="TextBox2" runat="server" CssClass="form-control" placeholder="Check In Date" TabIndex="63"></asp:TextBox>
+                        <div class="form-group">
+                            <label for="CheckInDate" class="control-label required-field col-md-2">
+                                Date</label>
+                            <div class="col-md-2">
+                                <asp:TextBox ID="txtCheckInDate" runat="server" CssClass="form-control" placeholder="Check In Date" TabIndex="63"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:TextBox ID="txtCheckOutDate" runat="server" TabIndex="64" CssClass="form-control" placeholder="Check Out Date"></asp:TextBox>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <asp:TextBox ID="TextBox3" runat="server" TabIndex="64" CssClass="form-control" placeholder="Check Out Date"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="CheckInDate" class="control-label required-field col-md-2">
-                            Description</label>
-                        <div class="col-md-10">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <asp:TextBox ID="txtGroupReservationDescription" TextMode="MultiLine" CssClass="form-control" runat="server" TabIndex="1" placeholder="Description"></asp:TextBox>
+                        <div class="form-group">
+                            <label for="CheckInDate" class="control-label col-md-2">
+                                Description</label>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <asp:TextBox ID="txtGroupReservationDescription" TextMode="MultiLine" CssClass="form-control" runat="server" TabIndex="1" placeholder="Description"></asp:TextBox>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row" style="padding-bottom:10px;">
-            <div class="col-md-12">
-                <asp:Button ID="btnUpdate" runat="server" TabIndex="4" Text="Update" CssClass="TransactionalButton btn btn-primary btn-sm"
-                    OnClientClick="javascript: return ValidationBeforeGroupReservationPosting();" />
-                <button type="button" id="btnClearForm" class="btn btn-primary btn-sm" onclick="PerformClearSearchAction()">Clear</button>
+            <div class="row" style="padding-bottom: 10px;">
+                <div class="col-md-12">
+                    <asp:Button ID="btnUpdate" runat="server" TabIndex="4" Text="Update" CssClass="TransactionalButton btn btn-primary btn-sm"
+                        OnClientClick="javascript: return ValidationBeforeGroupReservationPosting();" />
+                    <button type="button" id="btnClearForm" class="btn btn-primary btn-sm" onclick="PerformClearSearchAction()">Clear</button>
+                </div>
             </div>
         </div>
-        </div>
     </div>
-    
-    
+
+
     <script type="text/javascript">
         <%--var rsvnReservationId = '<%=rsvnReservationId%>';
         if (rsvnReservationId > -1) {

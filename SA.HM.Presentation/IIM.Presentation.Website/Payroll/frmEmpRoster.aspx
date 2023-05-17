@@ -14,19 +14,28 @@
                 CommonHelper.AlertMessage(JSON.parse($("#InnboardMessageHiddenField").val()));
                 $("#InnboardMessageHiddenField").val("");
             }
+
+            $("#ContentPlaceHolder1_ddlRosterId").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
+            $("#ContentPlaceHolder1_ddlEmpId").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
         });
 
         $(document).ready(function () {
             var ddlRosterId = '<%=ddlRosterId.ClientID%>'
-            var txtSrcRoomNumber = '<%=txtSrcRoomNumber.ClientID%>'
             var ddlEmpId = '<%=ddlEmpId.ClientID%>'
-            var txtEmployeeNameInfo = '<%=txtEmployeeNameInfo.ClientID%>'
             $('#' + ddlRosterId).change(function () {
                 var ddlRosterIdSelectedIndex = parseFloat($('#' + ddlRosterId).prop("selectedIndex"));
                 if (ddlRosterIdSelectedIndex != 0) {
-                    $('#' + txtSrcRoomNumber).val("")
-                    $('#' + ddlEmpId).val("0")
-                    $('#' + txtEmployeeNameInfo).val("")
                     $('#EmpRosterGridInformation').hide();
                 }
                 else {
@@ -60,45 +69,37 @@
         <div class="panel-heading">
             Employee Roster Information</div>
         <div class="panel-body">
-            <div class="form-horizontal">
+            <div class="form-horizontal">                
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <asp:Label ID="lblEmpId" runat="server" class="control-label required-field" Text="Employee"></asp:Label>
+                    </div>
+                    <div class="col-md-10">
+                        <asp:DropDownList ID="ddlEmpId" runat="server" CssClass="form-control"
+                            TabIndex="1">
+                        </asp:DropDownList>
+                    </div>
+                </div>
                 <div class="form-group">
                     <div class="col-md-2">
                         <asp:HiddenField ID="txtEmpRosterId" runat="server"></asp:HiddenField>
                         <asp:Label ID="lblRoster" runat="server" class="control-label required-field" Text="Roster"></asp:Label>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-10">
                         <asp:DropDownList ID="ddlRosterId" runat="server" TabIndex="1" CssClass="form-control">
                         </asp:DropDownList>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-2">
-                        <asp:Label ID="lblEmpId" runat="server" class="control-label required-field" Text="Employee ID"></asp:Label>
-                    </div>
-                    <div class="col-md-4">
-                        <asp:TextBox ID="txtSrcRoomNumber" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
-                        <asp:DropDownList ID="ddlEmpId" runat="server" CssClass="form-control" AutoPostBack="True"
-                            TabIndex="1" OnSelectedIndexChanged="ddlEmpId_SelectedIndexChanged" Visible="false">
-                        </asp:DropDownList>
-                    </div>
-                    <div class="col-md-2">
                         <asp:Button ID="btnSrcEmployees" runat="server" Text="Search" TabIndex="2" CssClass="TransactionalButton btn btn-primary"
                             OnClick="btnSrcEmployees_Click" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-2">
-                        <asp:Label ID="Label1" runat="server" class="control-label required-field" Text="Employee Name"></asp:Label>
-                    </div>
-                    <div class="col-md-10">
-                        <asp:TextBox ID="txtEmployeeNameInfo" runat="server" CssClass="form-control" TabIndex="1"
-                            Enabled="False"></asp:TextBox>
                     </div>
                 </div>
                 <div id="EmpRosterGridInformation" style="display: none;">
                     <div class="panel-body">
                         <asp:GridView ID="gvEmpRoster" Width="100%" runat="server" AllowPaging="True" AutoGenerateColumns="False"
-                            CellPadding="4" GridLines="None" PageSize="30" AllowSorting="True" ForeColor="#333333"
+                            CellPadding="4" GridLines="None" PageSize="500000" AllowSorting="True" ForeColor="#333333"
                             OnRowDataBound="gvEmpRoster_RowDataBound" CssClass="table table-bordered table-condensed table-responsive">
                             <RowStyle BackColor="#E3EAEB" />
                             <Columns>

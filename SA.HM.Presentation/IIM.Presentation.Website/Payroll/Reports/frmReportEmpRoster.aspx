@@ -10,6 +10,20 @@
             var formName = "<span class='divider'>/</span><li class='active'>Employee Roster Report</li>";
             var breadCrumbs = moduleName + formName;
             $("#ltlBreadCrumbsInformation").html(breadCrumbs);
+
+            $("#ContentPlaceHolder1_ddlRosterId").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
+            $("#ContentPlaceHolder1_ddlDepartmentId").select2({
+                tags: false,
+                allowClear: true,
+                placeholder: "--- ALL ---",
+                width: "99.75%"
+            });
         });
 
         //Div Visible True/False-------------------
@@ -31,48 +45,51 @@
             ×</button>
         <asp:Label ID='lblMessage' Font-Bold="True" runat="server"></asp:Label>
     </div>
-    <div id="SearchPanel" class="panel panel-default" >
+    <div id="SearchPanel" class="panel panel-default">
         <div class="panel-body">
-            <div class="form-horizontal">           
+            <div class="form-horizontal">
                 <div class="form-group">
                     <div class="col-md-2">
-                        <asp:Label ID="lblEmployee" runat="server" class="control-label" Text="Roster Name"></asp:Label>
+                        <asp:Label ID="lblEmployee" runat="server" class="control-label required-field" Text="Roster Name"></asp:Label>
                     </div>
                     <div class="col-md-10">
                         <asp:DropDownList ID="ddlRosterId" runat="server" CssClass="form-control"
                             TabIndex="1">
                         </asp:DropDownList>
                     </div>
-                </div>               
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <asp:Label ID="lblDepartmentId" runat="server" class="control-label"
+                            Text="Department"></asp:Label>
+                    </div>
+                    <div class="col-md-10">
+                        <asp:DropDownList ID="ddlDepartmentId" runat="server" CssClass="form-control">
+                        </asp:DropDownList>
+                    </div>
+                </div>
                 <div class="row">
- <div class="col-md-12">
-                    <asp:Button ID="btnGenarate" runat="server" Text="Generate" CssClass="btn btn-primary"
-                        OnClick="btnGenarate_Click" />
+                    <div class="col-md-12">
+                        <asp:Button ID="btnGenarate" runat="server" Text="Generate" CssClass="btn btn-primary"
+                            OnClick="btnGenarate_Click" />
+                    </div>
                 </div>
-                </div>
             </div>
-        </div>       
-        <%--       <div class="row">
-            <div class="columnRight">
-                <asp:TextBox ID="txtCompanyName" runat="server" Visible="False"></asp:TextBox>
-                <asp:TextBox ID="txtCompanyAddress" runat="server" Visible="False"></asp:TextBox>
-                <asp:TextBox ID="txtCompanyWeb" runat="server" Visible="False"></asp:TextBox>
-            </div>
-            <div class="clear">
-            </div>
-        </div>--%>
+        </div>
     </div>
     <div style="display: none;">
         <asp:Button ID="btnPrintReportFromClient" runat="server" Text="Button" OnClick="btnPrintReportFromClient_Click"
             ClientIDMode="Static" />
     </div>
     <div style="display: none;">
-        <iframe id="frmPrint" name="frmPrint" width="0" height="0" runat="server" style="left: -1000;
-            top: 2000;" clientidmode="static"></iframe>
+        <iframe id="frmPrint" name="frmPrint" width="0" height="0" runat="server" style="left: -1000; top: 2000;"
+            clientidmode="static"></iframe>
     </div>
-    <div id="ReportPanel" class="panel panel-default">       
-            <div class="panel-heading">Report:: Employee
-            Roster Information</div>
+    <div id="ReportPanel" class="panel panel-default">
+        <div class="panel-heading">
+            Report:: Employee
+            Roster Information
+        </div>
         <div class="block-body collapse in">
             <div class="panel-body">
                 <asp:Panel ID="pnlRoomReservation" runat="server" ScrollBars="Both" Height="700px">
@@ -80,22 +97,7 @@
                         PageCountMode="Actual" SizeToReportContent="true" ShowPrintButton="true" runat="server"
                         Font-Names="Verdana" Font-Size="8pt" InteractiveDeviceInfos="(Collection)" WaitMessageFont-Names="Verdana"
                         WaitMessageFont-Size="14pt" Width="950px" Height="820px">
-                        <%--                        <LocalReport ReportPath="Payroll\Reports\Rdlc\EmpoyeeRosterReport.rdlc">
-                            <DataSources>
-                                <rsweb:ReportDataSource DataSourceId="TransactionDataSource" Name="EmployeeRosterInfo" />
-                            </DataSources>
-                        </LocalReport>--%>
                     </rsweb:ReportViewer>
-                    <%--                    <asp:ObjectDataSource ID="TransactionDataSource" runat="server" SelectMethod="GetData"
-                        TypeName="HotelManagement.Presentation.Website.HotelManagementDBDataSetTableAdapters.GetEmployeeRosterInformation_SPTableAdapter"
-                        OldValuesParameterFormatString="original_{0}">
-                        <SelectParameters>
-                            <asp:FormParameter FormField="ddlRosterId" Name="RosterId" Type="Int32" />
-                            <asp:FormParameter FormField="txtCompanyName" Name="CompanyName" Type="String" />
-                            <asp:FormParameter FormField="txtCompanyAddress" Name="CompanyAddress" Type="String" />
-                            <asp:FormParameter FormField="txtCompanyWeb" Name="CompanyWeb" Type="String" />
-                        </SelectParameters>
-                    </asp:ObjectDataSource>--%>
                 </asp:Panel>
             </div>
         </div>

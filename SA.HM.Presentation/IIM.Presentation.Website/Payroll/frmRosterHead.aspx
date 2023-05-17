@@ -14,10 +14,10 @@
                 CommonHelper.AlertMessage(JSON.parse($("#InnboardMessageHiddenField").val()));
                 $("#InnboardMessageHiddenField").val("");
             }
-
+            var mPayrollEmployeeRosterDaySetup = '<%=payrollEmployeeRosterDaySetup%>';
             var txtStartDate = '<%=txtPeriodFrom.ClientID%>'
             var txtEndDate = '<%=txtPeriodTo.ClientID%>'
-            $('#' + txtEndDate).attr("disabled", "disabled");
+            //$('#' + txtEndDate).attr("disabled", "disabled");
             $('#' + txtStartDate).datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -27,10 +27,11 @@
                     var strDate = CommonHelper.DateFormatToMMDDYYYY($('#' + txtStartDate).val(), '/');
                     var date = new Date(strDate);
                     var newdate = new Date();
-                    newdate.setDate(date.getDate() + 6); // minus the date
-                    var nd = new Date(newdate);
-                    $("#<%=txtPeriodTo.ClientID %>").val(GetStringFromDateTime(nd));
 
+                    newdate.setDate(date.getDate() + parseInt(mPayrollEmployeeRosterDaySetup)); // minus the date
+                    var nd = new Date(newdate);
+
+                    $("#<%=txtPeriodTo.ClientID %>").val(GetStringFromDateTime(nd));
                 }
             });
 
@@ -57,7 +58,6 @@
             });
         });
 
-
         //For FillForm-------------------------   
         function PerformFillFormAction(actionId) {
             PageMethods.FillForm(actionId, OnFillFormObjectSucceeded, OnFillFormObjectFailed);
@@ -66,9 +66,7 @@
 
         function OnFillFormObjectSucceeded(result) {
             $("#<%=txtBPHead.ClientID %>").val(result.BPHead);
-
             $("#<%=txtPeriodFrom.ClientID %>").val(GetStringFromDateTime(result.PeriodFrom));
-
             $("#<%=txtPeriodTo.ClientID %>").val(GetStringFromDateTime(result.PeriodTo));
             $("#<%=ddlActiveStat.ClientID %>").val(result.ActiveStat == true ? 0 : 1);
             $("#<%=txtBusinessPromotionId.ClientID %>").val(result.BusinessPromotionId);
@@ -84,7 +82,6 @@
 
         //For Delete-------------------------        
         function PerformDeleteAction(actionId) {
-
             var answer = confirm("Do you want to delete this record?")
             if (answer) {
                 PageMethods.DeleteData(actionId, OnDeleteObjectSucceeded, OnDeleteObjectFailed);
@@ -101,11 +98,12 @@
         }
         //For ClearForm-------------------------
         function PerformClearAction() {
+            var mPayrollEmployeeRosterDaySetup = '<%=payrollEmployeeRosterDaySetup%>';
             $("#<%=txtBPHead.ClientID %>").val('');
             var date = new Date();
             $("#<%=txtPeriodFrom.ClientID %>").val(GetStringFromDateTime(date));
             var newdate = new Date(date);
-            newdate.setDate(date.getDate() + 7); // minus the date
+            newdate.setDate(date.getDate() + parseInt(mPayrollEmployeeRosterDaySetup)); // minus the date
             var nd = new Date(newdate);
             $("#<%=txtPeriodTo.ClientID %>").val(GetStringFromDateTime(nd));
             $("#<%=ddlActiveStat.ClientID %>").val(0);
@@ -162,19 +160,19 @@
                                 <asp:HiddenField ID="txtBusinessPromotionId" runat="server"></asp:HiddenField>
                                 <asp:Label ID="lblBPHead" runat="server" class="control-label required-field" Text="Name"></asp:Label>                                
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-10">
                                 <asp:TextBox ID="txtBPHead" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblPeriodFrom" runat="server" class="control-label" Text="Date From"></asp:Label>
+                                <asp:Label ID="lblPeriodFrom" runat="server" class="control-label required-field" Text="Date From"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtPeriodFrom" CssClass="form-control" runat="server" TabIndex="2"></asp:TextBox>
                             </div>
                             <div class="col-md-2">
-                                <asp:Label ID="lblPeriodTo" runat="server" class="control-label" Text="Date To"></asp:Label>
+                                <asp:Label ID="lblPeriodTo" runat="server" class="control-label required-field" Text="Date To"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtPeriodTo" runat="server" CssClass="form-control" TabIndex="3"></asp:TextBox>
@@ -216,7 +214,7 @@
                             <div class="col-md-2">
                                 <asp:Label ID="lblSName" runat="server" class="control-label" Text="Name"></asp:Label>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-10">
                                 <asp:TextBox ID="txtSName" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
                             </div>
                         </div>

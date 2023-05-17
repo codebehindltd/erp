@@ -17,18 +17,32 @@ namespace HotelManagement.Presentation.Website.Payroll
     public partial class frmRosterHead : BasePage
     {
         HiddenField innboardMessage;
-        HMUtility hmUtility = new HMUtility();        
+        HMUtility hmUtility = new HMUtility();
         protected int isNewAddButtonEnable = 1;
-        
+        protected int payrollEmployeeRosterDaySetup = 7;
         //**************************** Handlers ****************************//
         protected void Page_Load(object sender, EventArgs e)
         {
             innboardMessage = (HiddenField)this.Master.FindControl("InnboardMessageHiddenField");
-            
             if (!IsPostBack)
-            {
+            {                
+                this.CheckObjectPermission();
+                this.LoadPayrollEmployeeRosterDaySetup();
                 this.LoadCurrentDate();
-                CheckObjectPermission();
+            }
+        }
+        private void LoadPayrollEmployeeRosterDaySetup()
+        {            
+            HMCommonSetupBO payrollEmployeeRosterDaySetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+            payrollEmployeeRosterDaySetupBO = commonSetupDA.GetCommonConfigurationInfo("PayrollEmployeeRosterDaySetup", "PayrollEmployeeRosterDaySetup");
+            if (payrollEmployeeRosterDaySetupBO != null)
+            {
+                if (payrollEmployeeRosterDaySetupBO.SetupId > 0)
+                {
+                    payrollEmployeeRosterDaySetup = Convert.ToInt32(payrollEmployeeRosterDaySetupBO.SetupValue);
+                }
             }
         }
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -40,26 +54,16 @@ namespace HotelManagement.Presentation.Website.Payroll
             DateTime resultDate;
             if (string.IsNullOrWhiteSpace(this.txtBPHead.Text))
             {
-                this.isNewAddButtonEnable = 2;               
+                this.isNewAddButtonEnable = 2;
                 CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Name.", AlertType.Warning);
                 this.txtBPHead.Focus();
             }
             else if (String.IsNullOrEmpty(txtPeriodFrom.Text))
             {
-                this.isNewAddButtonEnable = 2;                
+                this.isNewAddButtonEnable = 2;
                 CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "From Date.", AlertType.Warning);
                 this.txtPeriodFrom.Focus();
-            
             }
-            //else if (String.IsNullOrEmpty(txtPeriodTo.Text) || !DateTime.TryParse(txtPeriodTo.Text, out resultDate))
-            //{
-                
-            //    this.isNewAddButtonEnable = 2;
-            //    this.isMessageBoxEnable = 1;
-            //    lblMessage.Text = "Please enter To Date";
-            //    this.txtPeriodTo.Focus();
-
-            //}
             else
             {
                 try
@@ -72,8 +76,9 @@ namespace HotelManagement.Presentation.Website.Payroll
 
                     entityBO.RosterName = this.txtBPHead.Text;
                     entityBO.FromDate = hmUtility.GetDateTimeFromString(this.txtPeriodFrom.Text, userInformationBO.ServerDateFormat);
-                    //entityBO.ToDate = hmUtility.ParseDateTime(this.txtPeriodTo.Text);
-                    entityBO.ToDate = entityBO.FromDate.AddDays(6);
+                    entityBO.ToDate = hmUtility.GetDateTimeFromString(this.txtPeriodTo.Text, userInformationBO.ServerDateFormat);
+                    //entityBO.ToDate = entityBO.FromDate.AddDays(6);
+                    //entityBO.ToDate = entityBO.FromDate.AddDays(payrollEmployeeRosterDaySetup);
                     entityBO.ActiveStat = ddlActiveStat.SelectedIndex == 0 ? true : false;
 
                     if (string.IsNullOrWhiteSpace(txtBusinessPromotionId.Value))
@@ -82,7 +87,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                         entityBO.CreatedBy = userInformationBO.UserInfoId;
                         Boolean status = entityDA.SaveRosterHeadInfo(entityBO, out tmpRosterId);
                         if (status)
-                        {                            
+                        {
                             CommonHelper.AlertInfo(innboardMessage, AlertMessage.Save, AlertType.Success);
                             bool logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(),
                             EntityTypeEnum.EntityType.RosterHead.ToString(), tmpRosterId,
@@ -97,7 +102,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                         entityBO.LastModifiedBy = userInformationBO.UserInfoId;
                         Boolean status = entityDA.UpdateRosterHeadInfo(entityBO);
                         if (status)
-                        {                            
+                        {
                             CommonHelper.AlertInfo(innboardMessage, AlertMessage.Update, AlertType.Success);
                             bool logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
                             EntityTypeEnum.EntityType.RosterHead.ToString(), entityBO.RosterId,
@@ -115,12 +120,11 @@ namespace HotelManagement.Presentation.Website.Payroll
                 catch (Exception ex)
                 {
                     CommonHelper.AlertInfo(innboardMessage, AlertMessage.Error, AlertType.Error);
-                    
                 }
             }
         }
         protected void gvGuestHouseService_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {            
+        {
             this.gvGuestHouseService.PageIndex = e.NewPageIndex;
             this.CheckObjectPermission();
             this.LoadGridView();
@@ -132,8 +136,6 @@ namespace HotelManagement.Presentation.Website.Payroll
                 Label lblValue = (Label)e.Row.FindControl("lblid");
                 ImageButton imgUpdate = (ImageButton)e.Row.FindControl("ImgUpdate");
                 ImageButton imgDelete = (ImageButton)e.Row.FindControl("ImgDelete");
-                //  imgUpdate.Attributes["onclick"] = "javascript:return PerformFillFormAction('" + lblValue.Text + "');";
-                //  imgDelete.Attributes["onclick"] = "javascript:return PerformDeleteAction('" + lblValue.Text + "');";
                 imgUpdate.Visible = isUpdatePermission;
                 imgDelete.Visible = isDeletePermission;
             }
@@ -155,7 +157,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                 {
                     Boolean status = hmCommonDA.DeleteInfoById("PayrollRosterHead", "RosterId", rosterId);
                     if (status)
-                    {                        
+                    {
                         CommonHelper.AlertInfo(innboardMessage, AlertMessage.Delete, AlertType.Success);
                         bool logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Delete.ToString(),
                             EntityTypeEnum.EntityType.RosterHead.ToString(), rosterId,
@@ -166,7 +168,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                 catch (Exception ex)
                 {
                     CommonHelper.AlertInfo(innboardMessage, AlertMessage.Error, AlertType.Error);
-                    
+
                 }
                 LoadGridView();
                 this.SetTab("SearchTab");
@@ -175,7 +177,6 @@ namespace HotelManagement.Presentation.Website.Payroll
         //************************ User Defined Function ********************//
         private void CheckObjectPermission()
         {
-            
             btnSave.Visible = isSavePermission;
             if (!isSavePermission)
             {
@@ -211,7 +212,7 @@ namespace HotelManagement.Presentation.Website.Payroll
         {
             DateTime dateTime = DateTime.Now;
             this.txtPeriodFrom.Text = hmUtility.GetStringFromDateTime(dateTime);
-            this.txtPeriodTo.Text = hmUtility.GetStringFromDateTime(dateTime.AddDays(7));
+            this.txtPeriodTo.Text = hmUtility.GetStringFromDateTime(dateTime.AddDays(payrollEmployeeRosterDaySetup));
         }
         private void Cancel()
         {

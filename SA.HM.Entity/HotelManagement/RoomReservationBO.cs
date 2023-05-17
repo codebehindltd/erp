@@ -7,6 +7,7 @@ namespace HotelManagement.Entity.HotelManagement
 {
     public class RoomReservationBO
     {
+        public long Id { get; set; }
         public int PaymentId { get; set; }
         public int ReservationId { get; set; }
         public int PickUpDropCount { get; set; }
@@ -119,6 +120,7 @@ namespace HotelManagement.Entity.HotelManagement
         public bool IsServiceChargeEnable { get; set; }
         public bool IsCityChargeEnable { get; set; }
         public bool IsVatAmountEnable { get; set; }
-        public bool IsAdditionalChargeEnable { get; set; }        
+        public bool IsAdditionalChargeEnable { get; set; }
+        public string ReservationDetails { get; set; }
     }
 }

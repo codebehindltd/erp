@@ -119,7 +119,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                             "Employee roster saved for each employee");
                 
                 this.SrcButtonClick();
-                this.txtSrcRoomNumber.Focus();
+                //this.txtSrcRoomNumber.Focus();
             }
         }
         
@@ -157,19 +157,24 @@ namespace HotelManagement.Presentation.Website.Payroll
             this.ddlEmpId.Items.Insert(0, item);
         }
         private void SrcButtonClick()
-        {
+        {            
+            if (this.ddlEmpId.SelectedValue == "0")
+            {
+                CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Employee Information.", AlertType.Warning);
+                return;
+            }
             if (this.ddlRosterId.SelectedIndex == 0)
             {
-                //this.txtGuestNameInfo.Text = string.Empty;                                       
                 CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Roster Information.", AlertType.Warning);
                 this.ddlRosterId.Focus();
                 return;
             }
-            if (!string.IsNullOrWhiteSpace(this.txtSrcRoomNumber.Text))
+
+            if (this.ddlEmpId.SelectedValue != "0")
             {
                 EmployeeDA entityDA = new EmployeeDA();
                 EmployeeBO entityBO = new EmployeeBO();
-                entityBO = entityDA.GetEmployeeInfoByCode(this.txtSrcRoomNumber.Text);
+                entityBO = entityDA.GetEmployeeInfoById(Convert.ToInt32(this.ddlEmpId.SelectedValue));
                 if (entityBO != null)
                 {
                     if (entityBO.EmpId > 0)
@@ -183,35 +188,17 @@ namespace HotelManagement.Presentation.Website.Payroll
                             {
                                 if (payrollWorkingDayBO.WorkingPlan == "Roster")
                                 {
-                                    this.ddlEmpId.SelectedValue = entityBO.EmpId.ToString();
-                                    this.txtEmployeeNameInfo.Text = entityBO.EmployeeName;
                                     this.GenerateRosterGridView();
                                 }
                                 else
                                 {
-                                    this.txtEmployeeNameInfo.Text = string.Empty;
                                     CommonHelper.AlertInfo(innboardMessage, "This Employee is not assigned for Roster Plan.", AlertType.Warning);
-                                    this.txtSrcRoomNumber.Focus();
                                     return;
                                 }
                             }
                         }
                     }
-                    else
-                    {
-                        this.txtEmployeeNameInfo.Text = string.Empty;
-                        CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Employee Information.", AlertType.Warning);
-                        this.txtSrcRoomNumber.Focus();
-                        return;
-                    }
                 }
-            }
-            else
-            {
-                this.txtEmployeeNameInfo.Text = string.Empty;
-                CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Employee Information.", AlertType.Warning);
-                this.txtSrcRoomNumber.Focus();
-                return;
             }
         }
         private void GenerateRosterGridView()
@@ -225,7 +212,6 @@ namespace HotelManagement.Presentation.Website.Payroll
             else if (this.ddlEmpId.SelectedIndex == 0)
             {
                 CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Employee Information.", AlertType.Warning);
-                this.txtSrcRoomNumber.Focus();
                 return;
             }
 
@@ -257,7 +243,6 @@ namespace HotelManagement.Presentation.Website.Payroll
                 }
 
                 List<DateTime> DateList = GetDateArrayBetweenTwoDates(StartDate, EndDate);
-
                 List<EmpRosterBO> empRosterBOList = new List<EmpRosterBO>();
 
                 foreach (DateTime date in DateList)
