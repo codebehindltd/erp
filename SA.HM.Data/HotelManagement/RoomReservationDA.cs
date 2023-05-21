@@ -7,6 +7,8 @@ using System.Data.Common;
 using System.Data;
 using System.Collections;
 using HotelManagement.Data.HMCommon;
+using HotelManagement.Entity.Payroll;
+using HotelManagement.Entity.Inventory;
 
 namespace HotelManagement.Data.HotelManagement
 {
@@ -3021,7 +3023,8 @@ namespace HotelManagement.Data.HotelManagement
                                 roomreservationBO.DateOutDisplay = reader["DateOutDisplay"].ToString();
                                 roomreservationBO.GuestName = reader["GuestName"].ToString();
                                 roomreservationBO.CompanyName = reader["CompanyName"].ToString();
-                                roomreservationBO.Reason = reader["Reason"].ToString();
+                                roomreservationBO.Reason = reader["Reason"].ToString();                                
+                                roomreservationBO.IsTaggedOnGroupReservation = Convert.ToBoolean(reader["IsTaggedOnGroupReservation"]);
                                 roomreservationList.Add(roomreservationBO);
                             }
                         }
@@ -3033,9 +3036,9 @@ namespace HotelManagement.Data.HotelManagement
 
             return roomreservationList;
         }
-        public List<RoomReservationBO> GetGroupRoomReservationInfoByStringSearchCriteria(DateTime? fromDate, DateTime? toDate, string groupName)
+        public List<RoomReservationBO> GetGroupRoomReservationInfoByStringSearchCriteria(DateTime? fromDate, DateTime? toDate, string reservationNumber, string groupName)
         {
-            string Where = GenerateGroupRoomReservationSearchWhereCondition(fromDate, toDate, groupName);
+            string Where = GenerateGroupRoomReservationSearchWhereCondition(fromDate, toDate, reservationNumber, groupName);
             List<RoomReservationBO> roomreservationList = new List<RoomReservationBO>();
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
@@ -3052,7 +3055,13 @@ namespace HotelManagement.Data.HotelManagement
                             {
                                 RoomReservationBO roomreservationBO = new RoomReservationBO();
                                 roomreservationBO.Id = Convert.ToInt32(reader["Id"]);
+                                roomreservationBO.ReservationNumber = reader["ReservationNumber"].ToString();
+                                roomreservationBO.ReservationDateDisplay = reader["ReservationDateDisplay"].ToString();
+                                roomreservationBO.GroupName = reader["GroupName"].ToString();
+                                roomreservationBO.CheckInDateDisplay = reader["CheckInDateDisplay"].ToString();
+                                roomreservationBO.CheckOutDateDisplay = reader["CheckOutDateDisplay"].ToString();                                
                                 roomreservationBO.ReservationDetails = reader["ReservationDetails"].ToString();
+                                roomreservationBO.GroupDescription = reader["GroupDescription"].ToString();
                                 roomreservationList.Add(roomreservationBO);
                             }
                         }
@@ -3226,46 +3235,59 @@ namespace HotelManagement.Data.HotelManagement
 
             return Where;
         }
-        public string GenerateGroupRoomReservationSearchWhereCondition(DateTime? fromDate, DateTime? toDate, string groupName)
+        public string GenerateGroupRoomReservationSearchWhereCondition(DateTime? fromDate, DateTime? toDate, string reservationNumber, string groupName)
         {
             string Where = string.Empty;
             groupName = groupName.Trim();
 
-            ////Date
-            //if (fromDate != null)
-            //{
-            //    string strFromDate = fromDate.HasValue ? fromDate.Value.ToString("yyyy-MM-dd") : string.Empty;
-            //    Where = "(dbo.FnDate(rr.DateIn) BETWEEN dbo.FnDate('" + strFromDate + "') AND dbo.FnDate('" + strFromDate + "') )";
-            //}
-            //if (toDate != null)
-            //{
-            //    string strToDate = toDate.HasValue ? toDate.Value.ToString("yyyy-MM-dd") : string.Empty;
-            //    Where = "(dbo.FnDate(rr.DateIn) BETWEEN dbo.FnDate('" + strToDate + "') AND dbo.FnDate('" + strToDate + "') )";
-            //}
-            //if (fromDate != null && toDate != null)
-            //{
-            //    string strFromDate = fromDate.HasValue ? fromDate.Value.ToString("yyyy-MM-dd") : string.Empty;
-            //    string strToDate = toDate.HasValue ? toDate.Value.ToString("yyyy-MM-dd") : string.Empty;
-            //    Where = "(dbo.FnDate(rr.DateIn) BETWEEN dbo.FnDate('" + strFromDate + "') AND dbo.FnDate('" + strToDate + "') )";
-            //}
+            //Date
+            if (fromDate != null)
+            {
+                string strFromDate = fromDate.HasValue ? fromDate.Value.ToString("yyyy-MM-dd") : string.Empty;
+                Where = "(dbo.FnDate(hgrr.CheckInDate) BETWEEN dbo.FnDate('" + strFromDate + "') AND dbo.FnDate('" + strFromDate + "') )";
+            }
+            if (toDate != null)
+            {
+                string strToDate = toDate.HasValue ? toDate.Value.ToString("yyyy-MM-dd") : string.Empty;
+                Where = "(dbo.FnDate(hgrr.CheckInDate) BETWEEN dbo.FnDate('" + strToDate + "') AND dbo.FnDate('" + strToDate + "') )";
+            }
+            if (fromDate != null && toDate != null)
+            {
+                string strFromDate = fromDate.HasValue ? fromDate.Value.ToString("yyyy-MM-dd") : string.Empty;
+                string strToDate = toDate.HasValue ? toDate.Value.ToString("yyyy-MM-dd") : string.Empty;
+                Where = "(dbo.FnDate(hgrr.CheckInDate) BETWEEN dbo.FnDate('" + strFromDate + "') AND dbo.FnDate('" + strToDate + "') )";
+            }
 
-            ////Group Name
-            //if (!string.IsNullOrWhiteSpace(groupName))
-            //{
-            //    if (!string.IsNullOrWhiteSpace(Where))
-            //    {
-            //        Where += " AND dbo.FnGuestInformationListWithCommaSeperator(rr.ReservationId, 'Reservation') LIKE '%" + groupName + "%'";
-            //    }
-            //    else
-            //    {
-            //        Where += "dbo.FnGuestInformationListWithCommaSeperator(rr.ReservationId, 'Reservation') LIKE '%" + groupName + "%'";
-            //    }
-            //}
+            //Reservation Number
+            if (!string.IsNullOrWhiteSpace(reservationNumber))
+            {
+                if (!string.IsNullOrWhiteSpace(Where))
+                {
+                    Where += " AND hgrr.ReservationNumber LIKE '%" + reservationNumber + "%'";
+                }
+                else
+                {
+                    Where += "hgrr.ReservationNumber LIKE '%" + reservationNumber + "%'";
+                }
+            }
 
-            //if (!string.IsNullOrWhiteSpace(Where))
-            //{
-            //    Where = " WHERE " + Where;
-            //}
+            //Group Name
+            if (!string.IsNullOrWhiteSpace(groupName))
+            {
+                if (!string.IsNullOrWhiteSpace(Where))
+                {
+                    Where += " AND hgrr.GroupName LIKE '%" + groupName + "%'";
+                }
+                else
+                {
+                    Where += "hgrr.GroupName LIKE '%" + groupName + "%'";
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(Where))
+            {
+                Where = " WHERE " + Where;
+            }
 
             return Where;
         }
@@ -4447,45 +4469,211 @@ namespace HotelManagement.Data.HotelManagement
 
             return status;
         }
-        public bool SaveGroupRoomReservation(int userInfoId, int companyId, string groupName, List<RoomReservationBO> groupRoomReservationList)
+        public bool SaveGroupRoomReservation(int companyId, string groupName, DateTime reservationDate, string reservationDetails, List<RoomReservationBO> groupRoomReservationList, int userInfoId, out long groupMasterId)
         {
             Boolean status = false;
-            int transactionCount = 0;
+            groupMasterId = 0;
+
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
                 conn.Open();
-
                 using (DbTransaction transaction = conn.BeginTransaction())
                 {
-                    using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveUpdateGroupRoomReservation_SP"))
+                    try
                     {
-                        foreach (RoomReservationBO groupRoomReservationBO in groupRoomReservationList)
+                        using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SaveGroupRoomReservationInfo_SP"))
                         {
-                            cmd.Parameters.Clear();
-                            dbSmartAspects.AddInParameter(cmd, "@ReservationId", DbType.Int32, groupRoomReservationBO.ReservationId);
-                            dbSmartAspects.AddInParameter(cmd, "@GroupName", DbType.String, groupName);
-                            dbSmartAspects.AddInParameter(cmd, "@CheckInDate", DbType.String, groupRoomReservationBO.DateInDisplay);
-                            dbSmartAspects.AddInParameter(cmd, "@CheckOutDate", DbType.String, groupRoomReservationBO.DateOutDisplay);
-                            dbSmartAspects.AddInParameter(cmd, "@ReservationDetails", DbType.String, groupRoomReservationBO.ReservationDetails);
-                            dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
-                            dbSmartAspects.AddInParameter(cmd, "@CreatedBy", DbType.Int32, userInfoId);
+                            dbSmartAspects.AddInParameter(command, "@ReservationDate", DbType.DateTime, reservationDate);
+                            dbSmartAspects.AddInParameter(command, "@CompanyId", DbType.Int32, companyId);
+                            dbSmartAspects.AddInParameter(command, "@GroupName", DbType.String, groupName);
+                            dbSmartAspects.AddInParameter(command, "@ReservationDetails", DbType.String, reservationDetails);
+                            dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, userInfoId);
+                            dbSmartAspects.AddOutParameter(command, "@GroupMasterId", DbType.Int64, sizeof(Int64));
 
-                            status = dbSmartAspects.ExecuteNonQuery(cmd, transaction) > 0 ? true : false;
-                            transactionCount = transactionCount + 1;
+                            status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
+                            groupMasterId = Convert.ToInt64(command.Parameters["@GroupMasterId"].Value);
+                        }                        
 
-                            //if (status)
-                            //{
-                            //    transactionCount = transactionCount + 1;
-                            //}
+                        if (status)
+                        {
+                            if (groupRoomReservationList != null)
+                            {
+                                using (DbCommand commandDetails = dbSmartAspects.GetStoredProcCommand("SaveGroupRoomReservationDetailInfo_SP"))
+                                {
+                                    foreach (RoomReservationBO groupRoomReservationBO in groupRoomReservationList)
+                                    {
+                                        commandDetails.Parameters.Clear();
+                                        dbSmartAspects.AddInParameter(commandDetails, "@GroupMasterId", DbType.Int64, groupMasterId);
+                                        dbSmartAspects.AddInParameter(commandDetails, "@ReservationId", DbType.Int64, groupRoomReservationBO.ReservationId);
+                                        dbSmartAspects.AddInParameter(commandDetails, "@CreatedBy", DbType.Int32, userInfoId);
+                                        status = dbSmartAspects.ExecuteNonQuery(commandDetails, transaction) > 0 ? true : false;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if (status)
+                            transaction.Commit();
+                        else
+                            transaction.Rollback();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+
+            return status;
+        }
+        public bool UpdateGroupRoomReservation(long groupMasterId, int companyId, string groupName, DateTime reservationDate, string reservationDetails, List<RoomReservationBO> groupRoomReservationList, int userInfoId)
+        {
+            Boolean status = false;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand command = dbSmartAspects.GetStoredProcCommand("UpdateGroupRoomReservationInfo_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(command, "@GroupMasterId", DbType.Int64, groupMasterId);
+                            dbSmartAspects.AddInParameter(command, "@ReservationDate", DbType.DateTime, reservationDate);
+                            dbSmartAspects.AddInParameter(command, "@CompanyId", DbType.Int32, companyId);
+                            dbSmartAspects.AddInParameter(command, "@GroupName", DbType.String, groupName);
+                            dbSmartAspects.AddInParameter(command, "@ReservationDetails", DbType.String, reservationDetails);
+                            dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, userInfoId);
+
+                            status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
+                        }
+
+                        if (status)
+                        {
+                            if (groupRoomReservationList != null)
+                            {
+                                using (DbCommand commandDetails = dbSmartAspects.GetStoredProcCommand("SaveGroupRoomReservationDetailInfo_SP"))
+                                {
+                                    foreach (RoomReservationBO groupRoomReservationBO in groupRoomReservationList)
+                                    {
+                                        commandDetails.Parameters.Clear();
+                                        dbSmartAspects.AddInParameter(commandDetails, "@GroupMasterId", DbType.Int64, groupMasterId);
+                                        dbSmartAspects.AddInParameter(commandDetails, "@ReservationId", DbType.Int64, groupRoomReservationBO.ReservationId);
+                                        dbSmartAspects.AddInParameter(commandDetails, "@CreatedBy", DbType.Int32, userInfoId);
+                                        status = dbSmartAspects.ExecuteNonQuery(commandDetails, transaction) > 0 ? true : false;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (status)
+                            transaction.Commit();
+                        else
+                            transaction.Rollback();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+
+            return status;
+        }
+        public List<RoomReservationBillBO> GetGroupRoomReservationBillInfoById(int transactionId)
+        {
+            List<RoomReservationBillBO> roomReservationList = new List<RoomReservationBillBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGroupRoomReservationBillInfoById_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@TransactionId", DbType.Int32, transactionId);
+
+                    DataSet reservationDS = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, reservationDS, "Reservation");
+                    DataTable Tabel = reservationDS.Tables["Reservation"];
+
+                    roomReservationList = Tabel.AsEnumerable().Select(r => new RoomReservationBillBO
+                    {
+                        GroupReservationNumber = r.Field<string>("GroupReservationNumber"),
+                        CompanyName = r.Field<string>("CompanyName"),
+                        CompanyAddress = r.Field<string>("CompanyAddress"),
+                        WebAddress = r.Field<string>("WebAddress"),
+                        CompanyDetails = r.Field<string>("CompanyDetails"),
+                        GroupName = r.Field<string>("GroupName"),
+                        BillingAddress = r.Field<string>("BillingAddress"),
+                        GroupDescription = r.Field<string>("GroupDescription"),
+                        ReservationNumber = r.Field<string>("ReservationNumber"),
+                        GuestName = r.Field<string>("GuestName"),
+                        TotalNumberOfRooms = r.Field<decimal?>("TotalNumberOfRooms"),
+                        RoomType = r.Field<string>("RoomType"),
+                        TypeWiseTotalRooms = r.Field<int?>("TypeWiseTotalRooms"),
+                        RoomRate = r.Field<decimal?>("RoomRate"),
+                        LocalCurrencyType = r.Field<string>("LocalCurrencyType"),
+                        CurrencyTypeId = r.Field<int?>("CurrencyTypeId"),
+                        CurrencyType = r.Field<string>("CurrencyType"),
+                        ConversionRate = r.Field<decimal>("ConversionRate"),
+                        CheckInDateDisplay = r.Field<string>("CheckInDateDisplay"),
+                        CheckOutDateDisplay = r.Field<string>("CheckOutDateDisplay"),
+                        ModeOfPayment = r.Field<string>("ModeOfPayment"),
+                        IsOtherChargeEnabled = r.Field<int>("IsOtherChargeEnabled"),
+                        CreatedDateDisplay = r.Field<string>("CreatedDateDisplay")
+                    }).ToList();
+                }
+
+                return roomReservationList;
+            }
+        }
+        public RoomReservationBO GetGroupRoomReservationInfoById(long transactionId)
+        {
+            RoomReservationBO roomReservation = new RoomReservationBO();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGroupRoomReservationInfoById_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@TransactionId", DbType.Int32, transactionId);
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                roomReservation.Id = Convert.ToInt64(reader["Id"]);
+                                roomReservation.ReservationNumber = reader["ReservationNumber"].ToString();
+                                roomReservation.ReservationDate = Convert.ToDateTime(reader["ReservationDate"]);
+                                //roomReservation.DateIn = Convert.ToDateTime(reader["DateIn"]);
+                                //roomReservation.DateOut = Convert.ToDateTime(reader["DateOut"]);
+                                roomReservation.GroupDescription = reader["GroupDescription"].ToString();
+                            }
                         }
                     }
-
-
-                    if (groupRoomReservationList.Count == transactionCount)
-                        transaction.Commit();
-                    else
-                        transaction.Rollback();
                 }
+            }
+            return roomReservation;
+        }
+        public Boolean CancelGroupRoomReservation(long reservationId)
+        {
+            Boolean status = false;
+            try
+            {
+                using (DbConnection conn = dbSmartAspects.CreateConnection())
+                {
+                    using (DbCommand command = dbSmartAspects.GetStoredProcCommand("CancelGroupRoomReservation_SP"))
+                    {
+                        dbSmartAspects.AddInParameter(command, "@TransactionId", DbType.Int64, reservationId);
+
+                        status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
             return status;

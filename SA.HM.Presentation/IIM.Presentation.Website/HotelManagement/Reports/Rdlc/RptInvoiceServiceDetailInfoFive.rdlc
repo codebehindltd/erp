@@ -362,7 +362,7 @@
                                             <Value>=Fields!BillAmount.Value</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
-                                              <Format>0.00;(0.00)</Format>
+                                              <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -396,7 +396,7 @@
                                             <Value>=Fields!PaidAmount.Value</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
-                                              <Format>0.00;(0.00)</Format>
+                                              <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -532,6 +532,7 @@
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
+                                              <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -566,6 +567,7 @@
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
+                                              <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -650,7 +652,7 @@
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
-                                              <Format>0.00;(0.00)</Format>
+                                              <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -693,7 +695,7 @@
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
-                                              <Format>0.00;(0.00)</Format>
+                                              <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -786,7 +788,7 @@
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
-                                              <Format>0.00;(0.00)</Format>
+                                              <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>

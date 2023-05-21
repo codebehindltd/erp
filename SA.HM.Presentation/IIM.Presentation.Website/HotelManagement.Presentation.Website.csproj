@@ -290,6 +290,7 @@
     <Content Include="HotelManagement\frmInHouseGuestBreakfast.aspx" />
     <Content Include="HotelManagement\frmGuestPaymentTransfer.aspx" />
     <Content Include="HotelManagement\Reports\frmReportComplimentaryGuest.aspx" />
+    <Content Include="HotelManagement\Reports\frmReportGroupReservationBillInfo.aspx" />
     <Content Include="HotelManagement\Reports\frmReportRoomControlChart.aspx" />
     <Content Include="HouseKeeping\HKLostFound.aspx" />
     <Content Include="HouseKeeping\RepairAndMaintenance.aspx" />
@@ -857,6 +858,7 @@
     <Content Include="Inventory\Reports\Rdlc\rptItemNutrientSummary.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptProductReceiveSummaryInfoByItem.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptProductReceiveDetailsInfoByItem.rdlc" />
+    <Content Include="HotelManagement\Reports\Rdlc\rptGroupReservationConfirmationLetter.rdlc" />
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />
@@ -2840,6 +2842,13 @@
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportComplimentaryGuest.aspx.designer.cs">
       <DependentUpon>frmReportComplimentaryGuest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HotelManagement\Reports\frmReportGroupReservationBillInfo.aspx.cs">
+      <DependentUpon>frmReportGroupReservationBillInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HotelManagement\Reports\frmReportGroupReservationBillInfo.aspx.designer.cs">
+      <DependentUpon>frmReportGroupReservationBillInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportRoomControlChart.aspx.cs">
       <DependentUpon>frmReportRoomControlChart.aspx</DependentUpon>

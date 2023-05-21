@@ -431,12 +431,21 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
                 this.txtGuestBillFromDate.Text = this.Session["GuestBillFromDate"].ToString();
                 this.txtGuestBillToDate.Text = this.Session["GuestBillToDate"].ToString();
 
-                HMCommonSetupBO frontOfficeInvoiceTemplateBO = new HMCommonSetupBO();
-                frontOfficeInvoiceTemplateBO = commonSetupDA.GetCommonConfigurationInfo("FrontOfficeInvoiceTemplate", "FrontOfficeInvoiceTemplate");
-                if (frontOfficeInvoiceTemplateBO != null)
+                string strwvsb = Request.QueryString["wvsb"];
+                if (strwvsb == "5")
                 {
-                    frontOfficeInvoiceTemplate = Convert.ToInt32(frontOfficeInvoiceTemplateBO.SetupValue);
+                    frontOfficeInvoiceTemplate = 5;
                 }
+                else
+                {
+                    HMCommonSetupBO frontOfficeInvoiceTemplateBO = new HMCommonSetupBO();
+                    frontOfficeInvoiceTemplateBO = commonSetupDA.GetCommonConfigurationInfo("FrontOfficeInvoiceTemplate", "FrontOfficeInvoiceTemplate");
+                    if (frontOfficeInvoiceTemplateBO != null)
+                    {
+                        frontOfficeInvoiceTemplate = Convert.ToInt32(frontOfficeInvoiceTemplateBO.SetupValue);
+                    }
+                }
+                
 
                 //IsCashierNameShownInInvoice
                 HMCommonSetupBO IsCashierNameShownInInvoiceBO = new HMCommonSetupBO();

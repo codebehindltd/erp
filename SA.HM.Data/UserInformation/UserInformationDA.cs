@@ -599,6 +599,39 @@ namespace HotelManagement.Data.UserInformation
             }
             return userInformation;
         }
+        public UserInformationBO GetUserInformationByGroupReservationId(int reservationId)
+        {
+            UserInformationBO userInformation = new UserInformationBO();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetUserInformationByGroupReservationId_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@TransactionId", DbType.Int32, reservationId);
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                userInformation.UserInfoId = Convert.ToInt32(reader["UserInfoId"]);
+                                userInformation.UserGroupId = Convert.ToInt32(reader["UserGroupId"]);
+                                userInformation.UserName = reader["UserName"].ToString();
+                                userInformation.UserId = reader["UserId"].ToString();
+                                userInformation.UserPassword = reader["UserPassword"].ToString();
+                                userInformation.UserEmail = reader["UserEmail"].ToString();
+                                userInformation.UserPhone = reader["UserPhone"].ToString();
+                                userInformation.UserDesignation = reader["UserDesignation"].ToString();
+                                userInformation.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
+                                userInformation.ActiveStatus = reader["ActiveStatus"].ToString();
+                            }
+                        }
+                    }
+                }
+            }
+            return userInformation;
+        }
         public UserInformationBO GetUserInformationByUserNameNId(string userId, string userPassword)
         {
             UserInformationBO userInformation = new UserInformationBO();

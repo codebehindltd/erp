@@ -491,7 +491,7 @@
         }
 
         function BillPreviewGlobal() {
-            var url = "/HotelManagement/Reports/frmReportGuestBillPreview.aspx";
+            var url = "/HotelManagement/Reports/frmReportGuestBillPreview.aspx?wvsb=5";
             var popup_window = "Print Preview";
             window.open(url, 'popup_window', 'width=790,height=680,left=300,top=50,location=no,toolbar=no,menubar=no,resizable=yes, scrollbars=1');
         }

@@ -122,5 +122,10 @@ namespace HotelManagement.Entity.HotelManagement
         public bool IsVatAmountEnable { get; set; }
         public bool IsAdditionalChargeEnable { get; set; }
         public string ReservationDetails { get; set; }
+        public string GroupName { get; set; }
+        public string CheckInDateDisplay { get; set; }
+        public string CheckOutDateDisplay { get; set; }
+        public string GroupDescription { get; set; }
+        public Boolean IsTaggedOnGroupReservation { get; set; }
     }
 }

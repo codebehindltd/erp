@@ -47,9 +47,21 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 gridHead += "<table id='RoomReservationGrid' class='table table-bordered table-condensed table-responsive'>" +
                              "       <thead>" +
-                             "           <tr style='color: White; background-color: #44545E; text-align: left; font-weight: bold;'>" +                             
-                             "               <th style='width: 90%;'>" +
-                             "                   Group Information" +
+                             "           <tr style='color: White; background-color: #44545E; text-align: left; font-weight: bold;'>" +
+                             "               <th style='width: 10%;'>" +
+                             "                   Reservation #" +
+                             "               </th>" +
+                             "               <th style='width: 15%;'>" +
+                             "                   Reservation Date" +
+                             "               </th>" +
+                             "               <th style='width: 10%;'>" +
+                             "                   Check In Date" +
+                             "               </th>" +
+                             "               <th style='width: 10%;'>" +
+                             "                   Check Out Date" +
+                             "               </th>" +
+                             "               <th style='width: 45%;'>" +
+                             "                   Group Name" +
                              "               </th>" +
                              "               <th style='width: 10%;'>" +
                              "                   Action" +
@@ -98,7 +110,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         }
         //************************ User Defined Web Method ********************//
         [WebMethod]
-        public static RoomReservationBO GetGroupRoomReservationInfoByStringSearchCriteria(string groupName, string prmFromDate, string prmToDate)
+        public static RoomReservationBO GetGroupRoomReservationInfoByStringSearchCriteria(string groupName, string reservationNumber, string prmFromDate, string prmToDate)
         {
             int rowCount = 0;
             HMUtility hmUtility = new HMUtility();
@@ -141,7 +153,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             RoomReservationDA roomReservationDA = new RoomReservationDA();
             List<RoomReservationBO> roomReservationListBO = new List<RoomReservationBO>();
 
-            roomReservationListBO = roomReservationDA.GetGroupRoomReservationInfoByStringSearchCriteria(fromDate, toDate, groupName);
+            roomReservationListBO = roomReservationDA.GetGroupRoomReservationInfoByStringSearchCriteria(fromDate, toDate, reservationNumber, groupName);
 
             if (roomReservationListBO != null)
             {
@@ -158,8 +170,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                             tr += "<tr style='background-color:#E3EAEB;'>";
                         }
 
-                        tr += "<td>" + stck.ReservationDetails + "</td>";
-                        tr += "<td align='right' style=\"width:45%; cursor:pointer;\"><img src='../Images/ReportDocument.png' ToolTip='Preview' onClick= \"javascript:return PerformBillPreviewAction('" + stck.Id + "')\" alt='Preview Information' border='0' /></td>";
+                        tr += "<td>" + stck.ReservationNumber + "</td>";
+                        tr += "<td>" + stck.ReservationDateDisplay + "</td>";
+                        tr += "<td>" + stck.CheckInDateDisplay + "</td>";
+                        tr += "<td>" + stck.CheckOutDateDisplay + "</td>";
+                        tr += "<td>" + stck.GroupName + "</td>";
+                        tr += "<td align='left' style=\"width:45%; cursor:pointer;\"><img src='../Images/delete.png' ToolTip='Cancel' onClick= \"javascript:return PerformCancelAction('" + stck.Id + "')\" alt='Cancel' border='0' />&nbsp;&nbsp;<img src='../Images/ReportDocument.png' ToolTip='Preview' onClick= \"javascript:return PerformBillPreviewAction('" + stck.Id + "')\" alt='Preview Information' border='0' /></td>";
                         tr += "<td style='display:none'>" + stck.Id + "</td>";
                         tr += "</tr>";
 
@@ -219,7 +235,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             RoomReservationDA roomReservationDA = new RoomReservationDA();
             List<RoomReservationBO> roomReservationListBO = new List<RoomReservationBO>();
 
-            roomReservationListBO = roomReservationDA.GetRoomReservationInfoByStringSearchCriteria(fromDate, toDate, guestName, reserveNo, companyName, contactPerson, contactPhone, contactEmail, srcMarketSegment, srcGuestSource, srcReferenceId, status);
+            roomReservationListBO = roomReservationDA.GetRoomReservationInfoByStringSearchCriteria(fromDate, toDate, guestName, reserveNo, companyName, contactPerson, contactPhone, contactEmail, srcMarketSegment, srcGuestSource, srcReferenceId, status).Where(x => x.IsTaggedOnGroupReservation == false).ToList();
 
             if (roomReservationListBO != null)
             {
@@ -263,7 +279,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         }
 
         [WebMethod]
-        public static ReturnInfo SaveOrUpdateGroupRoomReservation(int companyId, string groupName, List<RoomReservationBO> reservationDetailBO)
+        public static ReturnInfo SaveOrUpdateGroupRoomReservation(long groupMasterId, int companyId, string groupName, string strReservationDate, string reservationDetails, List<RoomReservationBO> groupRoomReservationList)
         {
             HMUtility hmUtility = new HMUtility();
             ReturnInfo rtninfo = new ReturnInfo();
@@ -272,18 +288,70 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             UserInformationBO userInformationBO = new UserInformationBO();
             userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
 
-            if (companyId > 0)
+            DateTime reservationDate = DateTime.Now;
+            if (!string.IsNullOrEmpty(strReservationDate))
+            {
+                reservationDate = hmUtility.GetDateTimeFromString(strReservationDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+            }
+
+            if (groupMasterId == 0)
             {
                 RoomReservationDA resDA = new RoomReservationDA();
-                bool status = resDA.SaveGroupRoomReservation(userInformationBO.UserInfoId, companyId, groupName, reservationDetailBO);
+                bool status = resDA.SaveGroupRoomReservation(companyId, groupName, reservationDate, reservationDetails, groupRoomReservationList, userInformationBO.UserInfoId, out groupMasterId);
                 if (status)
                 {
                     rtninfo.IsSuccess = true;
-                    rtninfo.AlertMessage = "Updated Group Reservation Successfully.";
+                    rtninfo.AlertMessage = "Group Reservation Save Successfully.";
+                }
+            }
+            else
+            {
+                RoomReservationDA resDA = new RoomReservationDA();
+                bool status = resDA.UpdateGroupRoomReservation(groupMasterId, companyId, groupName, reservationDate, reservationDetails, groupRoomReservationList, userInformationBO.UserInfoId);
+                if (status)
+                {
+                    rtninfo.IsSuccess = true;
+                    rtninfo.AlertMessage = "Group Reservation Save Successfully.";
                 }
             }
 
             return rtninfo;
+        }
+        [WebMethod]
+        public static ReturnInfo CancelGroupReservation(long reservationId, string reason)
+        {
+            ReturnInfo returnInfo = new ReturnInfo();
+            HMUtility hmUtility = new HMUtility();
+            RoomReservationDA reservationDA = new RoomReservationDA();
+            RoomReservationBO RoomReservationBO = reservationDA.GetGroupRoomReservationInfoById(reservationId);
+            //RoomReservationBO reservationBO = new RoomReservationBO() { ReservationId = reservationId, ReservationMode = mode, Reason = reason };
+            try
+            {
+                if (RoomReservationBO != null)
+                {
+                    if (RoomReservationBO.Id > 0)
+                    {
+                        returnInfo.IsSuccess = reservationDA.CancelGroupRoomReservation(reservationId);
+                        if (returnInfo.IsSuccess)
+                        {
+                            returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.ReservationCancel, AlertType.Success);
+                            hmUtility.CreateActivityLogEntity("Delete", "Group Room Reservation", reservationId, ProjectModuleEnum.ProjectModule.FrontOffice.ToString(), "Cancel Group Reservation#" + RoomReservationBO.ReservationNumber + " for the Reason: " + reason);
+
+                        }
+                        else
+                        {
+                            returnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Error, AlertType.Error);
+                        }
+                    }
+                }
+                
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnInfo;
         }
     }
 }

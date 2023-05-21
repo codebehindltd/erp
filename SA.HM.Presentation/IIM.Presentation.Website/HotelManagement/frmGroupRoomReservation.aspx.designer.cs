@@ -15,6 +15,24 @@ namespace HotelManagement.Presentation.Website.HotelManagement
     {
 
         /// <summary>
+        /// hfCancelReservationId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfCancelReservationId;
+
+        /// <summary>
+        /// txtCancelReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCancelReason;
+
+        /// <summary>
         /// ddlSrcCompany control.
         /// </summary>
         /// <remarks>
@@ -204,22 +222,13 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         protected global::System.Web.UI.WebControls.TextBox txtGroupName;
 
         /// <summary>
-        /// txtCheckInDate control.
+        /// txtReservationDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCheckInDate;
-
-        /// <summary>
-        /// txtCheckOutDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCheckOutDate;
+        protected global::System.Web.UI.WebControls.TextBox txtReservationDate;
 
         /// <summary>
         /// txtGroupReservationDescription control.
