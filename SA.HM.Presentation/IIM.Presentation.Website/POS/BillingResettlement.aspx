@@ -5261,7 +5261,7 @@
                                         Discount Amount</label>
                                 </div>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control quantity" id="txtDiscountAmount" tabindex="1" placeholder="Discount Amount"
+                                    <input type="text" class="form-control quantitydecimal" id="txtDiscountAmount" tabindex="1" placeholder="Discount Amount"
                                         onblur="CalculateDiscount()" />
                                 </div>
                             </div>
