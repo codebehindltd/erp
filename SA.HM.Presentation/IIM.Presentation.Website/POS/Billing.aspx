@@ -4374,7 +4374,7 @@
                                 </div>
                                 <div class="col-md-7">
                                     <asp:HiddenField ID="hfTotalDiscountAmount" runat="server" Value="0"></asp:HiddenField>
-                                    <input type="text" class="form-control quantity" id="txtDiscountAmount" tabindex="1" placeholder="Discount Amount"
+                                    <input type="text" class="form-control quantitydecimal" id="txtDiscountAmount" tabindex="1" placeholder="Discount Amount"
                                         onblur="CalculateDiscount()" />
                                 </div>
                             </div>
