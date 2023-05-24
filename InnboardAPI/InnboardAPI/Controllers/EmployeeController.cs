@@ -78,5 +78,25 @@ namespace InnboardAPI.Controllers
             var result = await db.GetPayrollEmpListWithLocation(criteriaDto);
             return Ok(result);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetLeaveType")]
+        public async Task<IHttpActionResult> GetLeaveType(int? EmpId, DateTime CurrentDate)
+        {
+            EmployeeDataAccess db = new EmployeeDataAccess();
+            var result = await db.GetLeaveType(EmpId, CurrentDate);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetActiveEmployees")]
+        public async Task<IHttpActionResult> GetActiveEmployees()
+        {
+            EmployeeDataAccess db = new EmployeeDataAccess();
+            var result = await db.GetActiveEmployees();
+            return Ok(result);
+        }
     }
 }

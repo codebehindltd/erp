@@ -10,6 +10,7 @@ using System.Data;
 using InnboardDomain.ViewModel;
 using InnboardDomain.Utility;
 using InnboardDomain.CriteriaDtoModel;
+using InnboardDomain.Models.Payroll;
 
 namespace InnboardDataAccess.DataAccesses
 {
@@ -65,6 +66,20 @@ namespace InnboardDataAccess.DataAccesses
             string query = string.Format($@"EXEC [dbo].[GetPayrollEmpLocationTracking_SP] {criteriaDto.UserInfoId}, '{criteriaDto.pageParams.SearchKey}', {criteriaDto.pageParams.PageNumber}, {criteriaDto.pageParams.PageSize}");
             var data = await InnboardDBContext.Database.SqlQuery<PayrollEmpLocationInfo>(query).ToListAsync();            
             return data;
+        }
+
+        public async Task<List<LeaveTakenNBalanceBO>> GetLeaveType(int? empId, DateTime currentDate)
+        {
+            SqlParameter param1 = new SqlParameter("@EmpId", empId);
+            SqlParameter param2 = new SqlParameter("@CurrentDate", currentDate);
+            var result = await InnboardDBContext.Database.SqlQuery<LeaveTakenNBalanceBO>("EXEC [dbo].[GetLeaveTakenNBalanceByEmployee_SP] @EmpId, @CurrentDate", param1, param2).ToListAsync();
+            return result;
+        }
+
+        public async Task<List<PayrollEmpLocationInfo>> GetActiveEmployees()
+        {
+            var result = await InnboardDBContext.Database.SqlQuery<PayrollEmpLocationInfo>("EXEC [dbo].[GetActiveEmployeeInfo_SP]").ToListAsync();
+            return result;
         }
     }
 }
