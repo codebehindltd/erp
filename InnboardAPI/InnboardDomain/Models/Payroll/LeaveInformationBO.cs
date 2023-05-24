@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InnboardDomain.Common.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +11,17 @@ namespace InnboardDomain.Models.Payroll
     {
         public int LeaveId { get; set; }
         public int EmpId { get; set; }
+        public int? EmployeeId { get; set; }
         public string EmpCode { get; set; }
         public string LeaveMode { get; set; }
         public string EmployeeName { get; set; }
         public int LeaveTypeId { get; set; }
+        public int? LeaveType { get; set; }
         public string TypeName { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
+        public DateTime? LeaveFromDate { get; set; }
+        public DateTime? LeaveToDate { get; set; }
         public int NoOfDays { get; set; }
 
         public string Reason { get; set; }
@@ -67,5 +72,10 @@ namespace InnboardDomain.Models.Payroll
 
         public string LeaveStatus { get; set; }
         public string CancelReason { get; set; }
+        public PageParams pageParams { get; set; }
+        public bool IsCanEdit { get; set; }
+        public bool IsCanDelete { get; set; }
+        public bool IsCanCheck { get; set; }
+        public bool IsCanApprove { get; set; }
     }
 }

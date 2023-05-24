@@ -137,5 +137,65 @@ namespace InnboardAPI.Controllers
                 return responseMsg;
             }
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetLeaveInformationBySearchCriteria")]
+        public async Task<IHttpActionResult> GetLeaveInformationBySearchCriteria([FromUri] LeaveInformationBO criteriaDto)
+        {
+
+            EmployeeDataAccess db = new EmployeeDataAccess();
+            var result = await db.GetLeaveInformationBySearchCriteria(criteriaDto);
+
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetLeaveInformation")]
+        public async Task<IHttpActionResult> GetLeaveInformation(int userId, int leaveId)
+        {
+            EmployeeDataAccess db = new EmployeeDataAccess();
+            var result = await db.GetLeaveInformation(userId, leaveId);
+
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("LeaveApproval")]
+        public async Task<HttpResponseMessage> LeaveApproval([FromBody] LeaveInformationBO model)
+        {
+            try
+            {
+                EmployeeDataAccess db = new EmployeeDataAccess();
+                var isSuccess = db.LeaveApproval(model);
+
+                if (isSuccess)
+                {
+                    var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                    {
+                        Content = new StringContent("Succesfully Done")
+                    };
+                    return responseMsg;
+                }
+                else
+                {
+                    var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+                    {
+                        Content = new StringContent("Bad Request")
+                    };
+                    return responseMsg;
+                }
+            }
+            catch (Exception ex)
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent(ex.Message)
+                };
+                return responseMsg;
+            }
+        }
     }
 }
