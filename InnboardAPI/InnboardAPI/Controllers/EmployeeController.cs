@@ -1,6 +1,8 @@
 ﻿using InnboardDataAccess.DataAccesses;
 using InnboardDomain.CriteriaDtoModel;
 using InnboardDomain.Models;
+using InnboardDomain.Models.Payroll;
+using InnboardDomain.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,6 +99,43 @@ namespace InnboardAPI.Controllers
             EmployeeDataAccess db = new EmployeeDataAccess();
             var result = await db.GetActiveEmployees();
             return Ok(result);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("LeaveApplication")]
+        public async Task<HttpResponseMessage> LeaveApplication([FromBody] LeaveInformationBO model)
+        {
+            try
+            {
+                EmployeeDataAccess db = new EmployeeDataAccess();
+                var isSuccess = db.LeaveApplication(model);
+
+                if (isSuccess)
+                {
+                    var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                    {
+                        Content = new StringContent("Succesfully Done")
+                    };
+                    return responseMsg;
+                }
+                else
+                {
+                    var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+                    {
+                        Content = new StringContent("Bad Request")
+                    };
+                    return responseMsg;
+                }
+            }
+            catch (Exception ex)
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent(ex.Message)
+                };
+                return responseMsg;
+            }
         }
     }
 }

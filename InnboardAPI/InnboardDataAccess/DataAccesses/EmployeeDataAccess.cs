@@ -81,5 +81,33 @@ namespace InnboardDataAccess.DataAccesses
             var result = await InnboardDBContext.Database.SqlQuery<PayrollEmpLocationInfo>("EXEC [dbo].[GetActiveEmployeeInfo_SP]").ToListAsync();
             return result;
         }
+
+        public bool LeaveApplication(LeaveInformationBO model)
+        {
+            SqlParameter empId = new SqlParameter("@EmpId", model.EmpId);
+            SqlParameter leaveMode = new SqlParameter("@LeaveMode ", model.LeaveMode);
+            SqlParameter leaveTypeId = new SqlParameter("@leaveTypeId ", model.LeaveTypeId);
+            SqlParameter fromDate = new SqlParameter("@FromDate ", model.FromDate);
+            SqlParameter toDate = new SqlParameter("@ToDate ", model.ToDate);
+            SqlParameter transactionType = new SqlParameter("@TransactionType ", model.TransactionType);
+            SqlParameter noOfDays = new SqlParameter("@NoOfDays ", model.NoOfDays);
+            SqlParameter workHandover = new SqlParameter("@WorkHandover ", model.WorkHandover);
+            SqlParameter expireDate = new SqlParameter("@ExpireDate ", model.ExpireDate);
+            SqlParameter leaveStatus = new SqlParameter("@LeaveStatus ", model.LeaveStatus);
+            SqlParameter reason = new SqlParameter("@Reason ", model.Reason);
+            SqlParameter reportingTo = new SqlParameter("@ReportingTo ", model.ReportingTo);
+            SqlParameter createdBy = new SqlParameter("@CreatedBy ", model.CreatedBy);
+            SqlParameter leaveId = new SqlParameter("@LeaveId ", model.LeaveId);
+            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveEmpLeaveInformation_SP]  @EmpId , @LeaveMode, @LeaveTypeId, @FromDate, @ToDate, @TransactionType, @NoOfDays, @WorkHandover, @ExpireDate, @LeaveStatus, @Reason, @ReportingTo, @CreatedBy, @LeaveId ", empId, leaveMode, leaveTypeId, fromDate, toDate, transactionType, noOfDays, workHandover, expireDate, leaveStatus, reason, reportingTo, createdBy, leaveId);
+
+            if (result > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
