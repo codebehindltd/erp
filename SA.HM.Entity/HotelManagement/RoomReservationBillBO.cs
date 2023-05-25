@@ -63,13 +63,16 @@ namespace HotelManagement.Entity.HotelManagement
         public Boolean IsRoomRateShowInPreRegistrationCard { get; set; }
         public int IsOtherChargeEnabled { get; set; }
         public string CompanyDetails { get; set; }
+        public long GroupMasterId { get; set; }
         public string GroupName { get; set; }
         public string GroupDescription { get; set; }
+        public string ReservationDateDisplay { get; set; }        
         public string CheckInDateDisplay { get; set; }
         public string CheckOutDateDisplay { get; set; }
         public string ModeOfPayment { get; set; }
         public string BillingAddress { get; set; }
         public string CreatedDateDisplay { get; set; }
-        public string GroupReservationNumber { get; set; }        
+        public string GroupReservationNumber { get; set; }
+        public string ReservationDetails { get; set; }
     }
 }

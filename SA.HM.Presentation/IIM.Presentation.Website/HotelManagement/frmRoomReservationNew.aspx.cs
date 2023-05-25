@@ -10,6 +10,7 @@ using HotelManagement.Entity.Payroll;
 using HotelManagement.Entity.SalesAndMarketing;
 using HotelManagement.Entity.UserInformation;
 using HotelManagement.Presentation.Website.Common;
+using HotelManagement.Presentation.Website.POS;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -52,9 +53,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             CheckMandatoryField();
 
             if (!IsPostBack)
-            {
+            {                
                 IsReservationStatusWaitingEnable();
                 CheckObjectPermission();
+                LoadGroupReservationInfo();
                 LoadGuestCityCharge();
                 LoadVIPGuestType();
                 LoadMealPlan();
@@ -597,6 +599,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 {
                     roomReservationBO.PaymentMode = ddlPaymentMode.SelectedValue.ToString();
                     roomReservationBO.IsListedCompany = false;
+                    roomReservationBO.GroupMasterId = Int32.Parse(ddlGroupName.SelectedValue);
                     roomReservationBO.ReservedCompany = txtGroupName.Text;
                     ddlPaymentMode.SelectedIndex = 0;
                     roomReservationBO.PaymentMode = "Self";
@@ -1204,6 +1207,22 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             itemProfession.Text = hmUtility.GetDropDownFirstValue();
             ddlProfessionId.Items.Insert(0, itemProfession);
         }
+        private void LoadGroupReservationInfo()
+        {
+            RoomReservationDA reservationDa = new RoomReservationDA();
+            List<RoomReservationBillBO> groupRoomReservationInfoListBO = new List<RoomReservationBillBO>();
+            groupRoomReservationInfoListBO = reservationDa.GetGroupRoomReservationInfo();
+
+            ddlGroupName.DataSource = groupRoomReservationInfoListBO;
+            ddlGroupName.DataTextField = "GroupName";
+            ddlGroupName.DataValueField = "GroupMasterId";
+            ddlGroupName.DataBind();
+
+            ListItem itemProfession = new ListItem();
+            itemProfession.Value = "0";
+            itemProfession.Text = hmUtility.GetDropDownFirstValue();
+            ddlGroupName.Items.Insert(0, itemProfession);
+        }
         private void LoadRoomRateInfo()
         {
             if (ddlRoomTypeId.SelectedIndex != -1)
@@ -1726,6 +1745,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             ddlReservedMode.Text = roomReservationBO.ReservedMode;
             if (roomReservationBO.ReservedMode == "Group")
             {
+                ddlGroupName.SelectedValue = roomReservationBO.GroupMasterId.ToString();
                 txtGroupName.Text = roomReservationBO.ReservedCompany;
             }
 
@@ -1942,6 +1962,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             ddlReservedMode.Text = roomReservationBO.ReservedMode;
             if (roomReservationBO.ReservedMode == "Group")
             {
+                ddlGroupName.SelectedValue = roomReservationBO.GroupMasterId.ToString();
                 txtGroupName.Text = roomReservationBO.ReservedCompany;
             }
 
