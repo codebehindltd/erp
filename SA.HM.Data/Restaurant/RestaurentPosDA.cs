@@ -85,8 +85,8 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@InvoiceDiscount", DbType.Decimal, kbd.InvoiceDiscount);
                                     dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, billmaster.CreatedBy);
                                     dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, kbd.Remarks);
-                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, kbd.BagWeight);
-                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
+                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Decimal, kbd.BagWeight);
+                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Decimal, kbd.NoOfBag);
 
                                     status = dbSmartAspects.ExecuteNonQuery(command, transction);
                                 }
@@ -500,8 +500,8 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@InvoiceDiscount", DbType.Decimal, kbd.InvoiceDiscount);
                                     dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, billmaster.CreatedBy);
                                     dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, kbd.Remarks);
-                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, kbd.BagWeight);
-                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
+                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Decimal, kbd.BagWeight);
+                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Decimal, kbd.NoOfBag);
 
                                     status = dbSmartAspects.ExecuteNonQuery(command, transction);
                                 }
@@ -975,8 +975,8 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@Amount", DbType.Decimal, kbd.Amount);
                                     dbSmartAspects.AddInParameter(command, "@InvoiceDiscount", DbType.Decimal, kbd.InvoiceDiscount);
                                     dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, kbd.Remarks);
-                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, kbd.BagWeight);
-                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
+                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Decimal, kbd.BagWeight);
+                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Decimal, kbd.NoOfBag);
 
                                     status = dbSmartAspects.ExecuteNonQuery(command, transction);
                                 }
@@ -1103,8 +1103,8 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@Amount", DbType.Decimal, kbd.Amount);
                                     dbSmartAspects.AddInParameter(command, "@InvoiceDiscount", DbType.Decimal, kbd.InvoiceDiscount);
                                     dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, kbd.Remarks);
-                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, kbd.BagWeight);
-                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
+                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Decimal, kbd.BagWeight);
+                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Decimal, kbd.NoOfBag);
 
                                     status = dbSmartAspects.ExecuteNonQuery(command, transction);
                                 }
@@ -1400,8 +1400,8 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, restaurentBillBO.CreatedBy);
 
                                     dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, kbd.Remarks);
-                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, kbd.BagWeight);
-                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
+                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Decimal, kbd.BagWeight);
+                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Decimal, kbd.NoOfBag);
 
 
                                     status = dbSmartAspects.ExecuteNonQuery(command, transction);
@@ -1425,8 +1425,8 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@ItemUnit", DbType.Decimal, kbd.ItemUnit);
                                     dbSmartAspects.AddInParameter(command, "@UnitRate", DbType.Decimal, kbd.UnitRate);
                                     dbSmartAspects.AddInParameter(command, "@Amount", DbType.Decimal, kbd.Amount);
-                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, kbd.BagWeight);
-                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
+                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Decimal, kbd.BagWeight);
+                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Decimal, kbd.NoOfBag);
 
                                     status = dbSmartAspects.ExecuteNonQuery(command, transction);
                                 }
@@ -1765,8 +1765,8 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, kbd.CreatedBy);
 
                                     dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, kbd.Remarks);
-                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, kbd.BagWeight);
-                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
+                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Decimal, kbd.BagWeight);
+                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Decimal, kbd.NoOfBag);
 
                                     status = dbSmartAspects.ExecuteNonQuery(command);
                                 }
@@ -1827,8 +1827,8 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@InvoiceDiscount", DbType.Decimal, kbd.InvoiceDiscount);
                                     dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, kbd.CreatedBy);
                                     dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, kbd.Remarks);
-                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, kbd.BagWeight);
-                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
+                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Decimal, kbd.BagWeight);
+                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Decimal, kbd.NoOfBag);
 
                                     status = dbSmartAspects.ExecuteNonQuery(command, transction);
                                 }
@@ -2030,8 +2030,8 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@InvoiceDiscount", DbType.Decimal, kbd.InvoiceDiscount);
                                     dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, restaurentBillBO.LastModifiedBy);
                                     dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, kbd.Remarks);
-                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, kbd.BagWeight);
-                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
+                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Decimal, kbd.BagWeight);
+                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Decimal, kbd.NoOfBag);
 
                                     status = dbSmartAspects.ExecuteNonQuery(command, transction);
                                 }
@@ -2057,8 +2057,8 @@ namespace HotelManagement.Data.Restaurant
                                     dbSmartAspects.AddInParameter(command, "@InvoiceDiscount", DbType.Decimal, kbd.InvoiceDiscount);
                                     dbSmartAspects.AddInParameter(command, "@LastModifiedBy", DbType.Int32, restaurentBillBO.LastModifiedBy);
                                     dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, kbd.Remarks);
-                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Int32, kbd.BagWeight);
-                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Int32, kbd.NoOfBag);
+                                    dbSmartAspects.AddInParameter(command, "@BagWeight", DbType.Decimal, kbd.BagWeight);
+                                    dbSmartAspects.AddInParameter(command, "@NoOfBag", DbType.Decimal, kbd.NoOfBag);
 
                                     status = dbSmartAspects.ExecuteNonQuery(command, transction);
                                 }

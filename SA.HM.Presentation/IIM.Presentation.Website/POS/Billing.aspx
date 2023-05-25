@@ -1270,6 +1270,9 @@
                     $("#ContentPlaceHolder1_txtRemarks").val("");
                 }
                 $("#ContentPlaceHolder1_txtSubject").val("");
+                $("#ContentPlaceHolder1_txtCustomerName").val("");
+                $("#ContentPlaceHolder1_txtCustomerMobile").val("");
+                $("#ContentPlaceHolder1_txtCustomerAddress").val("");
 
                 PaymentCalculation(0);
                 if ($("#CompanyInfoDialog").is(":visible")) {
@@ -3075,6 +3078,8 @@
             if ($("#ContentPlaceHolder1_hfCompanyId").val() != "") {
                 $("#lblCompanyName").text($("#txtSearchCompany").val());
                 $("#ContentPlaceHolder1_txtCustomerName").val($("#txtSearchCompany").val());
+                //$("#ContentPlaceHolder1_txtCustomerMobile").val($("#txtSearchContact").val());
+                //$("#ContentPlaceHolder1_txtCustomerAddress").val($("#txtCompanyAddress").val());
             }
             $("#CompanyInfoDialog").dialog('close');
             $("#txtCompanyPayment").focus();

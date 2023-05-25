@@ -24,8 +24,8 @@ namespace HotelManagement.Entity.Restaurant
         public int StyleId { get; set; }
         public string StyleName { get; set; }
         public int BagQuantity { get; set; }
-        public int BagWeight { get; set; }
-        public int NoOfBag { get; set; }
+        public decimal BagWeight { get; set; }
+        public decimal NoOfBag { get; set; }
         public decimal kgQuantity { get; set; }
         public decimal ItemUnit { get; set; }
         public decimal UnitRate { get; set; }
