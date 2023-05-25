@@ -19,6 +19,8 @@ TRUNCATE TABLE HotelRoomReservation
 TRUNCATE TABLE HotelRoomReservationDetail
 TRUNCATE TABLE HotelRoomReservationRoomDetail
 TRUNCATE TABLE HotelRoomReservationSummary
+TRUNCATE TABLE HotelGroupRoomReservation
+TRUNCATE TABLE HotelGroupRoomReservationDetails
 TRUNCATE TABLE HotelOnlineRoomReservation
 TRUNCATE TABLE HotelOnlineRoomReservationDetail
 TRUNCATE TABLE HotelRoomStatusHistory

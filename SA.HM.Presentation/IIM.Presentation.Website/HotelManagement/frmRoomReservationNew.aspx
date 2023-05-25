@@ -55,6 +55,13 @@
 
             $("#ContentPlaceHolder1_txtDateOut").datepicker("option", {
                 minDate: minCheckOutDate
+            });            
+
+            $("#ContentPlaceHolder1_ddlGroupName").select2({
+                tags: "true",
+                placeholder: "Select an option",
+                allowClear: true,
+                width: "99.75%"
             });
 
             $("#ContentPlaceHolder1_ddlSrcReferenceId").select2({
@@ -445,7 +452,7 @@
                     $('#<%=ddlGuestSex.ClientID%>').val("Female");
                 }
 
-}
+            }
             function AutoGuestGenderLoadInfo() {
                 var titleGuestSex = $('#<%=ddlGuestTitle.ClientID%>').val();
                 if (titleGuestSex == "Mr.") {
@@ -466,7 +473,7 @@
                 else {
                     $('#<%=ddlGuestSex.ClientID%>').val("Female");
                 }
-}
+            }
 
             function OnLoadConversionRateSucceeded(result) {
                 if ($("#<%=hfCurrencyType.ClientID %>").val() == "Local") {
@@ -1147,7 +1154,7 @@
                         $('#<%=ddlGuestSex.ClientID%>').val("Female");
                     }
 
-        $("#<%=ddlGuestCountry.ClientID %>").val($('#<%=ddlCountry.ClientID%>').val());
+                    $("#<%=ddlGuestCountry.ClientID %>").val($('#<%=ddlCountry.ClientID%>').val());
                     var countryId = $("#<%=ddlGuestCountry.ClientID %>").val();
                     if (countryId > 0) {
                         PageMethods.GetNationality(countryId, OnCountrySucceeded, OnCountryFailed);
@@ -2756,18 +2763,18 @@
                     show: 'slide'
                 });
             }
-        return false;
-    }
+            return false;
+        }
 
-    // Room Select
-    function LoadRoomNumber() {
-        var txtFromDate = $("#<%=txtDateIn.ClientID %>").val();
-            var txtToDate = $("#<%=txtDateOut.ClientID %>").val();
+        // Room Select
+        function LoadRoomNumber() {
+            var txtFromDate = $("#<%=txtDateIn.ClientID %>").val();
+        var txtToDate = $("#<%=txtDateOut.ClientID %>").val();
 
-            if (txtFromDate == "") {
-                //CustomAlert('The Check-In Date should not be empty.', 'Check In', 'Ok')
-                toastr.warning('The Check-In Date should not be empty.');
-                document.getElementById("<%=txtDateIn.ClientID%>").focus();
+        if (txtFromDate == "") {
+            //CustomAlert('The Check-In Date should not be empty.', 'Check In', 'Ok')
+            toastr.warning('The Check-In Date should not be empty.');
+            document.getElementById("<%=txtDateIn.ClientID%>").focus();
                 return false;
             }
             else if (txtToDate == "") {
@@ -2781,22 +2788,22 @@
                 return false;
             }
 
-        LoadRoomInformationWithControl();
-        $("#DivRoomSelect").dialog({
-            width: 250,
-            height: 400,
-            autoOpen: true,
-            modal: true,
-            closeOnEscape: true,
-            resizable: false,
-            fluid: true,
-            title: "Room Number",
-            show: 'slide'
-        });
-        return false;
-    }
-    function LoadRoomInformationWithControl() {
-        var RoomTypeId = $("#<%=ddlRoomTypeId.ClientID %>").val();
+            LoadRoomInformationWithControl();
+            $("#DivRoomSelect").dialog({
+                width: 250,
+                height: 400,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: true,
+                resizable: false,
+                fluid: true,
+                title: "Room Number",
+                show: 'slide'
+            });
+            return false;
+        }
+        function LoadRoomInformationWithControl() {
+            var RoomTypeId = $("#<%=ddlRoomTypeId.ClientID %>").val();
 
         var txtFromDate = $("#<%=txtDateIn.ClientID %>").val();
         var txtToDate = $("#<%=txtDateOut.ClientID %>").val();
@@ -2805,41 +2812,41 @@
         $("#<%=DateOutHiddenField.ClientID %>").val(txtToDate);
         $("#<%=hfCurrencyHiddenField.ClientID %>").val($("#ContentPlaceHolder1_ddlCurrency").val());
 
-        PageMethods.LoadRoomInformationWithControl(RoomTypeId, txtFromDate, txtToDate, OnLoadRoomInformationWithControlSucceeded, OnLoadRoomInformationWithControlFailed);
+            PageMethods.LoadRoomInformationWithControl(RoomTypeId, txtFromDate, txtToDate, OnLoadRoomInformationWithControlSucceeded, OnLoadRoomInformationWithControlFailed);
 
-        return false;
-    }
-    function OnLoadRoomInformationWithControlSucceeded(result) {
-        $("#ltlRoomNumberInfo").html(result);
-
-        var RoomIdList = "";
-
-        if (editedRow != "" && $("#ContentPlaceHolder1_hfSelectedRoomId").val() == "") {
-            RoomIdList = $.trim($(editedRow).find("td:eq(5)").text());
+            return false;
         }
-        else {
-            RoomIdList = $("#ContentPlaceHolder1_hfSelectedRoomId").val();
-        }
+        function OnLoadRoomInformationWithControlSucceeded(result) {
+            $("#ltlRoomNumberInfo").html(result);
 
-        if (RoomIdList.length > 0) {
-            var RoomArray = RoomIdList.split(",");
+            var RoomIdList = "";
 
-            if (RoomArray.length > 0) {
-                for (var i = 0; i < RoomArray.length; i++) {
-                    var roomId = RoomArray[i].trim();
-                    $("#" + roomId).attr("checked", true);
+            if (editedRow != "" && $("#ContentPlaceHolder1_hfSelectedRoomId").val() == "") {
+                RoomIdList = $.trim($(editedRow).find("td:eq(5)").text());
+            }
+            else {
+                RoomIdList = $("#ContentPlaceHolder1_hfSelectedRoomId").val();
+            }
+
+            if (RoomIdList.length > 0) {
+                var RoomArray = RoomIdList.split(",");
+
+                if (RoomArray.length > 0) {
+                    for (var i = 0; i < RoomArray.length; i++) {
+                        var roomId = RoomArray[i].trim();
+                        $("#" + roomId).attr("checked", true);
+                    }
                 }
             }
+
+            return false;
+        }
+        function OnLoadRoomInformationWithControlFailed(error) {
+            toastr.error(error.get_message());
         }
 
-        return false;
-    }
-    function OnLoadRoomInformationWithControlFailed(error) {
-        toastr.error(error.get_message());
-    }
-
-    function ShowRoomNumberAndId() {
-        var ids = $("#<%=hfSelectedRoomId.ClientID %>").val();
+        function ShowRoomNumberAndId() {
+            var ids = $("#<%=hfSelectedRoomId.ClientID %>").val();
 
         var numbers = $("#<%=hfSelectedRoomNumbers.ClientID %>").val();
         var addedRoom = $("#<%=lblAddedRoomNumber.ClientID %>").val()
@@ -2880,51 +2887,51 @@
         var roomLength = roomsArray.length;
         $("#<%=hfSelectedRoomId.ClientID %>").val(roomIdFlag);
         $("#<%=txtRoomId.ClientID %>").val(roomLength);
-    }
-
-    function RemoveFirstCommas(flag) {
-        var length = flag.length;
-        var Index = 0;
-        for (var j = 0; j < length; j++) {
-            if (flag.charAt(j) == '0' || flag.charAt(j) == '1' || flag.charAt(j) == '2' || flag.charAt(j) == '3' || flag.charAt(j) == '4' || flag.charAt(j) == '5' || flag.charAt(j) == '6' || flag.charAt(j) == '7' || flag.charAt(j) == '8' || flag.charAt(j) == '9') {
-                Index = j;
-                break;
-            }
         }
-        flag = flag.substring(Index, length - Index);
 
-        return flag;
-    }
-    function RomoveLastCommas(flag) {
-        var length = flag.length;
-        var Index = 0;
-        var lastIndex = flag.lastIndexOf(',');
-        flag = flag.substring(0, length - (length - lastIndex));
-        return flag;
-    }
-    function ClearRoomNumberAndId() {
-        $("#<%=hfSelectedRoomNumbers.ClientID %>").val('');
+        function RemoveFirstCommas(flag) {
+            var length = flag.length;
+            var Index = 0;
+            for (var j = 0; j < length; j++) {
+                if (flag.charAt(j) == '0' || flag.charAt(j) == '1' || flag.charAt(j) == '2' || flag.charAt(j) == '3' || flag.charAt(j) == '4' || flag.charAt(j) == '5' || flag.charAt(j) == '6' || flag.charAt(j) == '7' || flag.charAt(j) == '8' || flag.charAt(j) == '9') {
+                    Index = j;
+                    break;
+                }
+            }
+            flag = flag.substring(Index, length - Index);
+
+            return flag;
+        }
+        function RomoveLastCommas(flag) {
+            var length = flag.length;
+            var Index = 0;
+            var lastIndex = flag.lastIndexOf(',');
+            flag = flag.substring(0, length - (length - lastIndex));
+            return flag;
+        }
+        function ClearRoomNumberAndId() {
+            $("#<%=hfSelectedRoomNumbers.ClientID %>").val('');
 
         $("#<%=hfSelectedRoomId.ClientID %>").val('');
         $("#<%=hfSelectedRoomReservedId.ClientID %>").val('');
         $("#<%=lblAddedRoomNumber.ClientID %>").text('')
-        $("#ContentPlaceHolder1_txtRoomId").val('');
-        $("#ltlRoomNumberInfo").html('');
-        $('#DivAddedRoom').hide();
-    }
+            $("#ContentPlaceHolder1_txtRoomId").val('');
+            $("#ltlRoomNumberInfo").html('');
+            $('#DivAddedRoom').hide();
+        }
 
-    function ClearRommTypeAfterAdded() {
-        $("#ContentPlaceHolder1_ddlRoomTypeId").val('0');
-        $("#ContentPlaceHolder1_txtUnitPrice").val("");
-        $("#ContentPlaceHolder1_txtRoomRate").val("");
-        $("#ContentPlaceHolder1_txtPaxQuantity").val("");
-        $("#ContentPlaceHolder1_txtServiceCharge").val("");
-        $("#ContentPlaceHolder1_txtVatAmount").val("");
-        $("#ContentPlaceHolder1_txtCityCharge").val("");
-        $("#ContentPlaceHolder1_txtAdditionalCharge").val("");
-        $("#ContentPlaceHolder1_txtTotalRoomRate").val("");
+        function ClearRommTypeAfterAdded() {
+            $("#ContentPlaceHolder1_ddlRoomTypeId").val('0');
+            $("#ContentPlaceHolder1_txtUnitPrice").val("");
+            $("#ContentPlaceHolder1_txtRoomRate").val("");
+            $("#ContentPlaceHolder1_txtPaxQuantity").val("");
+            $("#ContentPlaceHolder1_txtServiceCharge").val("");
+            $("#ContentPlaceHolder1_txtVatAmount").val("");
+            $("#ContentPlaceHolder1_txtCityCharge").val("");
+            $("#ContentPlaceHolder1_txtAdditionalCharge").val("");
+            $("#ContentPlaceHolder1_txtTotalRoomRate").val("");
 
-        var ctrl = '#<%=chkIsLitedCompany.ClientID%>'
+            var ctrl = '#<%=chkIsLitedCompany.ClientID%>'
 
         if ($(ctrl).is(':checked')) {
             var companyId = $("#<%=ddlCompanyName.ClientID %>").val();
@@ -3927,9 +3934,12 @@
                 }
             }
             else if (reservedMode == "Group") {
-                if ($("#ContentPlaceHolder1_txtGroupName").val() == "") {
-                    toastr.warning("Please Provide Group Name.");
-                    $("#ContentPlaceHolder1_txtGroupName").focus();
+                //if ($("#ContentPlaceHolder1_txtGroupName").val() == "") {
+                var groupMasterId = $("#ContentPlaceHolder1_ddlGroupName").val();
+                if (groupMasterId == "0") {
+                    toastr.warning("Please Select Group Name.");
+                    //$("#ContentPlaceHolder1_txtGroupName").focus();
+                    $("#ContentPlaceHolder1_ddlGroupName").focus();
                     document.getElementById("ContentPlaceHolder1_btnSave").disabled = false;
                     return false;
                 }
@@ -4137,7 +4147,9 @@
             }
             else if (reservedMode == "Group") {
                 isListedCompany = false;
-                companyId = "0";
+                //companyId = "0";
+                companyId = $("#ContentPlaceHolder1_ddlGroupName").val();
+                $("#ContentPlaceHolder1_txtGroupName").val($("#<%=ddlGroupName.ClientID %> option:selected").text());
                 reservedCompany = $("#ContentPlaceHolder1_txtGroupName").val();
                 paymentMode = "Self";
             }
@@ -4290,8 +4302,6 @@
             var RoomReservationSummary = new Array();
 
             var cbServiceChargeVal, cbCityChargeVal, cbVatAmountVal, cbAdditionalChargeVal, totalRoomRate;
-
-
 
             $("#ReservationRoomGrid tbody tr").each(function () {
                 roomType = $.trim($(this).find("td:eq(0)").text());
@@ -4532,7 +4542,7 @@
 
         function OnSaveReservationSucceed(result) {
             document.getElementById("ContentPlaceHolder1_btnSave").disabled = false;
-           
+
             if (result.IsSuccess) {
                 $("#ContentPlaceHolder1_hfIsSaveRUpdate").val(result.Pk);
                 $("#ContentPlaceHolder1_hfAPId").val("");
@@ -4867,10 +4877,10 @@
                         $("#ContentPlaceHolder1_txtPassportNumber").focus();
                         return;
                     }
-                        //else if (passIssuePlace == "") {
-                        //    toastr.warning("Please Provide Passport Issue Place.");
-                        //    return;
-                        //}
+                    //else if (passIssuePlace == "") {
+                    //    toastr.warning("Please Provide Passport Issue Place.");
+                    //    return;
+                    //}
                     else if (passIssueDate == "") {
                         toastr.warning("Please Provide Passport Issue Date.");
                         $("#ContentPlaceHolder1_txtPIssueDate").focus();
@@ -4896,8 +4906,8 @@
                             return;
                         }
                     }
-}
-    var dob = $("#<%=txtGuestDOB.ClientID %>").val();
+                }
+                var dob = $("#<%=txtGuestDOB.ClientID %>").val();
                 var address = $("#<%=txtGuestAddress2.ClientID %>").val();
                 var phoneNo = $("#<%=txtGuestPhone.ClientID %>").val();
 
@@ -5946,7 +5956,11 @@
                             <label for="GroupName" class="control-label col-md-2 required-field">
                                 Group Name</label>
                             <div class="col-md-10">
-                                <asp:TextBox ID="txtGroupName" runat="server" CssClass="form-control" TabIndex="11"></asp:TextBox>
+                                <asp:DropDownList ID="ddlGroupName" runat="server" CssClass="form-control" AutoPostBack="false">
+                                </asp:DropDownList>
+                                <div style="display: none;">
+                                    <asp:TextBox ID="txtGroupName" runat="server" CssClass="form-control" TabIndex="11"></asp:TextBox>
+                                </div>
                             </div>
                         </div>
                         <div id="CompanyInformation" style="display: none;">
@@ -6323,7 +6337,7 @@
                                     <asp:DropDownList ID="ddlIsComplementary" runat="server" CssClass="form-control" TabIndex="65">
                                         <asp:ListItem Value="0">Non Complementary</asp:ListItem>
                                         <asp:ListItem Value="1">Complementary</asp:ListItem>
-                                    </asp:DropDownList>                                    
+                                    </asp:DropDownList>
                                 </div>
                             </div>
                         </div>
@@ -7724,12 +7738,12 @@
                 $("#<%=ddlRoomTypeId.ClientID %>").val(rcRoomTypeId);
                 RoomDetailsByRoomTypeId(rcRoomTypeId);
                 PerformFillFormActionByTypeId($('#<%=ddlRoomTypeId.ClientID%>').val());
-                    UpdateTotalCostWithDiscount();
-                    ClearRoomNumberAndId();
-                }
+                UpdateTotalCostWithDiscount();
+                ClearRoomNumberAndId();
+            }
         });
 
-            if ($('#<%=hfIsServiceChargeEnableConfig.ClientID%>').val() == "0") {
+        if ($('#<%=hfIsServiceChargeEnableConfig.ClientID%>').val() == "0") {
             $('#ServiceChargeLabel').hide();
             $('#ServiceChargeControl').hide();
             $('#rrcServiceChargeDiv').hide();

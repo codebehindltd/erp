@@ -4678,5 +4678,33 @@ namespace HotelManagement.Data.HotelManagement
 
             return status;
         }
+        public List<RoomReservationBillBO> GetGroupRoomReservationInfo()
+        {
+            List<RoomReservationBillBO> roomReservationList = new List<RoomReservationBillBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGroupRoomReservationInfo_SP"))
+                {
+                    DataSet reservationDS = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, reservationDS, "Reservation");
+                    DataTable Tabel = reservationDS.Tables["Reservation"];
+
+                    roomReservationList = Tabel.AsEnumerable().Select(r => new RoomReservationBillBO
+                    {
+                        GroupMasterId = r.Field<long>("Id"),
+                        ReservationNumber = r.Field<string>("ReservationNumber"),
+                        ReservationDateDisplay = r.Field<string>("ReservationDateDisplay"),
+                        GroupName = r.Field<string>("GroupName"),
+                        CheckInDateDisplay = r.Field<string>("CheckInDateDisplay"),
+                        CheckOutDateDisplay = r.Field<string>("CheckOutDateDisplay"),
+                        ReservationDetails = r.Field<string>("ReservationDetails"),
+                        GroupDescription = r.Field<string>("GroupDescription")
+                    }).ToList();
+                }
+
+                return roomReservationList;
+            }
+        }
     }
 }
