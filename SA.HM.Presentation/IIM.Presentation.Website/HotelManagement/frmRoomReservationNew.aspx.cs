@@ -53,7 +53,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             CheckMandatoryField();
 
             if (!IsPostBack)
-            {                
+            {
                 IsReservationStatusWaitingEnable();
                 CheckObjectPermission();
                 LoadGroupReservationInfo();
@@ -418,10 +418,18 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 ImageButton imageActive = (ImageButton)e.Row.FindControl("imageActive");
                 ImageButton imgBillPreview = (ImageButton)e.Row.FindControl("ImgBillPreview");
                 ImageButton imgPreRegistrationCard = (ImageButton)e.Row.FindControl("ImgPreRegistrationCard");
-                ImageButton imgBillPreviewForMultiplePickUpDrop = (ImageButton)e.Row.FindControl("ImgBillPreviewForMultiplePickUpDrop");
+                ImageButton imgBillPreviewForMultiplePickUpDrop = (ImageButton)e.Row.FindControl("ImgBillPreviewForMultiplePickUpDrop");                
                 ImageButton imgRoomCurrentStatus = (ImageButton)e.Row.FindControl("ImgRoomCurrentStatus");
                 Label lblReservationStatusInfo = (Label)e.Row.FindControl("lblReservationStatusInfo");
                 Label lblPickUpDropStatusInfo = (Label)e.Row.FindControl("lblPickUpDropStatusInfo");
+                
+                Label lblGroupMasterId = (Label)e.Row.FindControl("lblGroupMasterId");
+                ImageButton imgGroupReservationLetter = (ImageButton)e.Row.FindControl("ImgGroupReservationLetter");
+                imgGroupReservationLetter.Visible = true;
+                if (lblGroupMasterId.Text == "0")
+                {
+                    imgGroupReservationLetter.Visible = false;
+                }
 
                 imgUpdate.Visible = isUpdatePermission;
                 imgChangeStatus.Visible = isDeletePermission;
@@ -4015,7 +4023,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 {
                     DateTime yeasterDayDateTime = DateTime.Now.Date.AddDays(-1);
                     DateTime CheckInDate = RoomReservation.DateIn;
-                    
+
                     if (RoomReservation.ReservationId != 0)// update old
                     {
                         if (!string.IsNullOrWhiteSpace(RoomReservation.DateInFieldEdit))
@@ -4149,7 +4157,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(),
                                             EntityTypeEnum.EntityType.RoomReservation.ToString(), RoomReservation.ReservationId,
                                             ProjectModuleEnum.ProjectModule.FrontOffice.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.RoomReservation), out activityId);
-                        
+
                         // // // activity log details related process
                         logDA.LogDetails(ConstantHelper.FOActivityLogFormName.frmRoomReservationNew, previousData, RoomReservation, activityId);
 
@@ -4193,7 +4201,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             }
 
             return rtnInfo;
-        }       
+        }
         [WebMethod(EnableSession = true)]
         public static string SaveGuestInformationAsDetail(string reservationId, int prevGuestId, string isEdit, int IsEditFromAddMore, string title, string firstName, string lastName, string txtGuestName, string txtGuestEmail, string hiddenGuestId, string txtGuestDrivinlgLicense, string txtGuestDOB, string txtGuestAddress1, string txtGuestAddress2, string ddlProfessionId, string txtGuestCity, string ddlGuestCountry, string txtGuestNationality, string txtGuestPhone, string ddlGuestSex, string txtGuestZipCode, string txtNationalId, string txtPassportNumber, string txtPExpireDate, string txtPIssueDate, string txtPIssuePlace, string txtVExpireDate, string txtVisaNumber, string txtVIssueDate, int roomId, string selectedPreferenceId, int classificationId, string additionalRemarks)
         {
@@ -4968,7 +4976,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             List<RoomAvailableStatusBO> avalibleRoomList = new List<RoomAvailableStatusBO>();
             HMCommonDA hmCommonDA = new HMCommonDA();
-            
+
             availableRoomQty = hmCommonDA.GetRoomAvailableQuantity(reservationId, startDate, endDate, RoomTypeId, roomQuantityEntered);
             return availableRoomQty.ToString();
         }
@@ -5106,7 +5114,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             HTML = GetHTMLGuestReferenceGridView(guestReferenceList);
 
             return HTML;
-        }        
+        }
         [WebMethod]
         public static string LoadGuestPreferences(int guestId)
         {
@@ -5178,7 +5186,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 throw ex;
             }
             return returnInfo;
-        }        
+        }
         [WebMethod]
         public static bool IsCanCancelReservation(int reservationId)
         {
@@ -5201,6 +5209,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             ContactInformationDA contactInformationDA = new ContactInformationDA();
             contactInformationList = contactInformationDA.GetContactInformationByCompanyIdNSearchTextForAutoComplete(companyId, searchText);
             return contactInformationList;
-        }        
+        }
     }
 }

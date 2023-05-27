@@ -5600,9 +5600,12 @@
         function OnFailCancelOrActiveReservation(error) {
             toastr.error(error.get_message());
         }
-
-
-
+        function PerformBillPreviewAction(reservationId) {
+            var reportType = "room";
+            var url = "/HotelManagement/Reports/frmReportGroupReservationBillInfo.aspx?rt=" + reportType + "&rid=" + reservationId;
+            var popup_window = "Print Preview";
+            window.open(url, popup_window, "width=745,height=780,left=300,top=50,location=no,toolbar=no,menubar=no,resizable=yes, scrollbars=1");
+        }
     </script>
     <asp:HiddenField ID="hfInclusiveHotelManagementBill" runat="server" />
     <asp:HiddenField ID="hfCurrencyType" runat="server" />
@@ -7058,6 +7061,11 @@
                                     <asp:Label ID="lblPickUpDropStatusInfo" runat="server" Text='<%#Eval("PickUpDropCount") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:TemplateField HeaderText="GroupMasterId" Visible="False">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblGroupMasterId" runat="server" Text='<%#Eval("GroupMasterId") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Action" ShowHeader="False" ItemStyle-Width="28%">
                                 <ItemTemplate>
                                     <asp:ImageButton ID="imageActive" ToolTip="Reservation Active" AlternateText="Reservation Active"
@@ -7079,12 +7087,15 @@
                                     &nbsp;<asp:ImageButton ID="ImgBillPreview" runat="server" CausesValidation="False"
                                         CommandArgument='<%# bind("ReservationId") %>' CommandName="CmdBillPreview" ImageUrl="~/Images/ReportDocument.png"
                                         Text="" AlternateText="Reservation Letter" ToolTip="Reservation Letter" />
+                                    &nbsp;<asp:ImageButton ID="ImgGroupReservationLetter" runat="server" CausesValidation="False"
+                                        CommandName="CmdDetails" CommandArgument='<%# bind("GroupMasterId") %>' OnClientClick='<%#String.Format("return PerformBillPreviewAction({0})", Eval("GroupMasterId")) %>'
+                                        ImageUrl="~/Images/ReportDocument.png" Text="" AlternateText="Group Reservation Letter" ToolTip="Group Reservation Letter" />
                                     &nbsp;<asp:ImageButton ID="ImgPreRegistrationCard" runat="server" CausesValidation="False"
                                         CommandArgument='<%# bind("ReservationId") %>' CommandName="CmdPreRegistrationCard" ImageUrl="~/Images/ReportDocument.png"
                                         Text="" AlternateText="Pre Registration Card" ToolTip="Pre Registration Card" />
-                                    <asp:ImageButton ID="ImgBillPreviewForMultiplePickUpDrop" runat="server" CausesValidation="False"
+                                    &nbsp;<asp:ImageButton ID="ImgBillPreviewForMultiplePickUpDrop" runat="server" CausesValidation="False"
                                         CommandName="CmdDetails" CommandArgument='<%# bind("ReservationId") %>' OnClientClick='<%#String.Format("return MultiplePickUpDropInfo({0})", Eval("ReservationId")) %>'
-                                        ImageUrl="~/Images/detailsInfo.png" Text="" AlternateText="Details" ToolTip="Bill Preview" />
+                                        ImageUrl="~/Images/detailsInfo.png" Text="" AlternateText="Details" ToolTip="Bill Preview" />                                    
                                 </ItemTemplate>
                                 <ControlStyle Font-Size="Small" />
                                 <HeaderStyle HorizontalAlign="Center" />

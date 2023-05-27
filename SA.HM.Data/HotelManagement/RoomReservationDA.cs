@@ -2987,6 +2987,7 @@ namespace HotelManagement.Data.HotelManagement
                                 roomreservationDetail.ReservationMode = reader["ReservationMode"].ToString();
                                 roomreservationDetail.CompanyName = reader["CompanyName"].ToString();
                                 roomreservationDetail.RoomInformation = reader["RoomInformation"].ToString();
+                                roomreservationDetail.GroupMasterId = Convert.ToInt64(reader["GroupMasterId"]);
                                 roomreservationList.Add(roomreservationDetail);
                             }
                         }
