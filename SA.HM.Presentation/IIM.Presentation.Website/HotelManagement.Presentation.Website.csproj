@@ -859,6 +859,7 @@
     <Content Include="Inventory\Reports\Rdlc\rptProductReceiveSummaryInfoByItem.rdlc" />
     <Content Include="Inventory\Reports\Rdlc\rptProductReceiveDetailsInfoByItem.rdlc" />
     <Content Include="HotelManagement\Reports\Rdlc\rptGroupReservationConfirmationLetter.rdlc" />
+    <Content Include="Banquet\Reports\Rdlc\RptReportReservationKitchenSheet.rdlc" />
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />

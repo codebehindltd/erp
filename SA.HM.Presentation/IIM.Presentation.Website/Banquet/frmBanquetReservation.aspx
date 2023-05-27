@@ -1736,7 +1736,8 @@
                 }
 
                 if (gridObject.EventType != "Internal") {
-                    tr += "&nbsp&nbsp<img src='../Images/ReportDocument.png' onClick= \"javascript:return PerformBillPreview('" + gridObject.Id + "')\" alt='Delete Information' text='Report' border='0' />";
+                    tr += "&nbsp&nbsp<img src='../Images/ReportDocument.png' onClick= \"javascript:return PerformBillPreview('" + gridObject.Id + "')\" tooltip='Bill Preview' alt='Bill Preview' text='Report' border='0' />";
+                    tr += "&nbsp&nbsp<img src='../Images/ReportDocument.png' onClick= \"javascript:return PerformPartySheetPreview('" + gridObject.Id + "')\" tooltip='Party Sheet' alt='Party Sheet' text='Report' border='0' />";
                 }
                 tr += "</td>";
                 tr += "</tr>"
@@ -1760,6 +1761,12 @@
         function PerformBillPreview(reservationId) {
             var isPreview = true;
             var url = "/Banquet/Reports/frmReportReservationConLatter.aspx?ReservationId=" + reservationId + "&isPreview=" + isPreview;
+            var popup_window = "Print Preview";
+            window.open(url, popup_window, "width=790,height=780,left=300,top=50,resizable=yes");
+        }
+        function PerformPartySheetPreview(reservationId) {
+            var isPreview = true;
+            var url = "/Banquet/Reports/frmReportReservationConLatter.aspx?ps=1&ReservationId=" + reservationId + "&isPreview=" + isPreview;
             var popup_window = "Print Preview";
             window.open(url, popup_window, "width=790,height=780,left=300,top=50,resizable=yes");
         }

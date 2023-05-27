@@ -44,12 +44,22 @@ namespace HotelManagement.Presentation.Website.Banquet.Reports
         {
             try
             {
+                string queryPSString = Request.QueryString["ps"];
+
                 rvTransaction.LocalReport.DataSources.Clear();
                 rvTransaction.ProcessingMode = ProcessingMode.Local;
                 rvTransaction.LocalReport.EnableExternalImages = true;
 
                 var reportPath = "";
-                reportPath = Server.MapPath(@"~/Banquet/Reports/Rdlc/RptReportReservationConLatter.rdlc");
+                if (queryPSString == "1")
+                {
+                    reportPath = Server.MapPath(@"~/Banquet/Reports/Rdlc/RptReportReservationKitchenSheet.rdlc");
+                }
+                else
+                {
+                    reportPath = Server.MapPath(@"~/Banquet/Reports/Rdlc/RptReportReservationConLatter.rdlc");
+                }
+
 
                 if (!File.Exists(reportPath))
                     return;
@@ -141,7 +151,16 @@ namespace HotelManagement.Presentation.Website.Banquet.Reports
                 var reportDataSet = rvTransaction.LocalReport.GetDataSourceNames();
 
                 rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataSet[0], BanquetReservationBill));
-                rvTransaction.LocalReport.DisplayName = "Banquet Confirmation Letter";
+                
+                if (queryPSString == "1")
+                {
+                    rvTransaction.LocalReport.DisplayName = "Banquet Party Sheet";
+                }
+                else
+                {
+                    rvTransaction.LocalReport.DisplayName = "Banquet Confirmation Letter";
+                }
+
                 rvTransaction.LocalReport.Refresh();
                 bool isPreview = Convert.ToBoolean(Request.QueryString["isPreview"]);
                 if (!isPreview)
