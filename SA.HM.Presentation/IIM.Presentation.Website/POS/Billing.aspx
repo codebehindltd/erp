@@ -3418,7 +3418,8 @@
         //}
 
         function ClosePrintDialog() {
-            window.location = "/POS/frmBillSearch.aspx";
+            var costCenterId = Request.QueryString["cid"]
+            window.location = "/POS/frmBillSearch.aspx?cid=" + costCenterId;
         }
 
         function EditBill() {
@@ -4297,7 +4298,7 @@
                                     <th style="width: 20%;">Item Name</th>
                                     <th id="stockARMCol" style="width: 10%;">Stock</th>
                                     <th id="stockByARMCol" style="width: 10%;">Stock By</th>
-                                    <th style="width: 8%;">Bag Waight</th>
+                                    <th style="width: 8%;">Bag Weight</th>
                                     <th style="width: 8%;">Bag</th>
                                     <th style="width: 8%;">Quantity</th>
                                     <th style="width: 12%;">Unit Price</th>
