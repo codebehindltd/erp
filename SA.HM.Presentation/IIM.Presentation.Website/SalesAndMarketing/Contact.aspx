@@ -1125,12 +1125,14 @@
 
         function CheckSaveUnderCompany() {
             if ($("#ContentPlaceHolder1_chkIsSaveUnderCompany").is(":checked")) {
+                $("#<%=txtCompanyName.ClientID %>").val("");
                 $("#companyDiv").show("slow");
                 $("#emailWork").show("slow");
                 $("#<%=ddlLifeCycleStageId.ClientID %>").prop('disabled', true);
 
             }
             else {
+                $("#<%=txtCompanyName.ClientID %>").val("");
                 $("#companyDiv").hide("slow");
                 $("#emailWork").hide("slow");
                 $("#<%=ddlLifeCycleStageId.ClientID %>").val($("#ContentPlaceHolder1_hfLifeCycleStageId").val()).trigger('change');

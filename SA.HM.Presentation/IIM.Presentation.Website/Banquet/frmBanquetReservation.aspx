@@ -1710,7 +1710,7 @@
 
                 tr += "<td align='left' style=\"width:10%; cursor:pointer;\">" + gridObject.ReservationNumber + "</td>";
                 tr += "<td align='left' style=\"width:10%; cursor:pointer;\">" + gridObject.EventType + "</td>";
-                tr += "<td align='left' style=\"width:35%; cursor:pointer;\">" + gridObject.Name + "</td>";
+                tr += "<td align='left' style=\"width:30%; cursor:pointer;\">" + gridObject.Name + "</td>";
                 tr += "<td align='left' style=\"width:25%; cursor:pointer;\">" + gridObject.ContactEmail + "</td>";
 
                 if (gridObject.IsBillSettlement == true) {
@@ -1720,7 +1720,7 @@
                     tr += "<td align='left' style=\"width:10%; cursor:pointer;\">" + gridObject.Status + "</td>";
                 }
 
-                tr += "<td align='center' style=\"width:10%; cursor:pointer;\">";
+                tr += "<td align='center' style=\"width:15%; cursor:pointer;\">";
 
                 if (gridObject.IsBillSettlement == false) {
 
@@ -2567,10 +2567,10 @@
                             <colgroup>
                                 <col style="width: 10%;" />
                                 <col style="width: 10%;" />
-                                <col style="width: 35%;" />                                
+                                <col style="width: 30%;" />                                
                                 <col style="width: 25%;" />
                                 <col style="width: 10%;" />
-                                <col style="width: 10%;" />
+                                <col style="width: 15%;" />
                             </colgroup>
                             <thead>
                                 <tr style="color: White; background-color: #44545E; font-weight: bold;">                                    

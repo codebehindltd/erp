@@ -5600,9 +5600,9 @@
         function OnFailCancelOrActiveReservation(error) {
             toastr.error(error.get_message());
         }
-        function PerformBillPreviewAction(reservationId) {
+        function PerformGroupBillPreviewAction(groupMasterId) {
             var reportType = "room";
-            var url = "/HotelManagement/Reports/frmReportGroupReservationBillInfo.aspx?rt=" + reportType + "&rid=" + reservationId;
+            var url = "/HotelManagement/Reports/frmReportGroupReservationBillInfo.aspx?rt=" + reportType + "&gmid=" + groupMasterId;
             var popup_window = "Print Preview";
             window.open(url, popup_window, "width=745,height=780,left=300,top=50,location=no,toolbar=no,menubar=no,resizable=yes, scrollbars=1");
         }
@@ -7017,7 +7017,7 @@
                                     <asp:Label ID="lblid" runat="server" Text='<%#Eval("ReservationId") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="ReservationNumber" HeaderText="Reserv. No." ItemStyle-Width="10%">
+                            <asp:BoundField DataField="ReservationNumber" HeaderText="Reserv. No." ItemStyle-Width="9%">
                                 <HeaderStyle HorizontalAlign="Left" />
                                 <ItemStyle HorizontalAlign="Left" />
                             </asp:BoundField>
@@ -7040,14 +7040,14 @@
                                 <HeaderStyle HorizontalAlign="Left" />
                                 <ItemStyle HorizontalAlign="Left" />
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Check Out" ItemStyle-Width="9%" ItemStyle-HorizontalAlign="Left">
+                            <asp:TemplateField HeaderText="Check Out" ItemStyle-Width="8%" ItemStyle-HorizontalAlign="Left">
                                 <ItemTemplate>
                                     <asp:Label ID="lblgvDateOut" runat="server" Text='<%# GetStringFromDateTime(Convert.ToDateTime(Eval("DateOut"))) %>'></asp:Label>
                                 </ItemTemplate>
                                 <HeaderStyle HorizontalAlign="Left" />
                                 <ItemStyle HorizontalAlign="Left" />
                             </asp:TemplateField>
-                            <asp:BoundField DataField="ReservationMode" HeaderText="Status" ItemStyle-Width="8%">
+                            <asp:BoundField DataField="ReservationMode" HeaderText="Status" ItemStyle-Width="7%">
                                 <HeaderStyle HorizontalAlign="Left" />
                                 <ItemStyle HorizontalAlign="Left" />
                             </asp:BoundField>
@@ -7066,7 +7066,7 @@
                                     <asp:Label ID="lblGroupMasterId" runat="server" Text='<%#Eval("GroupMasterId") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Action" ShowHeader="False" ItemStyle-Width="28%">
+                            <asp:TemplateField HeaderText="Action" ShowHeader="False" ItemStyle-Width="31%">
                                 <ItemTemplate>
                                     <asp:ImageButton ID="imageActive" ToolTip="Reservation Active" AlternateText="Reservation Active"
                                         ImageUrl="~/Images/select.png" runat="server" OnClientClick='<%#String.Format("return ActiveReservation({0})", Eval("ReservationId")) %>' />
@@ -7088,7 +7088,7 @@
                                         CommandArgument='<%# bind("ReservationId") %>' CommandName="CmdBillPreview" ImageUrl="~/Images/ReportDocument.png"
                                         Text="" AlternateText="Reservation Letter" ToolTip="Reservation Letter" />
                                     &nbsp;<asp:ImageButton ID="ImgGroupReservationLetter" runat="server" CausesValidation="False"
-                                        CommandName="CmdDetails" CommandArgument='<%# bind("GroupMasterId") %>' OnClientClick='<%#String.Format("return PerformBillPreviewAction({0})", Eval("GroupMasterId")) %>'
+                                        CommandName="CmdDetails" CommandArgument='<%# bind("GroupMasterId") %>' OnClientClick='<%#String.Format("return PerformGroupBillPreviewAction({0})", Eval("GroupMasterId")) %>'
                                         ImageUrl="~/Images/ReportDocument.png" Text="" AlternateText="Group Reservation Letter" ToolTip="Group Reservation Letter" />
                                     &nbsp;<asp:ImageButton ID="ImgPreRegistrationCard" runat="server" CausesValidation="False"
                                         CommandArgument='<%# bind("ReservationId") %>' CommandName="CmdPreRegistrationCard" ImageUrl="~/Images/ReportDocument.png"

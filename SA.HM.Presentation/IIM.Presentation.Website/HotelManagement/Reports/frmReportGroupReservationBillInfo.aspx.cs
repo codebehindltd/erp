@@ -53,7 +53,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             this.Session["CurrentRegistrationId"] = null;
             
             string roomType = Request.QueryString["rt"];
-            string reservationId = Request.QueryString["rid"];
+            string reservationId = Request.QueryString["gmid"];
 
             if (string.IsNullOrEmpty(reservationId))
                 return;
