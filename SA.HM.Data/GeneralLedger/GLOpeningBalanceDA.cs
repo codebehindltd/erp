@@ -102,7 +102,8 @@ namespace HotelManagement.Data.GeneralLedger
                                 {
                                     Id = r.Field<Int64>("Id"),
                                     MasterId = r.Field<Int64>("CompanyMasterId"),
-                                    CompanyId = r.Field<Int32>("TransactionNodeId"),
+                                    //CompanyId = r.Field<Int32>("TransactionNodeId"),
+                                    CompanyId = r.Field<Int32>("CompanyId"),
                                     DrAmount = r.Field<decimal>("DrAmount"),
                                     CrAmount = r.Field<decimal>("CrAmount")
 
@@ -126,7 +127,8 @@ namespace HotelManagement.Data.GeneralLedger
                                 {
                                     Id = r.Field<Int64>("Id"),
                                     MasterId = r.Field<Int64>("SupplierMasterId"),
-                                    SupplierId = r.Field<Int32>("TransactionNodeId"),
+                                    //SupplierId = r.Field<Int32>("TransactionNodeId"),
+                                    SupplierId = r.Field<Int32>("SupplierId"),
                                     DrAmount = r.Field<decimal>("DrAmount"),
                                     CrAmount = r.Field<decimal>("CrAmount")
 
@@ -150,7 +152,8 @@ namespace HotelManagement.Data.GeneralLedger
                                 {
                                     Id = r.Field<Int64>("Id"),
                                     MasterId = r.Field<Int64>("EmployeeMasterId"),
-                                    EmployeeId = r.Field<Int32>("TransactionNodeId"),
+                                    //EmployeeId = r.Field<Int32>("TransactionNodeId"),
+                                    EmployeeId = r.Field<Int32>("EmpId"),
                                     DrAmount = r.Field<decimal>("DrAmount"),
                                     CrAmount = r.Field<decimal>("CrAmount")
 
@@ -174,7 +177,8 @@ namespace HotelManagement.Data.GeneralLedger
                                 {
                                     Id = r.Field<Int64>("Id"),
                                     MasterId = r.Field<Int64>("MemberMasterId"),
-                                    MemberId = r.Field<Int32>("TransactionNodeId"),
+                                    //MemberId = r.Field<Int32>("TransactionNodeId"),
+                                    MemberId = r.Field<Int32>("MemberId"),
                                     DrAmount = r.Field<decimal>("DrAmount"),
                                     CrAmount = r.Field<decimal>("CrAmount")
 
@@ -198,7 +202,8 @@ namespace HotelManagement.Data.GeneralLedger
                                 {
                                     Id = r.Field<Int64>("Id"),
                                     MasterId = r.Field<Int64>("CNFMasterId"),
-                                    CNFId = r.Field<Int32>("TransactionNodeId"),
+                                    //CNFId = r.Field<Int32>("TransactionNodeId"),
+                                    CNFId = r.Field<Int32>("SupplierId"),
                                     DrAmount = r.Field<decimal>("DrAmount"),
                                     CrAmount = r.Field<decimal>("CrAmount")
 

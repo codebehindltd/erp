@@ -275,6 +275,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                                                         string voucherDate, int categoryId, string inventorySearchType, int costCenterId,
                                                                 int locationId, long transactionNodeId = 0, string hierarchy = "")
         {
+            NodeMatrixDA nodeMatrixDA = new NodeMatrixDA();
             List<OpeningBalanceAccountList> chartOfAccountsList = new List<OpeningBalanceAccountList>();
             GLOpeningBalanceView openingBalanceView = new GLOpeningBalanceView();
             List<GLOpeningBalanceTransactionNodeAutoComplete> nodeList = new List<GLOpeningBalanceTransactionNodeAutoComplete>();
@@ -289,10 +290,13 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
 
             if (transactionType == ConstantHelper.GLTransactionType.Accounts.ToString())
             {
-                NodeMatrixDA nodeMatrixDA = new NodeMatrixDA();
-
                 string openingDate = hmUtility.GetUnivarsalDateTimeFromString(voucherDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
-                bool isAlreadyHaveOpening = nodeMatrixDA.AlreadyHaveOpening(openingDate);
+
+                string queryAssets = $@"DECLARE @FiscalYearId INT = 0
+                                    SELECT @FiscalYearId = FiscalYearId FROM GLFiscalYear WHERE ('{openingDate}' BETWEEN FromDate AND ToDate)
+                                    SELECT Id FROM GLOpeningBalance WHERE FiscalYearId = @FiscalYearId AND IsApproved = 1";
+
+                bool isAlreadyHaveOpening = nodeMatrixDA.AlreadyHaveOpening(queryAssets);
 
                 if (isAlreadyHaveOpening)
                 {
@@ -324,6 +328,22 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             }
             else if (transactionType == ConstantHelper.GLTransactionType.Company.ToString())
             {
+                string openingDate = hmUtility.GetUnivarsalDateTimeFromString(voucherDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+
+                string queryAssets = $@"DECLARE @FiscalYearId INT = 0
+                                    SELECT @FiscalYearId = FiscalYearId FROM GLFiscalYear WHERE ('{openingDate}' BETWEEN FromDate AND ToDate)
+                                    SELECT Id FROM HotelCompanyOpeningBalance WHERE FiscalYearId = @FiscalYearId AND IsApproved = 1";
+
+                bool isAlreadyHaveOpening = nodeMatrixDA.AlreadyHaveOpening(queryAssets);
+
+                if (isAlreadyHaveOpening)
+                {
+                    openingBalanceView.message = "Already have the opening for the current fiscal year";
+                    openingBalanceView.messageType = CommonHelper.MessageTpe.Error.ToString();
+
+                    return openingBalanceView;
+                }
+
                 List<GuestCompanyBO> companyList = new List<GuestCompanyBO>();
                 GuestCompanyDA guestCompanyDA = new GuestCompanyDA();
 
@@ -340,6 +360,22 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             }
             else if (transactionType == ConstantHelper.GLTransactionType.Supplier.ToString())
             {
+                string openingDate = hmUtility.GetUnivarsalDateTimeFromString(voucherDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+
+                string queryAssets = $@"DECLARE @FiscalYearId INT = 0
+                                    SELECT @FiscalYearId = FiscalYearId FROM GLFiscalYear WHERE ('{openingDate}' BETWEEN FromDate AND ToDate)
+                                    SELECT Id FROM PMSupplierOpeningBalance WHERE FiscalYearId = @FiscalYearId AND IsApproved = 1";
+
+                bool isAlreadyHaveOpening = nodeMatrixDA.AlreadyHaveOpening(queryAssets);
+
+                if (isAlreadyHaveOpening)
+                {
+                    openingBalanceView.message = "Already have the opening for the current fiscal year";
+                    openingBalanceView.messageType = CommonHelper.MessageTpe.Error.ToString();
+
+                    return openingBalanceView;
+                }
+
                 List<PMSupplierBO> supplierList = new List<PMSupplierBO>();
                 PMSupplierDA entityDA = new PMSupplierDA();
                 if (transactionNodeId > 0)
@@ -358,6 +394,22 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             }
             else if (transactionType == ConstantHelper.GLTransactionType.Employee.ToString())
             {
+                string openingDate = hmUtility.GetUnivarsalDateTimeFromString(voucherDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+
+                string queryAssets = $@"DECLARE @FiscalYearId INT = 0
+                                    SELECT @FiscalYearId = FiscalYearId FROM GLFiscalYear WHERE ('{openingDate}' BETWEEN FromDate AND ToDate)
+                                    SELECT Id FROM PayrollEmployeeOpeningBalance WHERE FiscalYearId = @FiscalYearId AND IsApproved = 1";
+
+                bool isAlreadyHaveOpening = nodeMatrixDA.AlreadyHaveOpening(queryAssets);
+
+                if (isAlreadyHaveOpening)
+                {
+                    openingBalanceView.message = "Already have the opening for the current fiscal year";
+                    openingBalanceView.messageType = CommonHelper.MessageTpe.Error.ToString();
+
+                    return openingBalanceView;
+                }
+
                 List<EmployeeBO> employeeList = new List<EmployeeBO>();
                 EmployeeDA entityDA = new EmployeeDA();
 
@@ -377,6 +429,22 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             }
             else if (transactionType == ConstantHelper.GLTransactionType.Member.ToString())
             {
+                string openingDate = hmUtility.GetUnivarsalDateTimeFromString(voucherDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+
+                string queryAssets = $@"DECLARE @FiscalYearId INT = 0
+                                    SELECT @FiscalYearId = FiscalYearId FROM GLFiscalYear WHERE ('{openingDate}' BETWEEN FromDate AND ToDate)
+                                    SELECT Id FROM MemberOpeningBalance WHERE FiscalYearId = @FiscalYearId AND IsApproved = 1";
+
+                bool isAlreadyHaveOpening = nodeMatrixDA.AlreadyHaveOpening(queryAssets);
+
+                if (isAlreadyHaveOpening)
+                {
+                    openingBalanceView.message = "Already have the opening for the current fiscal year";
+                    openingBalanceView.messageType = CommonHelper.MessageTpe.Error.ToString();
+
+                    return openingBalanceView;
+                }
+
                 MemMemberBasicDA memberBasicDA = new MemMemberBasicDA();
                 List<MemMemberBasicsBO> memberList = new List<MemMemberBasicsBO>();
 
@@ -396,6 +464,22 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             }
             else if (transactionType == ConstantHelper.GLTransactionType.CNF.ToString())
             {
+                string openingDate = hmUtility.GetUnivarsalDateTimeFromString(voucherDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+
+                string queryAssets = $@"DECLARE @FiscalYearId INT = 0
+                                    SELECT @FiscalYearId = FiscalYearId FROM GLFiscalYear WHERE ('{openingDate}' BETWEEN FromDate AND ToDate)
+                                    SELECT Id FROM LCCNFOpeningBalance WHERE FiscalYearId = @FiscalYearId AND IsApproved = 1";
+
+                bool isAlreadyHaveOpening = nodeMatrixDA.AlreadyHaveOpening(queryAssets);
+
+                if (isAlreadyHaveOpening)
+                {
+                    openingBalanceView.message = "Already have the opening for the current fiscal year";
+                    openingBalanceView.messageType = CommonHelper.MessageTpe.Error.ToString();
+
+                    return openingBalanceView;
+                }
+
                 LcCnfInfoDA cnfInfo = new LcCnfInfoDA();
                 List<LCCnfInfoBO> cnfList = new List<LCCnfInfoBO>();
 
@@ -411,6 +495,22 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
             }
             else if (transactionType == ConstantHelper.GLTransactionType.Inventory.ToString())
             {
+                string openingDate = hmUtility.GetUnivarsalDateTimeFromString(voucherDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+
+                string queryAssets = $@"DECLARE @FiscalYearId INT = 0
+                                    SELECT @FiscalYearId = FiscalYearId FROM GLFiscalYear WHERE ('{openingDate}' BETWEEN FromDate AND ToDate)
+                                    SELECT Id FROM InvOpeningBalance WHERE FiscalYearId = @FiscalYearId AND IsApproved = 1";
+
+                bool isAlreadyHaveOpening = nodeMatrixDA.AlreadyHaveOpening(queryAssets);
+
+                if (isAlreadyHaveOpening)
+                {
+                    openingBalanceView.message = "Already have the opening for the current fiscal year";
+                    openingBalanceView.messageType = CommonHelper.MessageTpe.Error.ToString();
+
+                    return openingBalanceView;
+                }
+
                 TableHeader = "Item Name";
                 if (inventorySearchType == "Item")
                 {

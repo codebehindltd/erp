@@ -1093,17 +1093,17 @@ namespace HotelManagement.Data.GeneralLedger
             return chartOfAccountsList;
         }
 
-        public bool AlreadyHaveOpening(string openingDate)
+        public bool AlreadyHaveOpening(string queryString)
         {
-            string queryAssets = $@"DECLARE @FiscalYearId INT = 0
-                                    SELECT @FiscalYearId = FiscalYearId FROM GLFiscalYear WHERE ('{openingDate}' BETWEEN FromDate AND ToDate)
-                                    SELECT Id FROM GLOpeningBalance WHERE FiscalYearId = @FiscalYearId AND IsApproved = 1";
+            //string queryAssets = $@"DECLARE @FiscalYearId INT = 0
+            //                        SELECT @FiscalYearId = FiscalYearId FROM GLFiscalYear WHERE ('{openingDate}' BETWEEN FromDate AND ToDate)
+            //                        SELECT Id FROM GLOpeningBalance WHERE FiscalYearId = @FiscalYearId AND IsApproved = 1";
 
             int fiscalYearId = 0;
 
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
-                using (DbCommand cmd = dbSmartAspects.GetSqlStringCommand(queryAssets))
+                using (DbCommand cmd = dbSmartAspects.GetSqlStringCommand(queryString))
                 {
                     DataSet CompanyDS = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, CompanyDS, "assests");

@@ -235,18 +235,53 @@
                     AccountOpeningBalance  = result.AccountOpeningBalance;
                 }
                 else if (transactionType == "Company") {
+                    if (result.messageType != null && result.messageType == "Error") {
+                        toastr.error(result.message);
+                        $("#btnSave").hide();
+                        $("#btnApprove").hide();
+                        return false;
+                    }
+
                     CompanyDebitCreditList = result.CompanyDebitCreditList;
                 }
                 else if (transactionType == "Supplier") {
+                    if (result.messageType != null && result.messageType == "Error") {
+                        toastr.error(result.message);
+                        $("#btnSave").hide();
+                        $("#btnApprove").hide();
+                        return false;
+                    }
+
                     SupplierDebitCreditList = result.SupplierDebitCreditList;
                 }
                 else if (transactionType == "Employee") {
+                    if (result.messageType != null && result.messageType == "Error") {
+                        toastr.error(result.message);
+                        $("#btnSave").hide();
+                        $("#btnApprove").hide();
+                        return false;
+                    }
+
                     EmployeeDebitCreditList = result.EmployeeDebitCreditList;
                 }
                 else if (transactionType == "Member") {
+                    if (result.messageType != null && result.messageType == "Error") {
+                        toastr.error(result.message);
+                        $("#btnSave").hide();
+                        $("#btnApprove").hide();
+                        return false;
+                    }
+
                     MemberDebitCreditList = result.MemberDebitCreditList;
                 }
                 else if (transactionType == "CNF") {
+                    if (result.messageType != null && result.messageType == "Error") {
+                        toastr.error(result.message);
+                        $("#btnSave").hide();
+                        $("#btnApprove").hide();
+                        return false;
+                    }
+
                     CNFDebitCreditList = result.CNFDebitCreditList;
                 }
                 else if (transactionType == "Inventory") {
@@ -765,8 +800,8 @@
                     sumCredit = sumCredit + CompanyDebitCreditList[row].CrAmount;
                 }
 
-                $("#debitTotal").text(sumDebit);
-                $("#creditTotal").text(sumCredit);
+                $("#debitTotal").text(toFixed(sumDebit, 2));
+                $("#creditTotal").text(toFixed(sumCredit, 2));
             }
 
             function CheckSupplierDebitInputValue(control, index) {
@@ -792,8 +827,9 @@
                     sumDebit = sumDebit + SupplierDebitCreditList[row].DrAmount;
                     sumCredit = sumCredit + SupplierDebitCreditList[row].CrAmount;
                 }
-                $("#debitTotal").text(sumDebit);
-                $("#creditTotal").text(sumCredit);
+
+                $("#debitTotal").text(toFixed(sumDebit, 2));
+                $("#creditTotal").text(toFixed(sumCredit, 2));
             }
 
             function CheckEmployeeDebitInputValue(control, index) {
@@ -819,8 +855,9 @@
                     sumDebit += EmployeeDebitCreditList[row].DrAmount;
                     sumCredit += EmployeeDebitCreditList[row].CrAmount;
                 }
-                $("#debitTotal").text(sumDebit);
-                $("#creditTotal").text(sumCredit);
+
+                $("#debitTotal").text(toFixed(sumDebit, 2));
+                $("#creditTotal").text(toFixed(sumCredit, 2));
             }
 
             function CheckMemberDebitInputValue(control, index) {
@@ -846,8 +883,9 @@
                     sumDebit += MemberDebitCreditList[row].DrAmount;
                     sumCredit += MemberDebitCreditList[row].CrAmount;
                 }
-                $("#debitTotal").text(sumDebit);
-                $("#creditTotal").text(sumCredit);
+
+                $("#debitTotal").text(toFixed(sumDebit, 2));
+                $("#creditTotal").text(toFixed(sumCredit, 2));
             }
 
             function CheckCNFDebitInputValue(control, index) {
@@ -873,8 +911,9 @@
                     sumDebit += CNFDebitCreditList[row].DrAmount;
                     sumCredit += CNFDebitCreditList[row].CrAmount;
                 }
-                $("#debitTotal").text(sumDebit);
-                $("#creditTotal").text(sumCredit);
+
+                $("#debitTotal").text(toFixed(sumDebit, 2));
+                $("#creditTotal").text(toFixed(sumCredit, 2));
             }
 
             function ApproveBalance() {
