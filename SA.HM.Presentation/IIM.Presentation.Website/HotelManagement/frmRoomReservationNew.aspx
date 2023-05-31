@@ -28,11 +28,14 @@
                     if (!($(id).length)) {
                         id = "#ContentPlaceHolder1_" + id;
                     }
-                    if (id == "#ContentPlaceHolder1_ddlMarketSegment" || id == "#ContentPlaceHolder1_txtBookersName" || id == "#ContentPlaceHolder1_ddlGuestSource" || id == "#ContentPlaceHolder1_ddlReferenceId") {
+                    if (id == "#ContentPlaceHolder1_txtMobileNumber" || id == "#ContentPlaceHolder1_ddlMarketSegment" || id == "#ContentPlaceHolder1_txtBookersName" || id == "#ContentPlaceHolder1_ddlGuestSource" || id == "#ContentPlaceHolder1_ddlReferenceId") {
                         var tr = $(id).parent().parent();
                         $(tr).find("label").addClass("required-field");
                         if (id == "#ContentPlaceHolder1_ddlMarketSegment") {
                             $('#lblGuestSource').removeClass("required-field");
+                        }
+                        else if (id == "#ContentPlaceHolder1_txtMobileNumber") {
+                            $('#lblEmailAddress').removeClass("required-field");
                         }
                     }
 
@@ -3647,6 +3650,17 @@
                 return false;
             }
 
+            var validationMobileNumber = _.findWhere(MandaoryFieldsList, { FieldId: "txtMobileNumber" });
+            if (validationMobileNumber != null) {
+                var mobileNumberValue = $("#ContentPlaceHolder1_txtMobileNumber").val();
+                if (mobileNumberValue == "") {
+                    toastr.warning("Please Provide Mobile Number");
+                    $("#ContentPlaceHolder1_MobileNumber").focus();
+                    document.getElementById("ContentPlaceHolder1_btnSave").disabled = false;
+                    return false;
+                }
+            }
+
             var rowCount = $('#ReservedGuestInformation tbody tr').length;
             if (rowCount == 0) {
                 if ($("#<%=txtFirstName.ClientID %>").val() == "") {
@@ -3926,12 +3940,12 @@
                     }
                 }
 
-                if ($("#ContentPlaceHolder1_txtMobileNumber").val() == "") {
-                    toastr.warning("Please Provide Mobile Number.");
-                    $("#ContentPlaceHolder1_txtMobileNumber").focus();
-                    document.getElementById("ContentPlaceHolder1_btnSave").disabled = false;
-                    return false;
-                }
+                //if ($("#ContentPlaceHolder1_txtMobileNumber").val() == "") {
+                //    toastr.warning("Please Provide Mobile Number.");
+                //    $("#ContentPlaceHolder1_txtMobileNumber").focus();
+                //    document.getElementById("ContentPlaceHolder1_btnSave").disabled = false;
+                //    return false;
+                //}
             }
             else if (reservedMode == "Group") {
                 //if ($("#ContentPlaceHolder1_txtGroupName").val() == "") {
@@ -6027,12 +6041,12 @@
                         </div>
                         <div id="MobileNEmailDiv" style="display: none">
                             <div class="form-group">
-                                <label for="MobileNumber" class="control-label col-md-2 required-field">
+                                <label for="MobileNumber" class="control-label col-md-2">
                                     Mobile Number</label>
                                 <div class="col-md-4">
                                     <asp:TextBox ID="txtMobileNumber" runat="server" CssClass="form-control" TabIndex="14"></asp:TextBox>
                                 </div>
-                                <label for="EmailAddress" class="control-label col-md-2">
+                                <label for="EmailAddress" class="control-label col-md-2" id="lblEmailAddress">
                                     Email Address</label>
                                 <div class="col-md-4">
                                     <asp:TextBox ID="txtContactEmail" runat="server" CssClass="form-control" TabIndex="13"></asp:TextBox>
