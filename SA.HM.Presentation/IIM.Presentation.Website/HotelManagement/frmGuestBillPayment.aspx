@@ -144,6 +144,14 @@
                     $('#CashOutDivPanel').show();
                     $('#AdvanceDivPanel').hide();
                 }
+                else if ($('#' + ddlPaymentType).val() == "Refund") {
+                    $('#' + ddlPayMode).val('Cash');
+                    $('#' + ddlCurrency).attr("disabled", true);
+                    $('#' + ddlCurrency).val('1');
+                    $('#' + ddlPayMode).attr("disabled", true);
+                    $('#CashOutDivPanel').show();
+                    $('#AdvanceDivPanel').hide();
+                }
                 else {
                     $('#' + ddlPayMode).attr("disabled", false);
                     $('#' + ddlCurrency).attr("disabled", false);
@@ -395,6 +403,31 @@
             $("#<%=txtCardNumber.ClientID %>").val(result.CardNumber)
             $("#<%=txtChecqueNumber.ClientID %>").val(result.ChecqueNumber)
 
+            var ddlPayMode = '<%=ddlPayMode.ClientID%>'
+            var ddlPaymentType = '<%=ddlPaymentType.ClientID%>'
+            if ($('#' + ddlPaymentType).val() == "PaidOut") {
+                $('#' + ddlPayMode).val('Cash');
+                $("#<%=ddlCurrency.ClientID %>").attr("disabled", true);
+                //$('#' + ddlCurrency).val('1');
+                $('#' + ddlPayMode).attr("disabled", true);
+                $('#CashOutDivPanel').show();
+                $('#AdvanceDivPanel').hide();
+            }
+            else if ($('#' + ddlPaymentType).val() == "Refund") {
+                $('#' + ddlPayMode).val('Cash');
+                $('#' + ddlCurrency).attr("disabled", true);
+                //$('#' + ddlCurrency).val('1');
+                $('#' + ddlPayMode).attr("disabled", true);
+                $('#CashOutDivPanel').show();
+                $('#AdvanceDivPanel').hide();
+            }
+            else {
+                $('#' + ddlPayMode).attr("disabled", false);
+                $("#<%=ddlCurrency.ClientID %>").attr("disabled", false);
+                $('#CashOutDivPanel').hide();
+                $('#AdvanceDivPanel').show();
+            }
+
             if (result.PaymentMode == "Cash") {
                 $('#CardPaymentAccountHeadDiv').hide();
                 $('#ChecquePaymentAccountHeadDiv').hide();
@@ -472,21 +505,29 @@
 
             var ddlPayMode = '<%=ddlPayMode.ClientID%>'
             var ddlPaymentType = '<%=ddlPaymentType.ClientID%>'
-                if ($('#' + ddlPaymentType).val() == "PaidOut") {
-                    $('#' + ddlPayMode).val('Cash');
-                    $("#<%=ddlCurrency.ClientID %>").attr("disabled", true);
-                    //$('#' + ddlCurrency).val('1');
-                    $('#' + ddlPayMode).attr("disabled", true);
-                    $('#CashOutDivPanel').show();
-                    $('#AdvanceDivPanel').hide();
-                }
-                else {
-                    $('#' + ddlPayMode).attr("disabled", false);
-                    $("#<%=ddlCurrency.ClientID %>").attr("disabled", false);
-                    $('#CashOutDivPanel').hide();
-                    $('#AdvanceDivPanel').show();
-                }
-                PaymentModeShowHideInformation();
+            if ($('#' + ddlPaymentType).val() == "PaidOut") {
+                $('#' + ddlPayMode).val('Cash');
+                $("#<%=ddlCurrency.ClientID %>").attr("disabled", true);
+                //$('#' + ddlCurrency).val('1');
+                $('#' + ddlPayMode).attr("disabled", true);
+                $('#CashOutDivPanel').show();
+                $('#AdvanceDivPanel').hide();
+            }
+            else if ($('#' + ddlPaymentType).val() == "Refund") {
+                $('#' + ddlPayMode).val('Cash');
+                $('#' + ddlCurrency).attr("disabled", true);
+                //$('#' + ddlCurrency).val('1');
+                $('#' + ddlPayMode).attr("disabled", true);
+                $('#CashOutDivPanel').show();
+                $('#AdvanceDivPanel').hide();
+            }
+            else {
+                $('#' + ddlPayMode).attr("disabled", false);
+                $("#<%=ddlCurrency.ClientID %>").attr("disabled", false);
+                $('#CashOutDivPanel').hide();
+                $('#AdvanceDivPanel').show();
+            }
+            PaymentModeShowHideInformation();
 
             return false;
         }
@@ -868,9 +909,9 @@
                     <div class="col-md-4">
                         <asp:DropDownList ID="ddlPaymentType" runat="server" CssClass="form-control" TabIndex="4">
                             <asp:ListItem Value="0">--- Please Select ---</asp:ListItem>
-                            <%--<asp:ListItem Value="Advance">Advance</asp:ListItem>--%>
                             <asp:ListItem Value="Payment">Payment</asp:ListItem>
                             <asp:ListItem Value="PaidOut">Paid Out</asp:ListItem>
+                            <asp:ListItem Value="Refund">Refund</asp:ListItem>
                             <asp:ListItem Value="Rebate">Rebate</asp:ListItem>
                         </asp:DropDownList>
                     </div>

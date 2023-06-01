@@ -290,6 +290,11 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     reservationBillPaymentBO.PaymentMode = "Cash";
                     this.ddlPayMode.SelectedValue = "Cash";
                 }
+                else if (this.ddlPaymentType.SelectedValue == "Refund")
+                {
+                    reservationBillPaymentBO.PaymentMode = "Cash";
+                    this.ddlPayMode.SelectedValue = "Cash";
+                }
                 else
                 {
                     reservationBillPaymentBO.PaymentMode = ddlPayMode.SelectedValue;
@@ -308,6 +313,11 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     reservationBillPaymentBO.CardNumber = "";
                     reservationBillPaymentBO.BranchName = "";
                     reservationBillPaymentBO.PaymentDescription = string.Empty;
+
+                    if (this.ddlPaymentType.SelectedValue == "Refund")
+                    {
+                        reservationBillPaymentBO.RefundAccountHead = Convert.ToInt32(ddlCashReceiveAccountsInfo.SelectedValue);
+                    }
                 }
                 else if (ddlPayMode.SelectedValue == "Card")
                 {
@@ -632,12 +642,28 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             }
             if (this.ddlPaymentType.SelectedValue != "PaidOut")
             {
-                if (this.ddlPayMode.SelectedValue == "0")
+                if (this.ddlPaymentType.SelectedValue != "Refund")
                 {
-                    this.isNewAddButtonEnable = 2;
-                    CommonHelper.AlertInfo(innboardMessage, "Please Select Payment Mode.", AlertType.Warning);
-                    this.txtLedgerAmount.Focus();
-                    flag = false;
+                    if (this.ddlPayMode.SelectedValue == "0")
+                    {
+                        this.isNewAddButtonEnable = 2;
+                        CommonHelper.AlertInfo(innboardMessage, "Please Select Payment Mode.", AlertType.Warning);
+                        this.txtLedgerAmount.Focus();
+                        flag = false;
+                    }
+                }
+            }
+            if (this.ddlPaymentType.SelectedValue != "Refund")
+            {
+                if (this.ddlPaymentType.SelectedValue != "PaidOut")
+                {
+                    if (this.ddlPayMode.SelectedValue == "0")
+                    {
+                        this.isNewAddButtonEnable = 2;
+                        CommonHelper.AlertInfo(innboardMessage, "Please Select Payment Mode.", AlertType.Warning);
+                        this.txtLedgerAmount.Focus();
+                        flag = false;
+                    }
                 }
             }
             if (string.IsNullOrWhiteSpace(this.txtLedgerAmount.Text))
@@ -656,11 +682,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             }
             if (this.ddlPaymentType.SelectedValue != "PaidOut")
             {
-                if (this.ddlCurrency.SelectedValue == "0")
+                if (this.ddlPaymentType.SelectedValue != "Refund")
                 {
-                    this.isNewAddButtonEnable = 2;
-                    CommonHelper.AlertInfo(innboardMessage, "Please Select Currency Type.", AlertType.Warning);
-                    flag = false;
+                    if (this.ddlCurrency.SelectedValue == "0")
+                    {
+                        this.isNewAddButtonEnable = 2;
+                        CommonHelper.AlertInfo(innboardMessage, "Please Select Currency Type.", AlertType.Warning);
+                        flag = false;
+                    }
                 }
             }
             if (this.ddlCurrency.SelectedValue != LocalCurrencyId.ToString() && this.ddlCurrency.SelectedValue != "0")
@@ -684,10 +713,24 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 if (this.ddlPaymentType.SelectedValue != "PaidOut")
                 {
-                    this.isNewAddButtonEnable = 2;
-                    CommonHelper.AlertInfo(innboardMessage, "Select Payment Mode.", AlertType.Warning);
-                    this.ddlPayMode.Focus();
-                    flag = false;
+                    if (this.ddlPaymentType.SelectedValue != "Refund")
+                    {
+                        this.isNewAddButtonEnable = 2;
+                        CommonHelper.AlertInfo(innboardMessage, "Select Payment Mode.", AlertType.Warning);
+                        this.ddlPayMode.Focus();
+                        flag = false;
+                    }
+                }
+
+                if (this.ddlPaymentType.SelectedValue != "Refund")
+                {
+                    if (this.ddlPaymentType.SelectedValue != "PaidOut")
+                    {
+                        this.isNewAddButtonEnable = 2;
+                        CommonHelper.AlertInfo(innboardMessage, "Select Payment Mode.", AlertType.Warning);
+                        this.ddlPayMode.Focus();
+                        flag = false;
+                    }
                 }
             }
             if (this.ddlPayMode.SelectedValue == "Card")
