@@ -143,26 +143,21 @@
         }
 
         function OnLoadGroupRoomReservationGridInformationSucceed(result) {
-            //$("#GroupReservationDetailDiv").show();
             $("#GroupRoomReservationGridContainer").html(result.RoomReservationGrid);
             CommonHelper.SpinnerClose();
             return false;
         }
         function PerformBillPreviewAction(reservationId) {
             var reportType = "room";
-            var url = "/HotelManagement/Reports/frmReportGroupReservationBillInfo.aspx?rt=" + reportType + "&rid=" + reservationId;
+            var url = "/HotelManagement/Reports/frmReportGroupReservationBillInfo.aspx?rt=" + reportType + "&gmid=" + reservationId;
             var popup_window = "Print Preview";
             window.open(url, popup_window, "width=745,height=780,left=300,top=50,location=no,toolbar=no,menubar=no,resizable=yes, scrollbars=1");
         }
         function OnLoadGroupRoomReservationGridInformationFailed(error) {
-
             CommonHelper.SpinnerClose();
         }
 
         function PerformRoomReservationSearchButton() {
-           <%-- var guestName = $.trim($("#<%=txtResvGuestName.ClientID %>").val());
-            var companyName = $.trim($("#<%=txtResvCompanyName.ClientID %>").val());
-            var reservNumber = $.trim($("#<%=txtReservationNo.ClientID %>").val());--%>
             var checkInDate = $.trim($("#<%=txtFromDate.ClientID %>").val());
             var checkOutDate = $.trim($("#<%=txtToDate.ClientID %>").val());
 
@@ -204,13 +199,6 @@
             if (IsPermitForSave == true) {
                 var groupMasterId = 0, companyId = 0, groupName = "", reservationId = 0, reservationDetails = "", reservationDate, checkInDate = "", checkOutDate = "";
 
-                <%--companyId = $("#<%=ddlCompany.ClientID %>").val();
-                if (companyId == "0") {
-                    toastr.info("Please select Company Name.");
-                    $("#<%=ddlCompany.ClientID %>").focus();
-                    return false;
-                }--%>
-
                 groupName = $("#ContentPlaceHolder1_txtGroupName").val();
                 if (groupName == "") {
                     toastr.info("Please enter Group Name.");
@@ -224,20 +212,6 @@
                     $("#ContentPlaceHolder1_txtReservationDate").focus();
                     return false;
                 }
-
-                //checkInDate = $("#ContentPlaceHolder1_txtCheckInDate").val();
-                //if (checkInDate == "") {
-                //    toastr.info("Please enter Check In Date.");
-                //    $("#ContentPlaceHolder1_txtCheckInDate").focus();
-                //    return false;
-                //}
-
-                //checkOutDate = $("#ContentPlaceHolder1_txtCheckOutDate").val();
-                //if (checkOutDate == "") {
-                //    toastr.info("Please enter Check Out Date.");
-                //    $("#ContentPlaceHolder1_txtCheckOutDate").focus();
-                //    return false;
-                //}
 
                 reservationDetails = $("#ContentPlaceHolder1_txtGroupReservationDescription").val();
 
@@ -337,7 +311,6 @@
                 resizable: false,
                 title: "Cancel Reason",
                 show: 'slide'
-
             });
             return false;
         }
