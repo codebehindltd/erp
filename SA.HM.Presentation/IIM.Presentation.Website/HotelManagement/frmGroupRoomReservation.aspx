@@ -217,20 +217,23 @@
 
                 var GroupRoomReservationDetails = [];
                 $("#RoomReservationGrid tbody tr").each(function (index, item) {
-                    reservationId = $(item).find("td:eq(7)").text();
+
+                    reservationId = 0;
 
                     if ($(item).find("td:eq(0)").find('input').is(':checked')) {
+                        reservationId = $(item).find("td:eq(7)").text();
                         transactionType = "Save";
                         IsCheckedMinimumOneReservation = true;
                     } else {
-
                         transactionType = "Update";
                     }
 
                     if ((transactionType == "Save") || (transactionType == "Update")) {
-                        GroupRoomReservationDetails.push({
-                            ReservationId: reservationId
-                        });
+                        //if (reservationId > 0) {
+                            GroupRoomReservationDetails.push({
+                                ReservationId: reservationId
+                            });
+                        //}
                     }
 
                 });
@@ -301,7 +304,7 @@
             $('#GroupRoomReservationDiv').dialog('close');
             return false;
         }
-        function PerformCancelAction(reservationId) {            
+        function PerformCancelAction(reservationId) {
             $("#<%=hfCancelReservationId.ClientID%>").val(reservationId);
             $("#reservationCancelPopUp").dialog({
                 autoOpen: true,
@@ -346,11 +349,11 @@
         function OnFailCancelReservation(error) {
             toastr.error(error.get_message());
         }
-    </script>    
+    </script>
     <div id="reservationCancelPopUp" style="display: none;" class="panel panel-default">
         <asp:HiddenField ID="hfCancelReservationId" runat="server" Value="0" />
         <div class="panel-body">
-            <div class="form-horizontal">                
+            <div class="form-horizontal">
                 <div class="form-group">
                     <div class="col-md-3">
                         <asp:Label runat="server" class="control-label required-field" Text="Cancel Reason"></asp:Label>

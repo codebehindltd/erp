@@ -294,6 +294,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 reservationDate = hmUtility.GetDateTimeFromString(strReservationDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             }
 
+            groupRoomReservationList = groupRoomReservationList.Where(x => x.ReservationId != 0).ToList();
+
             if (groupMasterId == 0)
             {
                 RoomReservationDA resDA = new RoomReservationDA();
