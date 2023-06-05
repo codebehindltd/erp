@@ -3916,6 +3916,28 @@ namespace HotelManagement.Data.HotelManagement
             }
             return roomRegistration;
         }
+        public InhouseGuestLedgerBO GetIsPreviousDayTransaction(DateTime transactionDate)
+        {
+            InhouseGuestLedgerBO roomRegistration = new InhouseGuestLedgerBO();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetIsPreviousDayTransaction_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@TransactionDate", DbType.DateTime, transactionDate);
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                roomRegistration.TransactionDate = Convert.ToDateTime(reader["TransactionDate"]);
+                            }
+                        }
+                    }
+                }
+            }
+            return roomRegistration;
+        }
         public List<RoomRegistrationBO> GetTodaysRegistrationDetailInfo()
         {
             List<RoomRegistrationBO> roomRegistrationList = new List<RoomRegistrationBO>();

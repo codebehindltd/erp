@@ -110,8 +110,8 @@ namespace HotelManagement.Entity.HotelManagement
         public decimal Credit { get; set; }
         public decimal Balance { get; set; }
         public int? SatyedNights { get; set; }
+        public DateTime TransactionDate { get; set; }
         public DateTime InhouseGuestLedgerDate { get; set; }
-
         public int TotalRoom { get; set; }
         public int TotalPerson { get; set; }
     }

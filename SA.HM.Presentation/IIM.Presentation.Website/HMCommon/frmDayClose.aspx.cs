@@ -225,19 +225,39 @@ namespace HotelManagement.Presentation.Website.HMCommon
                 }
                 else
                 {
-                    HMCommonDA hmCoomnoDA = new HMCommonDA();
-                    DayCloseBO dayCloseBO = new DayCloseBO();
+                    DateTime processDate = hmUtility.GetDateTimeFromString(this.txtDayClossingDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
 
-                    dayCloseBO = hmCoomnoDA.GetHotelDayCloseInformation(hmUtility.GetDateTimeFromString(this.txtDayClossingDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat));
-                    if (dayCloseBO != null)
+                    RoomRegistrationDA guestLedgerInfoDA = new RoomRegistrationDA();
+                    InhouseGuestLedgerBO guestLedgerInfoBO = new InhouseGuestLedgerBO();
+                    guestLedgerInfoBO = guestLedgerInfoDA.GetIsPreviousDayTransaction(hmUtility.GetDateTimeFromString(this.txtDayClossingDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat));
+
+                    if (guestLedgerInfoBO != null)
                     {
-                        if (dayCloseBO.DayCloseId > 0)
-                        {
-                            CommonHelper.AlertInfo(innboardMessage, "Day Closed for the date '" + this.txtDayClossingDate.Text + "', please try with another date.", AlertType.Warning);
-                            this.txtDayClossingDate.Focus();
-                            status = false;
-                        }
+                        processDate = guestLedgerInfoBO.TransactionDate;
                     }
+
+                    if (hmUtility.GetDateTimeFromString(this.txtDayClossingDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).Date == processDate.Date)
+                    {
+                        HMCommonDA hmCoomnoDA = new HMCommonDA();
+                        DayCloseBO dayCloseBO = new DayCloseBO();
+
+                        dayCloseBO = hmCoomnoDA.GetHotelDayCloseInformation(hmUtility.GetDateTimeFromString(this.txtDayClossingDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat));
+                        if (dayCloseBO != null)
+                        {
+                            if (dayCloseBO.DayCloseId > 0)
+                            {
+                                CommonHelper.AlertInfo(innboardMessage, "Day Closed for the date '" + this.txtDayClossingDate.Text + "', please try with another date.", AlertType.Warning);
+                                this.txtDayClossingDate.Focus();
+                                status = false;
+                            }
+                        }                        
+                    }
+                    else
+                    {
+                        CommonHelper.AlertInfo(innboardMessage, "Day Clossing is not aplicable for your provided date.", AlertType.Warning);
+                        this.txtDayClossingDate.Focus();
+                        status = false;
+                    }                    
                 }
             }
             return status;
