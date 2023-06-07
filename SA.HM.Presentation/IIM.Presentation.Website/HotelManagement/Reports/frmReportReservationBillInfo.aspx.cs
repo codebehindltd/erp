@@ -185,6 +185,23 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
                     {
                         IsInclusiveHotelManagementBill = "0";
                         IsInclusiveHotelManagementBillString = "exclusive";
+
+                        RoomReservationDA reservationIsVatSChargeInclusiveDA = new RoomReservationDA();
+                        RoomReservationBO reservationIsVatSChargeInclusiveBO = new RoomReservationBO();
+                        reservationIsVatSChargeInclusiveBO = reservationIsVatSChargeInclusiveDA.GetRoomReservationIsVatAmountEnableInfoById(ReservationId);
+                        if (reservationIsVatSChargeInclusiveBO != null)
+                        {
+                            if (reservationIsVatSChargeInclusiveBO.IsVatAmountEnable)
+                            {
+                                IsInclusiveHotelManagementBill = "0";
+                                IsInclusiveHotelManagementBillString = "exclusive";
+                            }
+                            else
+                            {
+                                IsInclusiveHotelManagementBill = "1";
+                                IsInclusiveHotelManagementBillString = "inclusive";
+                            }
+                        }
                     }
                     else
                     {

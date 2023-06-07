@@ -2189,6 +2189,29 @@ namespace HotelManagement.Data.HotelManagement
             }
             return roomReservation;
         }
+        public RoomReservationBO GetRoomReservationIsVatAmountEnableInfoById(int reservationId)
+        {
+            RoomReservationBO roomReservation = new RoomReservationBO();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetRoomReservationIsVatAmountEnableInfoById_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@ReservationId", DbType.Int32, reservationId);
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                roomReservation.IsVatAmountEnable = Convert.ToBoolean(reader["IsVatAmountEnable"]);
+                            }
+                        }
+                    }
+                }
+            }
+            return roomReservation;
+        }
         public RoomReservationBO GetRoomReservationInfoByReservationNumber(string reservationNumber)
         {
             RoomReservationBO roomReservation = new RoomReservationBO();
