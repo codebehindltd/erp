@@ -697,7 +697,7 @@
         }
         function CalculateTotalForAdhoq(control) {
 
-            //debugger;
+            debugger;
             var tr = $(control).parent().parent();
 
             var Amount = $.trim($(tr).find("td:eq(1)").find("input").val());
@@ -713,23 +713,50 @@
                 toastr.info("Conversion Rate Cannot Be Zero Or Empty.");
                 return false;
             }
-            //if (remarks == "") {
-            //    toastr.info("Remarks Cannot Be Empty.");
-            //    return false;
-            //}
 
             ($(tr).find("td:eq(5)").text((parseFloat(Amount) * parseFloat(ConversionRate)).toFixed(5)));
 
-            //var costCenterId = parseInt($.trim($(tr).find("td:eq(4)").text()), 10);
             var accountId = parseInt($.trim($(tr).find("td:eq(8)").text()), 10);
             var detailsId = parseInt($.trim($(tr).find("td:eq(9)").text()), 10);
 
-            var payment = _.findWhere(LCPaymentDetails, { AccountHeadId: accountId });
+            var payment = _.findWhere(LCPaymentDetails, { AccountHeadId: accountId, PaymentId: detailsId });
             var index = _.indexOf(LCPaymentDetails, payment);
 
             LCPaymentDetails[index].Amount = parseFloat(Amount);
             LCPaymentDetails[index].ConvertionRate = parseFloat(ConversionRate);
             LCPaymentDetails[index].Remarks = (remarks);
+
+
+
+
+            //var payment = "", paymentIndex = 0, paymentAccountId = 0;
+            //var paymentId = 0, paymentRemarks = "", paymentConversionRate = 0, paymentAmount = 0;
+            //$("#tblPDInformation tbody tr").each(function () {
+            //    paymentAccountId = $.trim($(tr).find("td:eq(8)").text());
+            //    paymentId = $.trim($(this).find("td:eq(9)").text());
+            //    paymentAmount = $(this).find("td:eq(1)").find("input").val();
+            //    paymentConversionRate = $(this).find("td:eq(4)").find("input").val();
+            //    paymentRemarks = $(this).find("td:eq(6)").find("input").val();
+
+            //    if (paymentId > 0) {
+            //        payment = _.findWhere(LCPaymentDetails, { PaymentId: parseInt(paymentId) });
+            //        paymentIndex = _.indexOf(LCPaymentDetails, payment);
+
+            //        LCPaymentDetails[paymentIndex].Amount = parseFloat(paymentAmount);
+            //        LCPaymentDetails[paymentIndex].ConvertionRate = parseFloat(paymentConversionRate);
+            //        LCPaymentDetails[paymentIndex].Remarks = (paymentRemarks);
+            //    }
+            //    else {
+            //        payment = _.findWhere(LCPaymentDetails, { AccountHeadId: parseInt(paymentAccountId) });
+            //        paymentIndex = _.indexOf(LCPaymentDetails, payment);
+
+            //        LCPaymentDetails[paymentIndex].Amount = parseFloat(paymentAmount);
+            //        LCPaymentDetails[paymentIndex].ConvertionRate = parseFloat(paymentConversionRate);
+            //        LCPaymentDetails[paymentIndex].Remarks = (paymentRemarks);
+            //    }
+
+            //});
+
 
             var total = 0.0;
             for (var i = 0; i < LCPaymentDetails.length; i++) {
@@ -840,7 +867,6 @@
                 return false;
             }
 
-
             var companyId = $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val();
             if (companyId == "0") {
                 isClose = false;
@@ -881,7 +907,6 @@
             }
             GlobalApproveStatus = "";
 
-
             var totalAmount = 0.0;
             var LCPaymentDetailsNewlyAdded = new Array();
             LCPaymentDetailsNewlyAdded = LCPaymentDetails;
@@ -901,6 +926,26 @@
             if (row != rowCount) {
                 return false;
             }
+
+            //var index = 0;
+            //var payment = "", paymentId = 0, paymentRemarks = "", paymentConversionRate = 0, paymentAmount = 0;
+            //$("#tblPDInformation tbody tr").each(function () {
+
+            //    paymentId = $.trim($(this).find("td:eq(9)").text());
+            //    paymentAmount = $(this).find("td:eq(1)").find("input").val();
+            //    paymentConversionRate = $(this).find("td:eq(4)").find("input").val();
+            //    paymentRemarks = $(this).find("td:eq(6)").find("input").val();
+
+            //    if (paymentId > 0) {
+            //        payment = _.findWhere(LCPaymentDetails, { PaymentId: parseInt(paymentId) });
+            //        index = _.indexOf(LCPaymentDetails, payment);
+
+            //        LCPaymentDetails[index].Amount = parseFloat(paymentAmount);
+            //        LCPaymentDetails[index].ConvertionRate = parseFloat(paymentConversionRate);
+            //        LCPaymentDetails[index].Remarks = (paymentRemarks);
+            //    }
+            //});
+
             var LCInformationViewBOForAdded = {
                 LCInformation: LCInformation,
                 LCInformationDetail: LCInformationDetails,
@@ -916,9 +961,6 @@
 
             PageMethods.SaveOrUpdateLCInformation(LCInformationViewBOForAdded, LCInformationViewBOForDeleted, hfRandom, deletedDocuments, OnSuccessSaveOrUpdate, OnFailSaveOrUpdate);
             return false;
-
-
-
         }
         function OnSuccessSaveOrUpdate(result) {
             //debugger;
