@@ -56,8 +56,8 @@
             }
         });
         function OnGetSupplierCompanyListSucceed(result) {
-            $("#ContentPlaceHolder1_lblFrom").text("From " + result[2]);
-            $("#ContentPlaceHolder1_lblTo").text("To " + result[3]);
+            $("#ContentPlaceHolder1_lblFrom").text(result[2] + " (Cr.)");
+            $("#ContentPlaceHolder1_lblTo").text(result[3] + " (Dr.)");
             $('#ContentPlaceHolder1_ddlFrom').empty();
             $('#ContentPlaceHolder1_ddlTo').empty();
             var fromId = $("#ContentPlaceHolder1_hfEditFromTransaction").val();
