@@ -1372,7 +1372,7 @@
             });
 
             $('#btnUserDashboard').click(function () {
-                window.location = "/HotelManagement/frmRoomStatusInfo.aspx";
+                window.location = "/HotelManagement/frmRoomStatusInfo.aspx?vs=rnw";
                 return false;
             });
         });

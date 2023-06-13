@@ -2158,7 +2158,17 @@ namespace HotelManagement.Data.Restaurant
 
                                         dbSmartAspects.AddInParameter(commandGuestBillPayment, "@CardReference", DbType.String, guestBillPaymentBO.CardReference);
                                         dbSmartAspects.AddInParameter(commandGuestBillPayment, "@CardHolderName", DbType.String, guestBillPaymentBO.CardHolderName);
-                                        dbSmartAspects.AddInParameter(commandGuestBillPayment, "@PaymentDescription", DbType.String, guestBillPaymentBO.PaymentDescription);
+
+                                        if (guestBillPaymentBO.PaymentDescription == "")
+                                        {
+                                            dbSmartAspects.AddInParameter(commandGuestBillPayment, "@PaymentDescription", DbType.String, "Bill Detail: " + restaurentBillBO.Remarks);
+                                        }
+                                        else
+                                        {
+                                            string PaymentDescription = guestBillPaymentBO.PaymentDescription + "[Bill Detail: " + restaurentBillBO.Remarks + "]";
+                                            dbSmartAspects.AddInParameter(commandGuestBillPayment, "@PaymentDescription", DbType.String, PaymentDescription);
+                                        }
+
                                         dbSmartAspects.AddInParameter(commandGuestBillPayment, "@CreatedBy", DbType.Int32, restaurentBillBO.LastModifiedBy);
                                         dbSmartAspects.AddOutParameter(commandGuestBillPayment, "@PaymentId", DbType.Int32, sizeof(Int32));
                                         status = dbSmartAspects.ExecuteNonQuery(commandGuestBillPayment, transction);

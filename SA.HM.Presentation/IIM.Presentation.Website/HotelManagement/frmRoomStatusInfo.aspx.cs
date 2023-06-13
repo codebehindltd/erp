@@ -45,6 +45,17 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     ddlStatusType.SelectedValue = userInformationBO.RoomStatusFilteringType;
                 }
 
+
+                if (Request.QueryString["vs"] != null)
+                {
+                    if (Request.QueryString["vs"] == "rnw")
+                    {
+                        hfLinkStatus.Value = "1";
+                        ddlStatusType.SelectedValue = "1";
+                        GenerateRoomNumberWiseRoomStatusInfo();                        
+                    }
+                }
+                    
             }
 
             string cancelRegistration = Request.QueryString["CancelRegistration"];
