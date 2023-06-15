@@ -967,7 +967,53 @@
 												<Paragraph>
 													<TextRuns>
 														<TextRun>
-															<Value EvaluationMode="Constant">"*** Complementary Bill ***"</Value>
+															<Value EvaluationMode="Constant">"***** Complementary Bill *****"</Value>
+															<Style>
+																<FontSize>9pt</FontSize>
+																<FontWeight>Bold</FontWeight>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style>
+														<TextAlign>Center</TextAlign>
+													</Style>
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox1</rd:DefaultName>
+											<ZIndex>34</ZIndex>
+											<Style>
+												<Border>
+													<Style>None</Style>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+										<ColSpan>6</ColSpan>
+									</CellContents>
+								</TablixCell>
+								<TablixCell />
+								<TablixCell />
+								<TablixCell />
+								<TablixCell />
+								<TablixCell />
+							</TablixCells>
+						</TablixRow>
+						<TablixRow>
+							<Height>0.25in</Height>
+							<TablixCells>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox27">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Parameters!BillDisplayText.Value</Value>
 															<Style>
 																<FontSize>9pt</FontSize>
 																<FontWeight>Bold</FontWeight>
@@ -7243,6 +7289,11 @@
 						</TablixMember>
 						<TablixMember>
 							<Visibility>
+								<Hidden>=IIF(Parameters!BillDisplayText.Value = "", true, false)</Hidden>
+							</Visibility>
+						</TablixMember>
+						<TablixMember>
+							<Visibility>
 								<Hidden>=IIF(Parameters!CompanyType.Value = "RetailShop", true, false)</Hidden>
 							</Visibility>
 						</TablixMember>
@@ -7276,7 +7327,7 @@
 					</TablixMembers>
 				</TablixRowHierarchy>
 				<DataSetName>GetRestaurantBill</DataSetName>
-				<Height>12.67602in</Height>
+				<Height>12.92602in</Height>
 				<Width>2.62375in</Width>
 				<Visibility>
 					<Hidden>=IIF(Len(Parameters!Path.Value) &gt; 0, false, true)</Hidden>
@@ -7288,7 +7339,7 @@
 				</Style>
 			</Tablix>
 		</ReportItems>
-		<Height>12.67602in</Height>
+		<Height>12.92602in</Height>
 		<Style />
 	</Body>
 	<Width>2.62896in</Width>
@@ -7434,6 +7485,12 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="IsCostCenterNameShowOnInvoice">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="BillDisplayText">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>

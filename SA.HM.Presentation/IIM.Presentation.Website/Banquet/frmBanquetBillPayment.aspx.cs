@@ -338,6 +338,18 @@ namespace HotelManagement.Presentation.Website.Banquet
                     reservationBillPaymentBO.BillPaidBy = Convert.ToInt32(ddlRegistrationId.SelectedValue);
                     reservationBillPaymentBO.PaymentDescription = string.Empty;
                 }
+                else if (ddlPayMode.SelectedValue == "M-Banking")
+                {
+                    reservationBillPaymentBO.AccountsPostingHeadId = Convert.ToInt32(ddlCardReceiveAccountsInfo.SelectedValue);
+                    reservationBillPaymentBO.BankId = Convert.ToInt32(ddlBankId.SelectedValue);
+                    reservationBillPaymentBO.ChecqueNumber = "";
+                    reservationBillPaymentBO.CardReference = "";
+                    reservationBillPaymentBO.CardNumber = "";
+                    reservationBillPaymentBO.BranchName = "";
+                    reservationBillPaymentBO.PaymentDescription = txtRemarks.Text;
+                }
+
+
                 reservationBillPaymentBO.ModuleName = "Banquet";
                 try
                 {

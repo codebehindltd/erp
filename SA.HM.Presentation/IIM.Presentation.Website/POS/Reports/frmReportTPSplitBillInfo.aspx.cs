@@ -59,7 +59,7 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                             if (costCentreTabBO.InvoiceTemplate == 1)
                             {
                                 hfBillTemplate.Value = "1";
-                                this.ReportProcessing("rptRestaurentBillForPos");
+                                this.ReportProcessing("rptRestaurentBillForPosWithoutSDC");
                             }
                             else if (costCentreTabBO.InvoiceTemplate == 2)
                             {
@@ -91,7 +91,7 @@ namespace HotelManagement.Presentation.Website.POS.Reports
             if ((itmString.Split('~')).Length > 0)
             {
                 int billID = Int32.Parse(queryStringId);
-                
+
                 if (!string.IsNullOrEmpty(queryStringId))
                 {
                     rvTransaction.ProcessingMode = ProcessingMode.Local;
@@ -138,12 +138,37 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                         reportParam.Add(new ReportParameter("Path", "Hide"));
                     }
 
+                    HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                    HMCommonSetupBO waterMarkBo = new HMCommonSetupBO();
+                    waterMarkBo = commonSetupDA.GetCommonConfigurationInfo("IsWaterMarkImageDisplayEnableInRestaurant", "IsWaterMarkImageDisplayEnableInRestaurant");
+
+                    string strBillDisplayText = "";
+
+                    if (Convert.ToInt32(waterMarkBo.SetupValue) == 1)
+                    {
+                        if (billBO.IsBillSettlement)
+                        {
+                            strBillDisplayText = "*** Duplicate Bill ***";
+                            reportParam.Add(new ReportParameter("WaterMarkImagePath", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/Bill-Duplicate-Water-Mark-Restaurant.png")));
+                        }
+                        else
+                        {
+                            strBillDisplayText = "*** Bill Preview ***";
+                            reportParam.Add(new ReportParameter("WaterMarkImagePath", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/Bill-Preview-Water-Mark-Restaurant.png")));
+                        }
+                    }
+                    else
+                    {
+                        strBillDisplayText = string.Empty;
+                        reportParam.Add(new ReportParameter("WaterMarkImagePath", string.Empty));
+                    }
+
+                    reportParam.Add(new ReportParameter("BillDisplayText", strBillDisplayText));
                     reportParam.Add(new ReportParameter("ThankYouMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIThankYouMessege")));
                     reportParam.Add(new ReportParameter("CorporateAddress", hmCommonDA.GetCustomFieldValueByFieldName("paramGICorporateAddress")));
                     reportParam.Add(new ReportParameter("AggrimentMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIAggrimentMessege")));
                     reportParam.Add(new ReportParameter("RestaurantMushakInfo", hmCommonDA.GetCustomFieldValueByFieldName("RestaurantMushakInfo")));
 
-                    HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
                     HMCommonSetupBO isCompanyNameShowOnRestaurantInvoice = new HMCommonSetupBO();
                     isCompanyNameShowOnRestaurantInvoice = commonSetupDA.GetCommonConfigurationInfo("IsCompanyNameShowOnRestaurantInvoice", "IsCompanyNameShowOnRestaurantInvoice");
                     if (Convert.ToInt32(isCompanyNameShowOnRestaurantInvoice.SetupValue) == 1)
@@ -286,7 +311,7 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                             invoiceBO.GrandTotal = invoiceBO.DiscountedAmount + invoiceBO.ServiceCharge + invoiceBO.VatAmount + invoiceBO.CitySDCharge + invoiceBO.AdditionalCharge;
                             decimal? invGrandTotal = invoiceBO.GrandTotal.HasValue ? Decimal.Round(invoiceBO.GrandTotal.Value, 2) : 0;
 
-                            invoiceBO.GrandTotal = invGrandTotal; 
+                            invoiceBO.GrandTotal = invGrandTotal;
                         }
                         else
                         {

@@ -424,8 +424,13 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                 HMCommonSetupBO waterMarkBo = new HMCommonSetupBO();
                 waterMarkBo = commonSetupDA.GetCommonConfigurationInfo("IsWaterMarkImageDisplayEnableInRestaurant", "IsWaterMarkImageDisplayEnableInRestaurant");
 
+                string strBillDisplayText = "";
+
                 if (Convert.ToInt32(waterMarkBo.SetupValue) == 1)
+                {
+                    strBillDisplayText = "*** Duplicate Bill ***";
                     reportParam.Add(new ReportParameter("WaterMarkImagePath", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/Bill-Duplicate-Water-Mark-Restaurant.png")));
+                }
                 else
                     reportParam.Add(new ReportParameter("WaterMarkImagePath", string.Empty));
 
@@ -439,6 +444,7 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                     reportParam.Add(new ReportParameter("Path", "Hide"));
                 }
 
+                reportParam.Add(new ReportParameter("BillDisplayText", strBillDisplayText));
                 reportParam.Add(new ReportParameter("ThankYouMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIThankYouMessegeForRestaurantBill")));
                 reportParam.Add(new ReportParameter("CorporateAddress", hmCommonDA.GetCustomFieldValueByFieldName("paramGICorporateAddress")));
                 reportParam.Add(new ReportParameter("AggrimentMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIAggrimentMessege")));

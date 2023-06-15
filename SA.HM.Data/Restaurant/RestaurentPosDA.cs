@@ -2119,7 +2119,8 @@ namespace HotelManagement.Data.Restaurant
                                         commandGuestBillPayment.Parameters.Clear();
 
                                         guestBillPaymentBO.CreatedBy = restaurentBillBO.CreatedBy;
-                                        guestBillPaymentBO.PaymentDate = DateTime.Now;
+                                        //guestBillPaymentBO.PaymentDate = DateTime.Now;
+                                        guestBillPaymentBO.PaymentDate = restaurentBillBO.BillDate;
 
                                         int companyId = 0;
                                         if (guestBillPaymentBO.CompanyId != null)

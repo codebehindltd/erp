@@ -183,6 +183,7 @@
                 $('#CardReceiveAccountsInfo').show();
                 $('#ChequeReceiveAccountsInfo').hide();
                 $('#CardPaymentAccountHeadDiv').show();
+                $('#CardTypeDiv').show();
                 $('#ChecquePaymentAccountHeadDiv').hide();
                 $('#PaidByOtherRoomDiv').hide();
                 $('#CompanyPaymentAccountHeadDiv').hide();
@@ -201,6 +202,16 @@
                 $('#CardReceiveAccountsInfo').hide();
                 $('#ChequeReceiveAccountsInfo').hide();
                 $('#CardPaymentAccountHeadDiv').hide();
+                $('#ChecquePaymentAccountHeadDiv').hide();
+                $('#PaidByOtherRoomDiv').hide();
+                $('#CompanyPaymentAccountHeadDiv').hide();
+            }
+            else if ($('#' + ddlPayMode).val() == "M-Banking") {
+                $('#CashReceiveAccountsInfo').hide();
+                $('#CardReceiveAccountsInfo').hide();
+                $('#ChequeReceiveAccountsInfo').hide();
+                $('#CardPaymentAccountHeadDiv').show();
+                $('#CardTypeDiv').hide();
                 $('#ChecquePaymentAccountHeadDiv').hide();
                 $('#PaidByOtherRoomDiv').hide();
                 $('#CompanyPaymentAccountHeadDiv').hide();
@@ -263,6 +274,7 @@
                 $('#CardReceiveAccountsInfo').show();
                 $('#ChequeReceiveAccountsInfo').hide();
                 $('#CardPaymentAccountHeadDiv').show();
+                $('#CardTypeDiv').show();
                 $('#ChecquePaymentAccountHeadDiv').hide();
                 $('#PaidByOtherRoomDiv').hide();
                 $('#CompanyPaymentAccountHeadDiv').hide();
@@ -281,6 +293,16 @@
                 $('#CardReceiveAccountsInfo').hide();
                 $('#ChequeReceiveAccountsInfo').hide();
                 $('#CardPaymentAccountHeadDiv').hide();
+                $('#ChecquePaymentAccountHeadDiv').hide();
+                $('#PaidByOtherRoomDiv').hide();
+                $('#CompanyPaymentAccountHeadDiv').hide();
+            }
+            else if ($('#' + ddlPayMode).val() == "M-Banking") {
+                $('#CashReceiveAccountsInfo').hide();
+                $('#CardReceiveAccountsInfo').hide();
+                $('#ChequeReceiveAccountsInfo').hide();
+                $('#CardPaymentAccountHeadDiv').show();
+                $('#CardTypeDiv').hide();
                 $('#ChecquePaymentAccountHeadDiv').hide();
                 $('#PaidByOtherRoomDiv').hide();
                 $('#CompanyPaymentAccountHeadDiv').hide();
@@ -362,32 +384,52 @@
             $("#<%=txtCardNumber.ClientID %>").val(result.CardNumber)
             $("#<%=txtChecqueNumber.ClientID %>").val(result.ChecqueNumber)
 
-            if (result.PaymentMode == "Cash") {
+            if ($('#' + ddlPayMode).val() == "Cash") {
+                $('#CashReceiveAccountsInfo').show();
+                $('#CardReceiveAccountsInfo').hide();
+                $('#ChequeReceiveAccountsInfo').hide();
                 $('#CardPaymentAccountHeadDiv').hide();
                 $('#ChecquePaymentAccountHeadDiv').hide();
                 $('#PaidByOtherRoomDiv').hide();
                 $('#CompanyPaymentAccountHeadDiv').hide();
-                $('#CashPaymentAccountHeadDiv').show();
-                $('#BankPaymentAccountHeadDiv').hide();
-                IntegratedGeneralLedgerDivPanelHide();
             }
-            else if (result.PaymentMode == "Card") {
+            else if ($('#' + ddlPayMode).val() == "Card") {
+                $('#CashReceiveAccountsInfo').hide();
+                $('#CardReceiveAccountsInfo').show();
+                $('#ChequeReceiveAccountsInfo').hide();
                 $('#CardPaymentAccountHeadDiv').show();
+                $('#CardTypeDiv').show();
                 $('#ChecquePaymentAccountHeadDiv').hide();
                 $('#PaidByOtherRoomDiv').hide();
                 $('#CompanyPaymentAccountHeadDiv').hide();
-                $('#CashPaymentAccountHeadDiv').hide();
-                $('#BankPaymentAccountHeadDiv').hide();
-                IntegratedGeneralLedgerDivPanelHide();
             }
-            else if (result.PaymentMode == "Cheque") {
+            else if ($('#' + ddlPayMode).val() == "Cheque") {
+                $('#CashReceiveAccountsInfo').hide();
+                $('#CardReceiveAccountsInfo').hide();
+                $('#ChequeReceiveAccountsInfo').show();
                 $('#CardPaymentAccountHeadDiv').hide();
                 $('#ChecquePaymentAccountHeadDiv').show();
                 $('#PaidByOtherRoomDiv').hide();
                 $('#CompanyPaymentAccountHeadDiv').hide();
-                $('#CashPaymentAccountHeadDiv').hide();
-                $('#BankPaymentAccountHeadDiv').hide();
-                IntegratedGeneralLedgerDivPanelHide();
+            }
+            else if ($('#' + ddlPayMode).val() == "Company") {
+                $('#CashReceiveAccountsInfo').show();
+                $('#CardReceiveAccountsInfo').hide();
+                $('#ChequeReceiveAccountsInfo').hide();
+                $('#CardPaymentAccountHeadDiv').hide();
+                $('#ChecquePaymentAccountHeadDiv').hide();
+                $('#PaidByOtherRoomDiv').hide();
+                $('#CompanyPaymentAccountHeadDiv').hide();
+            }
+            else if ($('#' + ddlPayMode).val() == "M-Banking") {
+                $('#CashReceiveAccountsInfo').hide();
+                $('#CardReceiveAccountsInfo').hide();
+                $('#ChequeReceiveAccountsInfo').hide();
+                $('#CardPaymentAccountHeadDiv').show();
+                $('#CardTypeDiv').hide();
+                $('#ChecquePaymentAccountHeadDiv').hide();
+                $('#PaidByOtherRoomDiv').hide();
+                $('#CompanyPaymentAccountHeadDiv').hide();
             }
 
             return false;
@@ -431,7 +473,7 @@
             $("#<%=txtCalculatedLedgerAmount.ClientID %>").val('');
             $("#<%=txtConversionRate.ClientID %>").val('');
             $("#<%=btnGroupPaymentPreview.ClientID %>").hide();
-            
+
             $("#ContentPlaceHolder1_txtSrcRoomNumber").val('');
             //$("#ContentPlaceHolder1_ddlRegistrationId").val("");
             //$("#ContentPlaceHolder1_btnGroupPaymentPreview").hide();
@@ -446,7 +488,7 @@
             $('#ConversionPanel').hide();
             $("#<%=btnSave.ClientID %>").val("Save");
             MessagePanelHide();
-            
+
             return false;
         }
 
@@ -563,7 +605,25 @@
                     $("#<%=ddlCompanyBank.ClientID %>").focus();
                     return false;
                 }
-            }           
+            }
+            else if ($("#ContentPlaceHolder1_ddlPayMode").val() == "M-Banking") {
+                var txtBankId = $("#<%=ddlBankId.ClientID %>").val();
+                if (txtBankId == "") {
+                    toastr.warning("Please select bank.");
+                    $("#<%=ddlBankId.ClientID %>").focus();
+                    return false;
+                }
+                else if (txtBankId == "0") {
+                    toastr.warning("Please select bank.");
+                    $("#<%=ddlBankId.ClientID %>").focus();
+                    return false;
+                }
+                else if (txtBankId == null) {
+                    toastr.warning("Please select bank.");
+                    $("#<%=ddlBankId.ClientID %>").focus();
+                    return false;
+                }
+            }
 
             return true;
         }
@@ -755,9 +815,8 @@
                 }
             });
             if (paymentIdList != "") {
-                
+
                 var url = "/Banquet/Reports/frmReporReservationBillPayment.aspx?PaymentIdList=" + paymentIdList;
-                //var url = "/HotelManagement/Reports/frmReportGuestPaymentInvoice.aspx?PaymentIdList=" + paymentIdList;
                 var popup_window = "Preview";
                 window.open(url, popup_window, "width=745,height=780,left=300,top=50,location=no,toolbar=no,menubar=no,resizable=yes, scrollbars=1");
             }
@@ -767,12 +826,11 @@
         }
     </script>
     <style>
-        .ChkAllSelect
-        {
+        .ChkAllSelect {
             padding-left: 03px;
         }
-        .lblHeader
-        {
+
+        .lblHeader {
         }
     </style>
     <div id="MessageBox" class="alert alert-info" style="display: none;">
@@ -852,7 +910,8 @@
     </div>
     <div id="EntryPanel" class="panel panel-default">
         <div class="panel-heading">
-            Banquet Bill Payment Information</div>
+            Banquet Bill Payment Information
+        </div>
         <div class="panel-body">
             <div class="form-horizontal">
                 <div class="form-group" style="display: none;">
@@ -909,9 +968,7 @@
                     </div>
                     <div class="col-md-4">
                         <asp:DropDownList ID="ddlPaymentType" runat="server" CssClass="form-control" TabIndex="4">
-                            <%--<asp:ListItem Value="0">--- Please Select ---</asp:ListItem>--%>
                             <asp:ListItem Value="Advance">Advance</asp:ListItem>
-                            <%--<asp:ListItem Value="PaidOut">Paid Out</asp:ListItem>--%>
                         </asp:DropDownList>
                     </div>
                     <div class="col-md-2">
@@ -924,6 +981,7 @@
                             <asp:ListItem>Card</asp:ListItem>
                             <asp:ListItem>Cheque</asp:ListItem>
                             <%--<asp:ListItem>Company</asp:ListItem>--%>
+                            <asp:ListItem Value="M-Banking">M-Banking</asp:ListItem>
                         </asp:DropDownList>
                     </div>
                 </div>
@@ -1052,14 +1110,11 @@
                                 <asp:DropDownList ID="ddlCompanyBank" CssClass="form-control" runat="server" AutoPostBack="false">
                                 </asp:DropDownList>
                             </div>
-                            <%--<asp:DropDownList ID="ddlCompanyBank" runat="server" CssClass="ThreeColumnDropDownList"
-                            AutoPostBack="false">
-                        </asp:DropDownList>--%>
                         </div>
                     </div>
                 </div>
                 <div id="CardPaymentAccountHeadDiv" style="display: none;">
-                    <div class="form-group">
+                    <div class="form-group" id="CardTypeDiv">
                         <div class="col-md-2">
                             <asp:Label ID="Label2" runat="server" class="control-label required-field" Text="Card Type"></asp:Label>
                         </div>
@@ -1089,9 +1144,6 @@
                                 <asp:DropDownList ID="ddlBankId" CssClass="form-control" runat="server" AutoPostBack="false">
                                 </asp:DropDownList>
                             </div>
-                            <%--<asp:DropDownList ID="ddlBankId" runat="server" CssClass="ThreeColumnDropDownList"
-                            TabIndex="10">
-                        </asp:DropDownList>--%>
                         </div>
                     </div>
                     <div style="display: none;">
@@ -1137,7 +1189,8 @@
     </div>
     <div id="SearchPanel" class="panel panel-default">
         <div class="panel-heading">
-            Bill Payment Details</div>
+            Bill Payment Details
+        </div>
         <div class="panel-body">
             <asp:GridView ID="gvGuestHouseService" Width="100%" runat="server" AllowPaging="True"
                 AutoGenerateColumns="False" CellPadding="4" GridLines="None" AllowSorting="True"
@@ -1148,7 +1201,8 @@
                 <Columns>
                     <asp:TemplateField HeaderText="IDNO" Visible="False">
                         <ItemTemplate>
-                            <asp:Label ID="lblid" runat="server" Text='<%#Eval("PaymentId") %>'></asp:Label></ItemTemplate>
+                            <asp:Label ID="lblid" runat="server" Text='<%#Eval("PaymentId") %>'></asp:Label>
+                        </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Date" ItemStyle-Width="10%">
                         <ItemTemplate>

@@ -152,27 +152,36 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                     reportParam.Add(new ReportParameter("Path", "Hide"));
                 }
 
+                string strBillDisplayText = "";
+
                 if (Convert.ToInt32(waterMarkBo.SetupValue) == 1)
                 {
                     if (queryRePrint == "0")
                     {
+                        strBillDisplayText = "*** Bill Preview ***";
                         reportParam.Add(new ReportParameter("WaterMarkImagePath", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/Bill-Preview-Water-Mark-Restaurant.png")));
                     }
                     else
                     {
                         if (billBO.IsBillSettlement)
                         {
+                            strBillDisplayText = "*** Duplicate Bill ***";
                             reportParam.Add(new ReportParameter("WaterMarkImagePath", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/Bill-Duplicate-Water-Mark-Restaurant.png")));
                         }
                         else
                         {
+                            strBillDisplayText = "*** Bill Preview ***";
                             reportParam.Add(new ReportParameter("WaterMarkImagePath", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/Bill-Preview-Water-Mark-Restaurant.png")));
-                        }                        
-                    }                    
+                        }
+                    }
                 }
                 else
-                    reportParam.Add(new ReportParameter("WaterMarkImagePath", string.Empty));
+                {
+                    strBillDisplayText = string.Empty;
+                    reportParam.Add(new ReportParameter("WaterMarkImagePath", string.Empty));                    
+                }
 
+                reportParam.Add(new ReportParameter("BillDisplayText", strBillDisplayText));
                 reportParam.Add(new ReportParameter("ThankYouMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIThankYouMessege")));
                 reportParam.Add(new ReportParameter("CorporateAddress", hmCommonDA.GetCustomFieldValueByFieldName("paramGICorporateAddress")));
                 reportParam.Add(new ReportParameter("AggrimentMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIAggrimentMessege")));
