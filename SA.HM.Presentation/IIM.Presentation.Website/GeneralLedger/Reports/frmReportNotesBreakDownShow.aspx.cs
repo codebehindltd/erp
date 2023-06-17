@@ -120,7 +120,9 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             rvTransaction.ProcessingMode = ProcessingMode.Local;
 
             var reportPath = "";
-            reportPath = Server.MapPath(@"~/GeneralLedger/Reports/Rdlc/rptNotesBreakDown.rdlc");
+            //reportPath = Server.MapPath(@"~/GeneralLedger/Reports/Rdlc/rptNotesBreakDown.rdlc");
+
+            reportPath = Server.MapPath(@"~/GeneralLedger/Reports/Rdlc/rptGeneralNotesBreakDown.rdlc");
 
             if (!File.Exists(reportPath))
                 return;

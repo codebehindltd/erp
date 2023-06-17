@@ -109,14 +109,17 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             bool isIndividualLedger = (bool)nodeMatrix.IsTransactionalHead;
             var reportPath = "";
 
-            if (isIndividualLedger)
-            {
-                reportPath = Server.MapPath(@"~/GeneralLedger/Reports/Rdlc/rptGeneralLedger.rdlc");
-            }
-            else if (!isIndividualLedger)
-            {
-                reportPath = Server.MapPath(@"~/GeneralLedger/Reports/Rdlc/rptGeneralGroupLedger.rdlc");
-            }
+            //if (isIndividualLedger)
+            //{
+            //    reportPath = Server.MapPath(@"~/GeneralLedger/Reports/Rdlc/rptGeneralLedger.rdlc");
+            //}
+            //else if (!isIndividualLedger)
+            //{
+            //    reportPath = Server.MapPath(@"~/GeneralLedger/Reports/Rdlc/rptGeneralGroupLedger.rdlc");
+            //}
+
+            reportPath = Server.MapPath(@"~/GeneralLedger/Reports/Rdlc/rptPopupNotesBreakDown.rdlc");
+            
 
             if (!File.Exists(reportPath))
                 return;
