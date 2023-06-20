@@ -270,6 +270,26 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             reportParam.Add(new ReportParameter("ReportCurrency", reportCurrency));
             reportParam.Add(new ReportParameter("PrintDateTime", printDateTime));
 
+            //List<LedgerBookReportBO> generalLedger
+            foreach (LedgerBookReportBO row in generalLedger)
+            {
+                if (string.IsNullOrEmpty(row.Narration))
+                {
+                    row.Narration = row.NodeHead;
+                }
+
+                if (row.ClosingBalance == null)
+                {
+                    row.ClosingBalance = row.NodeBalanceAmount;
+                }
+
+                if (row.ClosingBalance == 0)
+                {
+                    row.ClosingBalance = row.NodeBalanceAmount;
+                }
+            }
+
+
             rvTransaction.LocalReport.SetParameters(reportParam);
             var reportDataSet = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataSet[0], generalLedger));

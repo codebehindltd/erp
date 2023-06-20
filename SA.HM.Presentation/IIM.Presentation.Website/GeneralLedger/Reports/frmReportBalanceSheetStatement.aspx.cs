@@ -57,7 +57,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             ReportPrinting print = new ReportPrinting();
 
             LocalReport rpt = rvTransaction.LocalReport;
-            var reportSource = print.PrintReport(rpt, HMConstants.PrintPageType.Landscape.ToString());
+            var reportSource = print.PrintReport(rpt, HMConstants.PrintPageType.Portrait.ToString());
 
             frmPrint.Attributes["src"] = reportSource;
         }
