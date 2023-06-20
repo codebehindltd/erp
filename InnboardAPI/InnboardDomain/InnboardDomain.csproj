@@ -182,6 +182,7 @@
     <Compile Include="Models\CommonReportConfigDetails.cs" />
     <Compile Include="Models\CommonReportConfigMaster.cs" />
     <Compile Include="Models\CommonSetup.cs" />
+    <Compile Include="Models\CustomFieldBO.cs" />
     <Compile Include="Models\DashboardItem.cs" />
     <Compile Include="Models\DashboardManagement.cs" />
     <Compile Include="Models\DealImpFeedback.cs" />

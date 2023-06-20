@@ -35,6 +35,7 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment.Reports
 
         protected void btnGenarate_Click(object sender, EventArgs e)
         {
+            HMCommonDA hmCommonDA = new HMCommonDA();
             rvTransaction.LocalReport.DataSources.Clear();
             rvTransaction.ProcessingMode = ProcessingMode.Local;
             rvTransaction.LocalReport.EnableExternalImages = true;
@@ -121,7 +122,43 @@ namespace HotelManagement.Presentation.Website.PurchaseManagment.Reports
             reportParam.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
             reportParam.Add(new ReportParameter("PrintDateTime", printDate));
 
-            HMCommonDA hmCommonDA = new HMCommonDA();
+            string notesNo = string.Empty;
+            string notesHead = string.Empty;
+            string supplierLedgerNotesHead = string.Empty;
+
+            NodeMatrixBO supplierMatrixBO = new NodeMatrixBO();
+            NodeMatrixDA supplierMatrixDA = new NodeMatrixDA();
+            supplierMatrixBO = supplierMatrixDA.GetNodeMatrixInfoById(23);
+            if (supplierMatrixBO != null)
+            {
+                notesNo = supplierMatrixBO.NotesNumber;
+                notesHead = supplierMatrixBO.NodeHead;
+            }
+
+
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+            HMCommonSetupBO homePageSetupBO = new HMCommonSetupBO();
+            homePageSetupBO = commonSetupDA.GetCommonConfigurationInfo("SupplierAccountsHeadId", "SupplierAccountsHeadId");
+            if (homePageSetupBO != null)
+            {
+                int supplierAccountsPostingId;
+                supplierAccountsPostingId = Convert.ToInt32(homePageSetupBO.SetupValue);
+
+                supplierMatrixBO = supplierMatrixDA.GetNodeMatrixInfoById(supplierAccountsPostingId);
+                if (supplierMatrixBO != null)
+                {
+                    supplierLedgerNotesHead = supplierMatrixBO.NodeHead;
+                }
+            }
+
+            reportParam.Add(new ReportParameter("ReportDateFrom", startDate));
+            reportParam.Add(new ReportParameter("ReportDateTo", endDate));
+
+            reportParam.Add(new ReportParameter("NotesNo", notesNo));
+            reportParam.Add(new ReportParameter("NotesHead", notesHead));
+            reportParam.Add(new ReportParameter("SupplierLedgerNotesHead", supplierLedgerNotesHead));
+            
             string ImageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
             reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
 

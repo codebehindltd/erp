@@ -89,6 +89,7 @@
     <Compile Include="DataAccesses\BanquetReservationDataAccess.cs" />
     <Compile Include="DataAccesses\BanquetReservationDetailDataAccess.cs" />
     <Compile Include="DataAccesses\CommonCostCenterDataAccess.cs" />
+    <Compile Include="DataAccesses\CommonDataAccess.cs" />
     <Compile Include="DataAccesses\EmployeeDataAccess.cs" />
     <Compile Include="DataAccesses\GenericDataAccess.cs" />
     <Compile Include="DataAccesses\GLLedgerMasterDataAccess.cs" />

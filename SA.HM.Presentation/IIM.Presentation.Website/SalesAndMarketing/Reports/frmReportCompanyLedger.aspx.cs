@@ -19,6 +19,7 @@ using HotelManagement.Entity.HotelManagement;
 using HotelManagement.Data.HotelManagement;
 using HotelManagement.Entity.GeneralLedger;
 using HotelManagement.Data.GeneralLedger;
+using System.Web.Security;
 
 namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
 {
@@ -36,6 +37,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
         }
         protected void btnGenarate_Click(object sender, EventArgs e)
         {
+            HMCommonDA hmCommonDA = new HMCommonDA();
             rvTransaction.LocalReport.DataSources.Clear();
             rvTransaction.ProcessingMode = ProcessingMode.Local;
             rvTransaction.LocalReport.EnableExternalImages = true;
@@ -118,11 +120,46 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
             reportParam.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
             reportParam.Add(new ReportParameter("PrintDateTime", printDate));
 
+            string notesNo = string.Empty;
+            string notesHead = string.Empty;
+            string companyLedgerNotesHead = string.Empty;
+
+            NodeMatrixBO companyMatrixBO = new NodeMatrixBO();
+            NodeMatrixDA companyMatrixDA = new NodeMatrixDA();
+            companyMatrixBO = companyMatrixDA.GetNodeMatrixInfoById(17);
+            if (companyMatrixBO != null)
+            {
+                notesNo = companyMatrixBO.NotesNumber;
+                notesHead = companyMatrixBO.NodeHead;
+            }
+
+            List<CommonPaymentModeBO> commonPaymentModeBOList = new List<CommonPaymentModeBO>();
+            commonPaymentModeBOList = hmCommonDA.GetCommonPaymentModeInfo("All");
+            CommonPaymentModeBO companyPaymentModeInfo = commonPaymentModeBOList.Where(x => x.PaymentMode == "Company").FirstOrDefault();
+            if (companyPaymentModeInfo != null)
+            {
+                int companyAccountsPostingId;
+                companyAccountsPostingId = companyPaymentModeInfo.PaymentAccountsPostingId;
+
+                companyMatrixBO = companyMatrixDA.GetNodeMatrixInfoById(companyAccountsPostingId);
+                if (companyMatrixBO != null)
+                {
+                    companyLedgerNotesHead = companyMatrixBO.NodeHead;
+                }
+            }
+
+            reportParam.Add(new ReportParameter("ReportDateFrom", startDate));
+            reportParam.Add(new ReportParameter("ReportDateTo", endDate));
+
+            reportParam.Add(new ReportParameter("NotesNo", notesNo));
+            reportParam.Add(new ReportParameter("NotesHead", notesHead));
+            reportParam.Add(new ReportParameter("CompanyLedgerNotesHead", companyLedgerNotesHead));
+
             string searchNarration = txtSearchNarration.Text;
             string fromAmount = txtFromAmount.Text;
             string toAmount = txtToAmount.Text;
 
-            HMCommonDA hmCommonDA = new HMCommonDA();
+            
             string ImageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
             reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
 

@@ -303,7 +303,7 @@
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\RestaurantBillController.cs" />
     <Compile Include="Controllers\SyncController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

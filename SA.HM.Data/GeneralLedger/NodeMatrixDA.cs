@@ -456,6 +456,7 @@ namespace HotelManagement.Data.GeneralLedger
                                 nodeMatrixBO.NodeNumber = reader["NodeNumber"].ToString();
                                 nodeMatrixBO.NodeHead = reader["NodeHead"].ToString();
                                 nodeMatrixBO.HeadWithCode = reader["HeadWithCode"].ToString();
+                                nodeMatrixBO.NotesNumber = reader["NotesNumber"].ToString();
                                 nodeMatrixBO.Lvl = Convert.ToInt32(reader["Lvl"]);
                                 nodeMatrixBO.Hierarchy = reader["Hierarchy"].ToString();
                                 nodeMatrixBO.HierarchyIndex = reader["HierarchyIndex"].ToString();
