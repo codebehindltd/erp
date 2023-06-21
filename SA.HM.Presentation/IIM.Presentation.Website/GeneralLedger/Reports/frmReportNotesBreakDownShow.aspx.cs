@@ -182,6 +182,9 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                 generalLedger = commonReportDa.GetNotesBreakdownReport(FromDate, ToDate, nodeId, companyId, projectId, donorId, notesNodeId, withOrWithoutOpening);
             }
 
+            //generalLedger = generalLedger.Where(x => x.ClosingBalance > 0).ToList();
+
+
             string companyName = string.Empty, companyProject = string.Empty, reportCurrency = string.Empty, printDateTime = string.Empty;
             // // // ------- Multi Currency Related Effects -------------------------- Start
             decimal CurrencyConversionRate = 1;

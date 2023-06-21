@@ -226,10 +226,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             reportSearchType = ddlSearchType.SelectedValue;
 
             frmPrint.Attributes["src"] = "";
-
-
-
-
         }
 
         private void LoadNotesNumber()

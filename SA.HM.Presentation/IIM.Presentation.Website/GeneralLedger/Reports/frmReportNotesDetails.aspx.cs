@@ -215,6 +215,8 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                 }
             }
 
+            //generalLedger = generalLedger.Where(x => x.ClosingBalance > 0).ToList();
+
             string companyName = string.Empty, companyProject = string.Empty, reportCurrency = string.Empty, printDateTime = string.Empty;
             // // // ------- Multi Currency Related Effects -------------------------- Start
             decimal CurrencyConversionRate = 1;
@@ -276,6 +278,11 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                 if (string.IsNullOrEmpty(row.Narration))
                 {
                     row.Narration = row.NodeHead;
+                }
+
+                if (row.NodeBalanceAmount == null)
+                {
+                    row.NodeBalanceAmount = 0;
                 }
 
                 if (row.ClosingBalance == null)
