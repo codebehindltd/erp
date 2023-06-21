@@ -18,5 +18,13 @@ namespace InnboardDataAccess.DataAccesses
             var result = await InnboardDBContext.Database.SqlQuery<CustomFieldBO>("EXEC [dbo].[GetCustomField_SP] @FieldName", param1).ToListAsync();
             return result;
         }
+
+        public async Task<List<PropertyInformationBO>> GetPropertyInformation(string transactionType, int transactionId)
+        {
+            SqlParameter paramTransactionType = new SqlParameter("@TransactionType", transactionType);
+            SqlParameter paramTransactionId = new SqlParameter("@TransactionId", transactionId);
+            var result = await InnboardDBContext.Database.SqlQuery<PropertyInformationBO>("EXEC [dbo].[GetPropertyInformationForApps_SP] @TransactionType @TransactionId", paramTransactionType, paramTransactionId).ToListAsync();
+            return result;
+        }
     }
 }

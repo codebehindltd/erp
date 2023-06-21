@@ -179,7 +179,7 @@ namespace InnboardDataAccess.DataAccesses
             SqlParameter param1 = new SqlParameter("@UserInfoId", userId);
             SqlParameter param2 = new SqlParameter("@LeaveId", leaveId);
          
-            var result = await InnboardDBContext.Database.SqlQuery<LeaveInformationBO>("EXEC [dbo].[GetEmpLeaveInformationByIdForApps_SP_SP] @UserInfoId, @LeaveId", param1, param2).ToListAsync();
+            var result = await InnboardDBContext.Database.SqlQuery<LeaveInformationBO>("EXEC [dbo].[GetEmpLeaveInformationByIdForApps_SP] @UserInfoId, @LeaveId", param1, param2).ToListAsync();
             return result;
         }
 

@@ -23,5 +23,15 @@ namespace InnboardAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetPropertyInformation")]
+        public async Task<IHttpActionResult> GetPropertyInformation(string transactionType, int transactionId)
+        {
+            CommonDataAccess db = new CommonDataAccess();
+            var result = await db.GetPropertyInformation(transactionType, transactionId);
+            return Ok(result);
+        }
+
     }
 }

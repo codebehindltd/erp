@@ -14,5 +14,8 @@ namespace InnboardDomain.Models
         public string Description { get; set; }
         public bool ActiveStat { get; set; }
         public DateTime TransactionDate { get; set; }
+
+
+
     }
 }

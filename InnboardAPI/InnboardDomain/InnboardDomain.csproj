@@ -251,6 +251,7 @@
     <Compile Include="Models\PayrollEmpTracking.cs" />
     <Compile Include="Models\Payroll\LeaveInformationBO.cs" />
     <Compile Include="Models\Payroll\LeaveTakenNBalanceBO.cs" />
+    <Compile Include="Models\PropertyInformationBO.cs" />
     <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Utility\CommonHelper.cs" />
     <Compile Include="ViewModel\GLLedgerMasterVwBO.cs" />
