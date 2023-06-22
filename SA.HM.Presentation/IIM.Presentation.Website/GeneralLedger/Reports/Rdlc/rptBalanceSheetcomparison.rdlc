@@ -108,7 +108,7 @@
 					</Paragraph>
 				</Paragraphs>
 				<rd:DefaultName>Textbox7</rd:DefaultName>
-				<Top>0.78746in</Top>
+				<Top>0.83746in</Top>
 				<Height>0.29166in</Height>
 				<Width>7.97569in</Width>
 				<Style>
@@ -122,7 +122,7 @@
 				</Style>
 			</Textbox>
 			<Line Name="Line3">
-				<Top>0.76611in</Top>
+				<Top>0.81611in</Top>
 				<Height>0in</Height>
 				<Width>7.97569in</Width>
 				<ZIndex>1</ZIndex>
@@ -140,7 +140,7 @@
 							<Width>0.80208in</Width>
 						</TablixColumn>
 						<TablixColumn>
-							<Width>7.17361in</Width>
+							<Width>7.16627in</Width>
 						</TablixColumn>
 					</TablixColumns>
 					<TablixRows>
@@ -168,7 +168,7 @@
 											<TablixBody>
 												<TablixColumns>
 													<TablixColumn>
-														<Width>7.17361in</Width>
+														<Width>7.16627in</Width>
 													</TablixColumn>
 												</TablixColumns>
 												<TablixRows>
@@ -222,10 +222,10 @@
 																		<TablixBody>
 																			<TablixColumns>
 																				<TablixColumn>
-																					<Width>4.00838in</Width>
+																					<Width>4.0047in</Width>
 																				</TablixColumn>
 																				<TablixColumn>
-																					<Width>3.16524in</Width>
+																					<Width>3.16156in</Width>
 																				</TablixColumn>
 																			</TablixColumns>
 																			<TablixRows>
@@ -365,7 +365,7 @@
 				</TablixRowHierarchy>
 				<Top>0.0125in</Top>
 				<Height>0.78125in</Height>
-				<Width>7.97569in</Width>
+				<Width>7.96835in</Width>
 				<ZIndex>2</ZIndex>
 				<Style>
 					<Border>
@@ -373,60 +373,25 @@
 					</Border>
 				</Style>
 			</Tablix>
-			<Textbox Name="CompanyName5">
-				<CanGrow>true</CanGrow>
-				<KeepTogether>true</KeepTogether>
-				<Paragraphs>
-					<Paragraph>
-						<TextRuns>
-							<TextRun>
-								<Value>="Date From " + Parameters!ReportDateFrom.Value + " To " + Parameters!ReportDateTo.Value</Value>
-								<Style>
-									<FontSize>8pt</FontSize>
-									<FontWeight>Bold</FontWeight>
-									<Color>SteelBlue</Color>
-								</Style>
-							</TextRun>
-						</TextRuns>
-						<Style>
-							<TextAlign>Left</TextAlign>
-						</Style>
-					</Paragraph>
-				</Paragraphs>
-				<rd:DefaultName>CompanyName</rd:DefaultName>
-				<Top>1.10968in</Top>
-				<Height>0.19792in</Height>
-				<Width>7.97569in</Width>
-				<ZIndex>3</ZIndex>
-				<Style>
-					<Border>
-						<Style>None</Style>
-					</Border>
-					<PaddingLeft>2pt</PaddingLeft>
-					<PaddingRight>2pt</PaddingRight>
-					<PaddingTop>2pt</PaddingTop>
-					<PaddingBottom>2pt</PaddingBottom>
-				</Style>
-			</Textbox>
 			<Tablix Name="Tablix6">
 				<TablixBody>
 					<TablixColumns>
 						<TablixColumn>
-							<Width>3.94335in</Width>
+							<Width>3.97323in</Width>
 						</TablixColumn>
 						<TablixColumn>
-							<Width>1.31985in</Width>
+							<Width>1.06221in</Width>
 						</TablixColumn>
 						<TablixColumn>
-							<Width>1.34375in</Width>
+							<Width>1.46645in</Width>
 						</TablixColumn>
 						<TablixColumn>
-							<Width>1.34375in</Width>
+							<Width>1.46645in</Width>
 						</TablixColumn>
 					</TablixColumns>
 					<TablixRows>
 						<TablixRow>
-							<Height>0.48921in</Height>
+							<Height>0.25in</Height>
 							<TablixCells>
 								<TablixCell>
 									<CellContents>
@@ -434,19 +399,6 @@
 											<CanGrow>true</CanGrow>
 											<KeepTogether>true</KeepTogether>
 											<Paragraphs>
-												<Paragraph>
-													<TextRuns>
-														<TextRun>
-															<Value />
-															<Style>
-																<FontSize>8pt</FontSize>
-																<FontWeight>Bold</FontWeight>
-																<Color>White</Color>
-															</Style>
-														</TextRun>
-													</TextRuns>
-													<Style />
-												</Paragraph>
 												<Paragraph>
 													<TextRuns>
 														<TextRun>
@@ -486,19 +438,6 @@
 												<Paragraph>
 													<TextRuns>
 														<TextRun>
-															<Value />
-															<Style>
-																<FontSize>8pt</FontSize>
-																<FontWeight>Bold</FontWeight>
-																<Color>White</Color>
-															</Style>
-														</TextRun>
-													</TextRuns>
-													<Style />
-												</Paragraph>
-												<Paragraph>
-													<TextRuns>
-														<TextRun>
 															<Value>Notes</Value>
 															<Style>
 																<FontSize>8pt</FontSize>
@@ -528,47 +467,14 @@
 								</TablixCell>
 								<TablixCell>
 									<CellContents>
-										<Textbox Name="Textbox16">
+										<Textbox Name="Textbox8">
 											<CanGrow>true</CanGrow>
 											<KeepTogether>true</KeepTogether>
 											<Paragraphs>
 												<Paragraph>
 													<TextRuns>
 														<TextRun>
-															<Value>=Fields!CurrentYearDateFrom.Value</Value>
-															<Style>
-																<FontSize>8pt</FontSize>
-																<FontWeight>Bold</FontWeight>
-																<Format>dd-MMM-yy</Format>
-																<Color>White</Color>
-															</Style>
-														</TextRun>
-														<TextRun>
-															<Value>  To </Value>
-															<Style>
-																<FontSize>8pt</FontSize>
-																<FontWeight>Bold</FontWeight>
-																<Color>White</Color>
-															</Style>
-														</TextRun>
-														<TextRun>
-															<Value>=Fields!CurrentYearDateTo.Value</Value>
-															<Style>
-																<FontSize>8pt</FontSize>
-																<FontWeight>Bold</FontWeight>
-																<Format>dd-MMM-yy</Format>
-																<Color>White</Color>
-															</Style>
-														</TextRun>
-													</TextRuns>
-													<Style>
-														<TextAlign>Right</TextAlign>
-													</Style>
-												</Paragraph>
-												<Paragraph>
-													<TextRuns>
-														<TextRun>
-															<Value>Amount</Value>
+															<Value>= Parameters!ReportDateFrom.Value + " To " + Parameters!ReportDateTo.Value</Value>
 															<Style>
 																<FontSize>8pt</FontSize>
 																<FontWeight>Bold</FontWeight>
@@ -581,7 +487,7 @@
 													</Style>
 												</Paragraph>
 											</Paragraphs>
-											<rd:DefaultName>Textbox16</rd:DefaultName>
+											<rd:DefaultName>Textbox1</rd:DefaultName>
 											<Style>
 												<Border>
 													<Color>LightGrey</Color>
@@ -599,47 +505,14 @@
 								</TablixCell>
 								<TablixCell>
 									<CellContents>
-										<Textbox Name="Textbox18">
+										<Textbox Name="Textbox13">
 											<CanGrow>true</CanGrow>
 											<KeepTogether>true</KeepTogether>
 											<Paragraphs>
 												<Paragraph>
 													<TextRuns>
 														<TextRun>
-															<Value>=Fields!PreviousYearDateFrom.Value</Value>
-															<Style>
-																<FontSize>8pt</FontSize>
-																<FontWeight>Bold</FontWeight>
-																<Format>dd-MMM-yy</Format>
-																<Color>White</Color>
-															</Style>
-														</TextRun>
-														<TextRun>
-															<Value> To </Value>
-															<Style>
-																<FontSize>8pt</FontSize>
-																<FontWeight>Bold</FontWeight>
-																<Color>White</Color>
-															</Style>
-														</TextRun>
-														<TextRun>
-															<Value>=Fields!PreviousYearDateTo.Value</Value>
-															<Style>
-																<FontSize>8pt</FontSize>
-																<FontWeight>Bold</FontWeight>
-																<Format>dd-MMM-yy</Format>
-																<Color>White</Color>
-															</Style>
-														</TextRun>
-													</TextRuns>
-													<Style>
-														<TextAlign>Right</TextAlign>
-													</Style>
-												</Paragraph>
-												<Paragraph>
-													<TextRuns>
-														<TextRun>
-															<Value>Amount</Value>
+															<Value>=Parameters!ReportDateFrom2.Value + " To " + Parameters!ReportDateTo2.Value</Value>
 															<Style>
 																<FontSize>8pt</FontSize>
 																<FontWeight>Bold</FontWeight>
@@ -652,7 +525,7 @@
 													</Style>
 												</Paragraph>
 											</Paragraphs>
-											<rd:DefaultName>Textbox18</rd:DefaultName>
+											<rd:DefaultName>Textbox1</rd:DefaultName>
 											<Style>
 												<Border>
 													<Color>LightGrey</Color>
@@ -762,7 +635,7 @@
 															<Value>=Fields!Notes.Value</Value>
 															<Style>
 																<FontSize>8pt</FontSize>
-																<TextDecoration>Underline</TextDecoration>
+																<TextDecoration>None</TextDecoration>
 															</Style>
 														</TextRun>
 													</TextRuns>
@@ -770,13 +643,6 @@
 												</Paragraph>
 											</Paragraphs>
 											<rd:DefaultName>Notes</rd:DefaultName>
-											<ActionInfo>
-												<Actions>
-													<Action>
-														<Hyperlink>=IIF(Fields!Notes.Value = "", false, "javascript:void(OpenNotesDetailReport(" &amp; Fields!NodeId.Value &amp; "," &amp; "'" &amp; Replace(Fields!Particulars.Value, "'", "") &amp; "','"&amp; Fields!Notes.Value &amp; "'" &amp; "))")</Hyperlink>
-													</Action>
-												</Actions>
-											</ActionInfo>
 											<Style>
 												<Border>
 													<Color>LightGrey</Color>
@@ -1030,11 +896,10 @@
 					</TablixMembers>
 				</TablixRowHierarchy>
 				<DataSetName>BalanceSheetComparison</DataSetName>
-				<Top>1.36454in</Top>
-				<Left>0.025in</Left>
-				<Height>1.10421in</Height>
-				<Width>7.9507in</Width>
-				<ZIndex>4</ZIndex>
+				<Top>1.16454in</Top>
+				<Height>0.865in</Height>
+				<Width>7.96834in</Width>
+				<ZIndex>3</ZIndex>
 				<Style>
 					<Border>
 						<Style>None</Style>
@@ -1042,10 +907,10 @@
 				</Style>
 			</Tablix>
 		</ReportItems>
-		<Height>2.58333in</Height>
+		<Height>2.30092in</Height>
 		<Style />
 	</Body>
-	<Width>7.99652in</Width>
+	<Width>7.9757in</Width>
 	<Page>
 		<PageFooter>
 			<Height>0.27083in</Height>
@@ -1268,6 +1133,18 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="ReportCurrency">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ReportDateFrom2">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ReportDateTo2">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>

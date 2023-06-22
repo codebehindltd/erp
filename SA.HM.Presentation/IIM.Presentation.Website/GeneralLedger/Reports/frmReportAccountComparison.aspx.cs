@@ -187,11 +187,12 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                 }
             }
 
-            DateTime? FromDate2 = null, ToDate2 = null;
-            DateTime FromDate, ToDate;
+            DateTime FromDate = hmUtility.GetDateTimeFromString(startDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+            DateTime ToDate = hmUtility.GetDateTimeFromString(endDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1).AddSeconds(-1);
 
-            FromDate = hmUtility.GetDateTimeFromString(startDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
-            ToDate = hmUtility.GetDateTimeFromString(endDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1).AddSeconds(-1);
+            DateTime FromDate2 = hmUtility.GetDateTimeFromString(startDate2, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+            DateTime ToDate2 = hmUtility.GetDateTimeFromString(endDate2, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1).AddSeconds(-1);
+
 
             if (!string.IsNullOrEmpty(startDate2))
             {
@@ -301,8 +302,12 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             paramReport.Add(new ReportParameter("CompanyAddress", companyAddress));
             paramReport.Add(new ReportParameter("CompanyWeb", webAddress));
             paramReport.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + imageName)));
-            paramReport.Add(new ReportParameter("ReportDateFrom", startDate));
-            paramReport.Add(new ReportParameter("ReportDateTo", endDate));
+
+            paramReport.Add(new ReportParameter("ReportDateFrom", hmUtility.GetStringFromDateTime(FromDate)));
+            paramReport.Add(new ReportParameter("ReportDateTo", hmUtility.GetStringFromDateTime(ToDate)));
+
+            paramReport.Add(new ReportParameter("ReportDateFrom2", hmUtility.GetStringFromDateTime(FromDate2)));
+            paramReport.Add(new ReportParameter("ReportDateTo2", hmUtility.GetStringFromDateTime(ToDate2)));
 
             paramReport.Add(new ReportParameter("CompanyName", companyName));
             paramReport.Add(new ReportParameter("CompanyProject", projectName));

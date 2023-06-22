@@ -20,9 +20,10 @@
 
                 var startDate = '', endDate = '', fiscalYearId = '', startDate2 = '', endDate2 = '';
                 var companyId = 0, projectId = 0, donorId = 0, notesNodes = '';
-                var searchType = "";
+                var searchType = "", withOrWithoutOpening = "";
 
                 searchType = $("#ContentPlaceHolder1_ddlSearchType").val();
+                withOrWithoutOpening = $("#ContentPlaceHolder1_dllWithOrWithoutOpening").val();
 
                 if ($("#ContentPlaceHolder1_ddlSearchType").val() == "1") {
                     fiscalYearId = $("#ContentPlaceHolder1_hfFiscalYear").val();
@@ -34,7 +35,7 @@
                     }
 
                     if ($("#ContentPlaceHolder1_txtEndDate").val() != "") {
-                        startDate = $("#ContentPlaceHolder1_txtEndDate").val();
+                        endDate = $("#ContentPlaceHolder1_txtEndDate").val();
                     }
 
                     if ($("#ContentPlaceHolder1_txtStartDate2").val() != "") {
@@ -42,7 +43,7 @@
                     }
 
                     if ($("#ContentPlaceHolder1_txtEndDate2").val() != "") {
-                        startDate2 = $("#ContentPlaceHolder1_txtEndDate2").val();
+                        endDate2 = $("#ContentPlaceHolder1_txtEndDate2").val();
                     }
                 }
 
@@ -61,8 +62,8 @@
                 notesNodes = $("#ContentPlaceHolder1_hfNotesNodes").val();
 
                 var iframeid = 'printDocNotes';
-                var url = "/GeneralLedger/Reports/frmReportNotesBreakDownShow.aspx?&sd=" + startDate + "&ed=" + endDate + "&sd2=" + startDate2 + "&ed2=" + endDate2 + "&st=" + searchType + "&fy=" + fiscalYearId
-                    + "&cp=" + companyId + "&pj=" + projectId + "&dr=" + donorId + "&nod=" + notesNodes;
+                var url = "/GeneralLedger/Reports/frmReportNotesBreakDownShowComparison.aspx?&sd=" + startDate + "&ed=" + endDate + "&sd2=" + startDate2 + "&ed2=" + endDate2 + "&st=" + searchType + "&fy=" + fiscalYearId
+                    + "&cp=" + companyId + "&pj=" + projectId + "&dr=" + donorId + "&nod=" + notesNodes + "&wop=" + withOrWithoutOpening;
                 parent.document.getElementById(iframeid).src = url;
             }
 
@@ -485,7 +486,7 @@
                 Report::Notes Break Down Information
             </div>
             <div class="panel-body">
-                <iframe id="printDocNotes" name="printDoc" width="100%" frameborder="0"
+                <iframe id="printDocNotes" name="printDoc" width="100%" height="650" frameborder="0"
                     style="overflow: hidden; background-color: White;"></iframe>
             </div>
         </div>

@@ -273,6 +273,7 @@
     <Content Include="GeneralLedger\OpeningBalance.aspx" />
     <Content Include="GeneralLedger\Reports\frmReportBudgetStatement.aspx" />
     <Content Include="GeneralLedger\Reports\frmReportLocationWiseStockForProject.aspx" />
+    <Content Include="GeneralLedger\Reports\frmReportNotesBreakDownShowComparison.aspx" />
     <Content Include="HMCommon\CommonConfiguration.aspx" />
     <Content Include="HMCommon\DataSynchronization.aspx" />
     <Content Include="HMCommon\frmPaymentInstruction.aspx" />
@@ -862,6 +863,7 @@
     <Content Include="Banquet\Reports\Rdlc\RptReportReservationKitchenSheet.rdlc" />
     <Content Include="GeneralLedger\Reports\Rdlc\rptPopupNotesBreakDown.rdlc" />
     <Content Include="GeneralLedger\Reports\Rdlc\rptGeneralNotesBreakDown.rdlc" />
+    <Content Include="GeneralLedger\Reports\Rdlc\rptGeneralNotesBreakDownComparison.rdlc" />
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />
@@ -2726,6 +2728,13 @@
     </Compile>
     <Compile Include="GeneralLedger\Reports\frmReportLocationWiseStockForProject.aspx.designer.cs">
       <DependentUpon>frmReportLocationWiseStockForProject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralLedger\Reports\frmReportNotesBreakDownShowComparison.aspx.cs">
+      <DependentUpon>frmReportNotesBreakDownShowComparison.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GeneralLedger\Reports\frmReportNotesBreakDownShowComparison.aspx.designer.cs">
+      <DependentUpon>frmReportNotesBreakDownShowComparison.aspx</DependentUpon>
     </Compile>
     <Compile Include="HMCommon\CommonConfiguration.aspx.cs">
       <DependentUpon>CommonConfiguration.aspx</DependentUpon>
