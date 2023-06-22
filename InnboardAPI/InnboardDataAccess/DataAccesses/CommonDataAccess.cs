@@ -23,7 +23,7 @@ namespace InnboardDataAccess.DataAccesses
         {
             SqlParameter paramTransactionType = new SqlParameter("@TransactionType", transactionType);
             SqlParameter paramTransactionId = new SqlParameter("@TransactionId", transactionId);
-            var result = await InnboardDBContext.Database.SqlQuery<PropertyInformationBO>("EXEC [dbo].[GetPropertyInformationForApps_SP] @TransactionType @TransactionId", paramTransactionType, paramTransactionId).ToListAsync();
+            var result = await InnboardDBContext.Database.SqlQuery<PropertyInformationBO>("EXEC [dbo].[GetPropertyInformationForApps_SP] @TransactionType, @TransactionId", paramTransactionType, paramTransactionId).ToListAsync();
             return result;
         }
     }
