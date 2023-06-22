@@ -470,7 +470,7 @@
     </div>
     <div id="ReportPanel" class="panel panel-default" style="display: none;">
         <div class="panel-heading">
-            Report:: Profit and Loss Statement
+            Report:: Comparative Accounts
         </div>
         <div class="panel-body">
             <div class="ReporContainerDiv" style="overflow: scroll;">
@@ -483,7 +483,7 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                Report::Notes Break Down Information
+                Report:: Comparative Notes Break Down
             </div>
             <div class="panel-body">
                 <iframe id="printDocNotes" name="printDoc" width="100%" height="650" frameborder="0"

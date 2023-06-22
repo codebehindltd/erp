@@ -414,7 +414,7 @@
                 Report::Notes Break Down Information
             </div>
             <div class="panel-body">
-                <iframe id="printDocNotes" name="printDoc" width="100%" frameborder="0"
+                <iframe id="printDocNotes" name="printDoc" height="650" width="100%" frameborder="0"
                     style="overflow: hidden; background-color: White;"></iframe>
             </div>
         </div>
