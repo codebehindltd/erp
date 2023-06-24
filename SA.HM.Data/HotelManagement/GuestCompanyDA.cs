@@ -962,6 +962,7 @@ namespace HotelManagement.Data.HotelManagement
                                 GuestCompanyBO guestCompany = new GuestCompanyBO();
 
                                 guestCompany.CompanyId = Convert.ToInt32(reader["CompanyId"]);
+                                guestCompany.CompanyNumber = reader["CompanyNumber"].ToString();
                                 guestCompany.CompanyName = reader["CompanyName"].ToString();
                                 guestCompany.CompanyAddress = reader["CompanyAddress"].ToString();
                                 guestCompany.EmailAddress = reader["EmailAddress"].ToString();

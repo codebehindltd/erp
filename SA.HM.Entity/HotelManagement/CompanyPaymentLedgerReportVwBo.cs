@@ -13,5 +13,7 @@ namespace HotelManagement.Entity.HotelManagement
         public decimal? BalanceCommulative { get; set; }
         public string ContactName { get; set; }
         public string CurrencyName { get; set; }
+        public Nullable<decimal> PreviousYearClosingBalance { get; set; }
+        public Nullable<decimal> CurrentYearClosingBalance { get; set; }
     }
 }

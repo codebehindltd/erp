@@ -357,10 +357,13 @@
                     <div class="col-md-4">
                         <asp:DropDownList ID="ddlReportType" runat="server" CssClass="form-control" TabIndex="2">
                             <asp:ListItem Value="0">--- Report Type ---</asp:ListItem>
-                            <asp:ListItem Value="CashFlow">Cash Flow</asp:ListItem>
+                            <asp:ListItem Value="CashFlow">Cash Flow</asp:ListItem>                            
+                            <asp:ListItem Value="ReceiptNPaymentStatement">Receipt & Payment Statement</asp:ListItem>
                             <asp:ListItem Value="ProfitLoss">Profit Loss Statement</asp:ListItem>
                             <asp:ListItem Value="BalanceSheet">Balance Sheet</asp:ListItem>
-                            <asp:ListItem Value="ReceiptNPaymentStatement">Receipt & Payment Statement</asp:ListItem>
+                            <asp:ListItem Value="CompanyLedger">Company Ledger</asp:ListItem>
+                            <asp:ListItem Value="SupplierLedger">Supplier Ledger</asp:ListItem>
+
                         </asp:DropDownList>
                     </div>
                     <div class="col-md-2">
@@ -481,7 +484,7 @@
                 </rsweb:ReportViewer>
             </div>
         </div>
-        <div class="panel panel-default">
+        <div id="ComparativeNotesBreakDownDiv" class="panel panel-default" runat="server">
             <div class="panel-heading">
                 Report:: Comparative Notes Break Down
             </div>
