@@ -926,6 +926,7 @@
     <Content Include="SalesAndMarketing\Reports\Rdlc\RptCompanyLedger.rdlc" />
     <Content Include="PurchaseManagment\Reports\Rdlc\RptSupplierLedger.rdlc" />
     <Content Include="SalesAndMarketing\Reports\Rdlc\RptCompanyLedgerComparison.rdlc" />
+    <Content Include="PurchaseManagment\Reports\Rdlc\RptSupplierLedgerComparison.rdlc" />
     <None Include="Properties\PublishProfiles\LeadingEdge.pubxml" />
     <Content Include="SalesAndMarketing\RestaurantSalesOrderMM.Master" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />

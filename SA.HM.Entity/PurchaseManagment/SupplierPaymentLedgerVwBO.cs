@@ -18,5 +18,7 @@ namespace HotelManagement.Entity.PurchaseManagment
         public decimal? BalanceCommulative { get; set; }
         public string SupplierName { get; set; }
         public string CurrencyName { get; set; }
+        public Nullable<decimal> PreviousYearClosingBalance { get; set; }
+        public Nullable<decimal> CurrentYearClosingBalance { get; set; }
     }
 }

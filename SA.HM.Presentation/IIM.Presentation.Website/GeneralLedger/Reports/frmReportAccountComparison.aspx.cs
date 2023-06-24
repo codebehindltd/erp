@@ -19,6 +19,8 @@ using iTextSharp.text.pdf;
 using Newtonsoft.Json;
 using HotelManagement.Data.HotelManagement;
 using HotelManagement.Entity.HotelManagement;
+using HotelManagement.Data.PurchaseManagment;
+using HotelManagement.Entity.PurchaseManagment;
 
 namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
 {
@@ -48,7 +50,33 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                 LoadFiscalYear();
                 LoadGLDonor();
             }
+        }        
+        protected void btnGenarate_Click(object sender, EventArgs e)
+        {
+            if (ddlReportType.SelectedValue == "CompanyLedger")
+            {
+                ComparativeNotesBreakDownDiv.Visible = false;
+                GenerateCompanyLedgerReport();
+            }
+            else if (ddlReportType.SelectedValue == "SupplierLedger")
+            {
+                ComparativeNotesBreakDownDiv.Visible = false;
+                GenerateSupplierLedgerReport();
+            }
+            else
+            {
+                ComparativeNotesBreakDownDiv.Visible = true;
+                GenerateReport();
+            }
+        }        
+        protected void btnPrintReportFromClient_Click(object sender, EventArgs e)
+        {
+            ReportPrinting print = new ReportPrinting();
+            LocalReport rpt = rvTransaction.LocalReport;
+            var reportSource = print.PrintReport(rpt, HMConstants.PrintPageType.Portrait.ToString());
+            frmPrint.Attributes["src"] = reportSource;
         }
+        //************************ User Defined Function ********************//
         private void LoadCurrencyHead()
         {
             CommonCurrencyDA headDA = new CommonCurrencyDA();
@@ -85,34 +113,59 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             itemDonor.Value = "0";
             itemDonor.Text = hmUtility.GetDropDownFirstAllValue();
             ddlDonor.Items.Insert(0, itemDonor);
-        }
-        protected void btnGenarate_Click(object sender, EventArgs e)
+        }        
+        private void LoadCommonDropDownHiddenField()
         {
-            if (ddlReportType.SelectedValue == "CompanyLedger")
-            {
-                ComparativeNotesBreakDownDiv.Visible = true;
-                GenerateCompanyLedgerReport();
-            }
-            else if (ddlReportType.SelectedValue == "SupplierLedger")
-            {
-                ComparativeNotesBreakDownDiv.Visible = false;
-                //GenerateSupplierLedgerReport();
-            }
-            else
-            {
-                ComparativeNotesBreakDownDiv.Visible = true;
-                GenerateReport();
-            }
-        }
-        
-        protected void btnPrintReportFromClient_Click(object sender, EventArgs e)
+            CommonDropDownHiddenField.Value = hmUtility.GetDropDownFirstAllValue();
+            CommonDropDownHiddenFieldForPleaseSelect.Value = hmUtility.GetDropDownFirstValue();
+        }        
+        public string SplitPageName(string url)
         {
-            ReportPrinting print = new ReportPrinting();
-            LocalReport rpt = rvTransaction.LocalReport;
-            var reportSource = print.PrintReport(rpt, HMConstants.PrintPageType.Portrait.ToString());
-            frmPrint.Attributes["src"] = reportSource;
+            string[] words = url.Split('/');
+            int length = words.Length;
+            for (int i = 0; i < length - 1; i++)
+            {
+                FinalString = FinalString + words[i] + '/';
+            }
+            return FinalString;
+        }        
+        private void LoadFiscalYear()
+        {
+            List<GLFiscalYearBO> fiscalYearList = new List<GLFiscalYearBO>();
+            GLFiscalYearDA fiscalYearDA = new GLFiscalYearDA();
+            fiscalYearList = fiscalYearDA.GetAllFiscalYear();
+
+            ddlFiscalYear.DataSource = fiscalYearList;
+            ddlFiscalYear.DataTextField = "FiscalYearName";
+            ddlFiscalYear.DataValueField = "FiscalYearId";
+            ddlFiscalYear.DataBind();
+
+            ddlFiscalYear2.DataSource = fiscalYearList;
+            ddlFiscalYear2.DataTextField = "FiscalYearName";
+            ddlFiscalYear2.DataValueField = "FiscalYearId";
+            ddlFiscalYear2.DataBind();
+
+            System.Web.UI.WebControls.ListItem itemProject = new System.Web.UI.WebControls.ListItem();
+            itemProject.Value = "0";
+            itemProject.Text = hmUtility.GetDropDownFirstValue();
+
+            ddlFiscalYear.Items.Insert(0, itemProject);
+            ddlFiscalYear2.Items.Insert(0, itemProject);
         }
-        //************************ User Defined Function ********************//        
+        private bool IsFormValid()
+        {
+            bool status = true;
+            if (isSingle == false)
+            {
+                //if (ddlGLProject.SelectedIndex == 0)
+                //{
+                //    isMessageBoxEnable = 1;
+                //    lblMessage.Text = "Please Select Project Name";
+                //    status = false;
+                //}
+            }
+            return status;
+        }
         private void GenerateReport()
         {
             HMCommonDA hmCommonDA = new HMCommonDA();
@@ -615,7 +668,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                         {
                             r.CashNCashEquvalentAtEndOfPeriod = r.CashNCashEquvalentAtEndOfPeriod / ConversionRate;
                         }
-                        
+
                         //----------- For Comparision Report
                         if (r.OpeningBalanceCurrentYear != 0)
                         {
@@ -897,7 +950,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             rvTransaction.LocalReport.EnableExternalImages = true;
 
             var reportPath = "";
-            
+
             reportPath = Server.MapPath(@"~/SalesAndMarketing/Reports/Rdlc/RptCompanyLedgerComparison.rdlc");
 
             if (!File.Exists(reportPath))
@@ -954,14 +1007,14 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             if (!string.IsNullOrEmpty(endDate2))
             {
                 ToDate2 = hmUtility.GetDateTimeFromString(endDate2, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1).AddSeconds(-1);
-            }      
+            }
 
             int companyId = 0, projectId = 0, donorId = 0;
             string companyName = string.Empty;
             string companyAddress = string.Empty;
             string webAddress = string.Empty;
             Int32 glCompanyId = companyId;
-            
+
             //-- Company Logo -------------------------------
             string imageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
             string projectName = "All";
@@ -1130,61 +1183,285 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             hfFiscalId2 = ddlFiscalYear2.SelectedValue;
             hfNotesNodes.Value = notesNodesId;
 
-            frmPrint.Attributes["src"] = "";            
+            frmPrint.Attributes["src"] = "";
         }
-        private void LoadCommonDropDownHiddenField()
+        private void GenerateSupplierLedgerReport()
         {
-            CommonDropDownHiddenField.Value = hmUtility.GetDropDownFirstAllValue();
-            CommonDropDownHiddenFieldForPleaseSelect.Value = hmUtility.GetDropDownFirstValue();
-        }
-        
-        public string SplitPageName(string url)
-        {
-            string[] words = url.Split('/');
-            int length = words.Length;
-            for (int i = 0; i < length - 1; i++)
+            _RoomStatusInfoByDate = 1;
+            HMCommonDA hmCommonDA = new HMCommonDA();
+            rvTransaction.LocalReport.DataSources.Clear();
+            rvTransaction.ProcessingMode = ProcessingMode.Local;
+            rvTransaction.LocalReport.EnableExternalImages = true;
+
+            var reportPath = Server.MapPath(@"~/PurchaseManagment/Reports/Rdlc/RptSupplierLedgerComparison.rdlc");
+            //if (ddlReportType.SelectedValue == "0")
+            //{
+            //    reportPath = Server.MapPath(@"~/PurchaseManagment/Reports/Rdlc/RptSupplierLedger.rdlc");
+            //}
+            //else
+            //{
+            //    reportPath = Server.MapPath(@"~/PurchaseManagment/Reports/Rdlc/RptSupplierPaymentLedger.rdlc");
+            //}
+
+            if (!File.Exists(reportPath))
+                return;
+
+            rvTransaction.LocalReport.ReportPath = reportPath;
+
+            string paymentStatus = string.Empty, reportType = string.Empty;
+            //DateTime dateTime = DateTime.Now;
+
+            string startDate = string.Empty, endDate = string.Empty;
+            string startDate2 = string.Empty, endDate2 = string.Empty;
+
+            DateTime dateTime = DateTime.Now;
+
+            if (string.IsNullOrWhiteSpace(txtStartDate.Text))
             {
-                FinalString = FinalString + words[i] + '/';
+                startDate = hmUtility.GetStringFromDateTime(DateTime.Now);
+                txtStartDate.Text = hmUtility.GetStringFromDateTime(dateTime);
             }
-            return FinalString;
-        }
-        
-        private void LoadFiscalYear()
-        {
-            List<GLFiscalYearBO> fiscalYearList = new List<GLFiscalYearBO>();
-            GLFiscalYearDA fiscalYearDA = new GLFiscalYearDA();
-            fiscalYearList = fiscalYearDA.GetAllFiscalYear();
-
-            ddlFiscalYear.DataSource = fiscalYearList;
-            ddlFiscalYear.DataTextField = "FiscalYearName";
-            ddlFiscalYear.DataValueField = "FiscalYearId";
-            ddlFiscalYear.DataBind();
-
-            ddlFiscalYear2.DataSource = fiscalYearList;
-            ddlFiscalYear2.DataTextField = "FiscalYearName";
-            ddlFiscalYear2.DataValueField = "FiscalYearId";
-            ddlFiscalYear2.DataBind();
-
-            System.Web.UI.WebControls.ListItem itemProject = new System.Web.UI.WebControls.ListItem();
-            itemProject.Value = "0";
-            itemProject.Text = hmUtility.GetDropDownFirstValue();
-
-            ddlFiscalYear.Items.Insert(0, itemProject);
-            ddlFiscalYear2.Items.Insert(0, itemProject);
-        }
-        private bool IsFormValid()
-        {
-            bool status = true;
-            if (isSingle == false)
+            else
             {
-                //if (ddlGLProject.SelectedIndex == 0)
-                //{
-                //    isMessageBoxEnable = 1;
-                //    lblMessage.Text = "Please Select Project Name";
-                //    status = false;
-                //}
+                startDate = txtStartDate.Text;
             }
-            return status;
+            if (string.IsNullOrWhiteSpace(txtEndDate.Text))
+            {
+                endDate = hmUtility.GetStringFromDateTime(DateTime.Now);
+                txtEndDate.Text = hmUtility.GetStringFromDateTime(dateTime);
+            }
+            else
+            {
+                endDate = txtEndDate.Text;
+            }
+
+            if (!string.IsNullOrWhiteSpace(txtStartDate2.Text))
+            {
+                startDate2 = txtStartDate2.Text;
+            }
+            if (!string.IsNullOrWhiteSpace(txtEndDate2.Text))
+            {
+                endDate2 = txtEndDate2.Text;
+            }
+
+            DateTime FromDate = hmUtility.GetDateTimeFromString(startDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+            DateTime ToDate = hmUtility.GetDateTimeFromString(endDate, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1).AddSeconds(-1);
+
+            DateTime FromDate2 = hmUtility.GetDateTimeFromString(startDate2, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+            DateTime ToDate2 = hmUtility.GetDateTimeFromString(endDate2, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1).AddSeconds(-1);
+
+            if (!string.IsNullOrEmpty(startDate2))
+            {
+                FromDate2 = hmUtility.GetDateTimeFromString(startDate2, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
+            }
+
+            if (!string.IsNullOrEmpty(endDate2))
+            {
+                ToDate2 = hmUtility.GetDateTimeFromString(endDate2, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1).AddSeconds(-1);
+            }
+
+            //Int32 supplierId = Convert.ToInt32(hfSupplierId.Value);
+            //string companyName = ddlGLCompanyId.SelectedItem.Text;
+            //Int32 companyId = Convert.ToInt32(ddlGLCompanyId.SelectedValue);
+
+            //List<ReportParameter> reportParam = new List<ReportParameter>();
+
+            //CompanyDA companyDA = new CompanyDA();
+            //List<CompanyBO> files = companyDA.GetCompanyInfo();
+            //if (files[0].CompanyId > 0)
+            //{
+            //    reportParam.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
+            //    reportParam.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
+
+            //    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
+            //    {
+            //        reportParam.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
+            //    }
+            //    else
+            //    {
+            //        reportParam.Add(new ReportParameter("CompanyWeb", files[0].ContactNumber));
+            //    }
+            //}
+
+            //paymentStatus = "0";
+            //reportType = "0";
+
+            int companyId = 0, projectId = 0, donorId = 0, supplierId = 0;
+            string companyName = string.Empty;
+            string companyAddress = string.Empty;
+            string webAddress = string.Empty;
+            Int32 glCompanyId = companyId;
+
+            //-- Company Logo -------------------------------
+            string imageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
+            string projectName = "All";
+
+            CompanyDA companyDA = new CompanyDA();
+            List<CompanyBO> files = companyDA.GetCompanyInfo();
+
+            //List<ReportParameter> paramReport = new List<ReportParameter>();
+            List<ReportParameter> reportParam = new List<ReportParameter>();
+
+            if (files[0].CompanyId > 0)
+            {
+                companyName = files[0].CompanyName;
+                companyAddress = files[0].CompanyAddress;
+
+                if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
+                {
+                    webAddress = files[0].WebAddress;
+                }
+                else
+                {
+                    webAddress = files[0].ContactNumber;
+                }
+            }
+
+            //bool isProfitableOrganization = true;
+
+            //if (hfCompanyIsProfitable.Value == "1")
+            //    isProfitableOrganization = true;
+
+            if (hfCompanyId.Value != "0" && hfCompanyId.Value != "")
+            {
+                companyId = Convert.ToInt32(hfCompanyId.Value);
+                GLCompanyBO glCompanyBO = new GLCompanyBO();
+                GLCompanyDA glCompanyDA = new GLCompanyDA();
+                glCompanyBO = glCompanyDA.GetGLCompanyInfoById(companyId);
+                if (glCompanyBO != null)
+                {
+                    if (glCompanyBO.CompanyId > 0)
+                    {
+                        glCompanyId = glCompanyBO.CompanyId;
+                        companyName = glCompanyBO.Name;
+                        if (!string.IsNullOrWhiteSpace(glCompanyBO.CompanyAddress))
+                        {
+                            companyAddress = glCompanyBO.CompanyAddress;
+                        }
+                        if (!string.IsNullOrWhiteSpace(glCompanyBO.WebAddress))
+                        {
+                            webAddress = glCompanyBO.WebAddress;
+                        }
+                        if (!string.IsNullOrWhiteSpace(glCompanyBO.ImageName))
+                        {
+                            imageName = glCompanyBO.ImageName;
+                        }
+                    }
+                }
+            }
+
+            if (hfProjectId.Value != "0" && hfProjectId.Value != "")
+            {
+                projectId = Convert.ToInt32(hfProjectId.Value);
+                projectName = hfProjectId.Value != "0" ? hfProjectName.Value : "All";
+            }
+
+            reportParam.Add(new ReportParameter("CompanyProfile", companyName));
+            reportParam.Add(new ReportParameter("CompanyAddress", companyAddress));
+            reportParam.Add(new ReportParameter("CompanyWeb", webAddress));
+
+            paymentStatus = "0";
+            reportType = "0";
+
+            string searchNarration = string.Empty;
+            string fromAmount = string.Empty;
+            string toAmount = string.Empty;
+
+            DateTime currentDate = DateTime.Now;
+            string printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);
+            string footerPoweredByInfo = string.Empty;
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            footerPoweredByInfo = userInformationBO.FooterPoweredByInfo;
+
+            reportParam.Add(new ReportParameter("SupplierCompanyName", companyName));
+            reportParam.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
+            reportParam.Add(new ReportParameter("PrintDateTime", printDate));
+
+            string notesNo = string.Empty;
+            string notesHead = string.Empty;
+            string supplierLedgerNotesHead = string.Empty;
+            string notesNodesId = string.Empty;
+
+            NodeMatrixBO supplierMatrixBO = new NodeMatrixBO();
+            NodeMatrixDA supplierMatrixDA = new NodeMatrixDA();
+            supplierMatrixBO = supplierMatrixDA.GetNodeMatrixInfoById(23);
+            if (supplierMatrixBO != null)
+            {
+                notesNo = supplierMatrixBO.NotesNumber;
+                notesHead = supplierMatrixBO.NodeHead;
+            }
+
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+
+            HMCommonSetupBO homePageSetupBO = new HMCommonSetupBO();
+            homePageSetupBO = commonSetupDA.GetCommonConfigurationInfo("SupplierAccountsHeadId", "SupplierAccountsHeadId");
+            if (homePageSetupBO != null)
+            {
+                int supplierAccountsPostingId;
+                supplierAccountsPostingId = Convert.ToInt32(homePageSetupBO.SetupValue);
+
+                supplierMatrixBO = supplierMatrixDA.GetNodeMatrixInfoById(supplierAccountsPostingId);
+                if (supplierMatrixBO != null)
+                {
+                    supplierLedgerNotesHead = supplierMatrixBO.NodeHead;
+                }
+            }
+
+            reportParam.Add(new ReportParameter("ReportDateFrom", hmUtility.GetStringFromDateTime(FromDate)));
+            reportParam.Add(new ReportParameter("ReportDateTo", hmUtility.GetStringFromDateTime(ToDate)));
+
+            reportParam.Add(new ReportParameter("ReportDateFrom2", hmUtility.GetStringFromDateTime(FromDate2)));
+            reportParam.Add(new ReportParameter("ReportDateTo2", hmUtility.GetStringFromDateTime(ToDate2)));
+
+            reportParam.Add(new ReportParameter("NotesNo", notesNo));
+            reportParam.Add(new ReportParameter("NotesHead", notesHead));
+            reportParam.Add(new ReportParameter("SupplierLedgerNotesHead", supplierLedgerNotesHead));
+
+            string ImageName = hmCommonDA.GetCustomFieldValueByFieldName("paramHeaderLeftImagePath");
+            reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
+
+            rvTransaction.LocalReport.SetParameters(reportParam);
+
+            PMSupplierDA commonReportDa = new PMSupplierDA();
+            List<SupplierPaymentLedgerVwBO> supplierLedger = new List<SupplierPaymentLedgerVwBO>();
+            List<SupplierPaymentLedgerVwBO> supplierLedger1 = new List<SupplierPaymentLedgerVwBO>();
+            List<SupplierPaymentLedgerVwBO> supplierLedger2 = new List<SupplierPaymentLedgerVwBO>();
+
+            companyId = 0;
+            supplierId = 0;
+
+            supplierLedger1 = commonReportDa.GetSupllierLedger(userInformationBO.UserInfoId, companyId, supplierId, FromDate, ToDate, paymentStatus, reportType, searchNarration, fromAmount, toAmount);
+
+            supplierLedger2 = commonReportDa.GetSupllierLedger(userInformationBO.UserInfoId, companyId, supplierId, FromDate2, ToDate2, paymentStatus, reportType, searchNarration, fromAmount, toAmount);
+
+
+            //GuestCompanyDA guestCompanyDA = new GuestCompanyDA();
+            List<PMSupplierBO> supplierBOList = new List<PMSupplierBO>();
+            supplierBOList = commonReportDa.GetPMSupplierInfo();
+
+            foreach (PMSupplierBO row in supplierBOList)
+            {
+                SupplierPaymentLedgerVwBO ledgerReportBO = new SupplierPaymentLedgerVwBO();
+                ledgerReportBO.SupplierId = row.SupplierId;
+                ledgerReportBO.SupplierName = row.Name;
+                ledgerReportBO.PreviousYearClosingBalance = (from p in supplierLedger1 where p.SupplierId == row.SupplierId select p.ClosingBalance).ToList().Sum();
+                ledgerReportBO.CurrentYearClosingBalance = (from p in supplierLedger2 where p.SupplierId == row.SupplierId select p.ClosingBalance).ToList().Sum();
+                supplierLedger.Add(ledgerReportBO);
+            }
+
+            var reportDataSet = rvTransaction.LocalReport.GetDataSourceNames();
+            rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataSet[0], supplierLedger));
+
+            rvTransaction.LocalReport.DisplayName = "Supplier Ledger";
+            rvTransaction.LocalReport.Refresh();
+
+            reportSearchType = ddlSearchType.SelectedValue;
+            hfFiscalId1 = ddlFiscalYear.SelectedValue;
+            hfFiscalId2 = ddlFiscalYear2.SelectedValue;
+            hfNotesNodes.Value = notesNodesId;
+
+            frmPrint.Attributes["src"] = "";
         }
     }
 }
