@@ -84,7 +84,14 @@ namespace HotelManagement.Presentation.Website.HouseKeeping.Reports
             int transectionId = 0;
             string transectionType = ddlTransectionTypeSrc.SelectedValue;
             string hasReturned = ddlHasReturned.SelectedValue;
-            int whoFoundIt = Convert.ToInt32(ddlFoundPersonSrc.SelectedValue);
+
+            int whoFoundIt = 0;
+
+            if (hfIsPayrollIntegrateWithFrontOffice.Value == "1")
+            {
+                whoFoundIt = Convert.ToInt32(ddlFoundPersonSrc.SelectedValue);
+            }
+            
             string whoFoundItName = txtFoundPersonSrc.Text;
             if (string.IsNullOrWhiteSpace(this.txtFromDate.Text))
             {

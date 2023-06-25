@@ -15,12 +15,14 @@ namespace HotelManagement.Entity.HouseKeeping
         public string Description { get; set; }
         public string ItemType { get; set; }
         public DateTime? FoundDateTime { get; set; }
+        public string FoundDateTimeDisplay { get; set; }
         public string FoundTime { get; set; }
         public string FoundDate { get; set; }
         public int? WhoFoundIt { get; set; }
         public string WhoFoundItName { get; set; }
         public string FoundPlace { get; set; }
         public DateTime? ReturnDate { get; set; }
+        public string ReturnDateDisplay { get; set; }
         public string WhomToReturn { get; set; }
         public string ReturnDescription { get; set; }
         public bool? HasItemReturned { get; set; }

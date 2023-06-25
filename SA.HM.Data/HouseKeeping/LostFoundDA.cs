@@ -269,12 +269,15 @@ namespace HotelManagement.Data.HouseKeeping
                                     bO.ItemType = Convert.ToString(reader["ItemType"]);
                                     bO.FoundPlace = Convert.ToString(reader["FoundPlace"]);
                                     bO.FoundDateTime = Convert.ToDateTime(reader["FoundDateTime"]);
-                                    
+                                    bO.FoundDateTimeDisplay = Convert.ToString(reader["FoundDateTimeDisplay"]);
+
                                     bO.WhoFoundItName = Convert.ToString(reader["WhoFoundItName"]);
                                     bO.Description = Convert.ToString(reader["Description"]);
 
                                     if ((reader["ReturnDate"]) != DBNull.Value)
                                         bO.ReturnDate = Convert.ToDateTime(reader["ReturnDate"]);
+
+                                    bO.ReturnDateDisplay = Convert.ToString(reader["ReturnDateDisplay"]);
                                     bO.ReturnDescription = Convert.ToString(reader["ReturnDescription"]);
                                     bO.WhomToReturn = Convert.ToString(reader["WhomToReturn"]);
                                     bO.HasItemReturned = Convert.ToBoolean(reader["HasItemReturned"]);
