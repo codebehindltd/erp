@@ -5311,6 +5311,44 @@
         function PopUpSegmentRateChartInfo() {
         }
 
+        function PerformGuestBillInfoShow(RegistrationId, ConvertionRate) {
+            PageMethods.SetSessionValueForGuestBill(RegistrationId, ConvertionRate, OnSessionValueForGuestBillSucceeded, OnSessionValueForGuestBillFailed);
+            return false;
+        }
+
+        function OnSessionValueForGuestBillSucceeded(result) {
+            var RegistrationId = result;
+            var url = "/HotelManagement/Reports/frmReportGuestBillInfo.aspx?GuestBillInfo=" + RegistrationId;
+            var popup_window = "Bill Preview";
+            window.open(url, popup_window, "width=830,height=680,left=300,top=50,resizable=yes");
+        }
+        function OnSessionValueForGuestBillFailed(error) {
+            alert(error.get_message());
+        }
+
+        function PerformOtherInformationShow(RegistrationId) {
+            PageMethods.PerformOtherInformationByRegistrationId(RegistrationId, OnOtherInformationSucceeded, OnOtherInformationFailed);
+            return false;
+        }
+
+        function OnOtherInformationSucceeded(result) {
+            $("#ContentPlaceHolder1_txtHotelRemarksDisplay").val(result.Remarks);
+            $("#ContentPlaceHolder1_txtGuestRemarksDisplay").val(result.GuestRemarks);
+            $("#ContentPlaceHolder1_txtPOSRemarksDisplay").val(result.Remarks);
+            $("#OtherInformationPanel").dialog({
+                width: 900,
+                height: 550,
+                modal: true,
+                closeOnEscape: true,
+                resizable: false,
+                title: "Other Information",
+                show: 'slide'
+            });
+        }
+
+        function OnOtherInformationFailed(error) {
+            alert(error.get_message());
+        }
 
         function LoadPackage(pageNumber, isCurrentOrPreviousPage) {
 
@@ -5391,6 +5429,33 @@
             return true;
         }
     </script>
+    <div id="OtherInformationPanel" class="panel panel-default" style="display:none;">        
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="GuestName" class="control-label col-md-2">
+                        Hotel Remarks</label>
+                    <div class="col-md-10">
+                        <asp:TextBox ID="txtHotelRemarksDisplay" runat="server" Height="100" TextMode="MultiLine" Enabled="false" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="GuestName" class="control-label col-md-2">
+                        Guest Remarks</label>
+                    <div class="col-md-10">
+                        <asp:TextBox ID="txtGuestRemarksDisplay" runat="server" Height="100" TextMode="MultiLine" Enabled="false" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="CompanyName" class="control-label col-md-2">
+                        POS Remarks</label>
+                    <div class="col-md-10">
+                        <asp:TextBox ID="txtPOSRemarksDisplay" runat="server" Height="100" TextMode="MultiLine" Enabled="false" CssClass="form-control" TabIndex="2"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="PackageDialog" style="width: 450px; display: none;">
         <div  class="panel panel-default">
         <div class="panel-body">

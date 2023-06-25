@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Presentation.Website.HotelManagement {
-    
-    
-    public partial class frmReservationRoomAssignment {
-        
+namespace HotelManagement.Presentation.Website.HotelManagement
+{
+
+
+    public partial class frmReservationRoomAssignment
+    {
+
         /// <summary>
         /// lblSrcReservationNumber control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSrcReservationNumber;
-        
+
         /// <summary>
         /// txtSrcReservationNumber control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSrcReservationNumber;
-        
+
         /// <summary>
         /// btnReservationDetailSerach control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnReservationDetailSerach;
-        
+
         /// <summary>
         /// imgReservationSearch control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton imgReservationSearch;
-        
+
         /// <summary>
         /// lblReservationNumber control.
         /// </summary>
@@ -56,7 +58,16 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblReservationNumber;
-        
+
+        /// <summary>
+        /// lblHotelRemarks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblHotelRemarks;
+
         /// <summary>
         /// pnlExpressCheckInnGrid control.
         /// </summary>
@@ -65,7 +76,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlExpressCheckInnGrid;
-        
+
         /// <summary>
         /// pnlRoomCalender control.
         /// </summary>
@@ -74,7 +85,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlRoomCalender;
-        
+
         /// <summary>
         /// btnExpressCheckIn control.
         /// </summary>
@@ -83,7 +94,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnExpressCheckIn;
-        
+
         /// <summary>
         /// btnClear control.
         /// </summary>
@@ -92,7 +103,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnClear;
-        
+
         /// <summary>
         /// Label17 control.
         /// </summary>
@@ -101,7 +112,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label17;
-        
+
         /// <summary>
         /// txtResvGuestName control.
         /// </summary>
@@ -110,7 +121,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtResvGuestName;
-        
+
         /// <summary>
         /// txtResvCompanyName control.
         /// </summary>
@@ -119,7 +130,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtResvCompanyName;
-        
+
         /// <summary>
         /// txtRsvCheckInDate control.
         /// </summary>
@@ -128,7 +139,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRsvCheckInDate;
-        
+
         /// <summary>
         /// txtReservationNo control.
         /// </summary>
@@ -137,7 +148,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtReservationNo;
-        
+
         /// <summary>
         /// txtCheckOutDate control.
         /// </summary>

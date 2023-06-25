@@ -3651,7 +3651,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             string strTable = "";
             strTable += "<table  width='100%' class='table table-bordered table-condensed table-responsive' id='TableGuestHistory'><tr style='color: White; background-color: #44545E; font-weight: bold;'>";
 
-            strTable += "<th align='center' scope='col'>Registration Number</th><th align='left' scope='col'>Arrival Date</th> <th align='left' scope='col'>Checkout Date</th></tr>";
+            strTable += "<th align='center' scope='col'>Registration Number</th><th align='left' scope='col'>Arrival Date</th> <th align='left' scope='col'>Checkout Date</th><th align='center' scope='col'>Action</th></tr>";
+
             int counter = 0;
             foreach (RoomRegistrationBO dr in registrationList)
             {
@@ -3666,16 +3667,28 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     // It's odd
                     strTable += "<tr style='background-color:White;'>";
                 }
-                strTable += "<td align='left' style='width: 33%'>" + dr.RegistrationNumber + "</td>";
-                strTable += "<td align='left' style='width: 33%'>" + dr.ArriveDate.ToString("MM/dd/yy") + "</td>";
+                strTable += "<td align='left' style='width: 25%'>" + dr.RegistrationNumber + "</td>";
+                strTable += "<td align='left' style='width: 20%'>" + dr.ArriveDate.ToString("MM/dd/yy") + "</td>";
                 if (dr.CheckOutDate != DateTime.MinValue)
                 {
-                    strTable += "<td align='left' style='width: 33%'>" + dr.CheckOutDate.ToString("MM/dd/yy") + "</td>";
+                    strTable += "<td align='left' style='width: 20%'>" + dr.CheckOutDate.ToString("MM/dd/yy") + "</td>";
                 }
                 else
                 {
-                    strTable += "<td align='left' style='width: 33%'>" + "Not CheckOut Yet. " + "</td>";
+                    strTable += "<td align='left' style='width: 20%'>" + "Not CheckOut Yet. " + "</td>";
                 }
+
+                string strZeroConvertionRate = "0";
+                strTable += "<td align='center' style='width: 35%; cursor:pointer'>";
+                strTable += "&nbsp;<img src='../Images/detailsInfo.png' data-placement='bottom' data-toggle='tooltip' title='Other Information' onClick='javascript:return PerformOtherInformationShow(" + dr.RegistrationId + ")' alt='Other Information' border='0' />";
+
+                strTable += "&nbsp;<img src='../Images/ReportDocument.png' data-placement='bottom' data-toggle='tooltip' title='Bill Preview (" + dr.LocalCurrencyHead + ")' onClick='javascript:return PerformGuestBillInfoShow(" + dr.RegistrationId + "," + strZeroConvertionRate + ")' alt='Guest Bill' border='0' />";
+
+                if (dr.ConversionRate > 0)
+                {
+                    strTable += "&nbsp;<img src='../Images/ReportDocument.png' data-placement='bottom' data-toggle='tooltip' title='Bill Preview (USD)' onClick='javascript:return PerformGuestBillInfoShow(" + dr.RegistrationId + "," + dr.ConversionRate + ")' alt='Guest Bill' border='0' />";
+                }
+                strTable += "</td>";
                 strTable += "</tr>";
             }
 
@@ -4168,6 +4181,54 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             rateChart.RateChartDetails = rateChartDA.GetRateChartDetailByRateChartMasterIdForEdit(id).Where(i => i.ServiceType == "GuestRoom").ToList();
             rateChart.RateChartDetails[0].RateChartDiscountDetails = rateChart.RateChartDetails[0].RateChartDiscountDetails.Where(i => i.Type == "RoomType").ToList();
             return rateChart;
+        }
+        [WebMethod]
+        public static RoomRegistrationBO PerformOtherInformationByRegistrationId(int RegistrationId)
+        {
+            RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
+            RoomRegistrationBO roomRegistrationBO = new RoomRegistrationBO();
+
+            roomRegistrationBO = roomRegistrationDA.GetRoomRegistrationInfoById(RegistrationId);
+            return roomRegistrationBO;
+        }
+        [WebMethod(EnableSession = true)]
+        public static string SetSessionValueForGuestBill(string RegistrationId, string ConvertionRate)
+        {
+            string RegistrationIdList = string.Empty;
+            HMUtility hmUtility = new HMUtility();
+            HttpContext.Current.Session["IsBillSplited"] = "0";
+            HttpContext.Current.Session["GuestBillFromDate"] = hmUtility.GetFromDate();
+            HttpContext.Current.Session["GuestBillToDate"] = hmUtility.GetToDate();
+
+            GuestBillPaymentDA paymentDa = new GuestBillPaymentDA();
+            List<GenerateGuestBillReportBO> guestBill = new List<GenerateGuestBillReportBO>();
+
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+            guestBill = paymentDa.GetGenerateGuestBill(RegistrationId, "0", hmUtility.GetFromDate().ToString(), hmUtility.GetToDate().ToString(), userInformationBO.UserName);
+
+            foreach (GenerateGuestBillReportBO row in guestBill)
+            {
+                RegistrationIdList = row.RegistrationId.ToString();
+            }
+
+            HttpContext.Current.Session["CheckOutRegistrationIdList"] = RegistrationIdList;
+
+            InnboardWebUtility.BillPrintPreviewDynamicallyForReport(ConvertionRate, "0", "", "-1", "-1", "-1", "-1", "-1", "-1", "-1", hmUtility.GetFromDate().ToString(), hmUtility.GetToDate().ToString(), RegistrationIdList, RegistrationIdList);
+
+            return RegistrationId;
+        }
+        [WebMethod(EnableSession = true)]
+        public static string SetSessionValueForGuestBillForUsd(string RegistrationId, string ConvertionRate)
+        {
+            HMUtility hmUtility = new HMUtility();
+            HttpContext.Current.Session["IsBillSplited"] = "0";
+            HttpContext.Current.Session["GuestBillFromDate"] = hmUtility.GetFromDate();
+            HttpContext.Current.Session["GuestBillToDate"] = hmUtility.GetToDate();
+            HttpContext.Current.Session["CheckOutRegistrationIdList"] = RegistrationId;
+            InnboardWebUtility.BillPrintPreviewDynamicallyForReport(ConvertionRate, "0", "", "-1", "-1", "-1", "-1", "-1", "-1", "-1", hmUtility.GetFromDate().ToString(), hmUtility.GetToDate().ToString(), RegistrationId, RegistrationId);
+            return RegistrationId;
         }
     }
 }

@@ -533,6 +533,29 @@ function PerformPaymentPosting() {
             alert(error.get_message());
         }
 
+        function PerformOtherInformationShow(RegistrationId) {
+            PageMethods.PerformOtherInformationByRegistrationId(RegistrationId, OnOtherInformationSucceeded, OnOtherInformationFailed);
+            return false;
+        }
+
+        function OnOtherInformationSucceeded(result) {
+            $("#ContentPlaceHolder1_txtHotelRemarksDisplay").val(result.Remarks);
+            $("#ContentPlaceHolder1_txtGuestRemarksDisplay").val(result.GuestRemarks);
+            $("#ContentPlaceHolder1_txtPOSRemarksDisplay").val(result.Remarks);
+            $("#OtherInformationPanel").dialog({
+                width: 900,
+                height: 550,
+                modal: true,
+                closeOnEscape: true,
+                resizable: false,
+                title: "Other Information",
+                show: 'slide'
+            });
+        }
+        function OnOtherInformationFailed(error) {
+            alert(error.get_message());
+        }
+
         function PerformCancelCheckOut(registrationID, guestId) {
 
             if (confirm("Do you want to cancel Check Out?")) {
@@ -1102,11 +1125,35 @@ function PerformPaymentPosting() {
         </div>
         <div class="row">
             <div class="col-md-12">
-                <%--<asp:Button ID="btnPaymentPosting" runat="server" ClientIDMode="Static" Text="Save"
-                    CssClass="btn btn-primary btn-sm" OnClientClick="javascript:return ValidateForm();"
-                    TabIndex="23" OnClick="btnPaymentPosting_Click" />--%>
                 <button class="btn btn-primary btn-sm" type="button" onclick='javascript:return PerformPaymentPosting()'>
                     Save Payment</button>
+            </div>
+        </div>
+    </div>
+    <div id="OtherInformationPanel" class="panel panel-default" style="display:none;">        
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="GuestName" class="control-label col-md-2">
+                        Hotel Remarks</label>
+                    <div class="col-md-10">
+                        <asp:TextBox ID="txtHotelRemarksDisplay" runat="server" Height="100" TextMode="MultiLine" Enabled="false" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="GuestName" class="control-label col-md-2">
+                        Guest Remarks</label>
+                    <div class="col-md-10">
+                        <asp:TextBox ID="txtGuestRemarksDisplay" runat="server" Height="100" TextMode="MultiLine" Enabled="false" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="CompanyName" class="control-label col-md-2">
+                        POS Remarks</label>
+                    <div class="col-md-10">
+                        <asp:TextBox ID="txtPOSRemarksDisplay" runat="server" Height="100" TextMode="MultiLine" Enabled="false" CssClass="form-control" TabIndex="2"></asp:TextBox>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

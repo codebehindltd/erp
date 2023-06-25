@@ -321,6 +321,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     strTable += "<td align='center' style='width: 25%; cursor:pointer'>";
 
                     string strZeroConvertionRate = "0";
+                    strTable += "&nbsp;<img src='../Images/detailsInfo.png' data-placement='bottom' data-toggle='tooltip' title='Other Information' onClick='javascript:return PerformOtherInformationShow(" + dr.RegistrationId + ")' alt='Other Information' border='0' />";
+
                     strTable += "&nbsp;<img src='../Images/ReportDocument.png' data-placement='bottom' data-toggle='tooltip' title='Bill Preview (" + dr.LocalCurrencyHead + ")' onClick='javascript:return PerformGuestBillInfoShow(" + dr.RegistrationId + "," + strZeroConvertionRate + ")' alt='Guest Bill' border='0' />";
 
                     if (dr.ConversionRate > 0)
@@ -368,6 +370,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                             strTable += "";
                         }
                     }
+
                     strTable += "</td>";
                 }
                 else
@@ -720,5 +723,16 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             return ReturnResult;
         }
+
+        [WebMethod]
+        public static RoomRegistrationBO PerformOtherInformationByRegistrationId(int RegistrationId)
+        {
+            RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
+            RoomRegistrationBO roomRegistrationBO = new RoomRegistrationBO();
+
+            roomRegistrationBO = roomRegistrationDA.GetRoomRegistrationInfoById(RegistrationId);
+            return roomRegistrationBO;
+        }
+        
     }
 }

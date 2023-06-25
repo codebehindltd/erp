@@ -105,6 +105,13 @@
             if (result != null) {
                 if (result.ReservationNumber) {
                     $("#ContentPlaceHolder1_lblReservationNumber").text("Reservation No.: " + result.ReservationNumber);
+
+                    if (result.Remarks != "") {
+                        $("#ContentPlaceHolder1_lblHotelRemarks").text("=> Hotel Remarks: " + result.Remarks);
+                    }
+                    else {
+                        $("#ContentPlaceHolder1_lblHotelRemarks").text("");
+                    }
                 }
                 else {
                     $("#ContentPlaceHolder1_lblReservationNumber").text("");
@@ -434,6 +441,11 @@
                     </div>
                     <div class="col-md-4">
                         <asp:Label ID="lblReservationNumber" runat="server" class="control-label" ForeColor="Red" Text=""></asp:Label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12" style="text-align:left;">
+                        <asp:Label ID="lblHotelRemarks" runat="server" ForeColor="blue" Text=""></asp:Label>
                     </div>
                 </div>
                 <div class="form-group">

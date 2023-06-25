@@ -4296,6 +4296,9 @@ namespace HotelManagement.Data.HotelManagement
                                 roomReservation.PaxQuantity = Convert.ToInt32(reader["PaxQuantity"]);
                                 roomReservation.RoomType = Convert.ToString(reader["RoomType"]);
                                 roomReservation.TypeWiseRoomQuantity = Convert.ToInt32(reader["RoomQuantity"]);
+                                roomReservation.Remarks = reader["Remarks"].ToString();
+                                roomReservation.GuestRemarks = reader["GuestRemarks"].ToString();
+                                roomReservation.POSRemarks = reader["POSRemarks"].ToString();
                                 roomReservationList.Add(roomReservation);
                             }
                         }

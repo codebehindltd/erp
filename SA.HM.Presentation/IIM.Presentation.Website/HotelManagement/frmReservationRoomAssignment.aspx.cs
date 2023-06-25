@@ -79,7 +79,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         {
             int rowCount = 0;
             int roomReservationId = 0;
-            string grid = string.Empty, tr = string.Empty, roomReservationNumber = string.Empty;
+            string grid = string.Empty, tr = string.Empty, roomReservationNumber = string.Empty, hotelRemarks = string.Empty, guestRemarks = string.Empty, posRemarks = string.Empty;
 
             RoomNumberDA entityDA = new RoomNumberDA();
             List<RoomNumberBO> roomNumberInfoBO = entityDA.GetRoomNumberInfo();
@@ -95,6 +95,11 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 if (reservationDetailListBO.Count > 0)
                 {
+
+                    hotelRemarks = reservationDetailListBO[0].Remarks;
+                    guestRemarks = reservationDetailListBO[0].GuestRemarks;
+                    posRemarks = reservationDetailListBO[0].POSRemarks;
+
                     int counterReservationDetail = 0;
                     string strReservationDetailTable = "";
                     ReservationDetailDA reservationDetailDA = new ReservationDetailDA();
@@ -235,8 +240,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     grid += GridHeader() + tr + "</tbody> </table>";
                     adjvw.ReservationId = roomReservationId;
                     adjvw.ReservationNumber = roomReservationNumber;
-                    adjvw.ExpressCheckInnDetailsGrid = grid;
 
+                    adjvw.Remarks = hotelRemarks;
+                    adjvw.GuestRemarks = guestRemarks;
+                    adjvw.POSRemarks = posRemarks;
+
+                    adjvw.ExpressCheckInnDetailsGrid = grid;
                     adjvw.DuplicateCheck = duplicateCheck;
 
                     //----------------------------------------------------------------------------------------------------------------------------------------------------------

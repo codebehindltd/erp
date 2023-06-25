@@ -980,6 +980,7 @@ namespace HotelManagement.Data.HotelManagement
                                 roomRegistration.IsVIPGuest = Convert.ToBoolean(reader["IsVIPGuest"]);
                                 roomRegistration.VIPGuestTypeId = Convert.ToInt32(reader["VIPGuestTypeId"]);
                                 roomRegistration.Remarks = reader["Remarks"].ToString();
+                                roomRegistration.GuestRemarks = reader["GuestRemarks"].ToString();
                                 roomRegistration.POSRemarks = reader["POSRemarks"].ToString();
                                 roomRegistration.MealPlanId = Convert.ToInt32(reader["MealPlanId"]);
                                 roomRegistration.ReferenceId = Convert.ToInt32(reader["ReferenceId"]);

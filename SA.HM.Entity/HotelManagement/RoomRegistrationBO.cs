@@ -93,6 +93,7 @@ namespace HotelManagement.Entity.HotelManagement
         public bool IsAdditionalChargeEnable { get; set; }        
         public bool IsPaidServiceExist { get; set; }
         public string Remarks { get; set; }
+        public string GuestRemarks { get; set; }
         public string POSRemarks { get; set; } 
         public int BillPaidByRegistrationId { get; set; }
         public string BillPaidByRegistrationNumber { get; set; }
