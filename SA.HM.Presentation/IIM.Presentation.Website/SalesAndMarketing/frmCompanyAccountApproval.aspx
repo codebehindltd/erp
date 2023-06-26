@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Innboard.Master" AutoEventWireup="true" CodeBehind="frmCompanyAccountApproval.aspx.cs" Inherits="HotelManagement.Presentation.Website.SalesAndMarketing.frmCompanyAccountApproval" %>
+
 <%@ Register Assembly="FlashUpload" Namespace="ClientUploader" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
@@ -19,13 +20,13 @@
                 changeYear: true,
                 dateFormat: innBoarDateFormat
             });
-            
+
             $("#ContentPlaceHolder1_txtShortCreditLimitDate").datepicker({
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: innBoarDateFormat
             });
-                        
+
             $("#ContentPlaceHolder1_txtTransactionDate").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -100,11 +101,14 @@
 
             $("#ContentPlaceHolder1_ddlLegalAction").val(parseInt(legalAction)).trigger('change');
             ShowUploadedDocument($("#ContentPlaceHolder1_RandomDocId").val());
+
+            var activeStat = result.ActiveStat == false ? 0 : 1;
+            $("#ContentPlaceHolder1_ddlActiveStat").val(parseInt(activeStat));
         }
         function OnGetCompanyInformationForFillFormFailed(error) {
             alert(error.get_message());
         }
-        function LoadCompanyLegalActionForFillForm(companyId){
+        function LoadCompanyLegalActionForFillForm(companyId) {
             PageMethods.GetCompanyLegalActionForFillForm(companyId, OnGetCompanyLegalActionForFillFormSucceeded, OnGetCompanyLegalActionForFillFormFailed);
             return false;
         }
@@ -114,9 +118,9 @@
                 $("#ContentPlaceHolder1_hfIsPreviousDataExists").val(1);
             }
             LoadLastLegalActionId();
-            
+
             $.each(result, function (count, gridObject) {
-                
+
                 var tr = "";
 
                 tr += "<tr>";
@@ -264,7 +268,7 @@
                 $("#ContentPlaceHolder1_txtGuestCompany").focus();
                 return false;
             }
-            else if(creditLimit == ""){
+            else if (creditLimit == "") {
                 toastr.warning("Please Give Credit Limit.");
                 $("#ContentPlaceHolder1_txtCreditLimit").focus();
                 return false;
@@ -303,7 +307,7 @@
             var LegalActions = [];
 
             var legalAction = $("#ContentPlaceHolder1_ddlLegalAction").val();
-            
+
             if (legalAction == 1) {
                 $("#LegalActionTbl tbody tr").each(function (index, item) {
                     var id = $.trim($(item).find("td:eq(0)").text());
@@ -347,12 +351,22 @@
                 SalesCommission: salesCommission,
                 LegalAction: legalAction
             }
-            
-            
+
+
             var randomDocId = $("#ContentPlaceHolder1_RandomDocId").val();
             var deletedDoc = $("#ContentPlaceHolder1_hfDeletedDoc").val();
+            var ddlActiveStatus = $("#ContentPlaceHolder1_ddlActiveStat").val();
+            var activeStat = false;
+
+            if (ddlActiveStatus == "1") {
+                activeStat = true;
+            }
+            else {
+                activeStat = false;
+            }
+
             CommonHelper.SpinnerOpen();
-            PageMethods.SaveCompanyAccountApprovalInfo(BenefitList, LegalActions, deletedLegalActionInfoList, parseInt(randomDocId), deletedDoc, OnSaveCompanyAccountApprovalInfoSucceeded, OnSaveCompanyAccountApprovalInfoFailed);
+            PageMethods.SaveCompanyAccountApprovalInfo(BenefitList, LegalActions, deletedLegalActionInfoList, parseInt(randomDocId), deletedDoc, activeStat, OnSaveCompanyAccountApprovalInfoSucceeded, OnSaveCompanyAccountApprovalInfoFailed);
             return false;
         }
         function OnSaveCompanyAccountApprovalInfoSucceeded(result) {
@@ -435,7 +449,7 @@
             else {
                 lastId = parseInt(lastLegalActionDBId);
                 newId = lastId + 1;
-            }        
+            }
 
             if ($("#ContentPlaceHolder1_hfIsLegalActionEdit").val() != 1) {
                 var tr = "";
@@ -448,7 +462,7 @@
                 tr += "<td style='width:15%;'>" +
                     "<a href='javascript:void()' onclick= 'DeleteLegalActionInfoItem(this)' ><img alt='Delete' src='../Images/delete.png' title='Delete' /></a>";
                 tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return EditLegalActionInfoItem(this)\" alt='Edit'  title='Edit' border='0' />";
-                tr += "</td>";                                
+                tr += "</td>";
                 tr += "</tr>";
 
                 $("#LegalActionTbl tbody").append(tr);
@@ -465,7 +479,7 @@
                         if (currentLegalActionId == clickedId) {
                             $(this).find("td").eq(1).html(transactionDate);
                             $(this).find("td").eq(2).html(detailDescription);
-                            $(this).find("td").eq(3).html(callToAction);                        
+                            $(this).find("td").eq(3).html(callToAction);
                             ClearAfterLegalActionAdded();
                         }
                     }
@@ -688,6 +702,17 @@
             <div id="DocumentDialouge" style="display: none;">
                 <iframe id="frmPrint" name="IframeName" width="100%" height="100%" runat="server"
                     clientidmode="static" scrolling="yes"></iframe>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2">
+                    <asp:Label ID="lblActiveStat" runat="server" class="control-label" Text="Status"></asp:Label>
+                </div>
+                <div class="col-md-4">
+                    <asp:DropDownList ID="ddlActiveStat" runat="server" CssClass="form-control" TabIndex="2">
+                        <asp:ListItem Value="1">Active</asp:ListItem>
+                        <asp:ListItem Value="0">Inactive</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
             </div>
             <div class="form-group" style="padding-top: 10px;">
                 <div class="col-md-12">

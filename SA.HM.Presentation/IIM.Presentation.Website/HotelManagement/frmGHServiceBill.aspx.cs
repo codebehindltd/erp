@@ -1053,7 +1053,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         private void LoadGuestCompany()
         {
             GuestCompanyDA companyDa = new GuestCompanyDA();
-            ddlCompany.DataSource = companyDa.GetGuestCompanyInfo();
+            ddlCompany.DataSource = companyDa.GetGuestCompanyInfo().Where(x => x.ActiveStat != false).ToList();
             ddlCompany.DataTextField = "CompanyName";
             ddlCompany.DataValueField = "CompanyId";
             ddlCompany.DataBind();

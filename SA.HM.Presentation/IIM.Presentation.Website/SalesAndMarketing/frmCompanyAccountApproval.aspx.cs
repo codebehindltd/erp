@@ -94,7 +94,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
             return docList;
         }
         [WebMethod]
-        public static ReturnInfo SaveCompanyAccountApprovalInfo(GuestCompanyBO BenefitList, List<GuestCompanyBO> LegalActions, List<int> deletedLegalActionInfoList, int randomDocId, string deletedDoc)
+        public static ReturnInfo SaveCompanyAccountApprovalInfo(GuestCompanyBO BenefitList, List<GuestCompanyBO> LegalActions, List<int> deletedLegalActionInfoList, int randomDocId, string deletedDoc, bool activeStat)
         {
             ReturnInfo rtninfo = new ReturnInfo();
             Boolean status = false;
@@ -112,7 +112,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing
                 int OwnerIdForDocuments = 0;
                 HMCommonDA hmCommonDA = new HMCommonDA();
 
-                status = gcDa.SaveCompanyAccountApprovalInfo(BenefitList, LegalActions, deletedLegalActionInfoList, out id);
+                status = gcDa.SaveCompanyAccountApprovalInfo(BenefitList, LegalActions, deletedLegalActionInfoList, activeStat, out id);
                 if (status)
                 {
                     rtninfo.IsSuccess = true;

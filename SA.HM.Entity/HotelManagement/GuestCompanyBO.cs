@@ -120,5 +120,6 @@ namespace HotelManagement.Entity.HotelManagement
         public DateTime? CreatedDate { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public int IsPreviousDataExists { get; set; }
+        public bool ActiveStat { get; set; }
     }
 }

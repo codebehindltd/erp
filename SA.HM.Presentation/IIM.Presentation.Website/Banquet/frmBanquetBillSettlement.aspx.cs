@@ -824,24 +824,32 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                         if (BanquetReservationBill[0].CompanyId > 0)
                         {
-                            GuestCompanyDA companyDa = new GuestCompanyDA();
-                            List<GuestCompanyBO> companyListBO = new List<GuestCompanyBO>();
-                            companyListBO = companyDa.GetGuestCompanyInfo().Where(x => x.CompanyId == BanquetReservationBill[0].CompanyId).ToList();
-                            ddlCompanyName.DataSource = companyListBO;
-                            ddlCompanyName.DataTextField = "CompanyName";
-                            ddlCompanyName.DataValueField = "NodeId";
-                            ddlCompanyName.DataBind();
-
-
-                            ListItem itemRoom = new ListItem
+                            GuestCompanyBO companyBO = new GuestCompanyBO();
+                            GuestCompanyDA companyDA = new GuestCompanyDA();
+                            companyBO = companyDA.GetGuestCompanyInfoById(BanquetReservationBill[0].CompanyId);
+                            if (companyBO != null)
                             {
-                                Value = "Company",
-                                Text = "Company"
-                            };
-                            ddlPayMode.Items.Insert(4, itemRoom);
+                                if (companyBO.CompanyId > 0)
+                                {
+                                    if (companyBO.ActiveStat)
+                                    {
+                                        GuestCompanyDA companyDa = new GuestCompanyDA();
+                                        List<GuestCompanyBO> companyListBO = new List<GuestCompanyBO>();
+                                        companyListBO = companyDa.GetGuestCompanyInfo().Where(x => x.CompanyId == BanquetReservationBill[0].CompanyId).ToList();
+                                        ddlCompanyName.DataSource = companyListBO;
+                                        ddlCompanyName.DataTextField = "CompanyName";
+                                        ddlCompanyName.DataValueField = "NodeId";
+                                        ddlCompanyName.DataBind();
 
-                            //ListItem chequeItem = new ListItem("Cheque", "Cheque", true);
-                            //ddlPayMode.Items.Add(chequeItem);
+                                        ListItem itemRoom = new ListItem
+                                        {
+                                            Value = "Company",
+                                            Text = "Company"
+                                        };
+                                        ddlPayMode.Items.Insert(4, itemRoom);
+                                    }
+                                }
+                            }
                         }
 
                         pnlBillPrintPreview.Visible = true;

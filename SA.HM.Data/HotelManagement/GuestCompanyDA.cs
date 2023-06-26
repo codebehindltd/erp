@@ -38,6 +38,7 @@ namespace HotelManagement.Data.HotelManagement
                                 guestCompany.Remarks = reader["Remarks"].ToString();
                                 guestCompany.DiscountPercent = Convert.ToDecimal(reader["DiscountPercent"]);
                                 guestCompany.NodeId = Convert.ToInt32(reader["NodeId"]);
+                                guestCompany.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
 
                                 roomTypeList.Add(guestCompany);
                             }
@@ -47,7 +48,105 @@ namespace HotelManagement.Data.HotelManagement
             }
             return roomTypeList;
         }
+        public GuestCompanyBO GetGuestCompanyInfoById(int companyId)
+        {
+            GuestCompanyBO guestCompany = new GuestCompanyBO();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestCompanyInfoById_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
 
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                guestCompany.CompanyId = Convert.ToInt32(reader["CompanyId"]);
+                                guestCompany.CompanyName = reader["CompanyName"].ToString();
+                                guestCompany.CompanyAddress = reader["CompanyAddress"].ToString();
+                                guestCompany.EmailAddress = reader["EmailAddress"].ToString();
+                                guestCompany.EmailAddressWithoutLabel = reader["EmailAddressWithoutLabel"].ToString();
+                                guestCompany.WebAddress = reader["WebAddress"].ToString();
+                                guestCompany.ContactNumber = reader["ContactNumber"].ToString();
+                                guestCompany.ContactNumberWithoutLabel = reader["ContactNumberWithoutLabel"].ToString();
+                                guestCompany.Fax = reader["Fax"].ToString();
+                                //guestCompany.ContactDesignation = reader["ContactDesignation"].ToString();
+                                //guestCompany.TelephoneNumber = reader["TelephoneNumber"].ToString();
+                                guestCompany.ContactPerson = reader["ContactPerson"].ToString();
+                                guestCompany.Remarks = reader["Remarks"].ToString();
+                                guestCompany.BranchCode = reader["BranchCode"].ToString();
+                                //guestCompany.SignupStatus = reader["SignupStatus"].ToString();
+
+                                guestCompany.SignupStatusId = Convert.ToInt32(reader["SignupStatusId"]);
+                                guestCompany.DiscountPercent = Convert.ToDecimal(reader["DiscountPercent"]);
+                                guestCompany.CreditLimit = Convert.ToDecimal(reader["CreditLimit"]);
+                                guestCompany.CompanyOwnerId = Convert.ToInt32(reader["CompanyOwnerId"]);
+
+                                guestCompany.MatrixInfo = Convert.ToString(reader["MatrixInfo"]);
+                                guestCompany.LocationId = Convert.ToInt32(reader["LocationId"]);
+                                guestCompany.IndustryId = Convert.ToInt32(reader["IndustryId"]);
+                                guestCompany.NodeId = Convert.ToInt32(reader["NodeId"]);
+                                guestCompany.Balance = Convert.ToDecimal(reader["Balance"]);
+
+                                //new add
+                                guestCompany.CompanyOwnerName = Convert.ToString(reader["CompanyOwnerName"]);
+                                guestCompany.TypeName = Convert.ToString(reader["TypeName"]);
+                                guestCompany.IndustryName = Convert.ToString(reader["IndustryName"]);
+                                guestCompany.OwnershipName = Convert.ToString(reader["OwnershipName"]);
+                                guestCompany.LifeCycleStage = reader["LifeCycleStage"].ToString();
+
+                                guestCompany.IndustryId = Convert.ToInt32(reader["IndustryId"]);
+                                guestCompany.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);
+                                guestCompany.AncestorId = Convert.ToInt32(reader["AncestorId"]);
+
+                                guestCompany.CompanyType = Convert.ToInt32(reader["CompanyType"]);
+                                guestCompany.OwnershipId = Convert.ToInt32(reader["OwnershipId"]);
+                                guestCompany.LifeCycleStageId = Convert.ToInt32(reader["LifeCycleStageId"]);
+
+
+                                guestCompany.BillingCountryId = Convert.ToInt32(reader["BillingCountryId"]);
+                                guestCompany.BillingStateId = Convert.ToInt32(reader["BillingStateId"]);
+                                guestCompany.BillingCityId = Convert.ToInt32(reader["BillingCityId"]);
+                                guestCompany.BillingCity = reader["BillingCity"].ToString();
+                                guestCompany.BillingState = reader["BillingState"].ToString();
+                                guestCompany.BillingCountry = reader["BillingCountry"].ToString();
+                                guestCompany.BillingLocationId = Convert.ToInt32(reader["BillingLocationId"]);
+                                guestCompany.BillingStreet = reader["BillingStreet"].ToString();
+                                guestCompany.BillingPostCode = reader["BillingPostCode"].ToString();
+
+                                guestCompany.ShippingCountryId = Convert.ToInt32(reader["ShippingCountryId"]);
+                                guestCompany.ShippingStateId = Convert.ToInt32(reader["ShippingStateId"]);
+                                guestCompany.ShippingCityId = Convert.ToInt32(reader["ShippingCityId"]);
+                                guestCompany.ShippingLocationId = Convert.ToInt32(reader["ShippingLocationId"]);
+                                guestCompany.ShippingStreet = reader["ShippingStreet"].ToString();
+                                guestCompany.ShippingPostCode = reader["ShippingPostCode"].ToString();
+                                guestCompany.ShippingCountry = reader["ShippingCountry"].ToString();
+                                guestCompany.ShippingCity = reader["ShippingCity"].ToString();
+                                guestCompany.ShippingState = reader["ShippingState"].ToString();
+
+                                guestCompany.TicketNumber = reader["TicketNumber"].ToString();
+                                guestCompany.BillingAddress = reader["BillingAddress"].ToString();
+                                guestCompany.ShippingAddress = reader["ShippingAddress"].ToString();
+
+                                
+                                guestCompany.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
+
+                                if (reader["NumberOfEmployee"] != DBNull.Value)
+                                    guestCompany.NumberOfEmployee = Convert.ToInt32(reader["NumberOfEmployee"]);
+                                if (reader["AnnualRevenue"] != DBNull.Value)
+                                    guestCompany.AnnualRevenue = Convert.ToDecimal(reader["AnnualRevenue"]);
+                                guestCompany.IndustryName = reader["IndustryName"].ToString();
+                                guestCompany.IsClient = Convert.ToBoolean(reader["IsClient"]);
+                            }
+                        }
+                    }
+                }
+            }
+            return guestCompany;
+        }
         public List<GuestCompanyBO> GetCompanyInfoForAirTicket(string searchTerm)
         {
             List<GuestCompanyBO> companyList = new List<GuestCompanyBO>();
@@ -116,6 +215,7 @@ namespace HotelManagement.Data.HotelManagement
                         {
                             while (reader.Read())
                             {
+                                companyInfo.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
                                 companyInfo.CreditLimit = Convert.ToDecimal(reader["CreditLimit"]);
                                 if (reader["CreditLimitExpire"] != DBNull.Value)
                                     companyInfo.CreditLimitExpire = Convert.ToDateTime(reader["CreditLimitExpire"]);
@@ -138,7 +238,6 @@ namespace HotelManagement.Data.HotelManagement
             }
             return companyInfo;
         }
-
         public List<GuestCompanyBO> GetCompanyLegalActionForFillForm(int companyId)
         {
             List<GuestCompanyBO> legalActionList = new List<GuestCompanyBO>();
@@ -193,7 +292,6 @@ namespace HotelManagement.Data.HotelManagement
             }
             return guestCompany;
         }
-
         public List<GuestCompanyBO> GetGuestCompanyInfoByUserId(int userInfoId)
         {
             List<GuestCompanyBO> roomTypeList = new List<GuestCompanyBO>();
@@ -569,107 +667,7 @@ namespace HotelManagement.Data.HotelManagement
                 throw ex;
             }
             return status;
-        }
-        public GuestCompanyBO GetGuestCompanyInfoById(int companyId)
-        {
-            GuestCompanyBO guestCompany = new GuestCompanyBO();
-            using (DbConnection conn = dbSmartAspects.CreateConnection())
-            {
-                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetGuestCompanyInfoById_SP"))
-                {
-                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
-                    dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
-
-                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
-                    {
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                guestCompany.CompanyId = Convert.ToInt32(reader["CompanyId"]);
-                                guestCompany.CompanyName = reader["CompanyName"].ToString();
-                                guestCompany.CompanyAddress = reader["CompanyAddress"].ToString();
-                                guestCompany.EmailAddress = reader["EmailAddress"].ToString();
-                                guestCompany.EmailAddressWithoutLabel = reader["EmailAddressWithoutLabel"].ToString();
-                                guestCompany.WebAddress = reader["WebAddress"].ToString();
-                                guestCompany.ContactNumber = reader["ContactNumber"].ToString();
-                                guestCompany.ContactNumberWithoutLabel = reader["ContactNumberWithoutLabel"].ToString();
-                                guestCompany.Fax = reader["Fax"].ToString();
-                                //guestCompany.ContactDesignation = reader["ContactDesignation"].ToString();
-                                //guestCompany.TelephoneNumber = reader["TelephoneNumber"].ToString();
-                                guestCompany.ContactPerson = reader["ContactPerson"].ToString();
-                                guestCompany.Remarks = reader["Remarks"].ToString();
-                                guestCompany.BranchCode = reader["BranchCode"].ToString();
-                                //guestCompany.SignupStatus = reader["SignupStatus"].ToString();
-
-                                guestCompany.SignupStatusId = Convert.ToInt32(reader["SignupStatusId"]);
-                                guestCompany.DiscountPercent = Convert.ToDecimal(reader["DiscountPercent"]);
-                                guestCompany.CreditLimit = Convert.ToDecimal(reader["CreditLimit"]);
-                                guestCompany.CompanyOwnerId = Convert.ToInt32(reader["CompanyOwnerId"]);
-
-                                guestCompany.MatrixInfo = Convert.ToString(reader["MatrixInfo"]);
-                                guestCompany.LocationId = Convert.ToInt32(reader["LocationId"]);
-                                guestCompany.IndustryId = Convert.ToInt32(reader["IndustryId"]);
-                                guestCompany.NodeId = Convert.ToInt32(reader["NodeId"]);
-                                guestCompany.Balance = Convert.ToDecimal(reader["Balance"]);
-
-                                //new add
-                                guestCompany.CompanyOwnerName = Convert.ToString(reader["CompanyOwnerName"]);
-                                guestCompany.TypeName = Convert.ToString(reader["TypeName"]);
-                                guestCompany.IndustryName = Convert.ToString(reader["IndustryName"]);
-                                guestCompany.OwnershipName = Convert.ToString(reader["OwnershipName"]);
-                                guestCompany.LifeCycleStage = reader["LifeCycleStage"].ToString();
-
-                                guestCompany.IndustryId = Convert.ToInt32(reader["IndustryId"]);
-                                guestCompany.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);
-                                guestCompany.AncestorId = Convert.ToInt32(reader["AncestorId"]);
-
-                                guestCompany.CompanyType = Convert.ToInt32(reader["CompanyType"]);
-                                guestCompany.OwnershipId = Convert.ToInt32(reader["OwnershipId"]);
-                                guestCompany.LifeCycleStageId = Convert.ToInt32(reader["LifeCycleStageId"]);
-
-
-                                guestCompany.BillingCountryId = Convert.ToInt32(reader["BillingCountryId"]);
-                                guestCompany.BillingStateId = Convert.ToInt32(reader["BillingStateId"]);
-                                guestCompany.BillingCityId = Convert.ToInt32(reader["BillingCityId"]);
-                                guestCompany.BillingCity = reader["BillingCity"].ToString();
-                                guestCompany.BillingState = reader["BillingState"].ToString();
-                                guestCompany.BillingCountry = reader["BillingCountry"].ToString();
-                                guestCompany.BillingLocationId = Convert.ToInt32(reader["BillingLocationId"]);
-                                guestCompany.BillingStreet = reader["BillingStreet"].ToString();
-                                guestCompany.BillingPostCode = reader["BillingPostCode"].ToString();
-
-                                guestCompany.ShippingCountryId = Convert.ToInt32(reader["ShippingCountryId"]);
-                                guestCompany.ShippingStateId = Convert.ToInt32(reader["ShippingStateId"]);
-                                guestCompany.ShippingCityId = Convert.ToInt32(reader["ShippingCityId"]);
-                                guestCompany.ShippingLocationId = Convert.ToInt32(reader["ShippingLocationId"]);
-                                guestCompany.ShippingStreet = reader["ShippingStreet"].ToString();
-                                guestCompany.ShippingPostCode = reader["ShippingPostCode"].ToString();
-                                guestCompany.ShippingCountry = reader["ShippingCountry"].ToString();
-                                guestCompany.ShippingCity = reader["ShippingCity"].ToString();
-                                guestCompany.ShippingState = reader["ShippingState"].ToString();
-
-                                guestCompany.TicketNumber = reader["TicketNumber"].ToString();
-                                guestCompany.BillingAddress = reader["BillingAddress"].ToString();
-                                guestCompany.ShippingAddress = reader["ShippingAddress"].ToString();
-
-
-                                if (reader["NumberOfEmployee"] != DBNull.Value)
-                                    guestCompany.NumberOfEmployee = Convert.ToInt32(reader["NumberOfEmployee"]);
-                                if (reader["AnnualRevenue"] != DBNull.Value)
-                                    guestCompany.AnnualRevenue = Convert.ToDecimal(reader["AnnualRevenue"]);
-                                guestCompany.IndustryName = reader["IndustryName"].ToString();
-                                //if(reader["DealStageWiseCompanyStatusId"] != DBNull.Value)
-                                //    guestCompany.DealStageWiseCompanyStatusId = Convert.ToInt64(reader["DealStageWiseCompanyStatusId"]);
-                                //guestCompany.DealStageWiseCompanyStatus = reader["DealStageWiseCompanyStatus"].ToString();
-                                guestCompany.IsClient = Convert.ToBoolean(reader["IsClient"]);
-                            }
-                        }
-                    }
-                }
-            }
-            return guestCompany;
-        }
+        }       
         public List<int> GetGuestCRMCompanyInfoById(int companyId)
         {
             List<int> CRMCompanyIds = new List<int>();
@@ -1080,6 +1078,8 @@ namespace HotelManagement.Data.HotelManagement
                                 guestCompany.Balance = Convert.ToDecimal(reader["Balance"]);
                                 guestCompany.LifeCycleStageId = Convert.ToInt32(reader["LifeCycleStageId"]);
 
+                                guestCompany.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
+
                                 roomTypeList.Add(guestCompany);
                             }
                         }
@@ -1248,7 +1248,7 @@ namespace HotelManagement.Data.HotelManagement
 
             return status > 0 ? true : false;
         }
-        public Boolean SaveCompanyAccountApprovalInfo(GuestCompanyBO BenefitList, List<GuestCompanyBO> LegalActions, List<int> deletedLegalActionInfoList, out int tmpCompanyId)
+        public Boolean SaveCompanyAccountApprovalInfo(GuestCompanyBO BenefitList, List<GuestCompanyBO> LegalActions, List<int> deletedLegalActionInfoList, Boolean activeStat, out int tmpCompanyId)
         {
             int status = 0;
 
@@ -1272,6 +1272,7 @@ namespace HotelManagement.Data.HotelManagement
                             dbSmartAspects.AddInParameter(commBen, "@SalesCommission", DbType.Decimal, BenefitList.SalesCommission);
                             dbSmartAspects.AddInParameter(commBen, "@LegalAction", DbType.String, BenefitList.LegalAction);
                             dbSmartAspects.AddInParameter(commBen, "@AccountsApprovedBy", DbType.Int32, BenefitList.AccountsApprovedBy);
+                            dbSmartAspects.AddInParameter(commBen, "@ActiveStat", DbType.Boolean, activeStat);
 
                             status = dbSmartAspects.ExecuteNonQuery(commBen, transaction);
                             tmpCompanyId = Convert.ToInt32(BenefitList.CompanyId);

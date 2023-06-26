@@ -4108,7 +4108,7 @@ namespace HotelManagement.Presentation.Website.POS
         public static List<GuestCompanyBO> GetGuestCompanyInfo(string companyName)
         {
             GuestCompanyDA bpDA = new GuestCompanyDA();
-            return bpDA.GetGuestCompanyInfo(companyName);
+            return bpDA.GetGuestCompanyInfo(companyName).Where(x => x.ActiveStat != false).ToList();
         }
         [WebMethod]
         public static List<BankBO> GetBankInfoForAutoComplete(string bankName)

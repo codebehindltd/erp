@@ -2063,13 +2063,33 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                         if (roomAllocationBO.CompanyId > 0)
                         {
-                            ListItem itemRoom = new ListItem();
-                            itemRoom.Value = "Company";
-                            itemRoom.Text = "Company";
-                            this.ddlPayMode.Items.Insert(4, itemRoom);
+                            GuestCompanyBO companyBO = new GuestCompanyBO();
+                            GuestCompanyDA companyDA = new GuestCompanyDA();
+                            companyBO = companyDA.GetGuestCompanyInfoById(roomAllocationBO.CompanyId);
+                            if (companyBO != null)
+                            {
+                                if (companyBO.CompanyId > 0)
+                                {
+                                    if (companyBO.ActiveStat)
+                                    {
+                                        ListItem itemRoom = new ListItem();
+                                        itemRoom.Value = "Company";
+                                        itemRoom.Text = "Company";
+                                        this.ddlPayMode.Items.Insert(4, itemRoom);
 
-                            this.ddlCompanyPaymentAccountHead.Enabled = false;
-                            this.HiddenFieldCompanyPaymentButtonInfo.Value = "1";
+                                        this.ddlCompanyPaymentAccountHead.Enabled = false;
+                                        this.HiddenFieldCompanyPaymentButtonInfo.Value = "1";
+                                    }
+                                }
+                            }
+
+                            //ListItem itemRoom = new ListItem();
+                            //itemRoom.Value = "Company";
+                            //itemRoom.Text = "Company";
+                            //this.ddlPayMode.Items.Insert(4, itemRoom);
+
+                            //this.ddlCompanyPaymentAccountHead.Enabled = false;
+                            //this.HiddenFieldCompanyPaymentButtonInfo.Value = "1";
                         }
 
                         Session["HiddenFieldCompanyPaymentButtonInfo"] = this.HiddenFieldCompanyPaymentButtonInfo.Value;
