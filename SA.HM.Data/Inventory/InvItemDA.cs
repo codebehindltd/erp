@@ -1154,6 +1154,8 @@ namespace HotelManagement.Data.Inventory
                                 productBO.AdditionalChargeType = reader["AdditionalChargeType"].ToString();
                                 productBO.AdditionalCharge = Convert.ToDecimal(reader["AdditionalCharge"]);
 
+                                productBO.Description = reader["ItemDescription"].ToString();
+
                                 productList.Add(productBO);
                             }
                         }

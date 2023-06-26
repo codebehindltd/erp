@@ -111,9 +111,8 @@ namespace HotelManagement.Presentation.Website.Banquet
                 ImageButton imgDelete = (ImageButton)e.Row.FindControl("ImgDelete");
                 imgUpdate.Attributes["onclick"] = "javascript:return PerformFillFormAction('" + lblValue.Text + "');";
                 imgDelete.Attributes["onclick"] = "javascript:return PerformDeleteAction('" + lblValue.Text + "');";
-                //imgUpdate.Visible = isSavePermission;
-                ////imgDelete.Visible = isDeletePermission;
-                imgDelete.Visible = false;
+                imgUpdate.Visible = isSavePermission;
+                imgDelete.Visible = isDeletePermission;
             }
         }
         protected void gvGuestHouseService_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -967,17 +966,17 @@ namespace HotelManagement.Presentation.Website.Banquet
         }
         //************************ User Defined Function ********************//       
         [WebMethod]
-        public static string DeleteData(int sEmpId)
+        public static string DeleteData(int paymentId)
         {
             string result = string.Empty;
             try
             {
                 HMCommonDA hmCommonDA = new HMCommonDA();
                 HMUtility hmUtility = new HMUtility();
-                Boolean status = hmCommonDA.DeleteInfoById("HotelGuestBillPayment", "PaymentId", sEmpId);
+                Boolean status = hmCommonDA.DeleteInfoById("HotelGuestBillPayment", "PaymentId", paymentId);
                 if (status)
                 {
-                    hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Delete.ToString(), EntityTypeEnum.EntityType.BanquetBillPayment.ToString(), sEmpId, ProjectModuleEnum.ProjectModule.BanquetManagement.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.BanquetBillPayment)); 
+                    hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Delete.ToString(), EntityTypeEnum.EntityType.BanquetBillPayment.ToString(), paymentId, ProjectModuleEnum.ProjectModule.BanquetManagement.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.BanquetBillPayment)); 
                     result = "success";
                 }
             }

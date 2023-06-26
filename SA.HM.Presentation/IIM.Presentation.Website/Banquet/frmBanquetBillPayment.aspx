@@ -450,7 +450,7 @@
         }
 
         function OnDeleteObjectSucceeded(result) {
-            window.location = "frmReservationBillPayment.aspx?DeleteConfirmation=Deleted"
+            window.location = "frmBanquetBillPayment.aspx"
         }
 
         function OnDeleteObjectFailed(error) {

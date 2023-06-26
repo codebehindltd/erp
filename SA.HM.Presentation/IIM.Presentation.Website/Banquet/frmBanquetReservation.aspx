@@ -28,6 +28,7 @@
 
             if (item != null) {
                 $("#ContentPlaceHolder1_txtUnitPrice").val(item.UnitPriceLocal);
+                $("#ContentPlaceHolder1_txtItemDescription").val(item.Description);
 
                 if (item.IsItemEditable == true) {
                     $("#ContentPlaceHolder1_txtUnitPrice").attr('disabled', false);
@@ -2315,7 +2316,7 @@
                                                 <asp:Label ID="Label4" runat="server" class="control-label" Text="Description"></asp:Label>
                                             </div>
                                             <div class="col-md-10">
-                                                <asp:TextBox ID="txtItemDescription" runat="server" CssClass="form-control" TabIndex="23" TextMode="MultiLine"></asp:TextBox>
+                                                <asp:TextBox ID="txtItemDescription" runat="server" Height="75" CssClass="form-control" TabIndex="23" TextMode="MultiLine"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -2343,7 +2344,7 @@
                                 <asp:Label ID="lblRemarks" runat="server" class="control-label" Text="Remarks"></asp:Label>
                             </div>
                             <div class="col-md-10">
-                                <asp:TextBox ID="txtRemarks" runat="server" CssClass="form-control" TextMode="MultiLine"
+                                <asp:TextBox ID="txtRemarks" runat="server" Height="75" CssClass="form-control" TextMode="MultiLine"
                                     TabIndex="19"></asp:TextBox>
                             </div>
                         </div>
