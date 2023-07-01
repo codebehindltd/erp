@@ -246,7 +246,7 @@ namespace HotelManagement.Data.HotelManagement
             }
             return cashInfo;
         }
-        public List<HotelGuestCompanyBO> GetHotelGuestCompanyInfo(string guestCompany, string contactPerson, string contactNumber, int signupStatusId, int lifeCycleStageId, DateTime? affStartDate, DateTime? affEndDate)
+        public List<HotelGuestCompanyBO> GetHotelGuestCompanyInfo(string guestCompany, string contactPerson, string contactNumber, int signupStatusId, int lifeCycleStageId, int industryId, DateTime? affStartDate, DateTime? affEndDate)
         {
             List<HotelGuestCompanyBO> guestCmpInfo = new List<HotelGuestCompanyBO>();
 
@@ -293,6 +293,14 @@ namespace HotelManagement.Data.HotelManagement
                     else
                     {
                         dbSmartAspects.AddInParameter(cmd, "@LifeCycleStageId", DbType.Int32, DBNull.Value);
+                    }
+                    if (industryId != 0)
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@IndustryId", DbType.Int32, industryId);
+                    }
+                    else
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@IndustryId", DbType.Int32, DBNull.Value);
                     }
                     if (affStartDate != null)
                     {

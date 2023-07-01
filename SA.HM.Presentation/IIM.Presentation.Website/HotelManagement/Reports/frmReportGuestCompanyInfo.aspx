@@ -24,6 +24,19 @@
                 }
             });
 
+            $("#ContentPlaceHolder1_ddlLifeCycleStageId").select2({
+                tags: "true",
+                //placeholder: "Select an option",
+                allowClear: true,
+                width: "99.75%"
+            });
+            $("#ContentPlaceHolder1_ddlIndustry").select2({
+                tags: "true",
+                //placeholder: "Select an option",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             $("#ContentPlaceHolder1_txtStartDate").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -93,6 +106,13 @@
                     <div class="col-md-4">
                         <asp:DropDownList ID="ddlLifeCycleStageId" runat="server" CssClass="form-control"
                             TabIndex="2">
+                        </asp:DropDownList>
+                    </div>                    
+                    <div class="col-md-2">
+                        <asp:Label ID="lblIndustry" runat="server" class="control-label" Text="Industry"></asp:Label>
+                    </div>
+                    <div class="col-md-4">
+                        <asp:DropDownList ID="ddlIndustry" runat="server" CssClass="form-control" TabIndex="1">
                         </asp:DropDownList>
                     </div>
                 </div>

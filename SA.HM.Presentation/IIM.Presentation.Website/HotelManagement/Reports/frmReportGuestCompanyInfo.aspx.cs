@@ -38,6 +38,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
                 this.CheckObjectPermission(userInformationBO.UserInfoId, HMConstants.ApplicationFormName.frmReportGuestCompanyInfo.ToString());
                 LoadSignupStatus();
                 LoadLifeCycleStage();
+                LoadIndustry();
             }
         }
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -68,6 +69,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             string contactNumber = txtContactNumber.Text.ToString();
             Int32 signupStatusId = Convert.ToInt32( ddlSignupStatus.SelectedValue);
             int lifeCycleStageId = Convert.ToInt32(ddlLifeCycleStageId.SelectedValue);
+            int industryId = Convert.ToInt32(ddlIndustry.SelectedValue);
 
             if (ddlSignupStatus.SelectedItem.Text == "Affiliated")
             {
@@ -128,13 +130,22 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             {
                 paramReport.Add(new ReportParameter("Referance", ""));
             }
+            if (ddlIndustry.SelectedValue != "0")
+            {
+                paramReport.Add(new ReportParameter("IndustryName", ddlIndustry.SelectedItem.Text));
+            }
+            else
+            {
+                paramReport.Add(new ReportParameter("IndustryName", ""));
+            }
+
             rvTransaction.LocalReport.SetParameters(paramReport);
 
             AllReportDA reportDA = new AllReportDA();
             List<HotelGuestCompanyBO> gstCmpBO = new List<HotelGuestCompanyBO>();
             if (userInformationBO.UserInfoId == 1)
             {
-                gstCmpBO = reportDA.GetHotelGuestCompanyInfo(guestCmpny, contactPerson, contactNumber, signupStatusId, lifeCycleStageId, fromDate, toDate);
+                gstCmpBO = reportDA.GetHotelGuestCompanyInfo(guestCmpny, contactPerson, contactNumber, signupStatusId, lifeCycleStageId, industryId, fromDate, toDate);
                 if (ddlReferenceId.SelectedValue != "0")
                 {
                     int referenceId = !string.IsNullOrWhiteSpace(this.ddlReferenceId.SelectedValue) ? Convert.ToInt32(this.ddlReferenceId.SelectedValue) : 0;
@@ -145,11 +156,11 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             {
                 if (isHotelGuestCompanyRescitionForAllUsers == 1)
                 {
-                    gstCmpBO = reportDA.GetHotelGuestCompanyInfo(guestCmpny, contactPerson, contactNumber, signupStatusId, lifeCycleStageId, fromDate, toDate).Where(x => x.CreatedBy == userInformationBO.UserInfoId).ToList();
+                    gstCmpBO = reportDA.GetHotelGuestCompanyInfo(guestCmpny, contactPerson, contactNumber, signupStatusId, lifeCycleStageId, industryId, fromDate, toDate).Where(x => x.CreatedBy == userInformationBO.UserInfoId).ToList();
                 }
                 else
                 {
-                    gstCmpBO = reportDA.GetHotelGuestCompanyInfo(guestCmpny, contactPerson, contactNumber, signupStatusId, lifeCycleStageId, fromDate, toDate);
+                    gstCmpBO = reportDA.GetHotelGuestCompanyInfo(guestCmpny, contactPerson, contactNumber, signupStatusId, lifeCycleStageId, industryId, fromDate, toDate);
                     if (ddlReferenceId.SelectedValue != "0")
                     {
                         int referenceId = !string.IsNullOrWhiteSpace(this.ddlReferenceId.SelectedValue) ? Convert.ToInt32(this.ddlReferenceId.SelectedValue) : 0;
@@ -173,6 +184,22 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             frmPrint.Attributes["src"] = reportSource;
         }
         //************************ User Defined Function ********************//
+        private void LoadIndustry()
+        {
+            IndustryDA industryDA = new IndustryDA();
+            List<IndustryBO> industryBO = new List<IndustryBO>();
+            industryBO = industryDA.GetIndustryInfo();
+
+            ddlIndustry.DataSource = industryBO;
+            ddlIndustry.DataTextField = "IndustryName";
+            ddlIndustry.DataValueField = "IndustryId";
+            ddlIndustry.DataBind();
+
+            ListItem item = new ListItem();
+            item.Value = "0";
+            item.Text = hmUtility.GetDropDownFirstAllValue();
+            ddlIndustry.Items.Insert(0, item);
+        }
         private void LoadLifeCycleStage()
         {
             LifeCycleStageDA lifeCycleStageDA = new LifeCycleStageDA();
