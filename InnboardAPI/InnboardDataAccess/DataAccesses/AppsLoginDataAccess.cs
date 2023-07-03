@@ -21,6 +21,12 @@ namespace InnboardDataAccess.DataAccesses
             UserInfoModel userInfo = InnboardDBContext.Database.SqlQuery<UserInfoModel>("EXEC [dbo].[GetUserInformationByUserNameNId_SP] @UserId,@UserPassword", param1, param2).FirstOrDefault();
             return userInfo;
         }
+        public UserInfoModel LoginUserByMasterUserInfoId(int masterUserInfoId)
+        {
+            SqlParameter paramMasterUserInfoId = new SqlParameter("@MasterUserInfoId", masterUserInfoId);
+            UserInfoModel userInfo = InnboardDBContext.Database.SqlQuery<UserInfoModel>("EXEC [dbo].[GetUserInformationByMasterUserInfoId_SP] @MasterUserInfoId", paramMasterUserInfoId).FirstOrDefault();
+            return userInfo;
+        }
 
         public bool AppUserAttendanceSave(AppAttendanceModel appAttModel)
         {

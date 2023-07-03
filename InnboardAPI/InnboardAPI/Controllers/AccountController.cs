@@ -134,7 +134,25 @@ namespace InnboardAPI.Controllers
             //return responseMsg;
         }
 
-       
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("AppsLoginUserByMasterUserInfoId")]
+        public async Task<IHttpActionResult> AppsLoginUserByMasterUserInfoId(int masterUserInfoId)
+        {
+            AppsLoginDataAccess dbLogin = new AppsLoginDataAccess();
+            UserInfoModel infoModel = dbLogin.LoginUserByMasterUserInfoId(masterUserInfoId);
+            if (infoModel != null)
+            {
+                return Ok(infoModel);
+            }
+            else
+            {
+                return BadRequest("User Invalid!");
+            }
+
+            //return responseMsg;
+        }
+
         //private string ProcessUploadFile(Image model)
         //{
         //    string uniqueFilename = null;
