@@ -2007,13 +2007,14 @@
             var masterCardPayment = $.trim($("#ContentPlaceHolder1_txtMasterCard").val()) == "" ? "0" : $("#ContentPlaceHolder1_txtMasterCard").val();
             var visaCardPayment = $.trim($("#ContentPlaceHolder1_txtVisaCard").val()) == "" ? "0" : $("#ContentPlaceHolder1_txtVisaCard").val();
             var discoverCardPayment = $.trim($("#ContentPlaceHolder1_txtDiscoverCard").val()) == "" ? "0" : $("#ContentPlaceHolder1_txtDiscoverCard").val();
+            var mBankingAmount = $.trim($("#ContentPlaceHolder1_txtMBankingPayment").val()) == "" ? "0" : $("#ContentPlaceHolder1_txtMBankingPayment").val();
             var companyAmount = $.trim($("#ContentPlaceHolder1_txtCompanyPayment").val()) == "" ? "0" : $("#ContentPlaceHolder1_txtCompanyPayment").val();
             var roundedAmount = $.trim($("#ContentPlaceHolder1_txtTPRoundedAmount").val()) == "" ? 0.00 : parseFloat($("#ContentPlaceHolder1_txtTPRoundedAmount").val());
             var guestRoomPayment = $.trim($("#ContentPlaceHolder1_txtRoomPayment").val()) == "" ? 0.00 : parseFloat($("#ContentPlaceHolder1_txtRoomPayment").val());
             var employeePayment = $.trim($("#ContentPlaceHolder1_txtEmployeePayment").val()) == "" ? 0.00 : parseFloat($("#ContentPlaceHolder1_txtEmployeePayment").val());
             var memberPayment = $.trim($("#ContentPlaceHolder1_txtMemberPayment").val()) == "" ? 0.00 : parseFloat($("#ContentPlaceHolder1_txtMemberPayment").val());
 
-            var totalPayment = parseFloat(cashPayment) + parseFloat(amexCardPayment) +
+            var totalPayment = parseFloat(cashPayment) + parseFloat(amexCardPayment) + parseFloat(mBankingAmount) +
                 parseFloat(masterCardPayment) + parseFloat(visaCardPayment) + parseFloat(discoverCardPayment) + parseFloat(companyAmount) +
                 parseFloat(guestRoomPayment) + parseFloat(employeePayment) + parseFloat(memberPayment);
 
@@ -2061,6 +2062,13 @@
                         guestRoomPayment = "0";
                     }
                 }
+                else if (mBankingAmount != "0" && mBankingAmount == activeControlValue) {
+                    if (parseFloat(totalPayment) > parseFloat(grandTotal)) {
+                        $("#ContentPlaceHolder1_txtMBankingPayment").val("");
+                        toastr.warning("M-Banking Payment Amount Cannot Be Greater Than Due Amount.");
+                        companyAmount = "0";
+                    }
+                }
                 else if (companyAmount != "0" && companyAmount == activeControlValue) {
                     if (parseFloat(totalPayment) > parseFloat(grandTotal)) {
                         $("#ContentPlaceHolder1_txtCompanyPayment").val("");
@@ -2084,7 +2092,7 @@
                 }
             }
 
-            totalPayment = parseFloat(cashPayment) + parseFloat(amexCardPayment) +
+            totalPayment = parseFloat(cashPayment) + parseFloat(amexCardPayment) + parseFloat(mBankingAmount) +
                 parseFloat(masterCardPayment) + parseFloat(visaCardPayment) + parseFloat(discoverCardPayment) + parseFloat(companyAmount) +
                 parseFloat(guestRoomPayment) + parseFloat(employeePayment) + parseFloat(memberPayment);
 
