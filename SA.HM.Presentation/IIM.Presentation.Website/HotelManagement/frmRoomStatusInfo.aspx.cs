@@ -3430,6 +3430,16 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     strTable += " onclick=\"return CountTotalNumberOfGuestByRoomNumber('" + RoomNember + "', 0 );\"  />";
                     strTable += "</div>";
                 }
+                else if (list[i].DisplayText == "Bill Split")
+                {
+                    RoomAlocationBO roomAllocationBO = new RoomAlocationBO();
+                    roomAllocationBO = roomRegistrationDA.GetActiveRegistrationInfoByRoomNumber(RoomNember);
+                    if (roomAllocationBO.RoomId > 0)
+                    {
+                        strTable += " onclick=\" location.href='" + list[i].PossiblePath + "?RId=" + roomAllocationBO.RegistrationId.ToString() + "';\"  />";
+                        strTable += "</div>";
+                    }
+                }
                 else if (list[i].DisplayText == "Bill Preview")
                 {
 
@@ -3662,9 +3672,18 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     strTable += " onclick=\"return CountTotalNumberOfGuestByRoomNumber('" + RoomNember + "', 0 );\"  />";
                     strTable += "</div>";
                 }
+                else if (list[i].DisplayText == "Bill Split")
+                {
+                    RoomAlocationBO roomAllocationBO = new RoomAlocationBO();
+                    roomAllocationBO = roomRegistrationDA.GetActiveRegistrationInfoByRoomNumber(RoomNember);
+                    if (roomAllocationBO.RoomId > 0)
+                    {
+                        strTable += " onclick=\" location.href='" + list[i].PossiblePath + "?RId=" + roomAllocationBO.RegistrationId.ToString() + "';\"  />";
+                        strTable += "</div>";
+                    }
+                }
                 else if (list[i].DisplayText == "Bill Preview")
                 {
-                    //RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
                     RoomAlocationBO roomAllocationBO = new RoomAlocationBO();
                     roomAllocationBO = roomRegistrationDA.GetActiveRegistrationInfoByRoomNumber(RoomNember);
                     if (roomAllocationBO.RoomId > 0)
@@ -3682,10 +3701,9 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         strTable += " onclick='LoadBillPreview()' />";
                         strTable += "</div>";
                     }
-                }
+                }                
                 else if (list[i].DisplayText == "Room Check Out")
                 {
-                    //RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
                     RoomAlocationBO roomAllocationBO = new RoomAlocationBO();
                     roomAllocationBO = roomRegistrationDA.GetActiveRegistrationInfoByRoomNumber(RoomNember);
                     if (roomAllocationBO.RoomId > 0)

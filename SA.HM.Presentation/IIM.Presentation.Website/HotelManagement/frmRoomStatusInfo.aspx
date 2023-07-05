@@ -865,6 +865,190 @@
             }
         }
     </script>
+    <div class="childDivSection" id="BillSplitPopUpForm" style="display: none;">
+        <div class="panel-body">
+            <div class="form-horizontal" style="padding-bottom: 20px;">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <asp:Label ID="Label4" runat="server" class="control-label" Text="From Date"></asp:Label>
+                    </div>
+                    <div class="col-md-4">
+                        <asp:TextBox ID="txtStartDate" CssClass="form-control" runat="server" TabIndex="-1"></asp:TextBox><input
+                            type="hidden" id="hidFromDate" />
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="Label5" runat="server" class="control-label" Text="To Date"></asp:Label>
+                    </div>
+                    <div class="col-md-4">
+                        <asp:TextBox ID="txtEndDate" CssClass="form-control" runat="server" TabIndex="-1"></asp:TextBox><input
+                            type="hidden" id="hidToDate" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <asp:Label ID="lblServiceType" runat="server" class="control-label" Text="Split Type"></asp:Label>
+                    </div>
+                    <div class="col-md-4">
+                        <asp:DropDownList ID="ddlServiceType" runat="server" CssClass="form-control" TabIndex="-1">
+                            <asp:ListItem Value="GroupService">Group Service</asp:ListItem>
+                            <asp:ListItem Value="IndividualService">Individual Service</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                </div>
+                <%--<div class="childDivSection">--%>
+                <div style="display: none">
+                    <div id="IndividualServiceDivInfo" style="display: none">
+                        <asp:GridView ID="gvIndividualServiceInformationForBillSplit" Width="100%" runat="server"
+                            AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" GridLines="None"
+                            AllowSorting="True" ForeColor="#333333"
+                            CssClass="table table-bordered table-condensed table-responsive">
+                            <RowStyle BackColor="#E3EAEB" />
+                            <Columns>
+                                <asp:TemplateField HeaderText="IDNO" Visible="False">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblServiceId" runat="server" Text='<%#Eval("ServiceId") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Select" ItemStyle-Width="05%">
+                                    <ItemTemplate>
+                                        <asp:CheckBox ID="chkIsSelected" runat="server" />
+                                    </ItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Center" />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Service Name" ItemStyle-Width="95%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblgvMenuHead" runat="server" Text='<%# Bind("ServiceName") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Left" />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Service Type" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblgvServiceType" runat="server" Text='<%# Bind("ServiceType") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Left" />
+                                </asp:TemplateField>
+                            </Columns>
+                            <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
+                            <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                            <EmptyDataTemplate>
+                                <asp:Label ID="lblRecordNotFound" runat="server" Text="Record Not Found."></asp:Label>
+                            </EmptyDataTemplate>
+                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+                            <HeaderStyle BackColor="#44545E" Font-Bold="True" ForeColor="White" />
+                            <EditRowStyle BackColor="#7C6F57" />
+                            <AlternatingRowStyle BackColor="White" />
+                        </asp:GridView>
+                    </div>
+                    <div id="GroupServiceDivInfo" style="display: none">
+                        <asp:GridView ID="gvGroupServiceInformationForBillSplit" Width="100%" runat="server"
+                            AllowPaging="True" AutoGenerateColumns="False" CellPadding="4" GridLines="None"
+                            AllowSorting="True" ForeColor="#333333"
+                            CssClass="table table-bordered table-condensed table-responsive">
+                            <RowStyle BackColor="#E3EAEB" />
+                            <Columns>
+                                <asp:TemplateField HeaderText="IDNO" Visible="False">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblServiceId" runat="server" Text='<%#Eval("ServiceId") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Select" ItemStyle-Width="05%">
+                                    <ItemTemplate>
+                                        <asp:CheckBox ID="chkIsSelected" runat="server" />
+                                    </ItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Center" />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Service Name" ItemStyle-Width="95%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblgvMenuHead" runat="server" Text='<%# Bind("ServiceName") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Left" />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Service Type" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblgvServiceType" runat="server" Text='<%# Bind("ServiceType") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Left" />
+                                    <ItemStyle HorizontalAlign="Left" />
+                                </asp:TemplateField>
+                            </Columns>
+                            <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />
+                            <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                            <EmptyDataTemplate>
+                                <asp:Label ID="lblRecordNotFound" runat="server" Text="Record Not Found."></asp:Label>
+                            </EmptyDataTemplate>
+                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+                            <HeaderStyle BackColor="#44545E" Font-Bold="True" ForeColor="White" />
+                            <EditRowStyle BackColor="#7C6F57" />
+                            <AlternatingRowStyle BackColor="White" />
+                        </asp:GridView>
+                    </div>
+                </div>
+            </div>
+            <asp:Panel ID="pnlRoomCalender" runat="server" ScrollBars="Both" Height="350px">
+                <div id="GroupBillSpliteCheckBoxListDiv">
+                    <div class="checkbox checkboxList" id="checkboxRoomList">
+                        <asp:CheckBoxList ID="chkBillSpliteRoomItem" runat="server" CssClass="customChkBox">
+                        </asp:CheckBoxList>
+                    </div>
+                    <div class="checkbox checkboxList" id="checkboxServiceList" style="margin-top: -13px">
+                        <asp:CheckBoxList ID="chkBillSpliteServiceItem" runat="server" CssClass="customChkBox">
+                        </asp:CheckBoxList>
+                    </div>
+                    <div class="checkbox checkboxList" id="checkboxPaymentList" style="margin-top: -13px">
+                        <asp:CheckBoxList ID="chkBillSplitePaymentItem" runat="server" CssClass="customChkBox">
+                        </asp:CheckBoxList>
+                    </div>
+                </div>
+                <div id="IndividualBillSpliteCheckBoxListDiv" style="display: none;">
+                    <div class="checkbox checkboxList" id="checkboxIndividualRoomList">
+                        <asp:CheckBoxList ID="chkBillSpliteIndividualRoomItem" runat="server" CssClass="customChkBox">
+                        </asp:CheckBoxList>
+                    </div>
+                    <div class="checkbox checkboxList" id="checkboxIndividualServiceList" style="margin-top: -13px">
+                        <asp:CheckBoxList ID="chkBillSpliteIndividualServiceItem" runat="server" CssClass="customChkBox">
+                        </asp:CheckBoxList>
+                    </div>
+                    <div class="checkbox checkboxList" id="checkboxIndividualPaymentList" style="margin-top: -13px">
+                        <asp:CheckBoxList ID="chkBillSpliteIndividualPaymentItem" runat="server" CssClass="customChkBox">
+                        </asp:CheckBoxList>
+                    </div>
+                    <div class="checkbox checkboxList" id="checkboxIndividualTransferedPaymentList" style="margin-top: -13px">
+                        <asp:CheckBoxList ID="chkBillSpliteIndividualTransferedPaymentItem" runat="server"
+                            CssClass="customChkBox">
+                        </asp:CheckBoxList>
+                    </div>
+                </div>
+            </asp:Panel>
+            <div class="form-horizontal">
+                <div class="form-group" style="display: none;">
+                    <div class="col-md-2">
+                        Total Bill Amount
+                    </div>
+                    <div class="col-md-2">
+                        <asp:TextBox ID="txtTotalBillAmount" CssClass="form-control" runat="server" Width="190px"></asp:TextBox>
+                        <asp:HiddenField ID="hfAdvanceOrCashOutCalculatedAmount" runat="server"></asp:HiddenField>
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                </div>
+                <%-- </div>--%>
+                <div class="form-group" style="padding-top: 4px;">
+                    <div id="PrintPreviewDiv">
+                        <input type="button" id="btnBillSplitPrintPreview" value="Print Preview" class="btn btn-primary" />
+                        <input type="button" id="btnBillSplitPrintPreviewForUsd" value="Print Preview (USD)"
+                            class="btn btn-primary" />
+                        <input type="button" id="btnCancelBillSplitPrintPreview" value="Close" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--</div>--%>
+    </div>
     <div style="display: none;">
         <asp:Button ID="btnBillPreview" runat="server" ClientIDMode="Static" Text="Bill Preview"
             OnClick="btnBillPreview_Click" />

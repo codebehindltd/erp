@@ -293,6 +293,7 @@
     <Content Include="HotelManagement\Reports\frmReportComplimentaryGuest.aspx" />
     <Content Include="HotelManagement\Reports\frmReportGroupReservationBillInfo.aspx" />
     <Content Include="HotelManagement\Reports\frmReportRoomControlChart.aspx" />
+    <Content Include="HotelManagement\GuestBillSplit.aspx" />
     <Content Include="HouseKeeping\HKLostFound.aspx" />
     <Content Include="HouseKeeping\RepairAndMaintenance.aspx" />
     <Content Include="HouseKeeping\HKLostFoundReturnIframe.aspx" />
@@ -2871,6 +2872,13 @@
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportRoomControlChart.aspx.designer.cs">
       <DependentUpon>frmReportRoomControlChart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HotelManagement\GuestBillSplit.aspx.cs">
+      <DependentUpon>GuestBillSplit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HotelManagement\GuestBillSplit.aspx.designer.cs">
+      <DependentUpon>GuestBillSplit.aspx</DependentUpon>
     </Compile>
     <Compile Include="HouseKeeping\HKLostFound.aspx.cs">
       <DependentUpon>HKLostFound.aspx</DependentUpon>
