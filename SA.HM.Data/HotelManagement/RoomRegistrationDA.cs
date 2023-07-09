@@ -4881,5 +4881,32 @@ namespace HotelManagement.Data.HotelManagement
             }
             return status;
         }
+        public List<RoomRegistrationBO> GetConversionRateByRegistrationIdList(string registrationIdList)
+        {
+            List<RoomRegistrationBO> roomRegistrationList = new List<RoomRegistrationBO>();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetConversionRateByRegistrationIdList_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@RegistrationIdList", DbType.String, registrationIdList);
+
+                    using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                RoomRegistrationBO roomRegistration = new RoomRegistrationBO();
+
+                                roomRegistration.RegistrationId = Convert.ToInt32(reader["RegistrationId"]);
+                                roomRegistration.ConversionRate = Convert.ToDecimal(reader["ConversionRate"]);
+                                roomRegistrationList.Add(roomRegistration);
+                            }
+                        }
+                    }
+                }
+            }
+            return roomRegistrationList;
+        }
     }
 }

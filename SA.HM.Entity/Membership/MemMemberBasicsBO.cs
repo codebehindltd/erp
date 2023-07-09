@@ -77,5 +77,7 @@ namespace HotelManagement.Entity.Membership
         public int? NomineeRelationId { get; set; }
         public string NationalID { get; set; }
 
+        public decimal Balance { get; set; }
+
     }
 }

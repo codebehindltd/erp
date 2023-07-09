@@ -1776,6 +1776,65 @@ namespace HotelManagement.Data.Membership
             }
             return memberList;
         }
+        public List<MemMemberBasicsBO> GetMemberDetailInfoForCostcenter(int costCenterId, string memberName)
+        {
+            List<MemMemberBasicsBO> memberList = new List<MemMemberBasicsBO>();
+            DataSet memberDS = new DataSet();
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetMemberDetailInfoForCostcenter_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@CostCenterId", DbType.Int32, costCenterId);
+                    dbSmartAspects.AddInParameter(cmd, "@MemberName", DbType.String, memberName);
+
+                    dbSmartAspects.LoadDataSet(cmd, memberDS, "MemberInfo");
+                    DataTable table = memberDS.Tables["MemberInfo"];
+
+                    memberList = table.AsEnumerable().Select(r =>
+                                   new MemMemberBasicsBO
+                                   {
+                                       MemberId = r.Field<int>("MemberId"),
+                                       CompanyId = r.Field<int>("CompanyId"),
+                                       NodeId = r.Field<int>("NodeId"),
+                                       TypeId = r.Field<int>("TypeId"),
+                                       TypeName = r.Field<string>("TypeName"),
+                                       MembershipNumber = r.Field<string>("MembershipNumber"),
+                                       NameTitle = r.Field<string>("NameTitle"),
+                                       FullName = r.Field<string>("FullName"),
+                                       FirstName = r.Field<string>("FirstName"),
+                                       MiddleName = r.Field<string>("MiddleName"),
+                                       LastName = r.Field<string>("LastName"),
+                                       FatherName = r.Field<string>("FatherName"),
+                                       MotherName = r.Field<string>("MotherName"),
+                                       BirthDate = r.Field<DateTime>("BirthDate"),
+                                       MemberGender = r.Field<int>("MemberGender"),
+                                       MemberAddress = r.Field<string>("MemberAddress"),
+                                       MailAddress = r.Field<string>("MailAddress"),
+                                       PersonalEmail = r.Field<string>("PersonalEmail"),
+                                       OfficeEmail = r.Field<string>("OfficeEmail"),
+                                       HomeFax = r.Field<string>("HomeFax"),
+                                       OfficeFax = r.Field<string>("OfficeFax"),
+                                       MaritalStatus = r.Field<int>("MaritalStatus"),
+                                       BloodGroup = r.Field<int>("BloodGroup"),
+                                       Nationality = r.Field<int>("Nationality"),
+                                       RegistrationDate = r.Field<DateTime?>("RegistrationDate"),
+                                       ExpiryDate = r.Field<DateTime?>("ExpiryDate"),
+                                       PassportNumber = r.Field<string>("PassportNumber"),
+                                       Organization = r.Field<string>("Organization"),
+                                       Occupation = r.Field<string>("Occupation"),
+                                       Designation = r.Field<string>("Designation"),
+                                       AnnualTurnover = r.Field<decimal?>("AnnualTurnover"),
+                                       MonthlyIncome = r.Field<decimal?>("MonthlyIncome"),
+                                       SecurityDeposit = r.Field<decimal>("SecurityDeposit"),
+                                       MobileNumber = r.Field<string>("MobileNumber"),
+                                       Balance = r.Field<decimal>("Balance"),
+                                       DiscountPercent = r.Field<decimal>("DiscountPercent")
+
+                                   }).ToList();
+                }
+            }
+            return memberList;
+        }
 
         //--------- Bill Generation, Received, Payment
         public MemberBillGenerationBO GetMemberBillGeneration(Int64 MemberBillId)

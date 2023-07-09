@@ -20,8 +20,11 @@ namespace HotelManagement.Entity.HotelManagement
         public string ArriveDate { get; set; }
         public string RoomNumber { get; set; }
         public string RoomType { get; set; }
-        public string CurrencyHead { get; set; }
         public int IsDiscountApplicableOnRackRate { get; set; }
+        public string LocalCurrencyHead { get; set; }
+        public decimal? LocalCurrencyUnitPrice { get; set; }
+        public decimal? LocalCurrencyRoomRate { get; set; }
+        public string CurrencyHead { get; set; }        
         public decimal? UnitPrice { get; set; }
         public decimal? RoomRate { get; set; }
         public string ExpectedCheckOutDate { get; set; }
@@ -30,5 +33,9 @@ namespace HotelManagement.Entity.HotelManagement
         public string PrintDate { get; set; }
         public string PrintedBy { get; set; }
         public int Night { get; set; }
+
+        public bool IsServiceChargeEnable { get; set; }
+        public bool IsCityChargeEnable { get; set; }
+        public bool IsVatAmountEnable { get; set; }
     }
 }

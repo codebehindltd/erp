@@ -11,7 +11,7 @@
             }
 
             var txtConversionRate = '<%=txtConversionRateHiddenField.ClientID%>'
-                var txtConversionRateVal = $('#' + txtConversionRate).val();
+            var txtConversionRateVal = $('#' + txtConversionRate).val();
             if (txtConversionRateVal > 0) {
                 $('#btnBillSplitPrintPreviewForUsd').show();
             }
@@ -45,7 +45,6 @@
             });
 
             $("#btnBillSplitPrintPreview").click(function () {
-
                 debugger;
                 var selectedServiceIdArray = new Array();
                 var selectedServiceArray = new Array();
@@ -199,7 +198,7 @@
                 return false;
             });
         });
-        
+
         function RemoveFirstCommas(flag) {
             var length = flag.length;
             var Index = 0;
@@ -506,4 +505,37 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //// Group Service -----------
+            $('#checkboxServiceList input[type=checkbox]').each(function () {
+                $(this).prop("checked", true);
+            });
+
+            $('#checkboxRoomList input[type=checkbox]').each(function () {
+                $(this).prop("checked", true);
+            });
+
+            $('#checkboxPaymentList input[type=checkbox]').each(function () {
+                $(this).prop("checked", true);
+            });
+
+            //// Individual Service -----------
+            $('#checkboxIndividualRoomList input[type=checkbox]').each(function () {
+                $(this).prop("checked", true);
+            });
+
+            $('#checkboxIndividualServiceList input[type=checkbox]').each(function () {
+                $(this).prop("checked", true);
+            });
+
+            $('#checkboxIndividualPaymentList input[type=checkbox]').each(function () {
+                $(this).prop("checked", true);
+            });
+
+            $('#checkboxIndividualTransferedPaymentList input[type=checkbox]').each(function () {
+                $(this).prop("checked", true);
+            });
+        });
+    </script>
 </asp:Content>

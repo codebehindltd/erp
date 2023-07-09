@@ -5727,11 +5727,12 @@
 
             $("#txtMemberNameSearch").autocomplete({
                 source: function (request, response) {
+                    var costcenterId = $("#ContentPlaceHolder1_hfCostCenterId").val();
                     $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
-                        url: "../../Common/WebMethodPage.aspx/GetMemberInfoByName",
-                        data: "{'memberName':'" + request.term + "'}",
+                        url: "../../Common/WebMethodPage.aspx/GetMemberDetailInfoForCostcenter",
+                        data: "{costCenterId:" + costcenterId + ",'memberName':'" + request.term + "'}",
                         dataType: "json",
                         success: function (data) {
 
@@ -5742,6 +5743,8 @@
                                     TypeName: m.TypeName,
                                     MemberAddress: m.MemberAddress,
                                     MobileNumber: m.MobileNumber,
+                                    Balance: m.Balance,
+                                    DiscountPercent: m.DiscountPercent,
                                     label: m.FullName,
                                     value: m.MemberId
                                 };
@@ -5770,7 +5773,8 @@
                     $("#txtMemberType").val(ui.item.TypeName);
                     $("#txtMemberAddress").val(ui.item.MemberAddress);
                     $("#txtMemberContactNumber").val(ui.item.MobileNumber);
-                    $("#txtMemberBalance").val(0);
+                    $("#txtMemberBalance").val(ui.item.Balance);
+                    $("#txtMemberDiscountPercent").val(ui.item.DiscountPercent);
                 }
             });
         }
@@ -5843,6 +5847,8 @@
                 $("#lblMemberName").text($("#txtMemberName").val() + "(" + $("#txtMemberType").val() + ") ");
             $("#MemberInfoDialog").dialog('close')
             $("#ContentPlaceHolder1_txtMemberPayment").focus();
+            $("#ContentPlaceHolder1_txtTPDiscountAmount").val($("#txtMemberDiscountPercent").val())
+            CalculateDiscountAmount();            
         }
 
         function UserAccessVarification(userid, password) {
@@ -7626,7 +7632,6 @@
                     </div>
                     <fieldset>
                         <legend>Member Details</legend>
-
                         <div class="form-group">
                             <asp:Label ID="Label16" runat="server" Text="Member Name" CssClass="control-label col-sm-3"></asp:Label>
                             <div class="col-sm-9">
@@ -7656,6 +7661,12 @@
                             <asp:Label ID="Label10" runat="server" Text="Balance" CssClass="control-label col-sm-3"></asp:Label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="txtMemberBalance" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <asp:Label ID="Label24" runat="server" Text="Discount(%)" CssClass="control-label col-sm-3"></asp:Label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="txtMemberDiscountPercent" />
                             </div>
                         </div>
                     </fieldset>

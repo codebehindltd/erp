@@ -301,6 +301,17 @@ namespace HotelManagement.Presentation.Website.Common
         }
 
         [WebMethod]
+        public static List<MemMemberBasicsBO> GetMemberDetailInfoForCostcenter(int costCenterId, string memberName)
+        {
+            List<MemMemberBasicsBO> bo = new List<MemMemberBasicsBO>();
+            MemMemberBasicDA memDa = new MemMemberBasicDA();
+
+            bo = memDa.GetMemberDetailInfoForCostcenter(costCenterId, memberName.Trim());
+
+            return bo;
+        }
+
+        [WebMethod]
         public static List<CountriesBO> SearchCountry(string searchTerm)
         {
             HMCommonDA commonDA = new HMCommonDA();

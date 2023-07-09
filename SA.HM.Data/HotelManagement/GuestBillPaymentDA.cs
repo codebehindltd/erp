@@ -717,15 +717,26 @@ namespace HotelManagement.Data.HMCommon
                         ArriveDate = r.Field<string>("ArriveDate"),
                         RoomNumber = r.Field<string>("RoomNumber"),
                         RoomType = r.Field<string>("RoomType"),
-                        CurrencyHead = r.Field<string>("CurrencyHead"),
                         IsDiscountApplicableOnRackRate = r.Field<Int32>("IsDiscountApplicableOnRackRate"),
+
+                        LocalCurrencyHead = r.Field<string>("LocalCurrencyHead"),
+                        LocalCurrencyUnitPrice = r.Field<decimal?>("LocalCurrencyUnitPrice"),
+                        LocalCurrencyRoomRate = r.Field<decimal?>("LocalCurrencyRoomRate"),
+
+                        CurrencyHead = r.Field<string>("CurrencyHead"),                        
                         UnitPrice = r.Field<decimal?>("UnitPrice"),
                         RoomRate = r.Field<decimal?>("RoomRate"),
                         ExpectedCheckOutDate = r.Field<string>("ExpectedCheckOutDate"),
                         CheckOutDate = r.Field<string>("CheckOutDate"),
                         IsBillSplited = r.Field<int?>("IsBillSplited"),
                         PrintDate = r.Field<string>("PrintDate"),
-                        PrintedBy = r.Field<string>("PrintedBy")
+                        PrintedBy = r.Field<string>("PrintedBy"),
+                        
+                        IsServiceChargeEnable = r.Field<Boolean>("IsServiceChargeEnable"),
+                        IsCityChargeEnable = r.Field<Boolean>("IsCityChargeEnable"),
+                        IsVatAmountEnable = r.Field<Boolean>("IsVatAmountEnable")
+
+
 
                     }).ToList();
                 }

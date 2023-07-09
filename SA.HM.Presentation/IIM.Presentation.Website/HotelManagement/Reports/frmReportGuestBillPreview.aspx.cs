@@ -17,6 +17,7 @@ using System.IO;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using System.Net;
+using HotelManagement.Presentation.Website.POS;
 
 namespace HotelManagement.Presentation.Website.HotelManagement.Reports
 {
@@ -104,6 +105,20 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             string EndDate = hmUtility.GetToDate();
             string ddlRegistrationId = registrationId;
             string txtSrcRegistrationIdList = registrationId;
+
+            List<RoomRegistrationBO> conversionRateBOList = new List<RoomRegistrationBO>();
+            RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
+            conversionRateBOList = roomRegistrationDA.GetConversionRateByRegistrationIdList(registrationId);
+            if (conversionRateBOList != null)
+            {
+                if (conversionRateBOList.Count > 0)
+                {
+                    if (conversionRateBOList.Where(x => x.ConversionRate > 0).ToList().Count > 0)
+                    {
+                        currencyRate = conversionRateBOList[0].ConversionRate.ToString();
+                    }
+                }
+            }
 
             HttpContext.Current.Session["IsBillSplited"] = "0";
             HttpContext.Current.Session["GuestBillFromDate"] = hmUtility.GetFromDate();
