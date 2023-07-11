@@ -152,6 +152,7 @@ namespace HotelManagement.Presentation.Website.HMCommon
                 costCentreTabBO.AdditionalChargeType = ddlAdditionalChargeType.SelectedValue;
                 costCentreTabBO.AdditionalCharge = !string.IsNullOrWhiteSpace(txtAdditionalChargeAmount.Text) ? Convert.ToDecimal(txtAdditionalChargeAmount.Text) : 0;
                 costCentreTabBO.IsVatOnSDCharge = ddlVatEnableOnSDCharge.SelectedValue == "1" ? true : false;
+                costCentreTabBO.IsCitySDChargeEnableOnServiceCharge = ddlIsCitySDChargeEnableOnServiceCharge.SelectedValue == "1" ? true : false;
                 costCentreTabBO.IsRatePlusPlus = Convert.ToInt32(ddlGuestServiceRateIsPlusPlus.SelectedValue);
                 costCentreTabBO.BillNumberPrefix = txtBillNumberPrefix.Text;
 
@@ -433,6 +434,7 @@ namespace HotelManagement.Presentation.Website.HMCommon
             {
                 ddlGLCompanyId.SelectedValue = "0";
             }
+
             hfIsSingleGLCompany.Value = "1";
             txtCostCentre.Text = string.Empty;
             ddlIsVatSChargeInclusive.SelectedIndex = 0;
@@ -447,6 +449,8 @@ namespace HotelManagement.Presentation.Website.HMCommon
             txtCostCentre.Focus();
             pnlDefaultStockDeductionLocationInfo.Visible = false;
             ddlIsDefaultCostCenter.SelectedValue = "0";
+            ddlVatEnableOnSDCharge.SelectedValue = "1";
+            ddlIsCitySDChargeEnableOnServiceCharge.SelectedValue = "1";
             ddlAdditionalChargeType.SelectedIndex = 0;
             txtAdditionalChargeAmount.Text = string.Empty;
             cbServiceCharge.Checked = true;
@@ -494,6 +498,7 @@ namespace HotelManagement.Presentation.Website.HMCommon
 
             ddlGuestServiceRateIsPlusPlus.SelectedValue = costCentreTabBO.IsRatePlusPlus.ToString();
             ddlVatEnableOnSDCharge.SelectedValue = costCentreTabBO.IsVatOnSDCharge ? "1" : "0";
+            ddlIsCitySDChargeEnableOnServiceCharge.SelectedValue = costCentreTabBO.IsCitySDChargeEnableOnServiceCharge ? "1" : "0";
 
             ddlDefaultView.SelectedValue = costCentreTabBO.DefaultView.ToString();
             if(costCentreTabBO.InvoiceTemplate!= 0)

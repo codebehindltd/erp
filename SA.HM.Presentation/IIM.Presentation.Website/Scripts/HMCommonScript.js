@@ -748,7 +748,7 @@ CommonHelper.GetDefaultRackRateServiceChargeVatCalculation = function (Inclusive
 
 CommonHelper.GetRackRateServiceChargeVatInformation = function (TransactionalAmount, ServiceChargeConfig, SDCityChargeConfig, VatConfig,
     AdditionalChargeConfig, AdditionalChargeType, IsInclusive,
-    IsRatePlusPlus, IsVatOnSD, IsVatEnable, IsServiceChargeEnable,
+    IsRatePlusPlus, IsVatOnSD, isCitySDChargeEnableOnServiceCharge, IsVatEnable, IsServiceChargeEnable,
     IsSDChargeEnable, IsAdditionalChargeEnable, isDiscountApplicableOnRackRate,
     DiscountType, Discount) {
 
@@ -756,7 +756,6 @@ CommonHelper.GetRackRateServiceChargeVatInformation = function (TransactionalAmo
     var
         RackRateConfig = 100.00,
         PercentageTotal = 0.00,
-
         RackRate = 0.00,
         ServiceCharge = 0.00,
         SDCityCharge = 0.00,
@@ -787,7 +786,12 @@ CommonHelper.GetRackRateServiceChargeVatInformation = function (TransactionalAmo
         //Not Flat Rate
         if (IsRatePlusPlus == 1) {
             if (SDCityChargeConfig > 0) {
-                SDCityChargeConfig += ServiceChargeConfig * (SDCityChargeConfig / 100);
+                if (isCitySDChargeEnableOnServiceCharge == 1) {
+                    SDCityChargeConfig += ServiceChargeConfig * (SDCityChargeConfig / 100);
+                }
+                else {
+                    SDCityChargeConfig += (SDCityChargeConfig / 100);
+                }
             }
 
             if (IsVatOnSD == 1) {
@@ -833,7 +837,12 @@ CommonHelper.GetRackRateServiceChargeVatInformation = function (TransactionalAmo
         if (SDCityChargeConfig > 0) {
             // Not Flat Rate
             if (IsRatePlusPlus == 1) {
-                SDCityCharge = CalculatedAmount * (SDCityChargeConfig / 100.00);
+                if (isCitySDChargeEnableOnServiceCharge == 1) {
+                    SDCityCharge = CalculatedAmount * (SDCityChargeConfig / 100.00);
+                }
+                else {
+                    SDCityCharge = RackRate * (SDCityChargeConfig / 100.00);
+                }
             }
             else { // Flat Rate
                 SDCityCharge = RackRate * (SDCityChargeConfig / 100.00);
@@ -893,14 +902,13 @@ CommonHelper.GetRackRateServiceChargeVatInformation = function (TransactionalAmo
 
 CommonHelper.GetKotWiseVatNSChargeNDiscountNComplementary = function (itemTableId, discountType, discount,
     ServiceChargeConfig, SDCityChargeConfig, VatConfig, AdditionalChargeConfig,
-    AdditionalChargeType, IsInclusive, IsRatePlusPlus, IsVatOnSD, IsVatEnable, IsServiceChargeEnable,
+    AdditionalChargeType, IsInclusive, IsRatePlusPlus, IsVatOnSD, isCitySDChargeEnableOnServiceCharge, IsVatEnable, IsServiceChargeEnable,
     IsSDChargeEnable, IsAdditionalChargeEnable, isDiscountApplicableOnRackRate, isComplementaryOrNonChargeable
 ) {
 
     var
         RackRateConfig = 100.00,
         PercentageTotal = 0.00,
-
         RackRate = 0.00,
         ServiceCharge = 0.00,
         SDCityCharge = 0.00,
@@ -1047,7 +1055,12 @@ CommonHelper.GetKotWiseVatNSChargeNDiscountNComplementary = function (itemTableI
             //Not Flat Rate
             if (IsRatePlusPlus == 1) {
                 if (SDCityChargeConfig > 0) {
-                    SDCityChargeConfig += ServiceChargeConfig * (SDCityChargeConfig / 100);
+                    if (isCitySDChargeEnableOnServiceCharge == 1) {
+                        SDCityChargeConfig += ServiceChargeConfig * (SDCityChargeConfig / 100);
+                    }
+                    else {
+                        SDCityChargeConfig += (SDCityChargeConfig / 100);
+                    }
                 }
 
                 if (IsVatOnSD == 1) {
@@ -1102,7 +1115,12 @@ CommonHelper.GetKotWiseVatNSChargeNDiscountNComplementary = function (itemTableI
             if (SDCityChargeConfig > 0) {
                 // Not Flat Rate
                 if (IsRatePlusPlus == 1) {
-                    SDCityCharge = CalculatedAmount * (SDCityChargeConfig / 100.00);
+                    if (isCitySDChargeEnableOnServiceCharge == 1) {
+                        SDCityCharge = CalculatedAmount * (SDCityChargeConfig / 100.00);
+                    }
+                    else {
+                        SDCityCharge = RackRate * (SDCityChargeConfig / 100.00);
+                    }
                 }
                 else { // Flat Rate
                     SDCityCharge = RackRate * (SDCityChargeConfig / 100.00);

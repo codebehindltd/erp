@@ -132,15 +132,6 @@ namespace HotelManagement.Presentation.Website.Banquet
         protected global::System.Web.UI.WebControls.HiddenField hfAdditionalChargeType;
 
         /// <summary>
-        /// hfIsVatOnSD control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfIsVatOnSD;
-
-        /// <summary>
         /// hfIsRatePlusPlus control.
         /// </summary>
         /// <remarks>
@@ -283,6 +274,24 @@ namespace HotelManagement.Presentation.Website.Banquet
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfEditedId;
+
+        /// <summary>
+        /// hfIsVatOnSD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsVatOnSD;
+
+        /// <summary>
+        /// hfIsCitySDChargeEnableOnServiceCharge control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsCitySDChargeEnableOnServiceCharge;
 
         /// <summary>
         /// hfIsBanquetReservationRestictionForAllUser control.

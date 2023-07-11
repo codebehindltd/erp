@@ -842,6 +842,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 hfAdditionalChargeType.Value = costCentreTabBO[0].AdditionalChargeType.ToString();
 
                 hfIsVatOnSDCharge.Value = costCentreTabBO[0].IsVatOnSDCharge ? "1" : "0";
+                hfIsCitySDChargeEnableOnServiceCharge.Value = costCentreTabBO[0].IsCitySDChargeEnableOnServiceCharge ? "1" : "0";
 
                 hfCityCharge.Value = costCentreTabBO[0].CitySDCharge.ToString();
                 hfGuestServiceVat.Value = costCentreTabBO[0].VatAmount.ToString();

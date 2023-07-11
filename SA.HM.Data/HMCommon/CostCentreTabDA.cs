@@ -131,6 +131,7 @@ namespace HotelManagement.Data.HMCommon
                                 costCentreTabBO.IsVatEnable = Convert.ToBoolean(reader["IsVatEnable"]);
                                 costCentreTabBO.IsRatePlusPlus = Convert.ToInt32(reader["IsRatePlusPlus"]);
                                 costCentreTabBO.IsVatOnSDCharge = Convert.ToBoolean(reader["IsVatOnSDCharge"]);
+                                costCentreTabBO.IsCitySDChargeEnableOnServiceCharge = Convert.ToBoolean(reader["IsCitySDChargeEnableOnServiceCharge"]);
 
                                 costCentreTabBO.IsAdditionalChargeEnable = Convert.ToBoolean(reader["IsAdditionalChargeEnable"]);
                                 costCentreTabBO.IsCitySDChargeEnable = Convert.ToBoolean(reader["IsCitySDChargeEnable"]);
@@ -415,6 +416,7 @@ namespace HotelManagement.Data.HMCommon
                         dbSmartAspects.AddInParameter(command, "@IsVatSChargeInclusive", DbType.Int32, costCentreTabBO.IsVatSChargeInclusive);
                         dbSmartAspects.AddInParameter(command, "@IsRatePlusPlus", DbType.Int32, costCentreTabBO.IsRatePlusPlus);
                         dbSmartAspects.AddInParameter(command, "@IsVatOnSDCharge", DbType.Boolean, costCentreTabBO.IsVatOnSDCharge);
+                        dbSmartAspects.AddInParameter(command, "@IsCitySDChargeEnableOnServiceCharge", DbType.Boolean, costCentreTabBO.IsCitySDChargeEnableOnServiceCharge);
                         dbSmartAspects.AddInParameter(command, "@CostCenterType", DbType.String, costCentreTabBO.CostCenterType);
                         dbSmartAspects.AddInParameter(command, "@IsRestaurant", DbType.Boolean, costCentreTabBO.IsRestaurant);
                         dbSmartAspects.AddInParameter(command, "@DefaultView", DbType.String, costCentreTabBO.DefaultView);
@@ -501,6 +503,7 @@ namespace HotelManagement.Data.HMCommon
                         dbSmartAspects.AddInParameter(command, "@IsVatSChargeInclusive", DbType.Int32, costCentreTabBO.IsVatSChargeInclusive);
                         dbSmartAspects.AddInParameter(command, "@IsRatePlusPlus", DbType.Int32, costCentreTabBO.IsRatePlusPlus);
                         dbSmartAspects.AddInParameter(command, "@IsVatOnSDCharge", DbType.Boolean, costCentreTabBO.IsVatOnSDCharge);
+                        dbSmartAspects.AddInParameter(command, "@IsCitySDChargeEnableOnServiceCharge", DbType.Boolean, costCentreTabBO.IsCitySDChargeEnableOnServiceCharge);
                         dbSmartAspects.AddInParameter(command, "@CostCenterType", DbType.String, costCentreTabBO.CostCenterType);
                         dbSmartAspects.AddInParameter(command, "@IsRestaurant", DbType.Boolean, costCentreTabBO.IsRestaurant);
                         dbSmartAspects.AddInParameter(command, "@DefaultView", DbType.String, costCentreTabBO.DefaultView);
@@ -587,6 +590,7 @@ namespace HotelManagement.Data.HMCommon
                                 costCentreTabBO.IsVatEnable = Convert.ToBoolean(reader["IsVatEnable"]);
                                 costCentreTabBO.IsRatePlusPlus = Convert.ToInt32(reader["IsRatePlusPlus"]);
                                 costCentreTabBO.IsVatOnSDCharge = Convert.ToBoolean(reader["IsVatOnSDCharge"]);
+                                costCentreTabBO.IsCitySDChargeEnableOnServiceCharge = Convert.ToBoolean(reader["IsCitySDChargeEnableOnServiceCharge"]);
                                 costCentreTabBO.IsAdditionalChargeEnable = Convert.ToBoolean(reader["IsAdditionalChargeEnable"]);
                                 costCentreTabBO.IsCitySDChargeEnable = Convert.ToBoolean(reader["IsCitySDChargeEnable"]);
                                 costCentreTabBO.IsDiscountApplicableOnRackRate = Convert.ToBoolean(reader["IsDiscountApplicableOnRackRate"]);

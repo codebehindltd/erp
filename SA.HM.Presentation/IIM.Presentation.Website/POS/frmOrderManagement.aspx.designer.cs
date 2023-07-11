@@ -168,15 +168,6 @@ namespace HotelManagement.Presentation.Website.POS
         protected global::System.Web.UI.WebControls.HiddenField hfAdditionalChargeType;
 
         /// <summary>
-        /// hfIsVatOnSD control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfIsVatOnSD;
-
-        /// <summary>
         /// hfIsRestaurantBillInclusive control.
         /// </summary>
         /// <remarks>
@@ -238,6 +229,24 @@ namespace HotelManagement.Presentation.Website.POS
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfSDCharge;
+
+        /// <summary>
+        /// hfIsVatOnSD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsVatOnSD;
+
+        /// <summary>
+        /// hfIsCitySDChargeEnableOnServiceCharge control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsCitySDChargeEnableOnServiceCharge;
 
         /// <summary>
         /// hfltlTableWiseItemInformationDivHeight control.

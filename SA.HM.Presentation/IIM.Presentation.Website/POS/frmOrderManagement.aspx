@@ -2255,13 +2255,15 @@
             var citySDCharge = 0.00, additionalCharge = 0.00, isRatePlusPlus = 0;
             var isInvoiceCitySDChargeEnable = 1, isInvoiceAdditionalChargeEnable = 1, isServiceChargeEnable = 1, isVatEnable = 1;
             var additionalChargeType = $("#ContentPlaceHolder1_hfAdditionalChargeType").val();
-            var isVatOnSD = 0, isDiscountApplicableOnRackRate = 0;
+            var isVatOnSD = 0, isCitySDChargeEnableOnServiceCharge = 0, isDiscountApplicableOnRackRate = 0;
 
             if ($("#ContentPlaceHolder1_hfIsRatePlusPlus").val() != "") { isRatePlusPlus = parseInt($("#ContentPlaceHolder1_hfIsRatePlusPlus").val(), 10); }
 
             if ($("#ContentPlaceHolder1_hfIsDiscountApplicableOnRackRate").val() != "") { isDiscountApplicableOnRackRate = parseInt($("#ContentPlaceHolder1_hfIsDiscountApplicableOnRackRate").val(), 10); }
 
             if ($("#ContentPlaceHolder1_hfIsVatOnSD").val() != "") { isVatOnSD = parseInt($("#ContentPlaceHolder1_hfIsVatOnSD").val(), 10); }
+
+            if ($("#ContentPlaceHolder1_hfIsCitySDChargeEnableOnServiceCharge").val() != "") { isCitySDChargeEnableOnServiceCharge = parseInt($("#ContentPlaceHolder1_hfIsCitySDChargeEnableOnServiceCharge").val(), 10); }
 
             if ($("#ContentPlaceHolder1_hfIsRestaurantBillInclusive").val() != "") { isInclusiveBill = parseInt($("#ContentPlaceHolder1_hfIsRestaurantBillInclusive").val(), 10); }
 
@@ -2343,9 +2345,9 @@
                 itemTableId, discountType, discount,
                 serviceChargeAmount, citySDCharge, vatAmount, additionalCharge,
                 additionalChargeType, isInclusiveBill, isRatePlusPlus, isVatOnSD,
-                isVatEnable, isServiceChargeEnable, isInvoiceCitySDChargeEnable,
-                isInvoiceAdditionalChargeEnable, isDiscountApplicableOnRackRate,
-                isComplementaryOrNonChargeable
+                isCitySDChargeEnableOnServiceCharge, isVatEnable, isServiceChargeEnable,
+                isInvoiceCitySDChargeEnable, isInvoiceAdditionalChargeEnable,
+                isDiscountApplicableOnRackRate, isComplementaryOrNonChargeable
             );
 
             KotWiseServiceChargeVatNOther = BillPaymentDetails;
@@ -6298,8 +6300,7 @@
     <asp:HiddenField ID="hfIsServiceChargeEnable" runat="server" />
     <asp:HiddenField ID="hfIsSDChargeEnable" runat="server" />
     <asp:HiddenField ID="hfIsAdditionalChargeEnable" runat="server" />
-    <asp:HiddenField ID="hfAdditionalChargeType" runat="server" />
-    <asp:HiddenField ID="hfIsVatOnSD" runat="server" />
+    <asp:HiddenField ID="hfAdditionalChargeType" runat="server" />    
     <asp:HiddenField ID="hfIsRestaurantBillInclusive" runat="server" />
     <asp:HiddenField ID="hfIsRatePlusPlus" runat="server" />
     <asp:HiddenField ID="hfIsDiscountApplicableOnRackRate" runat="server" />
@@ -6307,6 +6308,8 @@
     <asp:HiddenField ID="hfRestaurantServiceCharge" runat="server" />
     <asp:HiddenField ID="hfAdditionalCharge" runat="server" />
     <asp:HiddenField ID="hfSDCharge" runat="server" />
+    <asp:HiddenField ID="hfIsVatOnSD" runat="server" />
+    <asp:HiddenField ID="hfIsCitySDChargeEnableOnServiceCharge" runat="server" />
     <asp:HiddenField ID="hfltlTableWiseItemInformationDivHeight" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfAddedTableIdForBill" runat="server" Value="" />
     <asp:HiddenField ID="hfAddedClassificationId" runat="server" Value="" />

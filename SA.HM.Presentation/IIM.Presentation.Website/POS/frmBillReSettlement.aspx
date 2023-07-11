@@ -1820,13 +1820,15 @@
             var citySDCharge = 0.00, additionalCharge = 0.00, isRatePlusPlus = 0;
             var isInvoiceCitySDChargeEnable = 1, isInvoiceAdditionalChargeEnable = 1, isServiceChargeEnable = 1, isVatEnable = 1;
             var additionalChargeType = $("#ContentPlaceHolder1_hfAdditionalChargeType").val();
-            var isVatOnSD = 0, isDiscountApplicableOnRackRate = 0;
+            var isVatOnSD = 0, isCitySDChargeEnableOnServiceCharge = 0, isDiscountApplicableOnRackRate = 0;
 
             if ($("#ContentPlaceHolder1_hfIsRatePlusPlus").val() != "") { isRatePlusPlus = parseInt($("#ContentPlaceHolder1_hfIsRatePlusPlus").val(), 10); }
 
             if ($("#ContentPlaceHolder1_hfIsDiscountApplicableOnRackRate").val() != "") { isDiscountApplicableOnRackRate = parseInt($("#ContentPlaceHolder1_hfIsDiscountApplicableOnRackRate").val(), 10); }
 
             if ($("#ContentPlaceHolder1_hfIsVatOnSD").val() != "") { isVatOnSD = parseInt($("#ContentPlaceHolder1_hfIsVatOnSD").val(), 10); }
+
+            if ($("#ContentPlaceHolder1_hfIsCitySDChargeEnableOnServiceCharge").val() != "") { isCitySDChargeEnableOnServiceCharge = parseInt($("#ContentPlaceHolder1_hfIsCitySDChargeEnableOnServiceCharge").val(), 10); }
 
             if ($("#ContentPlaceHolder1_hfIsRestaurantBillInclusive").val() != "") { isInclusiveBill = parseInt($("#ContentPlaceHolder1_hfIsRestaurantBillInclusive").val(), 10); }
 
@@ -1907,14 +1909,13 @@
                 itemTableId, discountType, discount,
                 serviceChargeAmount, citySDCharge, vatAmount, additionalCharge,
                 additionalChargeType, isInclusiveBill, isRatePlusPlus, isVatOnSD,
-                isVatEnable, isServiceChargeEnable, isInvoiceCitySDChargeEnable,
-                isInvoiceAdditionalChargeEnable, isDiscountApplicableOnRackRate,
-                isComplementaryOrNonChargeable
+                isCitySDChargeEnableOnServiceCharge, isVatEnable, isServiceChargeEnable,
+                isInvoiceCitySDChargeEnable, isInvoiceAdditionalChargeEnable,
+                isDiscountApplicableOnRackRate, isComplementaryOrNonChargeable
             );
 
             KotWiseServiceChargeVatNOther = BillPaymentDetails;
             $("#ContentPlaceHolder1_txtTPDiscount").val(BillPaymentDetails.DiscountAmount);
-            //$("#ContentPlaceHolder1_txtTPDiscountedAmount").val(BillPaymentDetails.DiscountedAmount);
 
             if (isDiscountApplicableOnRackRate == 0) {
                 $("#ContentPlaceHolder1_txtTPDiscountedAmount").val(toFixed(BillPaymentDetails.DiscountedAmount, 2));
@@ -1935,7 +1936,6 @@
                 $("#ContentPlaceHolder1_txtTPRoundedAmount").val(roundedAmount);
                 $("#ContentPlaceHolder1_txtTPSDCharge").val(toFixed(BillPaymentDetails.SDCityCharge, 2));
                 $("#ContentPlaceHolder1_txtTPAdditionalCharge").val(toFixed(BillPaymentDetails.AdditionalCharge, 2));
-
                 $("#ContentPlaceHolder1_txtCitySDCharge").val(toFixed(BillPaymentDetails.SDCityCharge, 2));
                 $("#ContentPlaceHolder1_txtAdditionalCharge").val(toFixed(BillPaymentDetails.AdditionalCharge, 2));
             }
@@ -1945,11 +1945,9 @@
                 $("#ContentPlaceHolder1_txtTPGrandTotal").val(toFixed(BillPaymentDetails.GrandTotal, 2));
                 $("#ContentPlaceHolder1_txtChangeAmount").val(toFixed(BillPaymentDetails.GrandTotal, 2));
                 $("#ContentPlaceHolder1_txtTPChangeAmount").val(toFixed(BillPaymentDetails.GrandTotal, 2));
-
                 $("#ContentPlaceHolder1_txtTPRoundedAmount").val("0");
                 $("#ContentPlaceHolder1_txtTPSDCharge").val('0');
                 $("#ContentPlaceHolder1_txtTPAdditionalCharge").val('0');
-
                 $("#ContentPlaceHolder1_txtCitySDCharge").val('0');
                 $("#ContentPlaceHolder1_txtAdditionalCharge").val('0');
             }
@@ -1985,19 +1983,12 @@
                     $("#ContentPlaceHolder1_txtTPDiscount").val("0");
                 }
             }
-
-            //toastr.info("CalculatePayment");
-
+                        
             var discountAmount = $("#ContentPlaceHolder1_txtTPDiscount").val();
             var salesAmount = $("#ContentPlaceHolder1_txtTotalSales").val();
             var grandTotal = parseFloat($("#ContentPlaceHolder1_txtTPGrandTotal").val());
 
             if (discountAmount == "") { discountAmount = "0"; }
-
-            //var discountedAmount = 0;
-
-            //discountedAmount = (parseFloat(salesAmount) - parseFloat(discountAmount));
-            //$("#ContentPlaceHolder1_txtTPDiscountedAmount").val(discountedAmount);
 
             FocusedInputControl = $(document.activeElement).attr("id");
             var activeControlValue = $(document.activeElement).val();
@@ -2100,21 +2091,6 @@
             billAmount = grandTotal;
 
             $("#ContentPlaceHolder1_txtTPTotalPaymentAmount").val(totalPayment);
-            //$("#ContentPlaceHolder1_txtTPVatAmount").val($("#ContentPlaceHolder1_txtVatAmount").val());
-            //$("#ContentPlaceHolder1_txtTPServiceCharge").val($("#ContentPlaceHolder1_txtServiceCharge").val());
-
-            //var vatAmount = $("#ContentPlaceHolder1_txtTPVatAmount").val() == "" ? "0" : $("#ContentPlaceHolder1_txtTPVatAmount").val();
-            //var serviceChargeAmount = $("#ContentPlaceHolder1_txtTPServiceCharge").val() == "" ? "0" : $("#ContentPlaceHolder1_txtTPServiceCharge").val();
-
-            //var isInclusive = $("#ContentPlaceHolder1_hfIsRestaurantBillInclusive").val();
-            //var billAmount = 0.00;
-
-            //if (isInclusive == "1") {
-            //    billAmount = discountedAmount;
-            //}
-            //else {
-            //    billAmount = parseFloat(toFixed((discountedAmount + parseFloat(vatAmount) + parseFloat(serviceChargeAmount)), 2));
-            //}
 
             if ($("#ContentPlaceHolder1_hfIsRestaurantBillAmountWillRound").val() == "1") {
                 billAmount = Math.round(billAmount);
@@ -5737,7 +5713,7 @@
     <asp:HiddenField ID="hfIsSDChargeEnable" runat="server" />
     <asp:HiddenField ID="hfIsAdditionalChargeEnable" runat="server" />
     <asp:HiddenField ID="hfAdditionalChargeType" runat="server" />
-    <asp:HiddenField ID="hfIsVatOnSD" runat="server" />
+    
     <asp:HiddenField ID="hfIsRestaurantBillInclusive" runat="server" />
     <asp:HiddenField ID="hfIsRatePlusPlus" runat="server" />
     <asp:HiddenField ID="hfIsDiscountApplicableOnRackRate" runat="server" />
@@ -5747,6 +5723,8 @@
     <asp:HiddenField ID="hfAdditionalCharge" runat="server" />
     <asp:HiddenField ID="hfSDCharge" runat="server" />
 
+    <asp:HiddenField ID="hfIsVatOnSD" runat="server" />
+    <asp:HiddenField ID="hfIsCitySDChargeEnableOnServiceCharge" runat="server" />
     <asp:HiddenField ID="hfltlTableWiseItemInformationDivHeight" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfAddedTableIdForBill" runat="server" Value="" />
     <asp:HiddenField ID="hfAddedClassificationId" runat="server" Value="" />

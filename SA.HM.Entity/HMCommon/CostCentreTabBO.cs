@@ -19,6 +19,7 @@ namespace HotelManagement.Entity.HMCommon
         public decimal VatAmount { get; set; }
         public decimal CitySDCharge { get; set; }
         public bool IsVatOnSDCharge { get; set; }
+        public bool IsCitySDChargeEnableOnServiceCharge { get; set; }
         public string AdditionalChargeType { get; set; }
         public decimal AdditionalCharge { get; set; }
         public int OutletType { get; set; }

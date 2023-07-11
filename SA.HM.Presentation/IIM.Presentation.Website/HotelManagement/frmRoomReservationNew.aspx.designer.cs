@@ -1221,6 +1221,15 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         protected global::System.Web.UI.WebControls.HiddenField hfIsVatEnableOnGuestHouseCityCharge;
 
         /// <summary>
+        /// hfIsCitySDChargeEnableOnServiceCharge control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsCitySDChargeEnableOnServiceCharge;
+
+        /// <summary>
         /// cbCityCharge control.
         /// </summary>
         /// <remarks>

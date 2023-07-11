@@ -241,6 +241,7 @@ namespace HotelManagement.Presentation.Website.POS
             }
 
             hfIsVatOnSD.Value = costCentreTabBO.IsVatOnSDCharge ? "1" : "0";
+            hfIsCitySDChargeEnableOnServiceCharge.Value = costCentreTabBO.IsCitySDChargeEnableOnServiceCharge ? "1" : "0";
             hfIsRatePlusPlus.Value = costCentreTabBO.IsRatePlusPlus.ToString();
             hfIsDiscountApplicableOnRackRate.Value = costCentreTabBO.IsDiscountApplicableOnRackRate ? "1" : "0";
 

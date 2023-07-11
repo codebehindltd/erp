@@ -3022,7 +3022,7 @@
             var cbAdditionalCharge = '<%=cbAdditionalCharge.ClientID%>'
 
             var inclusiveBill = 0, Vat = 0.00, ServiceCharge = 0.00, cityCharge = 0.00, additionalCharge = 0.00;
-            var additionalChargeType = "Fixed", isRatePlusPlus = 1, isVatEnableOnGuestHouseCityCharge = 0;
+            var additionalChargeType = "Fixed", isRatePlusPlus = 1, isVatEnableOnGuestHouseCityCharge = 0, isCitySDChargeEnableOnServiceCharge = 0;
             var cbVatAmountVal = 1, cbServiceChargeVal = 1, cbCityChargeVal = 1, cbAdditionalChargeVal = 1;
             var isDiscountApplicableOnRackRate = 0;
 
@@ -3046,6 +3046,10 @@
 
             if ($("#<%=hfIsVatEnableOnGuestHouseCityCharge.ClientID %>").val() != "")
                 isVatEnableOnGuestHouseCityCharge = parseInt($("#<%=hfIsVatEnableOnGuestHouseCityCharge.ClientID %>").val(), 10);
+
+            if ($("#<%=hfIsCitySDChargeEnableOnServiceCharge.ClientID %>").val() != "")
+                isCitySDChargeEnableOnServiceCharge = parseInt($("#<%=hfIsCitySDChargeEnableOnServiceCharge.ClientID %>").val(), 10);
+
             if ($('#' + cbServiceCharge).is(':checked')) {
                 cbServiceChargeVal = 1;
             }
@@ -3103,7 +3107,7 @@
             }
 
             var InnboardRateCalculationInfo = CommonHelper.GetRackRateServiceChargeVatInformation(txtRoomRateVal, ServiceCharge, cityCharge,
-                Vat, additionalCharge, additionalChargeType, inclusiveBill, isRatePlusPlus, isVatEnableOnGuestHouseCityCharge,
+                Vat, additionalCharge, additionalChargeType, inclusiveBill, isRatePlusPlus, isVatEnableOnGuestHouseCityCharge, isCitySDChargeEnableOnServiceCharge,
                 parseInt(cbVatAmountVal, 10), parseInt(cbServiceChargeVal, 10), parseInt(cbCityChargeVal, 10),
                 parseInt(cbAdditionalChargeVal, 10), isDiscountApplicableOnRackRate, discountType, discountAmount);
             OnLoadRackRateServiceChargeVatInformationSucceeded(InnboardRateCalculationInfo);
@@ -5326,7 +5330,7 @@
             var cbAdditionalCharge = '<%=cbCalculateAdditionalCharge.ClientID%>'
 
             var inclusiveBill = 1, Vat = 0.00, ServiceCharge = 0.00, cityCharge = 0.00, additionalCharge = 0.00;
-            var additionalChargeType = "Fixed", isRatePlusPlus = 1, isVatEnableOnGuestHouseCityCharge = 0;
+            var additionalChargeType = "Fixed", isRatePlusPlus = 1, isVatEnableOnGuestHouseCityCharge = 0, isCitySDChargeEnableOnServiceCharge = 0;
             var cbVatAmountVal = 1, cbServiceChargeVal = 1, cbCityChargeVal = 1, cbAdditionalChargeVal = 1;
             var isDiscountApplicableOnRackRate = 0;
 
@@ -5350,6 +5354,9 @@
 
             if ($("#<%=hfIsVatEnableOnGuestHouseCityCharge.ClientID %>").val() != "")
                 isVatEnableOnGuestHouseCityCharge = parseInt($("#<%=hfIsVatEnableOnGuestHouseCityCharge.ClientID %>").val(), 10);
+
+            if ($("#<%=hfIsCitySDChargeEnableOnServiceCharge.ClientID %>").val() != "")
+                isCitySDChargeEnableOnServiceCharge = parseInt($("#<%=hfIsCitySDChargeEnableOnServiceCharge.ClientID %>").val(), 10);
 
             if ($('#' + cbServiceCharge).is(':checked')) {
                 cbServiceChargeVal = 1;
@@ -5406,7 +5413,7 @@
             //}
 
             var RoomRateGlobal = CommonHelper.GetRackRateServiceChargeVatInformation(unitPrice, ServiceCharge, cityCharge,
-                Vat, additionalCharge, additionalChargeType, 0, isRatePlusPlus, isVatEnableOnGuestHouseCityCharge,
+                Vat, additionalCharge, additionalChargeType, 0, isRatePlusPlus, isVatEnableOnGuestHouseCityCharge, isCitySDChargeEnableOnServiceCharge,
                 parseInt(cbVatAmountVal, 10), parseInt(cbServiceChargeVal, 10), parseInt(cbCityChargeVal, 10),
                 parseInt(cbAdditionalChargeVal, 10), isDiscountApplicableOnRackRate, 'Fixed', 0.00);
 
@@ -5415,7 +5422,7 @@
             discountAmount = txtRoomRateVal - parseFloat($('#' + txtUnitPrice).val());
 
             var RoomRate = CommonHelper.GetRackRateServiceChargeVatInformation(txtRoomRateVal, ServiceCharge, cityCharge,
-                Vat, additionalCharge, additionalChargeType, inclusiveBill, isRatePlusPlus, isVatEnableOnGuestHouseCityCharge,
+                Vat, additionalCharge, additionalChargeType, inclusiveBill, isRatePlusPlus, isVatEnableOnGuestHouseCityCharge, isCitySDChargeEnableOnServiceCharge,
                 parseInt(cbVatAmountVal, 10), parseInt(cbServiceChargeVal, 10), parseInt(cbCityChargeVal, 10),
                 parseInt(cbAdditionalChargeVal, 10), isDiscountApplicableOnRackRate, discountType, discountAmount);
 
@@ -6202,6 +6209,7 @@
                                                             Enabled="false"></asp:TextBox>
                                                         <asp:HiddenField ID="hfCityCharge" runat="server"></asp:HiddenField>
                                                         <asp:HiddenField ID="hfIsVatEnableOnGuestHouseCityCharge" runat="server"></asp:HiddenField>
+                                                        <asp:HiddenField ID="hfIsCitySDChargeEnableOnServiceCharge" runat="server"></asp:HiddenField>
                                                         <span class="input-group-addon">
                                                             <asp:CheckBox ID="cbCityCharge" runat="server" Text="" CssClass="customChkBox"
                                                                 onclick="javascript: return ToggleTotalRoomRateVatServiceChargeCalculationForServiceCharge(this);"

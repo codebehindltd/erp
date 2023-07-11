@@ -1647,7 +1647,7 @@
         function TotalRoomRateVatServiceChargeCalculation() {
 
             var inclusiveBill = 0, Vat = 0.00, ServiceCharge = 0.00, cityCharge = 0.00, additionalCharge = 0.00;
-            var additionalChargeType = "Fixed", isRatePlusPlus = 1, isVatEnableOnGuestHouseCityCharge = 0;
+            var additionalChargeType = "Fixed", isRatePlusPlus = 1, isVatEnableOnGuestHouseCityCharge = 0, isCitySDChargeEnableOnServiceCharge = 0;
             var cbVatAmountVal = 1, cbServiceChargeVal = 1, cbCityChargeVal = 1, cbAdditionalChargeVal = 1;
 
             if ($("#ContentPlaceHolder1_hfIsRatePlusPlus").val() != "")
@@ -1670,6 +1670,9 @@
 
             if ($("#ContentPlaceHolder1_hfIsVatOnSDCharge").val() != "")
                 isVatEnableOnGuestHouseCityCharge = parseInt($("#ContentPlaceHolder1_hfIsVatOnSDCharge").val(), 10);
+
+            if ($("#<%=hfIsCitySDChargeEnableOnServiceCharge.ClientID %>").val() != "")
+                isCitySDChargeEnableOnServiceCharge = parseInt($("#<%=hfIsCitySDChargeEnableOnServiceCharge.ClientID %>").val(), 10);
 
             if ($("#ContentPlaceHolder1_hfInclusiveGuestServiceBill").val() != "") {
                 inclusiveBill = parseInt($("#ContentPlaceHolder1_hfInclusiveGuestServiceBill").val(), 10);
@@ -1715,7 +1718,7 @@
             var discountAmount = 0;
 
             var InnboardRateCalculationInfo = CommonHelper.GetRackRateServiceChargeVatInformation(txtServiceRateVal, ServiceCharge, cityCharge,
-                                              Vat, additionalCharge, additionalChargeType, inclusiveBill, isRatePlusPlus, isVatEnableOnGuestHouseCityCharge,
+                Vat, additionalCharge, additionalChargeType, inclusiveBill, isRatePlusPlus, isVatEnableOnGuestHouseCityCharge, isCitySDChargeEnableOnServiceCharge,
                                               parseInt(cbVatAmountVal, 10), parseInt(cbServiceChargeVal, 10), parseInt(cbCityChargeVal, 10),
                                               parseInt(cbAdditionalChargeVal, 10), discountType, discountAmount
                       );
@@ -1783,8 +1786,7 @@
     <asp:HiddenField ID="hfGuestServiceServiceCharge" runat="server" />
     <asp:HiddenField ID="hfCityCharge" runat="server" />
     <asp:HiddenField ID="hfAdditionalCharge" runat="server" />
-    <asp:HiddenField ID="hfAdditionalChargeType" runat="server" />
-    <asp:HiddenField ID="hfIsVatOnSDCharge" runat="server" />
+    <asp:HiddenField ID="hfAdditionalChargeType" runat="server" />    
     <asp:HiddenField ID="hfIsRatePlusPlus" runat="server" />
     <asp:HiddenField ID="hfServiceRate" runat="server" />
     <asp:HiddenField ID="hfRackRate" runat="server" />
@@ -1800,6 +1802,8 @@
     <input id="hfExistingBillnumberId" type="hidden" value="0" />
     <input id="hfExistingServiceDate" type="hidden" value="0" />
     <input id="hfPaymentId" type="hidden" value="0" />
+    <asp:HiddenField ID="hfIsVatOnSDCharge" runat="server" />
+    <asp:HiddenField ID="hfIsCitySDChargeEnableOnServiceCharge" runat="server" />
     <asp:HiddenField ID="hfIsServiceBillWithoutInHouseGuest" runat="server" Value="" />
     <div id="PaidServiceDateInformationDiv" class="form-group" style="display: none;">
         <div style="height: 25px">

@@ -371,7 +371,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2 text-left">
-                                <asp:Label ID="lblValEnableOnSd" runat="server" CssClass="control-label text-left required-field" Text="Is Vat On SD Charge"></asp:Label>
+                                <asp:Label ID="lblValEnableOnSd" runat="server" CssClass="control-label text-left required-field" Text="Vat On SD Charge"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:DropDownList ID="ddlVatEnableOnSDCharge" runat="server" CssClass="form-control"
@@ -380,6 +380,18 @@
                                     <asp:ListItem Value="0">Vat Not Enable On SD/City Charge</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
+                            <div class="col-md-2 text-left">
+                                <asp:Label ID="Label4" runat="server" CssClass="control-label text-left required-field" Text="City/SD On S. Charge"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:DropDownList ID="ddlIsCitySDChargeEnableOnServiceCharge" runat="server" CssClass="form-control"
+                                    TabIndex="7">
+                                    <asp:ListItem Value="1">SD/City Charge Enable On Service Charge</asp:ListItem>
+                                    <asp:ListItem Value="0">SD/City Charge Not Enable On Service Charge</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-md-2 text-left">
                                 <asp:Label ID="Label2" runat="server" CssClass="control-label text-left required-field" Text="Department"></asp:Label>
                             </div>
