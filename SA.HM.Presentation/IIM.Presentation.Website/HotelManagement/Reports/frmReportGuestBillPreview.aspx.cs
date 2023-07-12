@@ -106,16 +106,20 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             string ddlRegistrationId = registrationId;
             string txtSrcRegistrationIdList = registrationId;
 
-            List<RoomRegistrationBO> conversionRateBOList = new List<RoomRegistrationBO>();
-            RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
-            conversionRateBOList = roomRegistrationDA.GetConversionRateByRegistrationIdList(registrationId);
-            if (conversionRateBOList != null)
+            string reportCurrencyType = Request.QueryString["ct"];
+            if (reportCurrencyType == "usd")
             {
-                if (conversionRateBOList.Count > 0)
+                List<RoomRegistrationBO> conversionRateBOList = new List<RoomRegistrationBO>();
+                RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
+                conversionRateBOList = roomRegistrationDA.GetConversionRateByRegistrationIdList(registrationId);
+                if (conversionRateBOList != null)
                 {
-                    if (conversionRateBOList.Where(x => x.ConversionRate > 0).ToList().Count > 0)
+                    if (conversionRateBOList.Count > 0)
                     {
-                        currencyRate = conversionRateBOList[0].ConversionRate.ToString();
+                        if (conversionRateBOList.Where(x => x.ConversionRate > 0).ToList().Count > 0)
+                        {
+                            currencyRate = conversionRateBOList[0].ConversionRate.ToString();
+                        }
                     }
                 }
             }

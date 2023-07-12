@@ -2022,14 +2022,14 @@
         </div>
     </div>
 
-    <div id="BillPreviewRelatedInformation" style="display: none; padding-top: 10px;">
+    <div id="BillPreviewRelatedInformation" style="display: none; padding-top: 10px; overflow:hidden;">
         <div class="row">
             <div class="col-md-6">
-                <asp:Button ID="btnLocalBillPreview" runat="server" TabIndex="4" Text="Bill Preview"
+                <asp:Button ID="btnLocalBillPreview" runat="server" Width="100%"  TabIndex="4" Text="Bill Preview"
                     CssClass="btn btn-primary btn-sm" OnClientClick="javascript: return PerformLocalBillPreviewAction();" />
             </div>
             <div class="col-md-6">
-                <asp:Button ID="btnUSDBillPreview" runat="server" TabIndex="4" Text="Bill Preview (USD)"
+                <asp:Button ID="btnUSDBillPreview" runat="server" Width="100%"  TabIndex="4" Text="Bill Preview (USD)"
                     CssClass="btn btn-primary btn-sm" OnClientClick="javascript: return PerformUSDBillPreviewAction();" />
             </div>
         </div>

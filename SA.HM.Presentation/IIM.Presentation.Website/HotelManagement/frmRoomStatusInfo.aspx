@@ -330,11 +330,37 @@
             }
         }
 
+        function LoadBillPreviewAction() {
+            $("#BillPreviewRelatedInformation").dialog({
+                width: 380,
+                height: 100,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: true,
+                resizable: false,
+                fluid: true,
+                title: "", ////TODO add title
+                show: 'slide'
+            });
+        }
+
+
         function LoadBillPreview() {
+            $("#serviceDecider").dialog('close');
+            $('#btnBillPreview').trigger('click');
+        }
+
+        function PerformLocalBillPreviewAction() {
             $("#serviceDecider").dialog('close');
             $('#btnBillPreview').trigger('click');
 
         }
+
+        function PerformUSDBillPreviewAction() {
+            $("#serviceDecider").dialog('close');
+            $('#btnUSDBillPreview').trigger('click');
+        }
+
         function LoadLinkedBillPreview() {
             $("#serviceDecider").dialog('close');
             $('#btnLinkedBillPreview').trigger('click');
@@ -1054,6 +1080,10 @@
             OnClick="btnBillPreview_Click" />
     </div>
     <div style="display: none;">
+        <asp:Button ID="btnUSDBillPreview" runat="server" ClientIDMode="Static" Text="Bill Preview"
+            OnClick="btnUSDBillPreview_Click" />
+    </div>
+    <div style="display: none;">
         <asp:Button ID="btnLinkedBillPreview" runat="server" ClientIDMode="Static" Text="Bill Preview" OnClick="btnLinkedBillPreview_Click" />
     </div>
     <div class="panel panel-default">
@@ -1578,6 +1608,30 @@
         </div>
 
     </div>
+    <div style="display: none;">
+        <div id="USDCurrencyInfo" runat="server">
+            <div class="form-group">
+                <div class="col-md-2 label-align">
+                    <asp:Label ID="lblSellingPriceLocal" runat="server" class="control-label" Text="Selling Price One"></asp:Label>
+                    <asp:DropDownList ID="ddlSellingPriceLocal" runat="server" CssClass="form-control"
+                        TabIndex="7" Visible="False">
+                    </asp:DropDownList>
+                </div>
+                <div class="col-md-4">
+                    <asp:TextBox ID="txtSellingPriceLocal" runat="server" CssClass="form-control" TabIndex="8"></asp:TextBox>
+                </div>
+                <div class="col-md-2 label-align">
+                    <asp:Label ID="lblSellingPriceUsd" runat="server" class="control-label" Text="Selling Price Two"></asp:Label>
+                    <asp:DropDownList ID="ddlSellingPriceUsd" runat="server" CssClass="form-control"
+                        TabIndex="10" Visible="False">
+                    </asp:DropDownList>
+                </div>
+                <div class="col-md-4">
+                    <asp:TextBox ID="txtSellingPriceUsd" runat="server" CssClass="form-control" TabIndex="11"></asp:TextBox>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="VacantPopUp" style="display: none;">
         <div id="PopMyVacant">
             <div id="DivPopMyVacant" class="block" style="font-weight: bold">
@@ -1591,7 +1645,18 @@
         <div id="serviceDeciderHtml">
         </div>
     </div>
-
+    <div id="BillPreviewRelatedInformation" style="display: none; padding-top: 10px; overflow:hidden;">
+        <div class="row">
+            <div class="col-md-6">
+                <asp:Button ID="btnLocalBillPreview" runat="server" Width="100%" TabIndex="4" Text="Bill Preview"
+                    CssClass="btn btn-primary btn-sm" OnClientClick="javascript: return PerformLocalBillPreviewAction();" />
+            </div>
+            <div class="col-md-6">
+                <asp:Button ID="btnUSDBillPreview2" runat="server" Width="100%" TabIndex="4" Text="Bill Preview (USD)"
+                    CssClass="btn btn-primary btn-sm" OnClientClick="javascript: return PerformUSDBillPreviewAction();" />
+            </div>
+        </div>
+    </div>
     <div id="ReservationPopUp" style="display: none;">
         <div id="PopReservation">
             <ul id="Ul1" class="ui-style">

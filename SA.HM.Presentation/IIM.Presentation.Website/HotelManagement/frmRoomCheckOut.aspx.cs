@@ -110,6 +110,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                 this.LoadStartAndEndDate();
             }
+
             btnAddDetailGuest.Visible = false; //it's need to work-----------------------------------------------------
             if (Session["HiddenFieldCompanyPaymentButtonInfo"] != null)
             {

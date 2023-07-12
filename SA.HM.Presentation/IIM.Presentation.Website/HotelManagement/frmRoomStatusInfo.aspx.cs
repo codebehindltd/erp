@@ -33,6 +33,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             Session["MessegePanelEnableForSelectedRoomNumber"] = null;
             if (!IsPostBack)
             {
+                LoadCurrency();
                 ReservationNoShowProcess();
                 LoadFloor();
                 LoadFloorBlock();
@@ -169,6 +170,13 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             string s = "window.open('" + url + "', 'popup_window', 'width=820,height=680,left=300,top=50,resizable=yes');";
             ClientScript.RegisterStartupScript(GetType(), "script", s, true);
         }
+        protected void btnUSDBillPreview_Click(object sender, EventArgs e)
+        {
+            isLegendContainerDivEnable = 1;
+            string url = "/HotelManagement/Reports/frmReportGuestBillPreview.aspx?ct=usd";
+            string s = "window.open('" + url + "', 'popup_window', 'width=820,height=680,left=300,top=50,resizable=yes');";
+            ClientScript.RegisterStartupScript(GetType(), "script", s, true);
+        }
         protected void btnLinkedBillPreview_Click(object sender, EventArgs e)
         {
             isLegendContainerDivEnable = 1;
@@ -177,6 +185,32 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             ClientScript.RegisterStartupScript(GetType(), "script", s, true);
         }
         //************************ User Defined Method ********************//
+        private void LoadCurrency()
+        {
+            CommonCurrencyDA headDA = new CommonCurrencyDA();
+            List<CommonCurrencyBO> currencyListBO = new List<CommonCurrencyBO>();
+            currencyListBO = headDA.GetConversionHeadInfoByType("LocalNUsd");
+
+            List<CommonCurrencyBO> localCurrencyListBO = new List<CommonCurrencyBO>();
+            localCurrencyListBO = currencyListBO.Where(x => x.CurrencyType == "Local").ToList();
+            List<CommonCurrencyBO> UsdCurrencyListBO = new List<CommonCurrencyBO>();
+            UsdCurrencyListBO = currencyListBO.Where(x => x.CurrencyType == "Usd").ToList();
+
+            ddlSellingPriceLocal.DataSource = localCurrencyListBO;
+            ddlSellingPriceLocal.DataTextField = "CurrencyName";
+            ddlSellingPriceLocal.DataValueField = "CurrencyId";
+            ddlSellingPriceLocal.DataBind();
+            ddlSellingPriceLocal.SelectedIndex = 0;
+            lblSellingPriceLocal.Text = "Unit Price(" + ddlSellingPriceLocal.SelectedItem.Text + ")";
+            btnLocalBillPreview.Text = "Bill Preview (" + ddlSellingPriceLocal.SelectedItem.Text + ")";
+
+            ddlSellingPriceUsd.DataSource = UsdCurrencyListBO;
+            ddlSellingPriceUsd.DataTextField = "CurrencyName";
+            ddlSellingPriceUsd.DataValueField = "CurrencyId";
+            ddlSellingPriceUsd.DataBind();
+            ddlSellingPriceUsd.SelectedIndex = 1;
+            lblSellingPriceUsd.Text = "Unit Price(" + ddlSellingPriceUsd.SelectedItem.Text + ")";
+        }
         private void ReservationNoShowProcess()
         {
             UserInformationBO userInformationBO = new UserInformationBO();
@@ -3456,13 +3490,20 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         HttpContext.Current.Session["IsBillSplited"] = "0";
                         HttpContext.Current.Session["GuestBillFromDate"] = hmUtility.GetFromDate();
                         HttpContext.Current.Session["GuestBillToDate"] = hmUtility.GetToDate();
-                        strTable += " onclick='LoadBillPreview()' />";
+                        if (roomAllocationBO.ConversionRate > 0)
+                        {
+                            strTable += " onclick='LoadBillPreviewAction()' />";
+                        }
+                        else
+                        {
+                            strTable += " onclick='LoadBillPreview()' />";
+                        }
+                        
                         strTable += "</div>";
                     }
                 }
                 else if (list[i].DisplayText == "Room Check Out")
                 {
-
                     RoomAlocationBO roomAllocationBO = new RoomAlocationBO();
                     roomAllocationBO = roomRegistrationDA.GetActiveRegistrationInfoByRoomNumber(RoomNember);
                     if (roomAllocationBO.RoomId > 0)
@@ -3698,7 +3739,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         HttpContext.Current.Session["IsBillSplited"] = "0";
                         HttpContext.Current.Session["GuestBillFromDate"] = hmUtility.GetFromDate();
                         HttpContext.Current.Session["GuestBillToDate"] = hmUtility.GetToDate();
-                        strTable += " onclick='LoadBillPreview()' />";
+                        if (roomAllocationBO.ConversionRate > 0)
+                        {
+                            strTable += " onclick='LoadBillPreviewAction()' />";
+                        }
+                        else
+                        {
+                            strTable += " onclick='LoadBillPreview()' />";
+                        }
                         strTable += "</div>";
                     }
                 }                

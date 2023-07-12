@@ -674,7 +674,7 @@
 						<Paragraph>
 							<TextRuns>
 								<TextRun>
-									<Value>=IIF(Fields!IsDiscountApplicableOnRackRate.Value = "1", Fields!UnitPrice.Value.ToString(),  Fields!RoomRate.Value.ToString()) + " " + IIF(Fields!IsServiceChargeEnable.Value = "1", "+", "") + IIF(Fields!IsVatAmountEnable.Value = "1", "+", "")</Value>
+									<Value>=IIF(Fields!IsDiscountApplicableOnRackRate.Value = "1", Fields!UnitPrice.Value.ToString(),  Fields!RoomRate.Value.ToString()) + " " + IIF(Fields!IsServiceChargeEnable.Value = "1", "+", "") + IIF(Fields!IsCityChargeEnable.Value = "1", "+", "") + IIF(Fields!IsVatAmountEnable.Value = "1", "+", "")</Value>
 									<Style>
 										<FontSize>8pt</FontSize>
 									</Style>
@@ -1891,7 +1891,7 @@
 						<Paragraph>
 							<TextRuns>
 								<TextRun>
-									<Value>=IIF(Fields!IsDiscountApplicableOnRackRate.Value = "1", Fields!LocalCurrencyUnitPrice.Value.ToString, Fields!LocalCurrencyRoomRate.Value.ToString) + " " + IIF(Fields!IsServiceChargeEnable.Value = "1", "+", "") + IIF(Fields!IsVatAmountEnable.Value = "1", "+", "")</Value>
+									<Value>=IIF(Fields!IsDiscountApplicableOnRackRate.Value = "1", Fields!LocalCurrencyUnitPrice.Value.ToString, Fields!LocalCurrencyRoomRate.Value.ToString) + " " + IIF(Fields!IsServiceChargeEnable.Value = "1", "+", "") + IIF(Fields!IsCityChargeEnable.Value = "1", "+", "") + IIF(Fields!IsVatAmountEnable.Value = "1", "+", "")</Value>
 									<Style>
 										<FontSize>8pt</FontSize>
 									</Style>

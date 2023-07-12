@@ -186,6 +186,15 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         protected global::System.Web.UI.WebControls.Button btnBillPreview;
 
         /// <summary>
+        /// btnUSDBillPreview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUSDBillPreview;
+
+        /// <summary>
         /// btnLinkedBillPreview control.
         /// </summary>
         /// <remarks>
@@ -1147,6 +1156,87 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDRemarks;
+
+        /// <summary>
+        /// USDCurrencyInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl USDCurrencyInfo;
+
+        /// <summary>
+        /// lblSellingPriceLocal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSellingPriceLocal;
+
+        /// <summary>
+        /// ddlSellingPriceLocal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSellingPriceLocal;
+
+        /// <summary>
+        /// txtSellingPriceLocal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSellingPriceLocal;
+
+        /// <summary>
+        /// lblSellingPriceUsd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSellingPriceUsd;
+
+        /// <summary>
+        /// ddlSellingPriceUsd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSellingPriceUsd;
+
+        /// <summary>
+        /// txtSellingPriceUsd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSellingPriceUsd;
+
+        /// <summary>
+        /// btnLocalBillPreview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLocalBillPreview;
+
+        /// <summary>
+        /// btnUSDBillPreview2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUSDBillPreview2;
 
         /// <summary>
         /// Li1 control.
