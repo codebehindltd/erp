@@ -29,34 +29,39 @@ namespace HotelManagement.Presentation.Website.POS.Reports
         {
             if (!IsPostBack)
             {
-                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                string queryStringId = Request.QueryString["billId"];
+                int billID = Int32.Parse(queryStringId);
 
-                HMCommonSetupBO invoiceTemplateBO = new HMCommonSetupBO();
-                invoiceTemplateBO = commonSetupDA.GetCommonConfigurationInfo("RestaurantBillInvoiceTemplate", "RestaurantBillInvoiceTemplate");
-                if (invoiceTemplateBO != null)
+                if (!string.IsNullOrEmpty(queryStringId))
                 {
-                    if (invoiceTemplateBO.SetupId > 0)
+                    CostCentreTabBO costCentreTabBO = new CostCentreTabBO();
+                    CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
+                    costCentreTabBO = costCentreTabDA.GetCostCenterDetailInformation("Restaurant", billID);
+
+                    if (costCentreTabBO != null)
                     {
-                        if (Convert.ToInt32(invoiceTemplateBO.SetupValue) == 1)
+                        if (costCentreTabBO.InvoiceTemplate > 0)
                         {
-                            hfBillTemplate.Value = "1";
-                            this.ReportProcessing("rptRestaurentBillForPosWithoutSDC");
-                        }
-                        else if (Convert.ToInt32(invoiceTemplateBO.SetupValue) == 2)
-                        {
-                            hfBillTemplate.Value = "2";
-                            this.ReportProcessing("rptRestaurentBillForDotMatrix");
-                        }
-                        else if (Convert.ToInt32(invoiceTemplateBO.SetupValue) == 3)
-                        {
-                            hfBillTemplate.Value = "3";
-                            this.ReportProcessing("rptRestaurentBillTwoColumn");
-                        }
-                        else if (Convert.ToInt32(invoiceTemplateBO.SetupValue) == 4)
-                        {
-                            hfBillTemplate.Value = "4";
-                            this.ReportProcessingForPosToken("rptRestaurentBillForPosToken");
+                            if (costCentreTabBO.InvoiceTemplate == 1)
+                            {
+                                hfBillTemplate.Value = "1";
+                                this.ReportProcessing("rptRestaurentBillForPosWithoutSDC");
+                            }
+                            else if (costCentreTabBO.InvoiceTemplate == 2)
+                            {
+                                hfBillTemplate.Value = "2";
+                                this.ReportProcessing("rptRestaurentBillForDotMatrix");
+                            }
+                            else if (costCentreTabBO.InvoiceTemplate == 3)
+                            {
+                                hfBillTemplate.Value = "3";
+                                this.ReportProcessing("rptRestaurentBillTwoColumn");
+                            }
+                            else if (costCentreTabBO.InvoiceTemplate == 4)
+                            {
+                                hfBillTemplate.Value = "4";
+                                this.ReportProcessingForPosToken("rptRestaurentBillForPosToken");
+                            }
                         }
                     }
                 }
@@ -64,7 +69,6 @@ namespace HotelManagement.Presentation.Website.POS.Reports
         }
 
         // Template 1 -- POS, Template 2---- Dot Matrix, Template 3 -- Double Column
-
         private void ReportProcessing(string reportName)
         {
             int billID = 0;
@@ -178,7 +182,7 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                 else
                 {
                     strBillDisplayText = string.Empty;
-                    reportParam.Add(new ReportParameter("WaterMarkImagePath", string.Empty));                    
+                    reportParam.Add(new ReportParameter("WaterMarkImagePath", string.Empty));
                 }
 
                 reportParam.Add(new ReportParameter("BillDisplayText", strBillDisplayText));
@@ -219,7 +223,7 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                 {
                     reportParam.Add(new ReportParameter("IsRestaurantTokenInfoDisable", "No"));
                 }
-                                
+
                 HMCommonSetupBO isRestaurantIntegrateWithFrontOfficeBO = new HMCommonSetupBO();
                 isRestaurantIntegrateWithFrontOfficeBO = commonSetupDA.GetCommonConfigurationInfo("IsGuestNameAndRoomNoTextShowInInvoice", "IsGuestNameAndRoomNoTextShowInInvoice");
                 if (isRestaurantIntegrateWithFrontOfficeBO != null)
@@ -294,7 +298,6 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                 rvTransaction.LocalReport.Refresh();
             }
         }
-
         private void ReportProcessingForPosToken(string reportName)
         {
             string queryStringId = Request.QueryString["billId"];
@@ -436,7 +439,6 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                 rvTransaction.LocalReport.Refresh();
             }
         }
-
         private void IsRestaurantOrderSubmitDisableInfo()
         {
             HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
@@ -552,7 +554,6 @@ namespace HotelManagement.Presentation.Website.POS.Reports
             //bytes = null;
             //cb = null;
         }
-
         //Dot Matrix
         protected void btnPrintReportTemplate2_Click(object sender, EventArgs e)
         {
@@ -642,7 +643,6 @@ namespace HotelManagement.Presentation.Website.POS.Reports
             //bytes = null;
             //cb = null;
         }
-
         //Double Column
         protected void btnPrintReportTemplate3_Click(object sender, EventArgs e)
         {
