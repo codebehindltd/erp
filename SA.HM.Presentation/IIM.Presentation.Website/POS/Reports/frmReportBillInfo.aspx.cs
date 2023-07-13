@@ -489,16 +489,18 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                 HMCommonDA printDateDA = new HMCommonDA();
 
                 string printDate = string.Empty;
-                RestaurantBillBO billInfoBO = new RestaurantBillBO();
-                billInfoBO = billDA.GetBillInfoByBillId(billID);
-                if (billInfoBO != null)
-                {
-                    printDate = hmUtility.GetDateTimeStringFromDateTime(billInfoBO.BillDate); //hmUtility.GetStringFromDateTime(billInfoBO.BillDate) + " " + billInfoBO.BillDate.ToString("hh:mm:ss tt");
-                }
-                else
-                {
-                    printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);
-                }
+                printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);
+
+                //RestaurantBillBO billInfoBO = new RestaurantBillBO();
+                //billInfoBO = billDA.GetBillInfoByBillId(billID);
+                //if (billInfoBO != null)
+                //{
+                //    printDate = hmUtility.GetDateTimeStringFromDateTime(billInfoBO.BillDate); //hmUtility.GetStringFromDateTime(billInfoBO.BillDate) + " " + billInfoBO.BillDate.ToString("hh:mm:ss tt");
+                //}
+                //else
+                //{
+                //    printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);
+                //}
 
                 RestaurentBillDA rda = new RestaurentBillDA();
                 List<RestaurantBillReportBO> restaurantBill = new List<RestaurantBillReportBO>();
