@@ -56,6 +56,7 @@ namespace HotelManagement.Entity.RetailPOS
         public string RoutePath { get; set; }
         public string AirlineName { get; set; }
         public string Remarks { get; set; }
-        public string BillDescription { get; set; }        
+        public string BillDescription { get; set; }
+        public Nullable<decimal> CompanyPreviousDue { get; set; }
     }
 }

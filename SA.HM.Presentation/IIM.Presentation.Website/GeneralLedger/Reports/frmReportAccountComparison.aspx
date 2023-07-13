@@ -62,7 +62,7 @@
                 notesNodes = $("#ContentPlaceHolder1_hfNotesNodes").val();
 
                 var iframeid = 'printDocNotes';
-                var url = "/GeneralLedger/Reports/frmReportNotesBreakDownShowComparison.aspx?&sd=" + startDate + "&ed=" + endDate + "&sd2=" + startDate2 + "&ed2=" + endDate2 + "&st=" + searchType + "&fy=" + fiscalYearId
+                var url = "/GeneralLedger/Reports/frmReportNotesBreakDownShowComparison.aspx?rt=pl&sd=" + startDate + "&ed=" + endDate + "&sd2=" + startDate2 + "&ed2=" + endDate2 + "&st=" + searchType + "&fy=" + fiscalYearId
                     + "&cp=" + companyId + "&pj=" + projectId + "&dr=" + donorId + "&nod=" + notesNodes + "&wop=" + withOrWithoutOpening;
                 parent.document.getElementById(iframeid).src = url;
             }
