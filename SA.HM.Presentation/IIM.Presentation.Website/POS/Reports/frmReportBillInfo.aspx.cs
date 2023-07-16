@@ -221,7 +221,8 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                                 }
                                 else
                                 {
-                                    reportName = "rptRestaurentBillForA402Page";
+                                    //reportName = "rptRestaurentBillForA402Page";
+                                    reportName = "rptRestaurentBillForA4Page";
                                 }
                             }
                             else
