@@ -221,8 +221,7 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                                 }
                                 else
                                 {
-                                    //reportName = "rptRestaurentBillForA402Page";
-                                    reportName = "rptRestaurentBillForA4Page";
+                                    reportName = "rptRestaurentBillForA402Page";
                                 }
                             }
                             else
@@ -348,6 +347,11 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                         }
                     }
                 }
+
+                //Decimal billCompanyDueTotal = 0.00;
+                //billCompanyDueTotal = 1000.00;
+                //reportParam.Add(new ReportParameter("BillCompanyDueTotal", billCompanyDueTotal));
+
 
                 reportParam.Add(new ReportParameter("DiscountTitle", discountTitle));
                 reportParam.Add(new ReportParameter("BillRemarks", billRemarks));

@@ -62,8 +62,20 @@
                 notesNodes = $("#ContentPlaceHolder1_hfNotesNodes").val();
 
                 var iframeid = 'printDocNotes';
-                var url = "/GeneralLedger/Reports/frmReportNotesBreakDownShowComparison.aspx?rt=pl&sd=" + startDate + "&ed=" + endDate + "&sd2=" + startDate2 + "&ed2=" + endDate2 + "&st=" + searchType + "&fy=" + fiscalYearId
-                    + "&cp=" + companyId + "&pj=" + projectId + "&dr=" + donorId + "&nod=" + notesNodes + "&wop=" + withOrWithoutOpening;
+
+                if ($("#ContentPlaceHolder1_ddlReportType").val() == "ProfitLoss") {
+                    var url = "/GeneralLedger/Reports/frmReportNotesBreakDownShowComparison.aspx?rt=pl&sd=" + startDate + "&ed=" + endDate + "&sd2=" + startDate2 + "&ed2=" + endDate2 + "&st=" + searchType + "&fy=" + fiscalYearId
+                        + "&cp=" + companyId + "&pj=" + projectId + "&dr=" + donorId + "&nod=" + notesNodes + "&wop=" + withOrWithoutOpening;
+                }
+                else if ($("#ContentPlaceHolder1_ddlReportType").val() == "BalanceSheet") {
+                    var url = "/GeneralLedger/Reports/frmReportNotesBreakDownShowComparison.aspx?rt=bl&sd=" + startDate + "&ed=" + endDate + "&sd2=" + startDate2 + "&ed2=" + endDate2 + "&st=" + searchType + "&fy=" + fiscalYearId
+                        + "&cp=" + companyId + "&pj=" + projectId + "&dr=" + donorId + "&nod=" + notesNodes + "&wop=" + withOrWithoutOpening;
+                }
+                else {
+                    var url = "/GeneralLedger/Reports/frmReportNotesBreakDownShowComparison.aspx?rt=all&sd=" + startDate + "&ed=" + endDate + "&sd2=" + startDate2 + "&ed2=" + endDate2 + "&st=" + searchType + "&fy=" + fiscalYearId
+                        + "&cp=" + companyId + "&pj=" + projectId + "&dr=" + donorId + "&nod=" + notesNodes + "&wop=" + withOrWithoutOpening;
+                }
+                
                 parent.document.getElementById(iframeid).src = url;
             }
 

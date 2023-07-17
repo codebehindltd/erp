@@ -4306,7 +4306,8 @@ namespace HotelManagement.Data.Restaurant
                                     PaymentInstruction = r.Field<string>("PaymentInstruction"),
                                     BillSubject = r.Field<string>("BillSubject"),
                                     BagWaight = r.Field<decimal?>("BagWaight"),
-                                    CompanyPreviousDue = r.Field<decimal?>("CompanyPreviousDue")
+                                    CompanyPreviousDue = r.Field<decimal?>("CompanyPreviousDue"),
+                                    CompanyBillDueTotal = r.Field<decimal?>("CompanyBillDueTotal")
                                 }).ToList();
 
                     salesList.PosSalesReturnPayment = ds.Tables[1].AsEnumerable().Select(r =>
