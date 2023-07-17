@@ -496,7 +496,7 @@ namespace HotelManagement.Data.PurchaseManagment
             }
             return overheadDetails;
         }
-        public List<FinishedProductBO> GetInventoryProductionSearch(int costCenterId, DateTime? dateFrom, DateTime? dateTo, string productionId, string status, int userInfoId)
+        public List<FinishedProductBO> GetInventoryProductionSearch(int costCenterId, DateTime? dateFrom, DateTime? dateTo, string productionId, int supplierId, string status, int userInfoId)
         {
             List<FinishedProductBO> finishGoods = new List<FinishedProductBO>();
 
@@ -523,6 +523,11 @@ namespace HotelManagement.Data.PurchaseManagment
                         dbSmartAspects.AddInParameter(cmd, "@ProductionId", DbType.String, productionId);
                     else
                         dbSmartAspects.AddInParameter(cmd, "@ProductionId", DbType.String, DBNull.Value);
+
+                    if (supplierId != 0)
+                        dbSmartAspects.AddInParameter(cmd, "@SupplierId", DbType.Int32, supplierId);
+                    else
+                        dbSmartAspects.AddInParameter(cmd, "@SupplierId", DbType.Int32, DBNull.Value);
 
                     if (status != "All")
                         dbSmartAspects.AddInParameter(cmd, "@Status", DbType.String, status);

@@ -31,6 +31,13 @@
                 width: "99.75%"
             });
 
+            $("#ContentPlaceHolder1_ddlSupplier").select2({
+                tags: "true",
+                placeholder: "--- All ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             $("#ContentPlaceHolder1_ddlAccountHead").select2({
                 tags: "true",
                 placeholder: "--- Please Select ---",
@@ -52,7 +59,7 @@
             $('#ContentPlaceHolder1_ddlRMStyleAttribute').change(function () {
                 GetRMInvItemStockInfoByItemAndAttributeId();
             });
-            
+
             $('#ContentPlaceHolder1_ddlRMColorAttribute').change(function () {
                 GetRMInvItemStockInfoByItemAndAttributeId();
             });
@@ -120,7 +127,7 @@
                     // manually update the textbox and hidden field
                     $(this).val(ui.item.label);
                     $("#<%=hfRMItemId.ClientID %>").val(ui.item.value);
-                    
+
                     //var list = result;
                     var ddlRMStockById = '<%=ddlRMItemStockBy.ClientID%>';
                     var control = $('#' + ddlRMStockById);
@@ -139,7 +146,7 @@
                     }
                 }
             });
-            
+
             $("#txtItemName").autocomplete({
                 source: function (request, response) {
                     var costcenterId = $("#ContentPlaceHolder1_ddlCostCenter").val();
@@ -335,7 +342,7 @@
             });
 
             $("#btnAddOEAmount").click(function () {
-                
+
                 var costCenterId = $("#ContentPlaceHolder1_ddlCostCenter").val();
                 var accountHead = $("#ContentPlaceHolder1_ddlAccountHead option:selected").text();
                 var accountHeadId = $("#ContentPlaceHolder1_ddlAccountHead").val();
@@ -364,7 +371,7 @@
 
                 var AccountHeadDetailsId = "0", isEdited = 0, editedItemId = "0";
                 // accountHeadId = $("#ContentPlaceHolder1_hfAccoutHeadId").val();
-                
+
                 if (accountHeadId != "0" && finisItemEdited != "") {
                     AccountHeadDetailsId = $(finisItemEdited).find("td:eq(4)").text();
                     EditAccountHeadForOE(accountHead, amount, oEDescription, AccountHeadDetailsId, costCenterId, isEdited);
@@ -431,7 +438,7 @@
                 var bagQuantity = $("#ContentPlaceHolder1_txtBagQuantity").val();
 
                 if (unitPrice == "") {
-                    toastr.warning("Please Enter S. Price.");
+                    toastr.warning("Please Enter C. Price.");
                     $("#ContentPlaceHolder1_txtUnitPrice").focus();
                     return false;
                 }
@@ -918,7 +925,7 @@
         }
         function OnLoadLocationToSucceeded(result) {
             $("#ContentPlaceHolder1_hfIsRiceMillProduct").val("0");
-            
+
             $("#ContentPlaceHolder1_hfCompanyId").val(result[0].CompanyId);
             $("#BagLabelDiv").hide();
             $("#BagControlDiv").hide();
@@ -1072,8 +1079,7 @@
             var totalAmount = 0;
             $("#OEAmountGrid tr").each(function () {
                 var amount = $(this).find("td").eq(1).html();
-                if(amount == undefined)
-                {
+                if (amount == undefined) {
                     amount = 0;
                 }
                 totalAmount = parseFloat(totalAmount) + parseFloat(amount);
@@ -1188,7 +1194,7 @@
 
             $(deletedItem).parent().parent().remove();
         }
-                
+
         function DeleteAccountHeadOfOE(deletedItem) {
             if (!confirm("Do you want to delete?"))
                 return;
@@ -1251,11 +1257,11 @@
                 return false;
             }
 
-            
+
             //itemName, stockBy, quantity, finishedProductDetailsId, costCenterId, itemId, stockById
 
             var costCenterId = "0", itemId = "0", colorId = "0", sizeId = "0", styleId = "0", stockById = "0", unitPrice = 0, bagQuantity = 0;
-            var quantity = "0", finishedProductDetailsId = "0"; 
+            var quantity = "0", finishedProductDetailsId = "0";
             var isEdit = "0", finishProductId = "0", remarks = "";
 
             var itemIdRM = "0", colorIdRM = "0", sizeIdRM = "0", styleIdRM = "0", stockByIdRM = "0";
@@ -1432,7 +1438,7 @@
             return false;
         }
         function OnFinishProductApprovalFailed(result) { }
-        
+
         function FinishProductCheck(productionId) {
             PageMethods.FinishProductCheck(productionId, OnFinishProductCheckSucceded, OnFinishProductCheckFailed);
             return false;
@@ -1528,8 +1534,8 @@
                     itemName = itemName + "]";
 
                     AddRMItemForFinishGoods(itemName, result.FinisProductRMDetails[rowRM].UnitName, result.FinisProductRMDetails[rowRM].Quantity,
-                                    result.FinisProductRMDetails[rowRM].FinishedProductDetailsId, result.FinishedProduct.CostCenterId, result.FinisProductRMDetails[rowRM].LocationId, result.FinisProductRMDetails[rowRM].ItemId,
-                                    result.FinisProductRMDetails[rowRM].ColorId, result.FinisProductRMDetails[rowRM].SizeId, result.FinisProductRMDetails[rowRM].StyleId, result.FinisProductRMDetails[rowRM].StockById);
+                        result.FinisProductRMDetails[rowRM].FinishedProductDetailsId, result.FinishedProduct.CostCenterId, result.FinisProductRMDetails[rowRM].LocationId, result.FinisProductRMDetails[rowRM].ItemId,
+                        result.FinisProductRMDetails[rowRM].ColorId, result.FinisProductRMDetails[rowRM].SizeId, result.FinisProductRMDetails[rowRM].StyleId, result.FinisProductRMDetails[rowRM].StockById);
                 }
 
                 var rowLength = result.FinisProductDetails.length;
@@ -1541,9 +1547,9 @@
                     itemName = itemName + ", Size: " + result.FinisProductDetails[row].SizeName;
                     itemName = itemName + ", Style: " + result.FinisProductDetails[row].StyleName;
                     itemName = itemName + "]";
-                    
-                    AddItemForFinishGoods(itemName, result.FinisProductDetails[row].UnitName, result.FinisProductDetails[row].Quantity, result.FinisProductDetails[row].FinishedProductDetailsId, 
-                        result.FinishedProduct.CostCenterId, result.FinisProductDetails[row].LocationId, result.FinisProductDetails[row].ItemId, result.FinisProductDetails[row].ColorId, 
+
+                    AddItemForFinishGoods(itemName, result.FinisProductDetails[row].UnitName, result.FinisProductDetails[row].Quantity, result.FinisProductDetails[row].FinishedProductDetailsId,
+                        result.FinishedProduct.CostCenterId, result.FinisProductDetails[row].LocationId, result.FinisProductDetails[row].ItemId, result.FinisProductDetails[row].ColorId,
                         result.FinisProductDetails[row].SizeId, result.FinisProductDetails[row].StyleId, result.FinisProductDetails[row].StockById, result.FinisProductDetails[row].UnitPrice, result.FinisProductDetails[row].BagQuantity);
                 }
 
@@ -1552,7 +1558,7 @@
 
                 for (rowOE = 0; rowOE < rowLengthOE; rowOE++) {
                     var isEdited = "";
-                    AddAccountHeadForOEInfo(result.FinishProductOEDetails[rowOE].NodeId, result.FinishProductOEDetails[rowOE].AccountHead, result.FinishProductOEDetails[rowOE].Amount, result.FinishProductOEDetails[rowOE].Remarks, 
+                    AddAccountHeadForOEInfo(result.FinishProductOEDetails[rowOE].NodeId, result.FinishProductOEDetails[rowOE].AccountHead, result.FinishProductOEDetails[rowOE].Amount, result.FinishProductOEDetails[rowOE].Remarks,
                         result.FinishProductOEDetails[rowOE].FinishedProductDetailsId, result.FinishedProduct.CostCenterId, isEdited);
                 }
 
@@ -1617,7 +1623,7 @@
                 $("#ContentPlaceHolder1_ddlCostCenter").attr("disabled", false);
             }
             return false;
-        
+
         }
 
         function PerformClearForSearchTab() {
@@ -1651,7 +1657,7 @@
 
             $("#ContentPlaceHolder1_lblFGCurrentStock").text("0");
             $("#ContentPlaceHolder1_lblRMCurrentStock").text("0");
-            
+
             $("#ContentPlaceHolder1_hfAccoutHeadId").val("0");
 
             $("#ContentPlaceHolder1_ddlRMCategory").val("0");
@@ -1941,7 +1947,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-2">
-                                                <asp:Label ID="Label18" runat="server" class="control-label required-field" Text="S. Price"></asp:Label>
+                                                <asp:Label ID="Label18" runat="server" class="control-label required-field" Text="C. Price"></asp:Label>
                                             </div>
                                             <div class="col-md-4">
                                                 <asp:TextBox ID="txtUnitPrice" runat="server" CssClass="form-control quantitydecimal"></asp:TextBox>
@@ -2135,7 +2141,15 @@
                                 <asp:TextBox ID="txtProductionId" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
                             </div>
                         </div>
-                        <div class="form-group">                            
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:Label ID="Label9" runat="server" class="control-label" Text="Supplier"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:DropDownList ID="ddlSupplier" runat="server" CssClass="form-control"
+                                    TabIndex="6">
+                                </asp:DropDownList>
+                            </div>
                             <div class="col-md-2">
                                 <asp:Label ID="lblStatus" runat="server" class="control-label" Text="Status"></asp:Label>
                             </div>
@@ -2167,7 +2181,7 @@
                 <div class="panel-body">
                     <asp:GridView ID="gvFinishedProductInfo" Width="100%" runat="server" AutoGenerateColumns="False"
                         CellPadding="4" GridLines="None" AllowSorting="True" ForeColor="#333333" TabIndex="9"
-                        AllowPaging ="true" PageSize ="30" OnPageIndexChanging="gvFinishedProductInfo_PageIndexChanging"
+                        AllowPaging="true" PageSize="30" OnPageIndexChanging="gvFinishedProductInfo_PageIndexChanging"
                         OnRowCommand="gvFinishedProductInfo_RowCommand" OnRowDataBound="gvFinishedProductInfo_RowDataBound"
                         CssClass="table table-bordered table-condensed table-responsive">
                         <RowStyle BackColor="#E3EAEB" />
@@ -2222,7 +2236,7 @@
                              BackColor="#666666" ForeColor="White" HorizontalAlign="Center"
                             
                             />--%>
-                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="Last"/>
+                        <PagerSettings Mode="NumericFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="Last" />
                         <%--<PagerSettings Mode="NextPreviousFirstLast" FirstPageText="First" LastPageText="Last" NextPageText="Next" PreviousPageText="Prev" />--%>
                         <PagerStyle CssClass="ProductionPagination" />
                         <EmptyDataTemplate>

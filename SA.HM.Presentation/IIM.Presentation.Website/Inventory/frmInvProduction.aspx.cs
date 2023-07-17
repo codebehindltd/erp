@@ -33,6 +33,7 @@ namespace HotelManagement.Presentation.Website.Inventory
             {
                 this.CheckObjectPermission();
                 this.LoadCostCenter();
+                this.LoadSupplierInfo();
                 this.LoadCategoryInfo();
                 this.LoadGridInformation();
                 this.LoadAccountHead();
@@ -214,7 +215,19 @@ namespace HotelManagement.Presentation.Website.Inventory
             itemSearch.Text = hmUtility.GetDropDownFirstAllValue();
             this.ddlSearchCostCenter.Items.Insert(0, itemSearch);
         }
+        private void LoadSupplierInfo()
+        {
+            PMSupplierDA entityDA = new PMSupplierDA();
+            ddlSupplier.DataSource = entityDA.GetPMSupplierInfo();
+            ddlSupplier.DataTextField = "Name";
+            ddlSupplier.DataValueField = "SupplierId";
+            ddlSupplier.DataBind();
 
+            System.Web.UI.WebControls.ListItem item2 = new System.Web.UI.WebControls.ListItem();
+            item2.Value = "0";
+            item2.Text = hmUtility.GetDropDownFirstAllValue();
+            ddlSupplier.Items.Insert(0, item2);
+        }
         private void LoadAccountHead()
         {
             NodeMatrixDA nodeMatrixDA = new NodeMatrixDA();
@@ -266,7 +279,7 @@ namespace HotelManagement.Presentation.Website.Inventory
             List<FinishedProductBO> finishGoods = new List<FinishedProductBO>();
 
             DateTime? fromDate = null, toDate = null;
-            int costCenterId = 0;
+            int costCenterId = 0, supplierId = 0;
             string productionId = "";
             string status = "";
 
@@ -285,11 +298,16 @@ namespace HotelManagement.Presentation.Website.Inventory
                 toDate = CommonHelper.DateTimeToMMDDYYYY(txtToDate.Text);
             }
 
-
             productionId = txtProductionId.Text;
+
+            if (ddlSupplier.SelectedValue != "0")
+            {
+                supplierId = Convert.ToInt32(ddlSupplier.SelectedValue);
+            }
+
             status = ddlStatus.SelectedValue;
 
-            finishGoods = productDa.GetInventoryProductionSearch(costCenterId, fromDate, toDate, productionId, status, userInformationBO.UserInfoId);
+            finishGoods = productDa.GetInventoryProductionSearch(costCenterId, fromDate, toDate, productionId, supplierId, status, userInformationBO.UserInfoId);
             gvFinishedProductInfo.DataSource = finishGoods;
             gvFinishedProductInfo.DataBind();
         }
