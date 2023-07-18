@@ -380,7 +380,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
 
             paramReport.Add(new ReportParameter("CompanyName", companyName));
             paramReport.Add(new ReportParameter("CompanyProject", projectName));
-            //rvTransaction.LocalReport.SetParameters(paramReport);
 
             //Activate Session
             SessionNotesBreakDownBO notesBreakDown = new SessionNotesBreakDownBO();
@@ -669,7 +668,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                             r.CashNCashEquvalentAtEndOfPeriod = r.CashNCashEquvalentAtEndOfPeriod / ConversionRate;
                         }
 
-                        //----------- For Comparision Report
                         if (r.OpeningBalanceCurrentYear != 0)
                         {
                             r.OpeningBalanceCurrentYear = r.OpeningBalanceCurrentYear / ConversionRate;
@@ -784,7 +782,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                             p.CashNCashEquvalentAtEndOfPeriod = p.CashNCashEquvalentAtEndOfPeriod / ConversionRate;
                         }
 
-                        //----------- For Comparision Report
                         if (p.OpeningBalanceCurrentYear != 0)
                         {
                             p.OpeningBalanceCurrentYear = p.OpeningBalanceCurrentYear / ConversionRate;
@@ -1022,7 +1019,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             CompanyDA companyDA = new CompanyDA();
             List<CompanyBO> files = companyDA.GetCompanyInfo();
 
-            //List<ReportParameter> paramReport = new List<ReportParameter>();
             List<ReportParameter> reportParam = new List<ReportParameter>();
 
             if (files[0].CompanyId > 0)
@@ -1039,11 +1035,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                     webAddress = files[0].ContactNumber;
                 }
             }
-
-            //bool isProfitableOrganization = true;
-
-            //if (hfCompanyIsProfitable.Value == "1")
-            //    isProfitableOrganization = true;
 
             if (hfCompanyId.Value != "0" && hfCompanyId.Value != "")
             {
@@ -1167,8 +1158,13 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                 CompanyPaymentLedgerReportVwBo ledgerReportBO = new CompanyPaymentLedgerReportVwBo();
                 ledgerReportBO.CompanyId = row.CompanyId;
                 ledgerReportBO.CompanyName = row.CompanyName;
-                ledgerReportBO.PreviousYearClosingBalance = (from p in companyLedger1 where p.CompanyId == row.CompanyId select p.ClosingBalance).ToList().Sum();
-                ledgerReportBO.CurrentYearClosingBalance = (from p in companyLedger2 where p.CompanyId == row.CompanyId select p.ClosingBalance).ToList().Sum();
+
+                // ------ Date 1
+                ledgerReportBO.CurrentYearClosingBalance = (from p in companyLedger1 where p.CompanyId == row.CompanyId select p.ClosingBalance).ToList().Sum();
+
+                // ------ Date 2
+                ledgerReportBO.PreviousYearClosingBalance = (from p in companyLedger2 where p.CompanyId == row.CompanyId select p.ClosingBalance).ToList().Sum();
+                
                 companyLedger.Add(ledgerReportBO);
             }
 
@@ -1194,14 +1190,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             rvTransaction.LocalReport.EnableExternalImages = true;
 
             var reportPath = Server.MapPath(@"~/PurchaseManagment/Reports/Rdlc/RptSupplierLedgerComparison.rdlc");
-            //if (ddlReportType.SelectedValue == "0")
-            //{
-            //    reportPath = Server.MapPath(@"~/PurchaseManagment/Reports/Rdlc/RptSupplierLedger.rdlc");
-            //}
-            //else
-            //{
-            //    reportPath = Server.MapPath(@"~/PurchaseManagment/Reports/Rdlc/RptSupplierPaymentLedger.rdlc");
-            //}
 
             if (!File.Exists(reportPath))
                 return;
@@ -1209,7 +1197,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             rvTransaction.LocalReport.ReportPath = reportPath;
 
             string paymentStatus = string.Empty, reportType = string.Empty;
-            //DateTime dateTime = DateTime.Now;
 
             string startDate = string.Empty, endDate = string.Empty;
             string startDate2 = string.Empty, endDate2 = string.Empty;
@@ -1260,32 +1247,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                 ToDate2 = hmUtility.GetDateTimeFromString(endDate2, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddDays(1).AddSeconds(-1);
             }
 
-            //Int32 supplierId = Convert.ToInt32(hfSupplierId.Value);
-            //string companyName = ddlGLCompanyId.SelectedItem.Text;
-            //Int32 companyId = Convert.ToInt32(ddlGLCompanyId.SelectedValue);
-
-            //List<ReportParameter> reportParam = new List<ReportParameter>();
-
-            //CompanyDA companyDA = new CompanyDA();
-            //List<CompanyBO> files = companyDA.GetCompanyInfo();
-            //if (files[0].CompanyId > 0)
-            //{
-            //    reportParam.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
-            //    reportParam.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
-
-            //    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
-            //    {
-            //        reportParam.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
-            //    }
-            //    else
-            //    {
-            //        reportParam.Add(new ReportParameter("CompanyWeb", files[0].ContactNumber));
-            //    }
-            //}
-
-            //paymentStatus = "0";
-            //reportType = "0";
-
             int companyId = 0, projectId = 0, donorId = 0, supplierId = 0;
             string companyName = string.Empty;
             string companyAddress = string.Empty;
@@ -1299,7 +1260,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             CompanyDA companyDA = new CompanyDA();
             List<CompanyBO> files = companyDA.GetCompanyInfo();
 
-            //List<ReportParameter> paramReport = new List<ReportParameter>();
             List<ReportParameter> reportParam = new List<ReportParameter>();
 
             if (files[0].CompanyId > 0)
@@ -1316,11 +1276,6 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                     webAddress = files[0].ContactNumber;
                 }
             }
-
-            //bool isProfitableOrganization = true;
-
-            //if (hfCompanyIsProfitable.Value == "1")
-            //    isProfitableOrganization = true;
 
             if (hfCompanyId.Value != "0" && hfCompanyId.Value != "")
             {
@@ -1431,12 +1386,12 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
             companyId = 0;
             supplierId = 0;
 
+            // ------ Date 1
             supplierLedger1 = commonReportDa.GetSupllierLedger(userInformationBO.UserInfoId, companyId, supplierId, FromDate, ToDate, paymentStatus, reportType, searchNarration, fromAmount, toAmount);
 
+            // ------ Date 2
             supplierLedger2 = commonReportDa.GetSupllierLedger(userInformationBO.UserInfoId, companyId, supplierId, FromDate2, ToDate2, paymentStatus, reportType, searchNarration, fromAmount, toAmount);
 
-
-            //GuestCompanyDA guestCompanyDA = new GuestCompanyDA();
             List<PMSupplierBO> supplierBOList = new List<PMSupplierBO>();
             supplierBOList = commonReportDa.GetPMSupplierInfo();
 
@@ -1445,8 +1400,13 @@ namespace HotelManagement.Presentation.Website.GeneralLedger.Reports
                 SupplierPaymentLedgerVwBO ledgerReportBO = new SupplierPaymentLedgerVwBO();
                 ledgerReportBO.SupplierId = row.SupplierId;
                 ledgerReportBO.SupplierName = row.Name;
-                ledgerReportBO.PreviousYearClosingBalance = (from p in supplierLedger1 where p.SupplierId == row.SupplierId select p.ClosingBalance).ToList().Sum();
-                ledgerReportBO.CurrentYearClosingBalance = (from p in supplierLedger2 where p.SupplierId == row.SupplierId select p.ClosingBalance).ToList().Sum();
+
+                // ------ Date 1
+                ledgerReportBO.CurrentYearClosingBalance = (from p in supplierLedger1 where p.SupplierId == row.SupplierId select p.ClosingBalance).ToList().Sum();
+
+                // ------ Date 2
+                ledgerReportBO.PreviousYearClosingBalance = (from p in supplierLedger2 where p.SupplierId == row.SupplierId select p.ClosingBalance).ToList().Sum();
+                
                 supplierLedger.Add(ledgerReportBO);
             }
 

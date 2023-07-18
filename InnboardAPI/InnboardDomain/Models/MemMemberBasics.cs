@@ -208,5 +208,9 @@ namespace InnboardDomain.Models
 
         [StringLength(200)]
         public string MeetingDecisionEC { get; set; }
+
+        public string TransactionType { get; set; }
+        public string TransactionId { get; set; }
+        public string TransactionDetails { get; set; }
     }
 }
