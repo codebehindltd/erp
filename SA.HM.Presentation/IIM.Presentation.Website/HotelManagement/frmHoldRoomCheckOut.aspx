@@ -303,10 +303,10 @@
 
                 var duplicateCheck = false;
 
-                $('#ReservationDetailGrid tbody > tr > td:nth-child(1)').filter(function (index) {
-                    if ($.trim($(this).text()) == ddlPayMode)
-                        duplicateCheck = true;
-                });
+                //$('#ReservationDetailGrid tbody > tr > td:nth-child(1)').filter(function (index) {
+                //    if ($.trim($(this).text()) == ddlPayMode)
+                //        duplicateCheck = true;
+                //});
 
                 if (duplicateCheck == true) {
                     toastr.warning('Duplicate Payment Mode');

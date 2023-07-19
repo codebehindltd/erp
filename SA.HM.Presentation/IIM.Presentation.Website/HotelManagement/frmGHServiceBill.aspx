@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
-
+        var TotalRoomRateGlobalValue = 0;
         var AddedPaymentDetailsList = new Array(), EditPaymentDetailsList = new Array(), DeletePaymentDetailsList = new Array();
         var trr = [];
         var tst = {};
@@ -27,6 +27,10 @@
 
             CommonHelper.AutoSearchClientDataSource("txtBankId", "ContentPlaceHolder1_ddlBankId", "ContentPlaceHolder1_ddlBankId");
             CommonHelper.AutoSearchClientDataSource("txtMBankingBankId", "ContentPlaceHolder1_ddlMBankingBankId", "ContentPlaceHolder1_ddlMBankingBankId");
+
+            if ($("#ContentPlaceHolder1_hfInclusiveGuestServiceBill").val() == "1") {
+                $("#btnRoomRateCalculation").hide();
+            }
 
             $("#ContentPlaceHolder1_txtServiceQuantity").keypress(function (e) {
                 //if the letter is not digit then display error and don't type anything
@@ -343,20 +347,24 @@
             });
 
             $('#ContentPlaceHolder1_ddlServiceId').change(function () {
-                CheckDuplicateByServiceAndBillCritaria();
 
-                if ($(this).val() != "0") {
-                    PageMethods.GetPaidServiceDetails($(this).val(), OnSucceedPaidService, OnFailedPaidService);
-                }
-                else {
-                    $("#ContentPlaceHolder1_txtServiceRate").val("");
-                    $("#ContentPlaceHolder1_txtServiceCharge").val('');
-                    $("#ContentPlaceHolder1_txtSDCharge").val('');
-                    $("#ContentPlaceHolder1_txtVatAmount").val('');
-                    $("#ContentPlaceHolder1_txtAdditionalCharge").val('');
-                    $("#ContentPlaceHolder1_txtGrandTotal").val("");
-                    $("#ContentPlaceHolder1_lblGrandTotal").text("Grand Total");
-                }
+                //var serviceRate = parseFloat($('#ContentPlaceHolder1_txtServiceRate').val());
+                //if (serviceRate == 0) {
+                //    CheckDuplicateByServiceAndBillCritaria();
+
+                //    if ($(this).val() != "0") {
+                //        PageMethods.GetPaidServiceDetails($(this).val(), OnSucceedPaidService, OnFailedPaidService);
+                //    }
+                //    else {
+                //        $("#ContentPlaceHolder1_txtServiceRate").val("");
+                //        $("#ContentPlaceHolder1_txtServiceCharge").val('');
+                //        $("#ContentPlaceHolder1_txtSDCharge").val('');
+                //        $("#ContentPlaceHolder1_txtVatAmount").val('');
+                //        $("#ContentPlaceHolder1_txtAdditionalCharge").val('');
+                //        $("#ContentPlaceHolder1_txtGrandTotal").val("");
+                //        $("#ContentPlaceHolder1_lblGrandTotal").text("Grand Total");
+                //    }
+                //}
             });
 
             $('#ContentPlaceHolder1_txtServiceRate').blur(function () {
@@ -556,48 +564,48 @@
                         RemoveServicePayment(EditPaymentDetailsList, RowIndex);
 
                         EditPaymentDetailsList.push(
-                {
-                    Amount: Amount,
-                    PaymentModeId: PaymentModeId,
-                    CurrencyTypeId: CurrencyTypeId,
-                    ConversionRate: ConversionRate,
-                    AccountsPostingHeadId: AccountsPostingHeadId,
-                    CardTypeId: CardTypeId,
-                    CardNumber: CardNumber,
-                    ExpireDate: ExpireDate,
-                    CardHolderName: CardHolderName,
-                    EmployeeId: EmployeeId,
-                    CompanyId: CompanyId,
-                    PaymentId: PaymentId,
-                    BankId: BankId,
-                    ForeignCurrencyAmount: foreignCurrencyAmount,
-                    RowIndex: RowIndex
-                }
-                );
+                            {
+                                Amount: Amount,
+                                PaymentModeId: PaymentModeId,
+                                CurrencyTypeId: CurrencyTypeId,
+                                ConversionRate: ConversionRate,
+                                AccountsPostingHeadId: AccountsPostingHeadId,
+                                CardTypeId: CardTypeId,
+                                CardNumber: CardNumber,
+                                ExpireDate: ExpireDate,
+                                CardHolderName: CardHolderName,
+                                EmployeeId: EmployeeId,
+                                CompanyId: CompanyId,
+                                PaymentId: PaymentId,
+                                BankId: BankId,
+                                ForeignCurrencyAmount: foreignCurrencyAmount,
+                                RowIndex: RowIndex
+                            }
+                        );
                     }
                     else if (PaymentId == "0") {
 
                         RemoveServicePayment(AddedPaymentDetailsList, RowIndex);
 
                         AddedPaymentDetailsList.push(
-                {
-                    Amount: Amount,
-                    PaymentModeId: PaymentModeId,
-                    CurrencyTypeId: CurrencyTypeId,
-                    ConversionRate: ConversionRate,
-                    AccountsPostingHeadId: AccountsPostingHeadId,
-                    CardTypeId: CardTypeId,
-                    CardNumber: CardNumber,
-                    ExpireDate: ExpireDate,
-                    CardHolderName: CardHolderName,
-                    EmployeeId: EmployeeId,
-                    CompanyId: CompanyId,
-                    PaymentId: PaymentId,
-                    BankId: BankId,
-                    ForeignCurrencyAmount: foreignCurrencyAmount,
-                    RowIndex: RowIndex
-                }
-                );
+                            {
+                                Amount: Amount,
+                                PaymentModeId: PaymentModeId,
+                                CurrencyTypeId: CurrencyTypeId,
+                                ConversionRate: ConversionRate,
+                                AccountsPostingHeadId: AccountsPostingHeadId,
+                                CardTypeId: CardTypeId,
+                                CardNumber: CardNumber,
+                                ExpireDate: ExpireDate,
+                                CardHolderName: CardHolderName,
+                                EmployeeId: EmployeeId,
+                                CompanyId: CompanyId,
+                                PaymentId: PaymentId,
+                                BankId: BankId,
+                                ForeignCurrencyAmount: foreignCurrencyAmount,
+                                RowIndex: RowIndex
+                            }
+                        );
                     }
 
                     if (CardTypeId != "") {
@@ -630,7 +638,7 @@
                 var duplicatePayment = 0, duplicateTr = "", alreadyAddedmount = 0;
 
                 AddNewPaymentInfoDetails(PaymentMode, CardType, Amount, PaymentModeId, CurrencyTypeId, ConversionRate,
-                AccountsPostingHeadId, CardTypeId, CardNumber, ExpireDate, CardHolderName, EmployeeId, CompanyId, EmployeeName, CompanyName, PaymentId, BankId, foreignCurrencyAmount);
+                    AccountsPostingHeadId, CardTypeId, CardNumber, ExpireDate, CardHolderName, EmployeeId, CompanyId, EmployeeName, CompanyName, PaymentId, BankId, foreignCurrencyAmount);
 
                 CalculateTotalPaiedNDueAmount();
                 ClearPaymentInfo();
@@ -670,23 +678,23 @@
                 if (paymentId != "0") {
 
                     DeletePaymentDetailsList.push(
-                    {
-                        Amount: $(tr).find("td:eq(2)").text(),
-                        PaymentModeId: $(tr).find("td:eq(3)").text(),
-                        CurrencyTypeId: $(tr).find("td:eq(4)").text(),
-                        ConversionRate: $(tr).find("td:eq(5)").text(),
-                        AccountsPostingHeadId: $(tr).find("td:eq(6)").text(),
-                        CardTypeId: $(tr).find("td:eq(7)").text(),
-                        CardNumber: $(tr).find("td:eq(8)").text(),
-                        ExpireDate: $(tr).find("td:eq(9)").text(),
-                        CardHolderName: $(tr).find("td:eq(10)").text(),
-                        EmployeeId: $(tr).find("td:eq(11)").text(),
-                        CompanyId: $(tr).find("td:eq(12)").text(),
-                        PaymentId: paymentId,
-                        BankId: $(tr).find("td:eq(14)").text(),
-                        ForeignCurrencyAmount: $(tr).find("td:eq(15)").text(),
-                        RowIndex: deletedIndex
-                    }
+                        {
+                            Amount: $(tr).find("td:eq(2)").text(),
+                            PaymentModeId: $(tr).find("td:eq(3)").text(),
+                            CurrencyTypeId: $(tr).find("td:eq(4)").text(),
+                            ConversionRate: $(tr).find("td:eq(5)").text(),
+                            AccountsPostingHeadId: $(tr).find("td:eq(6)").text(),
+                            CardTypeId: $(tr).find("td:eq(7)").text(),
+                            CardNumber: $(tr).find("td:eq(8)").text(),
+                            ExpireDate: $(tr).find("td:eq(9)").text(),
+                            CardHolderName: $(tr).find("td:eq(10)").text(),
+                            EmployeeId: $(tr).find("td:eq(11)").text(),
+                            CompanyId: $(tr).find("td:eq(12)").text(),
+                            PaymentId: paymentId,
+                            BankId: $(tr).find("td:eq(14)").text(),
+                            ForeignCurrencyAmount: $(tr).find("td:eq(15)").text(),
+                            RowIndex: deletedIndex
+                        }
                     );
 
                     RemoveServicePayment(EditPaymentDetailsList, deletedIndex);
@@ -793,8 +801,8 @@
         }
 
         function AddNewPaymentInfoDetails(PaymentMode, CardType, Amount, PaymentModeId, CurrencyTypeId, ConversionRate,
-                                          AccountsPostingHeadId, CardTypeId, CardNumber, ExpireDate, CardHolderName, EmployeeId,
-                                          CompanyId, EmployeeName, CompanyName, PaymentId, BankId, foreignCurrencyAmount) {
+            AccountsPostingHeadId, CardTypeId, CardNumber, ExpireDate, CardHolderName, EmployeeId,
+            CompanyId, EmployeeName, CompanyName, PaymentId, BankId, foreignCurrencyAmount) {
 
             var tr = "", th = "", totalRow = 0, editLink = "", deleteLink = "";
 
@@ -861,24 +869,24 @@
             if (PaymentId == "0") {
                 RemoveServicePayment(AddedPaymentDetailsList, parseInt($("#hfRowCount").val(), 10));
                 AddedPaymentDetailsList.push(
-                        {
-                            Amount: Amount,
-                            PaymentModeId: PaymentModeId,
-                            CurrencyTypeId: CurrencyTypeId,
-                            ConversionRate: ConversionRate,
-                            AccountsPostingHeadId: AccountsPostingHeadId,
-                            CardTypeId: CardTypeId,
-                            CardNumber: CardNumber,
-                            ExpireDate: ExpireDate,
-                            CardHolderName: CardHolderName,
-                            EmployeeId: EmployeeId,
-                            CompanyId: CompanyId,
-                            PaymentId: PaymentId,
-                            BankId: BankId,
-                            ForeignCurrencyAmount: foreignCurrencyAmount,
-                            RowIndex: parseInt($("#hfRowCount").val(), 10)
-                        }
-                  );
+                    {
+                        Amount: Amount,
+                        PaymentModeId: PaymentModeId,
+                        CurrencyTypeId: CurrencyTypeId,
+                        ConversionRate: ConversionRate,
+                        AccountsPostingHeadId: AccountsPostingHeadId,
+                        CardTypeId: CardTypeId,
+                        CardNumber: CardNumber,
+                        ExpireDate: ExpireDate,
+                        CardHolderName: CardHolderName,
+                        EmployeeId: EmployeeId,
+                        CompanyId: CompanyId,
+                        PaymentId: PaymentId,
+                        BankId: BankId,
+                        ForeignCurrencyAmount: foreignCurrencyAmount,
+                        RowIndex: parseInt($("#hfRowCount").val(), 10)
+                    }
+                );
             }
         }
 
@@ -973,30 +981,30 @@
 
                 if (addedNewPaymentDetails != "") {
                     addedNewPaymentDetails += "#" + item.Amount + "," + item.PaymentModeId + "," + item.CurrencyTypeId + ","
-                                              + item.ConversionRate + "," + item.AccountsPostingHeadId + "," + item.CardTypeId + ","
-                                              + item.CardNumber + "," + item.ExpireDate + "," + item.CardHolderName + ","
-                                              + item.EmployeeId + "," + item.CompanyId + "," + item.PaymentId + "," + item.BankId + "," + item.ForeignCurrencyAmount;
+                        + item.ConversionRate + "," + item.AccountsPostingHeadId + "," + item.CardTypeId + ","
+                        + item.CardNumber + "," + item.ExpireDate + "," + item.CardHolderName + ","
+                        + item.EmployeeId + "," + item.CompanyId + "," + item.PaymentId + "," + item.BankId + "," + item.ForeignCurrencyAmount;
                 }
                 else {
                     addedNewPaymentDetails = item.Amount + "," + item.PaymentModeId + "," + item.CurrencyTypeId + ","
-                                         + item.ConversionRate + "," + item.AccountsPostingHeadId + "," + item.CardTypeId + ","
-                                         + item.CardNumber + "," + item.ExpireDate + "," + item.CardHolderName + ","
-                                         + item.EmployeeId + "," + item.CompanyId + "," + item.PaymentId + "," + item.BankId + "," + item.ForeignCurrencyAmount;
+                        + item.ConversionRate + "," + item.AccountsPostingHeadId + "," + item.CardTypeId + ","
+                        + item.CardNumber + "," + item.ExpireDate + "," + item.CardHolderName + ","
+                        + item.EmployeeId + "," + item.CompanyId + "," + item.PaymentId + "," + item.BankId + "," + item.ForeignCurrencyAmount;
                 }
             });
 
             $.each(EditPaymentDetailsList, function (index, item) {
                 if (editPaymentDetails != "") {
                     editPaymentDetails += "#" + item.Amount + "," + item.PaymentModeId + "," + item.CurrencyTypeId + ","
-                                          + item.ConversionRate + "," + item.AccountsPostingHeadId + "," + item.CardTypeId + ","
-                                          + item.CardNumber + "," + item.ExpireDate + "," + item.CardHolderName + ","
-                                          + item.EmployeeId + "," + item.CompanyId + "," + item.PaymentId + "," + item.BankId + "," + item.ForeignCurrencyAmount;
+                        + item.ConversionRate + "," + item.AccountsPostingHeadId + "," + item.CardTypeId + ","
+                        + item.CardNumber + "," + item.ExpireDate + "," + item.CardHolderName + ","
+                        + item.EmployeeId + "," + item.CompanyId + "," + item.PaymentId + "," + item.BankId + "," + item.ForeignCurrencyAmount;
                 }
                 else {
                     editPaymentDetails = item.Amount + "," + item.PaymentModeId + "," + item.CurrencyTypeId + ","
-                                     + item.ConversionRate + "," + item.AccountsPostingHeadId + "," + item.CardTypeId + ","
-                                     + item.CardNumber + "," + item.ExpireDate + "," + item.CardHolderName + ","
-                                     + item.EmployeeId + "," + item.CompanyId + "," + item.PaymentId + "," + item.BankId + "," + item.ForeignCurrencyAmount;
+                        + item.ConversionRate + "," + item.AccountsPostingHeadId + "," + item.CardTypeId + ","
+                        + item.CardNumber + "," + item.ExpireDate + "," + item.CardHolderName + ","
+                        + item.EmployeeId + "," + item.CompanyId + "," + item.PaymentId + "," + item.BankId + "," + item.ForeignCurrencyAmount;
                 }
             });
 
@@ -1004,15 +1012,15 @@
 
                 if (deletePaymentDetails != "") {
                     deletePaymentDetails += "#" + item.Amount + "," + item.PaymentModeId + "," + item.CurrencyTypeId + ","
-                                            + item.ConversionRate + "," + item.AccountsPostingHeadId + "," + item.CardTypeId + ","
-                                            + item.CardNumber + "," + item.ExpireDate + "," + item.CardHolderName + ","
-                                            + item.EmployeeId + "," + item.CompanyId + "," + item.PaymentId + "," + item.BankId + "," + item.ForeignCurrencyAmount;
+                        + item.ConversionRate + "," + item.AccountsPostingHeadId + "," + item.CardTypeId + ","
+                        + item.CardNumber + "," + item.ExpireDate + "," + item.CardHolderName + ","
+                        + item.EmployeeId + "," + item.CompanyId + "," + item.PaymentId + "," + item.BankId + "," + item.ForeignCurrencyAmount;
                 }
                 else {
                     deletePaymentDetails = item.Amount + "," + item.PaymentModeId + "," + item.CurrencyTypeId + ","
-                                       + item.ConversionRate + "," + item.AccountsPostingHeadId + "," + item.CardTypeId + ","
-                                       + item.CardNumber + "," + item.ExpireDate + "," + item.CardHolderName + ","
-                                       + item.EmployeeId + "," + item.CompanyId + "," + item.PaymentId + "," + item.BankId + "," + item.ForeignCurrencyAmount;
+                        + item.ConversionRate + "," + item.AccountsPostingHeadId + "," + item.CardTypeId + ","
+                        + item.CardNumber + "," + item.ExpireDate + "," + item.CardHolderName + ","
+                        + item.EmployeeId + "," + item.CompanyId + "," + item.PaymentId + "," + item.BankId + "," + item.ForeignCurrencyAmount;
                 }
             });
 
@@ -1239,7 +1247,7 @@
             $("#<%=txtServiceDate.ClientID %>").val(GetStringFromDateTime(result.ServiceBill.ServiceDate));
             $("#hfExistingServiceDate").val(result.ServiceBill.ServiceDate);
             $("#hfExistingBillnumberId").val(result.ServiceBill.BillNumber);
-            $("#<%=ddlServiceId.ClientID %>").val(result.ServiceBill.ServiceId);
+            $("#<%=ddlServiceId.ClientID %>").val(result.ServiceBill.ServiceId).trigger('change');
             $("#<%=txtServiceRate.ClientID %>").val(result.ServiceBill.ServiceRate);
             $("#<%=txtServiceQuantity.ClientID %>").val(result.ServiceBill.ServiceQuantity);
             $("#<%=txtDiscountAmount.ClientID %>").val(result.ServiceBill.DiscountAmount);
@@ -1339,10 +1347,10 @@
                     expireDate = GetStringFromDateTime(result.ServiceBillDetails[i].ExpireDate);
 
                 AddNewPaymentInfoDetails(result.ServiceBillDetails[i].PaymentMode, cardType, result.ServiceBillDetails[i].PaymentAmount,
-                                         result.ServiceBillDetails[i].PaymentMode, result.ServiceBillDetails[i].FieldId, result.ServiceBillDetails[i].ConversionRate,
-                                         result.ServiceBillDetails[i].AccountsPostingHeadId, result.ServiceBillDetails[i].CardType, result.ServiceBillDetails[i].CardNumber,
-                                         expireDate, result.ServiceBillDetails[i].CardHolderName, result.ServiceBillDetails[i].AccountsPostingHeadId, result.ServiceBillDetails[i].AccountsPostingHeadId,
-                                         employeeName, companyName, result.ServiceBillDetails[i].PaymentId, result.ServiceBillDetails[i].BankId, result.ServiceBillDetails[i].CurrencyAmount);
+                    result.ServiceBillDetails[i].PaymentMode, result.ServiceBillDetails[i].FieldId, result.ServiceBillDetails[i].ConversionRate,
+                    result.ServiceBillDetails[i].AccountsPostingHeadId, result.ServiceBillDetails[i].CardType, result.ServiceBillDetails[i].CardNumber,
+                    expireDate, result.ServiceBillDetails[i].CardHolderName, result.ServiceBillDetails[i].AccountsPostingHeadId, result.ServiceBillDetails[i].AccountsPostingHeadId,
+                    employeeName, companyName, result.ServiceBillDetails[i].PaymentId, result.ServiceBillDetails[i].BankId, result.ServiceBillDetails[i].CurrencyAmount);
                 cardType = "";
             }
 
@@ -1428,7 +1436,7 @@
             else
                 $("#ContentPlaceHolder1_btnSave").hide();
 
-            
+
             $("#<%=txtSrcRoomNumber.ClientID %>").val('');
             $("#<%=txtRegisteredGuestName.ClientID %>").val('');
             $("#<%=txtServiceCharge.ClientID %>").val('0');
@@ -1579,32 +1587,6 @@
                 $('#MBankingPaymentAccountHeadDiv').hide();
             }
         }
-        <%--function PopulateProjects() {
-            $("#<%=ddlGLProject.ClientID%>").attr("disabled", "disabled");
-            if ($('#<%=ddlGLCompany.ClientID%>').val() == "0") {
-                $('#<%=ddlGLProject.ClientID %>').empty().append('<option selected="selected" value="0">Please select</option>');
-            }
-            else {
-                $('#<%=ddlGLProject.ClientID %>').empty().append('<option selected="selected" value="0">Loading...</option>');
-                $.ajax({
-                    type: "POST",
-                    url: "/GeneralLedger/frmGLProject.aspx/PopulateProjects",
-                    data: '{companyId: ' + $('#<%=ddlGLCompany.ClientID%>').val() + '}',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: OnProjectsPopulated,
-                    failure: function (response) {
-                        toastr.info(response.d);
-                    }
-                });
-            }
-        }--%>
-
-        <%--function OnProjectsPopulated(response) {
-            var ddlGLProject = '<%=ddlGLProject.ClientID%>'
-            $("#" + ddlGLProject).attr("disabled", false);
-            PopulateControl(response.d, $("#<%=ddlGLProject.ClientID %>"), $("#<%=CommonDropDownHiddenField.ClientID %>").val());
-        }--%>
 
         $(function () {
             $("#myTabs").tabs();
@@ -1650,8 +1632,7 @@
             var additionalChargeType = "Fixed", isRatePlusPlus = 1, isVatEnableOnGuestHouseCityCharge = 0, isCitySDChargeEnableOnServiceCharge = 0;
             var cbVatAmountVal = 1, cbServiceChargeVal = 1, cbCityChargeVal = 1, cbAdditionalChargeVal = 1;
 
-            if ($("#ContentPlaceHolder1_hfIsRatePlusPlus").val() != "")
-            { isRatePlusPlus = parseInt($("#ContentPlaceHolder1_hfIsRatePlusPlus").val(), 10); }
+            if ($("#ContentPlaceHolder1_hfIsRatePlusPlus").val() != "") { isRatePlusPlus = parseInt($("#ContentPlaceHolder1_hfIsRatePlusPlus").val(), 10); }
 
             if ($("#ContentPlaceHolder1_hfGuestServiceVat").val() != "")
                 Vat = parseFloat($("#ContentPlaceHolder1_hfGuestServiceVat").val());
@@ -1719,9 +1700,9 @@
 
             var InnboardRateCalculationInfo = CommonHelper.GetRackRateServiceChargeVatInformation(txtServiceRateVal, ServiceCharge, cityCharge,
                 Vat, additionalCharge, additionalChargeType, inclusiveBill, isRatePlusPlus, isVatEnableOnGuestHouseCityCharge, isCitySDChargeEnableOnServiceCharge,
-                                              parseInt(cbVatAmountVal, 10), parseInt(cbServiceChargeVal, 10), parseInt(cbCityChargeVal, 10),
-                                              parseInt(cbAdditionalChargeVal, 10), discountType, discountAmount
-                      );
+                parseInt(cbVatAmountVal, 10), parseInt(cbServiceChargeVal, 10), parseInt(cbCityChargeVal, 10),
+                parseInt(cbAdditionalChargeVal, 10), discountType, discountAmount
+            );
             tst = InnboardRateCalculationInfo;
             OnLoadRackRateServiceChargeVatInformationSucceeded(InnboardRateCalculationInfo, serviceRate, inclusiveBill);
         }
@@ -1733,21 +1714,31 @@
                 $("#ContentPlaceHolder1_txtVatAmount").val(toFixed(result.VatAmount, 2));
                 $("#ContentPlaceHolder1_txtAdditionalCharge").val(toFixed(result.AdditionalCharge, 2));
 
+
+
+
+
                 if (inclusiveBill == 1) {
-                    //$("#ContentPlaceHolder1_txtGrandTotal").val(toFixed(result.RackRate, 2));
                     $("#ContentPlaceHolder1_txtNetAmount").val(toFixed(result.RackRate, 2));
                     $("#ContentPlaceHolder1_hfRackRate").val(toFixed(result.RackRate, 2));
-                    $("#ContentPlaceHolder1_hfGrandTotal").val(toFixed(result.GrandTotal, 2));
-                    //("#lblGrandTotal").text('MRack Rate');
+
                     $("#lblGrandTotal").text('Grand Total');
+                    $("#ContentPlaceHolder1_hfGrandTotal").val(toFixed(result.GrandTotal, 2));
                     $("#ContentPlaceHolder1_txtGrandTotal").val(toFixed(result.CalculatedAmount, 2));
+
+                    //$("#ContentPlaceHolder1_hfGrandTotal").val(Math.round(result.GrandTotal).toFixed(2));
+                    //$("#ContentPlaceHolder1_txtGrandTotal").val(Math.round(result.CalculatedAmount).toFixed(2));
                 }
                 else {
-                    $("#ContentPlaceHolder1_txtGrandTotal").val(toFixed(result.CalculatedAmount, 2));
                     $("#ContentPlaceHolder1_txtNetAmount").val(toFixed(result.CalculatedAmount, 2));
+
+                    $("#lblGrandTotal").text('Grand Total');
+                    $("#ContentPlaceHolder1_txtGrandTotal").val(toFixed(result.CalculatedAmount, 2));
                     $("#ContentPlaceHolder1_hfRackRate").val(toFixed(result.CalculatedAmount, 2));
                     $("#ContentPlaceHolder1_hfGrandTotal").val(toFixed(result.CalculatedAmount, 2));
-                    $("#lblGrandTotal").text('Grand Total');
+                    //$("#ContentPlaceHolder1_txtGrandTotal").val(Math.round(result.CalculatedAmount).toFixed(2));
+                    //$("#ContentPlaceHolder1_hfRackRate").val(Math.round(result.CalculatedAmount).toFixed(2));
+                    //$("#ContentPlaceHolder1_hfGrandTotal").val(Math.round(result.CalculatedAmount).toFixed(2));
                 }
 
                 $("#ContentPlaceHolder1_hfServiceCharge").val(toFixed(result.ServiceCharge, 2));
@@ -1776,6 +1767,214 @@
 
             return false;
         }
+
+        function CalculateRoomRateInclusively() {
+
+            if ($.trim($("#ContentPlaceHolder1_ddlServiceId").val()) == "0") {
+                toastr.warning("Please Provide Service Name.");
+                return false;
+            }
+
+            CommonHelper.ApplyDecimalValidation();
+
+            $("#ContentPlaceHolder1_cbCalculateServiceCharge").prop("checked", $("#ContentPlaceHolder1_cbServiceCharge").is(":checked"));
+            $("#ContentPlaceHolder1_cbCalculateCityCharge").prop("checked", $("#ContentPlaceHolder1_cbCityCharge").is(":checked"));
+            $("#ContentPlaceHolder1_cbCalculateVatCharge").prop("checked", $("#ContentPlaceHolder1_cbVatAmount").is(":checked"));
+            $("#ContentPlaceHolder1_cbCalculateAdditionalCharge").prop("checked", $("#ContentPlaceHolder1_cbAdditionalCharge").is(":checked"));
+
+            if (TotalRoomRateGlobalValue == 0) {
+                TotalRoomRateGlobalValue = parseFloat($("#ContentPlaceHolder1_txtGrandTotal").val());
+            }
+
+            $("#CalculateRackRateInclusivelyDialog").dialog({
+                width: 935,
+                height: 250,
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: true,
+                resizable: false,
+                fluid: true,
+                title: "Calculate Room Rate Inclusively",
+                show: 'slide',
+                open: function (event, ui) {
+                    $('#CalculateRackRateInclusivelyDialog').css('overflow', 'hidden');
+                }
+            });
+        }
+
+        function CalculateRateInclusively() {
+            debugger;
+            if ($.trim($("#ContentPlaceHolder1_ddlServiceId").val()) == "0") {
+                toastr.warning("Please Provide Service Name.");
+                return false;
+            }
+
+            var txtUnitPrice = '<%=txtCalculatedTotalRoomRate.ClientID%>'
+            var txtRoomRate = '<%=txtServiceRate.ClientID%>'
+            var cbServiceCharge = '<%=cbCalculateServiceCharge.ClientID%>'
+            var cbCityCharge = '<%=cbCalculateCityCharge.ClientID%>'
+            var cbVatAmount = '<%=cbCalculateVatCharge.ClientID%>'
+            var cbAdditionalCharge = '<%=cbCalculateAdditionalCharge.ClientID%>'
+
+            var inclusiveBill = 1, Vat = 0.00, ServiceCharge = 0.00, cityCharge = 0.00, additionalCharge = 0.00;
+            var additionalChargeType = "Fixed", isRatePlusPlus = 1, isVatEnableOnGuestHouseCityCharge = 0, isCitySDChargeEnableOnServiceCharge = 0;
+            var cbVatAmountVal = 1, cbServiceChargeVal = 1, cbCityChargeVal = 1, cbAdditionalChargeVal = 1;
+            var isDiscountApplicableOnRackRate = 0;
+
+            if ($("#ContentPlaceHolder1_hfIsRatePlusPlus").val() != "") { isRatePlusPlus = parseInt($("#ContentPlaceHolder1_hfIsRatePlusPlus").val(), 10); }
+
+            if ($("#<%=hfGuestServiceVat.ClientID %>").val() != "")
+                Vat = parseFloat($("#<%=hfGuestServiceVat.ClientID %>").val());
+
+            if ($("#<%=hfGuestServiceServiceCharge.ClientID %>").val() != "")
+                ServiceCharge = parseFloat($("#<%=hfGuestServiceServiceCharge.ClientID %>").val());
+
+            if ($("#<%=hfCityCharge.ClientID %>").val() != "")
+                cityCharge = parseFloat($("#<%=hfCityCharge.ClientID %>").val());
+
+            if ($("#<%=hfAdditionalCharge.ClientID %>").val() != "")
+                additionalCharge = parseFloat($("#<%=hfAdditionalCharge.ClientID %>").val());
+
+
+            if ($("#<%=hfAdditionalChargeType.ClientID %>").val() != "")
+                additionalChargeType = $("#<%=hfAdditionalChargeType.ClientID %>").val();
+
+            if ($("#<%=hfIsVatOnSDCharge.ClientID %>").val() != "")
+                isVatEnableOnGuestHouseCityCharge = parseInt($("#<%=hfIsVatOnSDCharge.ClientID %>").val(), 10);
+
+            if ($("#<%=hfIsCitySDChargeEnableOnServiceCharge.ClientID %>").val() != "")
+                isCitySDChargeEnableOnServiceCharge = parseInt($("#<%=hfIsCitySDChargeEnableOnServiceCharge.ClientID %>").val(), 10);
+
+            if ($('#' + cbServiceCharge).is(':checked')) {
+                cbServiceChargeVal = 1;
+            }
+            else {
+                cbServiceChargeVal = 0;
+                ServiceCharge = 0.00;
+            }
+
+            if ($('#' + cbCityCharge).is(':checked')) {
+                cbCityChargeVal = 1;
+            }
+            else {
+                cbCityChargeVal = 0;
+                cityCharge = 0.00;
+            }
+
+            if ($('#' + cbVatAmount).is(':checked')) {
+                cbVatAmountVal = 1;
+            }
+            else {
+                cbVatAmountVal = 0;
+                Vat = 0.00;
+            }
+
+            if ($('#' + cbAdditionalCharge).is(':checked')) {
+                cbAdditionalChargeVal = 1;
+            }
+            else {
+                cbAdditionalChargeVal = 0;
+                additionalCharge = 0.00;
+                additionalChargeType = "Percentage";
+            }
+
+            var txtRoomRateVal = parseFloat($('#' + txtUnitPrice).val());
+
+            <%--if ($("#<%=hfInclusiveHotelManagementBill.ClientID %>").val() != "") {
+                inclusiveBill = parseInt($("#<%=hfInclusiveHotelManagementBill.ClientID %>").val(), 10);
+            }--%>
+
+            if ($("#<%=hfIsDiscountApplicableOnRackRate.ClientID %>").val() != "") {
+                isDiscountApplicableOnRackRate = parseInt($("#<%=hfIsDiscountApplicableOnRackRate.ClientID %>").val(), 10);
+            }
+
+            var unitPrice = parseFloat($("#ContentPlaceHolder1_txtServiceRate").val());
+            var discountType = "";
+            var discountAmount = 0;
+
+            //if (isDiscountApplicableOnRackRate == 1) {                
+            //}
+            //else {
+            //    discountType = "Fixed";
+            //    discountAmount = 0.00;
+            //}
+
+            var RoomRateGlobal = CommonHelper.GetRackRateServiceChargeVatInformation(unitPrice, ServiceCharge, cityCharge,
+                Vat, additionalCharge, additionalChargeType, 0, isRatePlusPlus, isVatEnableOnGuestHouseCityCharge, isCitySDChargeEnableOnServiceCharge,
+                parseInt(cbVatAmountVal, 10), parseInt(cbServiceChargeVal, 10), parseInt(cbCityChargeVal, 10),
+                parseInt(cbAdditionalChargeVal, 10), isDiscountApplicableOnRackRate, 'Fixed', 0.00);
+
+            txtRoomRateVal = RoomRateGlobal.CalculatedAmount;  //parseFloat($('#' + txtUnitPrice).val());
+            discountType = "Fixed";
+            discountAmount = txtRoomRateVal - parseFloat($('#' + txtUnitPrice).val());
+
+            var RoomRate = CommonHelper.GetRackRateServiceChargeVatInformation(txtRoomRateVal, ServiceCharge, cityCharge,
+                Vat, additionalCharge, additionalChargeType, inclusiveBill, isRatePlusPlus, isVatEnableOnGuestHouseCityCharge, isCitySDChargeEnableOnServiceCharge,
+                parseInt(cbVatAmountVal, 10), parseInt(cbServiceChargeVal, 10), parseInt(cbCityChargeVal, 10),
+                parseInt(cbAdditionalChargeVal, 10), isDiscountApplicableOnRackRate, discountType, discountAmount);
+
+            if (RoomRate.RackRate > 0) {
+                $("#ContentPlaceHolder1_txtCalculateServiceCharge").val(toFixed(RoomRate.ServiceCharge, 2));
+                $("#ContentPlaceHolder1_txtCalculateVatCharge").val(toFixed(RoomRate.VatAmount, 2));
+                $("#ContentPlaceHolder1_txtCalculateCityCharge").val(toFixed(RoomRate.SDCityCharge, 2));
+                $("#ContentPlaceHolder1_txtCalculateAdditionalCharge").val(toFixed(RoomRate.AdditionalCharge, 2));
+                $("#ContentPlaceHolder1_txtCalculateRackRate").val(RoomRate.RackRate);
+                $("#ContentPlaceHolder1_txtCalculateDiscountAmount").val(RoomRate.DiscountAmount);
+            }
+            else {
+                $("#ContentPlaceHolder1_txtCalculateServiceCharge").val('0');
+                $("#ContentPlaceHolder1_txtCalculateVatCharge").val('0');
+                $("#ContentPlaceHolder1_txtCalculateCityCharge").val('0');
+                $("#ContentPlaceHolder1_txtCalculateAdditionalCharge").val('0');
+                $("#ContentPlaceHolder1_txtCalculateDiscountAmount").val('0');
+            }
+        }
+
+        function ApplyCalculateCharges() {
+
+            if ($.trim($("#ContentPlaceHolder1_txtCalculatedTotalRoomRate").val()) == "" || $.trim($("#ContentPlaceHolder1_txtCalculatedTotalRoomRate").val()) == "0") {
+                toastr.warning("0 is not acceptable.");
+                return false;
+            }
+
+            //var originalDiscount = toFixed((parseFloat($("#ContentPlaceHolder1_txtServiceRate").val()) - parseFloat($("#ContentPlaceHolder1_txtCalculateRackRate").val())), 2);
+
+            var originalDiscount = 0;
+
+            $("#ContentPlaceHolder1_txtServiceCharge").val($("#ContentPlaceHolder1_txtCalculateServiceCharge").val());
+            $("#ContentPlaceHolder1_txtCityCharge").val($("#ContentPlaceHolder1_txtCalculateCityCharge").val());
+            $("#ContentPlaceHolder1_txtVatAmount").val($("#ContentPlaceHolder1_txtCalculateVatCharge").val());
+            $("#ContentPlaceHolder1_txtAdditionalCharge").val($("#ContentPlaceHolder1_txtCalculateAdditionalCharge").val());
+
+            $("#ContentPlaceHolder1_txtDiscountAmount").val(originalDiscount);
+            $("#ContentPlaceHolder1_ddlDiscountType").val("Fixed");
+
+            var CalculatedTotalRoomRate = $("#ContentPlaceHolder1_txtCalculatedTotalRoomRate").val();
+            //$("#ContentPlaceHolder1_txtGrandTotal").val(Math.round(CalculatedTotalRoomRate).toFixed(2));
+
+            $("#ContentPlaceHolder1_txtGrandTotal").val(CalculatedTotalRoomRate);
+
+            $("#ContentPlaceHolder1_txtServiceRate").val($("#ContentPlaceHolder1_txtCalculateRackRate").val());
+            $("#CalculateRackRateInclusivelyDialog").dialog("close");
+
+            $("#ContentPlaceHolder1_cbServiceCharge").prop("checked", $("#ContentPlaceHolder1_cbCalculateServiceCharge").is(":checked"));
+            $("#ContentPlaceHolder1_cbCityCharge").prop("checked", $("#ContentPlaceHolder1_cbCalculateCityCharge").is(":checked"));
+            $("#ContentPlaceHolder1_cbVatAmount").prop("checked", $("#ContentPlaceHolder1_cbCalculateVatCharge").is(":checked"));
+            $("#ContentPlaceHolder1_cbAdditionalCharge").prop("checked", $("#ContentPlaceHolder1_cbCalculateAdditionalCharge").is(":checked"));
+            TotalRoomRateVatServiceChargeCalculation();
+            CalculateTotalPaiedNDueAmount();
+            ClearRRC();
+            //CalculateDiscount();
+        }
+
+        function ClearRRC() {
+            $("#ContentPlaceHolder1_txtCalculatedTotalRoomRate").val("");
+            $("#ContentPlaceHolder1_txtCalculateServiceCharge").val("");
+            $("#ContentPlaceHolder1_txtCalculateRackRate").val("");
+            $("#ContentPlaceHolder1_txtCalculateCityCharge").val("");
+            $("#ContentPlaceHolder1_txtCalculateVatCharge").val("");
+            $("#ContentPlaceHolder1_txtCalculateDiscountAmount").val("");
+        }
     </script>
     <asp:HiddenField ID="hfIsSavePermission" runat="server" />
     <asp:HiddenField ID="hfIsUpdatePermission" runat="server" />
@@ -1786,7 +1985,7 @@
     <asp:HiddenField ID="hfGuestServiceServiceCharge" runat="server" />
     <asp:HiddenField ID="hfCityCharge" runat="server" />
     <asp:HiddenField ID="hfAdditionalCharge" runat="server" />
-    <asp:HiddenField ID="hfAdditionalChargeType" runat="server" />    
+    <asp:HiddenField ID="hfAdditionalChargeType" runat="server" />
     <asp:HiddenField ID="hfIsRatePlusPlus" runat="server" />
     <asp:HiddenField ID="hfServiceRate" runat="server" />
     <asp:HiddenField ID="hfRackRate" runat="server" />
@@ -1797,6 +1996,7 @@
     <asp:HiddenField ID="hfddlRegistrationId" runat="server" Value="" />
     <asp:HiddenField ID="hfGuestCheckInDate" runat="server" Value="" />
     <asp:HiddenField ID="hfBillingStartDate" runat="server" Value="" />
+    <asp:HiddenField ID="hfIsDiscountApplicableOnRackRate" runat="server" />
     <input id="hfRowCount" type="hidden" value="0" />
     <input id="hfEditPaymentInfoRowIndex" type="hidden" value="0" />
     <input id="hfExistingBillnumberId" type="hidden" value="0" />
@@ -1820,6 +2020,119 @@
                 OnClick="btnPaidServiceDate_Click" />
         </div>
     </div>
+    <!--Start Calculate Rack Rate Inclusively PopUp -->
+    <div id="CalculateRackRateInclusivelyDialog" style="display: none;">
+        <asp:HiddenField ID="hfIsServiceChargeEnableConfig" runat="server" />
+        <asp:HiddenField ID="hfIsCitySDChargeEnableConfig" runat="server" />
+        <asp:HiddenField ID="hfIsVatEnableConfig" runat="server" />
+        <asp:HiddenField ID="hfIsAdditionalChargeEnableConfig" runat="server" />
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div id="RRCtotalRoomRateDiv">
+                    <label class="control-label col-md-2 required-field">
+                        Total Room Rate</label>
+                    <div class="col-md-4">
+                        <asp:TextBox ID="txtCalculatedTotalRoomRate" runat="server" CssClass="form-control quantitydecimal" TabIndex="22"
+                            onblur="CalculateRateInclusively()"></asp:TextBox>
+                    </div>
+                </div>
+                <div id="RRCrackRateDiv">
+                    <label class="control-label col-md-2 required-field">
+                        Rack Rate</label>
+                    <div class="col-md-4">
+                        <asp:TextBox ID="txtCalculateRackRate" runat="server" CssClass="form-control quantitydecimal" TabIndex="23" Enabled="false"></asp:TextBox>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div id="RRCserviceChargeDiv">
+                    <div id="CalculateServiceChargeLabel" class="col-md-2" style="text-align: right;">
+                        <asp:Label ID="Label1" runat="server" CssClass="control-label required-field" Text="Service Charge"></asp:Label>
+                    </div>
+                    <div id="CalculateServiceChargeControl" class="col-md-4">
+                        <div class="input-group">
+                            <asp:TextBox ID="txtCalculateServiceCharge" runat="server" TabIndex="22" CssClass="form-control"
+                                Enabled="false"></asp:TextBox>
+                            <span class="input-group-addon">
+                                <asp:CheckBox ID="cbCalculateServiceCharge" runat="server" Text="" CssClass="customChkBox"
+                                    onclick="javascript: return CalculateRateInclusively(this);"
+                                    TabIndex="8" Checked="True" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="RRCcitySdChargeDiv">
+                    <div id="CalculateCityChargeLabel" class="col-md-2" style="text-align: right;">
+                        <asp:Label ID="Label3" runat="server" CssClass="control-label required-field" Text="City/SD Charge"></asp:Label>
+                    </div>
+                    <div id="CalculateCityChargeControl" class="col-md-4">
+                        <div class="input-group">
+                            <asp:TextBox ID="txtCalculateCityCharge" runat="server" TabIndex="22" CssClass="form-control"
+                                Enabled="false"></asp:TextBox>
+                            <span class="input-group-addon">
+                                <asp:CheckBox ID="cbCalculateCityCharge" runat="server" Text="" CssClass="customChkBox"
+                                    onclick="javascript: return CalculateRateInclusively(this);"
+                                    TabIndex="8" Checked="True" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div id="RRCvatChargeDiv">
+                    <div id="CalculateVatAmountLabel" class="col-md-2" style="text-align: right;">
+                        <asp:Label ID="Label2" runat="server" CssClass="control-label required-field" Text="Vat Amount"></asp:Label>
+                    </div>
+                    <div id="CalculateVatAmountControl" class="col-md-4">
+                        <div class="input-group">
+                            <asp:TextBox ID="txtCalculateVatCharge" runat="server" TabIndex="23" CssClass="form-control"
+                                Enabled="false"></asp:TextBox>
+                            <span class="input-group-addon">
+                                <asp:CheckBox ID="cbCalculateVatCharge" runat="server" Text="" CssClass="customChkBox"
+                                    onclick="javascript: return CalculateRateInclusively(this);"
+                                    TabIndex="8" Checked="True" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div id="RRCadditionalChargeDiv">
+                    <div id="CalculateAdditionalChargeLabel" class="col-md-2" style="text-align: right;">
+                        <asp:Label ID="Label4" runat="server" CssClass="control-label required-field" Text="Additional Charge"></asp:Label>
+                    </div>
+                    <div id="CalculateAdditionalChargeControl" class="col-md-4">
+                        <div class="input-group">
+                            <asp:TextBox ID="txtCalculateAdditionalCharge" runat="server" TabIndex="22" CssClass="form-control"
+                                Enabled="false"></asp:TextBox>
+                            <span class="input-group-addon">
+                                <asp:CheckBox ID="cbCalculateAdditionalCharge" runat="server" Text="" CssClass="customChkBox"
+                                    onclick="javascript: return CalculateRateInclusively(this);"
+                                    TabIndex="8" Checked="True" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="discountAmountDiv" style="display: none;">
+                <label for="DiscountAmount" class="control-label col-md-2">
+                    Discount Amount</label>
+                <div class="col-md-4">
+                    <asp:TextBox ID="txtCalculateDiscountAmount" runat="server" CssClass="form-control quantitydecimal" Enabled="false" TabIndex="21"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-9"></div>
+                <div class="col-md-2">
+                    <input type="button" id="btnCalculatedDiscountOkey" value="Apply Rate"
+                        class="col-sm-12 btn btn-primary btn-large" onclick="ApplyCalculateCharges()" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Calculate Rack Rate Inclusively PopUp -->
     <div id="myTabs">
         <ul id="tabPage" class="ui-style">
             <li id="A" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
@@ -2029,8 +2342,16 @@
                                 <label id="lblGrandTotal" for="GrandTotal" class="control-label col-md-2">
                                     Grand Total</label>
                                 <div class="col-md-4">
-                                    <asp:TextBox ID="txtGrandTotal" runat="server" CssClass="form-control" TabIndex="6"
-                                        ReadOnly="true"></asp:TextBox>
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <asp:TextBox ID="txtGrandTotal" runat="server" CssClass="form-control" TabIndex="6"
+                                                ReadOnly="true"></asp:TextBox>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="button" tabindex="18" id="btnRoomRateCalculation" value="RRC" class="btn btn-primary btn-sm"
+                                                onclick="javascript: return CalculateRoomRateInclusively();" />
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="ComplementaryItemDiv">
                                     <label for="ComplimentaryItem" class="control-label col-md-2">
@@ -2481,8 +2802,7 @@
     <script type="text/javascript">
         var y = '<%=isOutSideGuestInfoEnable%>';
         if (y > -1) { InhousePanelVisibleFalse(); } else { InhousePanelVisibleTrue(); }
-        var z = '<%=isGridInfoEnable%>'; if (z > -1) { $('#GridInformation').show(); } else
-        { $('#GridInformation').show(); }
+        var z = '<%=isGridInfoEnable%>'; if (z > -1) { $('#GridInformation').show(); } else { $('#GridInformation').show(); }
 
         var single = '<%=isSingle%>';
         //if (single == "True") {
@@ -2523,40 +2843,64 @@
         if (IsServiceChargeEnableConfig == 0) {
             $('#ServiceChargeLabel').hide();
             $('#ServiceChargeControl').hide();
+
+            $('#CalculateServiceChargeLabel').hide();
+            $('#CalculateServiceChargeControl').hide();
         }
         else {
             $('#ServiceChargeLabel').show();
             $('#ServiceChargeControl').show();
+
+            $('#CalculateServiceChargeLabel').show();
+            $('#CalculateServiceChargeControl').show();
         }
 
         var IsCitySDChargeEnableConfig = '<%=IsCitySDChargeEnableConfig%>';
         if (IsCitySDChargeEnableConfig == 0) {
             $('#CityChargeLabel').hide();
             $('#CityChargeControl').hide();
+
+            $('#CalculateCityChargeLabel').hide();
+            $('#CalculateCityChargeControl').hide();
         }
         else {
             $('#CityChargeLabel').show();
             $('#CityChargeControl').show();
+
+            $('#CalculateCityChargeLabel').show();
+            $('#CalculateCityChargeControl').show();
         }
 
         var IsVatEnableConfig = '<%=IsVatEnableConfig%>';
         if (IsVatEnableConfig == 0) {
             $('#VatAmountLabel').hide();
             $('#VatAmountControl').hide();
+
+            $('#CalculateVatAmountLabel').hide();
+            $('#CalculateVatAmountControl').hide();
         }
         else {
             $('#VatAmountLabel').show();
             $('#VatAmountControl').show();
+
+            $('#CalculateVatAmountLabel').show();
+            $('#CalculateVatAmountControl').show();
         }
 
         var IsAdditionalChargeEnableConfig = '<%=IsAdditionalChargeEnableConfig%>';
         if (IsAdditionalChargeEnableConfig == 0) {
             $('#AdditionalChargeLabel').hide();
             $('#AdditionalChargeControl').hide();
+
+            $('#CalculateAdditionalChargeLabel').hide();
+            $('#CalculateAdditionalChargeControl').hide();
         }
         else {
             $('#AdditionalChargeLabel').show();
             $('#AdditionalChargeControl').show();
+
+            $('#CalculateAdditionalChargeLabel').show();
+            $('#CalculateAdditionalChargeControl').show();
         }
     </script>
 </asp:Content>

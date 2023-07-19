@@ -893,8 +893,10 @@ CommonHelper.GetRackRateServiceChargeVatInformation = function (TransactionalAmo
         SDCityCharge: toFixed(SDCityCharge, 2),
         VatAmount: toFixed(VatAmount, 2),
         AdditionalCharge: toFixed(AdditionalCharge, 2),
-        CalculatedAmount: Math.round(CalculatedAmount).toFixed(2),
-        GrandTotal: Math.round(CalculatedAmount).toFixed(2)
+        //CalculatedAmount: Math.round(CalculatedAmount).toFixed(2),
+        //GrandTotal: Math.round(CalculatedAmount).toFixed(2)
+        CalculatedAmount: toFixed(CalculatedAmount, 2),
+        GrandTotal: toFixed(CalculatedAmount, 2)
     };
 
     return BillPaymentDetails;

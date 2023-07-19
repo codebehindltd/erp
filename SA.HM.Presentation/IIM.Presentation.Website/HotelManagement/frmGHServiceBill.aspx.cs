@@ -117,9 +117,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     this.LoadSearchInformation();
                 }
 
-                CostCenterWiseSetting();
-                CheckPermission();
+                //CostCenterWiseSetting();
+                //CheckPermission();
             }
+
+            CostCenterWiseSetting();
+            CheckPermission();
         }
         protected void btnBackToCheckOutForm_Click(object sender, EventArgs e)
         {
@@ -843,6 +846,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                 hfIsVatOnSDCharge.Value = costCentreTabBO[0].IsVatOnSDCharge ? "1" : "0";
                 hfIsCitySDChargeEnableOnServiceCharge.Value = costCentreTabBO[0].IsCitySDChargeEnableOnServiceCharge ? "1" : "0";
+                hfIsDiscountApplicableOnRackRate.Value = costCentreTabBO[0].IsDiscountApplicableOnRackRate ? "1" : "0";
 
                 hfCityCharge.Value = costCentreTabBO[0].CitySDCharge.ToString();
                 hfGuestServiceVat.Value = costCentreTabBO[0].VatAmount.ToString();

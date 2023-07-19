@@ -63,7 +63,7 @@ namespace HotelManagement.Data.HotelManagement
                         dbSmartAspects.AddInParameter(command, "@ServiceId", DbType.Int32, ghServiceBill.ServiceId);
                         dbSmartAspects.AddInParameter(command, "@ServiceRate", DbType.Decimal, ghServiceBill.ServiceRate);
                         dbSmartAspects.AddInParameter(command, "@ServiceQuantity", DbType.Int32, ghServiceBill.ServiceQuantity);
-                        dbSmartAspects.AddInParameter(command, "@DiscountAmount", DbType.Int32, ghServiceBill.DiscountAmount);
+                        dbSmartAspects.AddInParameter(command, "@DiscountAmount", DbType.Decimal, ghServiceBill.DiscountAmount);
                         dbSmartAspects.AddInParameter(command, "@IsComplementary", DbType.Boolean, ghServiceBill.IsComplementary);
                         dbSmartAspects.AddInParameter(command, "@IsPaidService", DbType.Boolean, ghServiceBill.IsPaidService);
                         dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, ghServiceBill.Remarks);

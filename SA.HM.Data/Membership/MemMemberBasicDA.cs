@@ -23,37 +23,6 @@ namespace HotelManagement.Data.Membership
                     conn.Open();
                     using (DbTransaction transaction = conn.BeginTransaction())
                     {
-                        //using (DbCommand commandMaster = dbSmartAspects.GetStoredProcCommand("SaveGuestCompanyInfo_SP"))
-                        //{
-                        //    conn.Open();
-                        //    using (DbTransaction transaction = conn.BeginTransaction())
-                        //    {
-                        //        dbSmartAspects.AddInParameter(commandMaster, "@CompanyName", DbType.String, memBasicInfo.FullName);
-                        //        dbSmartAspects.AddInParameter(commandMaster, "@CompanyAddress", DbType.String, null);
-                        //        dbSmartAspects.AddInParameter(commandMaster, "@EmailAddress", DbType.String, null);
-                        //        dbSmartAspects.AddInParameter(commandMaster, "@WebAddress", DbType.String, null);
-                        //        dbSmartAspects.AddInParameter(commandMaster, "@ContactNumber", DbType.String, memBasicInfo.MobileNumber);
-                        //        dbSmartAspects.AddInParameter(commandMaster, "@Fax", DbType.String, memBasicInfo.HomeFax);
-                        //        //dbSmartAspects.AddInParameter(commandMaster, "@ContactDesignation", DbType.String, null);
-                        //        //dbSmartAspects.AddInParameter(commandMaster, "@TelephoneNumber", DbType.String, null);
-                        //        //dbSmartAspects.AddInParameter(commandMaster, "@ContactPerson", DbType.String, memBasicInfo.FullName);
-                        //        dbSmartAspects.AddInParameter(commandMaster, "@Remarks", DbType.String, null);
-                        //        //dbSmartAspects.AddInParameter(commandMaster, "@SignupStatus", DbType.String, null);
-                        //        //dbSmartAspects.AddInParameter(commandMaster, "@AffiliatedDate", DbType.DateTime, null);
-                        //        dbSmartAspects.AddInParameter(commandMaster, "@DiscountPercent", DbType.Decimal, null);
-                        //        dbSmartAspects.AddInParameter(commandMaster, "@CreditLimit", DbType.Decimal, null);
-                        //        dbSmartAspects.AddInParameter(commandMaster, "@ReferenceId", DbType.Int32, null);
-                        //        //dbSmartAspects.AddInParameter(commandMaster, "@LocationId", DbType.Int32, null);
-                        //        dbSmartAspects.AddInParameter(commandMaster, "@IndustryId", DbType.Int32, null);
-                        //        dbSmartAspects.AddInParameter(commandMaster, "@CreatedBy", DbType.Int32, memBasicInfo.CreatedBy);
-                        //        //dbSmartAspects.AddInParameter(commandMaster, "@IsMember", DbType.Boolean, true);
-                        //        dbSmartAspects.AddOutParameter(commandMaster, "@CompanyId", DbType.Int32, sizeof(Int32));
-
-                        //        status = dbSmartAspects.ExecuteNonQuery(commandMaster) > 0 ? true : false;
-
-                        //        tmpCompanyId = Convert.ToInt32(commandMaster.Parameters["@CompanyId"].Value);
-                        //if (status)
-                        //{
                         using (DbCommand commandMember = dbSmartAspects.GetStoredProcCommand("SaveMemMemberBasicInfo_SP"))
                         {
                             dbSmartAspects.AddInParameter(commandMember, "@CompanyId", DbType.Int32, tmpCompanyId);
@@ -101,10 +70,8 @@ namespace HotelManagement.Data.Membership
                             dbSmartAspects.AddInParameter(commandMember, "@NomineeMother", DbType.String, memBasicInfo.NomineeMother);
 
                             dbSmartAspects.AddOutParameter(commandMember, "@MemberId", DbType.Int32, sizeof(Int32));
-
                             membersave = dbSmartAspects.ExecuteNonQuery(commandMember, transaction);
 
-                            //status = dbSmartAspects.ExecuteNonQuery(commandMember) > 0 ? true : false;
                             tmpMemberId = Convert.ToInt32(commandMember.Parameters["@MemberId"].Value);
                         }
 
@@ -181,11 +148,7 @@ namespace HotelManagement.Data.Membership
                             transaction.Rollback();
                             status = false;
                         }
-
-
                     }
-                    //}
-                    //}
                 }
             }
             catch (Exception ex)
@@ -203,29 +166,6 @@ namespace HotelManagement.Data.Membership
             int tmpMemberId = 0;
             using (DbConnection conn = dbSmartAspects.CreateConnection())
             {
-                //using (DbCommand command = dbSmartAspects.GetStoredProcCommand("UpdateGuestCompanyInfo_SP"))
-                //{
-                //conn.Open();
-                //using (DbTransaction transaction = conn.BeginTransaction())
-                //{
-                //    dbSmartAspects.AddInParameter(command, "@CompanyId", DbType.Int32, memBasicInfo.CompanyId);
-                //    dbSmartAspects.AddInParameter(command, "@CompanyName", DbType.String, memBasicInfo.FullName);
-                //    dbSmartAspects.AddInParameter(command, "@CompanyAddress", DbType.String, null);
-                //    dbSmartAspects.AddInParameter(command, "@EmailAddress", DbType.String, null);
-                //    dbSmartAspects.AddInParameter(command, "@WebAddress", DbType.String, null);
-                //    dbSmartAspects.AddInParameter(command, "@ContactNumber", DbType.String, memBasicInfo.MobileNumber);
-                //    dbSmartAspects.AddInParameter(command, "@ContactDesignation", DbType.String, null);
-                //    dbSmartAspects.AddInParameter(command, "@TelephoneNumber", DbType.String, null);
-                //    dbSmartAspects.AddInParameter(command, "@ContactPerson", DbType.String, memBasicInfo.FullName);
-                //    dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, null);
-                //    dbSmartAspects.AddInParameter(command, "@SignupStatus", DbType.String, null);
-                //    dbSmartAspects.AddInParameter(command, "@AffiliatedDate", DbType.DateTime, null);
-                //    dbSmartAspects.AddInParameter(command, "@DiscountPercent", DbType.Decimal, null);
-                //    dbSmartAspects.AddInParameter(command, "@CreditLimit", DbType.Decimal, null);
-                //    dbSmartAspects.AddInParameter(command, "@ReferenceId", DbType.Int32, null);
-                //    dbSmartAspects.AddInParameter(command, "@IndustryId", DbType.Int32, null);
-                //    dbSmartAspects.AddInParameter(command, "@IsMember", DbType.Boolean, true);
-                //    dbSmartAspects.AddInParameter(command, "@LastModifiedBy", DbType.Int32, memBasicInfo.LastModifiedBy);
                 using (DbCommand commandMember = dbSmartAspects.GetStoredProcCommand("UpdateMemMemberBasicInfo_SP"))
                 {
                     conn.Open();
@@ -280,12 +220,6 @@ namespace HotelManagement.Data.Membership
 
                         update = dbSmartAspects.ExecuteNonQuery(commandMember, transaction);
                         tmpMemberId = memBasicInfo.MemberId;
-                        //}
-
-                        //status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
-                        //    if (status)
-                        //    {
-
 
                         if (update > 0)
                         {
@@ -471,13 +405,10 @@ namespace HotelManagement.Data.Membership
                                     }
                                 }
                             }
-
                         }
-
 
                         transaction.Commit();
                         status = true;
-                        //}
                     }
                 }
             }
@@ -532,11 +463,9 @@ namespace HotelManagement.Data.Membership
         }
 
         //Online Member
-
         public bool SaveOnlineMember(OnlineMemberBO onlineMemberObj, List<OnlineMemberFamilyBO> memberFamilyList, List<OnlineMemberEducationBO> educationList, out int tmpMemberId)
         {
             bool status = false;
-            //int tmpMemberId;
             int membersave = 0;
             int countEducation = 0;
             int countFamilyMember = 0;
@@ -550,9 +479,6 @@ namespace HotelManagement.Data.Membership
                         using (DbCommand commandMember = dbSmartAspects.GetStoredProcCommand("SaveOnlineMemberInfo_SP"))
                         {
                             dbSmartAspects.AddInParameter(commandMember, "@MemberType", DbType.Int32, onlineMemberObj.TypeId);
-                            //dbSmartAspects.AddInParameter(commandMember, "@FirstName", DbType.String, onlineMemberObj.FirstName);
-                            //dbSmartAspects.AddInParameter(commandMember, "@LastName", DbType.String, onlineMemberObj.LastName);
-                            //dbSmartAspects.AddInParameter(commandMember, "@NickName", DbType.String, onlineMemberObj.NickName);
                             dbSmartAspects.AddInParameter(commandMember, "@FullName", DbType.String, onlineMemberObj.FullName);
                             dbSmartAspects.AddInParameter(commandMember, "@NameBangla", DbType.String, onlineMemberObj.NameBangla);
                             dbSmartAspects.AddInParameter(commandMember, "@FatherName", DbType.String, onlineMemberObj.FatherName);
@@ -598,7 +524,6 @@ namespace HotelManagement.Data.Membership
                             dbSmartAspects.AddOutParameter(commandMember, "@MemberId", DbType.Int32, sizeof(Int32));
                             membersave = dbSmartAspects.ExecuteNonQuery(commandMember, transaction);
                             tmpMemberId = Convert.ToInt32(commandMember.Parameters["@MemberId"].Value);
-
                         }
 
                         if (membersave > 0)

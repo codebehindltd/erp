@@ -2262,26 +2262,6 @@
                 TotalRoomRateGlobalValue = parseFloat($("#ContentPlaceHolder1_txtTotalRoomRate").val());
             }
 
-            //if ($("#ContentPlaceHolder1_cbServiceCharge").is(":checked") == false)
-            //    $("#ContentPlaceHolder1_cbCalculateServiceCharge").prop("checked", false);
-            //else
-            //    $("#ContentPlaceHolder1_cbCalculateServiceCharge").prop("checked", true);
-
-            //if ($("#ContentPlaceHolder1_cbCityCharge").is(":checked") == false)
-            //    $("#ContentPlaceHolder1_cbCalculateCityCharge").prop("checked", false);
-            //else
-            //    $("#ContentPlaceHolder1_cbCalculateCityCharge").prop("checked", true);
-
-            //if ($("#ContentPlaceHolder1_cbVatAmount").is(":checked") == false)
-            //    $("#ContentPlaceHolder1_cbCalculateVatCharge").prop("checked", false);
-            //else
-            //    $("#ContentPlaceHolder1_cbCalculateVatCharge").prop("checked", true);
-
-            //if ($("#ContentPlaceHolder1_cbAdditionalCharge").is(":checked") == false)
-            //    $("#ContentPlaceHolder1_cbCalculateAdditionalCharge").prop("checked", false);
-            //else
-            //    $("#ContentPlaceHolder1_cbCalculateAdditionalCharge").prop("checked", true);
-
             $("#CalculateRackRateInclusivelyDialog").dialog({
                 width: 935,
                 height: 250,
@@ -2294,7 +2274,6 @@
                 show: 'slide',
                 open: function (event, ui) {
                     $('#CalculateRackRateInclusivelyDialog').css('overflow', 'hidden');
-                    //$(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
                 }
             });
         }
@@ -2443,9 +2422,11 @@
 
             $("#ContentPlaceHolder1_txtDiscountAmount").val(originalDiscount);
             $("#ContentPlaceHolder1_ddlDiscountType").val("Fixed");
-
+            
             var CalculatedTotalRoomRate = $("#ContentPlaceHolder1_txtCalculatedTotalRoomRate").val();
-            $("#ContentPlaceHolder1_txtTotalRoomRate").val(Math.round(CalculatedTotalRoomRate).toFixed(2));
+            //$("#ContentPlaceHolder1_txtTotalRoomRate").val(Math.round(CalculatedTotalRoomRate).toFixed(2));
+
+            $("#ContentPlaceHolder1_txtTotalRoomRate").val(CalculatedTotalRoomRate);
 
             $("#ContentPlaceHolder1_txtRoomRate").val($("#ContentPlaceHolder1_txtCalculateRackRate").val());
             $("#CalculateRackRateInclusivelyDialog").dialog("close");
@@ -4213,7 +4194,7 @@
                 $("#<%=txtAdditionalCharge.ClientID %>").val(toFixed(result.AdditionalCharge, 2));
 
                 if ($("#ContentPlaceHolder1_lblTotalRoomRateOrRoomTariff").text() == "Total Room Rate") {
-                    var totalRoomRate = toFixed(result.CalculatedAmount, 2);
+                    var totalRoomRate = toFixed(result.CalculatedAmount, 2);                    
                     $("#<%=txtTotalRoomRate.ClientID %>").val(totalRoomRate);
                 }
                 else {

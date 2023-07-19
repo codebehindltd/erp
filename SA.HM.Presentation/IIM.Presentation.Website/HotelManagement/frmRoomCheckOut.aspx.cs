@@ -1699,8 +1699,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             //decimal calculatedSalesTotal = (calculatedGuestRoomTotal + calculatedGuestServiceTotal + calculatedRestaurantTotal + calculatedExtraRoomTotal) - calculatedAdvancePaymentAmountTotal - calculatedDiscountTotal;
             decimal calculatedSalesTotal = (calculatedGuestRoomTotal + calculatedGuestServiceTotal + calculatedRestaurantTotal + calculatedExtraRoomTotal) - calculatedAdvancePaymentAmountTotal;
-            this.txtSalesTotal.Text = Math.Round(calculatedSalesTotal).ToString("#0.00");
-            this.HiddenFieldSalesTotal.Value = Math.Round(calculatedSalesTotal).ToString("#0.00");
+            //this.txtSalesTotal.Text = Math.Round(calculatedSalesTotal).ToString("#0.00");
+            //this.HiddenFieldSalesTotal.Value = Math.Round(calculatedSalesTotal).ToString("#0.00");
+            this.txtSalesTotal.Text = (calculatedSalesTotal).ToString("#0.00");
+            this.HiddenFieldSalesTotal.Value = (calculatedSalesTotal).ToString("#0.00");
 
             //USD Calculation ------------------------------------------------------------------
             decimal calculatedExtraRoomTotalUSD = 0;
@@ -1709,13 +1711,17 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             decimal calculatedGuestServiceTotalUSD = !string.IsNullOrWhiteSpace(this.txtIndividualServiceGrandTotalUSD.Text) ? Convert.ToDecimal(this.txtIndividualServiceGrandTotalUSD.Text) : 0;
             decimal calculatedRestaurantTotalUSD = !string.IsNullOrWhiteSpace(this.txtIndividualRestaurantGrandTotalUSD.Text) ? Convert.ToDecimal(this.txtIndividualRestaurantGrandTotalUSD.Text) : 0;
             decimal calculatedSalesTotalUSD = (calculatedGuestRoomTotalUSD + calculatedGuestServiceTotalUSD + calculatedRestaurantTotalUSD + calculatedExtraRoomTotalUSD) - calculatedAdvancePaymentAmountTotalUSD;
-            this.txtSalesTotalUsd.Text = Math.Round(calculatedSalesTotalUSD).ToString("#0.00");
-            //this.txtSalesTotalUsd.Text = calculatedSalesTotalUSD.ToString("#0.00");
+            //this.txtSalesTotalUsd.Text = Math.Round(calculatedSalesTotalUSD).ToString("#0.00");
+            this.txtSalesTotalUsd.Text = (calculatedSalesTotalUSD).ToString("#0.00");
 
             this.txtDiscountAmount.Text = "0.00";
-            this.txtGrandTotal.Text = Math.Round(calculatedSalesTotal).ToString("#0.00");
-            this.txtGrandTotalInfo.Text = Math.Round(calculatedSalesTotal).ToString("#0.00");
-            this.HiddenFieldGrandTotal.Value = Math.Round(calculatedSalesTotal).ToString("#0.00");
+            //this.txtGrandTotal.Text = Math.Round(calculatedSalesTotal).ToString("#0.00");
+            //this.txtGrandTotalInfo.Text = Math.Round(calculatedSalesTotal).ToString("#0.00");
+            //this.HiddenFieldGrandTotal.Value = Math.Round(calculatedSalesTotal).ToString("#0.00");
+
+            this.txtGrandTotal.Text = (calculatedSalesTotal).ToString("#0.00");
+            this.txtGrandTotalInfo.Text = (calculatedSalesTotal).ToString("#0.00");
+            this.HiddenFieldGrandTotal.Value = (calculatedSalesTotal).ToString("#0.00");
 
             //decimal conversionRate = !string.IsNullOrWhiteSpace(this.txtConversionRate.Text) ? Convert.ToDecimal(this.txtConversionRate.Text) : 1;
             if (!string.IsNullOrWhiteSpace(this.ddlRegistrationId.SelectedValue))
