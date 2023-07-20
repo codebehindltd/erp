@@ -3115,6 +3115,7 @@ namespace HotelManagement.Data.Restaurant
                         DiscountTransactionId = r.Field<Int32>("DiscountTransactionId"),
                         DiscountAmount = r.Field<decimal>("DiscountAmount"),
                         CalculatedDiscountAmount = r.Field<decimal>("CalculatedDiscountAmount"),
+                        IsOnlyRateEffectEnable = r.Field<bool>("IsOnlyRateEffectEnable"),
                         IsInvoiceServiceChargeEnable = r.Field<bool>("IsInvoiceServiceChargeEnable"),
                         ServiceCharge = r.Field<decimal>("ServiceCharge"),
                         IsInvoiceVatAmountEnable = r.Field<bool>("IsInvoiceVatAmountEnable"),
@@ -3670,11 +3671,12 @@ namespace HotelManagement.Data.Restaurant
                             dbSmartAspects.AddInParameter(command, "@RoundedAmount", DbType.Decimal, restaurentBillBO.RoundedAmount);
                             dbSmartAspects.AddInParameter(command, "@RoundedGrandTotal", DbType.Decimal, restaurentBillBO.RoundedGrandTotal);
 
+                            dbSmartAspects.AddInParameter(command, "@IsOnlyRateEffectEnable", DbType.Boolean, restaurentBillBO.IsOnlyRateEffectEnable);
                             dbSmartAspects.AddInParameter(command, "@IsInvoiceServiceChargeEnable", DbType.Boolean, restaurentBillBO.IsInvoiceServiceChargeEnable);
                             dbSmartAspects.AddInParameter(command, "@IsInvoiceVatAmountEnable", DbType.Boolean, restaurentBillBO.IsInvoiceVatAmountEnable);
-
                             dbSmartAspects.AddInParameter(command, "@IsInvoiceCitySDChargeEnable", DbType.Boolean, restaurentBillBO.IsInvoiceCitySDChargeEnable);
                             dbSmartAspects.AddInParameter(command, "@IsInvoiceAdditionalChargeEnable", DbType.Boolean, restaurentBillBO.IsInvoiceAdditionalChargeEnable);
+
                             dbSmartAspects.AddInParameter(command, "@CitySDCharge", DbType.Decimal, restaurentBillBO.CitySDCharge);
                             dbSmartAspects.AddInParameter(command, "@AdditionalChargeType", DbType.String, restaurentBillBO.AdditionalChargeType);
                             dbSmartAspects.AddInParameter(command, "@AdditionalCharge", DbType.Decimal, restaurentBillBO.AdditionalCharge);
@@ -5567,6 +5569,7 @@ namespace HotelManagement.Data.Restaurant
                             dbSmartAspects.AddInParameter(command, "@RoundedAmount", DbType.Decimal, restaurentBillBO.RoundedAmount);
                             dbSmartAspects.AddInParameter(command, "@RoundedGrandTotal", DbType.Decimal, restaurentBillBO.RoundedGrandTotal);
 
+                            dbSmartAspects.AddInParameter(command, "@IsOnlyRateEffectEnable", DbType.Boolean, restaurentBillBO.IsOnlyRateEffectEnable);
                             dbSmartAspects.AddInParameter(command, "@IsInvoiceServiceChargeEnable", DbType.Boolean, restaurentBillBO.IsInvoiceServiceChargeEnable);
                             dbSmartAspects.AddInParameter(command, "@IsInvoiceVatAmountEnable", DbType.Boolean, restaurentBillBO.IsInvoiceVatAmountEnable);
 

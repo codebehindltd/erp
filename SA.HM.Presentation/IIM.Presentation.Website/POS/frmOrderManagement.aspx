@@ -53,12 +53,10 @@
             CommonHelper.ApplyDecimalValidation();
 
             var status = <% = this.IsDiscountEnable%>;
-            if(status == true)
-            {
+            if (status == true) {
                 $('#discountApplicableDiv').show();
             }
-            else
-            {
+            else {
                 $('#discountApplicableDiv').hide();
             }
 
@@ -432,7 +430,7 @@
                         }
                     }
                 }
-                                
+
                 CommonHelper.SpinnerOpen();
 
                 $.confirm({
@@ -665,7 +663,7 @@
             $("#btnPromotionalDiscountOK").click(function () {
                 var totalDiscount = 0.00;
                 AddedPromotionalDiscountList = new Array();
-                DeletedPromotionalDiscountList = new Array();                
+                DeletedPromotionalDiscountList = new Array();
 
                 $('#TablePromotionalDiscount tbody tr').each(function () {
 
@@ -1432,7 +1430,7 @@
             PaymentMode.push({ CardType: '', PaymentType: 'GuestRoom', PaymentDescription: 'GuestRoom', PaymentMode: 'Other Room', PaymentById: $("#ContentPlaceHolder1_hfRoomId").val(), Control: "ContentPlaceHolder1_txtRoomPayment", AlertMassage: "Room" });
             PaymentMode.push({ CardType: '', PaymentType: 'Employee', PaymentDescription: employeeName, PaymentMode: 'Employee', PaymentById: $("#ContentPlaceHolder1_hfEmployeeId").val(), Control: "ContentPlaceHolder1_txtEmployeePayment", AlertMassage: "Employee" });
             PaymentMode.push({ CardType: '', PaymentType: 'Member', PaymentDescription: memberName, PaymentMode: 'Member', PaymentById: $("#ContentPlaceHolder1_hfMemberId").val(), Control: "ContentPlaceHolder1_txtMemberPayment", AlertMassage: "Member" });
-            
+
             var paymodeCount = PaymentMode.length, row = 0;
             var isInvalid = false, isCashPayment = false;
             var dueAmount = $("#ContentPlaceHolder1_txtTPChangeAmount").val();
@@ -1491,6 +1489,38 @@
 
         function OnLoadPaymentInformationInSessionFailed(xhr, err) {
             toastr.error(xhr.responseText);
+        }
+
+        function ToggleOnlyRateEffectAction(ctrl) {
+            if ($('#ContentPlaceHolder1_cbOnlyRateEffect').is(':checked')) {
+                $("#ContentPlaceHolder1_cbTPServiceCharge").prop("checked", false);
+                $("#ContentPlaceHolder1_cbTPVatAmount").prop("checked", false);
+                $("#ContentPlaceHolder1_cbTPSDCharge").prop("checked", false);
+                $("#ContentPlaceHolder1_cbTPAdditionalCharge").prop("checked", false);
+                //$("#ServiceChargeNSDChargeDiv").hide();
+                //$("#VatAmountNAdditionalChargeDiv").hide();
+
+                $("#ContentPlaceHolder1_cbTPServiceCharge").attr("disabled", true);
+                $("#ContentPlaceHolder1_cbTPVatAmount").attr("disabled", true);
+                $("#ContentPlaceHolder1_cbTPSDCharge").attr("disabled", true);
+                $("#ContentPlaceHolder1_cbTPAdditionalCharge").attr("disabled", true);
+            }
+            else {
+                //$("#ServiceChargeNSDChargeDiv").show();
+                //$("#VatAmountNAdditionalChargeDiv").show();
+                $("#ContentPlaceHolder1_cbTPServiceCharge").prop("checked", true);
+                $("#ContentPlaceHolder1_cbTPVatAmount").prop("checked", true);
+                $("#ContentPlaceHolder1_cbTPSDCharge").prop("checked", true);
+                $("#ContentPlaceHolder1_cbTPAdditionalCharge").prop("checked", true);
+
+                $("#ContentPlaceHolder1_cbTPServiceCharge").attr("disabled", false);
+                $("#ContentPlaceHolder1_cbTPVatAmount").attr("disabled", false);
+                $("#ContentPlaceHolder1_cbTPSDCharge").attr("disabled", false);
+                $("#ContentPlaceHolder1_cbTPAdditionalCharge").attr("disabled", false);
+            }
+
+            CalculateDiscountAmount();
+            CalculatePayment();
         }
 
         function ToggleTotalSalesAmountVatServiceChargeCalculationForServiceCharge(ctrl) {
@@ -4166,6 +4196,11 @@
 
             var costcenterId = $("#ContentPlaceHolder1_hfCostCenterId").val();
             var discountType = "Fixed", isComplementary = false, discountTransactionId = 0, isNonChargeable = false;
+            var isOnlyRateEffectEnable = false;
+
+            if ($("#ContentPlaceHolder1_cbOnlyRateEffect").is(":checked")) {
+                isOnlyRateEffectEnable = true;
+            }
 
             if ($("#ContentPlaceHolder1_rbTPFixedDiscount").is(":checked")) {
                 discountType = "Fixed";
@@ -4323,17 +4358,6 @@
             grandTotal = $("#ContentPlaceHolder1_txtGrandTotal").val();
             salesAmount = $("#ContentPlaceHolder1_txtSalesAmount").val();
 
-            //if (isRestaurantBillInclusive == "0") {
-            //    salesAmount = $("#ContentPlaceHolder1_txtSalesAmount").val();
-            //    grandTotal = $("#ContentPlaceHolder1_txtGrandTotal").val();
-            //}
-            //else {
-            //    salesAmount = $("#ContentPlaceHolder1_txtGrandTotal").val() == "" ? "0" : $("#ContentPlaceHolder1_txtGrandTotal").val();
-            //    grandTotal = $("#ContentPlaceHolder1_txtSalesAmount").val() == "" ? "0" : $("#ContentPlaceHolder1_txtSalesAmount").val();
-
-            //    grandTotal = parseFloat(salesAmount) - parseFloat(calculatedDiscountAmount);
-            //}
-
             var totalQuantity = 0, totalPrice = 0;
 
             $("#TableWiseItemInformation tbody tr").each(function () {
@@ -4370,6 +4394,7 @@
                 BearerId: bearerId,
                 BillPaidBySourceId: sourceId,
 
+                IsOnlyRateEffectEnable: isOnlyRateEffectEnable,
                 IsInvoiceServiceChargeEnable: isInvoiceServiceChargeEnable,
                 IsInvoiceVatAmountEnable: isInvoiceVatAmountEnable,
                 IsInvoiceCitySDChargeEnable: isInvoiceCitySDChargeEnable,
@@ -4391,7 +4416,7 @@
             var txtTPDiscountedAmountHiddenFieldVal = $("#ContentPlaceHolder1_txtTPDiscountedAmount").val();
 
             var txtCashVal = $("#ContentPlaceHolder1_txtCash").val();
-            
+
             var txtAmexCardVal = $("#ContentPlaceHolder1_txtAmexCard").val();
             var amexCardBankName = $("#lblAmexCardBankName").text();
             var amexCardBankId = $("#ContentPlaceHolder1_hfAmexCardId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfAmexCardId").val();
@@ -4407,11 +4432,11 @@
             var txtDiscoverCardVal = $("#ContentPlaceHolder1_txtDiscoverCard").val();
             var discoverCardBankName = $("#lblDiscoverCardBankName").text();
             var discoverCardBankId = $("#ContentPlaceHolder1_hfDiscoverCardId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfDiscoverCardId").val();
-                        
+
             var mBankAmount = $("#ContentPlaceHolder1_txtMBankingPayment").val();
             var mBankName = $("#lblMBankName").text();
             var mBankId = $("#ContentPlaceHolder1_hfMBankId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfMBankId").val();
-            
+
             var txtTPDiscountAmountVal = $("#ContentPlaceHolder1_txtTPDiscountAmount").val();
             var guestRoomPayment = $("#ContentPlaceHolder1_txtRoomPayment").val();
 
@@ -4430,31 +4455,31 @@
             if (amexCardBankId != "0") {
                 RestaurantBill.TransactionType = 'Card';
                 RestaurantBill.TransactionId = amexCardBankId;
-                RestaurantBill.CustomerName = 'Amex Card ('+ amexCardBankName + ')';
+                RestaurantBill.CustomerName = 'Amex Card (' + amexCardBankName + ')';
                 RestaurantBill.CustomerName = '';
             }
             else if (masterCardBankId != "0") {
                 RestaurantBill.TransactionType = 'Card';
                 RestaurantBill.TransactionId = masterCardBankId;
-                RestaurantBill.CustomerName = 'Master Card ('+ masterCardBankName + ')';
+                RestaurantBill.CustomerName = 'Master Card (' + masterCardBankName + ')';
                 RestaurantBill.CustomerName = '';
             }
             else if (visaCardBankId != "0") {
                 RestaurantBill.TransactionType = 'Card';
                 RestaurantBill.TransactionId = visaCardBankId;
-                RestaurantBill.CustomerName = 'Visa Card ('+ visaCardBankName + ')';
+                RestaurantBill.CustomerName = 'Visa Card (' + visaCardBankName + ')';
                 RestaurantBill.CustomerName = '';
             }
             else if (discoverCardBankId != "0") {
                 RestaurantBill.TransactionType = 'Card';
                 RestaurantBill.TransactionId = discoverCardBankId;
-                RestaurantBill.CustomerName = 'Discover Card ('+ discoverCardBankName + ')';
+                RestaurantBill.CustomerName = 'Discover Card (' + discoverCardBankName + ')';
                 RestaurantBill.CustomerName = '';
             }
             else if (mBankId != "0") {
                 RestaurantBill.TransactionType = 'M-Banking';
                 RestaurantBill.TransactionId = mBankId;
-                RestaurantBill.CustomerName = 'M-Banking ('+ mBankName + ')';
+                RestaurantBill.CustomerName = 'M-Banking (' + mBankName + ')';
                 //RestaurantBill.CustomerName = '';
             }
             else if (employeeId != "0") {
@@ -4471,7 +4496,7 @@
                 RestaurantBill.TransactionType = 'Company';
                 RestaurantBill.TransactionId = companyId;
                 RestaurantBill.CustomerName = companyName;
-            }            
+            }
             else {
                 RestaurantBill.TransactionType = null;
                 RestaurantBill.TransactionId = null;
@@ -4614,7 +4639,7 @@
                     else if (mBankId != "0") {
                         if ($.trim(paymentAmount) == "" || $.trim(paymentAmount) == "0") {
                             paymentAmount = $.trim(paymentAmount) == "" ? "0" : paymentAmount;
-                            
+
                             GuestBillPayment.push({
                                 NodeId: 0,
                                 PaymentType: PaymentMode[row].PaymentType,
@@ -5602,30 +5627,30 @@
             });
 
         }
-        
+
         function AmexCardPayment() {
-            if ($("#ContentPlaceHolder1_hfAmexCardId").val() != "") {                
+            if ($("#ContentPlaceHolder1_hfAmexCardId").val() != "") {
                 $("#lblAmexCardBankName").text($("#txtSearchAmexCard").val());
             }
             $("#AmexCardInfoDialog").dialog('close');
             $("#ContentPlaceHolder1_txtAmexCard").focus();
         }
         function MasterCardPayment() {
-            if ($("#ContentPlaceHolder1_hfMasterCardId").val() != "") {                
+            if ($("#ContentPlaceHolder1_hfMasterCardId").val() != "") {
                 $("#lblMasterCardBankName").text($("#txtSearchMasterCard").val());
             }
             $("#MasterCardInfoDialog").dialog('close');
             $("#ContentPlaceHolder1_txtMasterCard").focus();
         }
         function VisaCardPayment() {
-            if ($("#ContentPlaceHolder1_hfVisaCardId").val() != "") {                
+            if ($("#ContentPlaceHolder1_hfVisaCardId").val() != "") {
                 $("#lblVisaCardBankName").text($("#txtSearchVisaCard").val());
             }
             $("#VisaCardInfoDialog").dialog('close');
             $("#ContentPlaceHolder1_txtVisaCard").focus();
         }
         function DiscoverCardPayment() {
-            if ($("#ContentPlaceHolder1_hfDiscoverCardId").val() != "") {                
+            if ($("#ContentPlaceHolder1_hfDiscoverCardId").val() != "") {
                 $("#lblDiscoverCardBankName").text($("#txtSearchDiscoverCard").val());
             }
             $("#DiscoverCardInfoDialog").dialog('close');
@@ -5850,7 +5875,7 @@
             $("#MemberInfoDialog").dialog('close')
             $("#ContentPlaceHolder1_txtMemberPayment").focus();
             $("#ContentPlaceHolder1_txtTPDiscountAmount").val($("#txtMemberDiscountPercent").val())
-            CalculateDiscountAmount();            
+            CalculateDiscountAmount();
         }
 
         function UserAccessVarification(userid, password) {
@@ -5904,7 +5929,7 @@
                 toastr.info("Please Give Proper Item Quantity");
                 return false;
             }
-            
+
 
             var itemId = $("#ContentPlaceHolder1_hfSearchItemId").val();
             var itemName = $("#ContentPlaceHolder1_hfSearchItemName").val();
@@ -6300,7 +6325,7 @@
     <asp:HiddenField ID="hfIsServiceChargeEnable" runat="server" />
     <asp:HiddenField ID="hfIsSDChargeEnable" runat="server" />
     <asp:HiddenField ID="hfIsAdditionalChargeEnable" runat="server" />
-    <asp:HiddenField ID="hfAdditionalChargeType" runat="server" />    
+    <asp:HiddenField ID="hfAdditionalChargeType" runat="server" />
     <asp:HiddenField ID="hfIsRestaurantBillInclusive" runat="server" />
     <asp:HiddenField ID="hfIsRatePlusPlus" runat="server" />
     <asp:HiddenField ID="hfIsDiscountApplicableOnRackRate" runat="server" />
@@ -6730,7 +6755,7 @@
                                         <asp:TextBox ID="txtTPDiscountAmount" CssClass="form-control numkb quantity" TabIndex="1"
                                             runat="server" onblur="CalculateDiscountAmount()"></asp:TextBox>
                                     </div>
-                                    <div class="col-sm-5" style="padding-left: 0px; padding-right: 5px;">
+                                    <div class="col-sm-4" style="padding-left: 0px; padding-right: 5px;">
                                         <asp:TextBox ID="txtTPDiscount" TabIndex="1" runat="server" Text="0" ReadOnly="True"
                                             CssClass="form-control"></asp:TextBox>
                                     </div>
@@ -6751,13 +6776,28 @@
                             <label class="control-label col-sm-3">
                                 Discounted Amount</label>
                             <div class="col-sm-9">
-                                <asp:TextBox ID="txtTPDiscountedAmount" TabIndex="1" runat="server" ReadOnly="True"
-                                    CssClass="form-control"></asp:TextBox>
+                                <div class="row">
+                                    <div class="col-sm-6" style="padding-right: 5px;" id="discountContainer">
+                                        <asp:TextBox ID="txtTPDiscountedAmount" TabIndex="1" runat="server" ReadOnly="True"
+                                            CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                    <div class="col-sm-6" style="padding-left: 0px; padding-right: 0px;">
+                                        <div class="col-sm-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <asp:CheckBox ID="cbOnlyRateEffect" runat="server" Text="" onclick="javascript: return ToggleOnlyRateEffectAction(this);"
+                                                        TabIndex="8" Checked="false" />
+                                                </span>
+                                                <asp:TextBox ID="txtOnlyRateEffect" runat="server" TabIndex="22" CssClass="form-control" Enabled="false">Only Rate Effect</asp:TextBox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="ServiceChargeNSDChargeDiv">
                         <div class="col-sm-3 text-right">
                             <label class="control-label">Service Charge</label>
                         </div>
@@ -6784,7 +6824,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="VatAmountNAdditionalChargeDiv">
                         <div class="col-sm-3 text-right">
                             <label class="control-label">Vat Amount</label>
                         </div>
@@ -6966,7 +7006,7 @@
                                 <div class="col-sm-8">
                                     <asp:TextBox ID="txtRoomPayment" TabIndex="5" runat="server" CssClass="quantitydecimal numkb form-control"></asp:TextBox>
                                 </div>
-                                <div class="col-sm-4 no-gutter-column">
+                                <div class="col-sm-4">
                                     <img border="0" alt="Room Search" onclick="javascript:return SearchRoom()"
                                         style="cursor: pointer; display: inline;" title="Room Search" src="../Images/roomicon.png" />
                                     <img border="0" id="imgRoomWiseGuest" alt="Guest Search" onclick="javascript:return LoadRoomWiseGuestInfo()"

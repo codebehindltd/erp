@@ -120,6 +120,13 @@
                 $("#ContentPlaceHolder1_txtTPDiscountAmount").attr("disabled", true);
             }
 
+            if ($("#ContentPlaceHolder1_hfIsOnlyRateEffectEnable").val() == "1") {
+                $("#ContentPlaceHolder1_cbOnlyRateEffect").prop("checked", true);
+            }
+            else {
+                $("#ContentPlaceHolder1_cbOnlyRateEffect").prop("checked", false);
+            }
+
             if ($("#ContentPlaceHolder1_hfBearerCanSettleBill").val() == "1") {
 
                 $("#BillSettlementBtnContainer").show();
@@ -3628,6 +3635,11 @@
 
             var costcenterId = $("#ContentPlaceHolder1_hfCostCenterId").val();
             var discountType = "Fixed", isComplementary = false, discountTransactionId = 0, isComplementary = false, isNonChargeable = false;
+            var isOnlyRateEffectEnable = false;
+
+            if ($("#ContentPlaceHolder1_cbOnlyRateEffect").is(":checked")) {
+                isOnlyRateEffectEnable = true;
+            }
 
             if ($("#ContentPlaceHolder1_rbTPFixedDiscount").is(":checked")) {
                 discountType = "Fixed";
@@ -3787,17 +3799,6 @@
 
             var destinationPath = CommonHelper.GetParameterByName("dp");
 
-            //if (isRestaurantBillInclusive == "0") {
-            //    salesAmount = $("#ContentPlaceHolder1_txtSalesAmount").val();
-            //    grandTotal = $("#ContentPlaceHolder1_txtGrandTotal").val();
-            //}
-            //else {
-            //    salesAmount = $("#ContentPlaceHolder1_txtGrandTotal").val() == "" ? "0" : $("#ContentPlaceHolder1_txtGrandTotal").val();
-            //    grandTotal = $("#ContentPlaceHolder1_txtSalesAmount").val() == "" ? "0" : $("#ContentPlaceHolder1_txtSalesAmount").val();
-
-            //    grandTotal = parseFloat(salesAmount) - parseFloat(calculatedDiscountAmount);
-            //}
-
             var totalQuantity = 0, totalPrice = 0;
 
             $("#TableWiseItemInformation tbody tr").each(function () {
@@ -3834,6 +3835,7 @@
                 BearerId: bearerId,
                 BillPaidBySourceId: sourceId,
 
+                IsOnlyRateEffectEnable: isOnlyRateEffectEnable,
                 IsInvoiceServiceChargeEnable: isInvoiceServiceChargeEnable,
                 IsInvoiceVatAmountEnable: isInvoiceVatAmountEnable,
                 IsInvoiceCitySDChargeEnable: isInvoiceCitySDChargeEnable,
@@ -3855,11 +3857,6 @@
             var txtTPDiscountedAmountHiddenFieldVal = $("#ContentPlaceHolder1_txtTPDiscountedAmount").val();
 
             var txtCashVal = $("#ContentPlaceHolder1_txtCash").val();
-            //var txtAmexCardVal = $("#ContentPlaceHolder1_txtAmexCard").val();
-            //var txtMasterCardVal = $("#ContentPlaceHolder1_txtMasterCard").val();
-            //var txtVisaCardVal = $("#ContentPlaceHolder1_txtVisaCard").val();
-            //var txtDiscoverCardVal = $("#ContentPlaceHolder1_txtDiscoverCard").val();
-
             var txtAmexCardVal = $("#ContentPlaceHolder1_txtAmexCard").val();
             var amexCardBankName = $("#lblAmexCardBankName").text();
             var amexCardBankId = $("#ContentPlaceHolder1_hfAmexCardId").val() == "" ? "0" : $("#ContentPlaceHolder1_hfAmexCardId").val();
@@ -5697,6 +5694,37 @@
             $("#ContentPlaceHolder1_btnSave").attr("disabled", true);
         }
 
+        function ToggleOnlyRateEffectAction(ctrl) {
+            if ($('#ContentPlaceHolder1_cbOnlyRateEffect').is(':checked')) {
+                $("#ContentPlaceHolder1_cbTPServiceCharge").prop("checked", false);
+                $("#ContentPlaceHolder1_cbTPVatAmount").prop("checked", false);
+                $("#ContentPlaceHolder1_cbTPSDCharge").prop("checked", false);
+                $("#ContentPlaceHolder1_cbTPAdditionalCharge").prop("checked", false);
+                //$("#ServiceChargeNSDChargeDiv").hide();
+                //$("#VatAmountNAdditionalChargeDiv").hide();
+
+                $("#ContentPlaceHolder1_cbTPServiceCharge").attr("disabled", true);
+                $("#ContentPlaceHolder1_cbTPVatAmount").attr("disabled", true);
+                $("#ContentPlaceHolder1_cbTPSDCharge").attr("disabled", true);
+                $("#ContentPlaceHolder1_cbTPAdditionalCharge").attr("disabled", true);
+            }
+            else {
+                //$("#ServiceChargeNSDChargeDiv").show();
+                //$("#VatAmountNAdditionalChargeDiv").show();
+                $("#ContentPlaceHolder1_cbTPServiceCharge").prop("checked", true);
+                $("#ContentPlaceHolder1_cbTPVatAmount").prop("checked", true);
+                $("#ContentPlaceHolder1_cbTPSDCharge").prop("checked", true);
+                $("#ContentPlaceHolder1_cbTPAdditionalCharge").prop("checked", true);
+
+                $("#ContentPlaceHolder1_cbTPServiceCharge").attr("disabled", false);
+                $("#ContentPlaceHolder1_cbTPVatAmount").attr("disabled", false);
+                $("#ContentPlaceHolder1_cbTPSDCharge").attr("disabled", false);
+                $("#ContentPlaceHolder1_cbTPAdditionalCharge").attr("disabled", false);
+            }
+
+            CalculateDiscountAmount();
+            CalculatePayment();
+        }
     </script>
     <asp:HiddenField ID="hfsourceType" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfCostCenterId" runat="server"></asp:HiddenField>
@@ -5707,7 +5735,7 @@
     <asp:HiddenField ID="hfSourceId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfBearerId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfBearerCanSettleBill" runat="server" Value="0"></asp:HiddenField>
-
+    <asp:HiddenField ID="hfIsOnlyRateEffectEnable" runat="server" />
     <asp:HiddenField ID="hfIsVatEnable" runat="server" />
     <asp:HiddenField ID="hfIsServiceChargeEnable" runat="server" />
     <asp:HiddenField ID="hfIsSDChargeEnable" runat="server" />
@@ -6102,12 +6130,27 @@
                             <label class="control-label col-sm-3">
                                 Discounted Amount</label>
                             <div class="col-sm-9">
-                                <asp:TextBox ID="txtTPDiscountedAmount" TabIndex="1" runat="server" ReadOnly="True"
-                                    CssClass="form-control"></asp:TextBox>
+                                <div class="row">
+                                    <div class="col-sm-6" style="padding-right: 5px;" id="discountContainer">
+                                        <asp:TextBox ID="txtTPDiscountedAmount" TabIndex="1" runat="server" ReadOnly="True"
+                                            CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                    <div class="col-sm-6" style="padding-left: 0px; padding-right: 0px;">
+                                        <div class="col-sm-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <asp:CheckBox ID="cbOnlyRateEffect" runat="server" Text="" onclick="javascript: return ToggleOnlyRateEffectAction(this);"
+                                                        TabIndex="8" Checked="false" />
+                                                </span>
+                                                <asp:TextBox ID="txtOnlyRateEffect" runat="server" TabIndex="22" CssClass="form-control" Enabled="false">Only Rate Effect</asp:TextBox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="ServiceChargeNSDChargeDiv">
                         <div class="col-sm-3 text-right">
                             <label class="control-label">Service Charge</label>
                         </div>
@@ -6134,7 +6177,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="VatAmountNAdditionalChargeDiv">
                         <div class="col-sm-3 text-right">
                             <label class="control-label">Vat Amount</label>
                         </div>
@@ -6316,7 +6359,7 @@
                                 <div class="col-sm-8">
                                     <asp:TextBox ID="txtRoomPayment" TabIndex="5" runat="server" CssClass="quantitydecimal numkb form-control"></asp:TextBox>
                                 </div>
-                                <div class="col-sm-4 no-gutter-column">
+                                <div class="col-sm-4">
                                     <img border="0" alt="Room Search" onclick="javascript:return SearchRoom()"
                                         style="cursor: pointer; display: inline;" title="Room Search" src="../Images/roomicon.png" />
                                     <img border="0" id="imgRoomWiseGuest" alt="Guest Search" onclick="javascript:return LoadRoomWiseGuestInfo()"

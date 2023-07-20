@@ -1251,6 +1251,9 @@
         var GrandTotal = parseFloat(txtGrandTotal);
         var PaidTotal = parseFloat(result);
 
+        var GrandTotal = parseFloat(Math.round(txtGrandTotal));
+        var PaidTotal = parseFloat(Math.round(result));
+
         if (_grandTotal == 0 && !isNaN(_registrationId)) {
             if (PaidTotal != _grandTotal) {
                 $('#ContentPlaceHolder1_btnSave').attr('disabled', true);
@@ -1292,7 +1295,7 @@
         }
 
         function ClearDetailsPart() {
-            $("#<%=txtReceiveLeadgerAmount.ClientID %>").val('');
+        $("#<%=txtReceiveLeadgerAmount.ClientID %>").val('');
         $("#<%=txtCardNumber.ClientID %>").val('');
         $("#<%=ddlCardType.ClientID %>").val('0');
         $("#<%=txtExpireDate.ClientID %>").val('');

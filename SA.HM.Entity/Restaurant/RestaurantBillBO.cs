@@ -48,6 +48,7 @@ namespace HotelManagement.Entity.Restaurant
         public string BusinessPromotionIdNPercentAmount { get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal CalculatedDiscountAmount { get; set; }
+        public bool IsOnlyRateEffectEnable { get; set; }
         public bool IsInvoiceServiceChargeEnable { get; set; }
         public bool IsInvoiceVatAmountEnable { get; set; }
         public decimal ServiceCharge { get; set; }

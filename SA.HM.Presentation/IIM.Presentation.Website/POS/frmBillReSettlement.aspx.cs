@@ -436,7 +436,7 @@ namespace HotelManagement.Presentation.Website.POS
                 {
                     rbTPPercentageDiscount.Checked = true;
                 }
-
+                hfIsOnlyRateEffectEnable.Value = kotBill.IsOnlyRateEffectEnable ? "1" : "0";
                 hfIsVatEnable.Value = kotBill.IsInvoiceVatAmountEnable ? "1" : "0";
                 hfIsServiceChargeEnable.Value = kotBill.IsInvoiceServiceChargeEnable ? "1" : "0";
                 hfIsSDChargeEnable.Value = kotBill.IsInvoiceCitySDChargeEnable ? "1" : "0";
