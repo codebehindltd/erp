@@ -13,6 +13,7 @@ namespace HotelManagement.Entity.HotelManagement
         public string TransactionType { get; set; }
         public string TransactionNumber { get; set; }
         public string GuestName { get; set; }
+        public string PickUpDropInfo { get; set; }
         public string FlightName { get; set; }
         public string FlightNumber { get; set; }
         public string TimeString { get; set; }

@@ -79,25 +79,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
                 companyId = Convert.ToInt32(ddlCompany.SelectedValue);
             }
 
-            //CompanyDA companyDA = new CompanyDA();
-            //List<CompanyBO> files = companyDA.GetCompanyInfo();
-            //if (files != null)
-            //{
-            //    if (files.Count > 0)
-            //    {
-            //        this.txtCompanyName.Text = files[0].CompanyName;
-            //        this.txtCompanyAddress.Text = files[0].CompanyAddress;
-            //        if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
-            //        {
-            //            this.txtCompanyWeb.Text = files[0].WebAddress;
-            //        }
-            //        else
-            //        {
-            //            this.txtCompanyWeb.Text = files[0].ContactNumber;
-            //        }
-            //    }
-            //}
-
             rvTransaction.LocalReport.DataSources.Clear();
             rvTransaction.ProcessingMode = ProcessingMode.Local;
 

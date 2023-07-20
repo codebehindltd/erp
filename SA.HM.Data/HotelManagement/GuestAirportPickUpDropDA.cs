@@ -40,6 +40,7 @@ namespace HotelManagement.Data.HotelManagement
                                     TransactionType = r.Field<string>("TransactionType"),
                                     TransactionNumber = r.Field<string>("TransactionNumber"),
                                     GuestName = r.Field<string>("GuestName"),
+                                    PickUpDropInfo = r.Field<string>("PickUpDropInfo"),
                                     FlightName = r.Field<string>("FlightName"),
                                     FlightNumber = r.Field<string>("FlightNumber"),
                                     TimeString = r.Field<string>("TimeString"),
