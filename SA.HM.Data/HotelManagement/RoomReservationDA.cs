@@ -771,6 +771,7 @@ namespace HotelManagement.Data.HotelManagement
                             dbSmartAspects.AddInParameter(commandMaster, "@AirportDrop", DbType.String, RoomReservation.AirportDrop);
                             //--Aireport Pickup Drop Information------------------------------End--------
 
+                            dbSmartAspects.AddInParameter(commandMaster, "@IsRoomRateShowInReservationLetter", DbType.Boolean, RoomReservation.IsRoomRateShowInReservationLetter);
                             dbSmartAspects.AddInParameter(commandMaster, "@IsRoomRateShowInPreRegistrationCard", DbType.Boolean, RoomReservation.IsRoomRateShowInPreRegistrationCard);
 
                             dbSmartAspects.AddInParameter(commandMaster, "@CreatedBy", DbType.Int32, RoomReservation.CreatedBy);
@@ -1369,6 +1370,7 @@ namespace HotelManagement.Data.HotelManagement
                             dbSmartAspects.AddInParameter(commandMaster, "@ClassificationId", DbType.Int32, roomReservation.ClassificationId);
                             dbSmartAspects.AddInParameter(commandMaster, "@BookersName", DbType.String, roomReservation.BookersName);
 
+                            dbSmartAspects.AddInParameter(commandMaster, "@IsRoomRateShowInReservationLetter", DbType.Boolean, roomReservation.IsRoomRateShowInReservationLetter);
                             dbSmartAspects.AddInParameter(commandMaster, "@IsRoomRateShowInPreRegistrationCard", DbType.Boolean, roomReservation.IsRoomRateShowInPreRegistrationCard);
 
                             //--Aireport Pickup Drop Information-------------------------------------------
@@ -2407,6 +2409,8 @@ namespace HotelManagement.Data.HotelManagement
                                 roomReservation.AirportDrop = reader["AirportDrop"].ToString();
                                 roomReservation.DiscountType = reader["DiscountType"].ToString();
                                 roomReservation.DiscountAmount = Convert.ToDecimal(reader["DiscountAmount"].ToString());
+
+                                roomReservation.IsRoomRateShowInReservationLetter = Convert.ToBoolean(reader["IsRoomRateShowInReservationLetter"]);
                                 roomReservation.IsRoomRateShowInPreRegistrationCard = Convert.ToBoolean(reader["IsRoomRateShowInPreRegistrationCard"]);
 
                                 roomReservation.MealPlanId = Convert.ToInt32(reader["MealPlanId"]);

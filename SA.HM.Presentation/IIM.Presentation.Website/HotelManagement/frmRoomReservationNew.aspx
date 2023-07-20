@@ -3726,7 +3726,7 @@
                 businessPromotionId = "", referenceId = "", paymentMode = "", payFor = "", currencyType = "", conversionRate = "", reason = "", remarks = "", guestremarks = "", posRemarks = "",
                 numberOfPersonAdult = "", numberOfPersonChild = "", isFamilyOrCouple = "", airportPickUp = "", airportDrop = "", isAirportPickupDropExist = false,
                 reservationTempId = "0", reservationDuration = "", gId = 0, roomType = "", roomNumbers = "", displayRoomNumberNType = "", marketSegmentId = "", guestSourceId = "",
-                isRoomRateShowInPreRegistrationCard = false;
+                isRoomRateShowInReservationLetter = false, isRoomRateShowInPreRegistrationCard = false;
 
             var arrivalAirlineId = 0, departureAirlineId = 0, arrivalFlightName = "", arrivalFlightNumber = "", arrivalTime = "", departureFlightName = "", departureFlightNumber = "", departureTime = "", classificationId = 0;
             var IsArrivalChargable = false, IsDepartureChargable = false;
@@ -3773,6 +3773,7 @@
             numberOfPersonAdult = $("#ContentPlaceHolder1_txtNumberOfPersonAdult").val() == "" ? "0" : $("#ContentPlaceHolder1_txtNumberOfPersonAdult").val();
             isFamilyOrCouple = $("#ContentPlaceHolder1_cbFamilyOrCouple").is(":checked");
 
+            isRoomRateShowInReservationLetter = $("#ContentPlaceHolder1_chkIsRoomRateShowInReservationLetter").is(":checked");
             isRoomRateShowInPreRegistrationCard = $("#ContentPlaceHolder1_chkIsRoomRateShowInPreRegistrationCard").is(":checked");
 
             numberOfPersonChild = $("#ContentPlaceHolder1_txtNumberOfPersonChild").val() == "" ? "0" : $("#ContentPlaceHolder1_txtNumberOfPersonChild").val();
@@ -4281,6 +4282,7 @@
                 NumberOfPersonAdult: numberOfPersonAdult,
                 NumberOfPersonChild: numberOfPersonChild,
                 IsFamilyOrCouple: isFamilyOrCouple,
+                IsRoomRateShowInReservationLetter: isRoomRateShowInReservationLetter,
                 IsRoomRateShowInPreRegistrationCard: isRoomRateShowInPreRegistrationCard,
                 IsAirportPickupDropExist: (isAirportPickupDropExist == true ? 1 : 0),
                 AirportPickUp: airportPickUp,
@@ -6445,8 +6447,14 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-6 aspBoxText" style="width: 500px;">
+                                <asp:CheckBox ID="chkIsRoomRateShowInReservationLetter" runat="server" Checked="true" CssClass="aspBoxAlign" />&nbsp;
+                                        Is Room Rate Show in Reservation Letter                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 aspBoxText" style="width: 500px;">
                                 <asp:CheckBox ID="chkIsRoomRateShowInPreRegistrationCard" runat="server" Checked="true" CssClass="aspBoxAlign" />&nbsp;
-                                        Is Room Rate Show in Room Reservation Letter and Pre Registration Card                                
+                                        Is Room Rate Show in Pre Registration Card                                
                             </div>
                         </div>
                     </div>

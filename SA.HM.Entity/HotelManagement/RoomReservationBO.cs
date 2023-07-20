@@ -107,6 +107,7 @@ namespace HotelManagement.Entity.HotelManagement
         public int TotalPaxQuantity { get; set; }
         public int PaxQuantity { get; set; }
         public int RoomQuantity { get; set; }
+        public bool IsRoomRateShowInReservationLetter { get; set; }
         public bool IsRoomRateShowInPreRegistrationCard { get; set; }
         public List<RoomAssignDuplicationCheckVwBO> DuplicateCheck { get; set; }
         public int MealPlanId { get; set; }

@@ -1614,6 +1614,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             //----------------------------
             ddlTitle.SelectedIndex = 0;
             cbFamilyOrCouple.Checked = false;
+            chkIsRoomRateShowInReservationLetter.Checked = true;
             chkIsRoomRateShowInPreRegistrationCard.Checked = true;
             txtNumberOfPersonAdult.Text = "1";
             txtNumberOfPersonChild.Text = string.Empty;
@@ -2060,6 +2061,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             ddlPayFor.SelectedValue = roomReservationBO.PayFor.ToString();
             ddlPaymentMode.SelectedValue = roomReservationBO.PaymentMode;
+            chkIsRoomRateShowInReservationLetter.Checked = roomReservationBO.IsRoomRateShowInReservationLetter;
             chkIsRoomRateShowInPreRegistrationCard.Checked = roomReservationBO.IsRoomRateShowInPreRegistrationCard;
 
             txtBookersName.Text = roomReservationBO.BookersName.ToString();
