@@ -67,6 +67,7 @@ namespace HotelManagement.Data.HotelManagement
                         dbSmartAspects.AddInParameter(command, "@IsComplementary", DbType.Boolean, ghServiceBill.IsComplementary);
                         dbSmartAspects.AddInParameter(command, "@IsPaidService", DbType.Boolean, ghServiceBill.IsPaidService);
                         dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, ghServiceBill.Remarks);
+                        dbSmartAspects.AddInParameter(command, "@IsOnlyRateEffectEnable", DbType.Boolean, ghServiceBill.IsOnlyRateEffectEnable);
                         dbSmartAspects.AddInParameter(command, "@IsServiceChargeEnable", DbType.Boolean, ghServiceBill.IsServiceChargeEnable);
                         dbSmartAspects.AddInParameter(command, "@IsVatEnable", DbType.Boolean, ghServiceBill.IsVatAmountEnable);
                         dbSmartAspects.AddInParameter(command, "@ServiceCharge", DbType.Decimal, ghServiceBill.ServiceCharge);
@@ -200,6 +201,7 @@ namespace HotelManagement.Data.HotelManagement
                         dbSmartAspects.AddInParameter(command, "@DiscountAmount", DbType.Int32, ghServiceBill.DiscountAmount);
                         dbSmartAspects.AddInParameter(command, "@IsComplementary", DbType.Boolean, ghServiceBill.IsComplementary);
                         dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, ghServiceBill.Remarks);
+                        dbSmartAspects.AddInParameter(command, "@IsOnlyRateEffectEnable", DbType.Boolean, ghServiceBill.IsOnlyRateEffectEnable);
                         dbSmartAspects.AddInParameter(command, "@IsServiceChargeEnable", DbType.Boolean, ghServiceBill.IsServiceChargeEnable);
                         dbSmartAspects.AddInParameter(command, "@IsVatEnable", DbType.Boolean, ghServiceBill.IsVatAmountEnable);
                         dbSmartAspects.AddInParameter(command, "@ServiceCharge", DbType.Decimal, ghServiceBill.ServiceCharge);
@@ -436,6 +438,7 @@ namespace HotelManagement.Data.HotelManagement
                                 ghServiceBill.DiscountAmount = Convert.ToDecimal(reader["DiscountAmount"]);
                                 ghServiceBill.IsComplementary = Convert.ToBoolean(reader["IsComplementary"]);
                                 ghServiceBill.Remarks = reader["Remarks"].ToString();
+                                ghServiceBill.IsOnlyRateEffectEnable = Convert.ToBoolean(reader["IsOnlyRateEffectEnable"]);
                                 ghServiceBill.IsServiceChargeEnable = Convert.ToBoolean(reader["IsServiceChargeEnable"]);
                                 ghServiceBill.IsVatAmountEnable = Convert.ToBoolean(reader["IsVatAmountEnable"]);
                                 ghServiceBill.ServiceCharge = Convert.ToDecimal(reader["ServiceCharge"]);

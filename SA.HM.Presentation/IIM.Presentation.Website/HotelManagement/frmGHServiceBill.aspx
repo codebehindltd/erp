@@ -1257,6 +1257,13 @@
             $("#<%=txtServiceCharge.ClientID %>").val(result.ServiceBill.ServiceCharge);
             $("#<%=txtVatAmount.ClientID %>").val(result.ServiceBill.VatAmount);
 
+            if (result.ServiceBill.IsOnlyRateEffectEnable == true) {
+                $("#<%=cbOnlyRateEffect.ClientID %>").attr("checked", true);
+            }
+            else {
+                $("#<%=cbOnlyRateEffect.ClientID %>").attr("checked", false);
+            }
+
             if (result.ServiceBill.IsServiceChargeEnable == true) {
                 $("#<%=cbServiceCharge.ClientID %>").attr("checked", true);
             }
@@ -1975,6 +1982,44 @@
             $("#ContentPlaceHolder1_txtCalculateVatCharge").val("");
             $("#ContentPlaceHolder1_txtCalculateDiscountAmount").val("");
         }
+
+        function ToggleOnlyRateEffectAction(ctrl) {
+            debugger;
+            if ($('#ContentPlaceHolder1_cbOnlyRateEffect').is(':checked')) {
+                $("#ContentPlaceHolder1_cbServiceCharge").prop("checked", false);
+                $("#ContentPlaceHolder1_cbVatAmount").prop("checked", false);
+                $("#ContentPlaceHolder1_cbSDCharge").prop("checked", false);
+                $("#ContentPlaceHolder1_cbAdditionalCharge").prop("checked", false);
+                //$("#ServiceChargeNSDChargeDiv").hide();
+                //$("#VatAmountNAdditionalChargeDiv").hide();
+
+                $("#ContentPlaceHolder1_cbServiceCharge").attr("disabled", true);
+                $("#ContentPlaceHolder1_cbVatAmount").attr("disabled", true);
+                $("#ContentPlaceHolder1_cbSDCharge").attr("disabled", true);
+                $("#ContentPlaceHolder1_cbAdditionalCharge").attr("disabled", true);
+            }
+            else {
+                //$("#ServiceChargeNSDChargeDiv").show();
+                //$("#VatAmountNAdditionalChargeDiv").show();
+                $("#ContentPlaceHolder1_cbServiceCharge").prop("checked", true);
+                $("#ContentPlaceHolder1_cbVatAmount").prop("checked", true);
+                $("#ContentPlaceHolder1_cbSDCharge").prop("checked", true);
+                $("#ContentPlaceHolder1_cbAdditionalCharge").prop("checked", true);
+
+                $("#ContentPlaceHolder1_cbServiceCharge").attr("disabled", false);
+                $("#ContentPlaceHolder1_cbVatAmount").attr("disabled", false);
+                $("#ContentPlaceHolder1_cbSDCharge").attr("disabled", false);
+                $("#ContentPlaceHolder1_cbAdditionalCharge").attr("disabled", false);
+            }
+
+            ToggleTotalRoomRateVatServiceChargeCalculationForServiceCharge();
+            //TotalRoomRateVatServiceChargeCalculation();
+            //CalculateTotalPaiedNDueAmount();
+            //ClearRRC();
+
+            //CalculateDiscountAmount();
+            //CalculatePayment();
+        }
     </script>
     <asp:HiddenField ID="hfIsSavePermission" runat="server" />
     <asp:HiddenField ID="hfIsUpdatePermission" runat="server" />
@@ -2251,9 +2296,20 @@
                             <div class="form-group">
                                 <label for="ServiceRate" class="control-label col-md-2">
                                     Service Rate</label>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <asp:TextBox ID="txtServiceRate" runat="server" CssClass="form-control quantitydecimal" TabIndex="4"></asp:TextBox>
                                 </div>
+                                <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
+                                        <div class="col-sm-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <asp:CheckBox ID="cbOnlyRateEffect" runat="server" Text="" onclick="javascript: return ToggleOnlyRateEffectAction(this);"
+                                                        TabIndex="8" Checked="false" />
+                                                </span>
+                                                <asp:TextBox ID="txtOnlyRateEffect" runat="server" TabIndex="22" CssClass="form-control" Enabled="false">Only Rate Effect</asp:TextBox>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <label for="Quantity" class="control-label col-md-2">
                                     Quantity</label>
                                 <div class="col-md-4">

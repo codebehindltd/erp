@@ -24,6 +24,7 @@ namespace HotelManagement.Entity.HotelManagement
         public decimal ServiceQuantity { get; set; }
         public decimal DiscountAmount { get; set; }
         public int NodeId { get; set; }
+        public bool IsOnlyRateEffectEnable { get; set; }
         public bool IsServiceChargeEnable { get; set; }
         public bool IsVatAmountEnable { get; set; }
         public bool IsCitySDChargeEnable { get; set; }

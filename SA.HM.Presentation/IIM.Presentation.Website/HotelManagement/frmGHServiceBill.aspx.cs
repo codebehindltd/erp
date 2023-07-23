@@ -385,6 +385,15 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 ghServiceBillBO.ChecqueDate = DateTime.Now;
             }
 
+            if (this.cbOnlyRateEffect.Checked)
+            {
+                ghServiceBillBO.IsOnlyRateEffectEnable = true;
+            }
+            else
+            {
+                ghServiceBillBO.IsOnlyRateEffectEnable = false;
+            }
+
             if (this.cbServiceCharge.Checked)
             {
                 ghServiceBillBO.IsServiceChargeEnable = true;
@@ -985,76 +994,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.ddlMBankingReceiveAccountsInfo.DataTextField = "NodeHead";
             this.ddlMBankingReceiveAccountsInfo.DataValueField = "NodeId";
             this.ddlMBankingReceiveAccountsInfo.DataBind();
-        }
-        //private void LoadSingleProjectAndCompany()
-        //{
-        //    this.LoadGLCompany(true);
-        //    this.LoadGLProject(true);
-        //}
-        //private void LoadGLCompany(bool isSingle)
-        //{
-        //    GLCompanyDA entityDA = new GLCompanyDA();
-        //    var List = entityDA.GetAllGLCompanyInfo();
-        //    List<GLCompanyBO> companyList = new List<GLCompanyBO>();
-        //    if (isSingle == true)
-        //    {
-        //        companyList.Add(List[0]);
-        //        this.ddlGLCompany.DataSource = companyList;
-        //        this.ddlGLCompany.DataTextField = "Name";
-        //        this.ddlGLCompany.DataValueField = "CompanyId";
-        //        this.ddlGLCompany.DataBind();
-        //    }
-        //    else
-        //    {
-        //        this.ddlGLCompany.DataSource = List;
-        //        this.ddlGLCompany.DataTextField = "Name";
-        //        this.ddlGLCompany.DataValueField = "CompanyId";
-        //        this.ddlGLCompany.DataBind();
-        //        ListItem itemCompany = new ListItem();
-        //        itemCompany.Value = "0";
-        //        itemCompany.Text = hmUtility.GetDropDownFirstValue();
-        //        this.ddlGLCompany.Items.Insert(0, itemCompany);
-        //    }
-        //}
-        //private void LoadGLProject(bool isSingle)
-        //{
-        //    GLProjectDA entityDA = new GLProjectDA();
-        //    List<GLProjectBO> projectList = new List<GLProjectBO>();
-        //    var List = entityDA.GetAllGLProjectInfo();
-        //    if (isSingle == true)
-        //    {
-        //        projectList.Add(List[0]);
-        //        this.ddlGLProject.DataSource = projectList;
-        //        this.ddlGLProject.DataTextField = "Name";
-        //        this.ddlGLProject.DataValueField = "ProjectId";
-        //        this.ddlGLProject.DataBind();
-        //    }
-        //    else
-        //    {
-        //        this.ddlGLProject.DataSource = List;
-        //        this.ddlGLProject.DataTextField = "Name";
-        //        this.ddlGLProject.DataValueField = "ProjectId";
-        //        this.ddlGLProject.DataBind();
-
-        //        ListItem itemProject = new ListItem();
-        //        itemProject.Value = "0";
-        //        itemProject.Text = hmUtility.GetDropDownFirstValue();
-        //        this.ddlGLProject.Items.Insert(0, itemProject);
-        //    }
-        //}
-        //private void LoadGLProject(string companyId)
-        //{
-        //    GLProjectDA entityDA = new GLProjectDA();
-        //    this.ddlGLProject.DataSource = entityDA.GetGLProjectInfoByGLCompany(Convert.ToInt32(companyId));
-        //    this.ddlGLProject.DataTextField = "Name";
-        //    this.ddlGLProject.DataValueField = "ProjectId";
-        //    this.ddlGLProject.DataBind();
-
-        //    ListItem itemProject = new ListItem();
-        //    itemProject.Value = "0";
-        //    itemProject.Text = hmUtility.GetDropDownFirstValue();
-        //    this.ddlGLProject.Items.Insert(0, itemProject);
-        //}
+        }        
         private void LoadGuestCompany()
         {
             GuestCompanyDA companyDa = new GuestCompanyDA();
@@ -1114,7 +1054,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.chkAllActiveReservation.Visible = false;
             this.lblActivePaidServiceList.Visible = false;
             txtRegisteredGuestName.Text = string.Empty;
-
+            cbOnlyRateEffect.Checked = false;
         }
         public bool isValidForm()
         {
