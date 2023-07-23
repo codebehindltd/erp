@@ -87,6 +87,7 @@ namespace HotelManagement.Entity.HotelManagement
         public decimal VatAmount { get; set; }
         public decimal RackRate { get; set; }
         public int IsInclusive { get; set; }
+        public bool IsOnlyRateEffectEnable { get; set; }
         public bool IsCityChargeEnable { get; set; }
         public bool IsServiceChargeEnable { get; set; }
         public bool IsVatAmountEnable { get; set; }

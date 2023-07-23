@@ -2300,16 +2300,16 @@
                                     <asp:TextBox ID="txtServiceRate" runat="server" CssClass="form-control quantitydecimal" TabIndex="4"></asp:TextBox>
                                 </div>
                                 <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
-                                        <div class="col-sm-12">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <asp:CheckBox ID="cbOnlyRateEffect" runat="server" Text="" onclick="javascript: return ToggleOnlyRateEffectAction(this);"
-                                                        TabIndex="8" Checked="false" />
-                                                </span>
-                                                <asp:TextBox ID="txtOnlyRateEffect" runat="server" TabIndex="22" CssClass="form-control" Enabled="false">Only Rate Effect</asp:TextBox>
-                                            </div>
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <asp:CheckBox ID="cbOnlyRateEffect" runat="server" Text="" onclick="javascript: return ToggleOnlyRateEffectAction(this);"
+                                                    TabIndex="8" Checked="false" />
+                                            </span>
+                                            <asp:TextBox ID="txtOnlyRateEffect" runat="server" TabIndex="22" CssClass="form-control" Enabled="false">Only Rate Effect</asp:TextBox>
                                         </div>
                                     </div>
+                                </div>
                                 <label for="Quantity" class="control-label col-md-2">
                                     Quantity</label>
                                 <div class="col-md-4">

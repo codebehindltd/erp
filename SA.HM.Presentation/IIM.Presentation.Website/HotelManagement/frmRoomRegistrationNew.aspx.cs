@@ -889,6 +889,15 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
                         RoomRegistrationBO roomRegistrationBO = new RoomRegistrationBO();
 
+                        if (this.cbOnlyRateEffect.Checked)
+                        {
+                            roomRegistrationBO.IsOnlyRateEffectEnable = true;
+                        }
+                        else
+                        {
+                            roomRegistrationBO.IsOnlyRateEffectEnable = false;
+                        }
+
                         if (this.cbServiceCharge.Checked)
                         {
                             roomRegistrationBO.IsServiceChargeEnable = true;
@@ -2037,6 +2046,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.txtCalculateDiscountAmount.Text = "";
             this.ddlRoomId.Enabled = false;
             SetDefaultComplementaryItem();
+            
+            cbOnlyRateEffect.Checked = false;
+            this.cbServiceCharge.Enabled = true;
+            this.cbCityCharge.Enabled = true;
+            this.cbVatAmount.Enabled = true;
+            this.cbAdditionalCharge.Enabled = true;
         }
         private void LoadRoomNumber(int roomTypeId)
         {
@@ -2258,10 +2273,27 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 this.txtUnitPrice.Text = roomRegistrationBO.UnitPrice.ToString();
                 this.txtUnitPriceHiddenField.Value = roomRegistrationBO.UnitPrice.ToString();
                 this.txtRoomRate.Text = roomRegistrationBO.RoomRate.ToString();
+                this.cbOnlyRateEffect.Checked = roomRegistrationBO.IsOnlyRateEffectEnable;
                 this.cbServiceCharge.Checked = roomRegistrationBO.IsServiceChargeEnable;
                 this.cbCityCharge.Checked = roomRegistrationBO.IsCityChargeEnable;
                 this.cbVatAmount.Checked = roomRegistrationBO.IsVatAmountEnable;
                 this.cbAdditionalCharge.Checked = roomRegistrationBO.IsAdditionalChargeEnable;
+
+                if (roomRegistrationBO.IsOnlyRateEffectEnable)
+                {
+                    this.cbServiceCharge.Enabled = false;
+                    this.cbCityCharge.Enabled = false;
+                    this.cbVatAmount.Enabled = false;
+                    this.cbAdditionalCharge.Enabled = false;
+                }
+                else
+                {
+                    this.cbServiceCharge.Enabled = true;
+                    this.cbCityCharge.Enabled = true;
+                    this.cbVatAmount.Enabled = true;
+                    this.cbAdditionalCharge.Enabled = true;
+                }
+
                 this.txtCommingFrom.Text = roomRegistrationBO.CommingFrom;
                 this.txtNextDestination.Text = roomRegistrationBO.NextDestination;
                 this.txtVisitPurpose.Text = roomRegistrationBO.VisitPurpose;

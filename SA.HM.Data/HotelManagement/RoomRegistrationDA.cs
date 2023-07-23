@@ -250,6 +250,7 @@ namespace HotelManagement.Data.HotelManagement
                         dbSmartAspects.AddInParameter(commandMaster, "@ConversionRate", DbType.Decimal, roomRegistration.ConversionRate);
                         dbSmartAspects.AddInParameter(commandMaster, "@UnitPrice", DbType.Decimal, roomRegistration.UnitPrice);
                         dbSmartAspects.AddInParameter(commandMaster, "@RoomRate", DbType.Decimal, roomRegistration.RoomRate);
+                        dbSmartAspects.AddInParameter(commandMaster, "@IsOnlyRateEffectEnable", DbType.Boolean, roomRegistration.IsOnlyRateEffectEnable);
                         dbSmartAspects.AddInParameter(commandMaster, "@IsServiceChargeEnable", DbType.Boolean, roomRegistration.IsServiceChargeEnable);
                         dbSmartAspects.AddInParameter(commandMaster, "@IsCityChargeEnable", DbType.Boolean, roomRegistration.IsCityChargeEnable);
                         dbSmartAspects.AddInParameter(commandMaster, "@IsVatAmountEnable", DbType.Boolean, roomRegistration.IsVatAmountEnable);
@@ -738,6 +739,7 @@ namespace HotelManagement.Data.HotelManagement
                         dbSmartAspects.AddInParameter(commandMaster, "@ConversionRate", DbType.Decimal, roomRegistration.ConversionRate);
                         dbSmartAspects.AddInParameter(commandMaster, "@UnitPrice", DbType.Decimal, roomRegistration.UnitPrice);
                         dbSmartAspects.AddInParameter(commandMaster, "@RoomRate", DbType.Decimal, roomRegistration.RoomRate);
+                        dbSmartAspects.AddInParameter(commandMaster, "@IsOnlyRateEffectEnable", DbType.Boolean, roomRegistration.IsOnlyRateEffectEnable);
                         dbSmartAspects.AddInParameter(commandMaster, "@IsServiceChargeEnable", DbType.Boolean, roomRegistration.IsServiceChargeEnable);
                         dbSmartAspects.AddInParameter(commandMaster, "@IsCityChargeEnable", DbType.Boolean, roomRegistration.IsCityChargeEnable);
                         dbSmartAspects.AddInParameter(commandMaster, "@IsVatAmountEnable", DbType.Boolean, roomRegistration.IsVatAmountEnable);
@@ -946,6 +948,7 @@ namespace HotelManagement.Data.HotelManagement
                                 roomRegistration.DiscountType = reader["DiscountType"].ToString();
                                 roomRegistration.DiscountAmount = Convert.ToDecimal(reader["DiscountAmount"]);
                                 roomRegistration.RoomRate = Convert.ToDecimal(reader["RoomRate"]);
+                                roomRegistration.IsOnlyRateEffectEnable = Convert.ToBoolean(reader["IsOnlyRateEffectEnable"]);
                                 roomRegistration.IsServiceChargeEnable = Convert.ToBoolean(reader["IsServiceChargeEnable"]);
                                 roomRegistration.IsCityChargeEnable = Convert.ToBoolean(reader["IsCityChargeEnable"]);
                                 roomRegistration.IsVatAmountEnable = Convert.ToBoolean(reader["IsVatAmountEnable"]);
