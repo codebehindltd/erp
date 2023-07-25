@@ -888,15 +888,15 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                         RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
                         RoomRegistrationBO roomRegistrationBO = new RoomRegistrationBO();
-
-                        if (this.cbOnlyRateEffect.Checked)
-                        {
-                            roomRegistrationBO.IsOnlyRateEffectEnable = true;
-                        }
-                        else
-                        {
-                            roomRegistrationBO.IsOnlyRateEffectEnable = false;
-                        }
+                        roomRegistrationBO.IsOnlyRateEffectEnable = true;
+                        //if (this.cbOnlyRateEffect.Checked)
+                        //{
+                        //    roomRegistrationBO.IsOnlyRateEffectEnable = true;
+                        //}
+                        //else
+                        //{
+                        //    roomRegistrationBO.IsOnlyRateEffectEnable = false;
+                        //}
 
                         if (this.cbServiceCharge.Checked)
                         {
@@ -2047,7 +2047,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.ddlRoomId.Enabled = false;
             SetDefaultComplementaryItem();
             
-            cbOnlyRateEffect.Checked = false;
+            cbOnlyRateEffect.Checked = true;
             this.cbServiceCharge.Enabled = true;
             this.cbCityCharge.Enabled = true;
             this.cbVatAmount.Enabled = true;
@@ -2279,20 +2279,20 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 this.cbVatAmount.Checked = roomRegistrationBO.IsVatAmountEnable;
                 this.cbAdditionalCharge.Checked = roomRegistrationBO.IsAdditionalChargeEnable;
 
-                if (roomRegistrationBO.IsOnlyRateEffectEnable)
-                {
-                    this.cbServiceCharge.Enabled = false;
-                    this.cbCityCharge.Enabled = false;
-                    this.cbVatAmount.Enabled = false;
-                    this.cbAdditionalCharge.Enabled = false;
-                }
-                else
-                {
-                    this.cbServiceCharge.Enabled = true;
-                    this.cbCityCharge.Enabled = true;
-                    this.cbVatAmount.Enabled = true;
-                    this.cbAdditionalCharge.Enabled = true;
-                }
+                //if (roomRegistrationBO.IsOnlyRateEffectEnable)
+                //{
+                //    this.cbServiceCharge.Enabled = false;
+                //    this.cbCityCharge.Enabled = false;
+                //    this.cbVatAmount.Enabled = false;
+                //    this.cbAdditionalCharge.Enabled = false;
+                //}
+                //else
+                //{
+                //    this.cbServiceCharge.Enabled = true;
+                //    this.cbCityCharge.Enabled = true;
+                //    this.cbVatAmount.Enabled = true;
+                //    this.cbAdditionalCharge.Enabled = true;
+                //}
 
                 this.txtCommingFrom.Text = roomRegistrationBO.CommingFrom;
                 this.txtNextDestination.Text = roomRegistrationBO.NextDestination;

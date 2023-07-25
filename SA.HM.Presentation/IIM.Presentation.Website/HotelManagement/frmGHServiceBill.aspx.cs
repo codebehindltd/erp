@@ -385,14 +385,15 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 ghServiceBillBO.ChecqueDate = DateTime.Now;
             }
 
-            if (this.cbOnlyRateEffect.Checked)
-            {
-                ghServiceBillBO.IsOnlyRateEffectEnable = true;
-            }
-            else
-            {
-                ghServiceBillBO.IsOnlyRateEffectEnable = false;
-            }
+            ghServiceBillBO.IsOnlyRateEffectEnable = true;
+            //if (this.cbOnlyRateEffect.Checked)
+            //{
+            //    ghServiceBillBO.IsOnlyRateEffectEnable = true;
+            //}
+            //else
+            //{
+            //    ghServiceBillBO.IsOnlyRateEffectEnable = false;
+            //}
 
             if (this.cbServiceCharge.Checked)
             {
@@ -1054,7 +1055,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.chkAllActiveReservation.Visible = false;
             this.lblActivePaidServiceList.Visible = false;
             txtRegisteredGuestName.Text = string.Empty;
-            cbOnlyRateEffect.Checked = false;
+            cbOnlyRateEffect.Checked = true;
         }
         public bool isValidForm()
         {

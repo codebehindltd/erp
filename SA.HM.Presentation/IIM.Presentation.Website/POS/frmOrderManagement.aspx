@@ -1492,32 +1492,28 @@
         }
 
         function ToggleOnlyRateEffectAction(ctrl) {
-            if ($('#ContentPlaceHolder1_cbOnlyRateEffect').is(':checked')) {
-                $("#ContentPlaceHolder1_cbTPServiceCharge").prop("checked", false);
-                $("#ContentPlaceHolder1_cbTPVatAmount").prop("checked", false);
-                $("#ContentPlaceHolder1_cbTPSDCharge").prop("checked", false);
-                $("#ContentPlaceHolder1_cbTPAdditionalCharge").prop("checked", false);
-                //$("#ServiceChargeNSDChargeDiv").hide();
-                //$("#VatAmountNAdditionalChargeDiv").hide();
+            //if ($('#ContentPlaceHolder1_cbOnlyRateEffect').is(':checked')) {
+            //    $("#ContentPlaceHolder1_cbTPServiceCharge").prop("checked", false);
+            //    $("#ContentPlaceHolder1_cbTPVatAmount").prop("checked", false);
+            //    $("#ContentPlaceHolder1_cbTPSDCharge").prop("checked", false);
+            //    $("#ContentPlaceHolder1_cbTPAdditionalCharge").prop("checked", false);
 
-                $("#ContentPlaceHolder1_cbTPServiceCharge").attr("disabled", true);
-                $("#ContentPlaceHolder1_cbTPVatAmount").attr("disabled", true);
-                $("#ContentPlaceHolder1_cbTPSDCharge").attr("disabled", true);
-                $("#ContentPlaceHolder1_cbTPAdditionalCharge").attr("disabled", true);
-            }
-            else {
-                //$("#ServiceChargeNSDChargeDiv").show();
-                //$("#VatAmountNAdditionalChargeDiv").show();
-                $("#ContentPlaceHolder1_cbTPServiceCharge").prop("checked", true);
-                $("#ContentPlaceHolder1_cbTPVatAmount").prop("checked", true);
-                $("#ContentPlaceHolder1_cbTPSDCharge").prop("checked", true);
-                $("#ContentPlaceHolder1_cbTPAdditionalCharge").prop("checked", true);
+            //    $("#ContentPlaceHolder1_cbTPServiceCharge").attr("disabled", true);
+            //    $("#ContentPlaceHolder1_cbTPVatAmount").attr("disabled", true);
+            //    $("#ContentPlaceHolder1_cbTPSDCharge").attr("disabled", true);
+            //    $("#ContentPlaceHolder1_cbTPAdditionalCharge").attr("disabled", true);
+            //}
+            //else {
+            //    $("#ContentPlaceHolder1_cbTPServiceCharge").prop("checked", true);
+            //    $("#ContentPlaceHolder1_cbTPVatAmount").prop("checked", true);
+            //    $("#ContentPlaceHolder1_cbTPSDCharge").prop("checked", true);
+            //    $("#ContentPlaceHolder1_cbTPAdditionalCharge").prop("checked", true);
 
-                $("#ContentPlaceHolder1_cbTPServiceCharge").attr("disabled", false);
-                $("#ContentPlaceHolder1_cbTPVatAmount").attr("disabled", false);
-                $("#ContentPlaceHolder1_cbTPSDCharge").attr("disabled", false);
-                $("#ContentPlaceHolder1_cbTPAdditionalCharge").attr("disabled", false);
-            }
+            //    $("#ContentPlaceHolder1_cbTPServiceCharge").attr("disabled", false);
+            //    $("#ContentPlaceHolder1_cbTPVatAmount").attr("disabled", false);
+            //    $("#ContentPlaceHolder1_cbTPSDCharge").attr("disabled", false);
+            //    $("#ContentPlaceHolder1_cbTPAdditionalCharge").attr("disabled", false);
+            //}
 
             CalculateDiscountAmount();
             CalculatePayment();
@@ -4196,11 +4192,11 @@
 
             var costcenterId = $("#ContentPlaceHolder1_hfCostCenterId").val();
             var discountType = "Fixed", isComplementary = false, discountTransactionId = 0, isNonChargeable = false;
-            var isOnlyRateEffectEnable = false;
+            var isOnlyRateEffectEnable = true;
 
-            if ($("#ContentPlaceHolder1_cbOnlyRateEffect").is(":checked")) {
-                isOnlyRateEffectEnable = true;
-            }
+            //if ($("#ContentPlaceHolder1_cbOnlyRateEffect").is(":checked")) {
+            //    isOnlyRateEffectEnable = true;
+            //}
 
             if ($("#ContentPlaceHolder1_rbTPFixedDiscount").is(":checked")) {
                 discountType = "Fixed";
@@ -6777,18 +6773,18 @@
                                 Discounted Amount</label>
                             <div class="col-sm-9">
                                 <div class="row">
-                                    <div class="col-sm-6" style="padding-right: 5px;" id="discountContainer">
+                                    <div class="col-sm-12">
                                         <asp:TextBox ID="txtTPDiscountedAmount" TabIndex="1" runat="server" ReadOnly="True"
                                             CssClass="form-control"></asp:TextBox>
                                     </div>
-                                    <div class="col-sm-6" style="padding-left: 0px; padding-right: 0px;">
+                                    <div class="col-sm-6" style="padding-left: 0px; padding-right: 0px; display:none;">
                                         <div class="col-sm-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
                                                     <asp:CheckBox ID="cbOnlyRateEffect" runat="server" Text="" onclick="javascript: return ToggleOnlyRateEffectAction(this);"
                                                         TabIndex="8" Checked="false" />
                                                 </span>
-                                                <asp:TextBox ID="txtOnlyRateEffect" runat="server" TabIndex="22" CssClass="form-control" Enabled="false">Only Rate Effect</asp:TextBox>
+                                                <asp:TextBox ID="txtOnlyRateEffect" runat="server" TabIndex="22" CssClass="form-control" Enabled="false">Effect in All</asp:TextBox>
                                             </div>
                                         </div>
                                     </div>

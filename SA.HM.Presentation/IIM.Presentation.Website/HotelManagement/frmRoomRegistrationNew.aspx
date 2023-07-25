@@ -5417,33 +5417,29 @@
         }
 
         function ToggleOnlyRateEffectAction(ctrl) {
-            debugger;
-            if ($('#ContentPlaceHolder1_cbOnlyRateEffect').is(':checked')) {
-                $("#ContentPlaceHolder1_cbServiceCharge").prop("checked", false);
-                $("#ContentPlaceHolder1_cbVatAmount").prop("checked", false);
-                $("#ContentPlaceHolder1_cbCityCharge").prop("checked", false);
-                $("#ContentPlaceHolder1_cbAdditionalCharge").prop("checked", false);
-                //$("#ServiceChargeNSDChargeDiv").hide();
-                //$("#VatAmountNAdditionalChargeDiv").hide();
+            //debugger;
+            //if ($('#ContentPlaceHolder1_cbOnlyRateEffect').is(':checked')) {
+            //    $("#ContentPlaceHolder1_cbServiceCharge").prop("checked", false);
+            //    $("#ContentPlaceHolder1_cbVatAmount").prop("checked", false);
+            //    $("#ContentPlaceHolder1_cbCityCharge").prop("checked", false);
+            //    $("#ContentPlaceHolder1_cbAdditionalCharge").prop("checked", false);
 
-                $("#ContentPlaceHolder1_cbServiceCharge").attr("disabled", true);
-                $("#ContentPlaceHolder1_cbVatAmount").attr("disabled", true);
-                $("#ContentPlaceHolder1_cbCityCharge").attr("disabled", true);
-                $("#ContentPlaceHolder1_cbAdditionalCharge").attr("disabled", true);
-            }
-            else {
-                //$("#ServiceChargeNSDChargeDiv").show();
-                //$("#VatAmountNAdditionalChargeDiv").show();
-                $("#ContentPlaceHolder1_cbServiceCharge").prop("checked", true);
-                $("#ContentPlaceHolder1_cbVatAmount").prop("checked", true);
-                $("#ContentPlaceHolder1_cbCityCharge").prop("checked", true);
-                $("#ContentPlaceHolder1_cbAdditionalCharge").prop("checked", true);
+            //    $("#ContentPlaceHolder1_cbServiceCharge").attr("disabled", true);
+            //    $("#ContentPlaceHolder1_cbVatAmount").attr("disabled", true);
+            //    $("#ContentPlaceHolder1_cbCityCharge").attr("disabled", true);
+            //    $("#ContentPlaceHolder1_cbAdditionalCharge").attr("disabled", true);
+            //}
+            //else {
+            //    $("#ContentPlaceHolder1_cbServiceCharge").prop("checked", true);
+            //    $("#ContentPlaceHolder1_cbVatAmount").prop("checked", true);
+            //    $("#ContentPlaceHolder1_cbCityCharge").prop("checked", true);
+            //    $("#ContentPlaceHolder1_cbAdditionalCharge").prop("checked", true);
 
-                $("#ContentPlaceHolder1_cbServiceCharge").attr("disabled", false);
-                $("#ContentPlaceHolder1_cbVatAmount").attr("disabled", false);
-                $("#ContentPlaceHolder1_cbCityCharge").attr("disabled", false);
-                $("#ContentPlaceHolder1_cbAdditionalCharge").attr("disabled", false);
-            }
+            //    $("#ContentPlaceHolder1_cbServiceCharge").attr("disabled", false);
+            //    $("#ContentPlaceHolder1_cbVatAmount").attr("disabled", false);
+            //    $("#ContentPlaceHolder1_cbCityCharge").attr("disabled", false);
+            //    $("#ContentPlaceHolder1_cbAdditionalCharge").attr("disabled", false);
+            //}
 
             TotalRoomRateVatServiceChargeCalculation();
         }
@@ -5816,18 +5812,18 @@
                             </div>
                             <label for="NegotiatedRate" class="control-label col-md-2 required-field">
                                 Negotiated Rate</label>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <asp:TextBox ID="txtRoomRate" runat="server" CssClass="form-control quantitydecimal" TabIndex="23"
                                     onblur="CalculateDiscount()"></asp:TextBox>
                             </div>
-                            <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
+                            <div class="col-md-2" style="padding-left: 0px; padding-right: 0px; display:none;">
                                 <div class="col-sm-12">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <asp:CheckBox ID="cbOnlyRateEffect" runat="server" Text="" onclick="javascript: return ToggleOnlyRateEffectAction(this);"
                                                 TabIndex="8" Checked="false" />
                                         </span>
-                                        <asp:TextBox ID="txtOnlyRateEffect" runat="server" TabIndex="22" CssClass="form-control" Enabled="false">Only Rate Effect</asp:TextBox>
+                                        <asp:TextBox ID="txtOnlyRateEffect" runat="server" TabIndex="22" CssClass="form-control" Enabled="false">Effect in All</asp:TextBox>
                                     </div>
                                 </div>
                             </div>
