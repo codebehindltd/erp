@@ -20,6 +20,31 @@
                 ConvertCorrency();
             });
 
+            var ddlGuestType = '<%=ddlGuestType.ClientID%>'
+
+            if ($('#' + ddlGuestType).val() == "InHouseGuest") {
+                InhousePanelVisibleTrue();
+            }
+            else if ($('#' + ddlGuestType).val() == "OutSideGuest") {
+                InhousePanelVisibleFalse();
+            }
+
+            $('#' + ddlGuestType).change(function () {
+                <%--$('#' + btnSave).val('Save');
+                var txtSrcRoomNumber = '<%=txtSrcRoomNumber.ClientID%>'
+                $("#" + txtSrcRoomNumber).attr("disabled", false);
+
+                var btnSrcRoomNumber = '<%=btnSrcRoomNumber.ClientID%>'
+                $("#" + btnSrcRoomNumber).attr("disabled", false);--%>
+
+                if ($('#' + ddlGuestType).val() == "InHouseGuest") {
+                    InhousePanelVisibleTrue();
+                }
+                else if ($('#' + ddlGuestType).val() == "OutSideGuest") {
+                    InhousePanelVisibleFalse();
+                }
+            });
+
             $('#ContentPlaceHolder1_gvConversionInfo_ChkAllSelect').click(function () {
                 if ($('#ContentPlaceHolder1_gvConversionInfo_ChkAllSelect').is(':checked')) {
                     CheckAllCheckBoxCreate()
@@ -55,12 +80,28 @@
                 GetConversionRateByHeadId(from, to);
             });
 
+            function InhousePanelVisibleTrue() {
+                $('#ContentPlaceHolder1_txtGuestName').attr('readonly', true);
+                $('#ContentPlaceHolder1_txtCountryName').attr('readonly', true);
+                $('#ContentPlaceHolder1_txtPassportNumber').attr('readonly', true);
+                $('#InHouseGuestSearchInfo').show();
+                return false;
+            }
+            function InhousePanelVisibleFalse() {
+                $('#ContentPlaceHolder1_txtGuestName').attr('readonly', false);
+                $('#ContentPlaceHolder1_txtCountryName').attr('readonly', false);
+                $('#ContentPlaceHolder1_txtPassportNumber').attr('readonly', false);
+                $('#InHouseGuestSearchInfo').hide();
+                return false;
+            }
+
             function GetConversionRateByHeadId(from, to) {
                 PageMethods.GetConversionRateByHeadId(from, to, GetConversionRateByHeadIdSucceeded, GetConversionRateByHeadIdFailed);
                 return false;
             }
 
             function GetConversionRateByHeadIdSucceeded(result) {
+                $("#<%=hfConversionRate.ClientID %>").val(result.ConversionRate);
                 $("#<%=txtConversionRate.ClientID %>").val(result.ConversionRate);
                 $("#<%=txtConversionRateId.ClientID %>").val(result.ConversionRateId);
                 ConvertCorrency();
@@ -76,6 +117,7 @@
                 var toConversionHeadId = $("#<%=ddlToConversion.ClientID %>").val();
 
                 if (parseInt(toConversionHeadId) == parseInt(fromConversionHeadId)) {
+                    $("#<%=hfConversionRate.ClientID %>").val('1');
                     $("#<%=txtConversionRate.ClientID %>").val('1');
                     $("#<%=txtTotalAmount.ClientID %>").val(amount);
                 }
@@ -191,6 +233,8 @@
             }
         }
     </script>
+    <asp:HiddenField ID="hfConversionRate" runat="server" />
+    <asp:HiddenField ID="hfRegistrationId" runat="server" />
     <div id="DivItemSelect" style="display: none;">
         <div id="Div1" class="panel-body">
             <asp:GridView ID="gvConversionInfo" Width="100%" runat="server" AllowPaging="True"
@@ -210,7 +254,8 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="IDNO">
                         <ItemTemplate>
-                            <asp:Label ID="lblid" runat="server" Text='<%#Eval("CurrencyConversionId") %>'></asp:Label></ItemTemplate>
+                            <asp:Label ID="lblid" runat="server" Text='<%#Eval("CurrencyConversionId") %>'></asp:Label>
+                        </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="TransactionNumber" HeaderText="Transaction Number" ItemStyle-Width="20%">
                         <HeaderStyle HorizontalAlign="Left" />
@@ -253,60 +298,108 @@
                 href="#tab-2">Search Currency Conversion</a></li>
         </ul>
         <div id="tab-1">
-            <div id="EntryPanel" class="panel panel-default">                
+            <div id="EntryPanel" class="panel panel-default">
                 <div class="panel-heading">Currency Conversion</div>
                 <div class="form-horizontal">
-                <div class="panel-body">
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            <asp:HiddenField ID="txtCommonConversionId" runat="server" />
-                            <asp:HiddenField ID="txtConversionRateId" runat="server" />
-                            <asp:Label ID="lblFromConversion" runat="server" class="control-label" Text="From Conversion"></asp:Label>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:HiddenField ID="txtCommonConversionId" runat="server" />
+                                <asp:HiddenField ID="txtConversionRateId" runat="server" />
+                                <asp:Label ID="lblFromConversion" runat="server" class="control-label" Text="From Currency"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:DropDownList ID="ddlFromConversion" runat="server" CssClass="form-control" TabIndex="1">
+                                </asp:DropDownList>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblToConversion" runat="server" class="control-label" Text="To Currency"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:DropDownList ID="ddlToConversion" runat="server" CssClass="form-control" TabIndex="2">
+                                </asp:DropDownList>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <asp:DropDownList ID="ddlFromConversion" runat="server" CssClass="form-control" TabIndex="1">
-                            </asp:DropDownList>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:Label ID="lblMoneyAmount" runat="server" class="control-label" Text="Amount"></asp:Label>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:TextBox ID="txtMoneyAmount" runat="server" CssClass="form-control quantitydecimal" TabIndex="3"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:TextBox ID="txtConversionRate" runat="server" ReadOnly="true" CssClass="form-control quantitydecimal" TabIndex="4"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblGuestType" runat="server" class="control-label" Text="Guest Type"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:DropDownList ID="ddlGuestType" runat="server" CssClass="form-control" TabIndex="5">
+                                    <asp:ListItem Value="OutSideGuest">Walk-In Guest</asp:ListItem>
+                                    <asp:ListItem Value="InHouseGuest">In-House Guest</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <asp:Label ID="lblToConversion" runat="server" class="control-label" Text="To Conversion"></asp:Label>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:Label ID="lblTotalAmount" runat="server" class="control-label" Text="Total Amount"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtTotalAmount" runat="server" ReadOnly="true" CssClass="form-control" TabIndex="5"></asp:TextBox>
+                            </div>
+                            <div id="InHouseGuestSearchInfo">
+                                <div class="col-md-2">
+                                    <asp:Label ID="lblRoomNumber" runat="server" class="control-label" Text="Room Number"></asp:Label>
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:TextBox ID="txtSrcRoomNumber" runat="server" CssClass="form-control" TabIndex="1"></asp:TextBox>
+                                </div>
+                                <div class="col-md-2" style="text-align: left; padding-left: 0;">
+                                    <asp:Button ID="btnSrcRoomNumber" runat="server" Text="Search" TabIndex="2" CssClass="TransactionalButton btn btn-primary btn-sm"
+                                        OnClick="btnSrcRoomNumber_Click" />
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <asp:DropDownList ID="ddlToConversion" runat="server" CssClass="form-control" TabIndex="2">
-                            </asp:DropDownList>
+
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:Label ID="lblGuestName" runat="server" class="control-label" Text="Guest Name"></asp:Label>
+                            </div>
+                            <div class="col-md-10">
+                                <asp:TextBox ID="txtGuestName" runat="server" CssClass="form-control" TabIndex="5"></asp:TextBox>
+                            </div>
                         </div>
-                    </div>                    
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            <asp:Label ID="lblMoneyAmount" runat="server" class="control-label" Text="Amount"></asp:Label>
+
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:Label ID="lblCountryName" runat="server" class="control-label" Text="Country"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtCountryName" runat="server" CssClass="form-control" TabIndex="5"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblPassportNumber" runat="server" class="control-label" Text="Passport No."></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtPassportNumber" runat="server" CssClass="form-control" TabIndex="5"></asp:TextBox>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <asp:TextBox ID="txtMoneyAmount" runat="server" CssClass="form-control quantitydecimal" TabIndex="3"></asp:TextBox>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:Label ID="lblTransactionDetails" runat="server" class="control-label" Text="Transaction Details"></asp:Label>
+                            </div>
+                            <div class="col-md-10">
+                                <asp:TextBox ID="txtTransactionDetails" runat="server" TextMode="MultiLine" CssClass="form-control" TabIndex="5"></asp:TextBox>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <asp:Label ID="lblConversionRate" runat="server" class="control-label" Text="Conversion Rate"></asp:Label>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <asp:Button ID="btnSave" runat="server" Text="Save" TabIndex="12" CssClass="TransactionalButton btn btn-primary btn-sm"
+                                    OnClick="btnSave_Click" OnClientClick="javascript: return ValidateForm();" />
+                                <asp:Button ID="btnClear" runat="server" TabIndex="6" Text="Clear" CssClass="TransactionalButton btn btn-primary btn-sm"
+                                    OnClientClick="javascript: return PerformClearAction();" />
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <asp:TextBox ID="txtConversionRate" runat="server" CssClass="form-control quantitydecimal" TabIndex="4"></asp:TextBox>
-                        </div>
-                    </div>                    
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            <asp:Label ID="lblTotalAmount" runat="server" class="control-label" Text="Total Amount"></asp:Label>
-                        </div>
-                        <div class="col-md-4">
-                            <asp:TextBox ID="txtTotalAmount" runat="server" ReadOnly="true" CssClass="form-control" TabIndex="5"></asp:TextBox>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <asp:Button ID="btnSave" runat="server" Text="Save" TabIndex="12" CssClass="TransactionalButton btn btn-primary btn-sm"
-                                OnClick="btnSave_Click" OnClientClick="javascript: return ValidateForm();" />
-                            <asp:Button ID="btnClear" runat="server" TabIndex="6" Text="Clear" CssClass="TransactionalButton btn btn-primary btn-sm"
-                                OnClientClick="javascript: return PerformClearAction();" />
-                            <%--<asp:Button ID="btnGroupPaymentPreview" runat="server" Text="Payment Preview" TabIndex="15"
-                    CssClass="TransactionalButton btn btn-primary" OnClientClick="javascript: return LoadPopUp();" />--%>
-                        </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -314,19 +407,20 @@
         <div id="tab-2">
             <div id="SearchEntry" class="panel panel-default">
                 <div class="panel-heading">
-                    Currency Conversion Information</div>
+                    Currency Conversion Information
+                </div>
                 <div class="panel-body">
                     <div class="form-horizontal">
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblSFromConversion" runat="server" class="control-label" Text="From Conversion"></asp:Label>
+                                <asp:Label ID="lblSFromConversion" runat="server" class="control-label" Text="From Currency"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:DropDownList ID="ddlSFromConversion" runat="server" CssClass="form-control" TabIndex="1">
                                 </asp:DropDownList>
                             </div>
                             <div class="col-md-2">
-                                <asp:Label ID="lblSToConversion" runat="server" class="control-label" Text="To Conversion"></asp:Label>
+                                <asp:Label ID="lblSToConversion" runat="server" class="control-label" Text="To Currency"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:DropDownList ID="ddlSToConversion" runat="server" CssClass="form-control" TabIndex="2">
@@ -361,7 +455,8 @@
         </div>
         <div id="SearchPanel" class="panel panel-default">
             <div class="panel-heading">
-                Currency Conversion Details</div>
+                Currency Conversion Details
+            </div>
             <div class="panel-body">
                 <asp:GridView ID="gvCurrencyConversion" Width="100%" runat="server" AllowPaging="True"
                     AutoGenerateColumns="False" CellPadding="4" GridLines="None" AllowSorting="True"
@@ -397,7 +492,7 @@
                                     CommandArgument='<%# bind("CurrencyConversionId") %>' ImageUrl="~/Images/edit.png"
                                     Text="" AlternateText="Edit" ToolTip="Edit" />
                                 &nbsp;<asp:ImageButton ID="ImgDelete" runat="server" CausesValidation="False" CommandName="CmdDelete"
-                                    CommandArgument='<%# bind("CurrencyConversionId") %>' ImageUrl="~/Images/delete.png" Text="" AlternateText="Delete" 
+                                    CommandArgument='<%# bind("CurrencyConversionId") %>' ImageUrl="~/Images/delete.png" Text="" AlternateText="Delete"
                                     ToolTip="Delete" OnClientClick="return confirm('Do you want to Delete?');" />
                                 &nbsp;<asp:ImageButton ID="ImgPaymentPreview" runat="server" CausesValidation="False"
                                     CommandArgument='<%# bind("CurrencyConversionId") %>' CommandName="CmdPaymentPreview"
@@ -431,6 +526,15 @@
         }
         else {
             $('#SearchPanel').hide();
-        }        
+        }
+
+
+        <%--var xIsInHouseGuestTransaction = '<%=IsInHouseGuestTransaction%>';
+        if (xIsInHouseGuestTransaction == 0) {
+            InhousePanelVisibleTrue();
+        }
+        else {
+            InhousePanelVisibleFalse();
+        }--%>
     </script>
 </asp:Content>

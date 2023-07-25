@@ -9,6 +9,8 @@ using HotelManagement.Entity.HMCommon;
 using HotelManagement.Data.HMCommon;
 using HotelManagement.Presentation.Website.Common;
 using HotelManagement.Entity.UserInformation;
+using HotelManagement.Data.HotelManagement;
+using HotelManagement.Entity.HotelManagement;
 
 namespace HotelManagement.Presentation.Website.HMCommon
 {
@@ -20,6 +22,7 @@ namespace HotelManagement.Presentation.Website.HMCommon
         private Boolean isDeletePermission = false;
         protected int isNewAddButtonEnable = 1;
         protected int isSearchPanelEnable = -1;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             innboardMessage = (HiddenField)this.Master.FindControl("InnboardMessageHiddenField");
@@ -28,40 +31,7 @@ namespace HotelManagement.Presentation.Website.HMCommon
             {
                 LoadConversionHead();
             }
-        }
-
-        //private void LoadFromConversionHead()
-        //{
-        //    HMUtility hmUtility = new HMUtility();
-        //    HMCommonDA hmCommonDA = new HMCommonDA();
-        //    List<CustomFieldBO> list = new List<CustomFieldBO>();
-        //    list = hmCommonDA.GetCustomFieldList("CurrencyConversionHead");
-        //    this.ddlFromConversion.DataSource = list;
-        //    this.ddlFromConversion.DataTextField = "FieldValue";
-        //    this.ddlFromConversion.DataValueField = "FieldId";
-        //    this.ddlFromConversion.DataBind();
-
-        //    ListItem itemSelect = new ListItem();
-        //    itemSelect.Value = "0";
-        //    itemSelect.Text = hmUtility.GetDropDownFirstValue();
-        //    this.ddlFromConversion.Items.Insert(0, itemSelect);
-        //}
-        //private void ToFromConversionHead()
-        //{
-        //    HMUtility hmUtility = new HMUtility();
-        //    HMCommonDA hmCommonDA = new HMCommonDA();
-        //    List<CustomFieldBO> list = new List<CustomFieldBO>();
-        //    list = hmCommonDA.GetCustomFieldList("CurrencyConversionHead");
-        //    this.ddlToConversion.DataSource = list;
-        //    this.ddlToConversion.DataTextField = "FieldValue";
-        //    this.ddlToConversion.DataValueField = "FieldId";
-        //    this.ddlToConversion.DataBind();
-
-        //    ListItem itemSelect = new ListItem();
-        //    itemSelect.Value = "0";
-        //    itemSelect.Text = hmUtility.GetDropDownFirstValue();
-        //    this.ddlToConversion.Items.Insert(0, itemSelect);
-        //}
+        }        
         protected void gvCurrencyConversion_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             this.gvCurrencyConversion.PageIndex = e.NewPageIndex;
@@ -132,8 +102,26 @@ namespace HotelManagement.Presentation.Website.HMCommon
             cmncurrencyconvBO.FromConversionHeadId = Convert.ToInt32(this.ddlFromConversion.SelectedValue);
             cmncurrencyconvBO.ToConversionHeadId = Convert.ToInt32(this.ddlToConversion.SelectedValue);
             cmncurrencyconvBO.ConversionAmount = Convert.ToDecimal(this.txtMoneyAmount.Text);
-            cmncurrencyconvBO.ConversionRate = Convert.ToDecimal(this.txtConversionRate.Text);
+            cmncurrencyconvBO.ConversionRate = Convert.ToDecimal(this.hfConversionRate.Value);
             cmncurrencyconvBO.ConvertedAmount = Convert.ToDecimal(Request.Form[txtTotalAmount.UniqueID]);
+
+
+            cmncurrencyconvBO.TransactionType = ddlGuestType.SelectedValue;
+            if(ddlGuestType.SelectedValue == "InHouseGuest")
+            {
+                cmncurrencyconvBO.RegistrationId = Convert.ToInt32(hfRegistrationId.Value);
+            }
+            else
+            {
+                cmncurrencyconvBO.RegistrationId = 0;
+            }
+            
+            cmncurrencyconvBO.GuestName = txtGuestName.Text;
+            cmncurrencyconvBO.CountryName = txtCountryName.Text;
+            cmncurrencyconvBO.PassportNumber = txtPassportNumber.Text;
+            cmncurrencyconvBO.TransactionDetails = txtTransactionDetails.Text;
+
+
             if (string.IsNullOrWhiteSpace(txtCommonConversionId.Value))
             {
                 int temCurrencyConversionId = 0;
@@ -171,13 +159,15 @@ namespace HotelManagement.Presentation.Website.HMCommon
 
             this.SetTab("EntryTab");
         }
-
+        protected void btnSrcRoomNumber_Click(object sender, EventArgs e)
+        {
+            this.LoadSearchInformation();
+        }
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             SearchLoadGridView();
             // isSearchPanelEnable++;
         }
-
         protected void btnPreview_Click(object sender, EventArgs e)
         {
             string paymentIdList = string.Empty;
@@ -215,13 +205,13 @@ namespace HotelManagement.Presentation.Website.HMCommon
 
             if (this.ddlFromConversion.SelectedValue == "0")
             {
-                CommonHelper.AlertInfo(innboardMessage, AlertMessage.DropDownValidation + "From Conversion.", AlertType.Warning);
+                CommonHelper.AlertInfo(innboardMessage, AlertMessage.DropDownValidation + "From Currency.", AlertType.Warning);
                 flag = false;
                 ddlFromConversion.Focus();
             }
             else if (this.ddlToConversion.SelectedValue == "0")
             {
-                CommonHelper.AlertInfo(innboardMessage, AlertMessage.DropDownValidation + "To Conversion.", AlertType.Warning);
+                CommonHelper.AlertInfo(innboardMessage, AlertMessage.DropDownValidation + "To Currency.", AlertType.Warning);
                 flag = false;
                 ddlSToConversion.Focus();
             }
@@ -230,12 +220,6 @@ namespace HotelManagement.Presentation.Website.HMCommon
                 CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Amount.", AlertType.Warning);
                 flag = false;
                 txtMoneyAmount.Focus();
-            }
-            else if (string.IsNullOrWhiteSpace(this.txtConversionRate.Text))
-            {
-                CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Conversion Rate.", AlertType.Warning);
-                flag = false;
-                txtConversionRate.Focus();
             }
             return flag;
         }
@@ -299,7 +283,31 @@ namespace HotelManagement.Presentation.Website.HMCommon
             this.ddlSToConversion.DataBind();
             this.ddlSToConversion.Items.Insert(0, item);
         }
-
+        private void LoadSearchInformation()
+        {
+            if (!string.IsNullOrWhiteSpace(this.txtSrcRoomNumber.Text))
+            {
+                RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
+                RoomAlocationBO roomAllocationBO = new RoomAlocationBO();
+                roomAllocationBO = roomRegistrationDA.GetActiveRegistrationInfoByRoomNumber(this.txtSrcRoomNumber.Text);
+                if (roomAllocationBO.RoomId > 0)
+                {
+                    txtGuestName.Text = roomAllocationBO.GuestName;
+                    txtCountryName.Text = roomAllocationBO.GuestCountry;
+                    txtPassportNumber.Text = roomAllocationBO.GuestPassport;
+                    hfRegistrationId.Value = roomAllocationBO.RegistrationId.ToString();
+                }
+                else
+                {
+                    CommonHelper.AlertInfo(innboardMessage, "Please provide a valid Room Number.", AlertType.Warning);
+                }
+            }
+            else
+            {
+                CommonHelper.AlertInfo(innboardMessage, "Please provide a valid Room Number.", AlertType.Warning);
+            }
+            this.SetTab("EntryTab");
+        }
         private void LoadGridView()
         {
             //this.CheckObjectPermission();
@@ -340,7 +348,6 @@ namespace HotelManagement.Presentation.Website.HMCommon
             SetTab("SearchTab");
             this.btnPreview.Visible = true;
         }
-
         private void SetTab(string TabName)
         {
             if (TabName == "SearchTab")
@@ -362,21 +369,44 @@ namespace HotelManagement.Presentation.Website.HMCommon
 
             txtCommonConversionId.Value = cmncurrencyconvBO.CurrencyConversionId.ToString();
             txtMoneyAmount.Text = cmncurrencyconvBO.ConversionAmount.ToString();
+            hfConversionRate.Value = cmncurrencyconvBO.ConversionRate.ToString();
             txtConversionRate.Text = cmncurrencyconvBO.ConversionRate.ToString();
             txtTotalAmount.Text = cmncurrencyconvBO.ConvertedAmount.ToString();
             ddlFromConversion.SelectedValue = cmncurrencyconvBO.FromConversionHeadId.ToString();
             ddlToConversion.SelectedValue = cmncurrencyconvBO.ToConversionHeadId.ToString();
+
+            ddlGuestType.SelectedValue = cmncurrencyconvBO.TransactionType;
+            hfRegistrationId.Value = cmncurrencyconvBO.RegistrationId.ToString();
+            if (cmncurrencyconvBO.RegistrationId > 0)
+            {
+                txtSrcRoomNumber.Text = cmncurrencyconvBO.RoomNumber;
+            }
+            else
+            {
+                txtSrcRoomNumber.Text = string.Empty;
+            }
+
+            txtGuestName.Text = cmncurrencyconvBO.GuestName;
+            txtCountryName.Text = cmncurrencyconvBO.CountryName;
+            txtPassportNumber.Text = cmncurrencyconvBO.PassportNumber;
+            txtTransactionDetails.Text = cmncurrencyconvBO.TransactionDetails;
             this.btnSave.Text = "Update";
         }
         private void Cancel()
         {
+            ddlGuestType.SelectedValue = "OutSideGuest";
             ddlFromConversion.SelectedIndex = 0;
             ddlToConversion.SelectedIndex = 0;
             txtMoneyAmount.Text = string.Empty;
+            hfConversionRate.Value = string.Empty;
             txtConversionRate.Text = string.Empty;
             txtTotalAmount.Text = string.Empty;
+            txtGuestName.Text = string.Empty;
+            txtCountryName.Text = string.Empty;
+            txtPassportNumber.Text = string.Empty;
+            txtTransactionDetails.Text = string.Empty;
+            txtSrcRoomNumber.Text = string.Empty;
         }
-
         private void CheckObjectPermission()
         {
             UserInformationBO userInformationBO = new UserInformationBO();
@@ -393,19 +423,6 @@ namespace HotelManagement.Presentation.Website.HMCommon
                 isNewAddButtonEnable = -1;
             }
         }
-        //private void SetTab(string TabName)
-        //{
-        //    if (TabName == "SearchTab")
-        //    {
-        //        B.Attributes.Add("class", "ui-state-default ui-corner-top ui-tabs-active ui-state-active");
-        //        A.Attributes.Add("class", "ui-state-default ui-corner-top");
-        //    }
-        //    else if (TabName == "EntryTab")
-        //    {
-        //        A.Attributes.Add("class", "ui-state-default ui-corner-top ui-tabs-active ui-state-active");
-        //        B.Attributes.Add("class", "ui-state-default ui-corner-top");
-        //    }
-        //}
         [WebMethod]
         public static CommonCurrencyConversionBO GetConversionRateByHeadId(string FromHeadId, string ToHeadId)
         {
@@ -419,7 +436,5 @@ namespace HotelManagement.Presentation.Website.HMCommon
             }
             return setupBO;
         }
-
-
     }
 }

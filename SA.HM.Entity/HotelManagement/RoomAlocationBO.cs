@@ -10,6 +10,8 @@ namespace HotelManagement.Entity.HotelManagement
         public int RegistrationId { get; set; }
         public int ReservationId { get; set; }
         public string GuestName { get; set; }
+        public string GuestCountry { get; set; }
+        public string GuestPassport { get; set; }
         public string RoomType  { get; set; }
         public string RegistrationNumber { get; set; }
         public decimal RoomRate { get; set; }

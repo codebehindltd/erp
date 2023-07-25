@@ -22,6 +22,15 @@ namespace HotelManagement.Data.HMCommon
                     dbSmartAspects.AddInParameter(command, "@ConversionAmount", DbType.Decimal, cmncurrencyconvBO.ConversionAmount);
                     dbSmartAspects.AddInParameter(command, "@ConversionRate", DbType.Decimal, cmncurrencyconvBO.ConversionRate);
                     dbSmartAspects.AddInParameter(command, "@ConvertedAmount", DbType.Decimal, cmncurrencyconvBO.ConvertedAmount);
+
+                    dbSmartAspects.AddInParameter(command, "@TransactionType", DbType.String, cmncurrencyconvBO.TransactionType);
+                    dbSmartAspects.AddInParameter(command, "@RegistrationId", DbType.Int32, cmncurrencyconvBO.RegistrationId);
+                    dbSmartAspects.AddInParameter(command, "@GuestName", DbType.String, cmncurrencyconvBO.GuestName);
+                    dbSmartAspects.AddInParameter(command, "@CountryName", DbType.String, cmncurrencyconvBO.CountryName);
+                    dbSmartAspects.AddInParameter(command, "@PassportNumber", DbType.String, cmncurrencyconvBO.PassportNumber);
+                    dbSmartAspects.AddInParameter(command, "@TransactionDetails", DbType.String, cmncurrencyconvBO.TransactionDetails);
+
+
                     dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, cmncurrencyconvBO.CreatedBy);
                     dbSmartAspects.AddOutParameter(command, "@CurrencyConversionId", DbType.Int32, sizeof(Int32));
                     
@@ -46,6 +55,12 @@ namespace HotelManagement.Data.HMCommon
                     dbSmartAspects.AddInParameter(command, "@ConversionAmount", DbType.Decimal, cmncurrencyconvBO.ConversionAmount);
                     dbSmartAspects.AddInParameter(command, "@ConversionRate", DbType.Decimal, cmncurrencyconvBO.ConversionRate);
                     dbSmartAspects.AddInParameter(command, "@ConvertedAmount", DbType.Decimal, cmncurrencyconvBO.ConvertedAmount);
+                    dbSmartAspects.AddInParameter(command, "@TransactionType", DbType.String, cmncurrencyconvBO.TransactionType);
+                    dbSmartAspects.AddInParameter(command, "@RegistrationId", DbType.Int32, cmncurrencyconvBO.RegistrationId);
+                    dbSmartAspects.AddInParameter(command, "@GuestName", DbType.String, cmncurrencyconvBO.GuestName);
+                    dbSmartAspects.AddInParameter(command, "@CountryName", DbType.String, cmncurrencyconvBO.CountryName);
+                    dbSmartAspects.AddInParameter(command, "@PassportNumber", DbType.String, cmncurrencyconvBO.PassportNumber);
+                    dbSmartAspects.AddInParameter(command, "@TransactionDetails", DbType.String, cmncurrencyconvBO.TransactionDetails);
                     dbSmartAspects.AddInParameter(command, "@LastModifiedBy", DbType.Int32, cmncurrencyconvBO.LastModifiedBy);
 
                     status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
@@ -154,7 +169,15 @@ namespace HotelManagement.Data.HMCommon
                                 cmnCurrencyConv.ToConversionHeadId = Convert.ToInt32(reader["ToConversionHeadId"]);
                                 cmnCurrencyConv.ConversionAmount = Convert.ToDecimal(reader["ConversionAmount"]);
                                 cmnCurrencyConv.ConversionRate = Convert.ToDecimal(reader["ConversionRate"]);
-                                cmnCurrencyConv.ConvertedAmount = Convert.ToDecimal(reader["ConvertedAmount"]);                                
+                                cmnCurrencyConv.ConvertedAmount = Convert.ToDecimal(reader["ConvertedAmount"]);
+
+                                cmnCurrencyConv.TransactionType = reader["TransactionType"].ToString();
+                                cmnCurrencyConv.RegistrationId = Convert.ToInt32(reader["RegistrationId"]);
+                                cmnCurrencyConv.RoomNumber = reader["RoomNumber"].ToString();
+                                cmnCurrencyConv.GuestName = reader["GuestName"].ToString();
+                                cmnCurrencyConv.CountryName = reader["CountryName"].ToString();
+                                cmnCurrencyConv.PassportNumber = reader["PassportNumber"].ToString();
+                                cmnCurrencyConv.TransactionDetails = reader["TransactionDetails"].ToString();
                             }
                         }
                     }

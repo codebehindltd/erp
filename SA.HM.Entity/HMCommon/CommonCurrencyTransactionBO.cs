@@ -20,5 +20,12 @@ namespace HotelManagement.Entity.HMCommon
         public DateTime CreatedDate { get; set; }
         public int LastModifiedBy { get; set; }
         public DateTime LastModifiedDate { get; set; }
+        public string TransactionType { get; set; }
+        public int RegistrationId { get; set; }
+        public string RoomNumber { get; set; }
+        public string GuestName { get; set; }
+        public string CountryName { get; set; }
+        public string PassportNumber { get; set; }
+        public string TransactionDetails { get; set; }
     }
 }

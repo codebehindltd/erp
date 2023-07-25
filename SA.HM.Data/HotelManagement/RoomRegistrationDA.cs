@@ -2792,6 +2792,8 @@ namespace HotelManagement.Data.HotelManagement
                                 roomAllocationBO.ReservationId = Convert.ToInt32(reader["ReservationId"]);
                                 roomAllocationBO.RegistrationNumber = reader["RegistrationNumber"].ToString();
                                 roomAllocationBO.GuestName = reader["GuestName"].ToString();
+                                roomAllocationBO.GuestCountry = reader["GuestCountry"].ToString();
+                                roomAllocationBO.GuestPassport = reader["GuestPassport"].ToString();
                                 roomAllocationBO.RoomType = reader["RoomType"].ToString();
                                 roomAllocationBO.RoomRate = Decimal.Parse(reader["RoomRate"].ToString());
                                 roomAllocationBO.RoomTypeId = Int32.Parse(reader["RoomTypeId"].ToString());

@@ -7,11 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Presentation.Website.HMCommon {
-    
-    
-    public partial class frmCurrencyTransaction {
-        
+namespace HotelManagement.Presentation.Website.HMCommon
+{
+
+
+    public partial class frmCurrencyTransaction
+    {
+
+        /// <summary>
+        /// hfConversionRate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfConversionRate;
+
+        /// <summary>
+        /// hfRegistrationId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfRegistrationId;
+
         /// <summary>
         /// gvConversionInfo control.
         /// </summary>
@@ -20,7 +40,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvConversionInfo;
-        
+
         /// <summary>
         /// btnPreview control.
         /// </summary>
@@ -29,7 +49,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPreview;
-        
+
         /// <summary>
         /// A control.
         /// </summary>
@@ -38,7 +58,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl A;
-        
+
         /// <summary>
         /// B control.
         /// </summary>
@@ -47,7 +67,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl B;
-        
+
         /// <summary>
         /// txtCommonConversionId control.
         /// </summary>
@@ -56,7 +76,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField txtCommonConversionId;
-        
+
         /// <summary>
         /// txtConversionRateId control.
         /// </summary>
@@ -65,7 +85,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField txtConversionRateId;
-        
+
         /// <summary>
         /// lblFromConversion control.
         /// </summary>
@@ -74,7 +94,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFromConversion;
-        
+
         /// <summary>
         /// ddlFromConversion control.
         /// </summary>
@@ -83,7 +103,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlFromConversion;
-        
+
         /// <summary>
         /// lblToConversion control.
         /// </summary>
@@ -92,7 +112,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblToConversion;
-        
+
         /// <summary>
         /// ddlToConversion control.
         /// </summary>
@@ -101,7 +121,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlToConversion;
-        
+
         /// <summary>
         /// lblMoneyAmount control.
         /// </summary>
@@ -110,7 +130,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMoneyAmount;
-        
+
         /// <summary>
         /// txtMoneyAmount control.
         /// </summary>
@@ -119,16 +139,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMoneyAmount;
-        
-        /// <summary>
-        /// lblConversionRate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblConversionRate;
-        
+
         /// <summary>
         /// txtConversionRate control.
         /// </summary>
@@ -137,7 +148,25 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtConversionRate;
-        
+
+        /// <summary>
+        /// lblGuestType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblGuestType;
+
+        /// <summary>
+        /// ddlGuestType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlGuestType;
+
         /// <summary>
         /// lblTotalAmount control.
         /// </summary>
@@ -146,7 +175,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotalAmount;
-        
+
         /// <summary>
         /// txtTotalAmount control.
         /// </summary>
@@ -155,7 +184,106 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTotalAmount;
-        
+
+        /// <summary>
+        /// lblRoomNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRoomNumber;
+
+        /// <summary>
+        /// txtSrcRoomNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSrcRoomNumber;
+
+        /// <summary>
+        /// btnSrcRoomNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSrcRoomNumber;
+
+        /// <summary>
+        /// lblGuestName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblGuestName;
+
+        /// <summary>
+        /// txtGuestName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtGuestName;
+
+        /// <summary>
+        /// lblCountryName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCountryName;
+
+        /// <summary>
+        /// txtCountryName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCountryName;
+
+        /// <summary>
+        /// lblPassportNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPassportNumber;
+
+        /// <summary>
+        /// txtPassportNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPassportNumber;
+
+        /// <summary>
+        /// lblTransactionDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTransactionDetails;
+
+        /// <summary>
+        /// txtTransactionDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTransactionDetails;
+
         /// <summary>
         /// btnSave control.
         /// </summary>
@@ -164,7 +292,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
-        
+
         /// <summary>
         /// btnClear control.
         /// </summary>
@@ -173,7 +301,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnClear;
-        
+
         /// <summary>
         /// lblSFromConversion control.
         /// </summary>
@@ -182,7 +310,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSFromConversion;
-        
+
         /// <summary>
         /// ddlSFromConversion control.
         /// </summary>
@@ -191,7 +319,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSFromConversion;
-        
+
         /// <summary>
         /// lblSToConversion control.
         /// </summary>
@@ -200,7 +328,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSToConversion;
-        
+
         /// <summary>
         /// ddlSToConversion control.
         /// </summary>
@@ -209,7 +337,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSToConversion;
-        
+
         /// <summary>
         /// lblFromDate control.
         /// </summary>
@@ -218,7 +346,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFromDate;
-        
+
         /// <summary>
         /// txtFromDate control.
         /// </summary>
@@ -227,7 +355,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFromDate;
-        
+
         /// <summary>
         /// lblToDate control.
         /// </summary>
@@ -236,7 +364,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblToDate;
-        
+
         /// <summary>
         /// txtToDate control.
         /// </summary>
@@ -245,7 +373,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtToDate;
-        
+
         /// <summary>
         /// btnSearch control.
         /// </summary>
@@ -254,7 +382,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearch;
-        
+
         /// <summary>
         /// btnGroupPaymentPreview control.
         /// </summary>
@@ -263,7 +391,7 @@ namespace HotelManagement.Presentation.Website.HMCommon {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGroupPaymentPreview;
-        
+
         /// <summary>
         /// gvCurrencyConversion control.
         /// </summary>
