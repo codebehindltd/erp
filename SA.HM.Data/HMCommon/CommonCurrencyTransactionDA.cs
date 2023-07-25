@@ -212,7 +212,15 @@ namespace HotelManagement.Data.HMCommon
                                 entityBO.ConversionAmount = Convert.ToDecimal(reader["ConversionAmount"]);
                                 entityBO.ConversionRate = Convert.ToDecimal(reader["ConversionRate"]);
                                 entityBO.ConvertedAmount = Convert.ToDecimal(reader["ConvertedAmount"]);
-                                entityBO.TransactionNumber = reader["TransactionNumber"].ToString();                                
+                                entityBO.TransactionNumber = reader["TransactionNumber"].ToString();
+                                entityBO.GuestName = reader["GuestName"].ToString();
+                                entityBO.RegistrationNumber = reader["RegistrationNumber"].ToString();
+                                entityBO.RoomNumber = reader["RoomNumber"].ToString();
+                                entityBO.CountryName = reader["CountryName"].ToString();
+                                entityBO.PassportNumber = reader["PassportNumber"].ToString();
+                                entityBO.TransactionDetails = reader["TransactionDetails"].ToString();
+                                entityBO.UserName = reader["UserName"].ToString();
+                                entityBO.CreatedDateString = reader["CreatedDateString"].ToString();
 
                                 currencyconvList.Add(entityBO);
                             }

@@ -866,6 +866,7 @@
     <Content Include="GeneralLedger\Reports\Rdlc\rptGeneralNotesBreakDown.rdlc" />
     <Content Include="GeneralLedger\Reports\Rdlc\rptGeneralNotesBreakDownComparison.rdlc" />
     <Content Include="GeneralLedger\Reports\Rdlc\RptBudgetStatement.rdlc" />
+    <Content Include="HMCommon\Reports\Rdlc\rptCommonCurrencyConversionTwoColumn.rdlc" />
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />

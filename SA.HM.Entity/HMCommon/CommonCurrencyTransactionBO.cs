@@ -23,9 +23,12 @@ namespace HotelManagement.Entity.HMCommon
         public string TransactionType { get; set; }
         public int RegistrationId { get; set; }
         public string RoomNumber { get; set; }
+        public string RegistrationNumber { get; set; }
         public string GuestName { get; set; }
         public string CountryName { get; set; }
         public string PassportNumber { get; set; }
         public string TransactionDetails { get; set; }
+        public string UserName { get; set; }
+        public string CreatedDateString { get; set; }
     }
 }

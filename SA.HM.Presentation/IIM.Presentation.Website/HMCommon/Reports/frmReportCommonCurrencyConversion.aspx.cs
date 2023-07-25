@@ -9,6 +9,7 @@ using System.IO;
 using HotelManagement.Data.HMCommon;
 using HotelManagement.Entity.HMCommon;
 using HotelManagement.Presentation.Website.Common;
+using HotelManagement.Data.GeneralLedger;
 
 namespace HotelManagement.Presentation.Website.HMCommon.Reports
 {
@@ -52,6 +53,21 @@ namespace HotelManagement.Presentation.Website.HMCommon.Reports
 
                 var reportPath = "";
                 reportPath = Server.MapPath(@"~/HMCommon/Reports/Rdlc/rptCommonCurrencyConversion.rdlc");
+
+                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                HMCommonSetupBO CurrencyExchangeInvoiceFormatBO = new HMCommonSetupBO();
+                CurrencyExchangeInvoiceFormatBO = commonSetupDA.GetCommonConfigurationInfo("CurrencyExchangeInvoiceFormat", "CurrencyExchangeInvoiceFormat");
+                if (CurrencyExchangeInvoiceFormatBO != null)
+                {
+                    if (CurrencyExchangeInvoiceFormatBO.SetupValue == "1")
+                    {
+                        reportPath = Server.MapPath(@"~/HMCommon/Reports/Rdlc/rptCommonCurrencyConversion.rdlc");
+                    }
+                    else if (CurrencyExchangeInvoiceFormatBO.SetupValue == "2")
+                    {
+                        reportPath = Server.MapPath(@"~/HMCommon/Reports/Rdlc/rptCommonCurrencyConversionTwoColumn.rdlc");
+                    }
+                }
 
                 if (!File.Exists(reportPath))
                     return;

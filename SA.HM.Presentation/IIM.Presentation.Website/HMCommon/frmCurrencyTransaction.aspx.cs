@@ -14,7 +14,7 @@ using HotelManagement.Entity.HotelManagement;
 
 namespace HotelManagement.Presentation.Website.HMCommon
 {
-    public partial class frmCurrencyTransaction : System.Web.UI.Page
+    public partial class frmCurrencyTransaction : BasePage
     {
         HiddenField innboardMessage;
         HMUtility hmUtility = new HMUtility();
@@ -45,12 +45,8 @@ namespace HotelManagement.Presentation.Website.HMCommon
                 ImageButton imgUpdate = (ImageButton)e.Row.FindControl("ImgUpdate");
                 ImageButton imgDelete = (ImageButton)e.Row.FindControl("ImgDelete");
                 ImageButton imgPreview = (ImageButton)e.Row.FindControl("ImgPaymentPreview");
-                //imgUpdate.Attributes["onclick"] = "javascript:return PerformFillFormAction('" + lblValue.Text + "');";
-                //imgDelete.Attributes["onclick"] = "javascript:return PerformDeleteAction('" + lblValue.Text + "');";
-                //imgUpdate.Visible = isSavePermission;
-                //imgDelete.Visible = isDeletePermission;
-                //imgDelete.Visible = false;
-                imgPreview.Visible = false;
+                imgUpdate.Visible = isSavePermission;
+                imgDelete.Visible = isDeletePermission;
             }
         }
         protected void gvCurrencyConversion_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -325,7 +321,7 @@ namespace HotelManagement.Presentation.Website.HMCommon
         {
             DateTime? fromDate = null;
             DateTime? toDate = null;
-            //this.CheckObjectPermission();
+            this.CheckObjectPermission();
             int fromId = Convert.ToInt32(ddlSFromConversion.SelectedValue);
             int toId = Convert.ToInt32(ddlSToConversion.SelectedValue);
             if (!string.IsNullOrWhiteSpace(txtFromDate.Text))
@@ -346,7 +342,6 @@ namespace HotelManagement.Presentation.Website.HMCommon
             this.gvConversionInfo.DataSource = files;
             this.gvConversionInfo.DataBind();
             SetTab("SearchTab");
-            this.btnPreview.Visible = true;
         }
         private void SetTab(string TabName)
         {
@@ -413,7 +408,7 @@ namespace HotelManagement.Presentation.Website.HMCommon
             userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
 
             ObjectPermissionBO objectPermissionBO = new ObjectPermissionBO();
-            objectPermissionBO = hmUtility.ObjectPermission(userInformationBO.UserInfoId, HMConstants.ApplicationFormName.frmHMConvertCurrency.ToString());
+            objectPermissionBO = hmUtility.ObjectPermission(userInformationBO.UserInfoId, HMConstants.ApplicationFormName.frmCurrencyTransaction.ToString());
 
             isSavePermission = objectPermissionBO.IsSavePermission;
             isDeletePermission = objectPermissionBO.IsDeletePermission;

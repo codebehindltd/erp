@@ -42,15 +42,6 @@ namespace HotelManagement.Presentation.Website.HMCommon
         protected global::System.Web.UI.WebControls.GridView gvConversionInfo;
 
         /// <summary>
-        /// btnPreview control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPreview;
-
-        /// <summary>
         /// A control.
         /// </summary>
         /// <remarks>

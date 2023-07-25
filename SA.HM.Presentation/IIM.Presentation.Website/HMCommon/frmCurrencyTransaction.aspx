@@ -30,13 +30,6 @@
             }
 
             $('#' + ddlGuestType).change(function () {
-                <%--$('#' + btnSave).val('Save');
-                var txtSrcRoomNumber = '<%=txtSrcRoomNumber.ClientID%>'
-                $("#" + txtSrcRoomNumber).attr("disabled", false);
-
-                var btnSrcRoomNumber = '<%=btnSrcRoomNumber.ClientID%>'
-                $("#" + btnSrcRoomNumber).attr("disabled", false);--%>
-
                 if ($('#' + ddlGuestType).val() == "InHouseGuest") {
                     InhousePanelVisibleTrue();
                 }
@@ -284,10 +277,6 @@
                 <EditRowStyle BackColor="#7C6F57" />
                 <AlternatingRowStyle BackColor="White" />
             </asp:GridView>
-            <div class="divClear">
-            </div>
-            <asp:Button ID="btnPreview" runat="server" Text="Preview" TabIndex="3" CssClass="TransactionalButton btn btn-primary"
-                OnClientClick="javascript: return PaymentPreview();" />
         </div>
     </div>
     <div id="myTabs">

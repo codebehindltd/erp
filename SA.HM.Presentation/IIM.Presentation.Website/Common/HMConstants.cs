@@ -34,6 +34,7 @@ namespace HotelManagement.Presentation.Website.Common
             frmGuestBillPayment,
             frmExpectedDeparture,
             frmHMConvertCurrency,
+            frmCurrencyTransaction,
             frmReportRoomStatusHistory,
             frmReportRoomStatus,
             frmReportRoomWiseStatus,
