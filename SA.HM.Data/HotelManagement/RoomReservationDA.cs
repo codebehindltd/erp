@@ -812,7 +812,6 @@ namespace HotelManagement.Data.HotelManagement
 
                                             if (pickupDropBO.ArrivalTime != null)
                                             {
-                                                //dbSmartAspects.AddInParameter(commandPickupDropAdd, "@ArrivalTime", DbType.DateTime, pickupDropBO.ArrivalTime);
                                                 if (string.IsNullOrWhiteSpace(pickupDropBO.ArrivalFlightName.Replace("--- Please Select ---", "")) && string.IsNullOrWhiteSpace(pickupDropBO.ArrivalFlightNumber))
                                                 {
                                                     dbSmartAspects.AddInParameter(commandPickupDropAdd, "@ArrivalTime", DbType.DateTime, DBNull.Value);
@@ -831,7 +830,6 @@ namespace HotelManagement.Data.HotelManagement
                                             dbSmartAspects.AddInParameter(commandPickupDropAdd, "@DepartureFlightNumber", DbType.String, pickupDropBO.DepartureFlightNumber);
                                             if (pickupDropBO.DepartureTime != null)
                                             {
-                                                //dbSmartAspects.AddInParameter(commandPickupDropAdd, "@DepartureTime", DbType.DateTime, pickupDropBO.DepartureTime);
                                                 if (string.IsNullOrWhiteSpace(pickupDropBO.DepartureFlightName.Replace("--- Please Select ---", "")) && string.IsNullOrWhiteSpace(pickupDropBO.DepartureFlightNumber))
                                                 {
                                                     dbSmartAspects.AddInParameter(commandPickupDropAdd, "@DepartureTime", DbType.DateTime, DBNull.Value);
@@ -848,7 +846,9 @@ namespace HotelManagement.Data.HotelManagement
                                             dbSmartAspects.AddInParameter(commandPickupDropAdd, "@PickupDropType", DbType.String, pickupDropBO.PickupDropType);
 
                                             dbSmartAspects.AddInParameter(commandPickupDropAdd, "@IsArrivalChargable", DbType.Boolean, pickupDropBO.IsArrivalChargable);
+                                            dbSmartAspects.AddInParameter(commandPickupDropAdd, "@ArrivalChargableAmount", DbType.Decimal, pickupDropBO.ArrivalChargableAmount);
                                             dbSmartAspects.AddInParameter(commandPickupDropAdd, "@IsDepartureChargable", DbType.Boolean, pickupDropBO.IsDepartureChargable);
+                                            dbSmartAspects.AddInParameter(commandPickupDropAdd, "@DepartureChargableAmount", DbType.Decimal, pickupDropBO.DepartureChargableAmount);
 
                                             dbSmartAspects.AddOutParameter(commandPickupDropAdd, "@APDId", DbType.Int32, sizeof(Int32));
                                             status = dbSmartAspects.ExecuteNonQuery(commandPickupDropAdd, transction);
@@ -907,7 +907,9 @@ namespace HotelManagement.Data.HotelManagement
                                             dbSmartAspects.AddInParameter(commandPickupDropAdd, "@PickupDropType", DbType.String, pickupDropBO.PickupDropType);
 
                                             dbSmartAspects.AddInParameter(commandPickupDropAdd, "@IsArrivalChargable", DbType.Boolean, pickupDropBO.IsArrivalChargable);
+                                            dbSmartAspects.AddInParameter(commandPickupDropAdd, "@ArrivalChargableAmount", DbType.Decimal, pickupDropBO.ArrivalChargableAmount);
                                             dbSmartAspects.AddInParameter(commandPickupDropAdd, "@IsDepartureChargable", DbType.Boolean, pickupDropBO.IsDepartureChargable);
+                                            dbSmartAspects.AddInParameter(commandPickupDropAdd, "@DepartureChargableAmount", DbType.Decimal, pickupDropBO.DepartureChargableAmount);
 
                                             dbSmartAspects.AddOutParameter(commandPickupDropAdd, "@APDId", DbType.Int32, sizeof(Int32));
                                             status = dbSmartAspects.ExecuteNonQuery(commandPickupDropAdd, transction);
@@ -1404,7 +1406,6 @@ namespace HotelManagement.Data.HotelManagement
 
                                             if (pickupDropBO.ArrivalTime != null)
                                             {
-                                                //dbSmartAspects.AddInParameter(commandPickupDropEdit, "@ArrivalTime", DbType.DateTime, pickupDropBO.ArrivalTime);
                                                 if (string.IsNullOrWhiteSpace(pickupDropBO.ArrivalFlightName.Replace("--- Please Select ---", "")) && string.IsNullOrWhiteSpace(pickupDropBO.ArrivalFlightNumber))
                                                 {
                                                     dbSmartAspects.AddInParameter(commandPickupDropEdit, "@ArrivalTime", DbType.DateTime, DBNull.Value);
@@ -1423,7 +1424,6 @@ namespace HotelManagement.Data.HotelManagement
                                             dbSmartAspects.AddInParameter(commandPickupDropEdit, "@DepartureFlightNumber", DbType.String, pickupDropBO.DepartureFlightNumber);
                                             if (pickupDropBO.DepartureTime != null)
                                             {
-                                                //dbSmartAspects.AddInParameter(commandPickupDropEdit, "@DepartureTime", DbType.DateTime, pickupDropBO.DepartureTime);
                                                 if (string.IsNullOrWhiteSpace(pickupDropBO.DepartureFlightName.Replace("--- Please Select ---", "")) && string.IsNullOrWhiteSpace(pickupDropBO.DepartureFlightNumber))
                                                 {
                                                     dbSmartAspects.AddInParameter(commandPickupDropEdit, "@DepartureTime", DbType.DateTime, DBNull.Value);
@@ -1439,7 +1439,9 @@ namespace HotelManagement.Data.HotelManagement
                                             }
 
                                             dbSmartAspects.AddInParameter(commandPickupDropEdit, "@IsArrivalChargable", DbType.Boolean, pickupDropBO.IsArrivalChargable);
+                                            dbSmartAspects.AddInParameter(commandPickupDropEdit, "@ArrivalChargableAmount", DbType.Decimal, pickupDropBO.ArrivalChargableAmount);
                                             dbSmartAspects.AddInParameter(commandPickupDropEdit, "@IsDepartureChargable", DbType.Boolean, pickupDropBO.IsDepartureChargable);
+                                            dbSmartAspects.AddInParameter(commandPickupDropEdit, "@DepartureChargableAmount", DbType.Decimal, pickupDropBO.DepartureChargableAmount);
 
                                             dbSmartAspects.AddInParameter(commandPickupDropEdit, "@PickupDropType", DbType.String, pickupDropBO.PickupDropType);
                                             status = dbSmartAspects.ExecuteNonQuery(commandPickupDropEdit, transction);
@@ -1458,7 +1460,6 @@ namespace HotelManagement.Data.HotelManagement
 
                                             if (pickupDropBO.ArrivalTime != null)
                                             {
-                                                //dbSmartAspects.AddInParameter(commandPickupDropAdd, "@ArrivalTime", DbType.DateTime, pickupDropBO.ArrivalTime);
                                                 if (string.IsNullOrWhiteSpace(pickupDropBO.ArrivalFlightName.Replace("--- Please Select ---", "")) && string.IsNullOrWhiteSpace(pickupDropBO.ArrivalFlightNumber))
                                                 {
                                                     dbSmartAspects.AddInParameter(commandPickupDropAdd, "@ArrivalTime", DbType.DateTime, DBNull.Value);
@@ -1477,7 +1478,6 @@ namespace HotelManagement.Data.HotelManagement
                                             dbSmartAspects.AddInParameter(commandPickupDropAdd, "@DepartureFlightNumber", DbType.String, pickupDropBO.DepartureFlightNumber);
                                             if (pickupDropBO.DepartureTime != null)
                                             {
-                                                //dbSmartAspects.AddInParameter(commandPickupDropAdd, "@DepartureTime", DbType.DateTime, pickupDropBO.DepartureTime);
                                                 if (string.IsNullOrWhiteSpace(pickupDropBO.DepartureFlightName.Replace("--- Please Select ---", "")) && string.IsNullOrWhiteSpace(pickupDropBO.DepartureFlightNumber))
                                                 {
                                                     dbSmartAspects.AddInParameter(commandPickupDropAdd, "@DepartureTime", DbType.DateTime, DBNull.Value);
@@ -1494,7 +1494,9 @@ namespace HotelManagement.Data.HotelManagement
                                             dbSmartAspects.AddInParameter(commandPickupDropAdd, "@PickupDropType", DbType.String, pickupDropBO.PickupDropType);
 
                                             dbSmartAspects.AddInParameter(commandPickupDropAdd, "@IsArrivalChargable", DbType.Boolean, pickupDropBO.IsArrivalChargable);
+                                            dbSmartAspects.AddInParameter(commandPickupDropAdd, "@ArrivalChargableAmount", DbType.Decimal, pickupDropBO.ArrivalChargableAmount);
                                             dbSmartAspects.AddInParameter(commandPickupDropAdd, "@IsDepartureChargable", DbType.Boolean, pickupDropBO.IsDepartureChargable);
+                                            dbSmartAspects.AddInParameter(commandPickupDropAdd, "@DepartureChargableAmount", DbType.Decimal, pickupDropBO.DepartureChargableAmount);
 
                                             dbSmartAspects.AddOutParameter(commandPickupDropAdd, "@APDId", DbType.Int32, sizeof(Int32));
                                             status = dbSmartAspects.ExecuteNonQuery(commandPickupDropAdd, transction);
@@ -1552,6 +1554,12 @@ namespace HotelManagement.Data.HotelManagement
                                             dbSmartAspects.AddInParameter(commandPickupDropAdd, "@DepartureTime", DbType.DateTime, DBNull.Value);
                                         }
                                         dbSmartAspects.AddInParameter(commandPickupDropAdd, "@PickupDropType", DbType.String, pickupDropBO.PickupDropType);
+
+                                        dbSmartAspects.AddInParameter(commandPickupDropAdd, "@IsArrivalChargable", DbType.Boolean, pickupDropBO.IsArrivalChargable);
+                                        dbSmartAspects.AddInParameter(commandPickupDropAdd, "@ArrivalChargableAmount", DbType.Decimal, pickupDropBO.ArrivalChargableAmount);
+                                        dbSmartAspects.AddInParameter(commandPickupDropAdd, "@IsDepartureChargable", DbType.Boolean, pickupDropBO.IsDepartureChargable);
+                                        dbSmartAspects.AddInParameter(commandPickupDropAdd, "@DepartureChargableAmount", DbType.Decimal, pickupDropBO.DepartureChargableAmount);
+
                                         dbSmartAspects.AddOutParameter(commandPickupDropAdd, "@APDId", DbType.Int32, sizeof(Int32));
                                         status = dbSmartAspects.ExecuteNonQuery(commandPickupDropAdd, transction);
                                         tmpapdId = Convert.ToInt32(commandPickupDropAdd.Parameters["@APDId"].Value);
@@ -2458,7 +2466,9 @@ namespace HotelManagement.Data.HotelManagement
                                 bo.AirportPickUp = reader["AirportPickUp"].ToString();
                                 bo.AirportDrop = reader["AirportDrop"].ToString();
                                 bo.IsArrivalChargable = Convert.ToBoolean(reader["IsArrivalChargable"].ToString());
+                                bo.ArrivalChargableAmount = Convert.ToDecimal(reader["ArrivalChargableAmount"].ToString());
                                 bo.IsDepartureChargable = Convert.ToBoolean(reader["IsDepartureChargable"].ToString());
+                                bo.DepartureChargableAmount = Convert.ToDecimal(reader["DepartureChargableAmount"].ToString());
 
                                 list.Add(bo);
                             }

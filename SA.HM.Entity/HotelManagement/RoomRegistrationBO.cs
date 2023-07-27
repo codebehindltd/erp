@@ -74,7 +74,7 @@ namespace HotelManagement.Entity.HotelManagement
         public string DepartureFlightNumber { get; set; }
         public DateTime? DepartureTime { get; set; }
         public Boolean IsDepartureChargable { get; set; }
-
+        public decimal DepartureChargableAmount { get; set; }
         public int GuestId { get; set; }
         public string GuestName { get; set; }
         public string CountryName { get; set; }

@@ -2183,7 +2183,11 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 txtDepartureTime.Text = string.Empty;
 
                 chkIsArrivalChargable.Checked = false;
+                txtArrivalChargableAmount.Text = String.Empty;
                 chkIsDepartureChargable.Checked = false;
+                txtDepartureChargableAmount.Text = String.Empty;
+                txtArrivalChargableAmount.Enabled = false;
+                txtDepartureChargableAmount.Enabled = false;
                 return;
             }
             else if (airportPickupDropList.Count == 0)
@@ -2203,7 +2207,11 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 txtDepartureFlightNumber.Text = string.Empty;
                 txtDepartureTime.Text = string.Empty;
                 chkIsArrivalChargable.Checked = false;
+                txtArrivalChargableAmount.Text = String.Empty;
                 chkIsDepartureChargable.Checked = false;
+                txtDepartureChargableAmount.Text = String.Empty;
+                txtArrivalChargableAmount.Enabled = false;
+                txtDepartureChargableAmount.Enabled = false;
                 return;
             }
 
@@ -2212,6 +2220,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 hfAPId.Value = airportPickupDropList[0].APDId.ToString();
                 if ((airportPickupDropList[0].AirportPickUp == "YES") || (airportPickupDropList[0].AirportPickUp == "TBA"))
                 {
+                    txtArrivalChargableAmount.Enabled = true;
                     hfArrivalAirlineId.Value = airportPickupDropList[0].ArrivalAirlineId.ToString();
                     ddlArrivalFlightName.SelectedValue = hfArrivalAirlineId.Value.ToString();
                     ddlAirportPickUp.SelectedValue = airportPickupDropList[0].AirportPickUp;
@@ -2219,6 +2228,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     txtArrivalFlightNumber.Text = airportPickupDropList[0].ArrivalFlightNumber;
                     txtArrivalTime.Text = !string.IsNullOrWhiteSpace(airportPickupDropList[0].ArrivalTimeShow) ? Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd") + " " + airportPickupDropList[0].ArrivalTimeShow).ToString(userInformationBO.TimeFormat) : string.Empty;
                     chkIsArrivalChargable.Checked = airportPickupDropList[0].IsArrivalChargable;
+                    txtArrivalChargableAmount.Text = airportPickupDropList[0].ArrivalChargableAmount.ToString();
                 }
                 else if (airportPickupDropList[0].AirportPickUp == "NO")
                 {
@@ -2265,6 +2275,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 hfAPId.Value = airportPickupDropList[0].APDId.ToString();
                 if ((airportPickupDropList[0].AirportDrop == "YES") || (airportPickupDropList[0].AirportDrop == "TBA"))
                 {
+                    txtDepartureChargableAmount.Enabled = true;
                     hfDepartureAirlineId.Value = airportPickupDropList[0].DepartureAirlineId.ToString();
                     ddlDepartureFlightName.SelectedValue = hfDepartureAirlineId.Value.ToString();
                     ddlAirportDrop.SelectedValue = airportPickupDropList[0].AirportDrop;
@@ -2272,6 +2283,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     txtDepartureFlightNumber.Text = airportPickupDropList[0].DepartureFlightNumber;
                     txtDepartureTime.Text = !string.IsNullOrWhiteSpace(airportPickupDropList[0].DepartureTimeShow) ? Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd") + " " + airportPickupDropList[0].DepartureTimeShow).ToString(userInformationBO.TimeFormat) : string.Empty;
                     chkIsDepartureChargable.Checked = airportPickupDropList[0].IsDepartureChargable;
+                    txtDepartureChargableAmount.Text = airportPickupDropList[0].DepartureChargableAmount.ToString();
                 }
                 else if (airportPickupDropList[0].AirportDrop == "NO")
                 {

@@ -1169,6 +1169,15 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         }
 
                         roomRegistrationBO.IsDepartureChargable = hfIsDepartureChargable.Value.ToString().Trim() == "1" ? true : false;
+                        if (!string.IsNullOrWhiteSpace(txtDepartureChargableAmount.Text))
+                        {
+                            roomRegistrationBO.DepartureChargableAmount = Convert.ToDecimal(txtDepartureChargableAmount.Text);
+                        }
+                        else
+                        {
+                            roomRegistrationBO.DepartureChargableAmount = 0;
+                        }
+
                         // -- Airport Pickup and Drop Information-------------------------------End--------
 
                         // -- Advance Payment Information--------------------------------------------------
@@ -2052,6 +2061,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.cbCityCharge.Enabled = true;
             this.cbVatAmount.Enabled = true;
             this.cbAdditionalCharge.Enabled = true;
+
+            txtDepartureChargableAmount.Text = String.Empty;
         }
         private void LoadRoomNumber(int roomTypeId)
         {
@@ -2347,6 +2358,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     this.ddlDepartureFlightName.Text = roomRegistrationBO.DepartureAirlineId.ToString();
                     this.txtDepartureFlightNumber.Text = roomRegistrationBO.DepartureFlightNumber;
                     chkIsDepartureChargable.Checked = roomRegistrationBO.IsDepartureChargable;
+                    txtDepartureChargableAmount.Text = roomRegistrationBO.DepartureChargableAmount.ToString();
 
                     if (roomRegistrationBO.DepartureTime != null)
                     {

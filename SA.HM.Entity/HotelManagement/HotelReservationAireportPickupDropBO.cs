@@ -25,6 +25,8 @@ namespace HotelManagement.Entity.HotelManagement
         public string ArrivalTimeShow { get; set; }
         public string DepartureTimeShow { get; set; }
         public Boolean IsArrivalChargable { get; set; }
+        public decimal ArrivalChargableAmount { get; set; }
         public Boolean IsDepartureChargable { get; set; }
+        public decimal DepartureChargableAmount { get; set; }
     }
 }

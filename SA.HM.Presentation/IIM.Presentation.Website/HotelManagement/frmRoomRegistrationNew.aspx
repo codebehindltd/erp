@@ -49,6 +49,13 @@
                 $("#btnRoomRateCalculation").hide();
             }
 
+            //if ($('#ContentPlaceHolder1_chkIsDepartureChargable').is(':checked')) {
+            //    $("#ContentPlaceHolder1_txtDepartureChargableAmount").attr("readOnly", false);
+            //}
+            //else {
+            //    $("#ContentPlaceHolder1_txtDepartureChargableAmount").attr("readOnly", true);
+            //}
+
             if ($("#<%=chkIsExpectedCheckOutTimeEnable.ClientID %>").is(':checked')) {
                 $("#<%=txtProbableDepartureTime.ClientID %>").attr("disabled", false);
             }
@@ -4601,8 +4608,6 @@
                 return validationStatus;
             }
 
-
-
             var rowLength = $('#TableWiseItemInformation tr').length;
             if (rowLength <= 1) {
                 $("#<%=hfIsGuestAddFromRegistration.ClientID %>").val(0);
@@ -4612,34 +4617,28 @@
                 $("#<%=hfIsGuestAddFromRegistration.ClientID %>").val(1);
             }
 
-
             if (CommonHelper.IsDecimal($('#ContentPlaceHolder1_txtRoomRate').val()) == false) {
-                toastr.warning('Entered Negotiated Rate is not in correct format.');
-                
+                toastr.warning('Entered Negotiated Rate is not in correct format.');                
                 return false;
             }
 
             if ($("#ContentPlaceHolder1_txtDiscountAmount").val() != "") {
                 if (CommonHelper.IsDecimal($("#ContentPlaceHolder1_txtDiscountAmount").val()) == false) {
                     toastr.warning("Please Provide Valid Number in Discount Amount.");
-                    $("#ContentPlaceHolder1_txtDiscountAmount").focus();
-                    
+                    $("#ContentPlaceHolder1_txtDiscountAmount").focus();                    
                     return false;
                 }
             }
 
-
             var v = $("#ContentPlaceHolder1_txtRoomRate").val();
             var m = $("#ContentPlaceHolder1_ddlIsCompanyGuest").val();
-
 
             if ($.trim($("#ContentPlaceHolder1_txtRoomRate").val()) != "0" || $.trim($("#ContentPlaceHolder1_txtRoomRate").val()) != "0.00") {
                 var totalPaidSericeCost = CalculatePaidServiceTotal();
                 var roomCost = parseFloat($("#ContentPlaceHolder1_txtRoomRate").val());
 
                 if (roomCost < totalPaidSericeCost) {
-                    toastr.warning("Negotiated Rate cannot be less than the total Paid Service amount.");
-                    
+                    toastr.warning("Negotiated Rate cannot be less than the total Paid Service amount.");                    
                     return false;
                 }
             }
@@ -4648,21 +4647,18 @@
 
 
                 if (CommonHelper.IsInt($("#ContentPlaceHolder1_txtArrivalHour").val()) == false) {
-                    toastr.warning("Please give valid Arrival Hour.");
-                    
+                    toastr.warning("Please give valid Arrival Hour.");                    
                     return false;
                 }
                 else if (CommonHelper.IsInt($("#ContentPlaceHolder1_txtArrivalMin").val()) == false) {
-                    toastr.warning("Please give valid Arrival Minute.");
-                    
+                    toastr.warning("Please give valid Arrival Minute.");                    
                     return false;
                 }
             }
 
 
             if ($('#btnAddDetailGuest').val() == 'Save') {
-                toastr.warning("Please Click Save Button First to Update Guest Details.");
-                
+                toastr.warning("Please Click Save Button First to Update Guest Details.");                
                 return false;
             }
 
@@ -5414,6 +5410,16 @@
                 }
             });
             return true;
+        }
+
+        function ToggleAiportPicUpDropOffDeparture(ctrl) {
+            //if ($('#ContentPlaceHolder1_chkIsDepartureChargable').is(':checked')) {
+            //    $("#ContentPlaceHolder1_txtDepartureChargableAmount").attr("readOnly", false);
+            //}
+            //else {
+            //    $("#ContentPlaceHolder1_txtDepartureChargableAmount").attr("readOnly", true);
+            //}
+
         }
 
         function ToggleOnlyRateEffectAction(ctrl) {
@@ -6612,13 +6618,19 @@
                                         TabIndex="81"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="form-group" style="display:none;">
-                                <label for="ArrivalTime" class="control-label col-md-2">
-                                    &nbsp;</label>
-                                <div class="col-md-4">
-                                    <asp:CheckBox ID="chkIsDepartureChargable" runat="server" Text="" onclick="javascript: return ToggleFieldVisibleForAllActiveReservation(this);"
-                                        TabIndex="2" />&nbsp;&nbsp;
-                                    <asp:Label ID="Label5" runat="server" class="control-label" Text="Is Chargable"></asp:Label>
+                            <div class="form-group">
+                                <label for="DepartureTime" class="control-label col-md-2">
+                                    Is Chargable</label>
+                                <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <asp:CheckBox ID="chkIsDepartureChargable" runat="server" Text="" onclick="javascript: return ToggleAiportPicUpDropOffDeparture(this);"
+                                                    TabIndex="2" />
+                                            </span>
+                                            <asp:TextBox ID="txtDepartureChargableAmount" runat="server" TabIndex="22" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

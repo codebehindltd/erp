@@ -42,6 +42,22 @@
                 }
             }
 
+
+            if ($('#ContentPlaceHolder1_chkIsArrivalChargable').is(':checked')) {
+                $("#ContentPlaceHolder1_txtArrivalChargableAmount").attr("readOnly", false);
+            }
+            else {
+                $("#ContentPlaceHolder1_txtArrivalChargableAmount").attr("readOnly", true);
+            }
+
+            if ($('#ContentPlaceHolder1_chkIsDepartureChargable').is(':checked')) {
+                $("#ContentPlaceHolder1_txtDepartureChargableAmount").attr("readOnly", false);
+            }
+            else {
+                $("#ContentPlaceHolder1_txtDepartureChargableAmount").attr("readOnly", true);
+            }
+
+
             if ($("#InnboardMessageHiddenField").val() != "") {
                 CommonHelper.AlertMessage(JSON.parse($("#InnboardMessageHiddenField").val()));
                 $("#InnboardMessageHiddenField").val("");
@@ -58,7 +74,7 @@
 
             $("#ContentPlaceHolder1_txtDateOut").datepicker("option", {
                 minDate: minCheckOutDate
-            });            
+            });
 
             $("#ContentPlaceHolder1_ddlGroupName").select2({
                 tags: "true",
@@ -2772,18 +2788,18 @@
         // Room Select
         function LoadRoomNumber() {
             var txtFromDate = $("#<%=txtDateIn.ClientID %>").val();
-        var txtToDate = $("#<%=txtDateOut.ClientID %>").val();
+            var txtToDate = $("#<%=txtDateOut.ClientID %>").val();
 
-        if (txtFromDate == "") {
-            //CustomAlert('The Check-In Date should not be empty.', 'Check In', 'Ok')
-            toastr.warning('The Check-In Date should not be empty.');
-            document.getElementById("<%=txtDateIn.ClientID%>").focus();
-                return false;
-            }
-            else if (txtToDate == "") {
-                //CustomAlert('The Check-Out Date should not be empty.', 'Check Out', 'Ok')
-                toastr.warning('The Check-Out Date should not be empty.');
-                document.getElementById("<%=txtToDate.ClientID%>").focus();
+            if (txtFromDate == "") {
+                //CustomAlert('The Check-In Date should not be empty.', 'Check In', 'Ok')
+                toastr.warning('The Check-In Date should not be empty.');
+                document.getElementById("<%=txtDateIn.ClientID%>").focus();
+            return false;
+        }
+        else if (txtToDate == "") {
+            //CustomAlert('The Check-Out Date should not be empty.', 'Check Out', 'Ok')
+            toastr.warning('The Check-Out Date should not be empty.');
+            document.getElementById("<%=txtToDate.ClientID%>").focus();
                 return false;
             }
             else if ($("#ContentPlaceHolder1_ddlRoomTypeId").val() == "0") {
@@ -2808,12 +2824,12 @@
         function LoadRoomInformationWithControl() {
             var RoomTypeId = $("#<%=ddlRoomTypeId.ClientID %>").val();
 
-        var txtFromDate = $("#<%=txtDateIn.ClientID %>").val();
-        var txtToDate = $("#<%=txtDateOut.ClientID %>").val();
+            var txtFromDate = $("#<%=txtDateIn.ClientID %>").val();
+            var txtToDate = $("#<%=txtDateOut.ClientID %>").val();
 
-        $("#<%=DateInHiddenField.ClientID %>").val(txtFromDate);
-        $("#<%=DateOutHiddenField.ClientID %>").val(txtToDate);
-        $("#<%=hfCurrencyHiddenField.ClientID %>").val($("#ContentPlaceHolder1_ddlCurrency").val());
+            $("#<%=DateInHiddenField.ClientID %>").val(txtFromDate);
+            $("#<%=DateOutHiddenField.ClientID %>").val(txtToDate);
+            $("#<%=hfCurrencyHiddenField.ClientID %>").val($("#ContentPlaceHolder1_ddlCurrency").val());
 
             PageMethods.LoadRoomInformationWithControl(RoomTypeId, txtFromDate, txtToDate, OnLoadRoomInformationWithControlSucceeded, OnLoadRoomInformationWithControlFailed);
 
@@ -2851,45 +2867,45 @@
         function ShowRoomNumberAndId() {
             var ids = $("#<%=hfSelectedRoomId.ClientID %>").val();
 
-        var numbers = $("#<%=hfSelectedRoomNumbers.ClientID %>").val();
-        var addedRoom = $("#<%=lblAddedRoomNumber.ClientID %>").val()
-        var splitedNumbers = numbers.split(",");
-        var flag = "";
-        for (var i = 0; i < splitedNumbers.length; i++) {
-            if (splitedNumbers[i] != '') {
-                flag = splitedNumbers[i] + " , " + flag;
+            var numbers = $("#<%=hfSelectedRoomNumbers.ClientID %>").val();
+            var addedRoom = $("#<%=lblAddedRoomNumber.ClientID %>").val()
+            var splitedNumbers = numbers.split(",");
+            var flag = "";
+            for (var i = 0; i < splitedNumbers.length; i++) {
+                if (splitedNumbers[i] != '') {
+                    flag = splitedNumbers[i] + " , " + flag;
+                }
             }
-        }
 
-        flag = RemoveFirstCommas(flag);
-        flag = RomoveLastCommas(flag);
+            flag = RemoveFirstCommas(flag);
+            flag = RomoveLastCommas(flag);
 
 
-        $("#<%=hfSelectedRoomNumbers.ClientID %>").val(flag);
-        if (splitedNumbers.length > 0) {
-            $("#<%=lblAddedRoomNumber.ClientID %>").text(flag);
+            $("#<%=hfSelectedRoomNumbers.ClientID %>").val(flag);
+            if (splitedNumbers.length > 0) {
+                $("#<%=lblAddedRoomNumber.ClientID %>").text(flag);
             $('#DivAddedRoom').show();
         }
         else {
             $("#<%=lblAddedRoomNumber.ClientID %>").text('No Room Is Added.')
-            $('#DivAddedRoom').hide();
-        }
-
-
-        var roomIds = $("#<%=hfSelectedRoomId.ClientID %>").val();
-        var splitedRoomId = roomIds.split(",");
-        var roomIdFlag = "";
-        for (var i = 0; i < splitedRoomId.length; i++) {
-            if (splitedNumbers[i] != '') {
-                roomIdFlag = splitedRoomId[i] + " , " + roomIdFlag;
+                $('#DivAddedRoom').hide();
             }
-        }
-        roomIdFlag = RemoveFirstCommas(roomIdFlag);
-        roomIdFlag = RomoveLastCommas(roomIdFlag);
-        var roomsArray = roomIdFlag.split(',');
-        var roomLength = roomsArray.length;
-        $("#<%=hfSelectedRoomId.ClientID %>").val(roomIdFlag);
-        $("#<%=txtRoomId.ClientID %>").val(roomLength);
+
+
+            var roomIds = $("#<%=hfSelectedRoomId.ClientID %>").val();
+            var splitedRoomId = roomIds.split(",");
+            var roomIdFlag = "";
+            for (var i = 0; i < splitedRoomId.length; i++) {
+                if (splitedNumbers[i] != '') {
+                    roomIdFlag = splitedRoomId[i] + " , " + roomIdFlag;
+                }
+            }
+            roomIdFlag = RemoveFirstCommas(roomIdFlag);
+            roomIdFlag = RomoveLastCommas(roomIdFlag);
+            var roomsArray = roomIdFlag.split(',');
+            var roomLength = roomsArray.length;
+            $("#<%=hfSelectedRoomId.ClientID %>").val(roomIdFlag);
+            $("#<%=txtRoomId.ClientID %>").val(roomLength);
         }
 
         function RemoveFirstCommas(flag) {
@@ -2915,9 +2931,9 @@
         function ClearRoomNumberAndId() {
             $("#<%=hfSelectedRoomNumbers.ClientID %>").val('');
 
-        $("#<%=hfSelectedRoomId.ClientID %>").val('');
-        $("#<%=hfSelectedRoomReservedId.ClientID %>").val('');
-        $("#<%=lblAddedRoomNumber.ClientID %>").text('')
+            $("#<%=hfSelectedRoomId.ClientID %>").val('');
+            $("#<%=hfSelectedRoomReservedId.ClientID %>").val('');
+            $("#<%=lblAddedRoomNumber.ClientID %>").text('')
             $("#ContentPlaceHolder1_txtRoomId").val('');
             $("#ltlRoomNumberInfo").html('');
             $('#DivAddedRoom').hide();
@@ -2936,8 +2952,8 @@
 
             var ctrl = '#<%=chkIsLitedCompany.ClientID%>'
 
-        if ($(ctrl).is(':checked')) {
-            var companyId = $("#<%=ddlCompanyName.ClientID %>").val();
+            if ($(ctrl).is(':checked')) {
+                var companyId = $("#<%=ddlCompanyName.ClientID %>").val();
                 if (companyId == 0 || companyId == "") {
                     $("#ContentPlaceHolder1_txtDiscountAmount").val("");
                 }
@@ -3730,6 +3746,7 @@
 
             var arrivalAirlineId = 0, departureAirlineId = 0, arrivalFlightName = "", arrivalFlightNumber = "", arrivalTime = "", departureFlightName = "", departureFlightNumber = "", departureTime = "", classificationId = 0;
             var IsArrivalChargable = false, IsDepartureChargable = false;
+            var arrivalChargableAmount = 0, departureChargableAmount = 0;
 
             var apdId = '', APId = '', ADId = '', reservId = '', gstId = '', guestName = '', fligtName = '', flightNo = '', arrivtime = '';
             var AddedAirportPickupDrop = new Array();
@@ -4115,12 +4132,18 @@
             if (($("#<%=ddlAirportPickUp.ClientID %>").val() == "YES") || ($("#<%=ddlAirportPickUp.ClientID %>").val() == "TBA")) {
                 if ($("#ContentPlaceHolder1_chkIsArrivalChargable").is(":checked")) {
                     IsArrivalChargable = true;
+                    if ($("#ContentPlaceHolder1_txtArrivalChargableAmount").val() != "") {
+                        arrivalChargableAmount = $("#ContentPlaceHolder1_txtArrivalChargableAmount").val();
+                    }
                 }
             }
 
             if (($("#<%=ddlAirportDrop.ClientID %>").val() == "YES") || ($("#<%=ddlAirportDrop.ClientID %>").val() == "TBA")) {
                 if ($("#ContentPlaceHolder1_chkIsDepartureChargable").is(":checked")) {
                     IsDepartureChargable = true;
+                    if ($("#ContentPlaceHolder1_txtDepartureChargableAmount").val() != "") {
+                        departureChargableAmount = $("#ContentPlaceHolder1_txtDepartureChargableAmount").val();
+                    }
                 }
             }
 
@@ -4138,7 +4161,9 @@
                 DepartureTime: departureTime,
                 PickupDropType: 'PicupDrop',
                 IsArrivalChargable: IsArrivalChargable,
-                IsDepartureChargable: IsDepartureChargable
+                ArrivalChargableAmount: arrivalChargableAmount,
+                IsDepartureChargable: IsDepartureChargable,
+                DepartureChargableAmount: departureChargableAmount
             });
 
             if (reservedMode == "Company") {
@@ -5231,6 +5256,24 @@
 
         function ClosePreferenceDialog() {
             $("#DivGuestReference").dialog("close");
+        }
+
+        function ToggleAiportPicUpDropOffArrival(ctrl) {
+            if ($('#ContentPlaceHolder1_chkIsArrivalChargable').is(':checked')) {
+                $("#ContentPlaceHolder1_txtArrivalChargableAmount").attr("readOnly", false);
+            }
+            else {
+                $("#ContentPlaceHolder1_txtArrivalChargableAmount").attr("readOnly", true);
+            }
+        }
+
+        function ToggleAiportPicUpDropOffDeparture(ctrl) {
+            if ($('#ContentPlaceHolder1_chkIsDepartureChargable').is(':checked')) {
+                $("#ContentPlaceHolder1_txtDepartureChargableAmount").attr("readOnly", false);
+            }
+            else {
+                $("#ContentPlaceHolder1_txtDepartureChargableAmount").attr("readOnly", true);
+            }
         }
 
         <%--function ToggleLitedArrivalFlightNameInfo() {
@@ -6767,11 +6810,17 @@
                             </div>
                             <div class="form-group">
                                 <label for="ArrivalTime" class="control-label col-md-2">
-                                    &nbsp;</label>
-                                <div class="col-md-4">
-                                    <asp:CheckBox ID="chkIsArrivalChargable" runat="server" Text="" onclick="javascript: return ToggleFieldVisibleForAllActiveReservation(this);"
-                                        TabIndex="2" />&nbsp;&nbsp;
-                                    <asp:Label ID="Label12" runat="server" class="control-label" Text="Is Chargable"></asp:Label>
+                                    Is Chargable</label>
+                                <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <asp:CheckBox ID="chkIsArrivalChargable" runat="server" Text="" onclick="javascript: return ToggleAiportPicUpDropOffArrival(this);"
+                                                    TabIndex="2" />
+                                            </span>
+                                            <asp:TextBox ID="txtArrivalChargableAmount" ReadOnly="true" runat="server" TabIndex="22" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -6862,12 +6911,18 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="ArrivalTime" class="control-label col-md-2">
-                                    &nbsp;</label>
-                                <div class="col-md-4">
-                                    <asp:CheckBox ID="chkIsDepartureChargable" runat="server" Text="" onclick="javascript: return ToggleFieldVisibleForAllActiveReservation(this);"
-                                        TabIndex="2" />&nbsp;&nbsp;
-                                    <asp:Label ID="Label1" runat="server" class="control-label" Text="Is Chargable"></asp:Label>
+                                <label for="DepartureTime" class="control-label col-md-2">
+                                    Is Chargable</label>
+                                <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <asp:CheckBox ID="chkIsDepartureChargable" runat="server" Text="" onclick="javascript: return ToggleAiportPicUpDropOffDeparture(this);"
+                                                    TabIndex="2" />
+                                            </span>
+                                            <asp:TextBox ID="txtDepartureChargableAmount" ReadOnly="true" runat="server" TabIndex="22" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -7125,7 +7180,7 @@
                                         Text="" AlternateText="Pre Registration Card" ToolTip="Pre Registration Card" />
                                     &nbsp;<asp:ImageButton ID="ImgBillPreviewForMultiplePickUpDrop" runat="server" CausesValidation="False"
                                         CommandName="CmdDetails" CommandArgument='<%# bind("ReservationId") %>' OnClientClick='<%#String.Format("return MultiplePickUpDropInfo({0})", Eval("ReservationId")) %>'
-                                        ImageUrl="~/Images/detailsInfo.png" Text="" AlternateText="Details" ToolTip="Bill Preview" />                                    
+                                        ImageUrl="~/Images/detailsInfo.png" Text="" AlternateText="Details" ToolTip="Bill Preview" />
                                 </ItemTemplate>
                                 <ControlStyle Font-Size="Small" />
                                 <HeaderStyle HorizontalAlign="Center" />

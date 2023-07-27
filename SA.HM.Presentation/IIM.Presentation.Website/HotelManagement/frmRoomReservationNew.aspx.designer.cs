@@ -1860,13 +1860,13 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         protected global::System.Web.UI.WebControls.CheckBox chkIsArrivalChargable;
 
         /// <summary>
-        /// Label12 control.
+        /// txtArrivalChargableAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label12;
+        protected global::System.Web.UI.WebControls.TextBox txtArrivalChargableAmount;
 
         /// <summary>
         /// ddlAirportDrop control.
@@ -1932,13 +1932,13 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         protected global::System.Web.UI.WebControls.CheckBox chkIsDepartureChargable;
 
         /// <summary>
-        /// Label1 control.
+        /// txtDepartureChargableAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.TextBox txtDepartureChargableAmount;
 
         /// <summary>
         /// chkAll control.
