@@ -1251,8 +1251,8 @@
         var GrandTotal = parseFloat(txtGrandTotal);
         var PaidTotal = parseFloat(result);
 
-        var GrandTotal = parseFloat(Math.round(txtGrandTotal));
-        var PaidTotal = parseFloat(Math.round(result));
+        //var GrandTotal = parseFloat(Math.round(txtGrandTotal));
+        //var PaidTotal = parseFloat(Math.round(result));
 
         if (_grandTotal == 0 && !isNaN(_registrationId)) {
             if (PaidTotal != _grandTotal) {

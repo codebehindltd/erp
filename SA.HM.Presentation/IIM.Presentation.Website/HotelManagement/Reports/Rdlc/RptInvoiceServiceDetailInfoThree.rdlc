@@ -195,34 +195,31 @@
 											<TablixBody>
 												<TablixColumns>
 													<TablixColumn>
-														<Width>0.81069in</Width>
+														<Width>0.88804in</Width>
 													</TablixColumn>
 													<TablixColumn>
-														<Width>0.75861in</Width>
+														<Width>0.83596in</Width>
 													</TablixColumn>
 													<TablixColumn>
-														<Width>1.6251in</Width>
+														<Width>1.70245in</Width>
 													</TablixColumn>
 													<TablixColumn>
-														<Width>0.68569in</Width>
+														<Width>0.76304in</Width>
 													</TablixColumn>
 													<TablixColumn>
-														<Width>0.66486in</Width>
+														<Width>0.74221in</Width>
 													</TablixColumn>
 													<TablixColumn>
-														<Width>0.65444in</Width>
+														<Width>0.73179in</Width>
 													</TablixColumn>
 													<TablixColumn>
-														<Width>0.66486in</Width>
+														<Width>0.74221in</Width>
 													</TablixColumn>
 													<TablixColumn>
-														<Width>0.69611in</Width>
+														<Width>0.80471in</Width>
 													</TablixColumn>
 													<TablixColumn>
-														<Width>0.72736in</Width>
-													</TablixColumn>
-													<TablixColumn>
-														<Width>0.68569in</Width>
+														<Width>0.76304in</Width>
 													</TablixColumn>
 												</TablixColumns>
 												<TablixRows>
@@ -477,42 +474,6 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox10">
-																		<CanGrow>true</CanGrow>
-																		<KeepTogether>true</KeepTogether>
-																		<Paragraphs>
-																			<Paragraph>
-																				<TextRuns>
-																					<TextRun>
-																						<Value>Additional Charge</Value>
-																						<Style>
-																							<FontSize>8pt</FontSize>
-																							<FontWeight>Bold</FontWeight>
-																						</Style>
-																					</TextRun>
-																				</TextRuns>
-																				<Style>
-																					<TextAlign>Right</TextAlign>
-																				</Style>
-																			</Paragraph>
-																		</Paragraphs>
-																		<rd:DefaultName>Textbox10</rd:DefaultName>
-																		<Style>
-																			<Border>
-																				<Color>LightGrey</Color>
-																				<Style>Solid</Style>
-																				<Width>0.5pt</Width>
-																			</Border>
-																			<PaddingLeft>2pt</PaddingLeft>
-																			<PaddingRight>2pt</PaddingRight>
-																			<PaddingTop>2pt</PaddingTop>
-																			<PaddingBottom>2pt</PaddingBottom>
-																		</Style>
-																	</Textbox>
-																</CellContents>
-															</TablixCell>
-															<TablixCell>
-																<CellContents>
 																	<Textbox Name="Textbox25">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
@@ -693,7 +654,7 @@
 																						<Value>=Fields!ServiceRate.Value</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -727,7 +688,7 @@
 																						<Value>=Fields!ServiceCharge.Value</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -761,7 +722,7 @@
 																						<Value>=Fields!CitySDCharge.Value</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -795,7 +756,7 @@
 																						<Value>=Fields!VatAmount.Value</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -805,40 +766,6 @@
 																			</Paragraph>
 																		</Paragraphs>
 																		<rd:DefaultName>VatAmount</rd:DefaultName>
-																		<Style>
-																			<Border>
-																				<Style>None</Style>
-																			</Border>
-																			<PaddingLeft>2pt</PaddingLeft>
-																			<PaddingRight>2pt</PaddingRight>
-																			<PaddingTop>2pt</PaddingTop>
-																			<PaddingBottom>2pt</PaddingBottom>
-																		</Style>
-																	</Textbox>
-																</CellContents>
-															</TablixCell>
-															<TablixCell>
-																<CellContents>
-																	<Textbox Name="AdditionalCharge">
-																		<CanGrow>true</CanGrow>
-																		<KeepTogether>true</KeepTogether>
-																		<Paragraphs>
-																			<Paragraph>
-																				<TextRuns>
-																					<TextRun>
-																						<Value>=Fields!AdditionalCharge.Value</Value>
-																						<Style>
-																							<FontSize>8pt</FontSize>
-																							<Format>0.00;(0.00)</Format>
-																						</Style>
-																					</TextRun>
-																				</TextRuns>
-																				<Style>
-																					<TextAlign>Right</TextAlign>
-																				</Style>
-																			</Paragraph>
-																		</Paragraphs>
-																		<rd:DefaultName>AdditionalCharge</rd:DefaultName>
 																		<Style>
 																			<Border>
 																				<Style>None</Style>
@@ -863,7 +790,7 @@
 																						<Value>=Fields!BillAmount.Value</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -897,7 +824,7 @@
 																						<Value>=Fields!PaidAmount.Value</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -978,10 +905,11 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=Sum(Fields!ServiceRate.Value)</Value>
+																						<Value>=ROUND(Sum(Fields!ServiceRate.Value), 0)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<FontWeight>Bold</FontWeight>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -1020,11 +948,11 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=Sum(Fields!ServiceCharge.Value)</Value>
+																						<Value>=ROUND(Sum(Fields!ServiceCharge.Value), 0)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<FontWeight>Bold</FontWeight>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -1063,11 +991,11 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=Sum(Fields!CitySDCharge.Value)</Value>
+																						<Value>=ROUND(Sum(Fields!CitySDCharge.Value), 0)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<FontWeight>Bold</FontWeight>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -1106,11 +1034,11 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=Sum(Fields!VatAmount.Value)</Value>
+																						<Value>=ROUND(Sum(Fields!VatAmount.Value), 0)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<FontWeight>Bold</FontWeight>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -1142,49 +1070,6 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox14">
-																		<CanGrow>true</CanGrow>
-																		<KeepTogether>true</KeepTogether>
-																		<Paragraphs>
-																			<Paragraph>
-																				<TextRuns>
-																					<TextRun>
-																						<Value>=Sum(Fields!AdditionalCharge.Value)</Value>
-																						<Style>
-																							<FontSize>8pt</FontSize>
-																							<FontWeight>Bold</FontWeight>
-																							<Format>0.00;(0.00)</Format>
-																						</Style>
-																					</TextRun>
-																				</TextRuns>
-																				<Style>
-																					<TextAlign>Right</TextAlign>
-																				</Style>
-																			</Paragraph>
-																		</Paragraphs>
-																		<rd:DefaultName>Textbox14</rd:DefaultName>
-																		<Style>
-																			<Border>
-																				<Color>LightGrey</Color>
-																				<Style>Solid</Style>
-																				<Width>0.5pt</Width>
-																			</Border>
-																			<LeftBorder>
-																				<Style>None</Style>
-																			</LeftBorder>
-																			<RightBorder>
-																				<Style>None</Style>
-																			</RightBorder>
-																			<PaddingLeft>2pt</PaddingLeft>
-																			<PaddingRight>2pt</PaddingRight>
-																			<PaddingTop>2pt</PaddingTop>
-																			<PaddingBottom>2pt</PaddingBottom>
-																		</Style>
-																	</Textbox>
-																</CellContents>
-															</TablixCell>
-															<TablixCell>
-																<CellContents>
 																	<Textbox Name="Textbox28">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
@@ -1192,11 +1077,11 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=Sum(Fields!BillAmount.Value)</Value>
+																						<Value>=ROUND(Sum(Fields!BillAmount.Value), 0)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<FontWeight>Bold</FontWeight>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -1235,11 +1120,11 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=Sum(Fields!PaidAmount.Value)</Value>
+																						<Value>=ROUND(Sum(Fields!PaidAmount.Value), 0)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<FontWeight>Bold</FontWeight>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -1325,48 +1210,6 @@
 															<TablixCell />
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox15">
-																		<CanGrow>true</CanGrow>
-																		<KeepTogether>true</KeepTogether>
-																		<Paragraphs>
-																			<Paragraph>
-																				<TextRuns>
-																					<TextRun>
-																						<Value />
-																						<Style>
-																							<FontSize>8pt</FontSize>
-																							<FontWeight>Bold</FontWeight>
-																						</Style>
-																					</TextRun>
-																				</TextRuns>
-																				<Style>
-																					<TextAlign>Right</TextAlign>
-																				</Style>
-																			</Paragraph>
-																		</Paragraphs>
-																		<rd:DefaultName>Textbox15</rd:DefaultName>
-																		<Style>
-																			<Border>
-																				<Color>LightGrey</Color>
-																				<Style>Solid</Style>
-																				<Width>0.5pt</Width>
-																			</Border>
-																			<LeftBorder>
-																				<Style>None</Style>
-																			</LeftBorder>
-																			<RightBorder>
-																				<Style>None</Style>
-																			</RightBorder>
-																			<PaddingLeft>2pt</PaddingLeft>
-																			<PaddingRight>2pt</PaddingRight>
-																			<PaddingTop>2pt</PaddingTop>
-																			<PaddingBottom>2pt</PaddingBottom>
-																		</Style>
-																	</Textbox>
-																</CellContents>
-															</TablixCell>
-															<TablixCell>
-																<CellContents>
 																	<Textbox Name="Textbox31">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
@@ -1374,11 +1217,11 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=Sum(Fields!BillAmount.Value) - Sum(Fields!PaidAmount.Value)</Value>
+																						<Value>=ROUND(Sum(Fields!BillAmount.Value) - Sum(Fields!PaidAmount.Value), 0)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<FontWeight>Bold</FontWeight>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -1448,10 +1291,9 @@
 																			<PaddingBottom>2pt</PaddingBottom>
 																		</Style>
 																	</Textbox>
-																	<ColSpan>10</ColSpan>
+																	<ColSpan>9</ColSpan>
 																</CellContents>
 															</TablixCell>
-															<TablixCell />
 															<TablixCell />
 															<TablixCell />
 															<TablixCell />
@@ -1497,10 +1339,9 @@
 																			<PaddingBottom>2pt</PaddingBottom>
 																		</Style>
 																	</Textbox>
-																	<ColSpan>10</ColSpan>
+																	<ColSpan>9</ColSpan>
 																</CellContents>
 															</TablixCell>
-															<TablixCell />
 															<TablixCell />
 															<TablixCell />
 															<TablixCell />
@@ -1532,11 +1373,6 @@
 													<TablixMember>
 														<Visibility>
 															<Hidden>=IIF(Parameters!VatAmountEnableConfig.Value = 0, true, false)</Hidden>
-														</Visibility>
-													</TablixMember>
-													<TablixMember>
-														<Visibility>
-															<Hidden>=IIF(Parameters!AdditionalChargeEnableConfig.Value = 0, true, false)</Hidden>
 														</Visibility>
 													</TablixMember>
 													<TablixMember />
@@ -1671,7 +1507,7 @@
 							</TablixCells>
 						</TablixRow>
 						<TablixRow>
-							<Height>1.08079in</Height>
+							<Height>0.95579in</Height>
 							<TablixCells>
 								<TablixCell>
 									<CellContents>
@@ -1687,7 +1523,7 @@
 												</TablixColumns>
 												<TablixRows>
 													<TablixRow>
-														<Height>0.18013in</Height>
+														<Height>0.19116in</Height>
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
@@ -1763,7 +1599,7 @@
 														</TablixCells>
 													</TablixRow>
 													<TablixRow>
-														<Height>0.18013in</Height>
+														<Height>0.19116in</Height>
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
@@ -1777,7 +1613,7 @@
 																						<Value>=Sum(Fields!ServiceCharge.Value)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -1839,7 +1675,7 @@
 														</TablixCells>
 													</TablixRow>
 													<TablixRow>
-														<Height>0.18013in</Height>
+														<Height>0.19116in</Height>
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
@@ -1853,7 +1689,7 @@
 																						<Value>=Sum(Fields!CitySDCharge.Value)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -1915,7 +1751,7 @@
 														</TablixCells>
 													</TablixRow>
 													<TablixRow>
-														<Height>0.18013in</Height>
+														<Height>0.19116in</Height>
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
@@ -1929,7 +1765,7 @@
 																						<Value>=Sum(Fields!VatAmount.Value)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -1991,83 +1827,7 @@
 														</TablixCells>
 													</TablixRow>
 													<TablixRow>
-														<Height>0.18013in</Height>
-														<TablixCells>
-															<TablixCell>
-																<CellContents>
-																	<Textbox Name="BillAmount8">
-																		<CanGrow>true</CanGrow>
-																		<KeepTogether>true</KeepTogether>
-																		<Paragraphs>
-																			<Paragraph>
-																				<TextRuns>
-																					<TextRun>
-																						<Value>=Sum(Fields!AdditionalCharge.Value)</Value>
-																						<Style>
-																							<FontSize>8pt</FontSize>
-																							<Format>0.00;(0.00)</Format>
-																						</Style>
-																					</TextRun>
-																				</TextRuns>
-																				<Style>
-																					<TextAlign>Right</TextAlign>
-																				</Style>
-																			</Paragraph>
-																		</Paragraphs>
-																		<rd:DefaultName>BillAmount3</rd:DefaultName>
-																		<Style>
-																			<Border>
-																				<Color>LightGrey</Color>
-																				<Style>Solid</Style>
-																				<Width>0.25pt</Width>
-																			</Border>
-																			<PaddingLeft>2pt</PaddingLeft>
-																			<PaddingRight>2pt</PaddingRight>
-																			<PaddingTop>2pt</PaddingTop>
-																			<PaddingBottom>2pt</PaddingBottom>
-																		</Style>
-																	</Textbox>
-																</CellContents>
-															</TablixCell>
-															<TablixCell>
-																<CellContents>
-																	<Textbox Name="Textbox50">
-																		<CanGrow>true</CanGrow>
-																		<KeepTogether>true</KeepTogether>
-																		<Paragraphs>
-																			<Paragraph>
-																				<TextRuns>
-																					<TextRun>
-																						<Value />
-																						<Style>
-																							<FontSize>8pt</FontSize>
-																							<FontWeight>Bold</FontWeight>
-																						</Style>
-																					</TextRun>
-																				</TextRuns>
-																				<Style>
-																					<TextAlign>Center</TextAlign>
-																				</Style>
-																			</Paragraph>
-																		</Paragraphs>
-																		<rd:DefaultName>Textbox50</rd:DefaultName>
-																		<Style>
-																			<Border>
-																				<Style>None</Style>
-																				<Width>0.25pt</Width>
-																			</Border>
-																			<PaddingLeft>2pt</PaddingLeft>
-																			<PaddingRight>2pt</PaddingRight>
-																			<PaddingTop>2pt</PaddingTop>
-																			<PaddingBottom>2pt</PaddingBottom>
-																		</Style>
-																	</Textbox>
-																</CellContents>
-															</TablixCell>
-														</TablixCells>
-													</TablixRow>
-													<TablixRow>
-														<Height>0.18013in</Height>
+														<Height>0.19116in</Height>
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
@@ -2082,7 +1842,7 @@
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<FontWeight>Bold</FontWeight>
-																							<Format>0.00;(0.00)</Format>
+																							<Format>#,0.00;(#,0.00)</Format>
 																						</Style>
 																					</TextRun>
 																				</TextRuns>
@@ -2521,97 +2281,6 @@
 														<TablixHeader>
 															<Size>1.6769in</Size>
 															<CellContents>
-																<Textbox Name="Textbox46">
-																	<CanGrow>true</CanGrow>
-																	<KeepTogether>true</KeepTogether>
-																	<Paragraphs>
-																		<Paragraph>
-																			<TextRuns>
-																				<TextRun>
-																					<Value />
-																					<Style>
-																						<FontSize>8pt</FontSize>
-																						<FontWeight>Bold</FontWeight>
-																					</Style>
-																				</TextRun>
-																			</TextRuns>
-																			<Style>
-																				<TextAlign>Right</TextAlign>
-																			</Style>
-																		</Paragraph>
-																	</Paragraphs>
-																	<rd:DefaultName>Textbox46</rd:DefaultName>
-																	<Style>
-																		<Border>
-																			<Color>LightGrey</Color>
-																			<Style>Solid</Style>
-																			<Width>0.5pt</Width>
-																		</Border>
-																		<TopBorder>
-																			<Style>None</Style>
-																		</TopBorder>
-																		<BottomBorder>
-																			<Style>None</Style>
-																		</BottomBorder>
-																		<LeftBorder>
-																			<Style>None</Style>
-																		</LeftBorder>
-																		<PaddingLeft>2pt</PaddingLeft>
-																		<PaddingRight>2pt</PaddingRight>
-																		<PaddingTop>2pt</PaddingTop>
-																		<PaddingBottom>2pt</PaddingBottom>
-																	</Style>
-																</Textbox>
-															</CellContents>
-														</TablixHeader>
-														<TablixMembers>
-															<TablixMember>
-																<TablixHeader>
-																	<Size>3.22354in</Size>
-																	<CellContents>
-																		<Textbox Name="Textbox20">
-																			<CanGrow>true</CanGrow>
-																			<KeepTogether>true</KeepTogether>
-																			<Paragraphs>
-																				<Paragraph>
-																					<TextRuns>
-																						<TextRun>
-																							<Value>Additional Charge</Value>
-																							<Style>
-																								<FontSize>8pt</FontSize>
-																							</Style>
-																						</TextRun>
-																					</TextRuns>
-																					<Style>
-																						<TextAlign>Left</TextAlign>
-																					</Style>
-																				</Paragraph>
-																			</Paragraphs>
-																			<rd:DefaultName>Textbox10</rd:DefaultName>
-																			<Style>
-																				<Border>
-																					<Color>LightGrey</Color>
-																					<Style>Solid</Style>
-																					<Width>0.5pt</Width>
-																				</Border>
-																				<PaddingLeft>2pt</PaddingLeft>
-																				<PaddingRight>2pt</PaddingRight>
-																				<PaddingTop>2pt</PaddingTop>
-																				<PaddingBottom>2pt</PaddingBottom>
-																			</Style>
-																		</Textbox>
-																	</CellContents>
-																</TablixHeader>
-															</TablixMember>
-														</TablixMembers>
-														<Visibility>
-															<Hidden>=IIF(System.Math.ROUND(Sum(Fields!AdditionalCharge.Value), 0) = 0, true, false)</Hidden>
-														</Visibility>
-													</TablixMember>
-													<TablixMember>
-														<TablixHeader>
-															<Size>1.6769in</Size>
-															<CellContents>
 																<Textbox Name="Textbox77">
 																	<CanGrow>true</CanGrow>
 																	<KeepTogether>true</KeepTogether>
@@ -2746,7 +2415,7 @@
 					</TablixMembers>
 				</TablixRowHierarchy>
 				<DataSetName>GuestServiceBillInfo</DataSetName>
-				<Height>2.66623in</Height>
+				<Height>2.54123in</Height>
 				<Width>7.97344in</Width>
 				<Style>
 					<Border>
@@ -2755,7 +2424,7 @@
 				</Style>
 			</Tablix>
 		</ReportItems>
-		<Height>2.68706in</Height>
+		<Height>2.55743in</Height>
 		<Style />
 	</Body>
 	<Width>7.97344in</Width>

@@ -11,6 +11,13 @@
             var breadCrumbs = moduleName + formName;
             $("#ltlBreadCrumbsInformation").html(breadCrumbs);
 
+            $("#ContentPlaceHolder1_ddlCompanyName").select2({
+                tags: "true",
+                placeholder: "--- All ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             $('#ContentPlaceHolder1_txtStartDate').datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -34,20 +41,25 @@
         }
     </script>
     <div id="SearchPanel" class="panel panel-default">
-        <%--<div class="row" style="padding-left: 30px">--%>
         <div class="panel-body">
             <div class="form-horizontal">
                 <div class="form-group">
                     <div class="col-md-2">
-                        <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="From Date"></asp:Label>
+                        <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="Report Type"></asp:Label>
                     </div>
                     <div class="col-md-4">
+                        <asp:DropDownList ID="ddlReportType" CssClass="form-control" runat="server">
+                            <asp:ListItem>Summary</asp:ListItem>
+                            <asp:ListItem>Details</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="lblToDate" runat="server" class="control-label" Text="Date"></asp:Label>
+                    </div>
+                    <div class="col-md-2">
                         <asp:TextBox ID="txtStartDate" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-md-2">
-                        <asp:Label ID="lblToDate" runat="server" class="control-label" Text="To Date"></asp:Label>
-                    </div>
-                    <div class="col-md-4">
                         <asp:TextBox ID="txtEndDate" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>

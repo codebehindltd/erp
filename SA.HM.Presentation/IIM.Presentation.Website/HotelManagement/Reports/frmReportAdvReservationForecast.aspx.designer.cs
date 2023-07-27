@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
-    
-    
-    public partial class frmReportAdvReservationForecast {
-        
+namespace HotelManagement.Presentation.Website.HotelManagement.Reports
+{
+
+
+    public partial class frmReportAdvReservationForecast
+    {
+
         /// <summary>
         /// lblFromDate control.
         /// </summary>
@@ -20,16 +22,16 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFromDate;
-        
+
         /// <summary>
-        /// txtStartDate control.
+        /// ddlReportType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtStartDate;
-        
+        protected global::System.Web.UI.WebControls.DropDownList ddlReportType;
+
         /// <summary>
         /// lblToDate control.
         /// </summary>
@@ -38,7 +40,16 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblToDate;
-        
+
+        /// <summary>
+        /// txtStartDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtStartDate;
+
         /// <summary>
         /// txtEndDate control.
         /// </summary>
@@ -47,7 +58,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEndDate;
-        
+
         /// <summary>
         /// lblCompany control.
         /// </summary>
@@ -56,7 +67,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblCompany;
-        
+
         /// <summary>
         /// ddlCompanyName control.
         /// </summary>
@@ -65,7 +76,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCompanyName;
-        
+
         /// <summary>
         /// btnGenarate control.
         /// </summary>
@@ -74,7 +85,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGenarate;
-        
+
         /// <summary>
         /// btnPrintReportFromClient control.
         /// </summary>
@@ -83,7 +94,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPrintReportFromClient;
-        
+
         /// <summary>
         /// frmPrint control.
         /// </summary>
@@ -92,7 +103,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl frmPrint;
-        
+
         /// <summary>
         /// pnlReporContainer control.
         /// </summary>
@@ -101,7 +112,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlReporContainer;
-        
+
         /// <summary>
         /// rvTransaction control.
         /// </summary>

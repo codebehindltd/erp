@@ -30,37 +30,42 @@ namespace HotelManagement.Presentation.Website.POS.Reports
             if (!IsPostBack)
             {
                 string queryStringId = Request.QueryString["billId"];
-                int billID = Int32.Parse(queryStringId);
-
-                if (!string.IsNullOrEmpty(queryStringId))
+                if (!string.IsNullOrWhiteSpace(queryStringId))
                 {
-                    CostCentreTabBO costCentreTabBO = new CostCentreTabBO();
-                    CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
-                    costCentreTabBO = costCentreTabDA.GetCostCenterDetailInformation("Restaurant", billID);
+                    int billID = Convert.ToInt32(queryStringId);
+                    //RestaurentBillDA rda = new RestaurentBillDA();
+                    //billID = rda.GetBillPaymentByBillId(queryStringId);
 
-                    if (costCentreTabBO != null)
+                    if (billID > 0)
                     {
-                        if (costCentreTabBO.InvoiceTemplate > 0)
+                        CostCentreTabBO costCentreTabBO = new CostCentreTabBO();
+                        CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
+                        costCentreTabBO = costCentreTabDA.GetCostCenterDetailInformation("Restaurant", billID);
+
+                        if (costCentreTabBO != null)
                         {
-                            if (costCentreTabBO.InvoiceTemplate == 1)
+                            if (costCentreTabBO.InvoiceTemplate > 0)
                             {
-                                hfBillTemplate.Value = "1";
-                                this.ReportProcessing("rptRestaurentBillForPosWithoutSDC");
-                            }
-                            else if (costCentreTabBO.InvoiceTemplate == 2)
-                            {
-                                hfBillTemplate.Value = "2";
-                                this.ReportProcessing("rptRestaurentBillForDotMatrix");
-                            }
-                            else if (costCentreTabBO.InvoiceTemplate == 3)
-                            {
-                                hfBillTemplate.Value = "3";
-                                this.ReportProcessing("rptRestaurentBillTwoColumn");
-                            }
-                            else if (costCentreTabBO.InvoiceTemplate == 4)
-                            {
-                                hfBillTemplate.Value = "4";
-                                this.ReportProcessingForPosToken("rptRestaurentBillForPosToken");
+                                if (costCentreTabBO.InvoiceTemplate == 1)
+                                {
+                                    hfBillTemplate.Value = "1";
+                                    this.ReportProcessing("rptRestaurentBillForPosWithoutSDC");
+                                }
+                                else if (costCentreTabBO.InvoiceTemplate == 2)
+                                {
+                                    hfBillTemplate.Value = "2";
+                                    this.ReportProcessing("rptRestaurentBillForDotMatrix");
+                                }
+                                else if (costCentreTabBO.InvoiceTemplate == 3)
+                                {
+                                    hfBillTemplate.Value = "3";
+                                    this.ReportProcessing("rptRestaurentBillTwoColumn");
+                                }
+                                else if (costCentreTabBO.InvoiceTemplate == 4)
+                                {
+                                    hfBillTemplate.Value = "4";
+                                    this.ReportProcessingForPosToken("rptRestaurentBillForPosToken");
+                                }
                             }
                         }
                     }

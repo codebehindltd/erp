@@ -48,10 +48,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             IsSuccess = 1;
             DateTime? fromDate;
             DateTime? toDate;
-            int? companyId;            
+            int? companyId;
 
             if (!string.IsNullOrWhiteSpace(this.txtStartDate.Text))
-            {                
+            {
                 fromDate = hmUtility.GetDateTimeFromString(this.txtStartDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             }
             else
@@ -60,14 +60,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
                 this.txtStartDate.Text = hmUtility.GetStringFromDateTime(DateTime.Now);
             }
             if (!string.IsNullOrWhiteSpace(this.txtEndDate.Text))
-            {                
+            {
                 toDate = hmUtility.GetDateTimeFromString(this.txtEndDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             }
             else
             {
                 toDate = DateTime.Now.AddDays(30);
                 this.txtEndDate.Text = hmUtility.GetStringFromDateTime(DateTime.Now.AddDays(30));
-            }            
+            }
 
             if (ddlCompanyName.SelectedValue != "0")
             {
@@ -77,14 +77,22 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             {
                 companyId = null;
             }
-            
+
             HMCommonDA hmCommonDA = new HMCommonDA();
 
             rvTransaction.LocalReport.DataSources.Clear();
             rvTransaction.ProcessingMode = ProcessingMode.Local;
 
             var reportPath = "";
-            reportPath = Server.MapPath(@"~/HotelManagement/Reports/Rdlc/rptAdvReservationForecast.rdlc");
+
+            if (ddlReportType.SelectedValue == "Details")
+            {
+                reportPath = Server.MapPath(@"~/HotelManagement/Reports/Rdlc/rptAdvReservationForecast.rdlc");
+            }
+            else
+            {
+                reportPath = Server.MapPath(@"~/HotelManagement/Reports/Rdlc/rptAdvReservationForecastSummary.rdlc");
+            }
 
             if (!File.Exists(reportPath))
                 return;
@@ -108,6 +116,16 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             List<ReportParameter> paramLogo = new List<ReportParameter>();
             paramLogo.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + ImageName)));
 
+            paramLogo.Add(new ReportParameter("FromDate", this.txtStartDate.Text));
+            paramLogo.Add(new ReportParameter("ToDate", this.txtEndDate.Text));
+
+            string reportCompanyName = "";
+            if (ddlCompanyName.SelectedValue != "0")
+            {
+                reportCompanyName = ddlCompanyName.SelectedItem.Text;
+            }
+
+            paramLogo.Add(new ReportParameter("ReportCompanyName", reportCompanyName));
             paramLogo.Add(new ReportParameter("PrintDateTime", printDate));
             paramLogo.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
 

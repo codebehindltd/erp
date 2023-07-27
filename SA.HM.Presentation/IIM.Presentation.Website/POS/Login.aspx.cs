@@ -27,73 +27,7 @@ namespace HotelManagement.Presentation.Website.POS
                 LoadUserGroup();
             }
 
-            SiteTitle.InnerText = System.Web.Configuration.WebConfigurationManager.AppSettings["InnboardTitleHead"].ToString();
-
-            //string queryStringId = Request.QueryString["EmpId"];
-            //if (queryStringId != null)
-            //{
-            //    EmployeeBO empBO = new EmployeeBO();
-            //    EmployeeDA empDA = new EmployeeDA();
-            //    int userID = Int32.Parse(queryStringId);
-            //    empBO = empDA.GetEmployeeInfoById(userID);
-
-            //RestaurantBearerDA restaurantBearerDA = new RestaurantBearerDA();
-            //RestaurantBearerBO restaurantBearerBO = new RestaurantBearerBO();
-            //restaurantBearerBO = restaurantBearerDA.GetRestaurantBearerInfoByEmpIdNIsBearer(empBO.EmpId, 1);
-
-            //    if (empBO.EmpId != 0 && restaurantBearerBO.BearerId != 0)
-            //    {
-            //        empBO.BearerId = restaurantBearerBO.BearerId;
-            //        empBO.IsRestaurantBillCanSettle = restaurantBearerBO.IsRestaurantBillCanSettle;
-            //        empBO.IsItemCanEditDelete = restaurantBearerBO.IsItemCanEditDelete;
-
-            //        HMUtility hmUtility = new HMUtility();
-            //        empBO.ClientDateFormat = hmUtility.GetFormat(false);
-            //        empBO.ServerDateFormat = hmUtility.GetFormat(true);
-
-            //        HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-            //        HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-
-            //        commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("Innboard", "InnboardTitleHead");
-            //        empBO.SiteTitle = commonSetupBO.SetupValue;
-
-            //        HMCommonSetupBO costCenterSelection = new HMCommonSetupBO();
-            //        costCenterSelection = commonSetupDA.GetCommonConfigurationInfo("IsRedirectRestaurantCostCenterSelectionOld", "IsRedirectRestaurantCostCenterSelectionOld");
-
-            //        HMCommonSetupBO entityAttendanceBO = new HMCommonSetupBO();
-            //        entityAttendanceBO = commonSetupDA.GetCommonConfigurationInfo("IsRestaurantIntegrateWithPayrollAttendance", "IsRestaurantIntegrateWithPayrollAttendance");
-
-            //        if (entityAttendanceBO != null)
-            //        {
-            //            if (entityAttendanceBO.SetupValue == "0")
-            //            {
-            //                HMCommonDA hmCommonDA = new HMCommonDA();
-            //                Boolean postingStatus = hmCommonDA.SaveUpdateForRestaurantEmployeeAttendance(empBO.BearerId, 1);
-            //            }
-            //        }
-
-            //        HMCommonDA comonDa = new HMCommonDA();
-            //        empBO.DayOpenDate = comonDa.GetModuleWisePreviousDayTransaction(DateTime.Now);
-
-            //        empBO.ClientDateFormat = hmUtility.GetFormat(false);
-            //        empBO.ServerDateFormat = hmUtility.GetFormat(true);
-
-            //        Session.Add("EmployeeInformationBOSession", empBO);
-
-            //        if (costCenterSelection.SetupValue == "1")
-            //        {
-            //            Response.Redirect("frmCostCenterSelection.aspx");
-            //        }
-            //        else
-            //        {
-            //            Response.Redirect("frmCostCenterSelectionForAll.aspx");
-            //        }
-            //    }
-            //    else
-            //    {
-            //        Response.Redirect("Login.aspx");
-            //    }
-            //}
+            SiteTitle.InnerText = System.Web.Configuration.WebConfigurationManager.AppSettings["InnboardTitleHead"].ToString();            
         }
         private void LoadUserGroup()
         {
@@ -413,7 +347,7 @@ namespace HotelManagement.Presentation.Website.POS
         {
             UserInformationDA userDa = new UserInformationDA();
             List<UserInformationBO> userInformationList = new List<UserInformationBO>();
-            userInformationList = userDa.GetUserInformationByUserGroupForTouchPanelLogin(userGroupId);
+            userInformationList = userDa.GetUserInformationByUserGroupForTouchPanelLogin(userGroupId).Where(x => x.ActiveStat == true).ToList();
 
             return userInformationList;
         }

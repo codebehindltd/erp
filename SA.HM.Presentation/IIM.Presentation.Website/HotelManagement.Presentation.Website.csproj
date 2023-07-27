@@ -867,6 +867,8 @@
     <Content Include="GeneralLedger\Reports\Rdlc\rptGeneralNotesBreakDownComparison.rdlc" />
     <Content Include="GeneralLedger\Reports\Rdlc\RptBudgetStatement.rdlc" />
     <Content Include="HMCommon\Reports\Rdlc\rptCommonCurrencyConversionTwoColumn.rdlc" />
+    <Content Include="HotelManagement\Reports\Rdlc\RptInvoiceServiceDetailInfoSeven.rdlc" />
+    <Content Include="HotelManagement\Reports\Rdlc\rptAdvReservationForecastSummary.rdlc" />
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />
