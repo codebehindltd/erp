@@ -1121,6 +1121,16 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.ddlCurrency.DataTextField = "CurrencyName";
             this.ddlCurrency.DataValueField = "CurrencyId";
             this.ddlCurrency.DataBind();
+
+            this.ddlArrivalChargableAmountCurrency.DataSource = currencyListBO;
+            this.ddlArrivalChargableAmountCurrency.DataTextField = "CurrencyName";
+            this.ddlArrivalChargableAmountCurrency.DataValueField = "CurrencyId";
+            this.ddlArrivalChargableAmountCurrency.DataBind();
+
+            this.ddlDepartureChargableAmountCurrency.DataSource = currencyListBO;
+            this.ddlDepartureChargableAmountCurrency.DataTextField = "CurrencyName";
+            this.ddlDepartureChargableAmountCurrency.DataValueField = "CurrencyId";
+            this.ddlDepartureChargableAmountCurrency.DataBind();
         }
         private void LoadIsRoomOverbookingEnable()
         {
@@ -1583,6 +1593,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.txtPhone.Text = string.Empty;
             this.txtEmail.Text = string.Empty;
             this.ddlCountry.SelectedValue = "0";
+            //this.ddlArrivalChargableAmountCurrency.SelectedValue = "0";
+            //this.ddlDepartureChargableAmountCurrency.SelectedValue = "0";
 
             Random rd = new Random();
             ReservationId = rd.Next(100000, 999999);
@@ -2221,6 +2233,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 if ((airportPickupDropList[0].AirportPickUp == "YES") || (airportPickupDropList[0].AirportPickUp == "TBA"))
                 {
                     txtArrivalChargableAmount.Enabled = true;
+                    ddlArrivalChargableAmountCurrency.Enabled = true;
                     hfArrivalAirlineId.Value = airportPickupDropList[0].ArrivalAirlineId.ToString();
                     ddlArrivalFlightName.SelectedValue = hfArrivalAirlineId.Value.ToString();
                     ddlAirportPickUp.SelectedValue = airportPickupDropList[0].AirportPickUp;
@@ -2229,6 +2242,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     txtArrivalTime.Text = !string.IsNullOrWhiteSpace(airportPickupDropList[0].ArrivalTimeShow) ? Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd") + " " + airportPickupDropList[0].ArrivalTimeShow).ToString(userInformationBO.TimeFormat) : string.Empty;
                     chkIsArrivalChargable.Checked = airportPickupDropList[0].IsArrivalChargable;
                     txtArrivalChargableAmount.Text = airportPickupDropList[0].ArrivalChargableAmount.ToString();
+                    if (airportPickupDropList[0].ArrivalChargableAmountCurrency > 0)
+                    {
+                        ddlArrivalChargableAmountCurrency.SelectedValue = airportPickupDropList[0].ArrivalChargableAmountCurrency.ToString();
+                    }
                 }
                 else if (airportPickupDropList[0].AirportPickUp == "NO")
                 {
@@ -2276,6 +2293,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 if ((airportPickupDropList[0].AirportDrop == "YES") || (airportPickupDropList[0].AirportDrop == "TBA"))
                 {
                     txtDepartureChargableAmount.Enabled = true;
+                    ddlDepartureChargableAmountCurrency.Enabled = true;
                     hfDepartureAirlineId.Value = airportPickupDropList[0].DepartureAirlineId.ToString();
                     ddlDepartureFlightName.SelectedValue = hfDepartureAirlineId.Value.ToString();
                     ddlAirportDrop.SelectedValue = airportPickupDropList[0].AirportDrop;
@@ -2284,6 +2302,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     txtDepartureTime.Text = !string.IsNullOrWhiteSpace(airportPickupDropList[0].DepartureTimeShow) ? Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd") + " " + airportPickupDropList[0].DepartureTimeShow).ToString(userInformationBO.TimeFormat) : string.Empty;
                     chkIsDepartureChargable.Checked = airportPickupDropList[0].IsDepartureChargable;
                     txtDepartureChargableAmount.Text = airportPickupDropList[0].DepartureChargableAmount.ToString();
+                    if (airportPickupDropList[0].DepartureChargableAmountCurrency > 0)
+                    {
+                        ddlDepartureChargableAmountCurrency.SelectedValue = airportPickupDropList[0].DepartureChargableAmountCurrency.ToString();
+                    }
                 }
                 else if (airportPickupDropList[0].AirportDrop == "NO")
                 {

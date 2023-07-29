@@ -33,8 +33,6 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                 if (!string.IsNullOrWhiteSpace(queryStringId))
                 {
                     int billID = Convert.ToInt32(queryStringId);
-                    //RestaurentBillDA rda = new RestaurentBillDA();
-                    //billID = rda.GetBillPaymentByBillId(queryStringId);
 
                     if (billID > 0)
                     {

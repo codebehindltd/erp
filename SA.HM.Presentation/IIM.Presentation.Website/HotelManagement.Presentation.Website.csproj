@@ -292,6 +292,7 @@
     <Content Include="HotelManagement\frmGuestPaymentTransfer.aspx" />
     <Content Include="HotelManagement\Reports\frmReportComplimentaryGuest.aspx" />
     <Content Include="HotelManagement\Reports\frmReportGroupReservationBillInfo.aspx" />
+    <Content Include="HotelManagement\Reports\frmReportPickupDropForecastRevenueInfo.aspx" />
     <Content Include="HotelManagement\Reports\frmReportRoomControlChart.aspx" />
     <Content Include="HotelManagement\GuestBillSplit.aspx" />
     <Content Include="HouseKeeping\HKLostFound.aspx" />
@@ -371,6 +372,7 @@
     <Content Include="POS\Billing.aspx" />
     <Content Include="POS\frmSalesReturn.aspx" />
     <Content Include="POS\frmSOBilling.aspx" />
+    <Content Include="POS\Reports\frmReportTPBillPrintInfo.aspx" />
     <Content Include="POS\Reports\frmSalesSummary.aspx" />
     <Content Include="POS\Reports\ReportSalesReturn.aspx" />
     <Content Include="PurchaseManagment\QuotaionFeedback.aspx" />
@@ -869,6 +871,7 @@
     <Content Include="HMCommon\Reports\Rdlc\rptCommonCurrencyConversionTwoColumn.rdlc" />
     <Content Include="HotelManagement\Reports\Rdlc\RptInvoiceServiceDetailInfoSeven.rdlc" />
     <Content Include="HotelManagement\Reports\Rdlc\rptAdvReservationForecastSummary.rdlc" />
+    <Content Include="HotelManagement\Reports\Rdlc\rptPickupDropForecastRevenueInfo.rdlc" />
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />
@@ -2869,6 +2872,13 @@
     <Compile Include="HotelManagement\Reports\frmReportGroupReservationBillInfo.aspx.designer.cs">
       <DependentUpon>frmReportGroupReservationBillInfo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="HotelManagement\Reports\frmReportPickupDropForecastRevenueInfo.aspx.cs">
+      <DependentUpon>frmReportPickupDropForecastRevenueInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HotelManagement\Reports\frmReportPickupDropForecastRevenueInfo.aspx.designer.cs">
+      <DependentUpon>frmReportPickupDropForecastRevenueInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="HotelManagement\Reports\frmReportRoomControlChart.aspx.cs">
       <DependentUpon>frmReportRoomControlChart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3295,6 +3305,13 @@
     </Compile>
     <Compile Include="POS\frmSOBilling.aspx.designer.cs">
       <DependentUpon>frmSOBilling.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="POS\Reports\frmReportTPBillPrintInfo.aspx.cs">
+      <DependentUpon>frmReportTPBillPrintInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="POS\Reports\frmReportTPBillPrintInfo.aspx.designer.cs">
+      <DependentUpon>frmReportTPBillPrintInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="POS\Reports\frmSalesSummary.aspx.cs">
       <DependentUpon>frmSalesSummary.aspx</DependentUpon>

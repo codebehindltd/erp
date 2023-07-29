@@ -1869,6 +1869,15 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         protected global::System.Web.UI.WebControls.TextBox txtArrivalChargableAmount;
 
         /// <summary>
+        /// ddlArrivalChargableAmountCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlArrivalChargableAmountCurrency;
+
+        /// <summary>
         /// ddlAirportDrop control.
         /// </summary>
         /// <remarks>
@@ -1939,6 +1948,15 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDepartureChargableAmount;
+
+        /// <summary>
+        /// ddlDepartureChargableAmountCurrency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDepartureChargableAmountCurrency;
 
         /// <summary>
         /// chkAll control.

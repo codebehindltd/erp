@@ -779,7 +779,47 @@
 
             return false;
         }
+        
+        function BillReprintByBillNumber() {
 
+            $("#TouchKeypad").dialog("close");
+
+            if ($("#ContentPlaceHolder1_txtBillId").val() == "") {
+                toastr.warning("Please Provide Bill Id.");
+                return;
+            }
+
+            if ($("#ContentPlaceHolder1_hfIsCostCenterWiseBillNumberGenerate").val() == "1") {
+                if ($("#ContentPlaceHolder1_hfCostcenterIdForBillReprint").val() == "0") {
+                    toastr.warning("Please Select Cost-Center From Left Side.");
+                    return;
+                }
+            }
+
+            var billPrefix = $("#ContentPlaceHolder1_hfBillPrefixCostcentrwise").val();
+            var billNo = $("#ContentPlaceHolder1_txtBillId").val();
+            var billNumber = billPrefix + CommonHelper.padLeft(billNo, 8, '0');
+
+            var iframeid = 'printDoc';
+            var url = "/POS/Reports/frmReportTPBillPrintInfo.aspx?billID=" + billNumber + "&RePrint=1";
+            parent.document.getElementById(iframeid).src = url;
+
+            $("#displayBill").dialog({
+                autoOpen: true,
+                modal: true,
+                width: 450,
+                height: 'auto',
+                closeOnEscape: false,
+                resizable: false,
+                fluid: true,
+                close: ClosePrintPreviewDialog,
+                title: "Invoice Preview",
+                show: 'slide'
+            });
+
+            return false;
+        }
+        
         function PrintDocumentFunc(printTemplate) {
             if (printTemplate == "1") {
                 $('#btnPrintPreview').trigger('click');
@@ -1671,7 +1711,7 @@
             <div class="form-group pull-right" style="padding-right: 14px;">
                 <div class="col-sm-12">
                     <input type="button" class="ui-keyboard-button ui-keyboard-48 ui-state-default ui-corner-all"
-                        style="width: 90px; height: 50px; font-size: 1.5em;" value="OK" onclick='BillReprint()' />
+                        style="width: 90px; height: 50px; font-size: 1.5em;" value="OK" onclick='BillReprintByBillNumber()' />
                 </div>
             </div>
         </div>

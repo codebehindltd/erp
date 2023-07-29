@@ -2794,12 +2794,12 @@
                 //CustomAlert('The Check-In Date should not be empty.', 'Check In', 'Ok')
                 toastr.warning('The Check-In Date should not be empty.');
                 document.getElementById("<%=txtDateIn.ClientID%>").focus();
-            return false;
-        }
-        else if (txtToDate == "") {
-            //CustomAlert('The Check-Out Date should not be empty.', 'Check Out', 'Ok')
-            toastr.warning('The Check-Out Date should not be empty.');
-            document.getElementById("<%=txtToDate.ClientID%>").focus();
+                return false;
+            }
+            else if (txtToDate == "") {
+                //CustomAlert('The Check-Out Date should not be empty.', 'Check Out', 'Ok')
+                toastr.warning('The Check-Out Date should not be empty.');
+                document.getElementById("<%=txtToDate.ClientID%>").focus();
                 return false;
             }
             else if ($("#ContentPlaceHolder1_ddlRoomTypeId").val() == "0") {
@@ -2884,10 +2884,10 @@
             $("#<%=hfSelectedRoomNumbers.ClientID %>").val(flag);
             if (splitedNumbers.length > 0) {
                 $("#<%=lblAddedRoomNumber.ClientID %>").text(flag);
-            $('#DivAddedRoom').show();
-        }
-        else {
-            $("#<%=lblAddedRoomNumber.ClientID %>").text('No Room Is Added.')
+                $('#DivAddedRoom').show();
+            }
+            else {
+                $("#<%=lblAddedRoomNumber.ClientID %>").text('No Room Is Added.')
                 $('#DivAddedRoom').hide();
             }
 
@@ -3747,6 +3747,7 @@
             var arrivalAirlineId = 0, departureAirlineId = 0, arrivalFlightName = "", arrivalFlightNumber = "", arrivalTime = "", departureFlightName = "", departureFlightNumber = "", departureTime = "", classificationId = 0;
             var IsArrivalChargable = false, IsDepartureChargable = false;
             var arrivalChargableAmount = 0, departureChargableAmount = 0;
+            var arrivalChargableAmountCurrency = 0, departureChargableAmountCurrency = 0;
 
             var apdId = '', APId = '', ADId = '', reservId = '', gstId = '', guestName = '', fligtName = '', flightNo = '', arrivtime = '';
             var AddedAirportPickupDrop = new Array();
@@ -4134,6 +4135,7 @@
                     IsArrivalChargable = true;
                     if ($("#ContentPlaceHolder1_txtArrivalChargableAmount").val() != "") {
                         arrivalChargableAmount = $("#ContentPlaceHolder1_txtArrivalChargableAmount").val();
+                        arrivalChargableAmountCurrency = $("#ContentPlaceHolder1_ddlArrivalChargableAmountCurrency").val();
                     }
                 }
             }
@@ -4143,6 +4145,7 @@
                     IsDepartureChargable = true;
                     if ($("#ContentPlaceHolder1_txtDepartureChargableAmount").val() != "") {
                         departureChargableAmount = $("#ContentPlaceHolder1_txtDepartureChargableAmount").val();
+                        departureChargableAmountCurrency = $("#ContentPlaceHolder1_ddlDepartureChargableAmountCurrency").val();
                     }
                 }
             }
@@ -4162,8 +4165,10 @@
                 PickupDropType: 'PicupDrop',
                 IsArrivalChargable: IsArrivalChargable,
                 ArrivalChargableAmount: arrivalChargableAmount,
+                ArrivalChargableAmountCurrency: arrivalChargableAmountCurrency,
                 IsDepartureChargable: IsDepartureChargable,
-                DepartureChargableAmount: departureChargableAmount
+                DepartureChargableAmount: departureChargableAmount,
+                DepartureChargableAmountCurrency: departureChargableAmountCurrency
             });
 
             if (reservedMode == "Company") {
@@ -5261,18 +5266,23 @@
         function ToggleAiportPicUpDropOffArrival(ctrl) {
             if ($('#ContentPlaceHolder1_chkIsArrivalChargable').is(':checked')) {
                 $("#ContentPlaceHolder1_txtArrivalChargableAmount").attr("readOnly", false);
+                $("#ContentPlaceHolder1_ddlArrivalChargableAmountCurrency").attr("disabled", false);
             }
             else {
                 $("#ContentPlaceHolder1_txtArrivalChargableAmount").attr("readOnly", true);
+                $("#ContentPlaceHolder1_ddlArrivalChargableAmountCurrency").attr("disabled", true);
             }
         }
 
         function ToggleAiportPicUpDropOffDeparture(ctrl) {
             if ($('#ContentPlaceHolder1_chkIsDepartureChargable').is(':checked')) {
                 $("#ContentPlaceHolder1_txtDepartureChargableAmount").attr("readOnly", false);
+                $("#ContentPlaceHolder1_ddlDepartureChargableAmountCurrency").attr("disabled", false);
             }
             else {
                 $("#ContentPlaceHolder1_txtDepartureChargableAmount").attr("readOnly", true);
+                $("#ContentPlaceHolder1_ddlDepartureChargableAmountCurrency").attr("disabled", true);
+
             }
         }
 
@@ -6811,7 +6821,7 @@
                             <div class="form-group">
                                 <label for="ArrivalTime" class="control-label col-md-2">
                                     Is Chargable</label>
-                                <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
+                                <div class="col-md-4" style="padding-left: 0px; padding-right: 0px;">
                                     <div class="col-sm-12">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -6819,6 +6829,8 @@
                                                     TabIndex="2" />
                                             </span>
                                             <asp:TextBox ID="txtArrivalChargableAmount" ReadOnly="true" runat="server" TabIndex="22" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                            <asp:DropDownList ID="ddlArrivalChargableAmountCurrency" runat="server" Enabled="false" CssClass="form-control" TabIndex="16">
+                                            </asp:DropDownList>
                                         </div>
                                     </div>
                                 </div>
@@ -6913,7 +6925,7 @@
                             <div class="form-group">
                                 <label for="DepartureTime" class="control-label col-md-2">
                                     Is Chargable</label>
-                                <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
+                                <div class="col-md-4" style="padding-left: 0px; padding-right: 0px;">
                                     <div class="col-sm-12">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -6921,6 +6933,8 @@
                                                     TabIndex="2" />
                                             </span>
                                             <asp:TextBox ID="txtDepartureChargableAmount" ReadOnly="true" runat="server" TabIndex="22" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                            <asp:DropDownList ID="ddlDepartureChargableAmountCurrency" Enabled="false" runat="server" CssClass="form-control" TabIndex="16">
+                                            </asp:DropDownList>
                                         </div>
                                     </div>
                                 </div>

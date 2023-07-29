@@ -1169,6 +1169,9 @@
                     $("#<%=txtArrivalFlightName.ClientID %>").val(result.ArrivalFlightName);
                     $("#<%=txtArrivalFlightNumber.ClientID %>").val(result.ArrivalFlightNumber);
 
+                    $("#<%=txtDepartureChargableAmount.ClientID %>").val(result.DepartureChargableAmount);
+                    $("#<%=ddlDepartureChargableAmountCurrency.ClientID %>").val(result.DepartureChargableAmountCurrency);
+
                     var arrivalHour = dateArrival.getHours();
                     if (arrivalHour < 12) {
                         $("#<%=ddlArrivalAmPm.ClientID %>").val("AM");
@@ -6621,7 +6624,7 @@
                             <div class="form-group">
                                 <label for="DepartureTime" class="control-label col-md-2">
                                     Is Chargable</label>
-                                <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
+                                <div class="col-md-4" style="padding-left: 0px; padding-right: 0px;">
                                     <div class="col-sm-12">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -6629,6 +6632,8 @@
                                                     TabIndex="2" />
                                             </span>
                                             <asp:TextBox ID="txtDepartureChargableAmount" runat="server" TabIndex="22" CssClass="form-control quantitydecimal"></asp:TextBox>
+                                            <asp:DropDownList ID="ddlDepartureChargableAmountCurrency" runat="server" CssClass="form-control" TabIndex="16">
+                                            </asp:DropDownList>
                                         </div>
                                     </div>
                                 </div>

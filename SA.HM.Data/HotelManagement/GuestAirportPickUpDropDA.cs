@@ -44,7 +44,55 @@ namespace HotelManagement.Data.HotelManagement
                                     FlightName = r.Field<string>("FlightName"),
                                     FlightNumber = r.Field<string>("FlightNumber"),
                                     TimeString = r.Field<string>("TimeString"),
-                                    RoomNumber = r.Field<string>("RoomNumber")
+                                    RoomNumber = r.Field<string>("RoomNumber"),
+                                    ChargableInfo = r.Field<string>("ChargableInfo"),
+                                    ChargableAmount = r.Field<decimal>("ChargableAmount")
+                                }).ToList();
+                }
+            }
+            return guestList;
+        }
+        public List<GuestAirportPickUpDropReportViewBO> GetPickupDropForecastRevenueInfo(string reportType, DateTime startDate, DateTime endDate, int companyId)
+        {
+            List<GuestAirportPickUpDropReportViewBO> guestList = new List<GuestAirportPickUpDropReportViewBO>();
+            DataSet customerDS = new DataSet();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetPickupDropForecastRevenueInfo_SP"))
+                {
+                    dbSmartAspects.AddInParameter(cmd, "@ReportType", DbType.String, reportType);
+                    dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, startDate);
+                    dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, endDate);
+                    if (companyId != 0)
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, companyId);
+                    }
+                    else dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.Int32, DBNull.Value);
+
+                    // DataTable table = customerDS.Tables["GuestAirportPickupDrop"];
+                    DataSet ds = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, ds, "GuestAirportPickupDrop");
+                    DataTable Table = ds.Tables["GuestAirportPickupDrop"];
+                    guestList = Table.AsEnumerable().Select(r =>
+                                new GuestAirportPickUpDropReportViewBO
+                                {
+                                    FromDate = r.Field<DateTime>("FromDate"),
+                                    ToDate = r.Field<DateTime>("ToDate"),
+                                    TransactionDate = r.Field<DateTime>("TransactionDate"),
+                                    TransactionDateDisplay = r.Field<string>("TransactionDateDisplay"),
+                                    TransactionType = r.Field<string>("TransactionType"),
+                                    TransactionNumber = r.Field<string>("TransactionNumber"),
+                                    GuestName = r.Field<string>("GuestName"),
+                                    PickUpDropInfo = r.Field<string>("PickUpDropInfo"),
+                                    FlightName = r.Field<string>("FlightName"),
+                                    FlightNumber = r.Field<string>("FlightNumber"),
+                                    TimeString = r.Field<string>("TimeString"),
+                                    RoomNumber = r.Field<string>("RoomNumber"),
+                                    ChargableInfo = r.Field<string>("ChargableInfo"),
+                                    ChargableAmount = r.Field<decimal>("ChargableAmount"),
+                                    LocalCurrencyName = r.Field<string>("LocalCurrencyName"),
+                                    ChargableLocalCurrencyAmount = r.Field<decimal>("ChargableLocalCurrencyAmount")
                                 }).ToList();
                 }
             }

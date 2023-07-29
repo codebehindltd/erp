@@ -1178,6 +1178,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                             roomRegistrationBO.DepartureChargableAmount = 0;
                         }
 
+                        roomRegistrationBO.DepartureChargableAmountCurrency = Convert.ToInt32(ddlDepartureChargableAmountCurrency.SelectedValue);
+
                         // -- Airport Pickup and Drop Information-------------------------------End--------
 
                         // -- Advance Payment Information--------------------------------------------------
@@ -1682,6 +1684,11 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             item.Value = "0";
             item.Text = hmUtility.GetDropDownFirstValue();
             this.ddlPaymentCurrency.Items.Insert(0, item);
+
+            this.ddlDepartureChargableAmountCurrency.DataSource = currencyListBO;
+            this.ddlDepartureChargableAmountCurrency.DataTextField = "CurrencyName";
+            this.ddlDepartureChargableAmountCurrency.DataValueField = "CurrencyId";
+            this.ddlDepartureChargableAmountCurrency.DataBind();
         }
         private void LoadIsConversionRateEditable()
         {
@@ -2055,7 +2062,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             this.txtCalculateDiscountAmount.Text = "";
             this.ddlRoomId.Enabled = false;
             SetDefaultComplementaryItem();
-            
+
             cbOnlyRateEffect.Checked = true;
             this.cbServiceCharge.Enabled = true;
             this.cbCityCharge.Enabled = true;
@@ -2359,6 +2366,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     this.txtDepartureFlightNumber.Text = roomRegistrationBO.DepartureFlightNumber;
                     chkIsDepartureChargable.Checked = roomRegistrationBO.IsDepartureChargable;
                     txtDepartureChargableAmount.Text = roomRegistrationBO.DepartureChargableAmount.ToString();
+                    if (roomRegistrationBO.DepartureChargableAmountCurrency > 0)
+                    {
+                        ddlDepartureChargableAmountCurrency.SelectedValue = roomRegistrationBO.DepartureChargableAmountCurrency.ToString();
+                    }
 
                     if (roomRegistrationBO.DepartureTime != null)
                     {

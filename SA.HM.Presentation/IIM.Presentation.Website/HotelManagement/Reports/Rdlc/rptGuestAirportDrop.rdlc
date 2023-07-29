@@ -61,6 +61,14 @@
           <DataField>RoomNumber</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="ChargableInfo">
+          <DataField>ChargableInfo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ChargableAmount">
+          <DataField>ChargableAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>InnboardSixSeasonsDataSet</rd:DataSetName>
@@ -397,14 +405,14 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="AirPortPickUpDropInfo4">
+																	<Textbox Name="AirPortPickUpDropInfo3">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=IIF(Fields!PickUpDropInfo.Value = "", "N/A", Fields!PickUpDropInfo.Value.ToString) + Microsoft.VisualBasic.Constants.vbCrLf + IIF(Fields!FlightName.Value = "", "N/A", "Airline Name: " + Fields!FlightName.Value.ToString) + Microsoft.VisualBasic.Constants.vbCrLf + IIF(Fields!FlightNumber.Value = "", "N/A", "Flight No: " + Fields!FlightNumber.Value.ToString) + Microsoft.VisualBasic.Constants.vbCrLf + IIF(Fields!TimeString.Value = "", "N/A", "Time: " + Fields!TimeString.Value)</Value>
+																						<Value>=IIF(Fields!PickUpDropInfo.Value = "","N/A", Fields!PickUpDropInfo.Value.ToString()) + vbCrLf + IIF(Fields!FlightName.Value = "","N/A","Airline Name: " + Fields!FlightName.Value.ToString()) + vbCrLf + IIF(Fields!FlightNumber.Value = "","N/A","Flight No: " + Fields!FlightNumber.Value.ToString()) + vbCrLf + IIF(Fields!TimeString.Value = "","N/A","Time: " + Fields!TimeString.Value) + vbCrLf + IIF(Fields!ChargableInfo.Value = "","N/A","Chargable: " + Fields!ChargableInfo.Value.ToString())</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																						</Style>

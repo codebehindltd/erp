@@ -65,11 +65,15 @@ namespace HotelManagement.Entity.HotelManagement
         public string ArrivalFlightName { get; set; }
         public string ArrivalFlightNumber { get; set; }
         public DateTime ArrivalTime { get; set; }
+        public decimal ArrivalChargableAmount { get; set; }
+        public int ArrivalChargableAmountCurrency { get; set; }
         public int DepartureAirlineId { get; set; }
         public string DepartureFlightName { get; set; }
         public string DepartureFlightNumber { get; set; }
         public DateTime DepartureTime { get; set; }
         public string DepartureTimeString { get; set; }
+        public decimal DepartureChargableAmount { get; set; }
+        public int DepartureChargableAmountCurrency { get; set; }
         public string DiscountType { get; set; }
         public decimal DiscountAmount { get; set; }
         public string Remarks { get; set; }

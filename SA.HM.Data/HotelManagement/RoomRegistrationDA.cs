@@ -305,6 +305,7 @@ namespace HotelManagement.Data.HotelManagement
                         dbSmartAspects.AddInParameter(commandMaster, "@DepartureTime", DbType.DateTime, roomRegistration.DepartureTime);
                         dbSmartAspects.AddInParameter(commandMaster, "@IsDepartureChargable", DbType.Boolean, roomRegistration.IsDepartureChargable);
                         dbSmartAspects.AddInParameter(commandMaster, "@DepartureChargableAmount", DbType.Decimal, roomRegistration.DepartureChargableAmount);
+                        dbSmartAspects.AddInParameter(commandMaster, "@DepartureChargableAmountCurrency", DbType.Int32, roomRegistration.DepartureChargableAmountCurrency);
                         //--Aireport Pickup Drop Information------------------------------End--------
 
                         //--Credit Card Information ------------
@@ -762,6 +763,7 @@ namespace HotelManagement.Data.HotelManagement
                         dbSmartAspects.AddInParameter(commandMaster, "@DepartureTime", DbType.DateTime, roomRegistration.DepartureTime);
                         dbSmartAspects.AddInParameter(commandMaster, "@IsDepartureChargable", DbType.Boolean, roomRegistration.IsDepartureChargable);
                         dbSmartAspects.AddInParameter(commandMaster, "@DepartureChargableAmount", DbType.Decimal, roomRegistration.DepartureChargableAmount);
+                        dbSmartAspects.AddInParameter(commandMaster, "@DepartureChargableAmountCurrency", DbType.Int32, roomRegistration.DepartureChargableAmountCurrency);
                         //--Aireport Pickup Drop Information------------------------------End--------
 
 
@@ -1003,6 +1005,7 @@ namespace HotelManagement.Data.HotelManagement
                                 roomRegistration.DepartureFlightNumber = reader["DepartureFlightNumber"].ToString();
                                 roomRegistration.IsDepartureChargable = Convert.ToBoolean(reader["IsDepartureChargable"]);
                                 roomRegistration.DepartureChargableAmount = Convert.ToDecimal(reader["DepartureChargableAmount"]);
+                                roomRegistration.DepartureChargableAmountCurrency = Convert.ToInt32(reader["DepartureChargableAmountCurrency"]);
 
                                 if (roomRegistration.APDId != 0)
                                 {
