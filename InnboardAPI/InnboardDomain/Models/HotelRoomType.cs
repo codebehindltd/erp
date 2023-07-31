@@ -39,6 +39,7 @@ namespace InnboardDomain.Models
         public DateTime? LastModifiedDate { get; set; }
 
         public int? PaxQuantity { get; set; }
+        public int? ChildQuantity { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int? TotalRooms { get; set; }

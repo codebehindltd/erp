@@ -14,6 +14,7 @@ namespace HotelManagement.Entity.HotelManagement
         public Nullable<decimal> ConversionRate { get; set; }
         public Nullable<decimal> ConvertedAmount { get; set; }
         public string PaymentMode { get; set; }
+        public string TransactionDetails { get; set; }
         public string Remarks { get; set; }
         public string ReceivedBy { get; set; }
         public string CostCenter { get; set; }

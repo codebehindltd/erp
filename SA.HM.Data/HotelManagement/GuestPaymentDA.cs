@@ -42,7 +42,7 @@ namespace HotelManagement.Data.HotelManagement
             return guestList;
         }
 
-        public List<CurrencyTransactionBO> GetCurrencyTransaction(DateTime? PaymentDateFrom, DateTime? PaymentDateTo, int? CurrencyType, string PaymentMode, int? ReceivedBy, string CostCenter)
+        public List<CurrencyTransactionBO> GetCurrencyTransaction(DateTime? PaymentDateFrom, DateTime? PaymentDateTo, string tansactionNumber, int? CurrencyType, string PaymentMode, int? ReceivedBy, string CostCenter)
         {
             List<CurrencyTransactionBO> currencyTranscation = new List<CurrencyTransactionBO>();
 
@@ -52,6 +52,7 @@ namespace HotelManagement.Data.HotelManagement
                 {
                     dbSmartAspects.AddInParameter(cmd, "@PaymentDateFrom", DbType.DateTime, PaymentDateFrom);
                     dbSmartAspects.AddInParameter(cmd, "@PaymentDateTo", DbType.DateTime, PaymentDateTo);
+                    dbSmartAspects.AddInParameter(cmd, "@TransactionNumber", DbType.String, tansactionNumber);
                     if (CurrencyType != null)
                     {
                         dbSmartAspects.AddInParameter(cmd, "@CurrencyType", DbType.Int32, CurrencyType);
@@ -101,6 +102,7 @@ namespace HotelManagement.Data.HotelManagement
                                     ConversionRate = r.Field<decimal?>("ConversionRate"),
                                     ConvertedAmount = r.Field<decimal?>("ConvertedAmount"),
                                     PaymentMode = r.Field<string>("PaymentMode"),
+                                    TransactionDetails = r.Field<string>("TransactionDetails"),
                                     Remarks = r.Field<string>("Remarks"),
                                     ReceivedBy = r.Field<string>("ReceivedBy"),
                                     CostCenter = r.Field<string>("CostCenter")

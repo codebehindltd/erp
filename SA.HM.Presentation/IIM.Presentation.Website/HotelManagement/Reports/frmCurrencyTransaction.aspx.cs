@@ -123,9 +123,11 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
 
             rvTransaction.LocalReport.SetParameters(reportParam);
 
+            string tansactionNumber = txtTransactionNumber.Text;
+
             GuestPaymentDA guestPaymentDA = new GuestPaymentDA();
             List<CurrencyTransactionBO> currencyTranscation = new List<CurrencyTransactionBO>();
-            currencyTranscation = guestPaymentDA.GetCurrencyTransaction(FromDate, ToDate, currencyType, paymentMode, receivedBy, costCenter);
+            currencyTranscation = guestPaymentDA.GetCurrencyTransaction(FromDate, ToDate, tansactionNumber, currencyType, paymentMode, receivedBy, costCenter);
 
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], currencyTranscation));

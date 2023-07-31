@@ -100,7 +100,7 @@ namespace HotelManagement.Data.HMCommon
             }
             return cmncurrencyconvBOList;
         }
-        public List<CommonCurrencyTransactionBO> GetAllCommonCurrencyConversion(int fromId, int toId, DateTime? fromDate, DateTime? toDate)
+        public List<CommonCurrencyTransactionBO> GetAllCommonCurrencyConversion(int fromId, int toId, DateTime? fromDate, DateTime? toDate, string transactionNumber)
         {
             
             List<CommonCurrencyTransactionBO> cmncurrencyconvBOList = new List<CommonCurrencyTransactionBO>();
@@ -124,6 +124,7 @@ namespace HotelManagement.Data.HMCommon
                     }
                     dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, fromDate);
                     dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, toDate);
+                    dbSmartAspects.AddInParameter(cmd, "@TransactionNumber", DbType.String, transactionNumber);
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {

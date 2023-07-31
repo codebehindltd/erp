@@ -1,4 +1,5 @@
 ﻿using InnboardAPI.Models;
+using InnboardDataAccess.DataAccesses;
 using InnboardDomain.Models;
 using InnboardDomain.ViewModel;
 using InnboardService.Services;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -20,6 +22,15 @@ namespace InnboardAPI.Controllers
         public ReservationController()
         {
             onlineReservationService = new HotelRoomReservationOnlineService();
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetRoomTypeInfo")]
+        public async Task<IHttpActionResult> GetRoomTypeInfo()
+        {
+            HotelRoomTypeDataAccess db = new HotelRoomTypeDataAccess();
+            var result = await db.GetRoomTypeInfo();
+            return Ok(result);
         }
         [EnableCors("*", "*", "*")]
         [Route("GetAvailableRoomInfo"), HttpGet]

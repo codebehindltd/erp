@@ -348,15 +348,6 @@ namespace HotelManagement.Presentation.Website.HMCommon
         protected global::System.Web.UI.WebControls.TextBox txtFromDate;
 
         /// <summary>
-        /// lblToDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblToDate;
-
-        /// <summary>
         /// txtToDate control.
         /// </summary>
         /// <remarks>
@@ -366,6 +357,24 @@ namespace HotelManagement.Presentation.Website.HMCommon
         protected global::System.Web.UI.WebControls.TextBox txtToDate;
 
         /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+
+        /// <summary>
+        /// txtTransactionNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTransactionNumber;
+
+        /// <summary>
         /// btnSearch control.
         /// </summary>
         /// <remarks>
@@ -373,15 +382,6 @@ namespace HotelManagement.Presentation.Website.HMCommon
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearch;
-
-        /// <summary>
-        /// btnGroupPaymentPreview control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGroupPaymentPreview;
 
         /// <summary>
         /// gvCurrencyConversion control.

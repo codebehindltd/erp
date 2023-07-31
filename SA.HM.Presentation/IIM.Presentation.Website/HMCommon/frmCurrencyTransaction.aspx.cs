@@ -273,11 +273,21 @@ namespace HotelManagement.Presentation.Website.HMCommon
             this.ddlSFromConversion.DataBind();
             this.ddlSFromConversion.Items.Insert(0, item);
 
+            ListItem itemSFromConversion = new ListItem();
+            itemSFromConversion.Value = "0";
+            itemSFromConversion.Text = hmUtility.GetDropDownFirstAllValue();
+            this.ddlSFromConversion.Items.Insert(0, itemSFromConversion);
+
             this.ddlSToConversion.DataSource = headDA.GetConversionHeadInfoByType("Local");
             this.ddlSToConversion.DataTextField = "CurrencyName";
             this.ddlSToConversion.DataValueField = "CurrencyId";
             this.ddlSToConversion.DataBind();
             this.ddlSToConversion.Items.Insert(0, item);
+
+            ListItem itemSToConversion = new ListItem();
+            itemSToConversion.Value = "0";
+            itemSToConversion.Text = hmUtility.GetDropDownFirstAllValue();
+            this.ddlSToConversion.Items.Insert(0, itemSToConversion);
         }
         private void LoadSearchInformation()
         {
@@ -332,8 +342,11 @@ namespace HotelManagement.Presentation.Website.HMCommon
             {
                 toDate = hmUtility.GetDateTimeFromString(txtToDate.Text, hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat);
             }
+
+            String transactionNumber = txtTransactionNumber.Text;
+
             CommonCurrencyTransactionDA cmncurrencyconvDA = new CommonCurrencyTransactionDA();
-            List<CommonCurrencyTransactionBO> files = cmncurrencyconvDA.GetAllCommonCurrencyConversion(fromId, toId, fromDate, toDate);
+            List<CommonCurrencyTransactionBO> files = cmncurrencyconvDA.GetAllCommonCurrencyConversion(fromId, toId, fromDate, toDate, transactionNumber);
 
             isSearchPanelEnable = 1;
             this.gvCurrencyConversion.DataSource = files;

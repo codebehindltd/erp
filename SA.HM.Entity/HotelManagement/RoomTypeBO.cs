@@ -19,6 +19,7 @@ namespace HotelManagement.Entity
         public Boolean SuiteType { get; set; }
         public string ActiveStatus { get; set; }
         public int PaxQuantity { get; set; }
+        public int ChildQuantity { get; set; }
         public int CreatedBy { get; set; }
         public int LastModifiedBy { get; set; }
         public int TotalRoom { get; set; }

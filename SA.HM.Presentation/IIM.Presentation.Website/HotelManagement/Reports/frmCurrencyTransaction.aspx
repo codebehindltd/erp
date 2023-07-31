@@ -52,16 +52,19 @@
             <div class="form-horizontal">
                 <div class="form-group">
                     <div class="col-md-2">
-                        <asp:Label ID="Label1" runat="server" class="control-label" Text="Date From"></asp:Label>
+                        <asp:Label ID="Label1" runat="server" class="control-label" Text="Date"></asp:Label>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <asp:TextBox ID="txtPaymentDateFrom" runat="server" CssClass="form-control"></asp:TextBox>
                     </div>
                     <div class="col-md-2">
-                        <asp:Label ID="Label2" runat="server" class="control-label" Text="Date To"></asp:Label>
+                        <asp:TextBox ID="txtPaymentDateTo" runat="server" CssClass="form-control"></asp:TextBox>
+                    </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="Label2" runat="server" class="control-label" Text="Invoice Number"></asp:Label>
                     </div>
                     <div class="col-md-4">
-                        <asp:TextBox ID="txtPaymentDateTo" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:TextBox ID="txtTransactionNumber" runat="server" CssClass="form-control"></asp:TextBox>
                     </div>
                 </div>
                 <div class="form-group" id="divService">

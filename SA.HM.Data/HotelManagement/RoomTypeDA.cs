@@ -34,6 +34,7 @@ namespace HotelManagement.Data
                                 roomType.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
                                 roomType.ActiveStatus = reader["ActiveStatus"].ToString();
                                 roomType.PaxQuantity = Convert.ToInt32(reader["PaxQuantity"]);
+                                roomType.ChildQuantity = Convert.ToInt32(reader["ChildQuantity"]);
                                 //roomType.AccountsPostingHeadId = Convert.ToInt32(reader["AccountsPostingHeadId"]);
 
                                 roomTypeList.Add(roomType);

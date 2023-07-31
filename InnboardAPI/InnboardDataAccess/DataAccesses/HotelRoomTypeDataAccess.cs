@@ -1,6 +1,7 @@
 ﻿using InnboardAPI.DataAccesses;
 using InnboardDomain.Interfaces;
 using InnboardDomain.Models;
+using InnboardDomain.Models.Membership;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace InnboardDataAccess.DataAccesses
         public HotelRoomTypeDataAccess()
         {
 
+        }
+        public async Task<List<HotelRoomTypeBO>> GetRoomTypeInfo()
+        {
+            var result = await InnboardDBContext.Database.SqlQuery<HotelRoomTypeBO>("EXEC [dbo].[GetRoomTypeInfo_SP]").ToListAsync();
+            return result;
         }
         public new List<HotelRoomType> TruncateAllAndInsert(List<HotelRoomType> entity)
         {

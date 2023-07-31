@@ -282,13 +282,13 @@
     <div id="myTabs">
         <ul id="tabPage" class="ui-style">
             <li id="A" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
-                href="#tab-1">Currency Conversion</a></li>
+                href="#tab-1">Currency Exchange</a></li>
             <li id="B" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
-                href="#tab-2">Search Currency Conversion</a></li>
+                href="#tab-2">Search Currency Exchange</a></li>
         </ul>
         <div id="tab-1">
             <div id="EntryPanel" class="panel panel-default">
-                <div class="panel-heading">Currency Conversion</div>
+                <div class="panel-heading">Currency Exchange</div>
                 <div class="form-horizontal">
                     <div class="panel-body">
                         <div class="form-group">
@@ -396,7 +396,7 @@
         <div id="tab-2">
             <div id="SearchEntry" class="panel panel-default">
                 <div class="panel-heading">
-                    Currency Conversion Information
+                    Currency Exchange Information
                 </div>
                 <div class="panel-body">
                     <div class="form-horizontal">
@@ -418,24 +418,25 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-2">
-                                <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="From Date"></asp:Label>
+                                <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="Date"></asp:Label>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <asp:TextBox ID="txtFromDate" CssClass="form-control" runat="server" TabIndex="3"></asp:TextBox>
                             </div>
                             <div class="col-md-2">
-                                <asp:Label ID="lblToDate" runat="server" class="control-label" Text="To Date"></asp:Label>
-                            </div>
-                            <div class="col-md-4">
                                 <asp:TextBox ID="txtToDate" CssClass="form-control" runat="server" TabIndex="4"></asp:TextBox>
                             </div>
+                            <div class="col-md-2">
+                        <asp:Label ID="Label2" runat="server" class="control-label" Text="Invoice Number"></asp:Label>
+                    </div>
+                    <div class="col-md-4">
+                        <asp:TextBox ID="txtTransactionNumber" runat="server" CssClass="form-control"></asp:TextBox>
+                    </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <asp:Button ID="btnSearch" runat="server" TabIndex="3" Text="Search" CssClass="TransactionalButton btn btn-primary btn-sm"
                                     OnClick="btnSearch_Click" />
-                                <asp:Button ID="btnGroupPaymentPreview" runat="server" Text="Preview" TabIndex="15"
-                                    CssClass="TransactionalButton btn btn-primary btn-sm" OnClientClick="javascript: return LoadPopUp();" />
                             </div>
                         </div>
                     </div>
@@ -444,7 +445,7 @@
         </div>
         <div id="SearchPanel" class="panel panel-default">
             <div class="panel-heading">
-                Currency Conversion Details
+                Currency Exchange Details
             </div>
             <div class="panel-body">
                 <asp:GridView ID="gvCurrencyConversion" Width="100%" runat="server" AllowPaging="True"
