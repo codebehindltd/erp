@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Util;
 
 namespace InnboardAPI.Controllers
 {
@@ -13,6 +14,16 @@ namespace InnboardAPI.Controllers
     [RoutePrefix("api/Common")]
     public class CommonController : ApiController
     {
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetCompanyInfo")]
+        public async Task<IHttpActionResult> GetCompanyInfo()
+        {
+            CommonDataAccess db = new CommonDataAccess();
+            var result = await db.GetCompanyInfo();
+            return Ok(result);
+        }
+
         [HttpGet]
         [AllowAnonymous]
         [Route("GetCustomField")]
@@ -32,6 +43,5 @@ namespace InnboardAPI.Controllers
             var result = await db.GetPropertyInformation(transactionType, transactionId);
             return Ok(result);
         }
-
     }
 }

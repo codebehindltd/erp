@@ -265,14 +265,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 txtSrcBillNumber.Focus();
                 return;
             }
-            
+
             SrcBillNumberProcess();
             string participantFromOfficeValue = hfparticipantFromOfficeValue.Value;
             reservationBO.PerticipantFromOfficeCommaSeperatedIds = participantFromOfficeValue;
 
         }
 
-       
+
         protected void ddlPaymentMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadAccountHeadInfo();
@@ -458,7 +458,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         txtSrcRegistrationIdList.Value = ddlReservationId.SelectedValue;
                         txtRemarks.Text = banquetReservationBO.Remarks;
 
-                        
+
                         hfEventType.Value = banquetReservationBO.EventType.ToString();
                         hfCostcenterId.Value = banquetReservationBO.CostCenterId.ToString();
                         hfReservationId.Value = banquetReservationBO.Id.ToString();
@@ -1120,7 +1120,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                             txtSalesTotal.Text = (Math.Round(banquetReservationBO.GrandTotal)).ToString();
                         }
                         txtGrandTotal.Text = (Math.Round(banquetReservationBO.GrandTotal)).ToString();
-                        
+
                         dueAmountTotal = Math.Round(banquetReservationBO.GrandTotal - calculatePaidAmount);
 
                         ddlDiscountType.SelectedValue = "Fixed";
@@ -1913,12 +1913,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             reservationBO = reservationDA.GetBanquetReservationInfoById(reservationBO.Id);
 
             //var hallName = reservationDA.GetHallName(reservationBO.ReservationNumber);
-            
+
             BanquetInformationBO banquetInformationBO = banInfoDa.GetBanquetInformationById(reservationBO.BanquetId);
 
-            
 
-            
+
+
             //BanquetInformationBO banquet = new BanquetInformationBO();
             //BanquetInformationDA informationDA = new BanquetInformationDA();
             //banquet = informationDA.GetBanquetInformationById(reservationBO.Id);
@@ -1930,9 +1930,9 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             reservationBO.MeetingDiscussion = txtMeetingDiscussion1.Value;
 
             reservationBO.CallToAction = txtCallToAction1.Value;
-            
+
             int companyValue = Int32.Parse(ddlCompany1.SelectedValue);
-            if(companyValue == 0)
+            if (companyValue == 0)
             {
                 reservationBO.IsUnderCompany = false;
             }
@@ -1975,34 +1975,40 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 CommonHelper.AlertInfo(innboardMessage, "Operation Failed.", AlertType.Warning);
             }
 
-            if (companyValue != 0)
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsBanquetInternalMeetingEmailSendEnable", "IsBanquetInternalMeetingEmailSendEnable");
+            if (commonSetupBO != null)
             {
-                ContactInformationDA emp = new ContactInformationDA();
-                CompanyDA companyDA = new CompanyDA();
-                CompanyBO companyBO = new CompanyBO();
-                companyBO = companyDA.GetCompanyInfoById(companyValue);
-                //companyBO = companyDA.GetCompanyInfoById(emp.GetContactInformationById);
-                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-
-                bool send = false;
-
-                Email email;
-                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendEmailAddress", "SendEmailConfiguration");
-                string mainString = commonSetupBO.SetupValue;
-                EmployeeBO employeeBO = new EmployeeBO();
-                EmployeeDA empDa = new EmployeeDA();
-
-                int employeeId = Int32.Parse((reservationBO.RefferenceId).ToString());
-                var cordinator = empDa.GetEmployeeInfoById(employeeId);
-
-                foreach (var invitedEmployee in client)
+                if (commonSetupBO.SetupId > 0)
                 {
-                    var employee = emp.GetContactInformationById(int.Parse(invitedEmployee));
-                    //int companyEmailId = (int)employee.CompanyId;
-                    //var companyEmail = companyDA.GetCompanyInfoById(companyEmailId);
+                    if (companyValue != 0)
+                    {
+                        ContactInformationDA emp = new ContactInformationDA();
+                        CompanyDA companyDA = new CompanyDA();
+                        CompanyBO companyBO = new CompanyBO();
+                        companyBO = companyDA.GetCompanyInfoById(companyValue);
+                        //companyBO = companyDA.GetCompanyInfoById(emp.GetContactInformationById);
+                        HMCommonSetupBO SendEmailAddressBO = new HMCommonSetupBO();
 
-                    var tokens = new Dictionary<string, string>
+                        bool send = false;
+
+                        Email email;
+                        SendEmailAddressBO = commonSetupDA.GetCommonConfigurationInfo("SendEmailAddress", "SendEmailConfiguration");
+                        string mainString = SendEmailAddressBO.SetupValue;
+                        EmployeeBO employeeBO = new EmployeeBO();
+                        EmployeeDA empDa = new EmployeeDA();
+
+                        int employeeId = Int32.Parse((reservationBO.RefferenceId).ToString());
+                        var cordinator = empDa.GetEmployeeInfoById(employeeId);
+
+                        foreach (var invitedEmployee in client)
+                        {
+                            var employee = emp.GetContactInformationById(int.Parse(invitedEmployee));
+                            //int companyEmailId = (int)employee.CompanyId;
+                            //var companyEmail = companyDA.GetCompanyInfoById(companyEmailId);
+
+                            var tokens = new Dictionary<string, string>
                     {
                     {"Name",  employee.Name},
                     {"MeetingAgenda", reservationBO.MeetingAgenda },
@@ -2018,31 +2024,33 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     {"Venue",  banquetInformationBO.Name}
                     };
 
-                    if (!string.IsNullOrEmpty(mainString))
-                    {
-                        string[] dataArray = mainString.Split('~');
-                        email = new Email()
-                        {
-                            From = dataArray[0],
-                            Password = dataArray[1],
-                            To = employee.Email,
-                            //FromDisplayName = ,
-                            //ToDisplayName = employee.Name,
-                            Subject = reservationBO.EventTitle,
-                            //Body = reservationBO.MeetingDiscussion,
-                            Host = dataArray[2],
-                            Port = dataArray[3],
-                            TempleteName = "ThanksEmployeeEmail.html"
-                        };
+                            if (!string.IsNullOrEmpty(mainString))
+                            {
+                                string[] dataArray = mainString.Split('~');
+                                email = new Email()
+                                {
+                                    From = dataArray[0],
+                                    Password = dataArray[1],
+                                    To = employee.Email,
+                                    //FromDisplayName = ,
+                                    //ToDisplayName = employee.Name,
+                                    Subject = reservationBO.EventTitle,
+                                    //Body = reservationBO.MeetingDiscussion,
+                                    Host = dataArray[2],
+                                    Port = dataArray[3],
+                                    TempleteName = "ThanksEmployeeEmail.html"
+                                };
 
-                        try
-                        {
-                            //Send Mail   
-                            send = EmailHelper.SendEmail(email, tokens);
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
+                                try
+                                {
+                                    //Send Mail   
+                                    send = EmailHelper.SendEmail(email, tokens);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw ex;
+                                }
+                            }
                         }
                     }
                 }

@@ -559,50 +559,50 @@
                     toastr.error(response.d);
                 }
             });
-            }
-            function DivShowHideForEventType(type) {
-                if (type == "Internal") {
-                    $(".DivHideForEventType").hide();
-                    $(".DivShowForEventType").show();
-                    $("#MeetingAgendaDiv").show();
-                    $("#NumberOfPersonAdultLabelDiv").hide();
-                    $("#NumberOfPersonAdultControlDiv").hide();
-                    $("#ParticipantFromOfficeDiv").show();
-                    $("#<%=lblRemarks.ClientID %>").text("Description");
+        }
+        function DivShowHideForEventType(type) {
+            if (type == "Internal") {
+                $(".DivHideForEventType").hide();
+                $(".DivShowForEventType").show();
+                $("#MeetingAgendaDiv").show();
+                $("#NumberOfPersonAdultLabelDiv").hide();
+                $("#NumberOfPersonAdultControlDiv").hide();
+                $("#ParticipantFromOfficeDiv").show();
+                $("#<%=lblRemarks.ClientID %>").text("Description");
                     $("#<%=lblNumberOfPersonAdult.ClientID %>").text("Number Of Person");
                 }
                 else {
-                    $("#MeetingAgendaDiv").hide();                    
+                    $("#MeetingAgendaDiv").hide();
                     $(".DivHideForEventType").show();
                     $(".DivShowForEventType").hide();
                     $("#ParticipantFromOfficeDiv").hide();
                     $("#NumberOfPersonAdultLabelDiv").show();
                     $("#NumberOfPersonAdultControlDiv").show();
                     $("#<%=lblNumberOfPersonAdult.ClientID %>").text("Number Of Adult");
-                }
             }
-            function ShowPersonal() {
-                $("#<%=lblName.ClientID %>").text('Contact Person');
+        }
+        function ShowPersonal() {
+            $("#<%=lblName.ClientID %>").text('Contact Person');
                 $("#ContactPersonDiv").hide();
                 $("#<%=chkIsLitedCompany.ClientID %>").attr("Disabled", true);
                 $("#<%=chkIsLitedCompany.ClientID %>").prop("checked", false);
-                $("#ListedCompany").hide();
-                $("#ReservedCompany").show();
-                $("#txtCompanyId").val("");
-            }
-            function ShowCompany() {
-                $("#ContactPersonDiv").show();
-                $("#<%=lblName.ClientID %>").text('Company Name');
+            $("#ListedCompany").hide();
+            $("#ReservedCompany").show();
+            $("#txtCompanyId").val("");
+        }
+        function ShowCompany() {
+            $("#ContactPersonDiv").show();
+            $("#<%=lblName.ClientID %>").text('Company Name');
                 $("#<%=chkIsLitedCompany.ClientID %>").attr("Disabled", false);
-                $("#ListedCompany").show();
-                $("#ReservedCompany").hide();
-            }
-            function GetAffiliatedCompanyObjectSucceeded(result) {
-                $("#<%=txtAddress.ClientID %>").val(result.CompanyAddress)
-            $("#<%=txtContactPerson.ClientID %>").val(result.ContactPerson)
-            $("#<%=txtContactEmail.ClientID %>").val(result.EmailAddressWithoutLabel)
-            $("#<%=txtPhoneNumber.ClientID %>").val(result.TelephoneNumber)
-            $("#<%=txtContactPhone.ClientID %>").val(result.ContactNumberWithoutLabel)
+            $("#ListedCompany").show();
+            $("#ReservedCompany").hide();
+        }
+        function GetAffiliatedCompanyObjectSucceeded(result) {
+            $("#<%=txtAddress.ClientID %>").val(result.CompanyAddress)
+                $("#<%=txtContactPerson.ClientID %>").val(result.ContactPerson)
+                $("#<%=txtContactEmail.ClientID %>").val(result.EmailAddressWithoutLabel)
+                $("#<%=txtPhoneNumber.ClientID %>").val(result.TelephoneNumber)
+                $("#<%=txtContactPhone.ClientID %>").val(result.ContactNumberWithoutLabel)
             return false;
         }
         function GetAffiliatedCompanyObjectFailed(error) {
@@ -977,129 +977,129 @@
                     $("#<%=ddlGLProject.ClientID %>").focus();
                     return false;
                 }
-        }
-        if (eventType == "0") {
-            toastr.warning("Please select a Event Type.");
-            $("#<%=ddlEventTypeId.ClientID %>").focus();
-            return false;
-        }
-        if (isValidEndTime) {
-            toastr.warning("Please insert valid time.");
-            $("#ContentPlaceHolder1_txtProbableDepartureHour").focus();
-            return false;
-        }
-        else if (isSameTime) {
-            toastr.warning("Same time inserted. Please insert valid time.");
-            $("#ContentPlaceHolder1_txtProbableDepartureHour").focus();
-            return false;
-        }
-        else if ((isValidStart) && (isValidDate)) {
-            toastr.warning("Your Arrival Time Has Passed. Please insert valid time.");
-            $("#ContentPlaceHolder1_txtProbableArrivalHour").focus();
-            return false;
-        }
-
-        var chkIsLitedCompany = '<%=chkIsLitedCompany.ClientID%>'
-        if (banquetName == "0") {
-            toastr.warning("Please Provide Hall Name.");
-            $("#ContentPlaceHolder1_ddlBanquetId").focus();
-
-            return false;
-        }
-        else if (startDate == "") {
-            toastr.warning("Please Provide Party Start Date.");
-            $("#ContentPlaceHolder1_txtArriveDate").focus();
-
-            return false;
-        }
-        else if (occasionType == "0") {
-            toastr.warning("Please Select Occasion Type.");
-            $("#ContentPlaceHolder1_ddlOccessionTypeId").focus();
-
-            return false;
-        }
-        else if (seatingName == "0" && eventType == "Rental") {
-            toastr.warning("Please Select Layout Type.");
-            $("#ContentPlaceHolder1_ddlSeatingId").focus();
-            return false;
-        }
-        else if (ddlReservationMode == "0" && eventType == "Rental") {
-            toastr.warning("Please Select Reservation Mode.");
-            $("#ContentPlaceHolder1_ddlReservationMode").focus();
-            return false;
-        }
-        else if (eventTitle == "" && eventType == "Internal") {
-            toastr.warning("Please Insert Event Title.");
-            $("#ContentPlaceHolder1_txtEventTitle").focus();
-            return false;
-        }
-        else if (meetingAgenda == "" && eventType == "Internal") {
-            toastr.warning("Please Insert Meeting Agenda.");
-            $("#ContentPlaceHolder1_txtMeetingAgenda").focus();
-            return false;
-        }
-        else if (officeparticipantno == "" && eventType == "Internal") {
-            toastr.warning("Please select Participant From Office.");
-            $("#ContentPlaceHolder1_ddltxtParticipantFromOffice").focus();
-            return false;
-        }
-        else if (ddlReservationMode == "Personal") {
-            if ($("#ContentPlaceHolder1_txtName").val() == "") {
-                toastr.warning("Please provide a contact name");
-                $("#ContentPlaceHolder1_txtName").focus();
+            }
+            if (eventType == "0") {
+                toastr.warning("Please select a Event Type.");
+                $("#<%=ddlEventTypeId.ClientID %>").focus();
                 return false;
             }
-            else if ($("#ContentPlaceHolder1_txtContactPhone").val() == "") {
-                toastr.warning("Please provide a contact number");
-                $("#ContentPlaceHolder1_txtContactPhone").focus();
+            if (isValidEndTime) {
+                toastr.warning("Please insert valid time.");
+                $("#ContentPlaceHolder1_txtProbableDepartureHour").focus();
                 return false;
             }
-        }
-        else if (ddlReservationMode == "Company") {
+            else if (isSameTime) {
+                toastr.warning("Same time inserted. Please insert valid time.");
+                $("#ContentPlaceHolder1_txtProbableDepartureHour").focus();
+                return false;
+            }
+            else if ((isValidStart) && (isValidDate)) {
+                toastr.warning("Your Arrival Time Has Passed. Please insert valid time.");
+                $("#ContentPlaceHolder1_txtProbableArrivalHour").focus();
+                return false;
+            }
+
             var chkIsLitedCompany = '<%=chkIsLitedCompany.ClientID%>'
-            if ($("#" + chkIsLitedCompany).is(":checked")) {
-                var companyId = $("#<%=ddlCompanyId.ClientID %>").val();
-                var isCompanyId = CommonHelper.IsInt(companyId);
-                if (companyId == 0) {
-                    toastr.warning("Please select a Company Name.");
+            if (banquetName == "0") {
+                toastr.warning("Please Provide Hall Name.");
+                $("#ContentPlaceHolder1_ddlBanquetId").focus();
+
+                return false;
+            }
+            else if (startDate == "") {
+                toastr.warning("Please Provide Party Start Date.");
+                $("#ContentPlaceHolder1_txtArriveDate").focus();
+
+                return false;
+            }
+            else if (occasionType == "0") {
+                toastr.warning("Please Select Occasion Type.");
+                $("#ContentPlaceHolder1_ddlOccessionTypeId").focus();
+
+                return false;
+            }
+            else if (seatingName == "0" && eventType == "Rental") {
+                toastr.warning("Please Select Layout Type.");
+                $("#ContentPlaceHolder1_ddlSeatingId").focus();
+                return false;
+            }
+            else if (ddlReservationMode == "0" && eventType == "Rental") {
+                toastr.warning("Please Select Reservation Mode.");
+                $("#ContentPlaceHolder1_ddlReservationMode").focus();
+                return false;
+            }
+            else if (eventTitle == "" && eventType == "Internal") {
+                toastr.warning("Please Insert Event Title.");
+                $("#ContentPlaceHolder1_txtEventTitle").focus();
+                return false;
+            }
+            else if (meetingAgenda == "" && eventType == "Internal") {
+                toastr.warning("Please Insert Meeting Agenda.");
+                $("#ContentPlaceHolder1_txtMeetingAgenda").focus();
+                return false;
+            }
+            else if (officeparticipantno == "" && eventType == "Internal") {
+                toastr.warning("Please select Participant From Office.");
+                $("#ContentPlaceHolder1_ddltxtParticipantFromOffice").focus();
+                return false;
+            }
+            else if (ddlReservationMode == "Personal") {
+                if ($("#ContentPlaceHolder1_txtName").val() == "") {
+                    toastr.warning("Please provide a contact name");
+                    $("#ContentPlaceHolder1_txtName").focus();
                     return false;
                 }
-                else if (isCompanyId == false) {
-                    toastr.warning("Please provide an enlisted company.");
-                    return false;
-                }
-                if ($("#ContentPlaceHolder1_txtContactPhone").val() == "") {
+                else if ($("#ContentPlaceHolder1_txtContactPhone").val() == "") {
                     toastr.warning("Please provide a contact number");
                     $("#ContentPlaceHolder1_txtContactPhone").focus();
                     return false;
                 }
             }
-        }
-    if ($("#<%=txtContactEmail.ClientID %>").val() != "") {
+            else if (ddlReservationMode == "Company") {
+                var chkIsLitedCompany = '<%=chkIsLitedCompany.ClientID%>'
+            if ($("#" + chkIsLitedCompany).is(":checked")) {
+                var companyId = $("#<%=ddlCompanyId.ClientID %>").val();
+                    var isCompanyId = CommonHelper.IsInt(companyId);
+                    if (companyId == 0) {
+                        toastr.warning("Please select a Company Name.");
+                        return false;
+                    }
+                    else if (isCompanyId == false) {
+                        toastr.warning("Please provide an enlisted company.");
+                        return false;
+                    }
+                    if ($("#ContentPlaceHolder1_txtContactPhone").val() == "") {
+                        toastr.warning("Please provide a contact number");
+                        $("#ContentPlaceHolder1_txtContactPhone").focus();
+                        return false;
+                    }
+                }
+            }
+            if ($("#<%=txtContactEmail.ClientID %>").val() != "") {
                 var status = CommonHelper.IsValidEmail($("#<%=txtContactEmail.ClientID %>").val());
         if (!status) {
             toastr.warning("Email Address is not valid.");
             $("#<%=txtContactEmail.ClientID %>").focus();
-            return false;
-        }
-    }
-    if ($("#<%=txtPhoneNumber.ClientID %>").val() != "") {
+                    return false;
+                }
+            }
+            if ($("#<%=txtPhoneNumber.ClientID %>").val() != "") {
                 var status = CommonHelper.IsValidPhone($("#<%=txtPhoneNumber.ClientID %>").val());
         if (!status) {
             toastr.warning("Please Provide Valid Phone Number");
             $("#<%=txtPhoneNumber.ClientID %>").focus();
-            return false;
-        }
-    }
-    if ($("#<%=txtContactPhone.ClientID %>").val() != "") {
+                    return false;
+                }
+            }
+            if ($("#<%=txtContactPhone.ClientID %>").val() != "") {
                 var status = CommonHelper.IsValidPhone($("#<%=txtContactPhone.ClientID %>").val());
         if (!status) {
             toastr.warning("Please Provide Valid Mobile Number.");
             $("#<%=txtContactPhone.ClientID %>").focus();
-            return false;
-        }
-    }
-    if ($("#<%=ddlBanquetId.ClientID %>").val() == "0") {
+                    return false;
+                }
+            }
+            if ($("#<%=ddlBanquetId.ClientID %>").val() == "0") {
                 toastr.warning("Please Select Banquet Name");
                 $("#<%=ddlBanquetId.ClientID %>").focus();
                 return false;
@@ -1211,7 +1211,7 @@
                     });
                 }
             });
-            
+
             $("#<%=hfSaveObj.ClientID %>").val(JSON.stringify(saveObj));
             $("#<%=hfEditObj.ClientID %>").val(JSON.stringify(editObj));
             $("#<%=hfDeleteObj.ClientID %>").val(JSON.stringify(deleteObj));
@@ -1513,7 +1513,7 @@
             if ($("#ContentPlaceHolder1_hfIsVatOnSD").val() != "") { isVatOnSD = parseInt($("#ContentPlaceHolder1_hfIsVatOnSD").val(), 10); }
 
             if ($("#ContentPlaceHolder1_hfIsCitySDChargeEnableOnServiceCharge").val() != "") { isCitySDChargeEnableOnServiceCharge = parseInt($("#ContentPlaceHolder1_hfIsCitySDChargeEnableOnServiceCharge").val(), 10); }
-            
+
             if ($("#ContentPlaceHolder1_hfIsBanquetBillInclusive").val() != "") { isInclusiveBill = parseInt($("#ContentPlaceHolder1_hfIsBanquetBillInclusive").val(), 10); }
 
             if ($("#ContentPlaceHolder1_hfBanquetVatAmount").val() != "")
@@ -1741,8 +1741,9 @@
 
                 if (gridObject.EventType != "Internal") {
                     tr += "&nbsp&nbsp<img src='../Images/ReportDocument.png' onClick= \"javascript:return PerformBillPreview('" + gridObject.Id + "')\" tooltip='Bill Preview' alt='Bill Preview' text='Report' border='0' />";
-                    tr += "&nbsp&nbsp<img src='../Images/ReportDocument.png' onClick= \"javascript:return PerformPartySheetPreview('" + gridObject.Id + "')\" tooltip='Party Sheet' alt='Party Sheet' text='Report' border='0' />";
                 }
+                tr += "&nbsp&nbsp<img src='../Images/ReportDocument.png' onClick= \"javascript:return PerformPartySheetPreview('" + gridObject.Id + "')\" tooltip='Party Sheet' alt='Party Sheet' text='Report' border='0' />";
+
                 tr += "</td>";
                 tr += "</tr>"
 
@@ -1762,6 +1763,7 @@
             var possiblePath = "frmBanquetReservation.aspx?editId=" + reservationId;
             window.location = possiblePath;
         }
+
         function PerformBillPreview(reservationId) {
             var isPreview = true;
             var url = "/Banquet/Reports/frmReportReservationConLatter.aspx?ReservationId=" + reservationId + "&isPreview=" + isPreview;
@@ -1935,7 +1937,7 @@
     <asp:HiddenField ID="hfIsServiceChargeEnable" runat="server" />
     <asp:HiddenField ID="hfIsSDChargeEnable" runat="server" />
     <asp:HiddenField ID="hfIsAdditionalChargeEnable" runat="server" />
-    <asp:HiddenField ID="hfAdditionalChargeType" runat="server" />    
+    <asp:HiddenField ID="hfAdditionalChargeType" runat="server" />
     <asp:HiddenField ID="hfIsRatePlusPlus" runat="server" />
     <asp:HiddenField ID="hfIsDiscountApplicableOnRackRate" runat="server" />
     <asp:HiddenField ID="hfIsBanquetBillInclusive" runat="server" />
@@ -1953,7 +1955,7 @@
     <asp:HiddenField ID="hfToday" runat="server" />
     <asp:HiddenField ID="hfEditedId" runat="server" Value="0" />
     <asp:HiddenField ID="hfIsVatOnSD" runat="server" />
-    <asp:HiddenField ID="hfIsCitySDChargeEnableOnServiceCharge" runat="server" />    
+    <asp:HiddenField ID="hfIsCitySDChargeEnableOnServiceCharge" runat="server" />
     <asp:HiddenField ID="hfIsBanquetReservationRestictionForAllUser" runat="server" Value="0" />
     <asp:HiddenField ID="hfparticipantFromOfficeValue" runat="server" Value="" />
     <asp:HiddenField ID="hfddlEmployeeId" runat="server" Value="" />
@@ -2572,13 +2574,13 @@
                             <colgroup>
                                 <col style="width: 10%;" />
                                 <col style="width: 10%;" />
-                                <col style="width: 30%;" />                                
+                                <col style="width: 30%;" />
                                 <col style="width: 25%;" />
                                 <col style="width: 10%;" />
                                 <col style="width: 15%;" />
                             </colgroup>
                             <thead>
-                                <tr style="color: White; background-color: #44545E; font-weight: bold;">                                    
+                                <tr style="color: White; background-color: #44545E; font-weight: bold;">
                                     <td>Reservation #
                                     </td>
                                     <td>Type

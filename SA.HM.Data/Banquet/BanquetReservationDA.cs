@@ -1303,8 +1303,8 @@ namespace HotelManagement.Data.Banquet
                     billList = Table.AsEnumerable().Select(r => new BanquetReservationBO
                     {
                         Id = r.Field<long>("Id"),
+                        EventType = r.Field<string>("EventType"),
                         BanquetId = r.Field<long>("BanquetId"),
-                        //CostCenterId = r.Field<int>("CostCenterId"),
                         ReservationNumber = r.Field<string>("ReservationNumber"),
                         Name = r.Field<string>("Name"),
                         CityName = r.Field<string>("CityName"),

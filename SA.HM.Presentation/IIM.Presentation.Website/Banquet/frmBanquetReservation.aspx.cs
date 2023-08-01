@@ -264,73 +264,82 @@ namespace HotelManagement.Presentation.Website.Banquet
                     return;
                 }
 
-                if (ddlEventTypeId.SelectedValue == "Internal")
+                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsBanquetInternalMeetingEmailSendEnable", "IsBanquetInternalMeetingEmailSendEnable");
+                if (commonSetupBO != null)
                 {
-                    if (reservationBO.RefferenceId != null)
+                    if (commonSetupBO.SetupId > 0)
                     {
-                        HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-                        HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-                        BanquetInformationDA banInfoDa = new BanquetInformationDA();
-                        BanquetInformationBO banquetInformationBO = banInfoDa.GetBanquetInformationById(reservationBO.BanquetId);
-
-                        CompanyDA companyDA = new CompanyDA();
-                        CompanyBO companyBO = new CompanyBO();
-
-                        EmployeeBO employeeBO = new EmployeeBO();
-                        EmployeeDA empDa = new EmployeeDA();
-                        int employeeId = Int32.Parse((reservationBO.RefferenceId).ToString());
-                        var cordinator = empDa.GetEmployeeInfoById(employeeId);
-                        companyBO = companyDA.GetCompanyInfoById(cordinator.EmpCompanyId);
-                        bool send = false;
-
-                        Email email;
-                        commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendEmailAddress", "SendEmailConfiguration");
-                        string mainString = commonSetupBO.SetupValue;
-
-                        foreach (var invitedEmployee in client)
+                        if (ddlEventTypeId.SelectedValue == "Internal")
                         {
-                            var employee = empDa.GetEmployeeInfoById(int.Parse(invitedEmployee));
-                            var tokens = new Dictionary<string, string>
-                        {
-                            {"Name",  employee.DisplayName},
-                            {"Cordinator", cordinator.DisplayName },
-                            {"CordinatorEmail", cordinator.OfficialEmail },
-                            {"CordinatorPhone", cordinator.PresentPhone },
-                            {"MeetingAgenda", reservationBO.MeetingAgenda},
-                            {"Date", reservationBO.ArriveDate.ToString() },
-                            {"CompanyName", companyBO.CompanyName},
-                            {"CompanyAddress", companyBO.CompanyAddress},
-                            {"Email", companyBO.EmailAddress },
-                            {"Venue",  banquetInformationBO.Name}
-                        };
-
-                            if (!string.IsNullOrEmpty(mainString))
+                            if (reservationBO.RefferenceId != null)
                             {
-                                string[] dataArray = mainString.Split('~');
-                                email = new Email()
-                                {
-                                    From = dataArray[0],
-                                    Password = dataArray[1],
-                                    To = employee.OfficialEmail,
-                                    Subject = reservationBO.EventTitle,
-                                    Host = dataArray[2],
-                                    Port = dataArray[3],
-                                    TempleteName = "ParticipatedEmployeeEmail.html"
-                                };
+                                BanquetInformationDA banInfoDa = new BanquetInformationDA();
+                                BanquetInformationBO banquetInformationBO = banInfoDa.GetBanquetInformationById(reservationBO.BanquetId);
 
-                                try
+                                CompanyDA companyDA = new CompanyDA();
+                                CompanyBO companyBO = new CompanyBO();
+
+                                EmployeeBO employeeBO = new EmployeeBO();
+                                EmployeeDA empDa = new EmployeeDA();
+                                int employeeId = Int32.Parse((reservationBO.RefferenceId).ToString());
+                                var cordinator = empDa.GetEmployeeInfoById(employeeId);
+                                companyBO = companyDA.GetCompanyInfoById(cordinator.EmpCompanyId);
+                                bool send = false;
+
+                                Email email;
+                                HMCommonSetupBO SendEmailAddressBO = new HMCommonSetupBO();
+                                SendEmailAddressBO = commonSetupDA.GetCommonConfigurationInfo("SendEmailAddress", "SendEmailConfiguration");
+                                string mainString = SendEmailAddressBO.SetupValue;
+
+                                foreach (var invitedEmployee in client)
                                 {
-                                    //Send Mail   
-                                    send = EmailHelper.SendEmail(email, tokens);
-                                }
-                                catch (Exception ex)
-                                {
-                                    throw ex;
+                                    var employee = empDa.GetEmployeeInfoById(int.Parse(invitedEmployee));
+                                    var tokens = new Dictionary<string, string>
+                                    {
+                                        {"Name",  employee.DisplayName},
+                                        {"Cordinator", cordinator.DisplayName },
+                                        {"CordinatorEmail", cordinator.OfficialEmail },
+                                        {"CordinatorPhone", cordinator.PresentPhone },
+                                        {"MeetingAgenda", reservationBO.MeetingAgenda},
+                                        {"Date", reservationBO.ArriveDate.ToString() },
+                                        {"CompanyName", companyBO.CompanyName},
+                                        {"CompanyAddress", companyBO.CompanyAddress},
+                                        {"Email", companyBO.EmailAddress },
+                                        {"Venue",  banquetInformationBO.Name}
+                                    };
+
+                                    if (!string.IsNullOrEmpty(mainString))
+                                    {
+                                        string[] dataArray = mainString.Split('~');
+                                        email = new Email()
+                                        {
+                                            From = dataArray[0],
+                                            Password = dataArray[1],
+                                            To = employee.OfficialEmail,
+                                            Subject = reservationBO.EventTitle,
+                                            Host = dataArray[2],
+                                            Port = dataArray[3],
+                                            TempleteName = "ParticipatedEmployeeEmail.html"
+                                        };
+
+                                        try
+                                        {
+                                            //Send Mail   
+                                            send = EmailHelper.SendEmail(email, tokens);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            throw ex;
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
+
             }
 
             catch (Exception ex)

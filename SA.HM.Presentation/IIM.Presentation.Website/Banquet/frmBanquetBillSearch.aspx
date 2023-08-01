@@ -496,7 +496,8 @@ function OnProjectsPopulated(response) {
                 }
 
                 tr += "<td align='left' style=\"width:15%; cursor:pointer;\">" + gridObject.ReservationNumber + "</td>";
-                tr += "<td align='left' style=\"width:60%; cursor:pointer;\">" + gridObject.Name + "</td>";
+                tr += "<td align='left' style=\"width:10%; cursor:pointer;\">" + gridObject.EventType + "</td>";
+                tr += "<td align='left' style=\"width:55%; cursor:pointer;\">" + gridObject.Name + "</td>";
 
                 if (gridObject.IsDayClosed == 0) {
                     var editBill = "<img  src='../Images/edit.png' onClick= \"javascript:return PerformEditBill('" + gridObject.Id + "')\" alt='Edit Bill' Title='Edit Bill'  border='0'/>";
@@ -516,8 +517,14 @@ function OnProjectsPopulated(response) {
                             tr += "&nbsp;&nbsp;<img  src='../Images/delete.png' onClick= \"javascript:return AddRemarks(" + gridObject.Id + "," + gridObject.CostCenterId + ")\" alt='Cancel Bill' Title='Void'  border='0'/>";
                         }
 
-                        tr += "&nbsp;&nbsp;<img id='preview' src='../Images/ReportDocument.png' onClick= \"javascript:return PerformBillPreviewAction('" + gridObject.Id + "')\" alt='Preview Bill' Title='Preview' border='0'/>";
-                        //tr += "&nbsp;&nbsp;<img id='preview' src='../Images/billresettlement.png' onClick= \"javascript:return BillReSettlement('" + gridObject.ReservationId + "')\" alt='Re Sattlement' Title='Bill Re-Settlement' border='0'/>";
+                        if (gridObject.EventType != "Internal") {
+                            //tr += "&nbsp&nbsp<img src='../Images/ReportDocument.png' onClick= \"javascript:return PerformBillPreview('" + gridObject.Id + "')\" tooltip='Bill Preview' alt='Bill Preview' text='Report' border='0' />";
+                            tr += "&nbsp;&nbsp;<img id='preview' src='../Images/ReportDocument.png' onClick= \"javascript:return PerformBillPreviewAction('" + gridObject.Id + "')\" alt='Preview Bill' Title='Preview' border='0'/>";
+                        }
+
+                        if (gridObject.EventType == "Internal") {
+                            tr += "&nbsp&nbsp<img src='../Images/ReportDocument.png' onClick= \"javascript:return PerformPartySheetPreview('" + gridObject.Id + "')\" tooltip='Party Sheet' alt='Party Sheet' text='Report' border='0' />";
+                        }
 
                         tr += "</td>";
                     }
@@ -531,8 +538,14 @@ function OnProjectsPopulated(response) {
                             tr += "&nbsp;&nbsp;<img id='Active' src='../Images/select.png' onClick= \"javascript:return ActiveBillStatus(" + gridObject.Id + "," + gridObject.CostCenterId + ")\" alt='Active Bill' Title='Active' border='0'/>";
                         }
 
-                        tr += "&nbsp;&nbsp;<img id='preview' src='../Images/ReportDocument.png' onClick= \"javascript:return PerformBillPreviewAction('" + gridObject.Id + "')\" alt='Preview Bill' Title='Preview' border='0'/>";
-                        //tr += "&nbsp;&nbsp;<img id='preview' src='../Images/billresettlement.png' onClick= \"javascript:return BillReSettlement('" + gridObject.ReservationId + "')\" alt='Re Sattlement' Title='Bill Re-Settlement' border='0'/>";
+                        if (gridObject.EventType != "Internal") {
+                            //tr += "&nbsp&nbsp<img src='../Images/ReportDocument.png' onClick= \"javascript:return PerformBillPreview('" + gridObject.Id + "')\" tooltip='Bill Preview' alt='Bill Preview' text='Report' border='0' />";
+                            tr += "&nbsp;&nbsp;<img id='preview' src='../Images/ReportDocument.png' onClick= \"javascript:return PerformBillPreviewAction('" + gridObject.Id + "')\" alt='Preview Bill' Title='Preview' border='0'/>";
+                        }
+
+                        if (gridObject.EventType == "Internal") {
+                            tr += "&nbsp&nbsp<img src='../Images/ReportDocument.png' onClick= \"javascript:return PerformPartySheetPreview('" + gridObject.Id + "')\" tooltip='Party Sheet' alt='Party Sheet' text='Report' border='0' />";
+                        }
 
                         tr += "</td>";
                     }
@@ -561,6 +574,19 @@ function OnProjectsPopulated(response) {
             var url = "/Banquet/Reports/frmReportReservationBillInfo.aspx?Id=" + billId;
             var popup_window = "Print Preview";
             window.open(url, popup_window, "width=800,height=780,left=300,top=50,resizable=yes");
+        }
+
+        //function PerformBillPreview(reservationId) {
+        //    var isPreview = true;
+        //    var url = "/Banquet/Reports/frmReportReservationConLatter.aspx?ReservationId=" + reservationId + "&isPreview=" + isPreview;
+        //    var popup_window = "Print Preview";
+        //    window.open(url, popup_window, "width=790,height=780,left=300,top=50,resizable=yes");
+        //}
+        function PerformPartySheetPreview(reservationId) {
+            var isPreview = true;
+            var url = "/Banquet/Reports/frmReportReservationConLatter.aspx?ps=1&ReservationId=" + reservationId + "&isPreview=" + isPreview;
+            var popup_window = "Print Preview";
+            window.open(url, popup_window, "width=790,height=780,left=300,top=50,resizable=yes");
         }
 
         function CancelBillStatus() {
@@ -1042,13 +1068,16 @@ function OnProjectsPopulated(response) {
         <div class="panel-body">
             <table id='tblRstBillSearch' width="100%" class="table table-bordered table-condensed table-responsive">
                 <colgroup>
-                    <col style="width: 20%;" />
-                    <col style="width: 60%;" />
+                    <col style="width: 15%;" />
+                    <col style="width: 10%;" />
+                    <col style="width: 55%;" />
                     <col style="width: 15%;" />
                 </colgroup>
                 <thead>
                     <tr style="color: White; background-color: #44545E; font-weight: bold;">
                         <td>Bill Number
+                        </td>
+                        <td>Type
                         </td>
                         <td>Customer Name
                         </td>

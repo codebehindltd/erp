@@ -12,6 +12,12 @@ namespace InnboardDataAccess.DataAccesses
 {
     public class CommonDataAccess : GenericDataAccess<CustomFieldBO>
     {
+        public async Task<List<CommonCompanyProfileBO>> GetCompanyInfo()
+        {
+            var result = await InnboardDBContext.Database.SqlQuery<CommonCompanyProfileBO>("EXEC [dbo].[GetCompanyInfo_SP]").ToListAsync();
+            return result;
+        }
+
         public async Task<List<CustomFieldBO>> GetCustomField(string fieldType)
         {
             SqlParameter param1 = new SqlParameter("@FieldName", fieldType);

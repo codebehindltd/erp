@@ -60,6 +60,9 @@
                 }
             });
 
+            var fromCurrency = $("#<%=ddlFromConversion.ClientID %>").val();
+            var toCurrency = $("#<%=ddlToConversion.ClientID %>").val();
+            GetConversionRateByHeadId(fromCurrency, toCurrency);
 
             $("#<%=ddlFromConversion.ClientID %>").change(function () {
                 var from = $("#<%=ddlFromConversion.ClientID %>").val();

@@ -160,6 +160,7 @@
     <Compile Include="Models\CommonCheckedByApprovedBy.cs" />
     <Compile Include="Models\CommonCity.cs" />
     <Compile Include="Models\CommonCompanyBank.cs" />
+    <Compile Include="Models\CommonCompanyProfileBO.cs" />
     <Compile Include="Models\CommonCompanyProfile.cs" />
     <Compile Include="Models\CommonCostCenter.cs" />
     <Compile Include="Models\CommonCountries.cs" />
