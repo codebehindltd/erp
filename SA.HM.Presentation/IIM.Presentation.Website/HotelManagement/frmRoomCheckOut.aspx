@@ -793,6 +793,159 @@
                 return false;
             });
 
+            $("#btnUncheckedBillSplitPrintPreview").click(function () {
+                var selectedServiceIdArray = new Array();
+                var selectedServiceArray = new Array();
+                var SelectdServiceId = "";
+                var SelectdRoomId = "";
+
+                var SelectdServiceApprovedId = "";
+                var SelectdRoomApprovedId = "";
+                var SelectdPaymentId = "";
+                var SelectdIndividualPaymentId = "";
+                var SelectdIndividualTransferedPaymentId = "";
+
+                var ddlServiceType = '<%=ddlServiceType.ClientID%>'
+                var ddlServiceTypeVal = $('#' + ddlServiceType).val();
+
+                if (ddlServiceTypeVal == "GroupService") {
+                    $('#checkboxServiceList input:not(:checked)').each(function () {
+                        SelectdServiceId = SelectdServiceId + $(this).attr('value') + ',';
+                    });
+
+                    $('#checkboxRoomList input:not(:checked)').each(function () {
+                        SelectdRoomId = SelectdRoomId + $(this).attr('value') + ',';
+                    });
+
+                    $('#checkboxPaymentList input:not(:checked)').each(function () {
+                        SelectdPaymentId = SelectdPaymentId + $(this).attr('value') + ',';
+                    });
+
+                    SelectdServiceId = RemoveFirstCommas(SelectdServiceId);
+                    SelectdServiceId = RomoveLastCommas(SelectdServiceId);
+                    SelectdRoomId = RemoveFirstCommas(SelectdRoomId);
+                    SelectdRoomId = RomoveLastCommas(SelectdRoomId);
+                }
+                else {
+                    $('#checkboxIndividualServiceList input:not(:checked)').each(function () {
+                        SelectdServiceApprovedId = SelectdServiceApprovedId + $(this).attr('value') + ',';
+                    });
+
+                    $('#checkboxIndividualRoomList input:not(:checked)').each(function () {
+                        SelectdRoomApprovedId = SelectdRoomApprovedId + $(this).attr('value') + ',';
+                    });
+
+                    $('#checkboxIndividualPaymentList input:not(:checked)').each(function () {
+                        SelectdIndividualPaymentId = SelectdIndividualPaymentId + $(this).attr('value') + ',';
+                    });
+
+                    $('#checkboxIndividualTransferedPaymentList input:not(:checked)').each(function () {
+                        SelectdIndividualTransferedPaymentId = SelectdIndividualTransferedPaymentId + $(this).attr('value') + ',';
+                    });
+                }
+
+                SelectdServiceApprovedId = RemoveFirstCommas(SelectdServiceApprovedId);
+                SelectdServiceApprovedId = RomoveLastCommas(SelectdServiceApprovedId);
+                SelectdRoomApprovedId = RemoveFirstCommas(SelectdRoomApprovedId);
+                SelectdRoomApprovedId = RomoveLastCommas(SelectdRoomApprovedId);
+                SelectdPaymentId = RemoveFirstCommas(SelectdPaymentId);
+                SelectdPaymentId = RomoveLastCommas(SelectdPaymentId);
+                SelectdIndividualPaymentId = RemoveFirstCommas(SelectdIndividualPaymentId);
+                SelectdIndividualPaymentId = RomoveLastCommas(SelectdIndividualPaymentId);
+                SelectdIndividualTransferedPaymentId = RemoveFirstCommas(SelectdIndividualTransferedPaymentId);
+                SelectdIndividualTransferedPaymentId = RomoveLastCommas(SelectdIndividualTransferedPaymentId);
+
+                var txtStartDate = '<%=txtStartDate.ClientID%>'
+                var txtEndDate = '<%=txtEndDate.ClientID%>'
+                var ddlRegistrationId = '<%=ddlRegistrationId.ClientID%>'
+                var txtSrcRegistrationIdList = '<%=txtSrcRegistrationIdList.ClientID%>'
+
+                var StartDate = $('#' + txtStartDate).val();
+                var EndDate = $('#' + txtEndDate).val();
+                var RegistrationId = $('#' + ddlRegistrationId).val();
+                var SrcRegistrationIdList = $('#' + txtSrcRegistrationIdList).val();
+                var isIsplite = "1";
+                //popup(-1); ////TODO close popup
+
+                PageMethods.PerformBillSplitePrintPreview(0, isIsplite, ddlServiceTypeVal, SelectdIndividualTransferedPaymentId, SelectdPaymentId, SelectdIndividualPaymentId, SelectdServiceApprovedId, SelectdRoomApprovedId, SelectdServiceId, SelectdRoomId, StartDate, EndDate, RegistrationId, SrcRegistrationIdList, OnPerformBillSplitePrintPreviewSucceeded, OnPerformBillSplitePrintPreviewFailed);
+                return false;
+            });
+
+            $("#btnUncheckedBillSplitPrintPreviewForUsd").click(function () {
+                var selectedServiceIdArray = new Array();
+                var selectedServiceArray = new Array();
+                var SelectdServiceId = "";
+                var SelectdRoomId = "";
+
+                $('#checkboxServiceList input:not(:checked)').each(function () {
+                    SelectdServiceId = SelectdServiceId + $(this).attr('value') + ',';
+                });
+
+                $('#checkboxRoomList input:not(:checked)').each(function () {
+                    SelectdRoomId = SelectdRoomId + $(this).attr('value') + ',';
+                });
+
+                SelectdServiceId = RemoveFirstCommas(SelectdServiceId);
+                SelectdServiceId = RomoveLastCommas(SelectdServiceId);
+                SelectdRoomId = RemoveFirstCommas(SelectdRoomId);
+                SelectdRoomId = RomoveLastCommas(SelectdRoomId);
+
+                var SelectdServiceApprovedId = "";
+                var SelectdRoomApprovedId = "";
+                var SelectdPaymentId = "";
+                var SelectdIndividualPaymentId = "";
+                var SelectdIndividualTransferedPaymentId = "";
+                $('#checkboxIndividualServiceList input:not(:checked)').each(function () {
+                    SelectdServiceApprovedId = SelectdServiceApprovedId + $(this).attr('value') + ',';
+                });
+
+                $('#checkboxIndividualRoomList input:not(:checked)').each(function () {
+                    SelectdRoomApprovedId = SelectdRoomApprovedId + $(this).attr('value') + ',';
+                });
+
+                $('#checkboxPaymentList input:not(:checked)').each(function () {
+                    SelectdPaymentId = SelectdPaymentId + $(this).attr('value') + ',';
+                });
+
+                $('#checkboxIndividualPaymentList input:not(:checked)').each(function () {
+                    SelectdIndividualPaymentId = SelectdIndividualPaymentId + $(this).attr('value') + ',';
+                });
+
+                $('#checkboxIndividualTransferedPaymentList input:not(:checked)').each(function () {
+                    SelectdIndividualTransferedPaymentId = SelectdIndividualTransferedPaymentId + $(this).attr('value') + ',';
+                });
+
+                SelectdServiceApprovedId = RemoveFirstCommas(SelectdServiceApprovedId);
+                SelectdServiceApprovedId = RomoveLastCommas(SelectdServiceApprovedId);
+                SelectdRoomApprovedId = RemoveFirstCommas(SelectdRoomApprovedId);
+                SelectdRoomApprovedId = RomoveLastCommas(SelectdRoomApprovedId);
+                SelectdPaymentId = RemoveFirstCommas(SelectdPaymentId);
+                SelectdPaymentId = RomoveLastCommas(SelectdPaymentId);
+                SelectdIndividualPaymentId = RemoveFirstCommas(SelectdIndividualPaymentId);
+                SelectdIndividualPaymentId = RomoveLastCommas(SelectdIndividualPaymentId);
+                SelectdIndividualTransferedPaymentId = RemoveFirstCommas(SelectdIndividualTransferedPaymentId);
+                SelectdIndividualTransferedPaymentId = RomoveLastCommas(SelectdIndividualTransferedPaymentId);
+
+                var ddlServiceType = '<%=ddlServiceType.ClientID%>'
+                var ddlServiceTypeVal = $('#' + ddlServiceType).val();
+                //debugger;
+                var txtStartDate = '<%=txtStartDate.ClientID%>'
+                var txtEndDate = '<%=txtEndDate.ClientID%>'
+                var ddlRegistrationId = '<%=ddlRegistrationId.ClientID%>'
+                var txtSrcRegistrationIdList = '<%=txtSrcRegistrationIdList.ClientID%>'
+
+                var StartDate = $('#' + txtStartDate).val();
+                var EndDate = $('#' + txtEndDate).val();
+                var RegistrationId = $('#' + ddlRegistrationId).val();
+                var SrcRegistrationIdList = $('#' + txtSrcRegistrationIdList).val();
+                var isIsplite = "1";
+                var txtConversionRate = '<%=txtConversionRate.ClientID%>'
+                var txtConversionRateVal = $('#' + txtConversionRate).val();
+
+                PageMethods.PerformBillSplitePrintPreview(txtConversionRateVal, isIsplite, ddlServiceTypeVal, SelectdIndividualTransferedPaymentId, SelectdPaymentId, SelectdIndividualPaymentId, SelectdServiceApprovedId, SelectdRoomApprovedId, SelectdServiceId, SelectdRoomId, StartDate, EndDate, RegistrationId, SrcRegistrationIdList, OnPerformBillSplitePrintPreviewSucceeded, OnPerformBillSplitePrintPreviewFailed);
+                return false;
+            });
+
             var txtBillDate = '<%=txtBillDate.ClientID%>'
             $('#ContentPlaceHolder1_txtBillDate').datepicker({
                 changeMonth: true,
@@ -898,9 +1051,9 @@
 
                         if ($("#<%=ddlCurrency.ClientID %>").val() == "2") {
                             $("#<%=txtConversionRate.ClientID %>").val(registrationWiseConversionRate);
-                    }
-                    else {
-                        $("#<%=txtConversionRate.ClientID %>").val(result.ConversionRate);
+                        }
+                        else {
+                            $("#<%=txtConversionRate.ClientID %>").val(result.ConversionRate);
                         }
                     }
 
@@ -1140,54 +1293,54 @@
 
         function SaveGuestPaymentDetailsInformationByWebMethod() {
             var Amount = $("#<%=txtReceiveLeadgerAmount.ClientID %>").val();
-        var hfGuestCompanyInformation = $("#<%=hfGuestCompanyInformation.ClientID %>").val();
-        var floatAmout = parseFloat(Amount);
-        if (floatAmout <= 0) {
-            toastr.info('Receive Amount is not in correct format.');
-            return;
-        }
+            var hfGuestCompanyInformation = $("#<%=hfGuestCompanyInformation.ClientID %>").val();
+            var floatAmout = parseFloat(Amount);
+            if (floatAmout <= 0) {
+                toastr.info('Receive Amount is not in correct format.');
+                return;
+            }
 
-        var isEdit = false;
-        if ($('#btnAddDetailGuestPayment').val() == "Edit") {
-            $("#<%=lblHiddenIdDetailGuestPayment.ClientID %>").val("5");
+            var isEdit = false;
+            if ($('#btnAddDetailGuestPayment').val() == "Edit") {
+                $("#<%=lblHiddenIdDetailGuestPayment.ClientID %>").val("5");
             isEdit = true;
         }
         else {
             $("#<%=lblHiddenIdDetailGuestPayment.ClientID %>").val("0");
-        }
-        var ddlRegistrationId = $("#<%=ddlRegistrationId.ClientID %>").val();
-        var ddlPayMode = $("#<%=ddlPayMode.ClientID %>").val();
-        var txtReceiveLeadgerAmount = $("#<%=txtReceiveLeadgerAmount.ClientID %>").val();
-        var ddlCashReceiveAccountsInfo = $("#<%=ddlCashReceiveAccountsInfo.ClientID %>").val();
+            }
+            var ddlRegistrationId = $("#<%=ddlRegistrationId.ClientID %>").val();
+            var ddlPayMode = $("#<%=ddlPayMode.ClientID %>").val();
+            var txtReceiveLeadgerAmount = $("#<%=txtReceiveLeadgerAmount.ClientID %>").val();
+            var ddlCashReceiveAccountsInfo = $("#<%=ddlCashReceiveAccountsInfo.ClientID %>").val();
 
-        var txtCardNumber = $("#<%=txtCardNumber.ClientID %>").val();
-        var ddlCardType = $("#<%=ddlCardType.ClientID %>").val();
-        var txtExpireDate = $("#<%=txtExpireDate.ClientID %>").val();
-        var txtCardHolderName = $("#<%=txtCardHolderName.ClientID %>").val();
+            var txtCardNumber = $("#<%=txtCardNumber.ClientID %>").val();
+            var ddlCardType = $("#<%=ddlCardType.ClientID %>").val();
+            var txtExpireDate = $("#<%=txtExpireDate.ClientID %>").val();
+            var txtCardHolderName = $("#<%=txtCardHolderName.ClientID %>").val();
 
-        var txtChecqueNumber = $("#<%=txtChecqueNumber.ClientID %>").val();
-        var ddlBankId = $("#<%=ddlBankId.ClientID %>").val();
-        var ddlCompanyBankId = $("#<%=ddlCompanyBank.ClientID %>").val();
-        var ddlMBankingBankId = $("#<%=ddlMBankingBankId.ClientID %>").val();
-        var ddlMBankingReceiveAccountsInfo = $("#<%=ddlMBankingReceiveAccountsInfo.ClientID %>").val();
-        var ddlChecquePaymentAccountHeadId = $("#<%=ddlChecquePaymentAccountHeadId.ClientID %>").val();
-        var ddlCardPaymentAccountHeadId = $("#<%=ddlCardPaymentAccountHeadId.ClientID %>").val();
+            var txtChecqueNumber = $("#<%=txtChecqueNumber.ClientID %>").val();
+            var ddlBankId = $("#<%=ddlBankId.ClientID %>").val();
+            var ddlCompanyBankId = $("#<%=ddlCompanyBank.ClientID %>").val();
+            var ddlMBankingBankId = $("#<%=ddlMBankingBankId.ClientID %>").val();
+            var ddlMBankingReceiveAccountsInfo = $("#<%=ddlMBankingReceiveAccountsInfo.ClientID %>").val();
+            var ddlChecquePaymentAccountHeadId = $("#<%=ddlChecquePaymentAccountHeadId.ClientID %>").val();
+            var ddlCardPaymentAccountHeadId = $("#<%=ddlCardPaymentAccountHeadId.ClientID %>").val();
 
-        var ddlCompanyPaymentAccountHead = $("#<%=ddlCompanyPaymentAccountHead.ClientID %>").val();
-        var ddlPaidByRegistrationId = $("#<%=ddlPaidByRegistrationId.ClientID %>").val();
+            var ddlCompanyPaymentAccountHead = $("#<%=ddlCompanyPaymentAccountHead.ClientID %>").val();
+            var ddlPaidByRegistrationId = $("#<%=ddlPaidByRegistrationId.ClientID %>").val();
 
-        var RefundAccountHead = $("#<%=ddlRefundAccountHead.ClientID %>").val();
+            var RefundAccountHead = $("#<%=ddlRefundAccountHead.ClientID %>").val();
 
-        var paymentDescription = "";
+            var paymentDescription = "";
 
-        if (ddlPayMode == "Cash") {
-            paymentDescription = "";
-        }
-        else if (ddlPayMode == "M-Banking") {
-            paymentDescription = "";
-        }
-        else if (ddlPayMode == "Card") {
-            var ddlCardTypeText = $("#<%=ddlCardType.ClientID %> option:selected").text();
+            if (ddlPayMode == "Cash") {
+                paymentDescription = "";
+            }
+            else if (ddlPayMode == "M-Banking") {
+                paymentDescription = "";
+            }
+            else if (ddlPayMode == "Card") {
+                var ddlCardTypeText = $("#<%=ddlCardType.ClientID %> option:selected").text();
             paymentDescription = $("#<%=ddlCardType.ClientID %> option:selected").text();
         }
         else if (ddlPayMode == "Other Room") {
@@ -1204,14 +1357,14 @@
             var ddlPaidByChequeCompanyText = $("#<%=ddlChecquePaymentAccountHeadId.ClientID %> option:selected").text();
             var ddlCompanyBankText = $("#<%=ddlCompanyBank.ClientID %> option:selected").text();
 
-            paymentDescription = "Bank: " + ddlCompanyBankText + ", Cheque: " + txtChecqueNumber;
-        }
+                paymentDescription = "Bank: " + ddlCompanyBankText + ", Cheque: " + txtChecqueNumber;
+            }
 
-        var ddlCurrency = $("#<%=ddlCurrency.ClientID %>").val();
+            var ddlCurrency = $("#<%=ddlCurrency.ClientID %>").val();
         //var conversionRate = $("#<%=txtConversionRateHiddenField.ClientID %>").val();
-        var conversionRate = $("#<%=txtConversionRate.ClientID %>").val();
-        var currencyType = $("#<%=hfCurrencyType.ClientID %>").val();
-        var localCurrencyId = $("#<%=hfLocalCurrencyId.ClientID %>").val();
+            var conversionRate = $("#<%=txtConversionRate.ClientID %>").val();
+            var currencyType = $("#<%=hfCurrencyType.ClientID %>").val();
+            var localCurrencyId = $("#<%=hfLocalCurrencyId.ClientID %>").val();
 
             $('#btnAddDetailGuestPayment').val("Add");
             if (IsValidRegistrationNumber) {
@@ -1245,37 +1398,37 @@
         }
         function OnPerformGetTotalPaidAmountSucceeded(result) {
             var txtGrandTotal = $("#<%=txtGrandTotal.ClientID %>").val();
-        var _registrationId = $("#<%=ddlRegistrationId.ClientID %>").val();
-        var _grandTotal = parseFloat(txtGrandTotal);
+            var _registrationId = $("#<%=ddlRegistrationId.ClientID %>").val();
+            var _grandTotal = parseFloat(txtGrandTotal);
 
-        var GrandTotal = parseFloat(txtGrandTotal);
-        var PaidTotal = parseFloat(result);
+            var GrandTotal = parseFloat(txtGrandTotal);
+            var PaidTotal = parseFloat(result);
 
-        //var GrandTotal = parseFloat(Math.round(txtGrandTotal));
-        //var PaidTotal = parseFloat(Math.round(result));
+            //var GrandTotal = parseFloat(Math.round(txtGrandTotal));
+            //var PaidTotal = parseFloat(Math.round(result));
 
-        if (_grandTotal == 0 && !isNaN(_registrationId)) {
-            if (PaidTotal != _grandTotal) {
-                $('#ContentPlaceHolder1_btnSave').attr('disabled', true);
-                $('#ContentPlaceHolder1_AlartMessege').show();
+            if (_grandTotal == 0 && !isNaN(_registrationId)) {
+                if (PaidTotal != _grandTotal) {
+                    $('#ContentPlaceHolder1_btnSave').attr('disabled', true);
+                    $('#ContentPlaceHolder1_AlartMessege').show();
+                }
+                else {
+                    $('#ContentPlaceHolder1_btnSave').attr('disabled', false);
+                    $('#ContentPlaceHolder1_AlartMessege').hide();
+                }
             }
-            else {
+            else if (PaidTotal == GrandTotal) {
                 $('#ContentPlaceHolder1_btnSave').attr('disabled', false);
                 $('#ContentPlaceHolder1_AlartMessege').hide();
             }
-        }
-        else if (PaidTotal == GrandTotal) {
-            $('#ContentPlaceHolder1_btnSave').attr('disabled', false);
-            $('#ContentPlaceHolder1_AlartMessege').hide();
-        }
-        else {
-            $('#ContentPlaceHolder1_btnSave').attr('disabled', true);
-            $('#ContentPlaceHolder1_AlartMessege').show();
-        }
+            else {
+                $('#ContentPlaceHolder1_btnSave').attr('disabled', true);
+                $('#ContentPlaceHolder1_AlartMessege').show();
+            }
 
-        var dueAmountTotal = GrandTotal - PaidTotal;
-        $("#<%=HiddenFieldTotalPaid.ClientID %>").val(PaidTotal);
-        $("#<%=HiddenFieldGrandTotal.ClientID %>").val(txtGrandTotal);
+            var dueAmountTotal = GrandTotal - PaidTotal;
+            $("#<%=HiddenFieldTotalPaid.ClientID %>").val(PaidTotal);
+            $("#<%=HiddenFieldGrandTotal.ClientID %>").val(txtGrandTotal);
 
             var dueFormatedText = "";
             if (dueAmountTotal > 0) {
@@ -1295,17 +1448,17 @@
         }
 
         function ClearDetailsPart() {
-        $("#<%=txtReceiveLeadgerAmount.ClientID %>").val('');
-        $("#<%=txtCardNumber.ClientID %>").val('');
-        $("#<%=ddlCardType.ClientID %>").val('0');
-        $("#<%=txtExpireDate.ClientID %>").val('');
-        $("#<%=txtCardHolderName.ClientID %>").val('');
-        $("#<%=txtChecqueNumber.ClientID %>").val('');
-        $('#txtBankId').val('');
-        $('#txtCompanyBank').val('');
-        $('#txtMBankingBankId').val('');
-        $('#ConversionRateDivInformation').hide();
-        $("#<%=ddlCurrency.ClientID %>").val('1').trigger('change');
+            $("#<%=txtReceiveLeadgerAmount.ClientID %>").val('');
+            $("#<%=txtCardNumber.ClientID %>").val('');
+            $("#<%=ddlCardType.ClientID %>").val('0');
+            $("#<%=txtExpireDate.ClientID %>").val('');
+            $("#<%=txtCardHolderName.ClientID %>").val('');
+            $("#<%=txtChecqueNumber.ClientID %>").val('');
+            $('#txtBankId').val('');
+            $('#txtCompanyBank').val('');
+            $('#txtMBankingBankId').val('');
+            $('#ConversionRateDivInformation').hide();
+            $("#<%=ddlCurrency.ClientID %>").val('1').trigger('change');
 
             $("#DayLetDiscountInputDiv").hide();
             $("#AdvanceTodaysRoomChargeDiv").hide();
@@ -1362,9 +1515,9 @@
             SelectdRoomId = RomoveLastCommas(SelectdRoomId);
 
             var ddlRegistrationId = '<%=txtSrcRegistrationIdList.ClientID%>'
-        var RegistrationId = $('#' + ddlRegistrationId).val();
-        var txtStartDate = '<%=txtStartDate.ClientID%>'
-        var txtEndDate = '<%=txtEndDate.ClientID%>'
+            var RegistrationId = $('#' + ddlRegistrationId).val();
+            var txtStartDate = '<%=txtStartDate.ClientID%>'
+            var txtEndDate = '<%=txtEndDate.ClientID%>'
 
             var StartDate = $('#' + txtStartDate).val();
             var EndDate = $('#' + txtEndDate).val();
@@ -1382,8 +1535,8 @@
 
         function OnPerformCompanyPayBillSucceeded(result) {
             var txtTotalBillAmount = '<%=txtTotalBillAmount.ClientID%>'
-        var hfAdvanceOrCashOutCalculatedAmountVal = '<%=hfAdvanceOrCashOutCalculatedAmount.ClientID%>'
-        $("#<%=txtReceiveLeadgerAmount.ClientID %>").val($('#' + txtTotalBillAmount).val() - result);
+            var hfAdvanceOrCashOutCalculatedAmountVal = '<%=hfAdvanceOrCashOutCalculatedAmount.ClientID%>'
+            $("#<%=txtReceiveLeadgerAmount.ClientID %>").val($('#' + txtTotalBillAmount).val() - result);
         }
         function OnPerformCompanyPayBillFailed(error) {
 
@@ -1551,9 +1704,11 @@
                 if (txtConversionRateVal > 0) {
                     $('#btnBillSplitPrintPreview').val(btnLocalBillPreviewVal);
                     $('#btnBillSplitPrintPreviewForUsd').show();
+                    $('#btnUncheckedBillSplitPrintPreviewForUsd').show();
                 }
                 else {
                     $('#btnBillSplitPrintPreviewForUsd').hide();
+                    $('#btnUncheckedBillSplitPrintPreviewForUsd').hide();
                 }
 
                 var txtStartDate = '<%=txtStartDate.ClientID%>'
@@ -1569,8 +1724,8 @@
 
                 //popup(1, 'BillSplitPopUpForm', '', 600, 530);
                 $("#BillSplitPopUpForm").dialog({
-                    width: 600,
-                    height: 530,
+                    width: 750,
+                    height: 650,
                     autoOpen: true,
                     modal: true,
                     closeOnEscape: true,
@@ -2025,14 +2180,14 @@
         </div>
     </div>
 
-    <div id="BillPreviewRelatedInformation" style="display: none; padding-top: 10px; overflow:hidden;">
+    <div id="BillPreviewRelatedInformation" style="display: none; padding-top: 10px; overflow: hidden;">
         <div class="row">
             <div class="col-md-6">
-                <asp:Button ID="btnLocalBillPreview" runat="server" Width="100%"  TabIndex="4" Text="Bill Preview"
+                <asp:Button ID="btnLocalBillPreview" runat="server" Width="100%" TabIndex="4" Text="Bill Preview"
                     CssClass="btn btn-primary btn-sm" OnClientClick="javascript: return PerformLocalBillPreviewAction();" />
             </div>
             <div class="col-md-6">
-                <asp:Button ID="btnUSDBillPreview" runat="server" Width="100%"  TabIndex="4" Text="Bill Preview (USD)"
+                <asp:Button ID="btnUSDBillPreview" runat="server" Width="100%" TabIndex="4" Text="Bill Preview (USD)"
                     CssClass="btn btn-primary btn-sm" OnClientClick="javascript: return PerformUSDBillPreviewAction();" />
             </div>
         </div>
@@ -2458,13 +2613,45 @@
                                                 </div>
                                             </div>
                                             <%-- </div>--%>
-                                            <div class="form-group" style="padding-top: 4px;">
+
+                                            <%--<div class="form-group" style="padding-top: 4px;">
                                                 <div id="PrintPreviewDiv">
                                                     <input type="button" id="btnBillSplitPrintPreview" value="Print Preview" class="btn btn-primary" />
                                                     <input type="button" id="btnBillSplitPrintPreviewForUsd" value="Print Preview (USD)"
                                                         class="btn btn-primary" />
                                                     <input type="button" id="btnCancelBillSplitPrintPreview" value="Close" class="btn btn-primary" />
                                                 </div>
+                                            </div>--%>
+                                        </div>
+                                        <div class="form-group" style="padding-top: 4px;">
+                                            <div class="form-group">
+                                                <div class="col-md-6">
+                                                    <fieldset>
+                                                        <legend>Checked Item Preview</legend>
+                                                        <div class="form-group">
+                                                            <div id="PrintPreviewCheckedDiv">
+                                                                <input type="button" id="btnBillSplitPrintPreview" style="width: 49%" value="Print Preview" class="btn btn-primary" />
+                                                                <input type="button" id="btnBillSplitPrintPreviewForUsd" style="width: 49%" value="Print Preview (USD)"
+                                                                    class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <fieldset>
+                                                        <legend>Unchecked Item Preview</legend>
+                                                        <div class="form-group">
+                                                            <div id="PrintPreviewUncheckedDiv">
+                                                                <input type="button" id="btnUncheckedBillSplitPrintPreview" style="width: 49%" value="Print Preview" class="btn btn-primary" />
+                                                                <input type="button" id="btnUncheckedBillSplitPrintPreviewForUsd" style="width: 49%" value="Print Preview (USD)"
+                                                                    class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="padding-top: 4px; text-align: right;">
+                                                <input type="button" id="btnCancelBillSplitPrintPreview" value="Close" class="btn btn-primary" />
                                             </div>
                                         </div>
                                     </div>

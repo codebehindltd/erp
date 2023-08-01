@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -149,5 +150,59 @@ namespace InnboardAPI.Controllers
             else
                 return Json(new { Success = false, ErrorMessage = "Model is not in valid format" });
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("SaveRoomReservationInfoForMobileAppsGuest")]
+        public async Task<HttpResponseMessage> SaveRoomReservationInfoForMobileAppsGuest([FromBody] HotelRoomReservationMobileAppsBO roomReservationInfo)
+        {
+            long tmpReservationId = 0;
+            HotelRoomReservationDataAccess dbLogin = new HotelRoomReservationDataAccess();
+
+            bool isSuccess = dbLogin.SaveRoomReservationInfoForMobileAppsGuest(roomReservationInfo, out tmpReservationId);
+            if (isSuccess)
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                {
+                    Content = new StringContent(tmpReservationId.ToString())
+                };
+                return responseMsg;
+            }
+            else
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent("Bad Request")
+                };
+                return responseMsg;
+            }
+        }
+
+        //// Member Payment By Mobile Apps Registration
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[Route("SaveMemberPaymentInfoForMobileAppsRegistration")]
+        //public async Task<HttpResponseMessage> SaveMemberPaymentInfoForMobileAppsRegistration([FromBody] MemMemberBasics memberBasicInfo)
+        //{
+        //    MemberDataAccess dbLogin = new MemberDataAccess();
+
+        //    bool isSuccess = dbLogin.SaveMemberPaymentInfoForMobileAppsRegistration(memberBasicInfo);
+        //    if (isSuccess)
+        //    {
+        //        var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+        //        {
+        //            Content = new StringContent("Succesfully Payment Posted.")
+        //        };
+        //        return responseMsg;
+        //    }
+        //    else
+        //    {
+        //        var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+        //        {
+        //            Content = new StringContent("Bad Request")
+        //        };
+        //        return responseMsg;
+        //    }
+        //}
     }
 }
