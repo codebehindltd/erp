@@ -1610,7 +1610,7 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=Sum(Fields!ServiceCharge.Value)</Value>
+																						<Value>=ROUND(Sum(Fields!ServiceCharge.Value), 0)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<Format>#,0.00;(#,0.00)</Format>
@@ -1686,7 +1686,7 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=Sum(Fields!CitySDCharge.Value)</Value>
+																						<Value>=ROUND(Sum(Fields!CitySDCharge.Value), 0)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<Format>#,0.00;(#,0.00)</Format>
@@ -1762,7 +1762,7 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=Sum(Fields!VatAmount.Value)</Value>
+																						<Value>=ROUND(Sum(Fields!VatAmount.Value), 0)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<Format>#,0.00;(#,0.00)</Format>
@@ -1838,7 +1838,7 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=Sum(Fields!BillAmount.Value) - Sum(Fields!PaidAmount.Value)</Value>
+																						<Value>=ROUND(Sum(Fields!BillAmount.Value) - Sum(Fields!PaidAmount.Value), 0)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<FontWeight>Bold</FontWeight>

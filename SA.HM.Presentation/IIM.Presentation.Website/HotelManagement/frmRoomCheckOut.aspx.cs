@@ -2048,11 +2048,13 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                         this.LoadRelatedInformation();
 
+                        hfMasterRoomCurrencyType.Value = roomAllocationBO.CurrencyType.ToString();
+                        hfMasterRoomConversionRate.Value = roomAllocationBO.ConversionRate.ToString();
                         // //----------Currency Related Information ------------------------------------------------
                         if (roomAllocationBO.CurrencyType == 2)
                         {
                             USDInformationDiv.Visible = true;
-                            isFOMultiInvoicePreviewOptionEnable = 1;
+                            isFOMultiInvoicePreviewOptionEnable = 1;                            
                         }
                         else
                         {

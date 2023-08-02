@@ -230,13 +230,17 @@
             });
 
             $("#btnBillPreview").click(function () {
-                var txtConversionRate = '<%=txtConversionRate.ClientID%>'
-                var txtConversionRateVal = $('#' + txtConversionRate).val();
+                <%--var txtConversionRate = '<%=txtConversionRate.ClientID%>'
+                var txtConversionRateVal = $('#' + txtConversionRate).val();--%>
                 var txtConversionRateVal = 0;
 
-                var isFOMultiInvoicePreviewOption = '<%=isFOMultiInvoicePreviewOptionEnable%>';
+                <%--var isFOMultiInvoicePreviewOption = '<%=isFOMultiInvoicePreviewOptionEnable%>';
                 if (isFOMultiInvoicePreviewOption > 0) {
                     txtConversionRateVal = $('#' + txtConversionRate).val();
+                }--%>
+
+                if ($("#<%=hfMasterRoomCurrencyType.ClientID %>").val() == "2") {
+                    txtConversionRateVal = $("#<%=hfMasterRoomConversionRate.ClientID %>").val();
                 }
 
                 if (txtConversionRateVal > 0) {
@@ -283,13 +287,17 @@
             });
 
             $("#btnBillPreviewWithRebate").click(function () {
-                var txtConversionRate = '<%=txtConversionRate.ClientID%>'
-                var txtConversionRateVal = $('#' + txtConversionRate).val();
+                <%--var txtConversionRate = '<%=txtConversionRate.ClientID%>'
+                var txtConversionRateVal = $('#' + txtConversionRate).val();--%>
                 var txtConversionRateVal = 0;
 
-                var isFOMultiInvoicePreviewOption = '<%=isFOMultiInvoicePreviewOptionEnable%>';
+                <%--var isFOMultiInvoicePreviewOption = '<%=isFOMultiInvoicePreviewOptionEnable%>';
                 if (isFOMultiInvoicePreviewOption > 0) {
                     txtConversionRateVal = $('#' + txtConversionRate).val();
+                }--%>
+
+                if ($("#<%=hfMasterRoomCurrencyType.ClientID %>").val() == "2") {
+                    txtConversionRateVal = $("#<%=hfMasterRoomConversionRate.ClientID %>").val();
                 }
 
                 if (txtConversionRateVal > 0) {
@@ -338,13 +346,17 @@
             });
 
             $("#btnBillPreviewAndBillLock").click(function () {
-                var txtConversionRate = '<%=txtConversionRate.ClientID%>'
-                var txtConversionRateVal = $('#' + txtConversionRate).val();
+                <%--var txtConversionRate = '<%=txtConversionRate.ClientID%>'
+                var txtConversionRateVal = $('#' + txtConversionRate).val();--%>
                 var txtConversionRateVal = 0;
 
-                var isFOMultiInvoicePreviewOption = '<%=isFOMultiInvoicePreviewOptionEnable%>';
+                <%--var isFOMultiInvoicePreviewOption = '<%=isFOMultiInvoicePreviewOptionEnable%>';
                 if (isFOMultiInvoicePreviewOption > 0) {
                     txtConversionRateVal = $('#' + txtConversionRate).val();
+                }--%>
+
+                if ($("#<%=hfMasterRoomCurrencyType.ClientID %>").val() == "2") {
+                    txtConversionRateVal = $("#<%=hfMasterRoomConversionRate.ClientID %>").val();
                 }
 
                 if (txtConversionRateVal > 0) {
@@ -393,13 +405,17 @@
             });
 
             $("#btnBillPreviewAndBillLockWithRebate").click(function () {
-                var txtConversionRate = '<%=txtConversionRate.ClientID%>'
-                var txtConversionRateVal = $('#' + txtConversionRate).val();
+                <%--var txtConversionRate = '<%=txtConversionRate.ClientID%>'
+                var txtConversionRateVal = $('#' + txtConversionRate).val();--%>
                 var txtConversionRateVal = 0;
 
-                var isFOMultiInvoicePreviewOption = '<%=isFOMultiInvoicePreviewOptionEnable%>';
+                <%--var isFOMultiInvoicePreviewOption = '<%=isFOMultiInvoicePreviewOptionEnable%>';
                 if (isFOMultiInvoicePreviewOption > 0) {
                     txtConversionRateVal = $('#' + txtConversionRate).val();
+                }--%>
+
+                if ($("#<%=hfMasterRoomCurrencyType.ClientID %>").val() == "2") {
+                    txtConversionRateVal = $("#<%=hfMasterRoomConversionRate.ClientID %>").val();
                 }
 
                 if (txtConversionRateVal > 0) {
@@ -786,8 +802,10 @@
                 var RegistrationId = $('#' + ddlRegistrationId).val();
                 var SrcRegistrationIdList = $('#' + txtSrcRegistrationIdList).val();
                 var isIsplite = "1";
-                var txtConversionRate = '<%=txtConversionRate.ClientID%>'
-                var txtConversionRateVal = $('#' + txtConversionRate).val();
+                <%--var txtConversionRate = '<%=txtConversionRate.ClientID%>'
+                var txtConversionRateVal = $('#' + txtConversionRate).val();--%>
+
+                var txtConversionRateVal = $("#<%=hfMasterRoomConversionRate.ClientID %>").val();
 
                 PageMethods.PerformBillSplitePrintPreview(txtConversionRateVal, isIsplite, ddlServiceTypeVal, SelectdIndividualTransferedPaymentId, SelectdPaymentId, SelectdIndividualPaymentId, SelectdServiceApprovedId, SelectdRoomApprovedId, SelectdServiceId, SelectdRoomId, StartDate, EndDate, RegistrationId, SrcRegistrationIdList, OnPerformBillSplitePrintPreviewSucceeded, OnPerformBillSplitePrintPreviewFailed);
                 return false;
@@ -928,7 +946,7 @@
 
                 var ddlServiceType = '<%=ddlServiceType.ClientID%>'
                 var ddlServiceTypeVal = $('#' + ddlServiceType).val();
-                //debugger;
+                
                 var txtStartDate = '<%=txtStartDate.ClientID%>'
                 var txtEndDate = '<%=txtEndDate.ClientID%>'
                 var ddlRegistrationId = '<%=ddlRegistrationId.ClientID%>'
@@ -939,8 +957,12 @@
                 var RegistrationId = $('#' + ddlRegistrationId).val();
                 var SrcRegistrationIdList = $('#' + txtSrcRegistrationIdList).val();
                 var isIsplite = "1";
-                var txtConversionRate = '<%=txtConversionRate.ClientID%>'
-                var txtConversionRateVal = $('#' + txtConversionRate).val();
+
+                debugger;
+                <%--var txtConversionRate = '<%=txtConversionRate.ClientID%>'
+                var txtConversionRateVal = $('#' + txtConversionRate).val();--%>
+
+                var txtConversionRateVal = $("#<%=hfMasterRoomConversionRate.ClientID %>").val();
 
                 PageMethods.PerformBillSplitePrintPreview(txtConversionRateVal, isIsplite, ddlServiceTypeVal, SelectdIndividualTransferedPaymentId, SelectdPaymentId, SelectdIndividualPaymentId, SelectdServiceApprovedId, SelectdRoomApprovedId, SelectdServiceId, SelectdRoomId, StartDate, EndDate, RegistrationId, SrcRegistrationIdList, OnPerformBillSplitePrintPreviewSucceeded, OnPerformBillSplitePrintPreviewFailed);
                 return false;
@@ -1697,10 +1719,11 @@
                 var btnLocalBillPreview = '<%=btnLocalBillPreview.ClientID%>'
                 var btnLocalBillPreviewVal = $('#' + btnLocalBillPreview).val();
 
-                //var txtConversionRate = '<%=txtConversionRateHiddenField.ClientID%>'
-                var txtConversionRate = '<%=txtConversionRate.ClientID%>'
-                var txtConversionRateVal = $('#' + txtConversionRate).val();
-                //var txtConversionRateVal = 0;
+                <%--var txtConversionRate = '<%=txtConversionRate.ClientID%>'
+                var txtConversionRateVal = $('#' + txtConversionRate).val();--%>
+
+                var txtConversionRateVal = $("#<%=hfMasterRoomConversionRate.ClientID %>").val();
+
                 if (txtConversionRateVal > 0) {
                     $('#btnBillSplitPrintPreview').val(btnLocalBillPreviewVal);
                     $('#btnBillSplitPrintPreviewForUsd').show();
@@ -2102,8 +2125,10 @@
             //popup(-1); ////TODO close popup
 
             //var txtConversionRate = '<%=txtConversionRateHiddenField.ClientID%>'
-            var txtConversionRate = '<%=txtConversionRate.ClientID%>'
-            var txtConversionRateVal = $('#' + txtConversionRate).val();
+            <%--var txtConversionRate = '<%=txtConversionRate.ClientID%>'
+            var txtConversionRateVal = $('#' + txtConversionRate).val();--%>
+
+            var txtConversionRateVal = $("#<%=hfMasterRoomConversionRate.ClientID %>").val();
 
             PageMethods.PerformBillSplitePrintPreview(txtConversionRateVal, isIsplite, ddlServiceTypeVal, SelectdIndividualTransferedPaymentId, SelectdPaymentId, SelectdIndividualPaymentId, SelectdServiceApprovedId, SelectdRoomApprovedId, SelectdServiceId, SelectdRoomId, StartDate, EndDate, RegistrationId, SrcRegistrationIdList, OnPerformBillSplitePrintPreviewSucceeded, OnPerformBillSplitePrintPreviewFailed);
             return false;
@@ -2118,6 +2143,8 @@
         <asp:HiddenField ID="hfIsEnableBillPreviewOption" runat="server"></asp:HiddenField>
         <asp:HiddenField ID="txtAddedMultipleRoomId" runat="server"></asp:HiddenField>
         <asp:HiddenField ID="hfSelectedRoomId" runat="server" />
+        <asp:HiddenField ID="hfMasterRoomCurrencyType" runat="server"></asp:HiddenField>
+        <asp:HiddenField ID="hfMasterRoomConversionRate" runat="server"></asp:HiddenField>
     </div>
     <%-- <div id="MultipleRoomInfoDiv" style="display: none;">
         <div class="block">
