@@ -153,13 +153,12 @@ namespace InnboardAPI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("SaveRoomReservationInfoForMobileAppsGuest")]
-        public async Task<HttpResponseMessage> SaveRoomReservationInfoForMobileAppsGuest([FromBody] HotelRoomReservationMobileAppsBO roomReservationInfo)
+        [Route("SaveRoomReservationInfoForMobileApps")]
+        public async Task<HttpResponseMessage> SaveRoomReservationInfoForMobileApps([FromBody] HotelRoomReservationMobileAppsBO roomReservationInfo)
         {
             long tmpReservationId = 0;
             HotelRoomReservationDataAccess dbLogin = new HotelRoomReservationDataAccess();
-
-            bool isSuccess = dbLogin.SaveRoomReservationInfoForMobileAppsGuest(roomReservationInfo, out tmpReservationId);
+            bool isSuccess = dbLogin.SaveRoomReservationInfoForMobileApps(roomReservationInfo, out tmpReservationId);
             if (isSuccess)
             {
                 var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
@@ -178,31 +177,29 @@ namespace InnboardAPI.Controllers
             }
         }
 
-        //// Member Payment By Mobile Apps Registration
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[Route("SaveMemberPaymentInfoForMobileAppsRegistration")]
-        //public async Task<HttpResponseMessage> SaveMemberPaymentInfoForMobileAppsRegistration([FromBody] MemMemberBasics memberBasicInfo)
-        //{
-        //    MemberDataAccess dbLogin = new MemberDataAccess();
-
-        //    bool isSuccess = dbLogin.SaveMemberPaymentInfoForMobileAppsRegistration(memberBasicInfo);
-        //    if (isSuccess)
-        //    {
-        //        var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
-        //        {
-        //            Content = new StringContent("Succesfully Payment Posted.")
-        //        };
-        //        return responseMsg;
-        //    }
-        //    else
-        //    {
-        //        var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
-        //        {
-        //            Content = new StringContent("Bad Request")
-        //        };
-        //        return responseMsg;
-        //    }
-        //}
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("SaveRoomReservationPaymentInfoForMobileApps")]
+        public async Task<HttpResponseMessage> SaveRoomReservationPaymentInfoForMobileApps([FromBody] HotelRoomReservationMobileAppsBO memberBasicInfo)
+        {
+            HotelRoomReservationDataAccess dbLogin = new HotelRoomReservationDataAccess();
+            bool isSuccess = dbLogin.SaveRoomReservationPaymentInfoForMobileApps(memberBasicInfo);
+            if (isSuccess)
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Succesfully Payment Posted.")
+                };
+                return responseMsg;
+            }
+            else
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent("Bad Request")
+                };
+                return responseMsg;
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace InnboardDataAccess.DataAccesses
 {
     public class HotelRoomReservationDataAccess : GenericDataAccess<HotelRoomReservationMobileAppsBO>
     {
-        public bool SaveRoomReservationInfoForMobileAppsGuest(HotelRoomReservationMobileAppsBO roomReservationInfo, out long tmpReservationId)
+        public bool SaveRoomReservationInfoForMobileApps(HotelRoomReservationMobileAppsBO roomReservationInfo, out long tmpReservationId)
         {
             SqlParameter transactionType = new SqlParameter("@TransactionType", roomReservationInfo.TransactionType);
             SqlParameter fromDate = new SqlParameter("@FromDate", roomReservationInfo.FromDate);
@@ -30,7 +30,7 @@ namespace InnboardDataAccess.DataAccesses
             SqlParameter pOutReservationId = new SqlParameter("@ReservationId", SqlDbType.Int);
             pOutReservationId.Direction = ParameterDirection.Output;
 
-            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveRoomReservationInfoForMobileAppsGuest_SP] @TransactionType, @FromDate, @ToDate, @RoomTypeId, @PaxQuantity, @ChildQuantity, @ExtraBedQuantity, @GuestName, @PhoneNumber, @GuestNotes, @ReservationId OUT", transactionType, fromDate, toDate, roomTypeId, paxQuantity, childQuantity, extraBedQuantity, guestName, phoneNumber, guestNotes, pOutReservationId);
+            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveRoomReservationInfoForMobileApps_SP] @TransactionType, @FromDate, @ToDate, @RoomTypeId, @PaxQuantity, @ChildQuantity, @ExtraBedQuantity, @GuestName, @PhoneNumber, @GuestNotes, @ReservationId OUT", transactionType, fromDate, toDate, roomTypeId, paxQuantity, childQuantity, extraBedQuantity, guestName, phoneNumber, guestNotes, pOutReservationId);
 
             tmpReservationId = (long)pOutReservationId.Value;
 
@@ -45,26 +45,26 @@ namespace InnboardDataAccess.DataAccesses
 
         }
 
-        //public bool SaveMemberPaymentInfoForMobileAppsRegistration(MemMemberBasics memberBasicInfo)
-        //{
-        //    SqlParameter memberId = new SqlParameter("@MemberId", memberBasicInfo.MemberId);
-        //    SqlParameter transactionType = new SqlParameter("@TransactionType", memberBasicInfo.TransactionType);
-        //    SqlParameter transactionId = new SqlParameter("@TransactionId", memberBasicInfo.TransactionId);
-        //    SqlParameter securityDeposit = new SqlParameter("@SecurityDeposit", memberBasicInfo.SecurityDeposit);
-        //    SqlParameter transactionDetails = new SqlParameter("@TransactionDetails", memberBasicInfo.TransactionDetails);
-        //    SqlParameter createdBy = new SqlParameter("@CreatedBy", memberBasicInfo.CreatedBy);
+        public bool SaveRoomReservationPaymentInfoForMobileApps(HotelRoomReservationMobileAppsBO roomReservationPaymentInfo)
+        {
+            SqlParameter reservationId = new SqlParameter("@ReservationId", roomReservationPaymentInfo.ReservationId);
+            SqlParameter transactionType = new SqlParameter("@TransactionType", roomReservationPaymentInfo.TransactionType);
+            SqlParameter transactionId = new SqlParameter("@TransactionId", roomReservationPaymentInfo.TransactionId);
+            SqlParameter transactionAmount = new SqlParameter("@TransactionAmount", roomReservationPaymentInfo.TransactionAmount);
+            SqlParameter transactionDetails = new SqlParameter("@TransactionDetails", roomReservationPaymentInfo.TransactionDetails);
+            SqlParameter createdBy = new SqlParameter("@CreatedBy", roomReservationPaymentInfo.CreatedBy);
 
-        //    int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveMemberPaymentInfoForMobileAppsRegistration_SP] @MemberId, @TransactionType, @TransactionId, @SecurityDeposit, @TransactionDetails, @CreatedBy", memberId, transactionType, transactionId, securityDeposit, transactionDetails, createdBy);
+            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveRoomReservationPaymentInfoForMobileApps_SP] @ReservationId, @TransactionType, @TransactionId, @TransactionAmount, @TransactionDetails, @CreatedBy", reservationId, transactionType, transactionId, transactionAmount, transactionDetails, createdBy);
 
-        //    if (result > 0)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
+            if (result > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
-        //}
+        }
     }
 }

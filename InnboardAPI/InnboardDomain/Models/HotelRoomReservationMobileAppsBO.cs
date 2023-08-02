@@ -20,5 +20,10 @@ namespace InnboardDomain.Models
         public string GuestName { get; set; }
         public string PhoneNumber { get; set; }
         public string GuestNotes { get; set; }
+
+        public long TransactionId { get; set; }
+        public decimal TransactionAmount { get; set; }
+        public string TransactionDetails { get; set; }
+        public int CreatedBy { get; set; }
     }
 }
