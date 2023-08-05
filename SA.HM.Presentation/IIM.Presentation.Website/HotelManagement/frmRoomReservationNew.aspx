@@ -303,9 +303,9 @@
 
             $("#<%=ddlRoomTypeId.ClientID %>").change(function () {
                 RoomDetailsByRoomTypeId($(this).val());
-                //$('#<%=txtDiscountAmount.ClientID%>').val("");
                 PerformFillFormActionByTypeId($('#<%=ddlRoomTypeId.ClientID%>').val());
-                UpdateTotalCostWithDiscount();
+                //-------MAMUN 20230805 Room Type Change Effect
+                //UpdateTotalCostWithDiscount();
                 ClearRoomNumberAndId();
             });
             $("#<%=ddlGuestTitle.ClientID %>").change(function () {
@@ -429,20 +429,24 @@
             }
             function OnFillFormObjectSucceededByTypeId(result) {
                 vv = result;
-                if ($("#<%=ddlCurrency.ClientID %>").val() != "1") {
-                    $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRateUSD);
-                    $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRateUSD);
-                    $("#<%=txtMinimumUnitPriceHiddenField.ClientID %>").val(result.MinimumRoomRateUSD);
-                    $("#<%=txtRoomRate.ClientID %>").val(toFixed(result.RoomRateUSD, 2));
+                var answer = confirm("Do you want to recalculate Room Rent?")
+                if (answer) {
+                    if ($("#<%=ddlCurrency.ClientID %>").val() != "1") {
+                        $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRateUSD);
+                        $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRateUSD);
+                        $("#<%=txtMinimumUnitPriceHiddenField.ClientID %>").val(result.MinimumRoomRateUSD);
+                        $("#<%=txtRoomRate.ClientID %>").val(toFixed(result.RoomRateUSD, 2));
+                    }
+                    else {
+                        $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRate);
+                        $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRate);
+                        $("#<%=txtMinimumUnitPriceHiddenField.ClientID %>").val(result.MinimumRoomRate);
+                        $("#<%=txtRoomRate.ClientID %>").val(toFixed(result.RoomRate, 2));
+                    }
+
+                    UpdateTotalCostWithDiscount();
+                    TotalRoomRateVatServiceChargeCalculation();
                 }
-                else {
-                    $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRate);
-                    $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRate);
-                    $("#<%=txtMinimumUnitPriceHiddenField.ClientID %>").val(result.MinimumRoomRate);
-                    $("#<%=txtRoomRate.ClientID %>").val(toFixed(result.RoomRate, 2));
-                }
-                UpdateTotalCostWithDiscount();
-                TotalRoomRateVatServiceChargeCalculation();
                 return false;
             }
             function OnFillFormObjectFailedByTypeId(error) {
@@ -1527,8 +1531,10 @@
 
                 $('#DivAddedRoom').show();
                 $("#btnAddDetailGuest").val("Update");
-                PerformFillFormActionByTypeId($('#<%=ddlRoomTypeId.ClientID%>').val());
+                
 
+                //-------MAMUN 20230805 Room Type Change Effect
+                //PerformFillFormActionByTypeId($('#<%=ddlRoomTypeId.ClientID%>').val());
                 UpdateTotalCostWithDiscount();
                 TotalRoomRateVatServiceChargeCalculation();
             });
@@ -1827,20 +1833,23 @@
             return false;
         }
         function OnRoomDetailsLoadSucceeded(result) {
-            if ($("#<%=hfCurrencyType.ClientID %>").val() != 'Local') {
-                $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRateUSD);
-                $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRateUSD);
-                $("#<%=txtMinimumUnitPriceHiddenField.ClientID %>").val(result.MinimumRoomRateUSD);
-                $("#<%=txtRoomRate.ClientID %>").val(result.RoomRateUSD);
-            }
-            else {
-                $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRate);
-                $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRate);
-                $("#<%=txtMinimumUnitPriceHiddenField.ClientID %>").val(result.MinimumRoomRate);
-                $("#<%=txtRoomRate.ClientID %>").val(result.RoomRate);
-            }
-            DiscountPolicyByCompanyNRoomType();
-            UpdateTotalCostWithDiscount();
+            <%--var answer = confirm("Do you want to recalculate Room Rent?")
+            if (answer) {
+                if ($("#<%=hfCurrencyType.ClientID %>").val() != 'Local') {
+                    $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRateUSD);
+                    $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRateUSD);
+                    $("#<%=txtMinimumUnitPriceHiddenField.ClientID %>").val(result.MinimumRoomRateUSD);
+                    $("#<%=txtRoomRate.ClientID %>").val(result.RoomRateUSD);
+                }
+                else {
+                    $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRate);
+                    $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRate);
+                    $("#<%=txtMinimumUnitPriceHiddenField.ClientID %>").val(result.MinimumRoomRate);
+                    $("#<%=txtRoomRate.ClientID %>").val(result.RoomRate);
+                }
+                DiscountPolicyByCompanyNRoomType();
+                UpdateTotalCostWithDiscount();
+            }--%>
             return false;
         }
         function OnRoomDetailsLoadFailed(error) {
@@ -7848,7 +7857,8 @@
                 $("#<%=ddlRoomTypeId.ClientID %>").val(rcRoomTypeId);
                 RoomDetailsByRoomTypeId(rcRoomTypeId);
                 PerformFillFormActionByTypeId($('#<%=ddlRoomTypeId.ClientID%>').val());
-                UpdateTotalCostWithDiscount();
+                //-------MAMUN 20230805 Room Type Change Effect
+                //UpdateTotalCostWithDiscount();
                 ClearRoomNumberAndId();
             }
         });

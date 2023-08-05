@@ -177,7 +177,7 @@
             var roomType = $("#<%=ddlRoomType.ClientID %>").val();
 
             if (hfRoomType != roomType) {
-                var answer = confirm("Do you want to recalculate Room Rent ?")
+                var answer = confirm("Do you want to recalculate Room Rent?")
                 if (answer) {
                     if ($("#<%=ddlCurrencyHiddenField.ClientID %>").val() == '1') {
                         $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRate);

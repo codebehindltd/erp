@@ -783,7 +783,6 @@
 
             var ddlRoomType = '<%=ddlRoomType.ClientID%>'
             $('#' + ddlRoomType).change(function (event) {
-                //$('#<%=txtDiscountAmount.ClientID%>').val("");
                 PopulateRooms();
                 PerformFillFormActionByTypeId($('#<%=ddlRoomType.ClientID%>').val());
                 UpdateTotalCostWithDiscount();
@@ -795,19 +794,23 @@
             }
             function OnFillFormObjectSucceededByTypeId(result) {
                 vv = result;
-                if ($("#<%=ddlCurrency.ClientID %>").val() != "1") {
+                var answer = confirm("Do you want to recalculate Room Rent?")
+                if (answer) {
+                    if ($("#<%=ddlCurrency.ClientID %>").val() != "1") {
 
-                    $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRateUSD);
-                    $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRateUSD);
-                    $("#<%=txtMinimumUnitPriceHiddenField.ClientID %>").val(result.MinimumRoomRateUSD);
-                    $("#<%=txtRoomRate.ClientID %>").val(toFixed(result.RoomRateUSD, 2));
+                        $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRateUSD);
+                        $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRateUSD);
+                        $("#<%=txtMinimumUnitPriceHiddenField.ClientID %>").val(result.MinimumRoomRateUSD);
+                        $("#<%=txtRoomRate.ClientID %>").val(toFixed(result.RoomRateUSD, 2));
+                    }
+                    else {
+                        $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRate);
+                        $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRate);
+                        $("#<%=txtMinimumUnitPriceHiddenField.ClientID %>").val(result.MinimumRoomRate);
+                        $("#<%=txtRoomRate.ClientID %>").val(toFixed(result.RoomRate, 2));
+                    }
                 }
-                else {
-                    $("#<%=txtUnitPrice.ClientID %>").val(result.RoomRate);
-                    $("#<%=txtUnitPriceHiddenField.ClientID %>").val(result.RoomRate);
-                    $("#<%=txtMinimumUnitPriceHiddenField.ClientID %>").val(result.MinimumRoomRate);
-                    $("#<%=txtRoomRate.ClientID %>").val(toFixed(result.RoomRate, 2));
-                }
+
                 UpdateTotalCostWithDiscount();
                 TotalRoomRateVatServiceChargeCalculation();
                 return false;

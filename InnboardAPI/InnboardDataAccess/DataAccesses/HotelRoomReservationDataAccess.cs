@@ -27,7 +27,7 @@ namespace InnboardDataAccess.DataAccesses
             SqlParameter phoneNumber = new SqlParameter("@PhoneNumber", roomReservationInfo.PhoneNumber);
             SqlParameter guestNotes = new SqlParameter("@GuestNotes", roomReservationInfo.GuestNotes);
 
-            SqlParameter pOutReservationId = new SqlParameter("@ReservationId", SqlDbType.Int);
+            SqlParameter pOutReservationId = new SqlParameter("@ReservationId", SqlDbType.BigInt);
             pOutReservationId.Direction = ParameterDirection.Output;
 
             int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveRoomReservationInfoForMobileApps_SP] @TransactionType, @FromDate, @ToDate, @RoomTypeId, @PaxQuantity, @ChildQuantity, @ExtraBedQuantity, @GuestName, @PhoneNumber, @GuestNotes, @ReservationId OUT", transactionType, fromDate, toDate, roomTypeId, paxQuantity, childQuantity, extraBedQuantity, guestName, phoneNumber, guestNotes, pOutReservationId);

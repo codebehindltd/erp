@@ -292,6 +292,7 @@
     <Content Include="HotelManagement\frmGuestPaymentTransfer.aspx" />
     <Content Include="HotelManagement\Reports\frmReportComplimentaryGuest.aspx" />
     <Content Include="HotelManagement\Reports\frmReportGroupReservationBillInfo.aspx" />
+    <Content Include="HotelManagement\Reports\frmReportInHouseGuestInfo.aspx" />
     <Content Include="HotelManagement\Reports\frmReportPickupDropForecastRevenueInfo.aspx" />
     <Content Include="HotelManagement\Reports\frmReportRoomControlChart.aspx" />
     <Content Include="HotelManagement\GuestBillSplit.aspx" />
@@ -872,6 +873,9 @@
     <Content Include="HotelManagement\Reports\Rdlc\RptInvoiceServiceDetailInfoSeven.rdlc" />
     <Content Include="HotelManagement\Reports\Rdlc\rptAdvReservationForecastSummary.rdlc" />
     <Content Include="HotelManagement\Reports\Rdlc\rptPickupDropForecastRevenueInfo.rdlc" />
+    <Content Include="HotelManagement\Reports\Rdlc\rptInHouseGuestInfoOrderByRoom.rdlc" />
+    <Content Include="HotelManagement\Reports\Rdlc\rptInHouseGuestInfoOrderByCompany.rdlc" />
+    <Content Include="HotelManagement\Reports\Rdlc\rptInHouseGuestInfo.rdlc" />
     <EmbeddedResource Include="Inventory\Reports\Rdlc\rptXYZAnalysis.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\rptEmpEntryDetails.rdlc" />
     <Content Include="Payroll\Reports\Rdlc\EmpPayslipSouthSudan.rdlc" />
@@ -2871,6 +2875,13 @@
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportGroupReservationBillInfo.aspx.designer.cs">
       <DependentUpon>frmReportGroupReservationBillInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HotelManagement\Reports\frmReportInHouseGuestInfo.aspx.cs">
+      <DependentUpon>frmReportInHouseGuestInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HotelManagement\Reports\frmReportInHouseGuestInfo.aspx.designer.cs">
+      <DependentUpon>frmReportInHouseGuestInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="HotelManagement\Reports\frmReportPickupDropForecastRevenueInfo.aspx.cs">
       <DependentUpon>frmReportPickupDropForecastRevenueInfo.aspx</DependentUpon>

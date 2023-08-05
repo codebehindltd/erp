@@ -2170,6 +2170,75 @@ namespace HotelManagement.Data.HotelManagement
                 return guestHouse;
             }
         }
+        public List<GuestHouseInfoForReportBO> GetInHouseGuestInfoForReport(DateTime fromDate, DateTime toDate, string reportType, string guestCompany)
+        {
+            List<GuestHouseInfoForReportBO> guestHouse = new List<GuestHouseInfoForReportBO>();
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetInHouseGuestInfoForReport_SP"))
+                {
+                    cmd.CommandTimeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SqlCommandTimeOut"]);
+                    dbSmartAspects.AddInParameter(cmd, "@ReportType", DbType.String, reportType);
+                    dbSmartAspects.AddInParameter(cmd, "@FromDate", DbType.DateTime, fromDate);
+                    dbSmartAspects.AddInParameter(cmd, "@ToDate", DbType.DateTime, toDate);
+                    dbSmartAspects.AddInParameter(cmd, "@GuestCompany", DbType.String, guestCompany);
+
+                    DataSet reservationDS = new DataSet();
+                    dbSmartAspects.LoadDataSet(cmd, reservationDS, "GuestHouse");
+                    DataTable Tabel = reservationDS.Tables["GuestHouse"];
+
+                    guestHouse = Tabel.AsEnumerable().Select(r => new GuestHouseInfoForReportBO
+                    {
+                        ReportName = r.Field<string>("ReportName"),
+                        RRNumber = r.Field<string>("RRNumber"),
+                        GuestName = r.Field<string>("GuestName"),
+                        GuestNationality = r.Field<string>("GuestNationality"),
+                        GuestPassportNumber = r.Field<string>("GuestPassportNumber"),
+                        GuestCompany = r.Field<string>("GuestCompany"),
+                        CompanyId = r.Field<int?>("CompanyId"),
+                        TotalPerson = r.Field<int?>("TotalPerson"),
+                        ProbableArrivalTime = r.Field<string>("ProbableArrivalTime"),
+                        DateIn = r.Field<string>("DateIn"),
+                        DateOut = r.Field<string>("DateOut"),
+                        RoomNumberOrPickInfo = r.Field<string>("RoomNumberOrPickInfo"),
+                        ReportTable = r.Field<string>("ReportTable"),
+                        ReportType = r.Field<string>("ReportType"),
+                        ReservedBy = r.Field<string>("ReservedBy"),
+                        PaymentMode = r.Field<string>("PaymentMode"),
+                        GuestReferance = r.Field<string>("GuestReferance"),
+                        Quantity = r.Field<int?>("Quantity"),
+                        RoomType = r.Field<string>("RoomType"),
+                        RoomNumberList = r.Field<string>("RoomNumberList"),
+                        CurrencyType = r.Field<int>("CurrencyType"),
+                        CurrencyHead = r.Field<string>("CurrencyHead"),
+                        RoomRate = r.Field<decimal>("RoomRate"),
+                        AirportPickUp = r.Field<string>("AirportPickUp"),
+                        AirportDrop = r.Field<string>("AirportDrop"),
+                        ArrivalFlightName = r.Field<string>("ArrivalFlightName"),
+                        ArrivalFlightNumber = r.Field<string>("ArrivalFlightNumber"),
+                        ArrivalTimeString = r.Field<string>("ArrivalTimeString"),
+                        UserName = r.Field<string>("UserName"),
+                        CheckOutBy = r.Field<string>("CheckOutBy"),
+                        Remarks = r.Field<string>("Remarks"),
+                        VipGuestTypeId = r.Field<int?>("VipGuestTypeId"),
+                        BlockCode = r.Field<string>("BlockCode"),
+                        MktCode = r.Field<string>("MktCode"),
+                        NumberOfPersonAdult = r.Field<int?>("NumberOfPersonAdult"),
+                        NumberOfPersonChild = r.Field<int?>("NumberOfPersonChild"),
+                        GroupName = r.Field<string>("GroupName"),
+                        MealPlan = r.Field<string>("MealPlan"),
+                        Email = r.Field<string>("Email"),
+                        BillNo = r.Field<string>("BillNumber"),
+                        LocalCurrencyHead = r.Field<string>("LocalCurrencyHead"),
+                        TotalRoomRateUSD = r.Field<decimal>("TotalRoomRateUSD"),
+                        TotalRoomRateLocalCurrency = r.Field<decimal>("TotalRoomRateLocalCurrency")
+                    }).ToList();
+                }
+
+                return guestHouse;
+            }
+        }
         public List<GuestStayedNightBO> GetGuestTotalStayovers(string guestName, string companyName, string passportNumber, string mobileNumber, int? minNoOfNights)
         {
             List<GuestStayedNightBO> guestInfo = new List<GuestStayedNightBO>();

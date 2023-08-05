@@ -31,7 +31,7 @@ namespace HotelManagement.Entity.HotelManagement
         public string RoomNumberList { get; set; }
         public int CurrencyType { get; set; }
         public string CurrencyHead { get; set; }
-        public decimal RoomRate { get; set; }
+        public decimal RoomRate { get; set; }        
         public string ArrivalFlightName { get; set; }
         public string ArrivalFlightNumber { get; set; }
         public string ArrivalTimeString { get; set; }
@@ -48,8 +48,10 @@ namespace HotelManagement.Entity.HotelManagement
         public int? NumberOfPersonChild { get; set; }
         public string MealPlan { get; set; }
         public int IsStopChargePosting { get; set; }
-
         public string Email { get; set; }
         public string BillNo { get; set; }
+        public string LocalCurrencyHead { get; set; }
+        public decimal TotalRoomRateUSD { get; set; }
+        public decimal TotalRoomRateLocalCurrency { get; set; }
     }
 }

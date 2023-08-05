@@ -14,14 +14,14 @@ namespace InnboardDomain.Models
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public int RoomTypeId { get; set; }
-        public decimal PaxQuantity { get; set; }
-        public decimal ChildQuantity { get; set; }
-        public decimal ExtraBedQuantity { get; set; }
+        public int PaxQuantity { get; set; }
+        public int ChildQuantity { get; set; }
+        public int ExtraBedQuantity { get; set; }
         public string GuestName { get; set; }
         public string PhoneNumber { get; set; }
         public string GuestNotes { get; set; }
 
-        public long TransactionId { get; set; }
+        public string TransactionId { get; set; }
         public decimal TransactionAmount { get; set; }
         public string TransactionDetails { get; set; }
         public int CreatedBy { get; set; }
