@@ -659,7 +659,15 @@
                 tr += "</td>";
 
                 tr += "<td style='width: 20%'>" + GetStringFromDateTime(result[row].PaymentDate) + "</td>";
-                tr += "<td style='width: 40%'>" + result[row].BillNumber + "</td>";
+
+                if (result[row].BillNumber != "") {
+                    tr += "<td style='width: 40%'>" + result[row].BillNumber + "</td>";
+                }
+                else
+                {
+                    tr += "<td style='width: 40%'>" + result[row].Remarks + "</td>";
+                }
+
                 tr += "<td style='width: 15%'>" + result[row].DueAmount + "</td>";
 
                 if (result[row].IsBillGenerated) {

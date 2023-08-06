@@ -1000,6 +1000,7 @@ namespace HotelManagement.Data.PurchaseManagment
                         BillId = r.Field<Int32>("BillId"),
                         DueAmount = r.Field<decimal>("DueAmount"),
                         IsBillGenerated = r.Field<bool>("IsBillGenerated"),
+                        Remarks = r.Field<string>("Remarks"),
                         PaymentDetailsId = 0
 
                     }).ToList();
