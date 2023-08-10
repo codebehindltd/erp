@@ -19,24 +19,34 @@ namespace InnboardDataAccess.DataAccesses
             SqlParameter transactionType = new SqlParameter("@TransactionType", roomReservationInfo.TransactionType);
             SqlParameter fromDate = new SqlParameter("@FromDate", roomReservationInfo.FromDate);
             SqlParameter toDate = new SqlParameter("@ToDate", roomReservationInfo.ToDate);
-            SqlParameter roomTypeId = new SqlParameter("@RoomTypeId", roomReservationInfo.RoomTypeId);
-            SqlParameter paxQuantity = new SqlParameter("@PaxQuantity", roomReservationInfo.PaxQuantity);
-            SqlParameter childQuantity = new SqlParameter("@ChildQuantity", roomReservationInfo.ChildQuantity);
-            SqlParameter extraBedQuantity = new SqlParameter("@ExtraBedQuantity", roomReservationInfo.ExtraBedQuantity);
             SqlParameter guestName = new SqlParameter("@GuestName", roomReservationInfo.GuestName);
             SqlParameter phoneNumber = new SqlParameter("@PhoneNumber", roomReservationInfo.PhoneNumber);
-            SqlParameter guestNotes = new SqlParameter("@GuestNotes", roomReservationInfo.GuestNotes);
+            SqlParameter guestRemarks = new SqlParameter("@GuestRemarks", roomReservationInfo.GuestRemarks);
 
             SqlParameter pOutReservationId = new SqlParameter("@ReservationId", SqlDbType.BigInt);
             pOutReservationId.Direction = ParameterDirection.Output;
 
-            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveRoomReservationInfoForMobileApps_SP] @TransactionType, @FromDate, @ToDate, @RoomTypeId, @PaxQuantity, @ChildQuantity, @ExtraBedQuantity, @GuestName, @PhoneNumber, @GuestNotes, @ReservationId OUT", transactionType, fromDate, toDate, roomTypeId, paxQuantity, childQuantity, extraBedQuantity, guestName, phoneNumber, guestNotes, pOutReservationId);
+            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveRoomReservationInfoForMobileApps_SP] @TransactionType, @FromDate, @ToDate, @GuestName, @PhoneNumber, @GuestRemarks, @ReservationId OUT", transactionType, fromDate, toDate, guestName, phoneNumber, guestRemarks, pOutReservationId);
 
             tmpReservationId = (long)pOutReservationId.Value;
 
             if (result > 0)
             {
+                foreach (HotelRoomReservationDetailsMobileAppsBO row in roomReservationInfo.HotelRoomReservationDetails)
+                {
+                    SqlParameter reservationId = new SqlParameter("@ReservationId", tmpReservationId);
+                    SqlParameter roomTypeId = new SqlParameter("@RoomTypeId", row.RoomTypeId);
+                    SqlParameter roomQuantity = new SqlParameter("@RoomQuantity", row.RoomQuantity);
+                    SqlParameter paxQuantity = new SqlParameter("@PaxQuantity", row.PaxQuantity);
+                    SqlParameter childQuantity = new SqlParameter("@ChildQuantity", row.ChildQuantity);
+                    SqlParameter extraBedQuantity = new SqlParameter("@ExtraBedQuantity", row.ExtraBedQuantity);
+                    SqlParameter guestNotes = new SqlParameter("@GuestNotes", row.GuestNotes);
+
+                    int result2 = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveRoomReservationDetailInfoForMobileApps_SP] @ReservationId, @RoomTypeId, @RoomQuantity, @PaxQuantity, @ChildQuantity, @ExtraBedQuantity, @GuestNotes", reservationId, roomTypeId, roomQuantity, paxQuantity, childQuantity, extraBedQuantity, guestNotes);
+                }
+
                 return true;
+
             }
             else
             {

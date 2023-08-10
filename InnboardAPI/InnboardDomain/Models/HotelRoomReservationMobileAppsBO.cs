@@ -13,17 +13,13 @@ namespace InnboardDomain.Models
         public string TransactionType { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
-        public int RoomTypeId { get; set; }
-        public int PaxQuantity { get; set; }
-        public int ChildQuantity { get; set; }
-        public int ExtraBedQuantity { get; set; }
         public string GuestName { get; set; }
         public string PhoneNumber { get; set; }
-        public string GuestNotes { get; set; }
-
+        public string GuestRemarks { get; set; }
         public string TransactionId { get; set; }
         public decimal TransactionAmount { get; set; }
         public string TransactionDetails { get; set; }
         public int CreatedBy { get; set; }
+        public List<HotelRoomReservationDetailsMobileAppsBO> HotelRoomReservationDetails { get; set; }
     }
 }
