@@ -2471,7 +2471,7 @@
                                 <div class="childDivSection" id="BillSplitPopUpForm" style="display: none;">
                                     <div class="panel-body">
                                         <div class="form-horizontal" style="padding-bottom: 20px;">
-                                            <div class="form-group">
+                                            <div class="form-group" style="display:none;">
                                                 <div class="col-md-2">
                                                     <asp:Label ID="lblFromDate" runat="server" class="control-label" Text="From Date"></asp:Label>
                                                 </div>

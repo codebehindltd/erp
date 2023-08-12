@@ -2,6 +2,7 @@
 using HotelManagement.Data.HMCommon;
 using HotelManagement.Data.HotelManagement;
 using HotelManagement.Data.Restaurant;
+using HotelManagement.Data.UserInformation;
 using HotelManagement.Entity;
 using HotelManagement.Entity.HMCommon;
 using HotelManagement.Entity.HotelManagement;
@@ -1345,6 +1346,32 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     //arr.Add(list[0]);
                     //arr.Add(grid);
 
+                }
+                else
+                {
+                    arr.Add(registrationBO);
+                }
+            }
+            return arr;
+        }
+        [WebMethod]
+        public static ArrayList AdvanceRoomBillProcess(string roomNumber)
+        {
+            ArrayList arr = new ArrayList();
+            HMUtility hmUtility = new HMUtility();
+            KotBillMasterDA entityDA = new KotBillMasterDA();
+            RoomAlocationBO registrationBO = new RoomAlocationBO();            
+            RoomRegistrationDA registrationDA = new RoomRegistrationDA();
+
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+
+            registrationBO = registrationDA.GetActiveRegistrationInfoByRoomNumber(roomNumber);
+            if (registrationBO != null)
+            {
+                if (registrationBO.RegistrationId > 0)
+                {
+                    Boolean status = registrationDA.AdvanceRoomBillProcess(registrationBO.RegistrationId, userInformationBO.UserInfoId);
                 }
                 else
                 {

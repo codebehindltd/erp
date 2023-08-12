@@ -1070,19 +1070,22 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     else
                     {
                         HiddenStartDate.Value = hmUtility.GetFromDate();
-                        HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now);
+                        //HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now);
+                        HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now.AddYears(10));
                     }
                 }
                 else
                 {
                     HiddenStartDate.Value = hmUtility.GetFromDate();
-                    HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now);
+                    //HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now);
+                    HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now.AddYears(10));
                 }
             }
             else
             {
                 HiddenStartDate.Value = hmUtility.GetFromDate();
-                HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now);
+                //HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now);
+                HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now.AddYears(10));
             }
 
             this.txtStartDate.Text = HiddenStartDate.Value;
@@ -1747,11 +1750,13 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 this.txtStartDate.Text = hmUtility.GetStringFromDateTime(dateTime);
             }
-            this.txtEndDate.Text = hmUtility.GetStringFromDateTime(dateTime);
+            //this.txtEndDate.Text = hmUtility.GetStringFromDateTime(dateTime);
+            this.txtEndDate.Text = hmUtility.GetStringFromDateTime(dateTime.AddYears(10));
             this.txtBillDate.Enabled = false;
 
             HiddenStartDate.Value = this.txtStartDate.Text;
-            HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now);
+            //HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now);
+            HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now.AddYears(10));
         }
         private void Clear()
         {
@@ -2038,7 +2043,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                         this.txtStartDate.Text = hmUtility.GetStringFromDateTime(roomAllocationBO.ArriveDate);
                         HiddenStartDate.Value = this.txtStartDate.Text;
-                        HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now);
+                        //HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now);
+                        HiddenEndDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now.AddYears(10));
                         Session["txtStartDate"] = this.txtStartDate.Text;
 
                         if (!string.IsNullOrWhiteSpace(roomAllocationBO.Remarks))

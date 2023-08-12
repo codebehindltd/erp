@@ -1436,6 +1436,21 @@ namespace HotelManagement.Data.HotelManagement
 
             return status;
         }
+        public Boolean AdvanceRoomBillProcess(int registrationId, int createdBy)
+        {
+            Boolean status = false;
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand command = dbSmartAspects.GetStoredProcCommand("AdvanceRoomBillProcess_SP"))
+                {
+                    dbSmartAspects.AddInParameter(command, "@RegistrationId", DbType.Int32, registrationId);
+                    dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.String, createdBy);
+                    status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
+                }
+            }
+
+            return status;
+        }
         public bool DeleteDetailLinkRoooms(List<HotelLinkedRoomDetailsBO> roomDetailsBOs)
         {
             bool status = false;

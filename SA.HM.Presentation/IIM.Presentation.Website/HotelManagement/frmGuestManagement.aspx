@@ -472,23 +472,23 @@
                 $('#<%=ddlGuestSex.ClientID%>').val("Female");
             }
 
-}
-function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
-    var gridRecordsCount = $("#tblGuestInfo tbody tr").length;
+        }
+        function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
+            var gridRecordsCount = $("#tblGuestInfo tbody tr").length;
 
-    var guestName = $("#<%= txtGuestNameSrc.ClientID %>").val();
-            var companyName = $("#<%= txtCompanyNameSrc.ClientID %>").val();
-            var email = $("#<%= txtEmailSrc.ClientID %>").val();
-            var mobileNumber = $("#<%= txtMobileNumberSrc.ClientID %>").val();
-            var nId = $("#<%= txtNIDsrc.ClientID %>").val();
+            var guestName = $("#<%= txtGuestNameSrc.ClientID %>").val();
+    var companyName = $("#<%= txtCompanyNameSrc.ClientID %>").val();
+    var email = $("#<%= txtEmailSrc.ClientID %>").val();
+    var mobileNumber = $("#<%= txtMobileNumberSrc.ClientID %>").val();
+    var nId = $("#<%= txtNIDsrc.ClientID %>").val();
             //var doB = $("#<%= txtDoBSrc.ClientID %>").val();
 
-            var doB = "";
-            if ($("#<%= txtDoBSrc.ClientID %>").val() != "") {
-                doB = CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDoBSrc").val(), '/');
-            }
+    var doB = "";
+    if ($("#<%= txtDoBSrc.ClientID %>").val() != "") {
+        doB = CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDoBSrc").val(), '/');
+    }
 
-            var passport = $("#<%= txtPassportsrc.ClientID %>").val();
+    var passport = $("#<%= txtPassportsrc.ClientID %>").val();
             CommonHelper.SpinnerOpen();
 
             PageMethods.SearchAndLoadGuestInfo(guestName, companyName, email, mobileNumber, nId, doB, passport, gridRecordsCount, pageNumber, IsCurrentOrPreviousPage, OnLoadGuestSearchSucceed, OnLoadGuestSearchFailed);
@@ -1304,19 +1304,19 @@ function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
                 $("#<%=lblRoomSwapDArrivalDateToChange.ClientID %>").text(GetStringFromDateTime(result[1].ArriveDate));
                 $("#<%=lblRoomSwapDExpectedDepartureDateToChange.ClientID %>").text(GetStringFromDateTime(result[1].ExpectedCheckOutDate));
             }
-        return false;
-    }
-    function OnGetRegistrationInformationForSingleGuestByRoomNumberFailed(error) {
-        CommonHelper.SpinnerClose();
-    }
-    function ClearRoomDetails() {
+            return false;
+        }
+        function OnGetRegistrationInformationForSingleGuestByRoomNumberFailed(error) {
+            CommonHelper.SpinnerClose();
+        }
+        function ClearRoomDetails() {
 
-        $("#<%=lblRoomSwapDGuestName.ClientID %>").text("");
-            $("#<%=lblRoomSwapDGuestSex.ClientID %>").text("");
-            $("#<%=lblRoomSwapDGuestEmail.ClientID %>").text("");
-            $("#<%=lblRoomSwapDGuestPhone.ClientID %>").text("");
-            $("#<%=lblRoomSwapDGuestAddress2.ClientID %>").text("");
-            $("#<%=lblRoomSwapDGuestNationality.ClientID %>").text("");
+            $("#<%=lblRoomSwapDGuestName.ClientID %>").text("");
+        $("#<%=lblRoomSwapDGuestSex.ClientID %>").text("");
+        $("#<%=lblRoomSwapDGuestEmail.ClientID %>").text("");
+        $("#<%=lblRoomSwapDGuestPhone.ClientID %>").text("");
+        $("#<%=lblRoomSwapDGuestAddress2.ClientID %>").text("");
+        $("#<%=lblRoomSwapDGuestNationality.ClientID %>").text("");
 
             $("#txtRoomSwapRoomNumber").text("");
             $("#ContentPlaceHolder1_lblRoomSwapRoomNumber").text("");
@@ -1722,8 +1722,7 @@ function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
         function OnLoadGetMasterLinkRoomForddlFailed() {
 
         }
-        function BillPendingReleaseInfo()
-        {
+        function BillPendingReleaseInfo() {
             var roomNumber = $.trim($("#txtBillPendingRoomNumber").val());
             if (roomNumber == "") {
                 toastr.warning("Please Provide Room Number."); return false;
@@ -1737,11 +1736,26 @@ function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
         }
         function OnBillPendingReleaseInfoSucceeded(result) {
             CommonHelper.SpinnerClose();
-            //if (result[0].RegistrationId > 0) {
-                toastr.success("Bill Pending Released Successful.");
-            //}
+            toastr.success("Bill Pending Released Successful.");
         }
+        function AdvanceRoomBillProcessInfo() {
+            var roomNumber = $.trim($("#txtAdvanceRoomBillProcessByRoomNumber").val());
+            if (roomNumber == "") {
+                toastr.warning("Please Provide Room Number."); return false;
+            }
 
+            if (window.confirm("Do you want to Process Advance Room Bill?")) {
+                if ((roomNumber != "")) {
+                    CommonHelper.SpinnerOpen();
+                    PageMethods.AdvanceRoomBillProcess(roomNumber, OnAdvanceRoomBillProcessSucceeded, OnGetCommonFailed);
+                    return false;
+                }
+            }
+        }
+        function OnAdvanceRoomBillProcessSucceeded(result) {
+            CommonHelper.SpinnerClose();
+            toastr.success("Bill Pending Released Successful.");
+        }
         function SearchStopChargePostingRoomInfo() {
             var roomNumber = $.trim($("#txtStopChargePostingRoomNumber").val());
             var type = $("#ContentPlaceHolder1_ddlType option:selected").val();
@@ -2897,19 +2911,21 @@ function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
     <div id="myTabs">
         <ul id="tabPage" class="ui-style">
             <li id="A" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
-                href="#tab-1">Update Guest Information</a></li>
+                href="#tab-1">Update Guest Info</a></li>
             <li id="B" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
                 href="#tab-2">Guest Swap</a></li>
             <li id="C" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
                 href="#tab-3">Amend Stay</a></li>
             <li id="D" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
-                href="#tab-4">Stop Charge Posting</a></li>
+                href="#tab-4">Stop Posting</a></li>
             <li id="E" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
-                href="#tab-5">Linked Room Info</a></li>
+                href="#tab-5">Linked Room</a></li>
             <li id="F" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
                 href="#tab_6">Guest Block</a></li>
             <li id="G" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
                 href="#tab_7">Bill Pending</a></li>
+            <li id="H" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
+                href="#tab_8">Advance Room Bill</a></li>
         </ul>
         <div id="tab-1">
             <div id="ChangeGuestInfoDiv" class="panel panel-default">
@@ -4383,6 +4399,33 @@ function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
                 </div>
             </div>
         </div>
+        <div id="tab_8">
+            <div id="AdvanceRoomBillProcessInfoDiv" class="panel panel-default">
+                <div class="panel-heading">
+                    Advance Room Bill Process
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">                                        
+                            <div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <label class="control-label required-field" style="padding-top: 0px;">Room Number</label>
+                                        </span>
+                                        <input type="text" id="txtAdvanceRoomBillProcessByRoomNumber" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>                                                    
+                            <div class="col-md-2">
+                                <input type="button" value="Advance Room Bill Process" class="TransactionalButton btn btn-primary" onclick="AdvanceRoomBillProcessInfo()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
     </div>
     <div id="RoomInstructionInfoDiv" class="panel panel-default" style="display: none;">
         <div class="panel-heading">

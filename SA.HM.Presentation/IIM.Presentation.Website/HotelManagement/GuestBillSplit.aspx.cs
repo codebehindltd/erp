@@ -89,7 +89,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         {
             DateTime dateTime = DateTime.Now;
             this.txtStartDate.Text = hmUtility.GetStringFromDateTime(dateTime.AddYears(-12));
-            this.txtEndDate.Text = hmUtility.GetStringFromDateTime(dateTime.AddDays(1));
+            this.txtEndDate.Text = hmUtility.GetStringFromDateTime(dateTime.AddYears(10));
         }
         private void LoadCheckBoxListServiceInformation(string strRegistrationId)
         {
