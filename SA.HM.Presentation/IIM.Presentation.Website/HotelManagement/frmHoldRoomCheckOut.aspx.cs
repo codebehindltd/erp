@@ -707,7 +707,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             if (this.ddlRoomId.SelectedIndex != -1)
             {
                 AlartMessege.Visible = true;
-                this.ddlPaidByRegistrationId.Items.Remove(ddlPaidByRegistrationId.Items.FindByValue(this.ddlRoomId.SelectedValue));
+                //this.ddlPaidByRegistrationId.Items.Remove(ddlPaidByRegistrationId.Items.FindByValue(this.ddlRoomId.SelectedValue));
                 this.SavePendingGuestRoomInformation();
                 this.LoadServiceInformationWithControl();
                 this.LoadCheckBoxListServiceInformation();
@@ -876,11 +876,31 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 this.txtStartDate.Text = hmUtility.GetStringFromDateTime(hmUtility.GetDateTimeFromString(Session["txtStartDate"].ToString(), hmUtility.GetCurrentApplicationUserInfo().ServerDateFormat).AddMonths(-3));
             }
         }
+        //private void LoadRoomNumber()
+        //{
+        //    int condition = 0;
+        //    RoomNumberDA roomNumberDA = new RoomNumberDA();
+        //    this.ddlRoomId.DataSource = roomNumberDA.GetRoomNumberInfo();
+        //    this.ddlRoomId.DataTextField = "RoomNumber";
+        //    this.ddlRoomId.DataValueField = "RoomId";
+        //    this.ddlRoomId.DataBind();
+
+        //    ListItem itemRoom = new ListItem();
+        //    itemRoom.Value = "0";
+        //    itemRoom.Text = hmUtility.GetDropDownFirstValue();
+        //    this.ddlRoomId.Items.Insert(0, itemRoom);
+
+        //    this.ddlPaidByRegistrationId.DataSource = roomNumberDA.GetRoomNumberInfo();
+        //    this.ddlPaidByRegistrationId.DataTextField = "RoomNumber";
+        //    this.ddlPaidByRegistrationId.DataValueField = "RoomId";
+        //    this.ddlPaidByRegistrationId.DataBind();
+        //    this.ddlPaidByRegistrationId.Items.Insert(0, itemRoom);
+        //}
         private void LoadRoomNumber()
         {
             int condition = 0;
             RoomNumberDA roomNumberDA = new RoomNumberDA();
-            this.ddlRoomId.DataSource = roomNumberDA.GetRoomNumberInfo();
+            this.ddlRoomId.DataSource = roomNumberDA.GetRoomNumberInfoByCondition(0, condition);
             this.ddlRoomId.DataTextField = "RoomNumber";
             this.ddlRoomId.DataValueField = "RoomId";
             this.ddlRoomId.DataBind();
@@ -890,7 +910,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             itemRoom.Text = hmUtility.GetDropDownFirstValue();
             this.ddlRoomId.Items.Insert(0, itemRoom);
 
-            this.ddlPaidByRegistrationId.DataSource = roomNumberDA.GetRoomNumberInfo();
+            this.ddlPaidByRegistrationId.DataSource = roomNumberDA.GetRoomNumberInfoByCondition(0, condition);
             this.ddlPaidByRegistrationId.DataTextField = "RoomNumber";
             this.ddlPaidByRegistrationId.DataValueField = "RoomId";
             this.ddlPaidByRegistrationId.DataBind();

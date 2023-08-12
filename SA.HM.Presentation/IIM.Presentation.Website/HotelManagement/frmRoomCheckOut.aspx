@@ -14,6 +14,13 @@
                 CommonHelper.AlertMessage(JSON.parse($("#InnboardMessageHiddenField").val()));
             }
 
+            $("#ContentPlaceHolder1_ddlPaidByRegistrationId").select2({
+                tags: "true",
+                placeholder: "Select an option",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             $("#CheckOutDetailsDiv").show();
             $("#RebateInformationDiv").show();
             $("#PaymentDetailsInformation").show();

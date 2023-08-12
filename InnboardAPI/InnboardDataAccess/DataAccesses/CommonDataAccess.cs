@@ -32,5 +32,21 @@ namespace InnboardDataAccess.DataAccesses
             var result = await InnboardDBContext.Database.SqlQuery<PropertyInformationBO>("EXEC [dbo].[GetPropertyInformationForApps_SP] @TransactionType, @TransactionId", paramTransactionType, paramTransactionId).ToListAsync();
             return result;
         }
+
+        public async Task<GuestOrMemberProfileBO> GetGuestOrMemberProfileInformation(string transactionType, int transactionId)
+        {
+            SqlParameter paramTransactionType = new SqlParameter("@TransactionType", transactionType);
+            SqlParameter paramTransactionId = new SqlParameter("@TransactionId", transactionId);
+            var result = await InnboardDBContext.Database.SqlQuery<GuestOrMemberProfileBO>("EXEC [dbo].[GetGuestOrMemberProfileInformation_SP] @TransactionType, @TransactionId", paramTransactionType, paramTransactionId).ToListAsync();
+            return result.FirstOrDefault();
+        }
+
+        public async Task<List<GuestOrMemberPromotionalOfferBO>> GetGuestOrMemberPromotionalOffer(string transactionType, int transactionId)
+        {
+            SqlParameter paramTransactionType = new SqlParameter("@TransactionType", transactionType);
+            SqlParameter paramTransactionId = new SqlParameter("@TransactionId", transactionId);
+            var result = await InnboardDBContext.Database.SqlQuery<GuestOrMemberPromotionalOfferBO>("EXEC [dbo].[GetGuestOrMemberPromotionalOffer_SP] @TransactionType, @TransactionId", paramTransactionType, paramTransactionId).ToListAsync();
+            return result;
+        }
     }
 }

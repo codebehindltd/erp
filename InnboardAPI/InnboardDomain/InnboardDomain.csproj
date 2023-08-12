@@ -192,6 +192,7 @@
     <Compile Include="Models\DiscountMaster.cs" />
     <Compile Include="Models\GatePass.cs" />
     <Compile Include="Models\GatePassDetails.cs" />
+    <Compile Include="Models\GuestOrMemberPromotionalOfferBO.cs" />
     <Compile Include="Models\GLAccountConfiguration.cs" />
     <Compile Include="Models\GLAccountsMapping.cs" />
     <Compile Include="Models\GLAccountTypeSetup.cs" />
@@ -256,6 +257,7 @@
     <Compile Include="Models\PayrollEmpTracking.cs" />
     <Compile Include="Models\Payroll\LeaveInformationBO.cs" />
     <Compile Include="Models\Payroll\LeaveTakenNBalanceBO.cs" />
+    <Compile Include="Models\GuestOrMemberProfileBO.cs" />
     <Compile Include="Models\PropertyInformationBO.cs" />
     <Compile Include="Models\UserInfoModel.cs" />
     <Compile Include="Utility\CommonHelper.cs" />

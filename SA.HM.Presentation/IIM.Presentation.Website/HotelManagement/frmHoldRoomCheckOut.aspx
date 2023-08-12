@@ -16,6 +16,13 @@
                 $("#InnboardMessageHiddenField").val("");
             }
 
+            $("#ContentPlaceHolder1_ddlPaidByRegistrationId").select2({
+                tags: "true",
+                placeholder: "Select an option",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             var ddlcurrency = $("#<%=ddlCurrency.ClientID %>").val();
             PageMethods.LoadCurrencyType(ddlcurrency, OnLoadCurrencyTypeSucceess, OnLoadCurrencyTypeFail);
 
@@ -2927,7 +2934,7 @@
                                         <div class="col-md-2 label-align">
                                             <asp:Label ID="Label6" runat="server" class="control-label required-field" Text="Room Number"></asp:Label>
                                         </div>
-                                        <div class="col-md-10">
+                                        <div class="col-md-4">
                                             <asp:DropDownList ID="ddlPaidByRegistrationId" runat="server" CssClass="form-control">
                                             </asp:DropDownList>
                                         </div>

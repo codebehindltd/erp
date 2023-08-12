@@ -43,5 +43,25 @@ namespace InnboardAPI.Controllers
             var result = await db.GetPropertyInformation(transactionType, transactionId);
             return Ok(result);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetGuestOrMemberProfileInformation")]
+        public async Task<IHttpActionResult> GetGuestOrMemberProfileInformation(string transactionType, int transactionId)
+        {
+            CommonDataAccess db = new CommonDataAccess();
+            var result = await db.GetGuestOrMemberProfileInformation(transactionType, transactionId);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetGuestOrMemberPromotionalOffer")]
+        public async Task<IHttpActionResult> GetGuestOrMemberPromotionalOffer(string transactionType, int transactionId)
+        {
+            CommonDataAccess db = new CommonDataAccess();
+            var result = await db.GetGuestOrMemberPromotionalOffer(transactionType, transactionId);
+            return Ok(result);
+        }
     }
 }
