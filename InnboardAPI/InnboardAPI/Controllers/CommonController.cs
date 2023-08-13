@@ -51,6 +51,10 @@ namespace InnboardAPI.Controllers
         {
             CommonDataAccess db = new CommonDataAccess();
             var result = await db.GetGuestOrMemberProfileInformation(transactionType, transactionId);
+            if (result == null)
+            {
+                return BadRequest("Data not found");
+            }
             return Ok(result);
         }
 

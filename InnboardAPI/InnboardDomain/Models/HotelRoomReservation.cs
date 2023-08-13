@@ -16,10 +16,13 @@ namespace InnboardDomain.Models
         public string ReservationNumber { get; set; }
 
         public DateTime? ReservationDate { get; set; }
-
+        public string ReservationDateDisplay { get; set; }
         public DateTime? DateIn { get; set; }
+        public string DateInDisplay { get; set; }
 
         public DateTime? DateOut { get; set; }
+
+        public string DateOutDisplay { get; set; }
 
         public DateTime? ConfirmationDate { get; set; }
 
@@ -27,6 +30,8 @@ namespace InnboardDomain.Models
         public string ReservedCompany { get; set; }
 
         public long? GuestId { get; set; }
+        [StringLength(500)]
+        public string GuestName { get; set; }
 
         [StringLength(300)]
         public string ContactAddress { get; set; }

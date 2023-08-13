@@ -151,6 +151,16 @@ namespace InnboardAPI.Controllers
                 return Json(new { Success = false, ErrorMessage = "Model is not in valid format" });
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetRoomReservationInformationForMobileApps")]
+        public async Task<IHttpActionResult> GetRoomReservationInformationForMobileApps(int propertyId, string transactionType, int transactionId, DateTime fromDate, DateTime toDate)
+        {
+            HotelRoomReservationDataAccess dbLogin = new HotelRoomReservationDataAccess();
+            var result = await dbLogin.GetRoomReservationInformationForMobileApps(propertyId, transactionType, transactionId, fromDate, toDate);
+            return Ok(result);
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [Route("SaveRoomReservationInfoForMobileApps")]

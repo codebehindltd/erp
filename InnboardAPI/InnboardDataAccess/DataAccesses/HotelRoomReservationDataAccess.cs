@@ -14,6 +14,16 @@ namespace InnboardDataAccess.DataAccesses
 {
     public class HotelRoomReservationDataAccess : GenericDataAccess<HotelRoomReservationMobileAppsBO>
     {
+        public async Task<List<HotelRoomReservation>> GetRoomReservationInformationForMobileApps(int propertyId, string transactionType, int transactionId, DateTime fromDate, DateTime toDate)
+        {
+            SqlParameter paramPropertyId = new SqlParameter("@PropertyId", propertyId);
+            SqlParameter paramTransactionType = new SqlParameter("@TransactionType", transactionType);
+            SqlParameter paramTransactionId = new SqlParameter("@TransactionId", transactionId);
+            SqlParameter paramFromDate = new SqlParameter("@FromDate", fromDate);
+            SqlParameter paramToDate = new SqlParameter("@ToDate", toDate);
+            var result = await InnboardDBContext.Database.SqlQuery<HotelRoomReservation>("EXEC [dbo].[GetRoomReservationInformationForMobileApps_SP] @PropertyId, @TransactionType, @TransactionId, @FromDate, @ToDate", paramPropertyId, paramTransactionType, paramTransactionId, paramFromDate, paramToDate).ToListAsync();
+            return result;
+        }
         public bool SaveRoomReservationInfoForMobileApps(HotelRoomReservationMobileAppsBO roomReservationInfo, out long tmpReservationId)
         {
             SqlParameter transactionType = new SqlParameter("@TransactionType", roomReservationInfo.TransactionType);
