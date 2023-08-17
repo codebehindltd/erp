@@ -275,5 +275,21 @@ namespace HotelManagement.Data.HMCommon
             }
             return status;
         }
+
+        public Boolean BillCalculationProcessForCompanyDiscountAndCashIncentive_SP(Int64 billId, int userInfoId)
+        {
+            Boolean status = false;
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                using (DbCommand command = dbSmartAspects.GetStoredProcCommand("BillCalculationProcessForCompanyDiscountAndCashIncentive_SP"))
+                {
+                    dbSmartAspects.AddInParameter(command, "@BillId", DbType.Int64, billId);
+                    dbSmartAspects.AddInParameter(command, "@UserInfoId", DbType.Int64, userInfoId);
+
+                    status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
+                }
+            }
+            return status;
+        }
     }
 }

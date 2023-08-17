@@ -1222,6 +1222,8 @@ namespace HotelManagement.Presentation.Website.POS
                 CommonDA commonDA = new CommonDA();
                 bool autoProcessStatus = commonDA.AutoCompanyBillGenerationProcess("Restaurant", billId, userInformationBO.UserInfoId);
 
+                bool companyDiscountAndCashIncentiveStatus = commonDA.BillCalculationProcessForCompanyDiscountAndCashIncentive_SP(billId, userInformationBO.UserInfoId);
+
                 if (IsTaskAutoGenarate > 0)
                 {
                     RetailPosBillReturnBO restaurantBill = new RetailPosBillReturnBO();

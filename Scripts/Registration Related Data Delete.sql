@@ -16,6 +16,20 @@ CREATE PROCEDURE [dbo].[VatRelatedDataDelete]
 	@TransactionNumber VARCHAR(100)
 AS
 BEGIN
+	--DECLARE @RegistrationIdList VARCHAR(MAX)
+	--TRUNCATE TABLE TempRegistration
+	--SET @RegistrationIdList= 'RR00007254,RR00007259,RR00007263,RR00007266,RR00007267'
+	--INSERT INTO TempRegistration(RegistrationNumber)
+	--SELECT splitdata FROM   dbo.fnSplitString(@RegistrationIdList, ',')
+
+	--SELECT * FROM TempRegistration
+	
+	----SELECT * FROM HotelRoomRegistration WHERE RegistrationNumber = 'RR00007254'
+	
+	
+
+
+
 	--DECLARE @TransactionType	VARCHAR(100),
 	--		@TransactionNumber VARCHAR(100)
 			

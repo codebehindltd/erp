@@ -59,5 +59,6 @@ namespace HotelManagement.Entity.RetailPOS
         public string BillDescription { get; set; }
         public Nullable<decimal> CompanyPreviousDue { get; set; }
         public Nullable<decimal> CompanyBillDueTotal { get; set; }
+        public Nullable<decimal> CashIncentive { get; set; }
     }
 }
