@@ -166,9 +166,10 @@ namespace InnboardAPI.Controllers
         [Route("SaveRoomReservationInfoForMobileApps")]
         public async Task<HttpResponseMessage> SaveRoomReservationInfoForMobileApps([FromBody] HotelRoomReservationMobileAppsBO roomReservationInfo)
         {
+            int tmpGuestId = 0;
             long tmpReservationId = 0;
             HotelRoomReservationDataAccess dbLogin = new HotelRoomReservationDataAccess();
-            bool isSuccess = dbLogin.SaveRoomReservationInfoForMobileApps(roomReservationInfo, out tmpReservationId);
+            bool isSuccess = dbLogin.SaveRoomReservationInfoForMobileApps(roomReservationInfo, out tmpGuestId, out tmpReservationId);
             if (isSuccess)
             {
                 var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)

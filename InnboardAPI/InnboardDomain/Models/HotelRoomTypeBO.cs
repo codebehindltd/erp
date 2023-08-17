@@ -15,6 +15,8 @@ namespace InnboardDomain.Models
         public string LocalCurrencyHead { get; set; }
         public decimal? RoomRate { get; set; }
         public decimal? RoomRateUSD { get; set; }
+        public decimal? ExtrabedRate { get; set; }
+        public decimal? ExtrabedRateUSD { get; set; }
         public bool? ActiveStat { get; set; }
         public long? AccountsPostingHeadId { get; set; }
         public int? PaxQuantity { get; set; }

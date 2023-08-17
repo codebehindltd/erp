@@ -133,7 +133,31 @@ namespace InnboardAPI.Controllers
             
             //return responseMsg;
         }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("GuestOrMemberAppsLogin")]
+        public async Task<IHttpActionResult> GuestOrMemberAppsLogin(string userType, string userId, string userPassword)
+        {
+            AppsLoginDataAccess dbLogin = new AppsLoginDataAccess();
+            UserInfoModel infoModel = dbLogin.GetGuestOrMemberInformationByUserIdNPassword(userType, userId, userPassword);
+            if (infoModel != null)
+            {
+                //var serializer = new JavaScriptSerializer();
+                //var userJsonData = serializer.Serialize(infoModel);
+                //var responseMsg = new HttpResponseMessage()
+                //{
+                //    Content = new StringContent("Succesfully login")
+                //};
+                return Ok(infoModel);
+            }
+            else
+            {
+                return BadRequest("Username or password invalid!");
+            }
 
+
+            //return responseMsg;
+        }
         [HttpPost]
         [AllowAnonymous]
         [Route("AppsLoginUserByMasterUserInfoId")]

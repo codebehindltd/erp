@@ -18,7 +18,16 @@ namespace InnboardDataAccess.DataAccesses
             SqlParameter param1 = new SqlParameter("@UserId", loginModel.UserName);
             SqlParameter param2 = new SqlParameter("@UserPassword", loginModel.Password);
 
-            UserInfoModel userInfo = InnboardDBContext.Database.SqlQuery<UserInfoModel>("EXEC [dbo].[GetUserInformationByUserNameNId_SP] @UserId,@UserPassword", param1, param2).FirstOrDefault();
+            UserInfoModel userInfo = InnboardDBContext.Database.SqlQuery<UserInfoModel>("EXEC [dbo].[GetUserInformationByUserNameNId_SP] @UserId, @UserPassword", param1, param2).FirstOrDefault();
+            return userInfo;
+        }
+        public UserInfoModel GetGuestOrMemberInformationByUserIdNPassword(string userType, string userId, string userPassword)
+        {
+            SqlParameter paramUserType = new SqlParameter("@UserType", userType);
+            SqlParameter paramUserId = new SqlParameter("@UserId", userId);
+            SqlParameter paramUserPassword = new SqlParameter("@UserPassword", userPassword);
+
+            UserInfoModel userInfo = InnboardDBContext.Database.SqlQuery<UserInfoModel>("EXEC [dbo].[GetGuestOrMemberInformationByUserIdNPassword_SP] @UserType, @UserId, @UserPassword", paramUserType, paramUserId, paramUserPassword).FirstOrDefault();
             return userInfo;
         }
         public UserInfoModel LoginUserByMasterUserInfoId(int masterUserInfoId)

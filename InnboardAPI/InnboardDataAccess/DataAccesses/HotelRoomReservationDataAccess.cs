@@ -24,8 +24,9 @@ namespace InnboardDataAccess.DataAccesses
             var result = await InnboardDBContext.Database.SqlQuery<HotelRoomReservation>("EXEC [dbo].[GetRoomReservationInformationForMobileApps_SP] @PropertyId, @TransactionType, @TransactionId, @FromDate, @ToDate", paramPropertyId, paramTransactionType, paramTransactionId, paramFromDate, paramToDate).ToListAsync();
             return result;
         }
-        public bool SaveRoomReservationInfoForMobileApps(HotelRoomReservationMobileAppsBO roomReservationInfo, out long tmpReservationId)
+        public bool SaveRoomReservationInfoForMobileApps(HotelRoomReservationMobileAppsBO roomReservationInfo, out int tmpGuestId, out long tmpReservationId)
         {
+            SqlParameter guestSourceId = new SqlParameter("@GuestSourceId", roomReservationInfo.GuestSourceId);
             SqlParameter transactionType = new SqlParameter("@TransactionType", roomReservationInfo.TransactionType);
             SqlParameter fromDate = new SqlParameter("@FromDate", roomReservationInfo.FromDate);
             SqlParameter toDate = new SqlParameter("@ToDate", roomReservationInfo.ToDate);
@@ -33,11 +34,15 @@ namespace InnboardDataAccess.DataAccesses
             SqlParameter phoneNumber = new SqlParameter("@PhoneNumber", roomReservationInfo.PhoneNumber);
             SqlParameter guestRemarks = new SqlParameter("@GuestRemarks", roomReservationInfo.GuestRemarks);
 
+            SqlParameter pOutGuestId = new SqlParameter("@GuestId", SqlDbType.BigInt);
+            pOutGuestId.Direction = ParameterDirection.Output;
+
             SqlParameter pOutReservationId = new SqlParameter("@ReservationId", SqlDbType.BigInt);
             pOutReservationId.Direction = ParameterDirection.Output;
 
-            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveRoomReservationInfoForMobileApps_SP] @TransactionType, @FromDate, @ToDate, @GuestName, @PhoneNumber, @GuestRemarks, @ReservationId OUT", transactionType, fromDate, toDate, guestName, phoneNumber, guestRemarks, pOutReservationId);
+            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveRoomReservationInfoForMobileApps_SP] @GuestSourceId, @TransactionType, @FromDate, @ToDate, @GuestName, @PhoneNumber, @GuestRemarks, @GuestId OUT, @ReservationId OUT", guestSourceId, transactionType, fromDate, toDate, guestName, phoneNumber, guestRemarks, pOutGuestId, pOutReservationId);
 
+            tmpGuestId = (int)pOutGuestId.Value;
             tmpReservationId = (long)pOutReservationId.Value;
 
             if (result > 0)
