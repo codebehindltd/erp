@@ -125,7 +125,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             reportParam.Add(new ReportParameter("PrintDateTime", printDate));
 
             RoomNumberDA entityDA = new RoomNumberDA();
-            List<RoomNumberBO> roomNumberInfoBO = entityDA.GetRoomNumberInfo();
+            List<RoomNumberBO> roomNumberInfoBO = entityDA.GetRoomNumberInfo().Where(x => x.IsPMDummyRoom == false).ToList();
 
             int totalRoomQuantity = 0;
             if (roomNumberInfoBO != null)

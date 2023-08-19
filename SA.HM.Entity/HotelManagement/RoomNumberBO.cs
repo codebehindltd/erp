@@ -48,5 +48,6 @@ namespace HotelManagement.Entity
         public int IsBillLockedAndPreview { get; set; }
         public long RegistrationId { get; set; }
         public Boolean IsLinkedRoom { get; set; }
+        public Boolean IsPMDummyRoom { get; set; }
     }
 }

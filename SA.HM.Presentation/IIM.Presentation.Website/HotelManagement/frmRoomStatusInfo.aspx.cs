@@ -315,7 +315,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             RoomNumberDA roomNumberDA = new RoomNumberDA();
 
             lblTotalRoomCount.Text = "Room Status";
-            List<RoomNumberBO> roomNumberInfo = roomNumberDA.GetRoomNumberInfo();
+            List<RoomNumberBO> roomNumberInfo = roomNumberDA.GetRoomNumberInfo().Where(x => x.IsPMDummyRoom == false).ToList();
             if (roomNumberInfo != null)
             {
                 lblTotalRoomCount.Text = "Total Room: " + roomNumberInfo.Count() + "";
@@ -449,7 +449,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             RoomNumberDA roomNumberDA = new RoomNumberDA();
 
             lblTotalRoomCount.Text = "Room Status";
-            List<RoomNumberBO> roomNumberInfo = roomNumberDA.GetRoomNumberInfo();
+            List<RoomNumberBO> roomNumberInfo = roomNumberDA.GetRoomNumberInfo().Where(x => x.IsPMDummyRoom == false).ToList();
             if (roomNumberInfo != null)
             {
                 lblTotalRoomCount.Text = "Total Room: " + roomNumberInfo.Count() + "";

@@ -1355,8 +1355,9 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             return arr;
         }
         [WebMethod]
-        public static ArrayList AdvanceRoomBillProcess(string roomNumber)
+        public static ArrayList RoomBillPostingProcess(string processType, string roomNumber)
         {
+            Boolean status = true;
             ArrayList arr = new ArrayList();
             HMUtility hmUtility = new HMUtility();
             KotBillMasterDA entityDA = new KotBillMasterDA();
@@ -1371,7 +1372,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 if (registrationBO.RegistrationId > 0)
                 {
-                    Boolean status = registrationDA.AdvanceRoomBillProcess(registrationBO.RegistrationId, userInformationBO.UserInfoId);
+                    if (processType == "1") // No Show Bill Posting
+                    {
+                        status = registrationDA.RoomNoShowBillPostingProcess(registrationBO.RegistrationId, userInformationBO.UserInfoId);
+                    }
+                    else if (processType == "2")  // Advance Room Bill Posting
+                    { 
+                        status = registrationDA.AdvanceRoomBillPostingProcess(registrationBO.RegistrationId, userInformationBO.UserInfoId);
+                    }
                 }
                 else
                 {
@@ -2173,5 +2181,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             }
             return rtninfo;
         }
+        
     }
 }

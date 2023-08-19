@@ -164,7 +164,7 @@ namespace InnboardAPI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("SaveRoomReservationInfoForMobileApps")]
-        public async Task<HttpResponseMessage> SaveRoomReservationInfoForMobileApps([FromBody] HotelRoomReservationMobileAppsBO roomReservationInfo)
+        public async Task<IHttpActionResult> SaveRoomReservationInfoForMobileApps([FromBody] HotelRoomReservationMobileAppsBO roomReservationInfo)
         {
             int tmpGuestId = 0;
             long tmpReservationId = 0;
@@ -172,19 +172,16 @@ namespace InnboardAPI.Controllers
             bool isSuccess = dbLogin.SaveRoomReservationInfoForMobileApps(roomReservationInfo, out tmpGuestId, out tmpReservationId);
             if (isSuccess)
             {
-                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                var result = new
                 {
-                    Content = new StringContent(tmpReservationId.ToString())
+                    GuestId = tmpGuestId,
+                    ReservationId = tmpReservationId,
                 };
-                return responseMsg;
+                return Ok(result);
             }
             else
             {
-                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
-                {
-                    Content = new StringContent("Bad Request")
-                };
-                return responseMsg;
+                return BadRequest("Bad Request");
             }
         }
 

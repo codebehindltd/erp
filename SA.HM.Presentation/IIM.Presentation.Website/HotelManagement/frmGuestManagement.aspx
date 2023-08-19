@@ -73,6 +73,25 @@
                 }
             });
 
+            $("#ContentPlaceHolder1_ddlNoShowPostingRoomType").change(function () {
+                var noShowPostingInfo = $("#ContentPlaceHolder1_ddlNoShowPostingRoomType option:selected").val();
+                if (noShowPostingInfo == "2") {
+                    $("#txtNoShowPostingInfoRoomNumber").val("");
+                    $("#divNoShowPostingInfoLinkRoomSelection").show("slow");
+                    $("#inputNoShowPostingInfoDiv").hide("slow");
+                    $(".roomIsRegistered").hide("slow");
+                    LoadLinkRoomsNoShowPostingInfo();
+                }
+                else if ((noShowPostingInfo == "1") || (noShowPostingInfo == "0")) {
+                    $("#inputNoShowPostingInfoDiv").show("slow");
+                    $("#divNoShowPostingInfoLinkRoomSelection").hide("slow");
+                    $("#roomLinkedNoShowPostingInfo").hide("slow");
+
+                }
+            });
+
+
+
 
             //---Guest search -----
             $("#btnGuestSearch").on('click', function (event) {
@@ -477,18 +496,18 @@
             var gridRecordsCount = $("#tblGuestInfo tbody tr").length;
 
             var guestName = $("#<%= txtGuestNameSrc.ClientID %>").val();
-    var companyName = $("#<%= txtCompanyNameSrc.ClientID %>").val();
-    var email = $("#<%= txtEmailSrc.ClientID %>").val();
-    var mobileNumber = $("#<%= txtMobileNumberSrc.ClientID %>").val();
-    var nId = $("#<%= txtNIDsrc.ClientID %>").val();
+            var companyName = $("#<%= txtCompanyNameSrc.ClientID %>").val();
+            var email = $("#<%= txtEmailSrc.ClientID %>").val();
+            var mobileNumber = $("#<%= txtMobileNumberSrc.ClientID %>").val();
+            var nId = $("#<%= txtNIDsrc.ClientID %>").val();
             //var doB = $("#<%= txtDoBSrc.ClientID %>").val();
 
-    var doB = "";
-    if ($("#<%= txtDoBSrc.ClientID %>").val() != "") {
-        doB = CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDoBSrc").val(), '/');
-    }
+            var doB = "";
+            if ($("#<%= txtDoBSrc.ClientID %>").val() != "") {
+                doB = CommonHelper.DateFormatToMMDDYYYY($("#ContentPlaceHolder1_txtDoBSrc").val(), '/');
+            }
 
-    var passport = $("#<%= txtPassportsrc.ClientID %>").val();
+            var passport = $("#<%= txtPassportsrc.ClientID %>").val();
             CommonHelper.SpinnerOpen();
 
             PageMethods.SearchAndLoadGuestInfo(guestName, companyName, email, mobileNumber, nId, doB, passport, gridRecordsCount, pageNumber, IsCurrentOrPreviousPage, OnLoadGuestSearchSucceed, OnLoadGuestSearchFailed);
@@ -1312,11 +1331,11 @@
         function ClearRoomDetails() {
 
             $("#<%=lblRoomSwapDGuestName.ClientID %>").text("");
-        $("#<%=lblRoomSwapDGuestSex.ClientID %>").text("");
-        $("#<%=lblRoomSwapDGuestEmail.ClientID %>").text("");
-        $("#<%=lblRoomSwapDGuestPhone.ClientID %>").text("");
-        $("#<%=lblRoomSwapDGuestAddress2.ClientID %>").text("");
-        $("#<%=lblRoomSwapDGuestNationality.ClientID %>").text("");
+            $("#<%=lblRoomSwapDGuestSex.ClientID %>").text("");
+            $("#<%=lblRoomSwapDGuestEmail.ClientID %>").text("");
+            $("#<%=lblRoomSwapDGuestPhone.ClientID %>").text("");
+            $("#<%=lblRoomSwapDGuestAddress2.ClientID %>").text("");
+            $("#<%=lblRoomSwapDGuestNationality.ClientID %>").text("");
 
             $("#txtRoomSwapRoomNumber").text("");
             $("#ContentPlaceHolder1_lblRoomSwapRoomNumber").text("");
@@ -1585,6 +1604,129 @@
         function OnGetRoomAmendStayForLinkedRoomsFailed() {
 
         }
+
+
+
+
+
+        // //-------------------No Show Posting Information -------------------------------------------------------------------------
+        function SearchNoShowPostingRoomInfo() {
+            var roomNumber = $.trim($("#txtNoShowPostingRoomNumber").val());
+            var typeAmend = $("#ContentPlaceHolder1_ddlNoShowPostingRoomType option:selected").val();
+            var linkSelected = $("#ContentPlaceHolder1_ddlLinkRoomNoShowPostingInfo option:selected").val();
+
+            if (typeAmend == "0") {
+                toastr.warning("Please Slelect a Room Type First");
+                $("#ContentPlaceHolder1_ddlNoShowPostingRoomType").focus();
+                return false;
+            }
+            else if ((typeAmend == "1") && (roomNumber == "")) {
+                toastr.warning("Please Give From Room Number.");
+                $("#txtNoShowPostingRoomNumber").focus();
+                return false;
+            }
+            else if ((typeAmend == "2") && (linkSelected == "0")) {
+                toastr.warning("Please select a Link Name.");
+                $("#ContentPlaceHolder1_ddlLinkRoomNoShowPostingInfo").focus();
+                return false;
+            }
+
+            if ((typeAmend == "1") && (roomNumber != "")) {
+                CommonHelper.SpinnerOpen();
+                //PageMethods.GetRoomNoShowPostingByRoomNumber(roomNumber, OnGetRoomNoShowPostingByRoomNumberSucceeded, OnGetCommonFailed);
+                return false;
+            }
+            else if ((typeAmend == "2") && (linkSelected != "0")) {
+                PageMethods.GetRoomNoShowPostingForLinkedRooms(linkSelected, OnGetRoomNoShowPostingForLinkedRoomsSucceeded, OnGetRoomNoShowPostingForLinkedRoomsFailed);
+                return false;
+            }
+
+        }
+
+        function OnGetRoomNoShowPostingByRoomNumberSucceeded(result) {
+            //toastr.info(result[0].RegistrationId);
+            CommonHelper.SpinnerClose();
+            //toastr.warning(result.count);
+            //if (result[0].RegistrationId == 0) {
+
+            //}
+            $("#roomLinkedAmendStay").hide("slow");
+            if (result[0].RegistrationId > 0) {
+                ClearRoomAmendStayDetails();
+                if (result[0].RoomId != 0) {
+                    $(".roomIsRegistered").show("slow");
+                }
+                else { $(".roomIsRegistered").hide(); }
+
+
+                if (result[0].KotId != 0) {
+                    $(".roomChangeAmendStayContainer").show();
+                }
+                else {
+                    $(".roomChangeAmendStayContainer").hide();
+                }
+
+                if ($("#roomInfoAmendStayContainer").hasClass('col-md-12')) {
+                    $("#roomInfoAmendStayContainer").removeClass("col-md-12");
+                    $("#roomInfoAmendStayContainer").addClass("col-md-6");
+                }
+
+                $("#<%=lblAmendStayRoomNumber.ClientID %>").text(result[0].RoomNumber);
+                $("#<%=lblAmendStayRoomType.ClientID %>").text(result[0].RoomType);
+                $("#<%=lblAmendStayDGuestName.ClientID %>").text(result[0].GuestName);
+                $("#<%=lblAmendStayDGuestSex.ClientID %>").text(result[0].GuestSex);
+
+                if (GetStringFromDateTime(result[0].GuestDOB) == "01/01/1970") {
+                    $("#<%=lblAmendStayDGuestDOB.ClientID %>").text("");
+                }
+                else {
+                    $("#<%=lblAmendStayDGuestDOB.ClientID %>").text(GetStringFromDateTime(result[0].GuestDOB));
+                }
+
+                $("#<%=lblAmendStayDGuestEmail.ClientID %>").text(result[0].GuestEmail);
+                $("#<%=lblAmendStayDGuestPhone.ClientID %>").text(result[0].GuestPhone);
+                $("#<%=lblAmendStayDGuestAddress2.ClientID %>").text(result[0].GuestAddress2);
+                $("#<%=lblAmendStayDGuestNationality.ClientID %>").text(result[0].GuestNationality);
+                $("#<%=lblAmendStayDCountryName.ClientID %>").text(result[0].CountryName);
+                $("#<%=lblAmendStayDArrivalDate.ClientID %>").text(GetStringFromDateTime(result[0].ArriveDate));
+                $("#<%=txtAmendStayDExpectedDepartureDate.ClientID %>").val(GetStringFromDateTime(result[0].ExpectedCheckOutDate));
+                $("#<%=txtAmendStayDisplayCheckInDate.ClientID %>").val(GetStringFromDateTime(result[0].ArriveDate));
+                $("#ContentPlaceHolder1_hfAmendStayFromRegistrationId").val(result[0].RegistrationId);
+                $('#ContentPlaceHolder1_txtAmendStayDExpectedDepartureDate').datepicker("option", "minDate", 0);
+            }
+            else {
+                toastr.warning("Please provide a valid room number.");
+                $(".roomIsRegistered").hide();
+                ClearRoomNoShowPostingDetails();
+
+            }
+            return false;
+        }
+        function OnGetCommonFailed(error) {
+            toastr.error(error.get_message());
+            CommonHelper.SpinnerClose();
+            return false;
+        }
+        function OnGetRoomNoShowPostingForLinkedRoomsSucceeded(result) {
+            if (result[0].length > 0) {
+                $("#roomLinkedAmendStay").show("slow");
+                $(".roomIsRegistered").hide("slow");
+                ClearRoomNoShowPostingDetails();
+                $("#ltlLinkedRoomsAmendStay").html(result[0]);
+                $("#ContentPlaceHolder1_txtExpectedDepDateLinked").datepicker().datepicker("setDate", new Date());
+            }
+            else {
+                $("#roomLinkedAmendStay").hide();
+
+                toastr.warning("Please provide a valid link room number.");
+            }
+        }
+        function OnGetRoomNoShowPostingForLinkedRoomsFailed() {
+
+        }
+
+
+
         function ClearRoomAmendStayDetails() {
             $("#<%=lblAmendStayDGuestName.ClientID %>").text("");
             $("#<%=lblAmendStayDGuestSex.ClientID %>").text("");
@@ -1675,6 +1817,7 @@
             PageMethods.GetMasterLinkRoomForddl(OnLoadGetMasterLinkRoomForAmendSucceeded, OnLoadGetMasterLinkRoomForAmendFailed);
             return false;
         }
+
         function OnLoadGetMasterLinkRoomForAmendSucceeded(result) {
             var list = result;
             var control = $("#<%=ddlLinkRoomAmend.ClientID %>");
@@ -1692,6 +1835,31 @@
             }
         }
         function OnLoadGetMasterLinkRoomForAmendFailed() {
+
+        }
+
+        function LoadLinkRoomsNoShowPostingInfo() {
+            PageMethods.GetMasterLinkRoomForddl(OnLoadGetMasterLinkRoomForNoShowPostingInfoSucceeded, OnLoadGetMasterLinkRoomForNoShowPostingInfoFailed);
+            return false;
+        }
+
+        function OnLoadGetMasterLinkRoomForNoShowPostingInfoSucceeded(result) {
+            var list = result;
+            var control = $("#<%=ddlLinkRoomNoShowPostingInfo.ClientID %>");
+            if (list.length > 0) {
+                control.empty().append('<option selected="selected" value="0">' + "Please Select" + '</option>');
+                $.each(list, function () {
+                    control.append($("<option></option>").val(this['Value']).html(this['Text']));
+                });
+            }
+            else {
+                $("#inputNoShowPostingInfoDiv").show("slow");
+                $("#divNoShowPostingInfoLinkRoomSelection").hide("slow");
+                toastr.warning("No Link Room Found.");
+                return false;
+            }
+        }
+        function OnLoadGetMasterLinkRoomForNoShowPostingInfoFailed() {
 
         }
 
@@ -1738,21 +1906,28 @@
             CommonHelper.SpinnerClose();
             toastr.success("Bill Pending Released Successful.");
         }
-        function AdvanceRoomBillProcessInfo() {
-            var roomNumber = $.trim($("#txtAdvanceRoomBillProcessByRoomNumber").val());
-            if (roomNumber == "") {
-                toastr.warning("Please Provide Room Number."); return false;
+        function RoomBillPostingProcessInfo() {
+            debugger;
+            var roomBillPostingProcessType = $("#ContentPlaceHolder1_ddlRoomBillPostingProcessType option:selected").val();
+            if (roomBillPostingProcessType == "0") {
+                toastr.warning("Please Provide Posting Type."); return false;
             }
+            else {
+                var roomNumber = $.trim($("#txtRoomBillPostingRoomNumber").val());
+                if (roomNumber == "") {
+                    toastr.warning("Please Provide Room Number."); return false;
+                }
 
-            if (window.confirm("Do you want to Process Advance Room Bill?")) {
-                if ((roomNumber != "")) {
-                    CommonHelper.SpinnerOpen();
-                    PageMethods.AdvanceRoomBillProcess(roomNumber, OnAdvanceRoomBillProcessSucceeded, OnGetCommonFailed);
-                    return false;
+                if (window.confirm("Do you want to Process Room Bill Posting?")) {
+                    if ((roomNumber != "")) {
+                        CommonHelper.SpinnerOpen();
+                        PageMethods.RoomBillPostingProcess(roomBillPostingProcessType, roomNumber, OnRoomBillPostingProcessSucceeded, OnGetCommonFailed);
+                        return false;
+                    }
                 }
             }
         }
-        function OnAdvanceRoomBillProcessSucceeded(result) {
+        function OnRoomBillPostingProcessSucceeded(result) {
             CommonHelper.SpinnerClose();
             toastr.success("Bill Pending Released Successful.");
         }
@@ -2925,7 +3100,7 @@
             <li id="G" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
                 href="#tab_7">Bill Pending</a></li>
             <li id="H" runat="server" style="border: 1px solid #AAAAAA; border-bottom: none"><a
-                href="#tab_8">Advance Room Bill</a></li>
+                href="#tab_8">Room Bill Posting</a></li>
         </ul>
         <div id="tab-1">
             <div id="ChangeGuestInfoDiv" class="panel panel-default">
@@ -4400,32 +4575,313 @@
             </div>
         </div>
         <div id="tab_8">
-            <div id="AdvanceRoomBillProcessInfoDiv" class="panel panel-default">
+            <div id="NoShowPostingInfoDiv" class="panel panel-default">
                 <div class="panel-heading">
-                    Advance Room Bill Process
+                    Room Bill Posting Information
                 </div>
                 <div class="panel-body">
                     <div class="form-horizontal">
-                        <div class="form-group">                                        
-                            <div>
-                                <div class="col-md-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <label class="control-label required-field" style="padding-top: 0px;">Room Number</label>
-                                        </span>
-                                        <input type="text" id="txtAdvanceRoomBillProcessByRoomNumber" class="form-control" />
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="Type" class="control-label col-md-2">
+                                                Room Type</label>
+                                            <div class="col-md-3">
+                                                <asp:DropDownList ID="ddlNoShowPostingRoomType" runat="server" CssClass="form-control" TabIndex="2">
+                                                    <asp:ListItem Value="1">Individual Room</asp:ListItem>
+                                                    <%--<asp:ListItem Value="2">Link Room</asp:ListItem>--%>
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div id="divNoShowPostingInfoLinkRoomSelection" style="display:none">
+                                                <label for="Type" class="control-label required-field col-md-2">
+                                                        Link Rooms</label>
+                                                <div class="col-md-3">
+                                                    <asp:DropDownList ID="ddlLinkRoomNoShowPostingInfo" runat="server" TabIndex="10" CssClass="form-control">
+                                                    </asp:DropDownList>
+                                                </div>
+                                                </div>
+                                            <div id="inputNoShowPostingInfoDiv">
+                                                <div class="col-md-3">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <label class="control-label required-field" style="padding-top: 0px;">Room Number</label>
+                                                        </span>
+                                                        <input type="text" id="txtRoomBillPostingRoomNumber" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Type" class="control-label col-md-2">
+                                                Posting Type</label>
+                                            <div class="col-md-3">
+                                                <asp:DropDownList ID="ddlRoomBillPostingProcessType" runat="server" CssClass="form-control" TabIndex="2">
+                                                    <asp:ListItem Value="0">--- Please Select ---</asp:ListItem>
+                                                    <asp:ListItem Value="1">No Show Posting</asp:ListItem>
+                                                    <asp:ListItem Value="2">Advance Room Bill Posting</asp:ListItem>                                    
+                                                </asp:DropDownList>
+                                            </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="btnRoomBillPosting" value="Room Bill Posting" class="TransactionalButton btn btn-primary" onclick="RoomBillPostingProcessInfo()" />
                                     </div>
                                 </div>
-                            </div>                                                    
-                            <div class="col-md-2">
-                                <input type="button" value="Advance Room Bill Process" class="TransactionalButton btn btn-primary" onclick="AdvanceRoomBillProcessInfo()" />
+                                <div class="form-horizontal">
+                                    <div class="form-group roomIsRegistered" style="display: none;">
+                                        <div class="col-md-6" id="roomNoShowPostingInfoContainer">
+                                            <table class="table table-striped table-bordered table-condensed table-hover">
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label54" runat="server" Text="Room Number"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label55" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label56" runat="server" Text="Room Type"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label57" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label58" runat="server" Text="Arrival Date"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label59"
+                                                            runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label60"
+                                                            runat="server" Text="Expected Departure Date"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control" TabIndex="5"
+                                                            Visible="false"></asp:TextBox>
+                                                        <asp:TextBox ID="TextBox2" CssClass="form-control" runat="server" TabIndex="6"></asp:TextBox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label
+                                                            ID="Label61" runat="server" Text="Name"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label62" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label63" runat="server"
+                                                            Text="Country Name"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label64"
+                                                            runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label65" runat="server"
+                                                            Text="Gender"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label66"
+                                                            runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label67" runat="server" Text="Date of Birth"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label68" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label69"
+                                                            runat="server" Text="Email"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label70"
+                                                            runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label
+                                                            ID="Label71" runat="server" Text="Phone Number"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label72" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label73" runat="server"
+                                                            Text="Address"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label74"
+                                                            runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label75" runat="server" Text="Nationality"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label76" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-6" id="roomChangeNoShowPostingInfoContainerTable" style="display: none;">
+                                            <table class="table table-striped table-bordered table-condensed table-hover">
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label77" runat="server" Text="Room Number"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label78" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label79" runat="server" Text="Room Type"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label80" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label81" runat="server" Text="Arrival Date"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label82"
+                                                            runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label83"
+                                                            runat="server" Text="Expected Departure Date"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label84" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label
+                                                            ID="Label85" runat="server" Text="Name"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label86" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label87" runat="server"
+                                                            Text="Country Name"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label88"
+                                                            runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label89" runat="server"
+                                                            Text="Gender"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label90"
+                                                            runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label91" runat="server" Text="Date of Birth"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label92" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label93"
+                                                            runat="server" Text="Email"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label94"
+                                                            runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label
+                                                            ID="Label95" runat="server" Text="Phone Number"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label96" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label97" runat="server"
+                                                            Text="Address"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label98"
+                                                            runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="col-md-2">
+                                                        <asp:Label ID="Label99" runat="server" Text="Nationality"></asp:Label>
+                                                    </td>
+                                                    <td class="col-md-4">
+                                                        <asp:Label ID="Label100" runat="server" Text=""></asp:Label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <asp:HiddenField ID="HiddenField2" runat="server"></asp:HiddenField>
+                                        <input id="btnNoShowPostingInfo" type="button" value="Update Stay" class="btn btn-primary" onclick="RoomAmendStayInfo()" />
+                                    </div>
+                                </div>                                
+                                <div class="form-horizontal" id="roomLinkedNoShowPostingInfo" style="display: none;">
+                                    <div class="form-group">
+                                        <div class="col-md-6" id="roomInfoLinkedRoomDivNoShowPostingInfo">
+                                            <div id="ltlLinkedRoomsNoShowPostingInfo">
+                                            </div>
+                                        </div>
+                                        <div class ="col-md-2">
+                                            <asp:Label ID="Label101" runat="server"
+                                                            Text="Expected Deperature"></asp:Label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <asp:TextBox ID="TextBox3" CssClass="form-control" runat="server" TabIndex="6"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <input id="btnLinkedNoShowPostingInfo" type="button" value="Update Stay" class="btn btn-primary" onclick="RoomAmendStayInfoLink()" />
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>    
     </div>
     <div id="RoomInstructionInfoDiv" class="panel panel-default" style="display: none;">
         <div class="panel-heading">

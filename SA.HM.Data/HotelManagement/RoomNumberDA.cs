@@ -33,7 +33,8 @@ namespace HotelManagement.Data
                                 roomNumber.ActiveStatus = reader["ActiveStatus"].ToString();
                                 roomNumber.RoomType = reader["RoomType"].ToString();
                                 roomNumber.IsSmokingRoom = Convert.ToBoolean(reader["IsSmokingRoom"]);
-                                roomNumber.HKRoomStatusId = Convert.ToInt64(reader["HKRoomStatusId"]);
+                                roomNumber.IsPMDummyRoom = Convert.ToBoolean(reader["IsPMDummyRoom"]);
+                                roomNumber.HKRoomStatusId = Convert.ToInt64(reader["HKRoomStatusId"]);                                
                                 roomNumber.CleanupStatus = reader["CleanupStatus"].ToString();
 
                                 roomNumberList.Add(roomNumber);
