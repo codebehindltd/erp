@@ -11,6 +11,7 @@ namespace InnboardDomain.Models
     {
         public long ReservationId { get; set; }
         public int GuestSourceId { get; set; }
+        public int MemberId { get; set; }
         public string TransactionType { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }

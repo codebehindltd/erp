@@ -17,6 +17,7 @@ namespace InnboardDomain.Models
         public string ContactNumber { get; set; }
         public string EndPointIp { get; set; }
         public string LogoURL { get; set; }
+        public string CoverPictureURL { get; set; }
         public string RankNumber { get; set; }
         public string LineOne { get; set; }
         public string LineTwo { get; set; }

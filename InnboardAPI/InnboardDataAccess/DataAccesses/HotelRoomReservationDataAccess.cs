@@ -28,19 +28,20 @@ namespace InnboardDataAccess.DataAccesses
         {
             SqlParameter guestSourceId = new SqlParameter("@GuestSourceId", roomReservationInfo.GuestSourceId);
             SqlParameter transactionType = new SqlParameter("@TransactionType", roomReservationInfo.TransactionType);
+            SqlParameter memberId = new SqlParameter("@MemberId", roomReservationInfo.MemberId);
             SqlParameter fromDate = new SqlParameter("@FromDate", roomReservationInfo.FromDate);
             SqlParameter toDate = new SqlParameter("@ToDate", roomReservationInfo.ToDate);
             SqlParameter guestName = new SqlParameter("@GuestName", roomReservationInfo.GuestName);
             SqlParameter phoneNumber = new SqlParameter("@PhoneNumber", roomReservationInfo.PhoneNumber);
             SqlParameter guestRemarks = new SqlParameter("@GuestRemarks", roomReservationInfo.GuestRemarks);
 
-            SqlParameter pOutGuestId = new SqlParameter("@GuestId", SqlDbType.BigInt);
+            SqlParameter pOutGuestId = new SqlParameter("@GuestId", SqlDbType.Int);
             pOutGuestId.Direction = ParameterDirection.Output;
 
             SqlParameter pOutReservationId = new SqlParameter("@ReservationId", SqlDbType.BigInt);
             pOutReservationId.Direction = ParameterDirection.Output;
 
-            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveRoomReservationInfoForMobileApps_SP] @GuestSourceId, @TransactionType, @FromDate, @ToDate, @GuestName, @PhoneNumber, @GuestRemarks, @GuestId OUT, @ReservationId OUT", guestSourceId, transactionType, fromDate, toDate, guestName, phoneNumber, guestRemarks, pOutGuestId, pOutReservationId);
+            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[SaveRoomReservationInfoForMobileApps_SP] @GuestSourceId, @TransactionType, @MemberId, @FromDate, @ToDate, @GuestName, @PhoneNumber, @GuestRemarks, @GuestId OUT, @ReservationId OUT", guestSourceId, transactionType, memberId, fromDate, toDate, guestName, phoneNumber, guestRemarks, pOutGuestId, pOutReservationId);
 
             tmpGuestId = (int)pOutGuestId.Value;
             tmpReservationId = (long)pOutReservationId.Value;
