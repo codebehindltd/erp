@@ -824,7 +824,7 @@ namespace Mamun.Presentation.Website.Common
         }
         public void MessageCount()
         {
-            Int16 TotalUnreadMessage = 0;
+            Int64 TotalUnreadMessage = 0;
 
             CommonMessageDA messageDa = new CommonMessageDA();
             List<CommonMessageDetailsBO> messageDetails = new List<CommonMessageDetailsBO>();

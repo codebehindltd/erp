@@ -245,7 +245,7 @@ namespace HotelManagement.Data.HMCommon
             return messageDetails;
         }
 
-        public List<CommonMessageDetailsBO> GetMessageDetailsByUserId(string userId, bool? isReaden, byte? totalMessageRetrive, out Int16 TotalUnreadMessage)
+        public List<CommonMessageDetailsBO> GetMessageDetailsByUserId(string userId, bool? isReaden, byte? totalMessageRetrive, out Int64 TotalUnreadMessage)
         {
             List<CommonMessageDetailsBO> messageDetails = new List<CommonMessageDetailsBO>();
             TotalUnreadMessage = 0;
@@ -267,7 +267,7 @@ namespace HotelManagement.Data.HMCommon
                     else
                         dbSmartAspects.AddInParameter(cmd, "@TotalMessageRetrive", DbType.Byte, DBNull.Value);
 
-                    dbSmartAspects.AddOutParameter(cmd, "@TotalUnreadMessage", DbType.Int16, sizeof(Int16));
+                    dbSmartAspects.AddOutParameter(cmd, "@TotalUnreadMessage", DbType.Int64, sizeof(Int16));
 
                     DataSet ds = new DataSet();
                     dbSmartAspects.LoadDataSet(cmd, ds, "Message");
@@ -285,9 +285,7 @@ namespace HotelManagement.Data.HMCommon
 
                     }).ToList();
 
-                    TotalUnreadMessage = (Int16)cmd.Parameters["@TotalUnreadMessage"].Value;
-
-                    //TotalUnreadMessage = Convert.ToInt32(cmd.Parameters["@TotalUnreadMessage"].Value);
+                    TotalUnreadMessage = (Int64)cmd.Parameters["@TotalUnreadMessage"].Value;
                 }
             }
 

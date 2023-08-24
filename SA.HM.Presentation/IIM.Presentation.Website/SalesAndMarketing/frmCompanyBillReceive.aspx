@@ -44,6 +44,15 @@
                 width: "99.75%"
             });
 
+            $("#chkAll").change(function () {
+                if ($(this).is(":checked")) {
+                    $("#BillInfo tbody tr").find("td:eq(0)").find("input").prop("checked", true);
+                }
+                else {
+                    $("#BillInfo tbody tr").find("td:eq(0)").find("input").prop("checked", false);
+                }
+            });
+
             $('#ContentPlaceHolder1_gvPaymentInfo_ChkAllSelect').click(function () {
                 if ($('#ContentPlaceHolder1_gvPaymentInfo_ChkAllSelect').is(':checked')) {
                     CheckAllCheckBoxCreate()
@@ -970,7 +979,7 @@ function OnProjectsPopulated(response) {
                         tr += "<tr style='background-color:#E3EAEB;'>";
                     }
 
-                    tr += "<td style='width: 7%'> ";
+                    tr += "<td style='width: 7%; text-align: center;'> ";
 
                     if (isChecked == "1") {
                         tr += "<input type='checkbox' id='pay" + result.CompanyPaymentDetails[row].CompanyPaymentId + "'" + chk + " onclick='CheckRow(this)' />";
@@ -1672,7 +1681,7 @@ function OnProjectsPopulated(response) {
                     tr += "<tr style='background-color:#E3EAEB;'>";
                 }
 
-                tr += "<td style='width: 7%'> ";
+                tr += "<td style='width: 7%; text-align: center;'> ";
 
                 if (isChecked == "1") {
                     tr += "<input type='checkbox' id='pay" + result[row].CompanyPaymentId + "'" + chk + " onclick='CheckRow(this)' />";
@@ -1715,7 +1724,7 @@ function OnProjectsPopulated(response) {
             CurrencyConvertion();
 
             CommonHelper.ApplyDecimalValidation();
-
+            $("#chkAll").prop("checked", true);
             CommonHelper.SpinnerClose();
             return false;
         }
@@ -1774,19 +1783,24 @@ function OnProjectsPopulated(response) {
             CompanyGeneratedBill = result;
             var list = result;
             var control = $('#ContentPlaceHolder1_ddlCompanyBill');
-
+            var companyId = $("#ContentPlaceHolder1_hfCmpSearch").val();
+            
             control.empty();
             if (list != null) {
                 if (list.length > 0) {
-
                     control.empty().append('<option value="0">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
+                    
                     for (i = 0; i < list.length; i++) {
                         control.append('<option title="' + list[i].CompanyBillNumber + '" value="' + list[i].CompanyBillId + '">' + list[i].CompanyBillNumber + '</option>');
+                    }
+
+                    if ($("#ContentPlaceHolder1_hfIsGroupCompanyMultipleBillPaymentReceiveEnable").val() == 1) {
+                        control.append('<option value="' + ((-1) * companyId).toString() + '">--- Generated All Due Bill ---</option>');
                     }
                 }
                 else {
                     control.empty().append('<option selected="selected" value="0">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
-                }
+                }                
             }
 
             if ($("#ContentPlaceHolder1_hfCompanyBillId").val() != 0) {
@@ -2337,6 +2351,7 @@ function OnProjectsPopulated(response) {
     <asp:HiddenField ID="hfIsSavePermission" runat="server" />
     <asp:HiddenField ID="hfIsUpdatePermission" runat="server" />
     <asp:HiddenField ID="hfIsDeletePermission" runat="server" />
+    <asp:HiddenField ID="hfIsGroupCompanyMultipleBillPaymentReceiveEnable" runat="server" />
     <div id="MessageBox" class="alert alert-info" style="display: none;">
         <button type="button" class="close" data-dismiss="alert">
             ×</button>
@@ -2552,7 +2567,9 @@ function OnProjectsPopulated(response) {
                                 <table id="BillInfo" class="table table-bordered table-condensed table-hover table-responsive">
                                     <thead>
                                         <tr>
-                                            <th style="width: 7%;">Select</th>
+                                            <th style="width: 7%; text-align: center;">
+                                                <input type="checkbox" id="chkAll" />
+                                            </th>
                                             <th style="width: 43%;">Description</th>
                                             <th style="width: 10%;">Bill Date</th>
                                             <th style="width: 10%;">Bill Number</th>
@@ -2562,14 +2579,6 @@ function OnProjectsPopulated(response) {
                                     </thead>
                                     <tbody>
                                     </tbody>
-                                    <%--<tfoot>
-                                        <tr>
-                                            <td colspan="5" style="width: 82%; text-align: right;">Advance Amount</td>
-                                            <td style="width: 18%">
-                                                <asp:TextBox ID="txtAdvanceAmount" runat="server" onblur="CheckAdvance(this)" CssClass="form-control quantitydecimal" TabIndex="7"> </asp:TextBox>
-                                            </td>
-                                        </tr>
-                                    </tfoot>--%>
                                 </table>
                             </div>
                         </div>

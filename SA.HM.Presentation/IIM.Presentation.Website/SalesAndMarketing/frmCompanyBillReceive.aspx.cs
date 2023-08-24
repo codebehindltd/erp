@@ -64,6 +64,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 LoadLocalCurrencyId();
                 LoadIsConversionRateEditable();
                 IsPaymentBillInfoHideInCompanyBillReceive();
+                IsGroupCompanyMultipleBillPaymentReceiveEnable();
                 IsLocalCurrencyDefaultSelected();
                 LoadCommonDropDownHiddenField();
                 LoadGLCompany(false);
@@ -133,8 +134,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             //    gvGuestHouseService.DataBind();
             //}
         }
-
-        
         protected void btnSave_Click(object sender, EventArgs e)
         {
             LoadLocalCurrencyId();
@@ -675,6 +674,24 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                         CommonCurrencyBO currencyBO = currencyListBO.Where(x => x.CurrencyType == "Local").SingleOrDefault();
                         ddlCurrency.SelectedValue = currencyBO.CurrencyId.ToString();
+                    }
+                }
+            }
+        }
+        private void IsGroupCompanyMultipleBillPaymentReceiveEnable()
+        {
+            hfIsGroupCompanyMultipleBillPaymentReceiveEnable.Value = "0";
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsGroupCompanyMultipleBillPaymentReceiveEnable", "IsGroupCompanyMultipleBillPaymentReceiveEnable");
+
+            if (commonSetupBO != null)
+            {
+                if (commonSetupBO.SetupId > 0)
+                {
+                    if (commonSetupBO.SetupValue == "1")
+                    {
+                        hfIsGroupCompanyMultipleBillPaymentReceiveEnable.Value = "1";
                     }
                 }
             }
@@ -1427,7 +1444,17 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             try
             {
                 userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
-                rtninfo.IsSuccess = companyDa.ApprovedPayment(paymentId, userInformationBO.UserInfoId);
+                CompanyPaymentViewBO paymentBO = new CompanyPaymentViewBO();
+
+                paymentBO.CompanyPayment = companyDa.GetCompanyPayment(paymentId);
+                if (paymentBO.CompanyPayment.CompanyBillId < 0)
+                {
+                    rtninfo.IsSuccess = companyDa.ApprovedGroupCompanyMultipleBillPayment(paymentId, userInformationBO.UserInfoId);
+                }
+                else
+                {
+                    rtninfo.IsSuccess = companyDa.ApprovedPayment(paymentId, userInformationBO.UserInfoId);
+                }
             }
             catch (Exception ex)
             {

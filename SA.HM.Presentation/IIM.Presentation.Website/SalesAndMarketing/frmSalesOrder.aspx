@@ -2469,6 +2469,7 @@
             if (parseFloat(discountAmount) != "0" && parseFloat(discountAmount) != "")
                 calculatedDiscountAmount = parseFloat(totalSales) - parseFloat(afterDiscountAmount);
 
+            var companyName = $("#lblCompanyName").text();
             var companyId = $("#ContentPlaceHolder1_hfCompanyId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfCompanyId").val();
             var paymentId = $("#ContentPlaceHolder1_hfPaymentId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfPaymentId").val();
             var contactId = $("#ContentPlaceHolder1_hfContactId").val() == "" ? 0 : +$("#ContentPlaceHolder1_hfContactId").val();

@@ -89,7 +89,7 @@ namespace HotelManagement.Presentation.Website.HMCommon
 
         public void MessageCount()
         {
-            Int16 TotalUnreadMessage = 0;
+            Int64 TotalUnreadMessage = 0;
 
             CommonMessageDA messageDa = new CommonMessageDA();
             List<CommonMessageDetailsBO> messageDetails = new List<CommonMessageDetailsBO>();
@@ -178,7 +178,7 @@ namespace HotelManagement.Presentation.Website.HMCommon
         public static ReturnInfo LoadMessageDetails(Int64 msgId, Int64 msgDetailsId)
         {
             ReturnInfo rtnInf = new ReturnInfo();
-            int totalMessage = 0;
+            Int64 totalMessage = 0;
             string messageBrief = string.Empty;
 
             try
@@ -213,10 +213,9 @@ namespace HotelManagement.Presentation.Website.HMCommon
             return rtnInf;
         }
 
-        private static string MessageForTopBar(out int totalMessage)
+        private static string MessageForTopBar(out Int64 totalMessage)
         {
-            Int16 TotalUnreadMessage = 0;
-
+            Int64 TotalUnreadMessage = 0;
             HMUtility hmUtility = new HMUtility();
             CommonMessageDA messageDa = new CommonMessageDA();
             List<CommonMessageDetailsBO> messageDetails = new List<CommonMessageDetailsBO>();

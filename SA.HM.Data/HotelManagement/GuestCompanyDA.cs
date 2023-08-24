@@ -3465,6 +3465,43 @@ namespace HotelManagement.Data.HotelManagement
 
             return status > 0 ? true : false;
         }
+        public bool ApprovedGroupCompanyMultipleBillPayment(Int64 paymentId, int createdBy)
+        {
+            int status = 0;
+            Int64 supplierIdPaymentId = 0;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+                using (DbTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand command = dbSmartAspects.GetStoredProcCommand("ApprovedGroupCompanyMultipleBillPayment_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(command, "@PaymentId", DbType.String, paymentId);
+                            dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.String, createdBy);
+
+                            status = dbSmartAspects.ExecuteNonQuery(command, transaction);
+                            supplierIdPaymentId = Convert.ToInt32(command.Parameters["@PaymentId"].Value);
+                        }
+
+                        if (status > 0)
+                        {
+                            transaction.Commit();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        status = 0;
+                        transaction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+
+            return status > 0 ? true : false;
+        }
         public bool CheckedPaymentAdjustment(long paymentId, string approvedStatus)
         {
             int status = 0;

@@ -150,6 +150,15 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         protected global::System.Web.UI.WebControls.HiddenField hfIsDeletePermission;
 
         /// <summary>
+        /// hfIsGroupCompanyMultipleBillPaymentReceiveEnable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsGroupCompanyMultipleBillPaymentReceiveEnable;
+
+        /// <summary>
         /// lblMessage control.
         /// </summary>
         /// <remarks>
