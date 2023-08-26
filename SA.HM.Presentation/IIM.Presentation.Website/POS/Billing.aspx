@@ -857,6 +857,7 @@
         function OnSuccessLoading(result) {
             dataForEditForBillingBillId = result.RestaurantKotBill;
             var str = result;
+            debugger;
             var tr = "";
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 for (var i = 0; i < result.KotBillDetails.length; i++) {
@@ -1529,7 +1530,7 @@
 
             if (ItemDetails == null)
                 return;
-
+            debugger;
             //if (ItemDetails == null) {
             itemId = 0;
             itemId = ItemDetails == null ? itemId : ItemDetails.ItemId
@@ -1712,7 +1713,8 @@
                     tr += "<td style='display:none; width:12%;'>" + (ItemDetails == null ? itemCode : ItemDetails.Code) + "</td>";
                 }
 
-                tr += "<td style='width:20%;'>" + (ItemDetails == null ? itemName : ItemDetails.label) + "</td>";
+                //tr += "<td style='width:20%;'>" + (ItemDetails == null ? itemName : ItemDetails.label) + "</td>";
+                tr += "<td style='width:20%;'>" + (ItemDetails == null ? itemName : ItemDetails.Name) + "</td>";
 
                 if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
                     tr += "<td style='width:10%;'>" + colorText + "</td>";
@@ -2042,7 +2044,7 @@
             totalDiscountAmount = discountAmount;
 
             var MaxItemDiscountTotal = 0.0;
-            debugger;
+            
             if ($("#ContentPlaceHolder1_hfIsRiceMillBillingEnable").val() == '0') {
                 $("#AddedItem tbody tr").each(function () {
                     //var itemDiscountAmount = parseFloat($(this).find("td:eq(14)").text());

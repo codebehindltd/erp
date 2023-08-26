@@ -1714,7 +1714,7 @@
                     tr += "<td style='display:none; width:12%;'>" + (ItemDetails == null ? itemCode : ItemDetails.Code) + "</td>";
                 }
 
-                tr += "<td style='width:20%;'>" + (ItemDetails == null ? itemName : ItemDetails.label) + "</td>";
+                tr += "<td style='width:20%;'>" + (ItemDetails == null ? itemName : ItemDetails.Name) + "</td>";
 
                 if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
                     tr += "<td style='width:10%;'>" + colorText + "</td>";
