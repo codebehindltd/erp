@@ -1172,6 +1172,7 @@ namespace HotelManagement.Presentation.Website.POS
                 RestaurantBill.BillDate = DateTime.Now;
                 RestaurantBill.BillPaymentDate = DateTime.Now;
                 billmaster.CostCenterId = costCenterId;
+                RestaurantBill.IsOnlyRateEffectEnable = false;
 
                 if (RestaurantBill.IsBillReSettlement)
                 {

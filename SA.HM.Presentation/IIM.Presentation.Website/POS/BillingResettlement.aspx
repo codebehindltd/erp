@@ -3476,7 +3476,7 @@
             if (row != rowCount) {
                 return false;
             }
-
+            debugger;
             var MemberId = $("#ContentPlaceHolder1_hfMemberId").val() == '' ? 0 : +$("#ContentPlaceHolder1_hfMemberId").val();
             console.log(kotId, MemberId, RestaurantBill, BillPayment, BillDetails, EditedItemList, DeletedItemList, SalesReturnItem, estimatedDoneDate, isTaskAutoGenarate, AddedSerialzableProduct, DeletedSerialzableProduct);
             console.log("kot: " + kotId, "MemberId: " + MemberId, "RestaurantBill: " + RestaurantBill, "BillPayment: " + BillPayment, "BillDetails: " + BillDetails, "EditedItemList: " + EditedItemList, "DeletedItemList: " + DeletedItemList, "SalesReturnItem: " + SalesReturnItem, "estimatedDoneDate: " + estimatedDoneDate, "isTaskAutoGenarate: " + isTaskAutoGenarate, "AddedSerialzableProduct: " + AddedSerialzableProduct, "DeletedSerialzableProduct: " + DeletedSerialzableProduct);
