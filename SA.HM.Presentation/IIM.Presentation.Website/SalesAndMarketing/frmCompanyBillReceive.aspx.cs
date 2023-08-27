@@ -1292,9 +1292,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         {
             GuestCompanyDA companyDa = new GuestCompanyDA();
             List<CompanyBillGenerationBO> paymentInfo = new List<CompanyBillGenerationBO>();
-
             paymentInfo = companyDa.GetCompanyGeneratedBillByBillStatus(companyId);
-
             return paymentInfo;
         }
 
@@ -1304,7 +1302,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             GuestCompanyDA companyDa = new GuestCompanyDA();
             List<CompanyBillGenerateViewBO> companyBill = new List<CompanyBillGenerateViewBO>();
             companyBill = companyDa.GetCompanyBillForBillReceive(companyId, companyBillId);
-
             return companyBill;
         }
 
