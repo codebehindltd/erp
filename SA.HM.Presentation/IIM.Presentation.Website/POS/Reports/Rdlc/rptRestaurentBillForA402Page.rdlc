@@ -4083,7 +4083,11 @@
 						<TablixMember />
 						<TablixMember />
 						<TablixMember />
-						<TablixMember />
+						<TablixMember>
+							<Visibility>
+								<Hidden>=IIF(Parameters!IsBillingInvoiceDueSectionEnable.Value = "0", true, false)</Hidden>
+							</Visibility>
+						</TablixMember>
 						<TablixMember />
 					</TablixMembers>
 				</TablixRowHierarchy>
@@ -4540,6 +4544,12 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="DiscountTitle">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="IsBillingInvoiceDueSectionEnable">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>

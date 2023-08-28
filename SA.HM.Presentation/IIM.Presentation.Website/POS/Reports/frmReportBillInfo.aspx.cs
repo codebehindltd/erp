@@ -310,9 +310,26 @@ namespace HotelManagement.Presentation.Website.POS.Reports
                     reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "0"));
                 }
 
-                //reportParam.Add(new ReportParameter("IsRestaurantOrderSubmitDisable", "Yes"));
-                //reportParam.Add(new ReportParameter("IsRestaurantTokenInfoDisable", "Yes"));
-                //reportParam.Add(new ReportParameter("IsGuestNameAndRoomNoTextShowInInvoice", "0"));
+
+                isCompanyNameShowOnRestaurantInvoice = commonSetupDA.GetCommonConfigurationInfo("IsCompanyNameShowOnRestaurantInvoice", "IsCompanyNameShowOnRestaurantInvoice");
+                if (Convert.ToInt32(isCompanyNameShowOnRestaurantInvoice.SetupValue) == 1)
+                {
+                    reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "1"));
+                }
+                else
+                {
+                    reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "0"));
+                }
+
+                isCompanyNameShowOnRestaurantInvoice = commonSetupDA.GetCommonConfigurationInfo("IsBillingInvoiceDueSectionEnable", "IsBillingInvoiceDueSectionEnable");
+                if (Convert.ToInt32(isCompanyNameShowOnRestaurantInvoice.SetupValue) == 1)
+                {
+                    reportParam.Add(new ReportParameter("IsBillingInvoiceDueSectionEnable", "1"));
+                }
+                else
+                {
+                    reportParam.Add(new ReportParameter("IsBillingInvoiceDueSectionEnable", "0"));
+                }
 
                 DateTime currentDate = DateTime.Now;
                 HMCommonDA printDateDA = new HMCommonDA();
