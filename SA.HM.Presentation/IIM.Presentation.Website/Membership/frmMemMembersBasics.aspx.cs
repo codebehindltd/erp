@@ -41,6 +41,7 @@ namespace HotelManagement.Presentation.Website.Membership
                 LoadRelationship();
                 LoadMemberType();
                 LoadReligion();
+                IsMemberPasswordPanalEnable();
                 string editId = Request.QueryString["editId"];
                 if (!string.IsNullOrWhiteSpace(editId))
                 {
@@ -252,7 +253,16 @@ namespace HotelManagement.Presentation.Website.Membership
             memBasic.Occupation = txtOccupation.Text; //occupation Div
             memBasic.Organization = txtOrganization.Text;
             memBasic.Designation = txtDesignation.Text;
-            
+
+            if (hfIsMemberPasswordPanalEnable.Value == "1")
+            {
+                memBasic.MemberPassword = txtMemberPassword.Text.Trim();
+            }
+            else
+            {
+                memBasic.MemberPassword = "Mamun@01715857662@Mamun";
+            }
+
             //new
             memBasic.OfficeAddress = txtOfficeAddress.Text;
             memBasic.Height = string.IsNullOrEmpty(txtHeight.Text) ? 0 : Convert.ToInt32(txtHeight.Text);
@@ -295,18 +305,19 @@ namespace HotelManagement.Presentation.Website.Membership
             memBasic.OfficeFax = txtOfficeFax.Text;
             memBasic.PersonalEmail = txtPersonalEmail.Text;
             memBasic.OfficeEmail = txtOfficialEmail.Text;
-            
-            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-            HMCommonSetupBO commonSetupNewCOABO = new HMCommonSetupBO();
-            commonSetupNewCOABO = commonSetupDA.GetCommonConfigurationInfo("IsNewChartOfAccountsHeadCreateForMember", "IsNewChartOfAccountsHeadCreateForMember");
-            if (commonSetupNewCOABO != null)
-            {
-                isNewChartOfAccountsHeadCreateForMember = Convert.ToInt32(commonSetupNewCOABO.SetupValue);
-            }
+            isNewChartOfAccountsHeadCreateForMember = 0;
+
+            //HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            //HMCommonSetupBO commonSetupNewCOABO = new HMCommonSetupBO();
+            //commonSetupNewCOABO = commonSetupDA.GetCommonConfigurationInfo("IsNewChartOfAccountsHeadCreateForMember", "IsNewChartOfAccountsHeadCreateForMember");
+            //if (commonSetupNewCOABO != null)
+            //{
+            //    isNewChartOfAccountsHeadCreateForMember = Convert.ToInt32(commonSetupNewCOABO.SetupValue);
+            //}
 
             if (this.btnSave.Text.Equals("Save"))
             {
-                int tmpMemberId = 0;                
+                int tmpMemberId = 0;
                 memBasic.CreatedBy = userInformationBO.UserInfoId;
                 Boolean status = memBasicDA.SaveMemberBasicInfo(memBasic, out tmpMemberId, Session["ReferenceList"] as List<MemMemberReferenceBO>, Session["FamilyMemberList"] as List<MemMemberFamilyMemberBO>, Session["EducationList"] as List<OnlineMemberEducationBO>);
                 if (status)
@@ -314,23 +325,23 @@ namespace HotelManagement.Presentation.Website.Membership
                     int tmpNodeId = 0;
                     int ancestorId = Convert.ToInt32(Convert.ToInt32(Application["CompanyAccountInfoForSalesBillPayment"].ToString()));
 
-                    HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-                    commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("MembershipAccountsHeadId", "MembershipAccountsHeadId");
-                    if (commonSetupBO != null)
-                    {
-                        ancestorId = Convert.ToInt32(commonSetupBO.SetupValue);
-                    }
+                    //HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                    //commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("MembershipAccountsHeadId", "MembershipAccountsHeadId");
+                    //if (commonSetupBO != null)
+                    //{
+                    //    ancestorId = Convert.ToInt32(commonSetupBO.SetupValue);
+                    //}
 
-                    if (isNewChartOfAccountsHeadCreateForMember != 0)
-                    {
-                        this.CreadeNodeMatrixAccountHeadInfo(ancestorId, out tmpNodeId);
-                    }
-                    else
-                    {
-                        tmpNodeId = ancestorId;
-                    }
+                    //if (isNewChartOfAccountsHeadCreateForMember != 0)
+                    //{
+                    //    this.CreadeNodeMatrixAccountHeadInfo(ancestorId, out tmpNodeId);
+                    //}
+                    //else
+                    //{
+                    //    tmpNodeId = ancestorId;
+                    //}
 
-                    Boolean postingStatus = memBasicDA.UpdateMemberNAccountsInfo(tmpMemberId, tmpNodeId, isNewChartOfAccountsHeadCreateForMember);
+                    //Boolean postingStatus = memBasicDA.UpdateMemberNAccountsInfo(tmpMemberId, tmpNodeId, isNewChartOfAccountsHeadCreateForMember);
 
                     Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Add.ToString(), EntityTypeEnum.EntityType.MembershipInfo.ToString(), tmpMemberId,
                         ProjectModuleEnum.ProjectModule.MembershipManagement.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.MembershipInfo));
@@ -354,14 +365,14 @@ namespace HotelManagement.Presentation.Website.Membership
                 Boolean status = memBasicDA.UpdateMemberBasicInfo(memBasic, Session["ReferenceList"] as List<MemMemberReferenceBO>, Session["arrayReferenceDelete"] as ArrayList, Session["FamilyMemberList"] as List<MemMemberFamilyMemberBO>, Session["arrayFamilyMemberDelete"] as ArrayList, Session["EducationList"] as List<OnlineMemberEducationBO>, Session["arrayEducationDelete"] as ArrayList, isNewChartOfAccountsHeadCreateForMember);
                 if (status)
                 {
-                    if (isNewChartOfAccountsHeadCreateForMember != 0)
-                    {
-                        this.UpdateNodeMatrixAccountHeadInfo(Convert.ToInt32(this.txtNodeId.Value));
-                    }
+                    //if (isNewChartOfAccountsHeadCreateForMember != 0)
+                    //{
+                    //    this.UpdateNodeMatrixAccountHeadInfo(Convert.ToInt32(this.txtNodeId.Value));
+                    //}
 
                     Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(), EntityTypeEnum.EntityType.MembershipInfo.ToString(), memBasic.MemberId,
                         ProjectModuleEnum.ProjectModule.MembershipManagement.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.MembershipInfo));
-                    
+
                     CommonHelper.AlertInfo(innboardMessage, AlertMessage.Update, AlertType.Success);
                     Cancel();
                 }
@@ -467,6 +478,19 @@ namespace HotelManagement.Presentation.Website.Membership
             ddlReligion.DataBind();
 
         }
+        private void IsMemberPasswordPanalEnable()
+        {
+            MemberPasswordDiv.Visible = false;
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            HMCommonSetupBO homePageSetupBO = new HMCommonSetupBO();
+            homePageSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsMemberPasswordPanalEnable", "IsMemberPasswordPanalEnable");
+            hfIsMemberPasswordPanalEnable.Value = homePageSetupBO.SetupValue;
+
+            if (homePageSetupBO.SetupValue == "1")
+            {
+                MemberPasswordDiv.Visible = true;
+            }
+        }
         private void FillForm(int editId)
         {
             MemMemberBasicsBO memberBO = new MemMemberBasicsBO();
@@ -520,7 +544,7 @@ namespace HotelManagement.Presentation.Website.Membership
             txtMonthlyIncome.Text = memberBO.MonthlyIncome.ToString();
 
             txtAnnualTurnover.Text = memberBO.AnnualTurnover.ToString();
-            
+
             txtSecurityDep.Text = memberBO.SecurityDeposit.ToString();
 
             if (memberBO.RegistrationDate != null)
@@ -548,7 +572,7 @@ namespace HotelManagement.Presentation.Website.Membership
             txtOfficeFax.Text = memberBO.OfficeFax;
             txtPersonalEmail.Text = memberBO.PersonalEmail;
             txtOfficialEmail.Text = memberBO.OfficeEmail;
-            
+
             //Reference------------------------
             List<MemMemberReferenceBO> referenceList = new List<MemMemberReferenceBO>();
 
@@ -616,6 +640,9 @@ namespace HotelManagement.Presentation.Website.Membership
             txtOfficialEmail.Text = string.Empty;
             txtHeight.Text = string.Empty;
             txtWeight.Text = string.Empty;
+
+            txtMemberPassword.Text = string.Empty;
+            txtConfirmMemberPassword.Text = string.Empty;
 
             Session["arrayReferenceDelete"] = null;
             Session["arrayFamilyMemberDelete"] = null;
@@ -751,6 +778,24 @@ namespace HotelManagement.Presentation.Website.Membership
                     txtLastName.Focus();
                 }
             }
+
+            if (hfIsMemberPasswordPanalEnable.Value == "1")
+            {
+                if (string.IsNullOrWhiteSpace(txtMemberPassword.Text))
+                {
+                    CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Password.", AlertType.Warning);
+                    txtMemberPassword.Focus();
+                    status = false;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtConfirmMemberPassword.Text))
+                {
+                    CommonHelper.AlertInfo(innboardMessage, AlertMessage.TextTypeValidation + "Confirm Password.", AlertType.Warning);
+                    txtConfirmMemberPassword.Focus();
+                    status = false;
+                }
+            }
+
             SetTab("BasicTab");
             return status;
         }
@@ -991,8 +1036,8 @@ namespace HotelManagement.Presentation.Website.Membership
             educationBO.Degree = txtDegree.Text;
             educationBO.Institution = txtInstitution.Text;
             educationBO.PassingYear = Convert.ToInt32(txtPassingYear.Text);
-            
-            
+
+
             educationBO.Id = dynamicId == 0 ? memberEducationBOs.Count + 1 : dynamicId;
             memberEducationBOs.Add(educationBO);
             Session["EducationList"] = memberEducationBOs;
@@ -1018,7 +1063,7 @@ namespace HotelManagement.Presentation.Website.Membership
                     txtDegree.Text = educationBO.Degree;
                     txtInstitution.Text = educationBO.Institution;
                     txtPassingYear.Text = educationBO.PassingYear.ToString();
-                    
+
                     btnAddInst.Text = "Update";
                 }
                 else

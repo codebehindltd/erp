@@ -139,6 +139,15 @@
             $("#myTabs").tabs();
         });
 
+        //For Password Validation-------------------------
+        function confirmPass() {
+            if ($("#<%=txtMemberPassword.ClientID %>").val() != $("#<%=txtConfirmMemberPassword.ClientID %>").val()) {
+                toastr.warning('Wrong confirm password !');
+                $("#<%=txtConfirmMemberPassword.ClientID %>").val("");
+                return false;
+            }
+        }
+
         function GridPaging(pageNumber, IsCurrentOrPreviousPage) {
 
             var gridRecordsCount = $("#gvMember tbody tr").length;
@@ -224,6 +233,7 @@
                     <div class="form-horizontal">
                         <asp:HiddenField ID="hfMemberId" runat="server" />
                         <asp:HiddenField ID="hfCompanyId" runat="server" />
+                        <asp:HiddenField ID="hfIsMemberPasswordPanalEnable" runat="server" />                        
                         <asp:HiddenField ID="txtNodeId" runat="server"></asp:HiddenField>
                         <div class="form-group">
                             <div class="col-md-2">
@@ -497,6 +507,20 @@
                             </div>
                             <div class="col-md-10">
                                 <asp:TextBox ID="txtOfficialEmail" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div id="MemberPasswordDiv" class="form-group" runat="server">
+                            <div class="col-md-2">
+                                <asp:Label ID="Label2" runat="server" class="control-label" Text="Password"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtMemberPassword" TextMode="Password" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="Label3" runat="server" class="control-label" Text="Confirm Password"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtConfirmMemberPassword" TextMode="Password" CssClass="form-control" onblur="javascript: return confirmPass();" runat="server"></asp:TextBox>
                             </div>
                         </div>
                     </div>

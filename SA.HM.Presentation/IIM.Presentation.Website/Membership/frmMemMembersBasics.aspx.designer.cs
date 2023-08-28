@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Presentation.Website.Membership {
-    
-    
-    public partial class frmMemMembersBasics {
-        
+namespace HotelManagement.Presentation.Website.Membership
+{
+
+
+    public partial class frmMemMembersBasics
+    {
+
         /// <summary>
         /// A control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl A;
-        
+
         /// <summary>
         /// B control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl B;
-        
+
         /// <summary>
         /// C control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl C;
-        
+
         /// <summary>
         /// D control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl D;
-        
+
         /// <summary>
         /// E control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl E;
-        
+
         /// <summary>
         /// F control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl F;
-        
+
         /// <summary>
         /// G control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl G;
-        
+
         /// <summary>
         /// hfMemberId control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfMemberId;
-        
+
         /// <summary>
         /// hfCompanyId control.
         /// </summary>
@@ -92,7 +94,16 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfCompanyId;
-        
+
+        /// <summary>
+        /// hfIsMemberPasswordPanalEnable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsMemberPasswordPanalEnable;
+
         /// <summary>
         /// txtNodeId control.
         /// </summary>
@@ -101,7 +112,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField txtNodeId;
-        
+
         /// <summary>
         /// lblMemberType control.
         /// </summary>
@@ -110,7 +121,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMemberType;
-        
+
         /// <summary>
         /// ddlMemberType control.
         /// </summary>
@@ -119,7 +130,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlMemberType;
-        
+
         /// <summary>
         /// lblMemCode control.
         /// </summary>
@@ -128,7 +139,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMemCode;
-        
+
         /// <summary>
         /// txtMemCode control.
         /// </summary>
@@ -137,7 +148,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMemCode;
-        
+
         /// <summary>
         /// lblTitle control.
         /// </summary>
@@ -146,7 +157,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTitle;
-        
+
         /// <summary>
         /// ddlTitle control.
         /// </summary>
@@ -155,7 +166,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTitle;
-        
+
         /// <summary>
         /// lblFirstName control.
         /// </summary>
@@ -164,7 +175,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFirstName;
-        
+
         /// <summary>
         /// txtFirstName control.
         /// </summary>
@@ -173,7 +184,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFirstName;
-        
+
         /// <summary>
         /// lblMiddleName control.
         /// </summary>
@@ -182,7 +193,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMiddleName;
-        
+
         /// <summary>
         /// txtMiddleName control.
         /// </summary>
@@ -191,7 +202,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMiddleName;
-        
+
         /// <summary>
         /// lblLastName control.
         /// </summary>
@@ -200,7 +211,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblLastName;
-        
+
         /// <summary>
         /// txtLastName control.
         /// </summary>
@@ -209,7 +220,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtLastName;
-        
+
         /// <summary>
         /// lblDisplayName control.
         /// </summary>
@@ -218,7 +229,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDisplayName;
-        
+
         /// <summary>
         /// txtDisplayName control.
         /// </summary>
@@ -227,7 +238,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDisplayName;
-        
+
         /// <summary>
         /// lblFathersName control.
         /// </summary>
@@ -236,7 +247,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFathersName;
-        
+
         /// <summary>
         /// txtFathersName control.
         /// </summary>
@@ -245,7 +256,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFathersName;
-        
+
         /// <summary>
         /// lblMothersName control.
         /// </summary>
@@ -254,7 +265,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMothersName;
-        
+
         /// <summary>
         /// txtMothersName control.
         /// </summary>
@@ -263,7 +274,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMothersName;
-        
+
         /// <summary>
         /// lblMemDOB control.
         /// </summary>
@@ -272,7 +283,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMemDOB;
-        
+
         /// <summary>
         /// txtMemDOB control.
         /// </summary>
@@ -281,7 +292,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMemDOB;
-        
+
         /// <summary>
         /// lblGender control.
         /// </summary>
@@ -290,7 +301,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblGender;
-        
+
         /// <summary>
         /// ddlGender control.
         /// </summary>
@@ -299,7 +310,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlGender;
-        
+
         /// <summary>
         /// lblBloodGroup control.
         /// </summary>
@@ -308,7 +319,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblBloodGroup;
-        
+
         /// <summary>
         /// ddlBloodGroup control.
         /// </summary>
@@ -317,7 +328,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlBloodGroup;
-        
+
         /// <summary>
         /// lblMaritalStatus control.
         /// </summary>
@@ -326,7 +337,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMaritalStatus;
-        
+
         /// <summary>
         /// ddlMaritalStatus control.
         /// </summary>
@@ -335,7 +346,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlMaritalStatus;
-        
+
         /// <summary>
         /// Label26 control.
         /// </summary>
@@ -344,7 +355,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label26;
-        
+
         /// <summary>
         /// txtHeight control.
         /// </summary>
@@ -353,7 +364,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtHeight;
-        
+
         /// <summary>
         /// Label27 control.
         /// </summary>
@@ -362,7 +373,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label27;
-        
+
         /// <summary>
         /// txtWeight control.
         /// </summary>
@@ -371,7 +382,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtWeight;
-        
+
         /// <summary>
         /// lblNatinality control.
         /// </summary>
@@ -380,7 +391,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblNatinality;
-        
+
         /// <summary>
         /// ddlCountryId control.
         /// </summary>
@@ -389,7 +400,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCountryId;
-        
+
         /// <summary>
         /// lblPassportNumber control.
         /// </summary>
@@ -398,7 +409,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPassportNumber;
-        
+
         /// <summary>
         /// txtPassportNumber control.
         /// </summary>
@@ -407,7 +418,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPassportNumber;
-        
+
         /// <summary>
         /// lblAnnualTurnover control.
         /// </summary>
@@ -416,7 +427,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAnnualTurnover;
-        
+
         /// <summary>
         /// txtAnnualTurnover control.
         /// </summary>
@@ -425,7 +436,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAnnualTurnover;
-        
+
         /// <summary>
         /// lblSecurityDep control.
         /// </summary>
@@ -434,7 +445,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSecurityDep;
-        
+
         /// <summary>
         /// txtSecurityDep control.
         /// </summary>
@@ -443,7 +454,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSecurityDep;
-        
+
         /// <summary>
         /// lblRegDate control.
         /// </summary>
@@ -452,7 +463,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRegDate;
-        
+
         /// <summary>
         /// txtRegDate control.
         /// </summary>
@@ -461,7 +472,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRegDate;
-        
+
         /// <summary>
         /// lblExpiryDate control.
         /// </summary>
@@ -470,7 +481,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblExpiryDate;
-        
+
         /// <summary>
         /// txtExpiryDate control.
         /// </summary>
@@ -479,7 +490,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtExpiryDate;
-        
+
         /// <summary>
         /// lblPresentAddress control.
         /// </summary>
@@ -488,7 +499,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPresentAddress;
-        
+
         /// <summary>
         /// txtPresentAddress control.
         /// </summary>
@@ -497,7 +508,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPresentAddress;
-        
+
         /// <summary>
         /// lblMailingAddress control.
         /// </summary>
@@ -506,7 +517,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMailingAddress;
-        
+
         /// <summary>
         /// txtMailingAddress control.
         /// </summary>
@@ -515,7 +526,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMailingAddress;
-        
+
         /// <summary>
         /// Label4 control.
         /// </summary>
@@ -524,7 +535,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label4;
-        
+
         /// <summary>
         /// ddlReligion control.
         /// </summary>
@@ -533,7 +544,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlReligion;
-        
+
         /// <summary>
         /// lblHomePhone control.
         /// </summary>
@@ -542,7 +553,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblHomePhone;
-        
+
         /// <summary>
         /// txtHomePhone control.
         /// </summary>
@@ -551,7 +562,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtHomePhone;
-        
+
         /// <summary>
         /// lblOfficePhone control.
         /// </summary>
@@ -560,7 +571,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblOfficePhone;
-        
+
         /// <summary>
         /// txtOfficePhone control.
         /// </summary>
@@ -569,7 +580,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtOfficePhone;
-        
+
         /// <summary>
         /// lblHomeFax control.
         /// </summary>
@@ -578,7 +589,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblHomeFax;
-        
+
         /// <summary>
         /// txtHomeFax control.
         /// </summary>
@@ -587,7 +598,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtHomeFax;
-        
+
         /// <summary>
         /// lblOfficeFax control.
         /// </summary>
@@ -596,7 +607,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblOfficeFax;
-        
+
         /// <summary>
         /// txtOfficeFax control.
         /// </summary>
@@ -605,7 +616,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtOfficeFax;
-        
+
         /// <summary>
         /// lblPersonalEmail control.
         /// </summary>
@@ -614,7 +625,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPersonalEmail;
-        
+
         /// <summary>
         /// txtPersonalEmail control.
         /// </summary>
@@ -623,7 +634,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPersonalEmail;
-        
+
         /// <summary>
         /// lblOfficialEmail control.
         /// </summary>
@@ -632,7 +643,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblOfficialEmail;
-        
+
         /// <summary>
         /// txtOfficialEmail control.
         /// </summary>
@@ -641,7 +652,52 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtOfficialEmail;
-        
+
+        /// <summary>
+        /// MemberPasswordDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl MemberPasswordDiv;
+
+        /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+
+        /// <summary>
+        /// txtMemberPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMemberPassword;
+
+        /// <summary>
+        /// Label3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
+
+        /// <summary>
+        /// txtConfirmMemberPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtConfirmMemberPassword;
+
         /// <summary>
         /// Label8 control.
         /// </summary>
@@ -650,7 +706,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label8;
-        
+
         /// <summary>
         /// txtOccupation control.
         /// </summary>
@@ -659,7 +715,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtOccupation;
-        
+
         /// <summary>
         /// Label9 control.
         /// </summary>
@@ -668,7 +724,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label9;
-        
+
         /// <summary>
         /// txtDesignation control.
         /// </summary>
@@ -677,7 +733,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDesignation;
-        
+
         /// <summary>
         /// Label10 control.
         /// </summary>
@@ -686,7 +742,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label10;
-        
+
         /// <summary>
         /// txtOrganization control.
         /// </summary>
@@ -695,7 +751,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtOrganization;
-        
+
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -704,7 +760,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-        
+
         /// <summary>
         /// txtMonthlyIncome control.
         /// </summary>
@@ -713,7 +769,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMonthlyIncome;
-        
+
         /// <summary>
         /// Label11 control.
         /// </summary>
@@ -722,7 +778,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label11;
-        
+
         /// <summary>
         /// txtOfficeAddress control.
         /// </summary>
@@ -731,7 +787,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtOfficeAddress;
-        
+
         /// <summary>
         /// hfEducationId control.
         /// </summary>
@@ -740,7 +796,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label hfEducationId;
-        
+
         /// <summary>
         /// Label16 control.
         /// </summary>
@@ -749,7 +805,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label16;
-        
+
         /// <summary>
         /// txtDegree control.
         /// </summary>
@@ -758,7 +814,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDegree;
-        
+
         /// <summary>
         /// Label17 control.
         /// </summary>
@@ -767,7 +823,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label17;
-        
+
         /// <summary>
         /// txtInstitution control.
         /// </summary>
@@ -776,7 +832,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtInstitution;
-        
+
         /// <summary>
         /// Label18 control.
         /// </summary>
@@ -785,7 +841,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label18;
-        
+
         /// <summary>
         /// txtPassingYear control.
         /// </summary>
@@ -794,7 +850,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPassingYear;
-        
+
         /// <summary>
         /// btnAddInst control.
         /// </summary>
@@ -803,7 +859,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddInst;
-        
+
         /// <summary>
         /// gvEducationList control.
         /// </summary>
@@ -812,7 +868,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvEducationList;
-        
+
         /// <summary>
         /// lblMemberName control.
         /// </summary>
@@ -821,7 +877,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMemberName;
-        
+
         /// <summary>
         /// txtMemberName control.
         /// </summary>
@@ -830,7 +886,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMemberName;
-        
+
         /// <summary>
         /// lblDOB control.
         /// </summary>
@@ -839,7 +895,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDOB;
-        
+
         /// <summary>
         /// txtDOB control.
         /// </summary>
@@ -848,7 +904,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDOB;
-        
+
         /// <summary>
         /// lblFMOccupation control.
         /// </summary>
@@ -857,7 +913,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFMOccupation;
-        
+
         /// <summary>
         /// txtFMOccupation control.
         /// </summary>
@@ -866,7 +922,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFMOccupation;
-        
+
         /// <summary>
         /// lblRelationship control.
         /// </summary>
@@ -875,7 +931,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRelationship;
-        
+
         /// <summary>
         /// ddlRelationship control.
         /// </summary>
@@ -884,7 +940,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlRelationship;
-        
+
         /// <summary>
         /// lblUsageMode control.
         /// </summary>
@@ -893,7 +949,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblUsageMode;
-        
+
         /// <summary>
         /// ddlUsageMode control.
         /// </summary>
@@ -902,7 +958,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlUsageMode;
-        
+
         /// <summary>
         /// btnFamilyMember control.
         /// </summary>
@@ -911,7 +967,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnFamilyMember;
-        
+
         /// <summary>
         /// hfFamilyMemberId control.
         /// </summary>
@@ -920,7 +976,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label hfFamilyMemberId;
-        
+
         /// <summary>
         /// gvFamilyMember control.
         /// </summary>
@@ -929,7 +985,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvFamilyMember;
-        
+
         /// <summary>
         /// Label30 control.
         /// </summary>
@@ -938,7 +994,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label30;
-        
+
         /// <summary>
         /// txtNomineeName control.
         /// </summary>
@@ -947,7 +1003,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNomineeName;
-        
+
         /// <summary>
         /// Label31 control.
         /// </summary>
@@ -956,7 +1012,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label31;
-        
+
         /// <summary>
         /// txtNomineeFather control.
         /// </summary>
@@ -965,7 +1021,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNomineeFather;
-        
+
         /// <summary>
         /// Label32 control.
         /// </summary>
@@ -974,7 +1030,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label32;
-        
+
         /// <summary>
         /// txtNomineeMother control.
         /// </summary>
@@ -983,7 +1039,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNomineeMother;
-        
+
         /// <summary>
         /// Label33 control.
         /// </summary>
@@ -992,7 +1048,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label33;
-        
+
         /// <summary>
         /// txtNomineeDOB control.
         /// </summary>
@@ -1001,7 +1057,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNomineeDOB;
-        
+
         /// <summary>
         /// Label34 control.
         /// </summary>
@@ -1010,7 +1066,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label34;
-        
+
         /// <summary>
         /// ddlNomineeRelation control.
         /// </summary>
@@ -1019,7 +1075,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlNomineeRelation;
-        
+
         /// <summary>
         /// lblArbitrator control.
         /// </summary>
@@ -1028,7 +1084,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblArbitrator;
-        
+
         /// <summary>
         /// txtArbitrator control.
         /// </summary>
@@ -1037,7 +1093,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtArbitrator;
-        
+
         /// <summary>
         /// lblArbitratorMode control.
         /// </summary>
@@ -1046,7 +1102,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblArbitratorMode;
-        
+
         /// <summary>
         /// ddlArbitratorMode control.
         /// </summary>
@@ -1055,7 +1111,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlArbitratorMode;
-        
+
         /// <summary>
         /// lblArbRelationship control.
         /// </summary>
@@ -1064,7 +1120,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblArbRelationship;
-        
+
         /// <summary>
         /// ddlArbRelationship control.
         /// </summary>
@@ -1073,7 +1129,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlArbRelationship;
-        
+
         /// <summary>
         /// btnReference control.
         /// </summary>
@@ -1082,7 +1138,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnReference;
-        
+
         /// <summary>
         /// hfReferenceId control.
         /// </summary>
@@ -1091,7 +1147,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label hfReferenceId;
-        
+
         /// <summary>
         /// gvReference control.
         /// </summary>
@@ -1100,7 +1156,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvReference;
-        
+
         /// <summary>
         /// lblMemberCode control.
         /// </summary>
@@ -1109,7 +1165,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMemberCode;
-        
+
         /// <summary>
         /// txtMemberCode control.
         /// </summary>
@@ -1118,7 +1174,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMemberCode;
-        
+
         /// <summary>
         /// lblSMemberName control.
         /// </summary>
@@ -1127,7 +1183,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSMemberName;
-        
+
         /// <summary>
         /// txtSMemberName control.
         /// </summary>
@@ -1136,7 +1192,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSMemberName;
-        
+
         /// <summary>
         /// btnSave control.
         /// </summary>
@@ -1145,7 +1201,7 @@ namespace HotelManagement.Presentation.Website.Membership {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
-        
+
         /// <summary>
         /// btnCancel control.
         /// </summary>

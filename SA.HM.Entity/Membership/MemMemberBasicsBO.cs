@@ -49,21 +49,17 @@ namespace HotelManagement.Entity.Membership
         public DateTime? CreatedDate { get; set; }
         public int? LastModifiedBy { get; set; }
         public DateTime? LastModifiedDate { get; set; }
-
         public string MaritalSt { get; set; }
         public string MemberGenderSt { get; set; }
         public string NationalitySt { get; set; }
         public string BloodGroupName { get; set; }
-
         public decimal PointWiseAmount { get; set; }
         public decimal AchievePoint { get; set; }
         public decimal DiscountPercent { get; set; }
         public string MemberIdNDiscount { get; set; }
         public string NameWithMembershipNumber { get; set; }
-
         public int DepartmentId { get; set; }
         public int AttendanceDeviceMemberId { get; set; }
-
         public string OfficeAddress { get; set; }
         public double? Height { get; set; }
         public double? Weight { get; set; }
@@ -76,8 +72,8 @@ namespace HotelManagement.Entity.Membership
         public string NomineeRelation { get; set; }
         public int? NomineeRelationId { get; set; }
         public string NationalID { get; set; }
-
         public decimal Balance { get; set; }
+        public string MemberPassword { get; set; }
 
     }
 }

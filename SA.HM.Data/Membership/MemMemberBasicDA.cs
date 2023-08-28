@@ -69,6 +69,8 @@ namespace HotelManagement.Data.Membership
                             dbSmartAspects.AddInParameter(commandMember, "@NomineeFather", DbType.String, memBasicInfo.NomineeFather);
                             dbSmartAspects.AddInParameter(commandMember, "@NomineeMother", DbType.String, memBasicInfo.NomineeMother);
 
+                            dbSmartAspects.AddInParameter(commandMember, "@MemberPassword", DbType.String, memBasicInfo.MemberPassword);
+
                             dbSmartAspects.AddOutParameter(commandMember, "@MemberId", DbType.Int32, sizeof(Int32));
                             membersave = dbSmartAspects.ExecuteNonQuery(commandMember, transaction);
 
@@ -215,6 +217,8 @@ namespace HotelManagement.Data.Membership
                         dbSmartAspects.AddInParameter(commandMember, "@NomineeName", DbType.String, memBasicInfo.NomineeName);
                         dbSmartAspects.AddInParameter(commandMember, "@NomineeFather", DbType.String, memBasicInfo.NomineeFather);
                         dbSmartAspects.AddInParameter(commandMember, "@NomineeMother", DbType.String, memBasicInfo.NomineeMother);
+
+                        dbSmartAspects.AddInParameter(commandMember, "@MemberPassword", DbType.String, memBasicInfo.MemberPassword);
 
                         dbSmartAspects.AddInParameter(commandMember, "@IsNewChartOfAccountsHeadCreateForMember", DbType.Int32, isNewChartOfAccountsHeadCreateForMember);
 
