@@ -1800,6 +1800,9 @@ function OnProjectsPopulated(response) {
                 }
                 else {
                     control.empty().append('<option selected="selected" value="0">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
+                    if ($("#ContentPlaceHolder1_hfIsGroupCompanyMultipleBillPaymentReceiveEnable").val() == 1) {
+                        control.append('<option value="' + ((-1) * companyId).toString() + '">--- Generated All Due Bill ---</option>');
+                    }
                 }                
             }
 
