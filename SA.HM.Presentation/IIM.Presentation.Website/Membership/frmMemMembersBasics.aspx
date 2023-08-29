@@ -511,13 +511,13 @@
                         </div>
                         <div id="MemberPasswordDiv" class="form-group" runat="server">
                             <div class="col-md-2">
-                                <asp:Label ID="Label2" runat="server" class="control-label" Text="Password"></asp:Label>
+                                <asp:Label ID="Label2" runat="server" class="control-label required-field" Text="Password"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtMemberPassword" TextMode="Password" CssClass="form-control" runat="server"></asp:TextBox>
                             </div>
                             <div class="col-md-2">
-                                <asp:Label ID="Label3" runat="server" class="control-label" Text="Confirm Password"></asp:Label>
+                                <asp:Label ID="Label3" runat="server" class="control-label required-field" Text="Confirm Password"></asp:Label>
                             </div>
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtConfirmMemberPassword" TextMode="Password" CssClass="form-control" onblur="javascript: return confirmPass();" runat="server"></asp:TextBox>

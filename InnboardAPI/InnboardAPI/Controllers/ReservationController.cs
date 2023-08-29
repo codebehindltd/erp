@@ -33,6 +33,15 @@ namespace InnboardAPI.Controllers
             var result = await db.GetRoomTypeInfo();
             return Ok(result);
         }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetRoomTypeInfoForMobileApps")]
+        public async Task<IHttpActionResult> GetRoomTypeInfoForMobileApps(string transactionType, int transactionId)
+        {
+            HotelRoomTypeDataAccess db = new HotelRoomTypeDataAccess();
+            var result = await db.GetRoomTypeInfoForMobileApps(transactionType, transactionId);
+            return Ok(result);
+        }
         [EnableCors("*", "*", "*")]
         [Route("GetAvailableRoomInfo"), HttpGet]
         public string GetAvailableRoomInfo(string roomTypeId, string dateFrom, string dateTo)

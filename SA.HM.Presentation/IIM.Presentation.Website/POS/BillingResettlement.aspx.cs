@@ -562,6 +562,16 @@ namespace HotelManagement.Presentation.Website.POS
                     reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "0"));
                 }
 
+                isCompanyNameShowOnRestaurantInvoice = commonSetupDA.GetCommonConfigurationInfo("IsBillingInvoiceDueSectionEnable", "IsBillingInvoiceDueSectionEnable");
+                if (Convert.ToInt32(isCompanyNameShowOnRestaurantInvoice.SetupValue) == 1)
+                {
+                    reportParam.Add(new ReportParameter("IsBillingInvoiceDueSectionEnable", "1"));
+                }
+                else
+                {
+                    reportParam.Add(new ReportParameter("IsBillingInvoiceDueSectionEnable", "0"));
+                }
+
                 //reportParam.Add(new ReportParameter("IsRestaurantOrderSubmitDisable", "Yes"));
                 //reportParam.Add(new ReportParameter("IsRestaurantTokenInfoDisable", "Yes"));
                 //reportParam.Add(new ReportParameter("IsGuestNameAndRoomNoTextShowInInvoice", "0"));
