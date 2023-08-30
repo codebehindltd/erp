@@ -168,7 +168,7 @@
                     </form>
                     <div>
                         <p>
-                            <span style="color: #808B96; font-weight: bold;">Version:</span>&nbsp;13.8.2<span style="color: #1B4F72; font-weight: bold;"></span>
+                            <span style="color: #808B96; font-weight: bold;">Version:</span>&nbsp;13.8.3<span style="color: #1B4F72; font-weight: bold;"></span>
                         </p>
                     </div>
                     <div id="MessageBox" style="display: none;">

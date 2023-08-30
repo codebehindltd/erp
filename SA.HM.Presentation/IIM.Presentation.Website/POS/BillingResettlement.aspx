@@ -1294,16 +1294,64 @@
                 }
             });
 
+            //$("#txtSearchCompany").autocomplete({
+            //    source: function (request, response) {
+            //        $.ajax({
+            //            type: "POST",
+            //            contentType: "application/json; charset=utf-8",
+            //            url: 'frmOrderManagement.aspx/GetGuestCompanyInfo',
+            //            data: "{'companyName':'" + request.term.replace("'", "\\'") + "'}",
+            //            dataType: "json",
+            //            success: function (data) {
+
+            //                var searchData = data.error ? [] : $.map(data.d, function (m) {
+            //                    return {
+            //                        Balance: m.Balance,
+            //                        BillingStreet: m.BillingStreet,
+            //                        ContactNumber: m.ContactNumber,
+            //                        DiscountPercent: m.DiscountPercent,
+            //                        Balance: m.Balance,
+            //                        label: m.CompanyName,
+            //                        value: m.CompanyId
+            //                    };
+            //                });
+            //                response(searchData);
+            //            },
+            //            error: function (xhr, err) {
+            //                toastr.error(xhr.responseText);
+            //            }
+            //        });
+            //    },
+            //    focus: function (event, ui) {
+            //        // prevent autocomplete from updating the textbox
+            //        event.preventDefault();
+            //        // manually update the textbox
+            //        //$(this).val(ui.item.label);
+            //    },
+            //    select: function (event, ui) {
+            //        // prevent autocomplete from updating the textbox
+            //        event.preventDefault();
+            //        // manually update the textbox and hidden field
+            //        $(this).val(ui.item.label);
+
+            //        $("#ContentPlaceHolder1_hfCompanyId").val(ui.item.value);
+            //        $("#txtCompanyAddress").val(ui.item.BillingStreet);
+            //        $("#txtCompanyEmailAddress").val(ui.item.EmailAddress);
+            //        $("#txtCompanyWebAddress").val(ui.item.WebAddress);
+            //        $("#txtBalance").val(ui.item.Balance);
+            //    }
+            //});
+
             $("#txtSearchCompany").autocomplete({
                 source: function (request, response) {
+                    var costcenterId = $("#ContentPlaceHolder1_hfCostcenterId").val();
                     $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
-                        url: 'frmOrderManagement.aspx/GetGuestCompanyInfo',
-                        data: "{'companyName':'" + request.term.replace("'", "\\'") + "'}",
+                        url: 'Billing.aspx/GetGLCompanyWiseGuestCompanyInfo',
+                        data: "{'companyName':'" + request.term.replace("'", "\\'") + "', 'costcenterId':'" + costcenterId + "'}",
                         dataType: "json",
                         success: function (data) {
-
                             var searchData = data.error ? [] : $.map(data.d, function (m) {
                                 return {
                                     Balance: m.Balance,

@@ -1722,6 +1722,16 @@ namespace HotelManagement.Presentation.Website.POS
         }
 
         [WebMethod]
+        public static List<GuestCompanyBO> GetGLCompanyWiseGuestCompanyInfo(string companyName, int costcenterId)
+        {
+            HMUtility hmUtility = new HMUtility();
+            GuestCompanyDA bpDA = new GuestCompanyDA();
+            UserInformationBO userInformationBO = new UserInformationBO();
+            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+            return bpDA.GetGLCompanyWiseGuestCompanyInfo(userInformationBO.UserInfoId, companyName, costcenterId);
+        }
+
+        [WebMethod]
         public static List<BankBO> GetBankInfoForAutoComplete(string bankName)
         {
             BankDA bpDA = new BankDA();
