@@ -17,6 +17,7 @@ namespace InnboardDomain.Models
         public decimal? RoomRateUSD { get; set; }
         public decimal? ExtrabedRate { get; set; }
         public decimal? ExtrabedRateUSD { get; set; }
+        public int MaximumNightAvailPerReservation { get; set; }
         public int AvailableRoomNight { get; set; }
         public decimal? RoomDiscountPercent { get; set; }
         public bool? ActiveStat { get; set; }

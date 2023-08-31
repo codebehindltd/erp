@@ -107,7 +107,7 @@
         </div>
         <div class="panel-body">
             <div class="form-horizontal">  
-                <div class="form-group">
+                <div class="form-group" style="display:none;">
                     <div class="col-md-2">
                         <asp:Label ID="Label1" runat="server" class="control-label required-field" Text="Report Type"></asp:Label>
                     </div>

@@ -1717,9 +1717,10 @@ function OnProjectsPopulated(response) {
                 tr = "";
             }
 
-            $("#ContentPlaceHolder1_txtTotalAmount").val(totalPaymentAmount);
-            $("#ContentPlaceHolder1_txtLedgerAmount").val(totalPaymentAmount);
-            $("#ContentPlaceHolder1_txtCalculatedLedgerAmount").val(totalPaymentAmount);
+            //$("#ContentPlaceHolder1_txtTotalAmount").val(totalPaymentAmount);
+            $("#ContentPlaceHolder1_txtTotalAmount").val(toFixed(totalPaymentAmount, 2));
+            $("#ContentPlaceHolder1_txtLedgerAmount").val(toFixed(totalPaymentAmount, 2));
+            $("#ContentPlaceHolder1_txtCalculatedLedgerAmount").val(toFixed(totalPaymentAmount, 2));
 
             CurrencyConvertion();
 
@@ -2026,13 +2027,8 @@ function OnProjectsPopulated(response) {
                 grandTotal += parseFloat($(this).find("td:eq(8)").text());
             });
 
-            //if (grandTotal == 0) {
-            //    $("#tableFoot").hide();
-            //}
-            //else {
-            //    $("#tableFoot").show();
-            //}
-            $("#ContentPlaceHolder1_txtTotalReceiveAmount").val(grandTotal);
+            //$("#ContentPlaceHolder1_txtTotalReceiveAmount").val(grandTotal);
+            $("#ContentPlaceHolder1_txtTotalReceiveAmount").val(toFixed(grandTotal, 2));            
         }
 
         function AddItem() {
