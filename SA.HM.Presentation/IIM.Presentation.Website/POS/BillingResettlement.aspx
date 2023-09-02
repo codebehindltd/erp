@@ -2838,43 +2838,21 @@
             $("#txtRoundedGrandTotal").val(roundedGrandTotal);
         }
 
-        //function DeleteItemOrder(control) {
-
-        //    var index = 0;
-        //    var tr = $(control).parent().parent();
-        //    var itemId = parseInt($.trim($(tr).find("td:eq(8)").text()), 10);
-
-        //    //var itemName = $.trim($(tr).find("td:eq(1)").text());
-        //    //index = _.findIndex(AddedItemList, { ItemId: itemId, ItemName: itemName });
-
-        //    index = _.findIndex(AddedItemList, { ItemId: itemId });
-        //    console.log(index);
-        //    if (AddedItemList[index].KotDetailId != "0") {
-        //        DeletedItemList.push(JSON.parse(JSON.stringify(AddedItemList[index])));
-        //    }
-
-        //    $(tr).remove();
-        //    AddedItemList.splice(index, 1);
-        //    SalesNDiscountCalculation();
-        //    PaymentCalculation(0);
-
-        //    if (AddedItemList.length == 0) {
-        //        ClearAfterAllItemDelete();
-        //    }
-        //}
-
         function DeleteItemOrder(control) {
             var index = 0;
             var tr = $(control).parent().parent();
             var itemId = 0, kotDetailId = 0;
-
+            debugger;
             if ($("#ContentPlaceHolder1_hfIsItemAttributeEnable").val() == "1") {
                 itemId = parseInt($.trim($(tr).find("td:eq(11)").text()), 10);
                 kotDetailId = parseInt($.trim($(tr).find("td:eq(14)").text()), 10);
             }
             else {
-                itemId = parseInt($.trim($(tr).find("td:eq(9)").text()), 10);
-                kotDetailId = parseInt($.trim($(tr).find("td:eq(12)").text()), 10);
+                itemId = parseInt($.trim($(tr).find("td:eq(8)").text()), 10);
+                kotDetailId = parseInt($.trim($(tr).find("td:eq(11)").text()), 10);
+
+                //itemId = parseInt($.trim($(tr).find("td:eq(9)").text()), 10);
+                //kotDetailId = parseInt($.trim($(tr).find("td:eq(12)").text()), 10);
             }
             console.log(itemId, kotDetailId);
 
