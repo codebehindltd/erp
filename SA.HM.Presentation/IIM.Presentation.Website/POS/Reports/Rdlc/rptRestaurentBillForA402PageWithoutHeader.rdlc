@@ -2506,7 +2506,7 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=(ROUND(Sum((Fields!ItemUnit.Value * Fields!UnitRate.Value) + Fields!InvoiceVatAmount.Value))) - (Fields!DiscountAmount.Value)</Value>
+																						<Value>=(ROUND(Sum((Fields!ItemUnit.Value * Fields!UnitRate.Value) + Fields!InvoiceVatAmount.Value) - (Fields!DiscountAmount.Value)))</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<FontWeight>Bold</FontWeight>

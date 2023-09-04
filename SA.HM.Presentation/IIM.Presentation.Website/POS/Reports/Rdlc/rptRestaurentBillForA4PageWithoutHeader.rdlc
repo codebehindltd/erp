@@ -2416,7 +2416,7 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=(Fields!ItemUnit.Value * Fields!UnitRate.Value) + Fields!InvoiceVatAmount.Value</Value>
+																						<Value>=ROUND((Fields!ItemUnit.Value * Fields!UnitRate.Value) + Fields!InvoiceVatAmount.Value, 0)</Value>
 																						<Style>
 																							<FontSize>8pt</FontSize>
 																							<Format>#,0.00;(#,0.00)</Format>

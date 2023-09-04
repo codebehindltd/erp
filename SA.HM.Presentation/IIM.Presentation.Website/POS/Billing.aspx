@@ -1052,9 +1052,9 @@
             $("#txtDiscountAmount").val(result.RestaurantKotBill.DiscountAmount);
             $("#txtAfterDiscountAmount").val(result.RestaurantKotBill.GrandTotal - result.RestaurantKotBill.VatAmount);
             $("#txtVat").val(result.RestaurantKotBill.VatAmount);
-            $("#txtGrandTotal").val(result.RestaurantKotBill.GrandTotal);
+            $("#txtGrandTotal").val(Math.round(result.RestaurantKotBill.GrandTotal));
             $("#txtRoundedAmount").val(result.RestaurantKotBill.RoundedAmount);
-            $("#txtRoundedGrandTotal").val(result.RestaurantKotBill.RoundedGrandTotal);
+            $("#txtRoundedGrandTotal").val(Math.round(result.RestaurantKotBill.RoundedGrandTotal));
             $("#ContentPlaceHolder1_ddlProject").val(result.RestaurantKotBill.ProjectId).change();
             $("#ContentPlaceHolder1_ddlInclusiveOrExclusive").val(result.RestaurantKotBill.BillType).change();
             $("#ContentPlaceHolder1_txtRemarks").val(result.RestaurantKotBill.Remarks);
@@ -2133,13 +2133,13 @@
             $("#txtAfterDiscountAmount").val(toFixed(afterDiscountAmount, 2));
             $("#txtVat").val(toFixed(vat, 2));
             console.log(grandTotal);
-            $("#txtGrandTotal").val(toFixed(grandTotal, 2));
+            $("#txtGrandTotal").val(Math.round(toFixed(grandTotal, 2)));
 
             exchangeTotal = parseFloat($("#txtReturnItemTotal").val() == "" ? 0 : ($("#txtReturnItemTotal").val()));
             exchangeTotal += parseFloat($("#txtPointAmount").val() == "" ? 0 : ($("#txtPointAmount").val()));
             grandTotal = grandTotal - exchangeTotal;
 
-            $("#txtRoundedGrandTotal").val(toFixed(grandTotal, 2));
+            $("#txtRoundedGrandTotal").val(Math.round(toFixed(grandTotal, 2)));
 
             var isRestaurantBillAmountWillRound = $("#ContentPlaceHolder1_hfIsRestaurantBillAmountWillRound").val();
             var fractionalAmount = 0.00, roundedGrandTotal = toFixed(grandTotal, 2);
@@ -2157,7 +2157,7 @@
                     $("#txtRoundedAmount").val((fractionalAmount * -1.00));
                 }
 
-                $("#txtRoundedGrandTotal").val(roundedGrandTotal);
+                $("#txtRoundedGrandTotal").val(Math.round(roundedGrandTotal));
             }
 
             if ($("#ContentPlaceHolder1_hfBillId").val() != "") {
@@ -2270,7 +2270,7 @@
                     PaymentCalculation(0);
                     return false;
                 }
-                if (parseFloat(paymentTotal) > parseFloat(grandTotal)) {
+                if (Math.round(parseFloat(paymentTotal)) > Math.round(parseFloat(grandTotal))) {
                     $("#txtCompanyPayment").val("");
                     toastr.warning("Company Payment Amount Cannot Be Greater Than Due Amount.");
                     companyAmount = "0";
@@ -2288,7 +2288,7 @@
                 $("#DueRChnageAmount").text("Due Amount");
             }
 
-            $("#txtDueRChnage").val(toFixed(dueOrChangeAmount, 2));
+            $("#txtDueRChnage").val(Math.round(toFixed(dueOrChangeAmount, 2)));
         }
 
         function PaymentCheck() {
@@ -2327,10 +2327,10 @@
                 }
             }
             else if (cashPayment == 0 && cardPayment > 0) {
-                dueOrChangeAmount = grandTotal - paymentTotal;
+                dueOrChangeAmount = Math.round(grandTotal) - Math.round(paymentTotal);
             }
 
-            if (dueOrChangeAmount < 0) {
+            if (Math.round(dueOrChangeAmount) < 0) {
                 $(this).val("");
                 isPaymentExceded = true;
             }
