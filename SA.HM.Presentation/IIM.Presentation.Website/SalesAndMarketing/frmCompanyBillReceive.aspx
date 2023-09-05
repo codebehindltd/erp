@@ -2161,7 +2161,7 @@ function OnProjectsPopulated(response) {
 
                 tr += "<td style='width:5%;'>";
                 tr += "<a href='javascript:void()' onclick= 'EditAdhoqItem(this)' ><img alt='Delete' src='../Images/edit.png' /></a>";
-                tr += "<a href='javascript:void()' onclick= 'DeleteAdhoqItem(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
+                tr += "&nbsp;<a href='javascript:void()' onclick= 'DeleteAdhoqItem(this)' ><img alt='Delete' src='../Images/delete.png' /></a>";
                 tr += "</td>";
                 tr += "<td style='display:none;'>" + paymentHeadId + "</td>";
                 tr += "<td style='display:none;'>" + currencyTypeId + "</td>";

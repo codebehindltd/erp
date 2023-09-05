@@ -425,7 +425,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 string selectedVal = (tvLocations.SelectedNode != null) ? tvLocations.SelectedNode.Value : string.Empty;
                 TreeNode selectedNode = null;
                 tvLocations.Nodes.Clear();
-                dtObjects = moLocation.GetNodeMatrixInfoByCustomString("WHERE  lvl = 0 AND ISNULL(NodeMode, 0) <> 0");
+                dtObjects = moLocation.GetNodeMatrixInfoByCustomString("WHERE  lvl = 0 AND ISNULL(NodeMode, 0) <> 0 ORDER BY NodeId ASC");
 
                 foreach (NodeMatrixBO item in dtObjects)
                 {
@@ -465,7 +465,7 @@ namespace HotelManagement.Presentation.Website.GeneralLedger
                 TreeNode oNode;
                 int iLevel;
                 iLevel = oParent.Depth + 1;
-                dtObjects = moLocation.GetNodeMatrixInfoByCustomString(String.Format("WHERE  lvl = {0} AND AncestorId = {1}", iLevel, oParent.Value));
+                dtObjects = moLocation.GetNodeMatrixInfoByCustomString(String.Format("WHERE  lvl = {0} AND AncestorId = {1} ORDER BY NodeId ASC", iLevel, oParent.Value));
 
                 foreach (NodeMatrixBO item in dtObjects)
                 {
