@@ -127,14 +127,31 @@
             }
 
             var transactionType = '<%=ddlTransactionType.ClientID%>'
+            if ($('#' + transactionType).val() == "Receive") {
+                $('#AdjustmentHeadDiv').hide();
+                $("#<%=lblAdvanceAmount.ClientID %>").text("Receive Amount");
+                $("#<%=Label13.ClientID %>").text("Max Receive Amount");
+                $("#<%=lblPaymentDate2.ClientID %>").text("Receive Date");
+            }
+            else {
+                $('#AdjustmentHeadDiv').show();
+                $("#<%=lblAdvanceAmount.ClientID %>").text("Payment Amount");
+                $("#<%=Label13.ClientID %>").text("Max Payment Amount");
+                $("#<%=lblPaymentDate2.ClientID %>").text("Payment Date");
+            }
+
             $('#' + transactionType).change(function () {
                 if ($('#' + transactionType).val() == "Receive") {
                     $('#AdjustmentHeadDiv').hide();
-                    $("#<%=lblAdvanceAmount.ClientID %>").text("Advance Amount");
+                    $("#<%=lblAdvanceAmount.ClientID %>").text("Receive Amount");
+                    $("#<%=Label13.ClientID %>").text("Max Receive Amount");
+                    $("#<%=lblPaymentDate2.ClientID %>").text("Receive Date");
                 }
                 else {
                     $('#AdjustmentHeadDiv').show();
                     $("#<%=lblAdvanceAmount.ClientID %>").text("Payment Amount");
+                    $("#<%=Label13.ClientID %>").text("Max Payment Amount");
+                    $("#<%=lblPaymentDate2.ClientID %>").text("Payment Date");
                 }
             });
 
@@ -650,13 +667,13 @@
                 $('#ChequeNChequeNumber').hide();
                 $('#AdjustmentDiv').hide();
             }
-}
+        }
 
-function PaymentModeNewShowHideInformation() {
-    var ddlPayMode = '<%=ddlPaymentMode.ClientID%>'
-            var lblPaymentAccountHead = '<%=lblPaymentAccountHead.ClientID%>'
-            if ($('#' + ddlPayMode).val() == "0") {
-                $("#<%=txtChequeNumber.ClientID %>").val("");
+        function PaymentModeNewShowHideInformation() {
+            var ddlPayMode = '<%=ddlPaymentMode.ClientID%>'
+    var lblPaymentAccountHead = '<%=lblPaymentAccountHead.ClientID%>'
+    if ($('#' + ddlPayMode).val() == "0") {
+        $("#<%=txtChequeNumber.ClientID %>").val("");
                 $("#<%=txtChequeDate.ClientID %>").val("");
                 $('#CashPaymentAccountHeadDiv').hide();
                 $('#CashReceiveAccountsInfo').hide();
@@ -790,11 +807,11 @@ function PaymentModeNewShowHideInformation() {
                 $('#ChequeNChequeNumber').hide();
                 $('#AdjustmentDiv').hide();
             }
-}
-function PopulateProjects() {
-    $("#<%=ddlGLProject.ClientID%>").attr("disabled", "disabled");
-            if ($('#<%=ddlGLCompany.ClientID%>').val() == "0") {
-                $('#<%=ddlGLProject.ClientID %>').empty().append('<option selected="selected" value="0">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
+        }
+        function PopulateProjects() {
+            $("#<%=ddlGLProject.ClientID%>").attr("disabled", "disabled");
+    if ($('#<%=ddlGLCompany.ClientID%>').val() == "0") {
+        $('#<%=ddlGLProject.ClientID %>').empty().append('<option selected="selected" value="0">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
             }
             else {
                 $('#<%=ddlGLProject.ClientID %>').empty().append('<option selected="selected" value="0">Loading...</option>');
@@ -802,21 +819,21 @@ function PopulateProjects() {
                     type: "POST",
                     url: "/GeneralLedger/frmGLProject.aspx/PopulateProjects",
                     data: '{companyId: ' + $('#<%=ddlGLCompany.ClientID%>').val() + '}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: OnProjectsPopulated,
-            failure: function (response) {
-                alert(response.d);
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnProjectsPopulated,
+                    failure: function (response) {
+                        alert(response.d);
+                    }
+                });
             }
-            });
-    }
-}
+        }
 
-function OnProjectsPopulated(response) {
-    var ddlGLProject = '<%=ddlGLProject.ClientID%>'
-            $("#" + ddlGLProject).attr("disabled", false);
+        function OnProjectsPopulated(response) {
+            var ddlGLProject = '<%=ddlGLProject.ClientID%>'
+    $("#" + ddlGLProject).attr("disabled", false);
 
-            PopulateControl(response.d, $("#<%=ddlGLProject.ClientID %>"), $("#<%=CommonDropDownHiddenField.ClientID %>").val());
+    PopulateControl(response.d, $("#<%=ddlGLProject.ClientID %>"), $("#<%=CommonDropDownHiddenField.ClientID %>").val());
         }
         //For FillForm-------------------------   
         function FIllForEdit(actionId) {
@@ -1785,12 +1802,12 @@ function OnProjectsPopulated(response) {
             var list = result;
             var control = $('#ContentPlaceHolder1_ddlCompanyBill');
             var companyId = $("#ContentPlaceHolder1_hfCmpSearch").val();
-            
+
             control.empty();
             if (list != null) {
                 if (list.length > 0) {
                     control.empty().append('<option value="0">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
-                    
+
                     for (i = 0; i < list.length; i++) {
                         control.append('<option title="' + list[i].CompanyBillNumber + '" value="' + list[i].CompanyBillId + '">' + list[i].CompanyBillNumber + '</option>');
                     }
@@ -1804,7 +1821,7 @@ function OnProjectsPopulated(response) {
                     if ($("#ContentPlaceHolder1_hfIsGroupCompanyMultipleBillPaymentReceiveEnable").val() == 1) {
                         control.append('<option value="' + ((-1) * companyId).toString() + '">--- Generated All Due Bill ---</option>');
                     }
-                }                
+                }
             }
 
             if ($("#ContentPlaceHolder1_hfCompanyBillId").val() != 0) {
@@ -2028,7 +2045,7 @@ function OnProjectsPopulated(response) {
             });
 
             //$("#ContentPlaceHolder1_txtTotalReceiveAmount").val(grandTotal);
-            $("#ContentPlaceHolder1_txtTotalReceiveAmount").val(toFixed(grandTotal, 2));            
+            $("#ContentPlaceHolder1_txtTotalReceiveAmount").val(toFixed(grandTotal, 2));
         }
 
         function AddItem() {
@@ -2276,50 +2293,50 @@ function OnProjectsPopulated(response) {
 
             }
 
-        $("#btnAdd").val("Update");
+            $("#btnAdd").val("Update");
 
-        CalculatePaymentReceivedTotal();
-    }
+            CalculatePaymentReceivedTotal();
+        }
 
-    function DeleteAdhoqItem(control) {
-        if (!confirm("Do you want to delete?")) { return false; }
-        var tr = $(control).parent().parent();
+        function DeleteAdhoqItem(control) {
+            if (!confirm("Do you want to delete?")) { return false; }
+            var tr = $(control).parent().parent();
 
-        var costCenter = parseInt($.trim($(tr).find("td:eq(10)").text()), 10);
-        var detailsId = parseInt($.trim($(tr).find("td:eq(12)").text()), 10);
+            var costCenter = parseInt($.trim($(tr).find("td:eq(10)").text()), 10);
+            var detailsId = parseInt($.trim($(tr).find("td:eq(12)").text()), 10);
 
-        var paymentMode = ($.trim($(tr).find("td:eq(0)").text()));
-        debugger;
-        var CostCenter = _.findWhere(ReceiveInformation, { PaymentHeadId: costCenter, PaymentMode: paymentMode });
-        var index = _.indexOf(ReceiveInformation, CostCenter);
+            var paymentMode = ($.trim($(tr).find("td:eq(0)").text()));
+            debugger;
+            var CostCenter = _.findWhere(ReceiveInformation, { PaymentHeadId: costCenter, PaymentMode: paymentMode });
+            var index = _.indexOf(ReceiveInformation, CostCenter);
 
-        if (parseInt(detailsId, 10) > 0)
-            ReceiveInformationDeleted.push(JSON.parse(JSON.stringify(CostCenter)));
+            if (parseInt(detailsId, 10) > 0)
+                ReceiveInformationDeleted.push(JSON.parse(JSON.stringify(CostCenter)));
 
-        ReceiveInformation.splice(index, 1);
-        $(tr).remove();
-        CalculatePaymentReceivedTotal();
-    }
+            ReceiveInformation.splice(index, 1);
+            $(tr).remove();
+            CalculatePaymentReceivedTotal();
+        }
 
-    function ClearBillContainer() {
-        //$("#ContentPlaceHolder1_txtAdvanceAmount").val("");
-        //$("#ContentPlaceHolder1_txtTotalAmount").val("");
-        $("#ContentPlaceHolder1_ddlPaymentMode").val("0").change();
-        $("#txtBankPayment").val("");
-        $("#ContentPlaceHolder1_ddlBankPayment").val("");
-        $("#txtCashPayment").val("");
-        $("#ContentPlaceHolder1_ddlCashPayment").val("");
-        $("#ContentPlaceHolder1_txtLedgerAmount").val("");
-        $("#ContentPlaceHolder1_txtChequeNumber").val("");
-        $("#ContentPlaceHolder1_txtChequeDate").val(DayOpenDate);
-        $("#ContentPlaceHolder1_txtPaymentDate2").val(DayOpenDate);
-        $("#btnAdd").val("Add");
+        function ClearBillContainer() {
+            //$("#ContentPlaceHolder1_txtAdvanceAmount").val("");
+            //$("#ContentPlaceHolder1_txtTotalAmount").val("");
+            $("#ContentPlaceHolder1_ddlPaymentMode").val("0").change();
+            $("#txtBankPayment").val("");
+            $("#ContentPlaceHolder1_ddlBankPayment").val("");
+            $("#txtCashPayment").val("");
+            $("#ContentPlaceHolder1_ddlCashPayment").val("");
+            $("#ContentPlaceHolder1_txtLedgerAmount").val("");
+            $("#ContentPlaceHolder1_txtChequeNumber").val("");
+            $("#ContentPlaceHolder1_txtChequeDate").val(DayOpenDate);
+            $("#ContentPlaceHolder1_txtPaymentDate2").val(DayOpenDate);
+            $("#btnAdd").val("Add");
 
-        $("#ContentPlaceHolder1_ddlCurrency").val("1").change();
-        $("#ContentPlaceHolder1_ddlAdjustmentNodeHead").val("0").change();
+            $("#ContentPlaceHolder1_ddlCurrency").val("1").change();
+            $("#ContentPlaceHolder1_ddlAdjustmentNodeHead").val("0").change();
 
-        ItemEdited = ""; indexEdited = -1;
-    }
+            ItemEdited = ""; indexEdited = -1;
+        }
 
     </script>
 

@@ -189,14 +189,26 @@
             });
 
             var transactionType = '<%=ddlTransactionType.ClientID%>'
+            if ($('#' + transactionType).val() == "Receive") {
+                $('#AdjustmentHeadDiv').hide();
+                $("#<%=lblAdvanceAmount.ClientID %>").text("Receive Amount");
+                $("#<%=lblReceiveAmount.ClientID %>").text("Receive Amount");
+            }
+            else {
+                $('#AdjustmentHeadDiv').show();
+                $("#<%=lblAdvanceAmount.ClientID %>").text("Payment Amount");
+                $("#<%=lblReceiveAmount.ClientID %>").text("Payment Amount");
+            }
             $('#' + transactionType).change(function () {
                 if ($('#' + transactionType).val() == "Receive") {
                     $('#AdjustmentHeadDiv').hide();
                     $("#<%=lblAdvanceAmount.ClientID %>").text("Receive Amount");
+                    $("#<%=lblReceiveAmount.ClientID %>").text("Receive Amount");
                 }
                 else {
                     $('#AdjustmentHeadDiv').show();
-                    $("#<%=lblAdvanceAmount.ClientID %>").text("Advance Amount");
+                    $("#<%=lblAdvanceAmount.ClientID %>").text("Payment Amount");
+                    $("#<%=lblReceiveAmount.ClientID %>").text("Payment Amount");
                 }
             });
 
@@ -663,8 +675,7 @@
                 if (result[row].BillNumber != "") {
                     tr += "<td style='width: 40%'>" + result[row].BillNumber + "</td>";
                 }
-                else
-                {
+                else {
                     tr += "<td style='width: 40%'>" + result[row].Remarks + "</td>";
                 }
 
@@ -1875,7 +1886,7 @@
                         </div>
                     </div>
                 </div>
-    <div id="SearchResult" class="panel panel-default">
+                <div id="SearchResult" class="panel panel-default">
                     <div class="panel-heading">
                         Search Information
                     </div>
