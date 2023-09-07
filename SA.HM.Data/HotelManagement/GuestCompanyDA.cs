@@ -3296,6 +3296,9 @@ namespace HotelManagement.Data.HotelManagement
                                     paymentInfo.ChequeDate = Convert.ToDateTime(reader["ChequeDate"]);
                                 }
 
+                                paymentInfo.GLCompanyId = Convert.ToInt32(reader["GLCompanyId"]);
+                                paymentInfo.GLProjectId = Convert.ToInt32(reader["GLProjectId"]);
+
                                 paymentInfo.CurrencyId = Convert.ToInt32(reader["CurrencyId"]);
                                 paymentInfo.ConvertionRate = Convert.ToDecimal(reader["ConvertionRate"]);
                                 paymentInfo.PaymentType = reader["PaymentType"].ToString();
@@ -4055,6 +4058,31 @@ namespace HotelManagement.Data.HotelManagement
                 }
             }
             return roomTypeList;
+        }
+
+        public Boolean UpdateGLCompanyAndProjectOnCompanyPaymentReceive(long paymentId, int glCompanyId, int glProjectId, int lastModifiedBy)
+        {
+            Boolean status = false;
+            try
+            {
+                using (DbConnection conn = dbSmartAspects.CreateConnection())
+                {
+                    using (DbCommand command = dbSmartAspects.GetStoredProcCommand("UpdateGLCompanyAndProjectOnCompanyPaymentReceive_SP"))
+                    {
+                        dbSmartAspects.AddInParameter(command, "@PaymentId", DbType.Int32, paymentId);
+                        dbSmartAspects.AddInParameter(command, "@GLCompanyId", DbType.Int32, glCompanyId);
+                        dbSmartAspects.AddInParameter(command, "@GLProjectId", DbType.Int32, glProjectId);
+                        dbSmartAspects.AddInParameter(command, "@LastModifiedBy", DbType.Int32, lastModifiedBy);
+
+                        status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return status;
         }
     }
 }

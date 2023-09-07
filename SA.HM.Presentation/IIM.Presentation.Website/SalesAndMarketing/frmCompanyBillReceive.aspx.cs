@@ -43,6 +43,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             if (!IsPostBack)
             {
+                //companyProjectUserControl.ddlFirstValueVar = "select";
                 innboardMessage = (HiddenField)Master.FindControl("InnboardMessageHiddenField");
                 Random rd = new Random();
                 int seatingId = rd.Next(100000, 999999);
@@ -64,6 +65,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 LoadLocalCurrencyId();
                 LoadIsConversionRateEditable();
                 IsPaymentBillInfoHideInCompanyBillReceive();
+                IsCompanyAndProjectEnableOnCompanyBillReceive();
                 IsGroupCompanyMultipleBillPaymentReceiveEnable();
                 IsLocalCurrencyDefaultSelected();
                 LoadCommonDropDownHiddenField();
@@ -612,6 +614,26 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     else
                     {
                         txtConversionRate.ReadOnly = false;
+                    }
+                }
+            }
+        }
+        private void IsCompanyAndProjectEnableOnCompanyBillReceive()
+        {
+            hfIsCompanyAndProjectEnableOnCompanyBillReceive.Value = "0";
+            IsCompanyAndProjectEnableOnCompanyBillReceiveDive.Visible = false;
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsCompanyAndProjectEnableOnCompanyBillReceive", "IsCompanyAndProjectEnableOnCompanyBillReceive");
+
+            if (commonSetupBO != null)
+            {
+                if (commonSetupBO.SetupId > 0)
+                {
+                    if (commonSetupBO.SetupValue == "1")
+                    {
+                        hfIsCompanyAndProjectEnableOnCompanyBillReceive.Value = "1";
+                        IsCompanyAndProjectEnableOnCompanyBillReceiveDive.Visible = true;
                     }
                 }
             }
@@ -1306,7 +1328,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         }
 
         [WebMethod]
-        public static ReturnInfo SaveCompanyBillPayment(CompanyPaymentBO companyPayment, List<CompanyPaymentDetailsBO> companyPaymentDetails, List<CompanyPaymentDetailsBO> ReceiveInformationDetails, List<CompanyPaymentDetailsBO> ReceiveInformationDeletedDetails,
+        public static ReturnInfo SaveCompanyBillPayment(int glCompanyId, int glProjectId, CompanyPaymentBO companyPayment, List<CompanyPaymentDetailsBO> companyPaymentDetails, List<CompanyPaymentDetailsBO> ReceiveInformationDetails, List<CompanyPaymentDetailsBO> ReceiveInformationDeletedDetails,
                                                        List<CompanyPaymentDetailsBO> companyPaymentDetailsEdited, List<CompanyPaymentDetailsBO> companyPaymentDetailsDeleted,
                                                         int randomDocId, string deletedDoc)
         {
@@ -1325,6 +1347,10 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             bool status = false;
             int OwnerIdForDocuments = 0;
 
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsCompanyAndProjectEnableOnCompanyBillReceive", "IsCompanyAndProjectEnableOnCompanyBillReceive");
+
             companyPayment.ApprovedStatus = HMConstants.ApprovalStatus.Pending.ToString();
 
             try
@@ -1333,7 +1359,21 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 {
                     rtninfo.IsSuccess = companyDa.SaveCompanyBillPaymentTransaction(companyPayment, companyPaymentDetails, ReceiveInformationDetails, ReceiveInformationDeletedDetails, out id);
                     if (rtninfo.IsSuccess)
+                    {
                         OwnerIdForDocuments = Convert.ToInt32(id);
+                    }
+                    
+                    if (commonSetupBO != null)
+                    {
+                        if (commonSetupBO.SetupId > 0)
+                        {
+                            if (commonSetupBO.SetupValue == "1")
+                            {
+                                Boolean IsGLSuccess = companyDa.UpdateGLCompanyAndProjectOnCompanyPaymentReceive(id, glCompanyId, glProjectId, userInformationBO.UserInfoId);
+                            }
+                        }
+                    }
+                    
 
                     DocumentsDA documentsDA = new DocumentsDA();
                     string s = deletedDoc;
@@ -1350,7 +1390,20 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 {
                     rtninfo.IsSuccess = companyDa.UpdateCompanyBillPaymentTransaction(companyPayment, companyPaymentDetails, companyPaymentDetailsEdited, companyPaymentDetailsDeleted, ReceiveInformationDetails, ReceiveInformationDeletedDetails);
                     if (rtninfo.IsSuccess)
+                    { 
                         OwnerIdForDocuments = Convert.ToInt32(companyPayment.PaymentId);
+                    }
+
+                    if (commonSetupBO != null)
+                    {
+                        if (commonSetupBO.SetupId > 0)
+                        {
+                            if (commonSetupBO.SetupValue == "1")
+                            {
+                                Boolean IsGLSuccess = companyDa.UpdateGLCompanyAndProjectOnCompanyPaymentReceive(Convert.ToInt32(companyPayment.PaymentId), glCompanyId, glProjectId, userInformationBO.UserInfoId);
+                            }
+                        }
+                    }
 
                     DocumentsDA documentsDA = new DocumentsDA();
                     string s = deletedDoc;
@@ -1361,7 +1414,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         Boolean DeleteStatus = documentsDA.DeleteDocumentsByDocumentId(Convert.ToInt32(DeletedDocList[i]));
                     }
                     Boolean updateStatus = hmCommonDA.UpdateUploadedDocumentsInformationByOwnerId(OwnerIdForDocuments, Convert.ToInt32(randomDocId));
-
                 }
             }
             catch (Exception ex)

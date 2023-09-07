@@ -1,6 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Innboard.Master" AutoEventWireup="true" EnableEventValidation="true"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Common/Innboard.Master" AutoEventWireup="true" EnableEventValidation="false"
     CodeBehind="frmCompanyBillReceive.aspx.cs" Inherits="HotelManagement.Presentation.Website.HotelManagement.frmCompanyBillReceive" %>
 
+<%@ Register TagPrefix="UserControl" TagName="CompanyProjectUserControl" Src="~/HMCommon/UserControl/CompanyProjectUserControl.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
         var CompanyGeneratedBill = new Array();
@@ -671,129 +672,129 @@
 
         function PaymentModeNewShowHideInformation() {
             var ddlPayMode = '<%=ddlPaymentMode.ClientID%>'
-    var lblPaymentAccountHead = '<%=lblPaymentAccountHead.ClientID%>'
-    if ($('#' + ddlPayMode).val() == "0") {
+            var lblPaymentAccountHead = '<%=lblPaymentAccountHead.ClientID%>'
+            if ($('#' + ddlPayMode).val() == "0") {
+                $("#<%=txtChequeNumber.ClientID %>").val("");
+        $("#<%=txtChequeDate.ClientID %>").val("");
+        $('#CashPaymentAccountHeadDiv').hide();
+        $('#CashReceiveAccountsInfo').hide();
+        $('#CardReceiveAccountsInfo').hide();
+        $('#ChequeReceiveAccountsInfo').hide();
+        $('#CardPaymentAccountHeadDiv').hide();
+        $('#ChecquePaymentAccountHeadDiv').hide();
+        $('#PaidByOtherRoomDiv').hide();
+        $('#CompanyPaymentAccountHeadDiv').hide();
+        $('#BankPaymentAccountHeadDiv').hide();
+        $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
+        $('#ChequeNChequeNumber').hide();
+        $('#CurrencyAndPaymentAmountDiv').hide();
+        $('#AdjustmentDiv').hide();
+    }
+    else if ($('#' + ddlPayMode).val() == "Cash") {
         $("#<%=txtChequeNumber.ClientID %>").val("");
-                $("#<%=txtChequeDate.ClientID %>").val("");
-                $('#CashPaymentAccountHeadDiv').hide();
-                $('#CashReceiveAccountsInfo').hide();
-                $('#CardReceiveAccountsInfo').hide();
-                $('#ChequeReceiveAccountsInfo').hide();
-                $('#CardPaymentAccountHeadDiv').hide();
-                $('#ChecquePaymentAccountHeadDiv').hide();
-                $('#PaidByOtherRoomDiv').hide();
-                $('#CompanyPaymentAccountHeadDiv').hide();
-                $('#BankPaymentAccountHeadDiv').hide();
-                $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
-                $('#ChequeNChequeNumber').hide();
-                $('#CurrencyAndPaymentAmountDiv').hide();
-                $('#AdjustmentDiv').hide();
-            }
-            else if ($('#' + ddlPayMode).val() == "Cash") {
-                $("#<%=txtChequeNumber.ClientID %>").val("");
-                $("#<%=txtChequeDate.ClientID %>").val("");
-                $('#CashPaymentAccountHeadDiv').show();
-                $('#CashReceiveAccountsInfo').hide();
-                $('#CardReceiveAccountsInfo').hide();
-                $('#ChequeReceiveAccountsInfo').hide();
-                $('#CardPaymentAccountHeadDiv').hide();
-                $('#ChecquePaymentAccountHeadDiv').hide();
-                $('#PaidByOtherRoomDiv').hide();
-                $('#CompanyPaymentAccountHeadDiv').hide();
-                $('#BankPaymentAccountHeadDiv').hide();
-                $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
-                $('#ChequeNChequeNumber').hide();
-                $('#CurrencyAndPaymentAmountDiv').show();
-                $('#AdjustmentDiv').hide();
-            }
-            else if ($('#' + ddlPayMode).val() == "Card") {
-                $("#<%=txtChequeNumber.ClientID %>").val("");
-                $("#<%=txtChequeDate.ClientID %>").val("");
-                $('#CashReceiveAccountsInfo').hide();
-                $('#CardReceiveAccountsInfo').show();
-                $('#ChequeReceiveAccountsInfo').hide();
-                $('#CardPaymentAccountHeadDiv').hide();
-                $('#ChecquePaymentAccountHeadDiv').hide();
-                $('#PaidByOtherRoomDiv').hide();
-                $('#CompanyPaymentAccountHeadDiv').hide();
-                $('#BankPaymentAccountHeadDiv').hide();
-                $('#CashPaymentAccountHeadDiv').hide();
-                $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
-                $('#ChequeNChequeNumber').hide();
-                $('#CurrencyAndPaymentAmountDiv').show();
-                $('#AdjustmentDiv').hide();
-            }
-            else if ($('#' + ddlPayMode).val() == "Cheque") {
-                $("#<%=txtChequeNumber.ClientID %>").val("");
-                $("#<%=txtChequeDate.ClientID %>").val("");
-                $('#CashReceiveAccountsInfo').hide();
-                $('#CardReceiveAccountsInfo').hide();
-                $('#ChequeReceiveAccountsInfo').show();
-                $('#CardPaymentAccountHeadDiv').hide();
-                $('#ChecquePaymentAccountHeadDiv').show();
-                $('#PaidByOtherRoomDiv').hide();
-                $('#CompanyPaymentAccountHeadDiv').hide();
-                $('#BankPaymentAccountHeadDiv').hide();
-                $('#CashPaymentAccountHeadDiv').hide();
-                $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
-                $('#CurrencyAndPaymentAmountDiv').show();
-                $('#AdjustmentDiv').hide();
-            }
-            else if ($('#' + ddlPayMode).val() == "Bank") {
-                $("#<%=txtChequeNumber.ClientID %>").val("");
-                $("#<%=txtChequeDate.ClientID %>").val("");
-                $('#BankPaymentAccountHeadDiv').show();
-                $('#ChequeNChequeNumber').show();
-                $('#CashReceiveAccountsInfo').hide();
-                $('#CardReceiveAccountsInfo').hide();
-                $('#ChequeReceiveAccountsInfo').show();
-                $('#CardPaymentAccountHeadDiv').hide();
-                $('#ChecquePaymentAccountHeadDiv').hide();
-                $('#PaidByOtherRoomDiv').hide();
-                $('#CompanyPaymentAccountHeadDiv').hide();
-                $('#CashPaymentAccountHeadDiv').hide();
-                $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
-                $('#CurrencyAndPaymentAmountDiv').show();
-                $('#AdjustmentDiv').hide();
-            }
-            else if ($('#' + ddlPayMode).val() == "Company") {
-                $("#<%=txtChequeNumber.ClientID %>").val("");
-                $("#<%=txtChequeDate.ClientID %>").val("");
-                $('#CashReceiveAccountsInfo').show();
-                $('#CardReceiveAccountsInfo').hide();
-                $('#ChequeReceiveAccountsInfo').hide();
-                $('#CardPaymentAccountHeadDiv').hide();
-                $('#ChecquePaymentAccountHeadDiv').hide();
-                $('#PaidByOtherRoomDiv').hide();
-                $('#CompanyPaymentAccountHeadDiv').hide();
-                $('#BankPaymentAccountHeadDiv').hide();
-                $('#CashPaymentAccountHeadDiv').hide();
-                $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
-                $('#ChequeNChequeNumber').hide();
-                $('#AdjustmentDiv').hide();
-            }
-            else if ($('#' + ddlPayMode).val() == "Adjustment") {
-                $("#<%=txtAdjustmentAmount.ClientID %>").val("");
-                $("#<%=ddlAdjustmentNodeHead.ClientID %>").val("0");
-                $("#<%=txtChequeNumber.ClientID %>").val("");
-                $("#<%=txtChequeDate.ClientID %>").val("");
-                $('#AdjustmentDiv').show();
-                $('#CashPaymentAccountHeadDiv').hide();
-                $('#CashReceiveAccountsInfo').hide();
-                $('#CardReceiveAccountsInfo').hide();
-                $('#ChequeReceiveAccountsInfo').hide();
-                $('#CardPaymentAccountHeadDiv').hide();
-                $('#ChecquePaymentAccountHeadDiv').hide();
-                $('#PaidByOtherRoomDiv').hide();
-                $('#CompanyPaymentAccountHeadDiv').hide();
-                $('#BankPaymentAccountHeadDiv').hide();
-                $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
-                $('#ChequeNChequeNumber').hide();
-                $('#CurrencyAndPaymentAmountDiv').show();
-            }
-            else if ($('#' + ddlPayMode).val() == "Loan") {
-                $("#<%=txtChequeNumber.ClientID %>").val("");
-                $("#<%=txtChequeDate.ClientID %>").val("");
+        $("#<%=txtChequeDate.ClientID %>").val("");
+        $('#CashPaymentAccountHeadDiv').show();
+        $('#CashReceiveAccountsInfo').hide();
+        $('#CardReceiveAccountsInfo').hide();
+        $('#ChequeReceiveAccountsInfo').hide();
+        $('#CardPaymentAccountHeadDiv').hide();
+        $('#ChecquePaymentAccountHeadDiv').hide();
+        $('#PaidByOtherRoomDiv').hide();
+        $('#CompanyPaymentAccountHeadDiv').hide();
+        $('#BankPaymentAccountHeadDiv').hide();
+        $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
+        $('#ChequeNChequeNumber').hide();
+        $('#CurrencyAndPaymentAmountDiv').show();
+        $('#AdjustmentDiv').hide();
+    }
+    else if ($('#' + ddlPayMode).val() == "Card") {
+        $("#<%=txtChequeNumber.ClientID %>").val("");
+        $("#<%=txtChequeDate.ClientID %>").val("");
+        $('#CashReceiveAccountsInfo').hide();
+        $('#CardReceiveAccountsInfo').show();
+        $('#ChequeReceiveAccountsInfo').hide();
+        $('#CardPaymentAccountHeadDiv').hide();
+        $('#ChecquePaymentAccountHeadDiv').hide();
+        $('#PaidByOtherRoomDiv').hide();
+        $('#CompanyPaymentAccountHeadDiv').hide();
+        $('#BankPaymentAccountHeadDiv').hide();
+        $('#CashPaymentAccountHeadDiv').hide();
+        $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
+        $('#ChequeNChequeNumber').hide();
+        $('#CurrencyAndPaymentAmountDiv').show();
+        $('#AdjustmentDiv').hide();
+    }
+    else if ($('#' + ddlPayMode).val() == "Cheque") {
+        $("#<%=txtChequeNumber.ClientID %>").val("");
+        $("#<%=txtChequeDate.ClientID %>").val("");
+        $('#CashReceiveAccountsInfo').hide();
+        $('#CardReceiveAccountsInfo').hide();
+        $('#ChequeReceiveAccountsInfo').show();
+        $('#CardPaymentAccountHeadDiv').hide();
+        $('#ChecquePaymentAccountHeadDiv').show();
+        $('#PaidByOtherRoomDiv').hide();
+        $('#CompanyPaymentAccountHeadDiv').hide();
+        $('#BankPaymentAccountHeadDiv').hide();
+        $('#CashPaymentAccountHeadDiv').hide();
+        $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
+        $('#CurrencyAndPaymentAmountDiv').show();
+        $('#AdjustmentDiv').hide();
+    }
+    else if ($('#' + ddlPayMode).val() == "Bank") {
+        $("#<%=txtChequeNumber.ClientID %>").val("");
+        $("#<%=txtChequeDate.ClientID %>").val("");
+        $('#BankPaymentAccountHeadDiv').show();
+        $('#ChequeNChequeNumber').show();
+        $('#CashReceiveAccountsInfo').hide();
+        $('#CardReceiveAccountsInfo').hide();
+        $('#ChequeReceiveAccountsInfo').show();
+        $('#CardPaymentAccountHeadDiv').hide();
+        $('#ChecquePaymentAccountHeadDiv').hide();
+        $('#PaidByOtherRoomDiv').hide();
+        $('#CompanyPaymentAccountHeadDiv').hide();
+        $('#CashPaymentAccountHeadDiv').hide();
+        $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
+        $('#CurrencyAndPaymentAmountDiv').show();
+        $('#AdjustmentDiv').hide();
+    }
+    else if ($('#' + ddlPayMode).val() == "Company") {
+        $("#<%=txtChequeNumber.ClientID %>").val("");
+        $("#<%=txtChequeDate.ClientID %>").val("");
+        $('#CashReceiveAccountsInfo').show();
+        $('#CardReceiveAccountsInfo').hide();
+        $('#ChequeReceiveAccountsInfo').hide();
+        $('#CardPaymentAccountHeadDiv').hide();
+        $('#ChecquePaymentAccountHeadDiv').hide();
+        $('#PaidByOtherRoomDiv').hide();
+        $('#CompanyPaymentAccountHeadDiv').hide();
+        $('#BankPaymentAccountHeadDiv').hide();
+        $('#CashPaymentAccountHeadDiv').hide();
+        $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
+        $('#ChequeNChequeNumber').hide();
+        $('#AdjustmentDiv').hide();
+    }
+    else if ($('#' + ddlPayMode).val() == "Adjustment") {
+        $("#<%=txtAdjustmentAmount.ClientID %>").val("");
+        $("#<%=ddlAdjustmentNodeHead.ClientID %>").val("0");
+        $("#<%=txtChequeNumber.ClientID %>").val("");
+        $("#<%=txtChequeDate.ClientID %>").val("");
+        $('#AdjustmentDiv').show();
+        $('#CashPaymentAccountHeadDiv').hide();
+        $('#CashReceiveAccountsInfo').hide();
+        $('#CardReceiveAccountsInfo').hide();
+        $('#ChequeReceiveAccountsInfo').hide();
+        $('#CardPaymentAccountHeadDiv').hide();
+        $('#ChecquePaymentAccountHeadDiv').hide();
+        $('#PaidByOtherRoomDiv').hide();
+        $('#CompanyPaymentAccountHeadDiv').hide();
+        $('#BankPaymentAccountHeadDiv').hide();
+        $('#CashAndCashEquivalantPaymentAccountHeadDiv').hide();
+        $('#ChequeNChequeNumber').hide();
+        $('#CurrencyAndPaymentAmountDiv').show();
+    }
+    else if ($('#' + ddlPayMode).val() == "Loan") {
+        $("#<%=txtChequeNumber.ClientID %>").val("");
+        $("#<%=txtChequeDate.ClientID %>").val("");
                 $('#CashPaymentAccountHeadDiv').hide();
                 $('#CashReceiveAccountsInfo').hide();
                 $('#CardReceiveAccountsInfo').hide();
@@ -810,15 +811,15 @@
         }
         function PopulateProjects() {
             $("#<%=ddlGLProject.ClientID%>").attr("disabled", "disabled");
-    if ($('#<%=ddlGLCompany.ClientID%>').val() == "0") {
-        $('#<%=ddlGLProject.ClientID %>').empty().append('<option selected="selected" value="0">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
-            }
-            else {
-                $('#<%=ddlGLProject.ClientID %>').empty().append('<option selected="selected" value="0">Loading...</option>');
-                $.ajax({
-                    type: "POST",
-                    url: "/GeneralLedger/frmGLProject.aspx/PopulateProjects",
-                    data: '{companyId: ' + $('#<%=ddlGLCompany.ClientID%>').val() + '}',
+            if ($('#<%=ddlGLCompany.ClientID%>').val() == "0") {
+                $('#<%=ddlGLProject.ClientID %>').empty().append('<option selected="selected" value="0">' + $("#<%=CommonDropDownHiddenField.ClientID %>").val() + '</option>');
+    }
+    else {
+        $('#<%=ddlGLProject.ClientID %>').empty().append('<option selected="selected" value="0">Loading...</option>');
+        $.ajax({
+            type: "POST",
+            url: "/GeneralLedger/frmGLProject.aspx/PopulateProjects",
+            data: '{companyId: ' + $('#<%=ddlGLCompany.ClientID%>').val() + '}',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: OnProjectsPopulated,
@@ -831,9 +832,9 @@
 
         function OnProjectsPopulated(response) {
             var ddlGLProject = '<%=ddlGLProject.ClientID%>'
-    $("#" + ddlGLProject).attr("disabled", false);
+            $("#" + ddlGLProject).attr("disabled", false);
 
-    PopulateControl(response.d, $("#<%=ddlGLProject.ClientID %>"), $("#<%=CommonDropDownHiddenField.ClientID %>").val());
+            PopulateControl(response.d, $("#<%=ddlGLProject.ClientID %>"), $("#<%=CommonDropDownHiddenField.ClientID %>").val());
         }
         //For FillForm-------------------------   
         function FIllForEdit(actionId) {
@@ -899,6 +900,11 @@
 
             $("#<%=txtRemarks.ClientID %>").val(result.CompanyPayment.Remarks);
 
+            if ($("#ContentPlaceHolder1_hfIsCompanyAndProjectEnableOnCompanyBillReceive").val() == "1") {
+                $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val(result.CompanyPayment.GLCompanyId).trigger('change');
+                $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").val(result.CompanyPayment.GLProjectId);
+            }
+
             $("#ContentPlaceHolder1_txtAdjustmentAmount").val(result.CompanyPayment.PaymentAdjustmentAmount);
             $("#ContentPlaceHolder1_ddlAdjustmentNodeHead").val(result.CompanyPayment.AdjustmentAccountHeadId + '').trigger('change');
 
@@ -930,9 +936,7 @@
             }
 
             $("#<%=ddlPayMode.ClientID %>").val(result.CompanyPayment.PaymentType)
-
             $("#ReceiveInformationTbl tbody").html("");
-            //ClearBillContainer();
 
             var tr = "";
             for (var i = 0; i < result.CompanyPaymentTransactionDetails.length; i++) {
@@ -1196,8 +1200,34 @@
                 return false;
             }
 
+            var glCompanyId = 0;
+            var glProjectId = 0;
+
+            if ($("#ContentPlaceHolder1_hfIsCompanyAndProjectEnableOnCompanyBillReceive").val() == "1") {
+
+                glCompanyId = $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").val();
+                glProjectId = $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").val();
+
+                if (glCompanyId == "0") {
+                    glProjectId = 0;
+                }
+
+                //if (glCompanyId == "0") {
+                //    $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").focus();
+                //    toastr.warning("Please Select Company.");
+                //    return false;
+                //}
+                //if (glProjectId == "0") {
+                //    $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").focus();
+                //    toastr.warning("Please Select Project.");
+                //    return false;
+                //}
+
+            }
+
+
             CommonHelper.SpinnerOpen();
-            PageMethods.SaveCompanyBillPayment(CompanyPayment, CompanyPaymentDetails, ReceiveInformation, ReceiveInformationDeleted, CompanyPaymentDetailsEdited, CompanyPaymentDetailsDeleted, parseInt(randomDocId), deletedDoc, OnSupplierPaymentSucceeded, OnSupplierPaymentFailed);
+            PageMethods.SaveCompanyBillPayment(glCompanyId, glProjectId, CompanyPayment, CompanyPaymentDetails, ReceiveInformation, ReceiveInformationDeleted, CompanyPaymentDetailsEdited, CompanyPaymentDetailsDeleted, parseInt(randomDocId), deletedDoc, OnSupplierPaymentSucceeded, OnSupplierPaymentFailed);
 
             return false;
         }
@@ -2367,6 +2397,7 @@
     <asp:HiddenField ID="hfIsSavePermission" runat="server" />
     <asp:HiddenField ID="hfIsUpdatePermission" runat="server" />
     <asp:HiddenField ID="hfIsDeletePermission" runat="server" />
+    <asp:HiddenField ID="hfIsCompanyAndProjectEnableOnCompanyBillReceive" runat="server" />
     <asp:HiddenField ID="hfIsGroupCompanyMultipleBillPaymentReceiveEnable" runat="server" />
     <div id="MessageBox" class="alert alert-info" style="display: none;">
         <button type="button" class="close" data-dismiss="alert">
@@ -2966,6 +2997,11 @@
                         <div id="DocumentInfo">
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="form-group" id="IsCompanyAndProjectEnableOnCompanyBillReceiveDive" runat="server">
+                <div class="col-md-12">
+                    <UserControl:CompanyProjectUserControl ID="companyProjectUserControl" runat="server" />
                 </div>
             </div>
             <div class="form-group">

@@ -150,6 +150,15 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         protected global::System.Web.UI.WebControls.HiddenField hfIsDeletePermission;
 
         /// <summary>
+        /// hfIsCompanyAndProjectEnableOnCompanyBillReceive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIsCompanyAndProjectEnableOnCompanyBillReceive;
+
+        /// <summary>
         /// hfIsGroupCompanyMultipleBillPaymentReceiveEnable control.
         /// </summary>
         /// <remarks>
@@ -1165,6 +1174,24 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTotalReceiveAmount;
+
+        /// <summary>
+        /// IsCompanyAndProjectEnableOnCompanyBillReceiveDive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IsCompanyAndProjectEnableOnCompanyBillReceiveDive;
+
+        /// <summary>
+        /// companyProjectUserControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::HotelManagement.Presentation.Website.HMCommon.UserControl.CompanyProjectUserControl companyProjectUserControl;
 
         /// <summary>
         /// lblRemarks control.

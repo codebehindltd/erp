@@ -17,6 +17,8 @@ namespace HotelManagement.Entity.HotelManagement
         public decimal AdvanceAmount { get; set; }
         public decimal AdjustmentAmount { get; set; }
         public int CompanyId { get; set; }
+        public int GLCompanyId { get; set; }
+        public int GLProjectId { get; set; }
         public string CurrencyName { get; set; }
         public string Remarks { get; set; }
         public string PaymentType { get; set; }
