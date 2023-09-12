@@ -1,9 +1,11 @@
 ﻿using HotelManagement.Data;
+using HotelManagement.Data.GeneralLedger;
 using HotelManagement.Data.HMCommon;
 using HotelManagement.Data.HotelManagement;
 using HotelManagement.Data.Payroll;
 using HotelManagement.Data.SalesAndMarketing;
 using HotelManagement.Entity;
+using HotelManagement.Entity.GeneralLedger;
 using HotelManagement.Entity.HMCommon;
 using HotelManagement.Entity.HotelManagement;
 using HotelManagement.Entity.Payroll;
@@ -2934,6 +2936,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 var smsGetway = dataArray[0];
                 HMUtility hmUtility = new HMUtility();
 
+                string documentsTextMessage = "Please provide all of your NID/ Driving License/ Passport Copy at the time of check-in.";
+                HMCommonSetupBO commonSetupDocumentsTextMessageBO = new HMCommonSetupBO();
+                commonSetupDocumentsTextMessageBO = commonSetupDA.GetCommonConfigurationInfo("RoomReservationSMSDocumentsMessage", "RoomReservationSMSDocumentsMessage");
+                if (commonSetupDocumentsTextMessageBO.SetupId > 0)
+                {
+                    documentsTextMessage = commonSetupDocumentsTextMessageBO.Description;
+                }
+
                 // Config Block
                 if (!string.IsNullOrEmpty(mainString))
                 {
@@ -2952,7 +2962,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         {"ReservationNumber",  reservationNumber},
                         {"ArrivalDate", reservationBO.DateIn.ToString()},
                         {"DepartureDate", reservationBO.DateOut.ToString()},
-                        {"RoomNumber", reservationBO.RoomNumber }
+                        {"RoomNumber", reservationBO.RoomNumber },
+                        {"SMSDocumentsMessage", documentsTextMessage }
                         };
                     status = SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, reservationBO.MobileNumber);
                 }
@@ -2980,6 +2991,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 var smsGetway = dataArray[0];
                 HMUtility hmUtility = new HMUtility();
 
+                string documentsTextMessage = "Please provide all of your NID/ Driving License/ Passport Copy at the time of check-in.";
+                HMCommonSetupBO commonSetupDocumentsTextMessageBO = new HMCommonSetupBO();
+                commonSetupDocumentsTextMessageBO = commonSetupDA.GetCommonConfigurationInfo("RoomReservationSMSDocumentsMessage", "RoomReservationSMSDocumentsMessage");
+                if (commonSetupDocumentsTextMessageBO.SetupId > 0)
+                {
+                    documentsTextMessage = commonSetupDocumentsTextMessageBO.Description;
+                }
+
                 // Config Block
                 if (!string.IsNullOrEmpty(mainString))
                 {
@@ -2998,7 +3017,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         {"ReservationNumber",  reservationNumber},
                         {"ArrivalDate", reservationBO.DateIn.ToString()},
                         {"DepartureDate", reservationBO.DateOut.ToString()},
-                        {"RoomNumber", reservationBO.RoomNumber }
+                        {"RoomNumber", reservationBO.RoomNumber },
+                        {"SMSDocumentsMessage", documentsTextMessage }
                         };
                     status = SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, reservationBO.MobileNumber);
                 }
@@ -3026,6 +3046,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 var smsGetway = dataArray[0];
                 HMUtility hmUtility = new HMUtility();
 
+                string documentsTextMessage = "Please provide all of your NID/ Driving License/ Passport Copy at the time of check-in.";
+                HMCommonSetupBO commonSetupDocumentsTextMessageBO = new HMCommonSetupBO();
+                commonSetupDocumentsTextMessageBO = commonSetupDA.GetCommonConfigurationInfo("RoomReservationSMSDocumentsMessage", "RoomReservationSMSDocumentsMessage");
+                if (commonSetupDocumentsTextMessageBO.SetupId > 0)
+                {
+                    documentsTextMessage = commonSetupDocumentsTextMessageBO.Description;
+                }
+
                 // Config Block
                 if (!string.IsNullOrEmpty(mainString))
                 {
@@ -3044,7 +3072,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         {"ReservationNumber",  reservationNumber},
                         {"ArrivalDate", reservationBO.DateIn.ToString()},
                         {"DepartureDate", reservationBO.DateOut.ToString()},
-                        {"RoomNumber", reservationBO.RoomNumber }
+                        {"RoomNumber", reservationBO.RoomNumber },
+                        {"SMSDocumentsMessage", documentsTextMessage }
                         };
                     status = SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, reservationBO.ContactNumber);
                 }
@@ -3972,6 +4001,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             ReturnInfo rtnInfo = new ReturnInfo();
 
             HMUtility hmUtility = new HMUtility();
+            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
             RoomReservationDA roomReservationDA = new RoomReservationDA();
             UserInformationBO userInformationBO = new UserInformationBO();
             RoomReservationBO previousData = new RoomReservationBO();
@@ -4048,8 +4079,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         rtnInfo.Pk = currentReservationNumber;
                         rtnInfo.PKey = pkArr;
                         rtnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
+                        
                         //SendMail(ReservationId);
-                        SendSMSbySSLGateway(RoomReservation, currentReservationNumber);
+                        commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SMSAutoPosting", "IsRoomReservationSMSAutoPostingEnable");
+                        string IsSMSEnable = commonSetupBO.SetupValue;
+                        if (IsSMSEnable == "1")
+                        {
+                            SendSMSbySSLGateway(RoomReservation, currentReservationNumber);
+                        }
                     }
                     else
                     {
@@ -4172,9 +4209,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     {
                         // // // HotelRoomReservationRoomDetail Table Related Process
                         roomReservationDA.UpdateHotelRoomReservationRoomDetail(RoomReservation.ReservationId);
-
-                        HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-                        HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                        
                         commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("EmailAutoPosting", "IsRoomReservationEmailAutoPostingEnable");
                         string IsEmailEnable = commonSetupBO.SetupValue;
                         if (IsEmailEnable == "1")
@@ -4183,8 +4218,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         }
                         RoomReservationDA reservationDA = new RoomReservationDA();
                         var result = reservationDA.GetRoomReservationInfoById(RoomReservation.ReservationId);
-                        commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SMSAutoPosting", "IsRoomReservationSMSAutoPostingEnable");
-                        string IsSMSEnable = commonSetupBO.SetupValue;
                     }
 
                     SalesMarketingLogType<RoomReservationBO> logDA = new SalesMarketingLogType<RoomReservationBO>();

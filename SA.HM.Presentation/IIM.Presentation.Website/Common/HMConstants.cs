@@ -351,6 +351,7 @@ namespace HotelManagement.Presentation.Website.Common
             public const string ReservationConfirmation = "ReservationConfirmationSms.txt";
             public const string ReservationCancellation = "ReservationCancelSms.txt";
             public const string ReservationAmedmentSmsTemplate = "ReservationAmedmentSms.txt";
+            public const string RoomGuestCheckOutSms = "RoomGuestCheckOutSms.txt"; 
         }
     }
 }

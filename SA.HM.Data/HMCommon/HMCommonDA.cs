@@ -1272,24 +1272,20 @@ namespace HotelManagement.Data.HMCommon
         }
         public int GetRoomAvailableQuantity(Int64 reservationId, DateTime startDate, DateTime endDate, string roomTypeId, string roomQuantityEntered)
         {
-            RoomNumberDA entityDA = new RoomNumberDA();
-            List<RoomNumberBO> roomNumberInfoBO = entityDA.GetRoomNumberInfo();
-
-            int totalRoomQuantity = 0;
-            if (roomNumberInfoBO != null)
-            {
-                totalRoomQuantity = roomNumberInfoBO.Count();
-            }
-
-            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-
             //Get all room available room types
             RoomTypeDA roomTypeDA = new RoomTypeDA();
             List<RoomTypeBO> roomTypeList = roomTypeDA.GetRoomTypeInfoWithRoomCount();
 
             int totalRoomCount = 1;
             totalRoomCount = roomTypeList.Sum(item => item.TotalRoom);
+
+            RoomNumberDA entityDA = new RoomNumberDA();
+            List<RoomNumberBO> roomNumberInfoBO = entityDA.GetRoomNumberInfo().Where(x => x.IsPMDummyRoom == false).ToList();
+
+            if (roomNumberInfoBO != null)
+            {
+                totalRoomCount = roomNumberInfoBO.Count();
+            }
 
             //Getting all active registration information
             RoomRegistrationDA rRegistrationDA = new RoomRegistrationDA();

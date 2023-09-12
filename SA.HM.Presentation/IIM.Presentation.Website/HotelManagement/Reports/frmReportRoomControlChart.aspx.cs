@@ -124,30 +124,26 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             reportParam.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
             reportParam.Add(new ReportParameter("PrintDateTime", printDate));
 
-            RoomNumberDA entityDA = new RoomNumberDA();
-            List<RoomNumberBO> roomNumberInfoBO = entityDA.GetRoomNumberInfo().Where(x => x.IsPMDummyRoom == false).ToList();
-
-            int totalRoomQuantity = 0;
-            if (roomNumberInfoBO != null)
-            {
-                totalRoomQuantity = roomNumberInfoBO.Count();
-            }
-
-            reportParam.Add(new ReportParameter("TotalRoomQuantity", totalRoomQuantity.ToString()));
-            reportParam.Add(new ReportParameter("ReportType", "Room Control Chart Report"));
-
-            rvTransaction.LocalReport.SetParameters(reportParam);
-            var reportDataSet = rvTransaction.LocalReport.GetDataSourceNames();
-
-            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-
             //Get all room available room types
             RoomTypeDA roomTypeDA = new RoomTypeDA();
             List<RoomTypeBO> roomTypeList = roomTypeDA.GetRoomTypeInfoWithRoomCount();
 
             int totalRoomCount = 1;
             totalRoomCount = roomTypeList.Sum(item => item.TotalRoom);
+
+            RoomNumberDA entityDA = new RoomNumberDA();
+            List<RoomNumberBO> roomNumberInfoBO = entityDA.GetRoomNumberInfo().Where(x => x.IsPMDummyRoom == false).ToList();
+
+            if (roomNumberInfoBO != null)
+            {
+                totalRoomCount = roomNumberInfoBO.Count();
+            }
+
+            reportParam.Add(new ReportParameter("TotalRoomQuantity", totalRoomCount.ToString()));
+            reportParam.Add(new ReportParameter("ReportType", "Room Control Chart Report"));
+
+            rvTransaction.LocalReport.SetParameters(reportParam);
+            var reportDataSet = rvTransaction.LocalReport.GetDataSourceNames();
 
             //Getting all active registration information
             RoomRegistrationDA rRegistrationDA = new RoomRegistrationDA();

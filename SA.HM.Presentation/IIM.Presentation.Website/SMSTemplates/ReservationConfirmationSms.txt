@@ -1,1 +1,11 @@
-Dear ##Name##, Thank you for booking with us.Resv:  ##ReservationNumber## C/In Time: ##ArrivalDate## C/Out Time: ##DepartureDate##. Please provide all of your NID/Driving License/Passport Copy at the time of check-in. Reservation Team ##COMPANY## Hotline: ##CONTACTNUMBER##
+Dear ##Name##, 
+
+Thank you for booking with us, 
+Resv:  ##ReservationNumber## 
+C/In Time: ##ArrivalDate## 
+C/Out Time: ##DepartureDate## 
+##SMSDocumentsMessage##
+
+Reservation Team 
+##COMPANY## 
+Hotline: ##CONTACTNUMBER##

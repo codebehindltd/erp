@@ -74,7 +74,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 this.lblRegistrationNumber.Visible = false;
                 this.ddlRegistrationId.Visible = false;
                 this.LoadCommonDropDownHiddenField();
-                this.LoadRelatedInformation();                
+                this.LoadRelatedInformation();
 
                 this.LoadAccountHeadInfo();
                 Session["TransactionDetailList"] = null;
@@ -896,14 +896,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                             roomDetailsBOs = roomRegistrationDA.GetLinkedDetailsRoomInfoByRegistrationId(Int64.Parse(this.ddlRegistrationId.SelectedValue));
                             if (roomDetailsBOs.Count <= 2)//if there is only 2 rooms 
                             {
-                                
+
                                 //IsLinkDlt = roomRegistrationDA.DeleteDetailLinkRoooms(roomDetailsBOs);
                                 foreach (var item in roomDetailsBOs)
                                 {
                                     IsLinkDlt = hmCommonDA.DeleteInfoById("HotelLinkedRoomDetails", "RegistrationId", item.RegistrationId);
                                 }
-                                
-                                
+
+
                                 if (roomMasterBOs.Count > 0)
                                 {
                                     foreach (var item in roomMasterBOs)
@@ -912,7 +912,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                                     }
                                     //IsMasterDlt = roomRegistrationDA.DeleteMasterLinkRoooms(roomMasterBOs);
                                 }
-                                
+
                             }
                             else // if more than two rooms and the check out room is not the master room
                             {
@@ -932,8 +932,20 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                                     }
                                 }
-                                
+
                             }
+
+
+                            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SMSAutoPosting", "IsRoomGuestCheckOutSMSAutoPostingEnable");
+                            string IsSMSEnable = commonSetupBO.SetupValue;
+                            if (IsSMSEnable == "1")
+                            {
+                                SendCheckOutSMSbySSLGateway(Int32.Parse(this.ddlRegistrationId.SelectedValue));
+                            }
+
+
                             //Link room Delete end
                             Clear();
                             this.Session["AddedExtraRoomInformation"] = null;
@@ -960,7 +972,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
                             string url = "/HotelManagement/Reports/frmReportGuestBillInfo.aspx?GuestBillInfo=" + this.Session["CurrentRegistrationId"] + "&IsCheckOut=" + true;
 
-                            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                            //HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
                             HMCommonSetupBO setUpBO = commonSetupDA.GetCommonConfigurationInfo("IsSDCIntegrationEnable", "IsSDCIntegrationEnable");
                             if (!string.IsNullOrWhiteSpace(setUpBO.SetupValue))
                             {
@@ -971,11 +983,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                                 }
                             }
 
-
-
-
-
-                                    
                             string s = "window.open('" + url + "', 'popup_window', 'width=825,height=680,left=300,top=50,resizable=yes');";
                             ClientScript.RegisterStartupScript(this.GetType(), "script", s, true);
                         }
@@ -988,6 +995,60 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             }
         }
         //************************ User Defined Function ********************//
+        private static bool SendCheckOutSMSbySSLGateway(Int32 registrationId)
+        {
+            bool status = false;
+            SmsView sms;
+            try
+            {
+                RoomRegistrationDA roomRegistrationDA = new RoomRegistrationDA();
+                RoomRegistrationBO roomRegistrationBO = new RoomRegistrationBO();
+
+                roomRegistrationBO = roomRegistrationDA.GetRoomRegistrationInfoById(registrationId);
+                if (roomRegistrationBO != null)
+                {
+                    if (roomRegistrationBO.RegistrationId > 0)
+                    {
+                        if (!string.IsNullOrWhiteSpace(roomRegistrationBO.ContactNumber))
+                        {
+                            HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                            HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
+                            CommonDA commonDA = new CommonDA();
+                            RoomReservationDA reservationDA = new RoomReservationDA();
+                            string mainString = commonSetupBO.Description;
+                            string[] dataArray = mainString.Split('~');
+                            var smsGetway = dataArray[0];
+                            HMUtility hmUtility = new HMUtility();
+
+                            // Config Block
+                            if (!string.IsNullOrEmpty(mainString))
+                            {
+
+                                sms = new SmsView
+                                {
+                                    TempleteName = HMConstants.SMSTemplates.RoomGuestCheckOutSms
+                                };
+
+                                var singletoken = new Dictionary<string, string>
+                        {
+                        {"COMPANY", hmUtility.GetHMCompanyProfile()},
+                        {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
+                        {"CONTACTNUMBER", hmUtility.GetHMCompanyContactNumber()}
+                        };
+                                status = SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, roomRegistrationBO.ContactNumber);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        
+            return status;
+        }
         private void DeleteLetCheckoutDiscoutInfo()
         {
             int dlcRegistrationId = !string.IsNullOrWhiteSpace(ddlRegistrationId.SelectedValue) ? Convert.ToInt32(ddlRegistrationId.SelectedValue) : 0;
