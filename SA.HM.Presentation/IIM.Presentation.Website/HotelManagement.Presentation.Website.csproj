@@ -2615,6 +2615,7 @@
     <Compile Include="Common\SDCTool\threadStatus.cs" />
     <Compile Include="Common\SDCTool\udpHelp.cs" />
     <Compile Include="Common\Serialization.cs" />
+    <Compile Include="Common\SMSGateway\SmartLabSMS.cs" />
     <Compile Include="Common\SmsHelper.cs" />
     <Compile Include="Common\SSLCommerceSmsSender.cs" />
     <Compile Include="Common\Upload\CommonUpload.ashx.cs">

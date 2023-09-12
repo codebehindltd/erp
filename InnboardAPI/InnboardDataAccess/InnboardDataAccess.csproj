@@ -133,6 +133,8 @@
     <Compile Include="DataAccesses\RestaurantRecipeDetailDataAccess.cs" />
     <Compile Include="InnboardDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SMSGetway\SmartLabSMS.cs" />
+    <Compile Include="SMSGetway\SmsHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

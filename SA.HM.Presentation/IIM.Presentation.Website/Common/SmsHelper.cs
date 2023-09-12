@@ -54,6 +54,26 @@ namespace HotelManagement.Presentation.Website.Common
                     ZSenderSms zsender = new ZSenderSms();
                     status = zsender.SendSingleSms(requestData);
                 }
+
+                if (smsGetway == "SmartLabSMS")
+                {
+                    HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                    HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                    commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
+                    string mainString = commonSetupBO.Description;
+                    string[] dataArray = mainString.Split('~');
+                    APIRequestForSmartLabSMS requestData = new APIRequestForSmartLabSMS
+                    {
+                        api_key = dataArray[1],
+                        sender_id = dataArray[2],
+                        msisdn = mobileNumber,
+                        sms = Body                        
+                    };
+
+                    SmartLabSMS smartLabSMSsender = new SmartLabSMS();
+                    status = smartLabSMSsender.SendSingleSms(requestData);
+                }
+
                 return status;
             }
             catch (Exception ex)

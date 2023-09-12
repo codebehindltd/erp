@@ -1,4 +1,5 @@
 ﻿using InnboardDataAccess.DataAccesses;
+using InnboardDataAccess.SMSGetway;
 using InnboardDomain.Models;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,10 @@ namespace InnboardAPI.Controllers
             bool isSuccess = dbLogin.SaveMemMemberBasicInfoForMobileAppsRegistration(memberBasicInfo, out tmpMemberId);
             if (isSuccess)
             {
+                SmsHelper.SendSmsSingle("SmartLabSMS", "01715857662");
+
+
+
                 var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                 {
                     Content = new StringContent(tmpMemberId.ToString())
