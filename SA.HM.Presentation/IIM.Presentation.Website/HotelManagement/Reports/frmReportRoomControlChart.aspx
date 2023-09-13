@@ -62,7 +62,7 @@
     <div id="SearchPanel">
         <div class="form-horizontal">
             <div class="form-group" style="padding-top:5px;">
-                <div class="col-md-2">
+                <div class="col-md-2" style="padding-left:55px;">
                     <asp:HiddenField ID="ddlRoomStatus" runat="server" />
                     <asp:HiddenField ID="hfMinCheckInDate" runat="server" />
                     <asp:TextBox ID="txtCompanyName" runat="server" Visible="False"></asp:TextBox>

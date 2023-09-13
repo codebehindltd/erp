@@ -47,12 +47,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
         {
             innboardMessage = (HiddenField)Master.FindControl("InnboardMessageHiddenField");
             hfMinCheckInDate.Value = hmUtility.GetStringFromDateTime(DateTime.Now.Date);
+
             _RoomReservationId = -1;
             hfIsSameasContactPersonAsGuest.Value = "0";
             hfIsPaidServiceAlreadyLoded.Value = "0";
             hfIsCopyTo.Value = "false";
             AddEditODeleteDetail();
             CheckMandatoryField();
+            LoadInhouseGuestLedgerDateInfo();
 
             if (!IsPostBack)
             {
@@ -157,6 +159,28 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 this.txtDateIn.Text = hmUtility.GetStringFromDateTime(dateTime.AddDays(dayCount));
                 this.txtDateOut.Text = hmUtility.GetStringFromDateTime(dateTime.AddDays(dayCount).AddDays(1));
             }
+        }
+        private void LoadInhouseGuestLedgerDateInfo()
+        {
+            DateTime dateTime = DateTime.Now;
+            DateTime processDate = DateTime.Now;
+            RoomRegistrationDA guestLedgerInfoDA = new RoomRegistrationDA();
+            InhouseGuestLedgerBO guestLedgerInfoBO = new InhouseGuestLedgerBO();
+            guestLedgerInfoBO = guestLedgerInfoDA.GetInhouseGuestLedgerDateInfo();
+
+            if (guestLedgerInfoBO != null)
+            {
+                processDate = guestLedgerInfoBO.InhouseGuestLedgerDate;
+
+                if (dateTime.Date > processDate.Date)
+                {
+                    dateTime = processDate;
+                    this.txtDateIn.Text = hmUtility.GetStringFromDateTime(dateTime);
+                    this.txtDateOut.Text = hmUtility.GetStringFromDateTime(dateTime.AddDays(1));
+                }
+            }
+
+            hfMinCheckInDate.Value = hmUtility.GetStringFromDateTime(dateTime.Date);
         }
         protected void CheckMandatoryField()
         {
