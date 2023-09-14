@@ -24,6 +24,9 @@ namespace InnboardDomain.Models
         public string LineThree { get; set; }
         public string LineFour { get; set; }
         public string LineFive { get; set; }
+        public string PaymentGateWayStoreType { get; set; }
+        public string PaymentGateWayStoreId { get; set; }
+        public string PaymentGateWayStorePassword { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public int? LastModifiedBy { get; set; }

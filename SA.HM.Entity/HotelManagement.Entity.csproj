@@ -279,6 +279,10 @@
     <Compile Include="SalesAndMarketing\CallToActionViewBO.cs" />
     <Compile Include="SalesAndMarketing\ContactTitleBO.cs" />
     <Compile Include="SDC\SDCInvoiceInformationBO.cs" />
+    <Compile Include="SiteMinder\Envelope.cs" />
+    <Compile Include="SiteMinder\Response\RetrieveReservationResponse.cs" />
+    <Compile Include="SiteMinder\RetrieveRservationReadRequest.cs" />
+    <Compile Include="SiteMinder\SiteMinderHeader.cs" />
     <Compile Include="SupportAndTicket\BillClaimedNTotalBillClaimedBO.cs" />
     <Compile Include="SupportAndTicket\CaseNameAndCountNumberBO.cs" />
     <Compile Include="SupportAndTicket\CityNCompanyNameAndCountNumberBO.cs" />

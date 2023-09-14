@@ -212,5 +212,6 @@ namespace InnboardDomain.Models
         public string TransactionType { get; set; }
         public string TransactionId { get; set; }
         public string TransactionDetails { get; set; }
+        public string MemberAppsProfilePicture { get; set; }
     }
 }

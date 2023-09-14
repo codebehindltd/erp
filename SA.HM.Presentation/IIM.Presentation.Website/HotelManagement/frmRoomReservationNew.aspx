@@ -1531,7 +1531,7 @@
 
                 $('#DivAddedRoom').show();
                 $("#btnAddDetailGuest").val("Update");
-                
+
 
                 //-------MAMUN 20230805 Room Type Change Effect
                 //PerformFillFormActionByTypeId($('#<%=ddlRoomTypeId.ClientID%>').val());
@@ -2937,6 +2937,25 @@
             flag = flag.substring(0, length - (length - lastIndex));
             return flag;
         }
+
+        function RetrieveReservationXML() {
+            $.ajax({
+                type: "POST",
+                url: "frmRoomReservationNew.aspx/OnRetrieveReservationXML",
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#xml_output").text("Request sending. Please wait...");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+                },
+                success: function (result) {
+                    $("#xml_output").text(result.d);
+                }
+            });
+        }
+
         function ClearRoomNumberAndId() {
             $("#<%=hfSelectedRoomNumbers.ClientID %>").val('');
 
@@ -7236,6 +7255,8 @@
                     TabIndex="80" OnClientClick="javascript: return ValidateGuestNumber();" />
                 <asp:Button ID="btnCancel" runat="server" Text="Clear" CssClass="btn btn-primary btn-sm"
                     TabIndex="81" OnClick="btnCancel_Click" />
+                <input type="button" tabindex="18" id="retrieveReservation" value="Retrieve Reservation" style="display: none;" class="btn btn-primary btn-sm"
+                    onclick="javascript: return RetrieveReservationXML()" />
             </div>
         </div>
         <div id="TouchKeypad" style="display: none;">

@@ -10,6 +10,8 @@ using HotelManagement.Entity.HMCommon;
 using HotelManagement.Entity.HotelManagement;
 using HotelManagement.Entity.Payroll;
 using HotelManagement.Entity.SalesAndMarketing;
+using HotelManagement.Entity.SiteMinder;
+using HotelManagement.Entity.SiteMinder.Response;
 using HotelManagement.Entity.UserInformation;
 using HotelManagement.Presentation.Website.Common;
 using HotelManagement.Presentation.Website.POS;
@@ -17,6 +19,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -25,6 +28,8 @@ using System.Web;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace HotelManagement.Presentation.Website.HotelManagement
 {
@@ -5303,6 +5308,109 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             ContactInformationDA contactInformationDA = new ContactInformationDA();
             contactInformationList = contactInformationDA.GetContactInformationByCompanyIdNSearchTextForAutoComplete(companyId, searchText);
             return contactInformationList;
+        }
+
+
+
+        [WebMethod]
+        public static string OnRetrieveReservationXML()
+        {
+            return RetrieveReservationReadRequestFromServer(RetrieveRservationReadRequest.ReservationStatus.All);
+
+        }
+        public static string RetrieveReservationReadRequestFromServer(RetrieveRservationReadRequest.ReservationStatus reservationStatus)
+        {
+            XmlNode OTA_Hotel_Tag = null;
+            string pingNs = string.Empty;
+            SiteMinderHeader header = new SiteMinderHeader();
+            XmlDocument soapXMLDoc = header.XmlHeader(out OTA_Hotel_Tag, "OTA_ReadRQ");
+
+            //Build the XML OTA Child Tag Here, POS tag is included.
+            XmlNode ReadRequests = OTA_Hotel_Tag.AppendChild(soapXMLDoc.CreateElement("", "ReadRequests", ""));
+
+            XmlNode HotelReadREquest = ReadRequests.AppendChild(soapXMLDoc.CreateElement("", "HotelReadRequest", ""));
+            HotelReadREquest.Attributes.Append(soapXMLDoc.CreateAttribute("HotelCode")).Value = "TECHNOSENSEPMS123";
+
+            XmlNode SelectionCriteria = HotelReadREquest.AppendChild(soapXMLDoc.CreateElement("", "SelectionCriteria", ""));
+            SelectionCriteria.Attributes.Append(soapXMLDoc.CreateAttribute("SelectionType")).Value = RetrieveRservationReadRequest.SelectionType;
+
+            if (reservationStatus != RetrieveRservationReadRequest.ReservationStatus.All)
+            {
+                SelectionCriteria.Attributes.Append(soapXMLDoc.CreateAttribute("ResStatus")).Value = reservationStatus.ToString();
+            }
+
+            string xml_document = soapXMLDoc.OuterXml;
+
+            string response = header.postXMLData(xml_document);
+
+            //string xmlData = File.ReadAllText("Reservation_with_2_Rooms_of_Same_Room_Type.xml");
+            //string xmlData = File.ReadAllText("Reservation_with_Different_Multiple_Room_Types_Booked.xml");
+            //string xmlData = File.ReadAllText("Reservations_with_Room_Type_Booked_For_Split_Dates.xml");
+
+            Envelope env = ParseXmlResponse(response);
+            //Envelope env = ParseXmlResponse(xmlData);
+
+            string reservationDate = GetReservationInformation(env, "ReservationDate");
+            string reservationFromDate = GetReservationInformation(env, "ReservationFromDate");
+            string reservationToDate = GetReservationInformation(env, "ReservationToDate");
+            string guestName = GetReservationInformation(env, "GuestName");
+            string roomTypeCode = GetReservationInformation(env, "RoomTypeCode");
+            string roomTypeRate = GetReservationInformation(env, "RoomTypeRate");
+
+            return response;
+        }
+
+        public static Envelope ParseXmlResponse(string xmlResponse)
+        {
+            Envelope envelope = null;
+            XmlSerializer serializer = new XmlSerializer(typeof(Envelope));
+
+            using (StringReader reader = new StringReader(xmlResponse))
+            {
+                envelope = (Envelope)serializer.Deserialize(new IgnoreNamespaceXmlTextReader(reader));
+            }
+
+            return envelope;
+        }
+
+        public static string GetReservationInformation(Envelope env, string requestType)
+        {
+            string returnData = string.Empty;
+            Body envBody = env.Body;
+            OTAResRetrieveRS rs = envBody.OTAResRetrieveRS;
+            ReservationsList revList = rs.ReservationsList;
+
+            if (requestType == "ReservationDate")
+            {
+                //Done
+                returnData = revList.HotelReservation.CreateDateTime.ToString();
+            }
+            else if (requestType == "ReservationFromDate")
+            {
+                //Done
+                returnData = revList.HotelReservation.RoomStays.RoomStay.RatePlans.RatePlan.EffectiveDate.ToString();
+            }
+            else if (requestType == "ReservationToDate")
+            {
+                //Done
+                returnData = revList.HotelReservation.RoomStays.RoomStay.RatePlans.RatePlan.ExpireDate.ToString();
+            }
+            else if (requestType == "GuestName")
+            {
+                returnData = revList.HotelReservation.ResGuests.ResGuest.Profiles.ProfileInfo.Profile.Customer.PersonName.GivenName.ToString() + " " + revList.HotelReservation.ResGuests.ResGuest.Profiles.ProfileInfo.Profile.Customer.PersonName.Surname.ToString();
+            }
+            else if (requestType == "RoomTypeCode")
+            {
+                //Done
+                returnData = revList.HotelReservation.RoomStays.RoomStay.RoomTypes.RoomType.RoomTypeCode;
+            }
+            else if (requestType == "RoomTypeRate")
+            {
+                //Done
+                returnData = revList.HotelReservation.RoomStays.RoomStay.RoomRates.RoomRate.Rates.Rate.Total.AmountAfterTax.ToString();
+            }
+
+            return returnData;
         }
     }
 }

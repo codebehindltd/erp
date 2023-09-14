@@ -70,5 +70,28 @@ namespace InnboardDataAccess.DataAccesses
             }
 
         }
+
+        public bool UpdateMemMemberBasicInfoForMobileApps(MemMemberBasics memberBasicInfo)
+        {
+            SqlParameter transactionType = new SqlParameter("@TransactionType", memberBasicInfo.TransactionType);
+            SqlParameter memberId = new SqlParameter("@MemberId", memberBasicInfo.MemberId);
+            SqlParameter fullName = new SqlParameter("@FullName", memberBasicInfo.FullName);
+            SqlParameter passportNumber = new SqlParameter("@PassportNumber", memberBasicInfo.PassportNumber);
+            SqlParameter personalEmail = new SqlParameter("@PersonalEmail", memberBasicInfo.PersonalEmail);
+            SqlParameter memberAddress = new SqlParameter("@MemberAddress", memberBasicInfo.MemberAddress);
+            SqlParameter memberAppsProfilePicture = new SqlParameter("@MemberAppsProfilePicture", memberBasicInfo.MemberAppsProfilePicture);
+
+            int result = InnboardDBContext.Database.ExecuteSqlCommand("EXEC [dbo].[UpdateMemMemberBasicInfoForMobileApps_SP] @TransactionType, @MemberId, @FullName, @PassportNumber, @PersonalEmail, @MemberAddress, @MemberAppsProfilePicture", transactionType, memberId, fullName, passportNumber, personalEmail, memberAddress, memberAppsProfilePicture);
+                        
+            if (result > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 }

@@ -37,9 +37,7 @@ namespace InnboardAPI.Controllers
             bool isSuccess = dbLogin.SaveMemMemberBasicInfoForMobileAppsRegistration(memberBasicInfo, out tmpMemberId);
             if (isSuccess)
             {
-                SmsHelper.SendSmsSingle("SmartLabSMS", "01715857662");
-
-
+                //SmsHelper.SendSmsSingle("SmartLabSMS", memberBasicInfo.MobileNumber);
 
                 var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                 {
@@ -71,6 +69,34 @@ namespace InnboardAPI.Controllers
                 var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                 {
                     Content = new StringContent("Succesfully Payment Posted.")
+                };
+                return responseMsg;
+            }
+            else
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent("Bad Request")
+                };
+                return responseMsg;
+            }
+        }
+
+        // Member Profile Update By Mobile Apps Registration
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("UpdateMemMemberBasicInfoForMobileApps")]
+        public async Task<HttpResponseMessage> UpdateMemMemberBasicInfoForMobileApps([FromBody] MemMemberBasics memberBasicInfo)
+        {
+            int tmpMemberId = 0;
+            MemberDataAccess dbLogin = new MemberDataAccess();
+
+            bool isSuccess = dbLogin.UpdateMemMemberBasicInfoForMobileApps(memberBasicInfo);
+            if (isSuccess)
+            {
+                var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                {
+                    Content = new StringContent(tmpMemberId.ToString())
                 };
                 return responseMsg;
             }
