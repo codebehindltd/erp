@@ -1,5 +1,8 @@
-﻿using System.Security.Claims;
+﻿using System.IO;
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;

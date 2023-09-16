@@ -213,5 +213,6 @@ namespace InnboardDomain.Models
         public string TransactionId { get; set; }
         public string TransactionDetails { get; set; }
         public string MemberAppsProfilePicture { get; set; }
+        public virtual byte[] MemberAppsProfilePictureByte { get; set; }
     }
 }

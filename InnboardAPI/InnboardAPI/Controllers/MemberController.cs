@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using InnboardAPI.Models;
 
 namespace InnboardAPI.Controllers
 {
@@ -37,7 +38,7 @@ namespace InnboardAPI.Controllers
             bool isSuccess = dbLogin.SaveMemMemberBasicInfoForMobileAppsRegistration(memberBasicInfo, out tmpMemberId);
             if (isSuccess)
             {
-                //SmsHelper.SendSmsSingle("SmartLabSMS", memberBasicInfo.MobileNumber);
+                SmsHelper.SendSmsSingle("SmartLabSMS", memberBasicInfo.MobileNumber);
 
                 var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                 {
@@ -91,6 +92,11 @@ namespace InnboardAPI.Controllers
             int tmpMemberId = 0;
             MemberDataAccess dbLogin = new MemberDataAccess();
 
+            if (memberBasicInfo.MemberAppsProfilePictureByte != null)
+            {
+                memberBasicInfo.MemberAppsProfilePicture = UtilityMethods.UploadByteFile(memberBasicInfo.MemberAppsProfilePicture, "GuestOrMemberProfilePicture", memberBasicInfo.MemberAppsProfilePictureByte);
+            }
+            
             bool isSuccess = dbLogin.UpdateMemMemberBasicInfoForMobileApps(memberBasicInfo);
             if (isSuccess)
             {

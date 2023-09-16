@@ -6,6 +6,7 @@ using Owin;
 using Microsoft.Owin.FileSystems;
 using System.IO;
 using Microsoft.Owin.StaticFiles;
+using System.Web;
 
 [assembly: OwinStartup(typeof(InnboardAPI.Startup))]
 
@@ -30,5 +31,6 @@ namespace InnboardAPI
             //options.StaticFileOptions.ServeUnknownFileTypes = false;
             //app.UseFileServer(options);
         }
+
     }
 }

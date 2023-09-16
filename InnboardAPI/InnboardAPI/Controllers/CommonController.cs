@@ -60,6 +60,34 @@ namespace InnboardAPI.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [Route("GetMemberRoomNightInformation")]
+        public async Task<IHttpActionResult> GetMemberRoomNightInformation(int transactionId)
+        {
+            try
+            {
+                CommonDataAccess db = new CommonDataAccess();
+                var result = await db.GetMemberRoomNightInformation(transactionId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetMemberRoomNightPromotionalOffer")]
+        public async Task<IHttpActionResult> GetMemberRoomNightPromotionalOffer(int transactionId)
+        {
+            CommonDataAccess db = new CommonDataAccess();
+            var result = await db.GetMemberRoomNightPromotionalOffer(transactionId);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         [Route("GetGuestOrMemberPromotionalOffer")]
         public async Task<IHttpActionResult> GetGuestOrMemberPromotionalOffer(string transactionType, int transactionId)
         {

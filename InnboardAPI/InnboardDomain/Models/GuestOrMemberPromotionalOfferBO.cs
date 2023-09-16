@@ -18,5 +18,9 @@ namespace InnboardDomain.Models
         public decimal? RemainingBenefitsValue { get; set; }
         public string BenefitsTransactionType { get; set; }
         public int DisplaySequence { get; set; }
+        public string PropertyName { get; set; }
+        public int RoomNights { get; set; }
+        public int AvailNights { get; set; }
+        public int BalanceNight { get; set; }
     }
 }

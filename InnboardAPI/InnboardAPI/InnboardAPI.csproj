@@ -308,6 +308,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\UtilityMethods.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -384,6 +385,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\GuestOrMemberProfilePicture\" />
+    <Folder Include="Images\PropertyLogo\" />
+    <Folder Include="Images\PropertyProfilePicture\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
