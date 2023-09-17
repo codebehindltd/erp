@@ -1052,17 +1052,17 @@
 							<TablixCells>
 								<TablixCell>
 									<CellContents>
-										<Tablix Name="Tablix1">
+										<Tablix Name="Tablix8">
 											<TablixBody>
 												<TablixColumns>
 													<TablixColumn>
-														<Width>1.07164in</Width>
+														<Width>0.94433in</Width>
 													</TablixColumn>
 													<TablixColumn>
-														<Width>0.13414in</Width>
+														<Width>0.13183in</Width>
 													</TablixColumn>
 													<TablixColumn>
-														<Width>1.41796in</Width>
+														<Width>1.54759in</Width>
 													</TablixColumn>
 												</TablixColumns>
 												<TablixRows>
@@ -1071,7 +1071,7 @@
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox3">
+																	<Textbox Name="Textbox16">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1104,7 +1104,7 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox123">
+																	<Textbox Name="Textbox145">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1139,7 +1139,7 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="BillNumber">
+																	<Textbox Name="BillNumber2">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1176,7 +1176,7 @@
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox22">
+																	<Textbox Name="Textbox27">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1209,7 +1209,7 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox124">
+																	<Textbox Name="Textbox146">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1244,7 +1244,7 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="PaxQuantity">
+																	<Textbox Name="PaxQuantity2">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1283,7 +1283,7 @@
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox26">
+																	<Textbox Name="Textbox28">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1316,7 +1316,7 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox128">
+																	<Textbox Name="Textbox147">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1351,7 +1351,7 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="WaiterName">
+																	<Textbox Name="WaiterName2">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1388,7 +1388,7 @@
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox29">
+																	<Textbox Name="Textbox31">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1421,7 +1421,7 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox132">
+																	<Textbox Name="Textbox152">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1456,7 +1456,7 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="UserName">
+																	<Textbox Name="UserName2">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1493,7 +1493,7 @@
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox33">
+																	<Textbox Name="Textbox37">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1526,7 +1526,7 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox135">
+																	<Textbox Name="Textbox153">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1561,7 +1561,112 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox35">
+																	<Textbox Name="Textbox38">
+																		<CanGrow>true</CanGrow>
+																		<KeepTogether>true</KeepTogether>
+																		<Paragraphs>
+																			<Paragraph>
+																				<TextRuns>
+																					<TextRun>
+																						<Value>=Fields!BillDate.Value</Value>
+																						<Style>
+																							<FontSize>9pt</FontSize>
+																						</Style>
+																					</TextRun>
+																				</TextRuns>
+																				<Style />
+																			</Paragraph>
+																		</Paragraphs>
+																		<rd:DefaultName>Textbox35</rd:DefaultName>
+																		<Style>
+																			<Border>
+																				<Color>LightGrey</Color>
+																				<Style>None</Style>
+																			</Border>
+																			<PaddingLeft>2pt</PaddingLeft>
+																			<PaddingRight>2pt</PaddingRight>
+																			<PaddingTop>2pt</PaddingTop>
+																			<PaddingBottom>2pt</PaddingBottom>
+																		</Style>
+																	</Textbox>
+																</CellContents>
+															</TablixCell>
+														</TablixCells>
+													</TablixRow>
+													<TablixRow>
+														<Height>0.03141in</Height>
+														<TablixCells>
+															<TablixCell>
+																<CellContents>
+																	<Textbox Name="Textbox39">
+																		<CanGrow>true</CanGrow>
+																		<KeepTogether>true</KeepTogether>
+																		<Paragraphs>
+																			<Paragraph>
+																				<TextRuns>
+																					<TextRun>
+																						<Value>Print Date</Value>
+																						<Style>
+																							<FontSize>9pt</FontSize>
+																							<FontWeight>Bold</FontWeight>
+																						</Style>
+																					</TextRun>
+																				</TextRuns>
+																				<Style />
+																			</Paragraph>
+																		</Paragraphs>
+																		<rd:DefaultName>Textbox33</rd:DefaultName>
+																		<Style>
+																			<Border>
+																				<Color>LightGrey</Color>
+																				<Style>None</Style>
+																			</Border>
+																			<PaddingLeft>2pt</PaddingLeft>
+																			<PaddingRight>2pt</PaddingRight>
+																			<PaddingTop>2pt</PaddingTop>
+																			<PaddingBottom>2pt</PaddingBottom>
+																		</Style>
+																	</Textbox>
+																</CellContents>
+															</TablixCell>
+															<TablixCell>
+																<CellContents>
+																	<Textbox Name="Textbox154">
+																		<CanGrow>true</CanGrow>
+																		<KeepTogether>true</KeepTogether>
+																		<Paragraphs>
+																			<Paragraph>
+																				<TextRuns>
+																					<TextRun>
+																						<Value>:</Value>
+																						<Style>
+																							<FontSize>9pt</FontSize>
+																							<FontWeight>Bold</FontWeight>
+																						</Style>
+																					</TextRun>
+																				</TextRuns>
+																				<Style>
+																					<TextAlign>Center</TextAlign>
+																				</Style>
+																			</Paragraph>
+																		</Paragraphs>
+																		<rd:DefaultName>Textbox67</rd:DefaultName>
+																		<ZIndex>8</ZIndex>
+																		<Style>
+																			<Border>
+																				<Style>None</Style>
+																			</Border>
+																			<PaddingLeft>2pt</PaddingLeft>
+																			<PaddingRight>2pt</PaddingRight>
+																			<PaddingTop>2pt</PaddingTop>
+																			<PaddingBottom>2pt</PaddingBottom>
+																		</Style>
+																	</Textbox>
+																</CellContents>
+															</TablixCell>
+															<TablixCell>
+																<CellContents>
+																	<Textbox Name="Textbox41">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1598,119 +1703,14 @@
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox45">
+																	<Textbox Name="Textbox42">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value EvaluationMode="Constant">SDC Invoice No.</Value>
-																						<Style>
-																							<FontSize>9pt</FontSize>
-																							<FontWeight>Bold</FontWeight>
-																						</Style>
-																					</TextRun>
-																				</TextRuns>
-																				<Style />
-																			</Paragraph>
-																		</Paragraphs>
-																		<rd:DefaultName>Textbox45</rd:DefaultName>
-																		<Style>
-																			<Border>
-																				<Color>LightGrey</Color>
-																				<Style>None</Style>
-																			</Border>
-																			<PaddingLeft>2pt</PaddingLeft>
-																			<PaddingRight>2pt</PaddingRight>
-																			<PaddingTop>2pt</PaddingTop>
-																			<PaddingBottom>2pt</PaddingBottom>
-																		</Style>
-																	</Textbox>
-																</CellContents>
-															</TablixCell>
-															<TablixCell>
-																<CellContents>
-																	<Textbox Name="Textbox144">
-																		<CanGrow>true</CanGrow>
-																		<KeepTogether>true</KeepTogether>
-																		<Paragraphs>
-																			<Paragraph>
-																				<TextRuns>
-																					<TextRun>
-																						<Value>:</Value>
-																						<Style>
-																							<FontSize>9pt</FontSize>
-																							<FontWeight>Bold</FontWeight>
-																						</Style>
-																					</TextRun>
-																				</TextRuns>
-																				<Style>
-																					<TextAlign>Center</TextAlign>
-																				</Style>
-																			</Paragraph>
-																		</Paragraphs>
-																		<rd:DefaultName>Textbox67</rd:DefaultName>
-																		<ZIndex>8</ZIndex>
-																		<Style>
-																			<Border>
-																				<Style>None</Style>
-																			</Border>
-																			<PaddingLeft>2pt</PaddingLeft>
-																			<PaddingRight>2pt</PaddingRight>
-																			<PaddingTop>2pt</PaddingTop>
-																			<PaddingBottom>2pt</PaddingBottom>
-																		</Style>
-																	</Textbox>
-																</CellContents>
-															</TablixCell>
-															<TablixCell>
-																<CellContents>
-																	<Textbox Name="Textbox53">
-																		<CanGrow>true</CanGrow>
-																		<KeepTogether>true</KeepTogether>
-																		<Paragraphs>
-																			<Paragraph>
-																				<TextRuns>
-																					<TextRun>
-																						<Value>=Parameters!SDCInvoiceNumber.Value</Value>
-																						<Style>
-																							<FontSize>9pt</FontSize>
-																						</Style>
-																					</TextRun>
-																				</TextRuns>
-																				<Style />
-																			</Paragraph>
-																		</Paragraphs>
-																		<rd:DefaultName>Textbox53</rd:DefaultName>
-																		<Style>
-																			<Border>
-																				<Color>LightGrey</Color>
-																				<Style>None</Style>
-																			</Border>
-																			<PaddingLeft>2pt</PaddingLeft>
-																			<PaddingRight>2pt</PaddingRight>
-																			<PaddingTop>2pt</PaddingTop>
-																			<PaddingBottom>2pt</PaddingBottom>
-																		</Style>
-																	</Textbox>
-																</CellContents>
-															</TablixCell>
-														</TablixCells>
-													</TablixRow>
-													<TablixRow>
-														<Height>0.03141in</Height>
-														<TablixCells>
-															<TablixCell>
-																<CellContents>
-																	<Textbox Name="Textbox36">
-																		<CanGrow>true</CanGrow>
-																		<KeepTogether>true</KeepTogether>
-																		<Paragraphs>
-																			<Paragraph>
-																				<TextRuns>
-																					<TextRun>
-																						<Value>=Microsoft.VisualBasic.Interaction.IIF(Parameters!CompanyType.Value = "RetailShop", "Customer Info.", "Guest Info.")</Value>
+																						<Value>=IIF(Parameters!CompanyType.Value = "RetailShop", "Customer Info.", "Guest Info.")</Value>
 																						<Style>
 																							<FontSize>9pt</FontSize>
 																							<FontWeight>Bold</FontWeight>
@@ -1736,7 +1736,7 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox136">
+																	<Textbox Name="Textbox157">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1771,14 +1771,14 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="CustomerName">
+																	<Textbox Name="CustomerName2">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>=Microsoft.VisualBasic.Strings.Replace(Fields!CustomerName.Value, "~", System.Environment.NewLine)</Value>
+																						<Value>=Replace(Fields!CustomerName.Value, "~", System.Environment.NewLine)</Value>
 																						<Style>
 																							<FontSize>9pt</FontSize>
 																						</Style>
@@ -1808,7 +1808,7 @@
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox34">
+																	<Textbox Name="Textbox44">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1841,7 +1841,7 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="Textbox139">
+																	<Textbox Name="Textbox158">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1876,7 +1876,7 @@
 															</TablixCell>
 															<TablixCell>
 																<CellContents>
-																	<Textbox Name="MultipleTableAddedNumbers">
+																	<Textbox Name="MultipleTableAddedNumbers2">
 																		<CanGrow>true</CanGrow>
 																		<KeepTogether>true</KeepTogether>
 																		<Paragraphs>
@@ -1922,12 +1922,12 @@
 													<TablixMember />
 													<TablixMember>
 														<Visibility>
-															<Hidden>=Microsoft.VisualBasic.Interaction.IIF(Parameters!CompanyType.Value = "RetailShop", True, False)</Hidden>
+															<Hidden>=IIF(Parameters!CompanyType.Value = "RetailShop", True, False)</Hidden>
 														</Visibility>
 													</TablixMember>
 													<TablixMember>
 														<Visibility>
-															<Hidden>=Microsoft.VisualBasic.Interaction.IIF(Parameters!CompanyType.Value = "RetailShop", True, False)</Hidden>
+															<Hidden>=IIF(Parameters!CompanyType.Value = "RetailShop", True, False)</Hidden>
 														</Visibility>
 													</TablixMember>
 													<TablixMember />
@@ -1935,12 +1935,12 @@
 													<TablixMember />
 													<TablixMember>
 														<Visibility>
-															<Hidden>=IIF(Fields!CustomerName.Value = "", true, false)</Hidden>
+															<Hidden>=IIF(Fields!CustomerName.Value = "", True, False)</Hidden>
 														</Visibility>
 													</TablixMember>
 													<TablixMember>
 														<Visibility>
-															<Hidden>=IIf(Fields!MultipleTableAddedNumbers.Value &lt;&gt; "" , false, true)</Hidden>
+															<Hidden>=IIf(Fields!MultipleTableAddedNumbers.Value &lt;&gt; "", False, True)</Hidden>
 														</Visibility>
 													</TablixMember>
 												</TablixMembers>
@@ -7399,7 +7399,7 @@
 				<Value>=Parameters!QrImage.Value</Value>
 				<MIMEType>image/png</MIMEType>
 				<Sizing>FitProportional</Sizing>
-				<Top>12.42725in</Top>
+				<Top>12.67725in</Top>
 				<Left>0.66864in</Left>
 				<Height>1.05208in</Height>
 				<Width>1.29167in</Width>
@@ -7430,7 +7430,7 @@
 					</Paragraph>
 				</Paragraphs>
 				<rd:DefaultName>Textbox45</rd:DefaultName>
-				<Top>13.71863in</Top>
+				<Top>13.96863in</Top>
 				<Height>0.20543in</Height>
 				<Width>2.62374in</Width>
 				<ZIndex>2</ZIndex>
@@ -7472,7 +7472,7 @@
 					</Paragraph>
 				</Paragraphs>
 				<rd:DefaultName>Textbox45</rd:DefaultName>
-				<Top>13.50307in</Top>
+				<Top>13.75307in</Top>
 				<Height>0.20543in</Height>
 				<Width>2.62374in</Width>
 				<ZIndex>3</ZIndex>
@@ -7495,7 +7495,7 @@
 				</Style>
 			</Textbox>
 		</ReportItems>
-		<Height>13.94212in</Height>
+		<Height>14.17406in</Height>
 		<Style />
 	</Body>
 	<Width>2.62375in</Width>

@@ -1113,7 +1113,7 @@
 												</TablixColumns>
 												<TablixRows>
 													<TablixRow>
-														<Height>0.03125in</Height>
+														<Height>0.03488in</Height>
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
@@ -1218,7 +1218,7 @@
 														</TablixCells>
 													</TablixRow>
 													<TablixRow>
-														<Height>0.03125in</Height>
+														<Height>0.03488in</Height>
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
@@ -1325,7 +1325,7 @@
 														</TablixCells>
 													</TablixRow>
 													<TablixRow>
-														<Height>0.03125in</Height>
+														<Height>0.03488in</Height>
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
@@ -1430,7 +1430,7 @@
 														</TablixCells>
 													</TablixRow>
 													<TablixRow>
-														<Height>0.03125in</Height>
+														<Height>0.03488in</Height>
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
@@ -1535,7 +1535,112 @@
 														</TablixCells>
 													</TablixRow>
 													<TablixRow>
-														<Height>0.03125in</Height>
+														<Height>0.03488in</Height>
+														<TablixCells>
+															<TablixCell>
+																<CellContents>
+																	<Textbox Name="Textbox37">
+																		<CanGrow>true</CanGrow>
+																		<KeepTogether>true</KeepTogether>
+																		<Paragraphs>
+																			<Paragraph>
+																				<TextRuns>
+																					<TextRun>
+																						<Value>Invoice Date</Value>
+																						<Style>
+																							<FontSize>9pt</FontSize>
+																							<FontWeight>Bold</FontWeight>
+																						</Style>
+																					</TextRun>
+																				</TextRuns>
+																				<Style />
+																			</Paragraph>
+																		</Paragraphs>
+																		<rd:DefaultName>Textbox33</rd:DefaultName>
+																		<Style>
+																			<Border>
+																				<Color>LightGrey</Color>
+																				<Style>None</Style>
+																			</Border>
+																			<PaddingLeft>2pt</PaddingLeft>
+																			<PaddingRight>2pt</PaddingRight>
+																			<PaddingTop>2pt</PaddingTop>
+																			<PaddingBottom>2pt</PaddingBottom>
+																		</Style>
+																	</Textbox>
+																</CellContents>
+															</TablixCell>
+															<TablixCell>
+																<CellContents>
+																	<Textbox Name="Textbox142">
+																		<CanGrow>true</CanGrow>
+																		<KeepTogether>true</KeepTogether>
+																		<Paragraphs>
+																			<Paragraph>
+																				<TextRuns>
+																					<TextRun>
+																						<Value>:</Value>
+																						<Style>
+																							<FontSize>9pt</FontSize>
+																							<FontWeight>Bold</FontWeight>
+																						</Style>
+																					</TextRun>
+																				</TextRuns>
+																				<Style>
+																					<TextAlign>Center</TextAlign>
+																				</Style>
+																			</Paragraph>
+																		</Paragraphs>
+																		<rd:DefaultName>Textbox67</rd:DefaultName>
+																		<ZIndex>8</ZIndex>
+																		<Style>
+																			<Border>
+																				<Style>None</Style>
+																			</Border>
+																			<PaddingLeft>2pt</PaddingLeft>
+																			<PaddingRight>2pt</PaddingRight>
+																			<PaddingTop>2pt</PaddingTop>
+																			<PaddingBottom>2pt</PaddingBottom>
+																		</Style>
+																	</Textbox>
+																</CellContents>
+															</TablixCell>
+															<TablixCell>
+																<CellContents>
+																	<Textbox Name="Textbox38">
+																		<CanGrow>true</CanGrow>
+																		<KeepTogether>true</KeepTogether>
+																		<Paragraphs>
+																			<Paragraph>
+																				<TextRuns>
+																					<TextRun>
+																						<Value>=Fields!BillDate.Value</Value>
+																						<Style>
+																							<FontSize>9pt</FontSize>
+																						</Style>
+																					</TextRun>
+																				</TextRuns>
+																				<Style />
+																			</Paragraph>
+																		</Paragraphs>
+																		<rd:DefaultName>Textbox35</rd:DefaultName>
+																		<Style>
+																			<Border>
+																				<Color>LightGrey</Color>
+																				<Style>None</Style>
+																			</Border>
+																			<PaddingLeft>2pt</PaddingLeft>
+																			<PaddingRight>2pt</PaddingRight>
+																			<PaddingTop>2pt</PaddingTop>
+																			<PaddingBottom>2pt</PaddingBottom>
+																		</Style>
+																	</Textbox>
+																</CellContents>
+															</TablixCell>
+														</TablixCells>
+													</TablixRow>
+													<TablixRow>
+														<Height>0.03488in</Height>
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
@@ -1546,7 +1651,7 @@
 																			<Paragraph>
 																				<TextRuns>
 																					<TextRun>
-																						<Value>Invoice Date</Value>
+																						<Value>Print Date</Value>
 																						<Style>
 																							<FontSize>9pt</FontSize>
 																							<FontWeight>Bold</FontWeight>
@@ -1640,7 +1745,7 @@
 														</TablixCells>
 													</TablixRow>
 													<TablixRow>
-														<Height>0.09157in</Height>
+														<Height>0.03488in</Height>
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
@@ -1745,7 +1850,7 @@
 														</TablixCells>
 													</TablixRow>
 													<TablixRow>
-														<Height>0.03125in</Height>
+														<Height>0.03488in</Height>
 														<TablixCells>
 															<TablixCell>
 																<CellContents>
@@ -1871,6 +1976,7 @@
 															<Hidden>=Microsoft.VisualBasic.Interaction.IIF(Parameters!CompanyType.Value = "RetailShop", True, False)</Hidden>
 														</Visibility>
 													</TablixMember>
+													<TablixMember />
 													<TablixMember />
 													<TablixMember />
 													<TablixMember>
@@ -7342,7 +7448,7 @@
 		<Height>12.92602in</Height>
 		<Style />
 	</Body>
-	<Width>2.62896in</Width>
+	<Width>2.62375in</Width>
 	<Page>
 		<PageWidth>3in</PageWidth>
 		<LeftMargin>0.175in</LeftMargin>
