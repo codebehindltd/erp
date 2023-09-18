@@ -1,0 +1,8 @@
+Dear ##Name##, 
+
+Thank you for Registration, 
+Please wait until your registration is approved, we will take maximum 72 hours to approve.
+
+Sales Team 
+##COMPANY## 
+Hotline: ##CONTACTNUMBER##

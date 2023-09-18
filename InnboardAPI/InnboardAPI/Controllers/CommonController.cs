@@ -26,6 +26,16 @@ namespace InnboardAPI.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [Route("GetCommonConfigurationInfo")]
+        public async Task<IHttpActionResult> GetCommonConfigurationInfo(string typeName, string setupName)
+        {
+            CommonDataAccess db = new CommonDataAccess();
+            var result = await db.GetCommonConfigurationInfo(typeName, setupName);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         [Route("GetCustomField")]
         public async Task<IHttpActionResult> GetCustomField([FromUri] string fieldType)
         {

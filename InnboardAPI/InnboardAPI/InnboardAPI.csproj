@@ -364,6 +364,11 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="SMSTemplates\MemberRegistrationSms.txt" />
+    <Content Include="SMSTemplates\ReservationAmedmentSms.txt" />
+    <Content Include="SMSTemplates\ReservationCancelSms.txt" />
+    <Content Include="SMSTemplates\ReservationConfirmationSms.txt" />
+    <Content Include="SMSTemplates\RoomGuestCheckOutSms.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

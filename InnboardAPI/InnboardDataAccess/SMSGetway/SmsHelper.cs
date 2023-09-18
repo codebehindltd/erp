@@ -1,4 +1,5 @@
-﻿using InnboardDomain.Models;
+﻿using InnboardDataAccess.DataAccesses;
+using InnboardDomain.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,12 +12,12 @@ namespace InnboardDataAccess.SMSGetway
 {
     public class SmsHelper
     {
-        //public static bool SendSmsSingle(SMSView sms, Dictionary<string, string> tokens, string smsGetway, string mobileNumber)
-        public static bool SendSmsSingle(string smsGetway, string mobileNumber)
+        public static bool SendSmsSingle(SMSView sms, Dictionary<string, string> tokens, string smsGetway, string mobileNumber, string commonSetupBODescription)
+        //public static bool SendSmsSingle(string smsGetway, string mobileNumber)
         {
             bool status = false;
-            //var Body = SmsHelper.GetSmsBody(sms.TempleteName, tokens);
-            var Body = "Test SMS Body";
+            var Body = SmsHelper.GetSmsBody(sms.TempleteName, tokens);
+            //var Body = "Test SMS Body";
             try
             {
                 //if (smsGetway == "SSLCommerce")
@@ -60,23 +61,25 @@ namespace InnboardDataAccess.SMSGetway
 
                 if (smsGetway == "SmartLabSMS")
                 {
+                    
                     //HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
                     //HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
                     //commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
                     //string mainString = commonSetupBO.Description;
-                    //string[] dataArray = mainString.Split('~');
+                    string[] dataArray = commonSetupBODescription.Split('~');
                     APIRequestForSmartLabSMS requestData = new APIRequestForSmartLabSMS
                     {
-                        //api_key = dataArray[1],
-                        //sender_id = dataArray[2],
-                        //msisdn = mobileNumber,
-                        //sms = Body
-
-                        
-                        api_key = "9e5906e7a56c9a2ba6c1bc230c2de97c",
-                        sender_id = "DhaliResort",
+                        api_key = dataArray[1],
+                        sender_id = dataArray[2],
                         msisdn = mobileNumber,
                         sms = Body
+
+
+
+                        //api_key = "9e5906e7a56c9a2ba6c1bc230c2de97c",
+                        //sender_id = "DhaliResort",
+                        //msisdn = mobileNumber,
+                        //sms = Body
 
                     };
 
@@ -138,11 +141,11 @@ namespace InnboardDataAccess.SMSGetway
         /// <returns></returns>
 
         //---Sms Dynamic body--//
-        //public static string GetSmsBody(string templateName, Dictionary<string, string> tokens)
-        //{
-        //    string text = System.IO.File.ReadAllText(HttpContext.Current.Request.MapPath(string.Format("~/SMSTemplates/{0}", templateName)));
-        //    return tokens.Aggregate(text, (current, token) => current.Replace(string.Format("##{0}##", token.Key), token.Value));
-        //}
+        public static string GetSmsBody(string templateName, Dictionary<string, string> tokens)
+        {
+            string text = System.IO.File.ReadAllText(HttpContext.Current.Request.MapPath(string.Format("~/SMSTemplates/{0}", templateName)));
+            return tokens.Aggregate(text, (current, token) => current.Replace(string.Format("##{0}##", token.Key), token.Value));
+        }
 
     }
 }

@@ -88,6 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\HMConstants.cs" />
     <Compile Include="Common\Model\PageParams.cs" />
     <Compile Include="CriteriaDtoModel\GeneralLedgerCriteriaDto.cs" />
     <Compile Include="CriteriaDtoModel\PayrollEmpCriteriaDto.cs" />

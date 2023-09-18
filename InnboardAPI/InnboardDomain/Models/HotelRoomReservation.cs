@@ -131,5 +131,7 @@ namespace InnboardDomain.Models
 
         [StringLength(500)]
         public string POSRemarks { get; set; }
+
+        public string RoomNumber { get; set; }
     }
 }

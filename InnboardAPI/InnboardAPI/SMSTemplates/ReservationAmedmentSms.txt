@@ -1,0 +1,1 @@
+Dear ##Name##, Thank you for amending reservation. Resv:  ##ReservationNumber## Arrival: ##ArrivalDate## Departure: ##DepartureDate## Reservation Team ##COMPANY## Hotline: ##CONTACTNUMBER##

@@ -1,0 +1,1 @@
+Dear ##Name##, Your reservation has been cancelled. Resv:  ##ReservationNumber## Arrival: ##ArrivalDate## Departure: ##DepartureDate## Reservation Team ##COMPANY## Hotline: ##CONTACTNUMBER##

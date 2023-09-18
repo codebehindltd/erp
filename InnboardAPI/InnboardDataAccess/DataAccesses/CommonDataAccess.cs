@@ -21,6 +21,14 @@ namespace InnboardDataAccess.DataAccesses
             return result;
         }
 
+        public async Task<CommonSetup> GetCommonConfigurationInfo(string typeName, string setupName)
+        {
+            SqlParameter paramTypeName = new SqlParameter("@TypeName", typeName);
+            SqlParameter paramSetupName = new SqlParameter("@SetupName", setupName);
+            var result = await InnboardDBContext.Database.SqlQuery<CommonSetup>("EXEC [dbo].[GetCommonConfigurationInfo_SP] @TypeName, @SetupName", paramTypeName, paramSetupName).FirstOrDefaultAsync();
+            return result;
+        }
+
         public async Task<List<CustomFieldBO>> GetCustomField(string fieldType)
         {
             SqlParameter param1 = new SqlParameter("@FieldName", fieldType);
