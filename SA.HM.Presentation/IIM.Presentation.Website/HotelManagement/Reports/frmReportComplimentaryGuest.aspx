@@ -81,6 +81,16 @@
                         <asp:DropDownList ID="ddlGuestCompany" runat="server" CssClass="form-control" TabIndex="4">
                         </asp:DropDownList>
                     </div>
+                    <div class="col-md-2">
+                        <asp:Label ID="lblIsHouseUseRoom" runat="server" class="control-label" Text="House Use"></asp:Label>
+                    </div>
+                    <div class="col-md-4">
+                        <asp:DropDownList ID="ddlIsHouseUseRoom" runat="server" CssClass="form-control" TabIndex="70">
+                            <asp:ListItem Value="-1">--- All ---</asp:ListItem>
+                            <asp:ListItem Value="0">No</asp:ListItem>
+                            <asp:ListItem Value="1">Yes</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
                 </div>
                 <%--&nbsp--%>
                 <div class="form-group">

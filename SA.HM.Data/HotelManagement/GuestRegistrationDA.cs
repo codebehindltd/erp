@@ -97,7 +97,7 @@ namespace HotelManagement.Data.HotelManagement
             return status;
         }
         //GetWalkInReport_SP GetRoomBlocksReport_SP
-        public List<ComplementeryGuestInfoBO> GetComplementeryGuestInfoReport(DateTime dateFrom, DateTime dateTo, string roomNo, string regNo, int companyId)
+        public List<ComplementeryGuestInfoBO> GetComplementeryGuestInfoReport(DateTime dateFrom, DateTime dateTo, string roomNo, string regNo, int companyId, int isHouseUseRoom)
         {
             List<ComplementeryGuestInfoBO> guestInfoBOs = new List<ComplementeryGuestInfoBO>();
             using (DbConnection conn = dbSmartAspects.CreateConnection())
@@ -130,6 +130,15 @@ namespace HotelManagement.Data.HotelManagement
                     else
                     {
                         dbSmartAspects.AddInParameter(cmd, "@CompanyId", DbType.String, DBNull.Value);
+                    }
+
+                    if (isHouseUseRoom > -1)
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@IsHouseUseRoom", DbType.Int32, isHouseUseRoom);
+                    }
+                    else
+                    {
+                        dbSmartAspects.AddInParameter(cmd, "@IsHouseUseRoom", DbType.String, DBNull.Value);
                     }
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))

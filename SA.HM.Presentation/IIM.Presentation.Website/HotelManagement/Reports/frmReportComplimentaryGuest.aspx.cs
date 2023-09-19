@@ -81,8 +81,9 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             ToDate = ToDate.AddDays(1).AddSeconds(-1);
 
             int companyId = Convert.ToInt32(ddlGuestCompany.SelectedValue);
+            int isHouseUseRoom = Convert.ToInt32(ddlIsHouseUseRoom.SelectedValue);
 
-            guestInfoBOs = guestDA.GetComplementeryGuestInfoReport(FromDate, ToDate, txtRoomNumber.Text, txtRegistrationNo.Text, companyId);
+            guestInfoBOs = guestDA.GetComplementeryGuestInfoReport(FromDate, ToDate, txtRoomNumber.Text, txtRegistrationNo.Text, companyId, isHouseUseRoom);
 
             var rowCount = guestInfoBOs.Count;
 
@@ -112,6 +113,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement.Reports
             paramReport.Add(new ReportParameter("ToDate", endDate));
             paramReport.Add(new ReportParameter("RowCount", rowCount.ToString()));
             string reportName = "Complimentary Guest";
+
             paramReport.Add(new ReportParameter("ReportName", reportName));
 
             rvTransaction.LocalReport.SetParameters(paramReport);

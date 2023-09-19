@@ -15,6 +15,8 @@ using System.Web.Services;
 using System.Text.RegularExpressions;
 using HotelManagement.Entity.GeneralLedger;
 using HotelManagement.Data.GeneralLedger;
+using HotelManagement.Data.HotelManagement;
+using HotelManagement.Entity.HotelManagement;
 
 namespace HotelManagement.Presentation.Website.Membership
 {
@@ -370,6 +372,15 @@ namespace HotelManagement.Presentation.Website.Membership
                     //    this.UpdateNodeMatrixAccountHeadInfo(Convert.ToInt32(this.txtNodeId.Value));
                     //}
 
+                    HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                    HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                    commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SMSAutoPosting", "IsMemberActivationConfirmationSMSAutoPostingEnable");
+                    string IsSMSEnable = commonSetupBO.SetupValue;
+                    if (IsSMSEnable == "1")
+                    {
+                        SendSMSbySMSGateway(memBasic);
+                    }
+
                     Boolean logStatus = hmUtility.CreateActivityLogEntity(ActivityTypeEnum.ActivityType.Edit.ToString(), EntityTypeEnum.EntityType.MembershipInfo.ToString(), memBasic.MemberId,
                         ProjectModuleEnum.ProjectModule.MembershipManagement.ToString(), hmUtility.GetEntityTypeEnumDescription(EntityTypeEnum.EntityType.MembershipInfo));
 
@@ -380,6 +391,59 @@ namespace HotelManagement.Presentation.Website.Membership
             SetTab("BasicTab");
         }
         //************************ User Defined Function ********************//
+        private static bool SendSMSbySMSGateway(MemMemberBasicsBO memBasic)
+        {
+            bool status = false;
+            SmsView sms;
+            try
+            {
+                HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
+                CommonDA commonDA = new CommonDA();
+                RoomReservationDA reservationDA = new RoomReservationDA();
+                string mainString = commonSetupBO.Description;
+                string[] dataArray = mainString.Split('~');
+                var smsGetway = dataArray[0];
+                HMUtility hmUtility = new HMUtility();
+
+                string documentsTextMessage = "Thank you for staying with us.";
+                //HMCommonSetupBO commonSetupDocumentsTextMessageBO = new HMCommonSetupBO();
+                //commonSetupDocumentsTextMessageBO = commonSetupDA.GetCommonConfigurationInfo("RoomReservationSMSDocumentsMessage", "RoomReservationSMSDocumentsMessage");
+                //if (commonSetupDocumentsTextMessageBO.SetupId > 0)
+                //{
+                //    documentsTextMessage = commonSetupDocumentsTextMessageBO.Description;
+                //}
+
+                // Config Block
+                if (!string.IsNullOrEmpty(mainString))
+                {
+
+                    sms = new SmsView
+                    {
+                        TempleteName = HMConstants.SMSTemplates.MemberActivationConfirmationSms
+                    };
+
+                    var singletoken = new Dictionary<string, string>
+                        {
+                        {"COMPANY", hmUtility.GetHMCompanyProfile()},
+                        {"COMPANYADDRESS", hmUtility.GetHMCompanyAddress()},
+                        {"CONTACTNUMBER", hmUtility.GetHMCompanyContactNumber()},
+                        {"Name", memBasic.FullName},
+                        {"MembershipNumber",  memBasic.MembershipNumber},
+                        {"MemberPassword", memBasic.MemberPassword},
+                        {"SMSDocumentsMessage", documentsTextMessage }
+                        };
+                    status = SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, memBasic.MobileNumber);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return status;
+        }
         private void LoadMaritualStatus()
         {
             HMCommonDA commonDA = new HMCommonDA();

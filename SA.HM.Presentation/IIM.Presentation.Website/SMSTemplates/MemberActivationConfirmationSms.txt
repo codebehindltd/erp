@@ -1,0 +1,10 @@
+Dear ##Name##, 
+
+Your member account is activated with below information, 
+Member Id:  ##MembershipNumber## 
+Member Password: ##MemberPassword## 
+##SMSDocumentsMessage##
+
+Sales Team 
+##COMPANY## 
+Hotline: ##CONTACTNUMBER##

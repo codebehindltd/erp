@@ -171,7 +171,7 @@ namespace InnboardAPI.Controllers
             var result = await dbLogin.GetRoomReservationInformationForMobileApps(propertyId, transactionType, transactionId, fromDate, toDate);
             return Ok(result);
         }
-        
+
 
         [HttpPost]
         [AllowAnonymous]
@@ -190,31 +190,35 @@ namespace InnboardAPI.Controllers
                     ReservationId = tmpReservationId,
                 };
 
-                CommonDataAccess dbCommonDataAccess = new CommonDataAccess();
-                var companyInfo = await dbCommonDataAccess.GetCompanyInfo();
-
-                string documentsTextMessage = "Please provide all of your NID/ Driving License/ Passport Copy at the time of check-in.";
-                //HMCommonSetupBO commonSetupDocumentsTextMessageBO = new HMCommonSetupBO();
-                //commonSetupDocumentsTextMessageBO = commonSetupDA.GetCommonConfigurationInfo("RoomReservationSMSDocumentsMessage", "RoomReservationSMSDocumentsMessage");
-                //if (commonSetupDocumentsTextMessageBO.SetupId > 0)
-                //{
-                //    documentsTextMessage = commonSetupDocumentsTextMessageBO.Description;
-                //}
-
                 CommonDataAccess db = new CommonDataAccess();
-                var commonSetupBO = await db.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
-                string commonSetupBODescription = commonSetupBO.Description;
-                string[] dataArray = commonSetupBODescription.Split('~');
-                var smsGetway = dataArray[0];
-
-                var reservationBO = await dbLogin.GetRoomReservationInfoById(tmpReservationId);
-
-                //send msg 
-                SMSView sms = new SMSView
+                var commonSetupSMSAutoPostingBO = await db.GetCommonConfigurationInfo("SMSAutoPosting", "IsRoomReservationSMSAutoPostingEnable");
+                if (commonSetupSMSAutoPostingBO.SetupValue == "1")
                 {
-                    TempleteName = HMConstants.SMSTemplates.ReservationConfirmation
-                };
-                var singletoken = new Dictionary<string, string>
+                    CommonDataAccess dbCommonDataAccess = new CommonDataAccess();
+                    var companyInfo = await dbCommonDataAccess.GetCompanyInfo();
+
+                    string documentsTextMessage = "Please provide all of your NID/ Driving License/ Passport Copy at the time of check-in.";
+                    //HMCommonSetupBO commonSetupDocumentsTextMessageBO = new HMCommonSetupBO();
+                    //commonSetupDocumentsTextMessageBO = commonSetupDA.GetCommonConfigurationInfo("RoomReservationSMSDocumentsMessage", "RoomReservationSMSDocumentsMessage");
+                    //if (commonSetupDocumentsTextMessageBO.SetupId > 0)
+                    //{
+                    //    documentsTextMessage = commonSetupDocumentsTextMessageBO.Description;
+                    //}
+
+
+                    var commonSetupSendSMSBO = await db.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
+                    string commonSetupBODescription = commonSetupSendSMSBO.Description;
+                    string[] dataArray = commonSetupBODescription.Split('~');
+                    var smsGetway = dataArray[0];
+
+                    var reservationBO = await dbLogin.GetRoomReservationInfoById(tmpReservationId);
+
+                    //send msg 
+                    SMSView sms = new SMSView
+                    {
+                        TempleteName = HMConstants.SMSTemplates.ReservationConfirmation
+                    };
+                    var singletoken = new Dictionary<string, string>
                         {
                         {"COMPANY", companyInfo[0].CompanyName},
                         {"COMPANYADDRESS", companyInfo[0].CompanyAddress},
@@ -226,9 +230,11 @@ namespace InnboardAPI.Controllers
                         {"RoomNumber", reservationBO.RoomNumber },
                         {"SMSDocumentsMessage", documentsTextMessage }
                         };
-                
-                SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, roomReservationInfo.PhoneNumber, commonSetupBODescription);
-                // send msg end
+
+                    SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, roomReservationInfo.PhoneNumber, commonSetupBODescription);
+                    // send msg end
+
+                }
 
                 return Ok(result);
             }

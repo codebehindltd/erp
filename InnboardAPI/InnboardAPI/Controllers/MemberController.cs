@@ -39,29 +39,34 @@ namespace InnboardAPI.Controllers
             bool isSuccess = dbLogin.SaveMemMemberBasicInfoForMobileAppsRegistration(memberBasicInfo, out tmpMemberId);
             if (isSuccess)
             {
-                CommonDataAccess dbCommonDataAccess = new CommonDataAccess();
-                var companyInfo = await dbCommonDataAccess.GetCompanyInfo();
-
                 CommonDataAccess db = new CommonDataAccess();
-                var commonSetupBO = await db.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
-                string commonSetupBODescription = commonSetupBO.Description;
-                string[] dataArray = commonSetupBODescription.Split('~');
-                var smsGetway = dataArray[0];
-
-                //send msg 
-                SMSView sms = new SMSView
+                var commonSetupSMSAutoPostingBO = await db.GetCommonConfigurationInfo("SMSAutoPosting", "IsMemberRegistrationSMSAutoPostingEnable");
+                if (commonSetupSMSAutoPostingBO.SetupValue == "1")
                 {
-                    TempleteName = HMConstants.SMSTemplates.MemberRegistrationSms
-                };
-                var singletoken = new Dictionary<string, string>
+
+                    CommonDataAccess dbCommonDataAccess = new CommonDataAccess();
+                    var companyInfo = await dbCommonDataAccess.GetCompanyInfo();
+
+                    var commonSetupBO = await db.GetCommonConfigurationInfo("SendSMS", "SendSMSConfiguration");
+                    string commonSetupBODescription = commonSetupBO.Description;
+                    string[] dataArray = commonSetupBODescription.Split('~');
+                    var smsGetway = dataArray[0];
+
+                    //send msg 
+                    SMSView sms = new SMSView
+                    {
+                        TempleteName = HMConstants.SMSTemplates.MemberRegistrationSms
+                    };
+                    var singletoken = new Dictionary<string, string>
                         {
                         {"COMPANY", companyInfo[0].CompanyName},
                         {"COMPANYADDRESS", companyInfo[0].CompanyAddress},
                         {"CONTACTNUMBER", companyInfo[0].ContactNumber},
                         {"Name", memberBasicInfo.FullName}
                         };
-                SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, memberBasicInfo.MobileNumber, commonSetupBODescription);
-                // send msg end
+                    SmsHelper.SendSmsSingle(sms, singletoken, smsGetway, memberBasicInfo.MobileNumber, commonSetupBODescription);
+                    // send msg end
+                }
 
                 var responseMsg = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                 {

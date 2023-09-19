@@ -922,6 +922,7 @@
     <EmbeddedResource Include="POS\Reports\Rdlc\rptKotBill02.rdlc" />
     <Content Include="SMSTemplates\ReservationAmedmentSms.txt" />
     <Content Include="SMSTemplates\ReservationCancelSms.txt" />
+    <Content Include="SMSTemplates\MemberActivationConfirmationSms.txt" />
     <Content Include="SMSTemplates\RoomGuestCheckOutSms.txt" />
     <Content Include="SMSTemplates\ReservationConfirmationSms.txt" />
     <Content Include="StyleSheet\css\login.css" />

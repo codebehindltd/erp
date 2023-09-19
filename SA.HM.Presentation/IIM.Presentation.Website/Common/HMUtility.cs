@@ -170,7 +170,7 @@ namespace HotelManagement.Presentation.Website.Common
         }
         public string GetDropDownFirstAllValue()
         {
-            string value = "--- ALL ---";
+            string value = "--- All ---";
             return value;
         }
         public UserInformationBO GetCurrentApplicationUserInfo()
