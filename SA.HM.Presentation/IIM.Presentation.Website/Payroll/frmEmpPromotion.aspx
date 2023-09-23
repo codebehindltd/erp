@@ -51,6 +51,12 @@
                 dateFormat: innBoarDateFormat
             });
 
+            $("#ContentPlaceHolder1_txtEffectiveDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: innBoarDateFormat
+            });            
+
             $("#ContentPlaceHolder1_txtPromotionDateFrom").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -106,6 +112,8 @@
             var designationId = $("#ContentPlaceHolder1_ddlDesignationId").val();
             var gradeId = $("#ContentPlaceHolder1_ddlGradeId").val();
             var promotionDate = $("#ContentPlaceHolder1_txtPromotionDate").val();
+            var effectiveDate = $("#ContentPlaceHolder1_txtEffectiveDate").val();
+            
             var remarks = $("#ContentPlaceHolder1_txtRemarks").val();
 
             if (employeeId == "0") {
@@ -116,10 +124,6 @@
                 toastr.warning("Please Select Designation");
                 return false;
             }
-                //else if (gradeId == "0") {
-                //    toastr.warning("Please Select Grade");
-                //    return false;
-                //}
             else if (remarks == "0") {
                 toastr.warning("Please Select Remarks");
                 return false;
@@ -128,8 +132,12 @@
                 toastr.warning("Please Provide Promotion Date.");
                 return false;
             }
+            else if (effectiveDate == "") {
+                toastr.warning("Please Provide Effective Date.");
+                return false;
+            }
 
-            PageMethods.SaveEmployeePromotion(promotionId, employeeId, designationId, gradeId, promotionDate, remarks, OnEmployeePromotionSucceed, OnEmployeePromotionFailed);
+            PageMethods.SaveEmployeePromotion(promotionId, employeeId, designationId, gradeId, promotionDate, effectiveDate, remarks, OnEmployeePromotionSucceed, OnEmployeePromotionFailed);
 
             return false;
         }
@@ -155,12 +163,11 @@
             $("#ContentPlaceHolder1_employeeSearch_txtDepartment").val("");
             $("#ContentPlaceHolder1_employeeSearch_txtDesignation").val("");
             $("#ContentPlaceHolder1_employeeSearch_txtGrade").val("");
-
             $("#ContentPlaceHolder1_ddlDesignationId").val("0");
             $("#ContentPlaceHolder1_ddlGradeId").val("0");
             $("#ContentPlaceHolder1_txtPromotionDate").val("");
+            $("#ContentPlaceHolder1_txtEffectiveDate").val("");
             $("#ContentPlaceHolder1_txtRemarks").val("");
-
             $("#ContentPlaceHolder1_btnSave").val("Save");
         }
 
@@ -176,10 +183,8 @@
         }
         function ClearSearch() {
             $("#ContentPlaceHolder1_ddlSearchDepartment").val("0");
-
             $("#ContentPlaceHolder1_employeeSearchall_txtSearchEmployee").val("");
             $("#ContentPlaceHolder1_employeeSearchall_txtEmployeeName").val("");
-
             $("#ContentPlaceHolder1_employeeSearchall_hfEmployeeId").val("0");
             $("#ContentPlaceHolder1_employeeSearchall_hfEmployeeName").val("");
         }
@@ -223,6 +228,12 @@
                             </div>
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtPromotionDate" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="Label4" runat="server" class="control-label required-field" Text="Effective Date"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:TextBox ID="txtEffectiveDate" runat="server" CssClass="form-control"></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
@@ -322,24 +333,28 @@
                         <HeaderStyle HorizontalAlign="Left" />
                         <ItemStyle HorizontalAlign="Left" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="PromotionDateShow" HeaderText="Date" ItemStyle-Width="8%">
+                    <asp:BoundField DataField="PromotionDateShow" HeaderText="Prom. Date" ItemStyle-Width="6%">
                         <HeaderStyle HorizontalAlign="Left" />
                         <ItemStyle HorizontalAlign="Left" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="PreviousDesignation" HeaderText="Previous Designation"
+                    <asp:BoundField DataField="EffectiveDateDisplay" HeaderText="Eff. Date" ItemStyle-Width="6%">
+                        <HeaderStyle HorizontalAlign="Left" />
+                        <ItemStyle HorizontalAlign="Left" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="PreviousDesignation" HeaderText="Prev. Designation"
                         ItemStyle-Width="10%">
                         <HeaderStyle HorizontalAlign="Left" />
                         <ItemStyle HorizontalAlign="Left" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="CurrentDesignation" HeaderText="Current Designation" ItemStyle-Width="10%">
+                    <asp:BoundField DataField="CurrentDesignation" HeaderText="Curr. Designation" ItemStyle-Width="10%">
                         <HeaderStyle HorizontalAlign="Left" />
                         <ItemStyle HorizontalAlign="Left" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="PreviousGrade" HeaderText="Previous Grade" ItemStyle-Width="8%">
+                    <asp:BoundField DataField="PreviousGrade" HeaderText="Prev. Grade" ItemStyle-Width="6%">
                         <HeaderStyle HorizontalAlign="Left" />
                         <ItemStyle HorizontalAlign="Left" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="CurrentGrade" HeaderText="Current Grade" ItemStyle-Width="8%">
+                    <asp:BoundField DataField="CurrentGrade" HeaderText="Curr. Grade" ItemStyle-Width="6%">
                         <HeaderStyle HorizontalAlign="Left" />
                         <ItemStyle HorizontalAlign="Left" />
                     </asp:BoundField>

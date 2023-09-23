@@ -10,6 +10,7 @@ namespace HotelManagement.Entity.Payroll
         public Int64 PromotionId { get; set; }
         public int EmpId { get; set; }
         public DateTime PromotionDate { get; set; }
+        public string PromotionDateDisplay { get; set; }
         public int PreviousDesignationId { get; set; }
         public int PreviousGradeId { get; set; }
         public int CurrentDesignationId { get; set; }
@@ -20,7 +21,6 @@ namespace HotelManagement.Entity.Payroll
         public DateTime PromotionDateCreatedDate { get; set; }
         public int LastModifiedBy { get; set; }
         public DateTime LastModifiedDate { get; set; }
-
         public string EmployeeName { get; set; }
         public string EmpCode { get; set; }
         public string PreviousDesignation { get; set; }
@@ -29,5 +29,7 @@ namespace HotelManagement.Entity.Payroll
         public string CurrentGrade { get; set; }
         public string DepartmentName { get; set; }
         public string PromotionDateShow { get; set; }
+        public DateTime EffectiveDate { get; set; }
+        public string EffectiveDateDisplay { get; set; }
     }
 }

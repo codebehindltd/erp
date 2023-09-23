@@ -31,7 +31,8 @@ namespace HotelManagement.Data.Payroll
                                 increamentBO.Amount = Convert.ToDecimal(reader["Amount"].ToString());
                                 increamentBO.EmployeeName = reader["EmployeeName"].ToString();
                                 increamentBO.EmpId = Int32.Parse(reader["EmpId"].ToString());
-                                increamentBO.ShowIncrementDate = reader["ShowIncrementDate"].ToString();
+                                increamentBO.ShowIncrementDate = reader["ShowIncrementDate"].ToString();                                
+                                increamentBO.EffectiveDateDisplay = reader["EffectiveDateDisplay"].ToString();
                                 increamentBO.TotalAmount = Convert.ToDecimal(reader["TotalAmount"].ToString());
                                 increamentBO.IncrementAmount = Convert.ToDecimal(reader["IncrementAmount"].ToString());
                                 increamentBO.IncrementRate = Convert.ToDecimal(reader["IncrementRate"].ToString());
@@ -249,8 +250,8 @@ namespace HotelManagement.Data.Payroll
                     using (DbCommand command = dbSmartAspects.GetStoredProcCommand("SavePayrollEmpPromotion_SP"))
                     {
                         dbSmartAspects.AddInParameter(command, "@EmpId", DbType.Int32, promotion.EmpId);
-
                         dbSmartAspects.AddInParameter(command, "@PromotionDate", DbType.DateTime, promotion.PromotionDate);
+                        dbSmartAspects.AddInParameter(command, "@EffectiveDate", DbType.DateTime, promotion.EffectiveDate);
                         dbSmartAspects.AddInParameter(command, "@PreviousDesignationId", DbType.Int32, promotion.PreviousDesignationId);
                         dbSmartAspects.AddInParameter(command, "@PreviousGradeId", DbType.Int32, promotion.PreviousGradeId);
                         dbSmartAspects.AddInParameter(command, "@CurrentDesignationId", DbType.Int32, promotion.CurrentDesignationId);
@@ -286,11 +287,11 @@ namespace HotelManagement.Data.Payroll
                         dbSmartAspects.AddInParameter(command, "@PromotionId", DbType.Int64, promotion.PromotionId);
                         dbSmartAspects.AddInParameter(command, "@EmpId", DbType.Int32, promotion.EmpId);
                         dbSmartAspects.AddInParameter(command, "@PromotionDate", DbType.DateTime, promotion.PromotionDate);
+                        dbSmartAspects.AddInParameter(command, "@EffectiveDate", DbType.DateTime, promotion.EffectiveDate);
                         dbSmartAspects.AddInParameter(command, "@PreviousDesignationId", DbType.Int32, promotion.PreviousDesignationId);
                         dbSmartAspects.AddInParameter(command, "@PreviousGradeId", DbType.Int32, promotion.PreviousGradeId);
                         dbSmartAspects.AddInParameter(command, "@CurrentDesignationId", DbType.Int32, promotion.CurrentDesignationId);
                         dbSmartAspects.AddInParameter(command, "@CurrentGradeId", DbType.Int32, promotion.CurrentGradeId);
-                        //dbSmartAspects.AddInParameter(command, "@ApprovalStatus", DbType.String, promotion.ApprovalStatus);
                         dbSmartAspects.AddInParameter(command, "@Remarks", DbType.String, promotion.Remarks);
                         dbSmartAspects.AddInParameter(command, "@LastModifiedBy", DbType.Int32, promotion.LastModifiedBy);
 
@@ -419,6 +420,7 @@ namespace HotelManagement.Data.Payroll
                         ApprovalStatus = r.Field<string>("ApprovalStatus"),
                         Remarks = r.Field<string>("Remarks"),
                         PromotionDateShow = r.Field<string>("PromotionDateShow"),
+                        EffectiveDateDisplay = r.Field<string>("EffectiveDateDisplay"),
                         EmployeeName = r.Field<string>("EmployeeName"),
                         PreviousDesignation = r.Field<string>("PreviousDesignation"),
                         CurrentDesignation = r.Field<string>("CurrentDesignation"),
@@ -458,19 +460,19 @@ namespace HotelManagement.Data.Payroll
                         PromotionId = r.Field<Int64>("PromotionId"),
                         EmpId = r.Field<int>("EmpId"),
                         PromotionDate = r.Field<DateTime>("PromotionDate"),
+                        PromotionDateDisplay = r.Field<string>("PromotionDateDisplay"),
+                        EffectiveDateDisplay = r.Field<string>("EffectiveDateDisplay"),
                         PreviousDesignationId = r.Field<int>("PreviousDesignationId"),
                         PreviousGradeId = r.Field<int>("PreviousGradeId"),
                         CurrentDesignationId = r.Field<int>("CurrentDesignationId"),
                         CurrentGradeId = r.Field<int>("CurrentGradeId"),
                         ApprovalStatus = r.Field<string>("ApprovalStatus"),
                         Remarks = r.Field<string>("Remarks"),
-
                         EmployeeName = r.Field<string>("EmployeeName"),
                         PreviousDesignation = r.Field<string>("PreviousDesignation"),
                         CurrentDesignation = r.Field<string>("CurrentDesignation"),
                         PreviousGrade = r.Field<string>("PreviousGrade"),
                         CurrentGrade = r.Field<string>("CurrentGrade")
-
                     }).ToList();
                 }
             }
@@ -495,6 +497,7 @@ namespace HotelManagement.Data.Payroll
                         PromotionId = r.Field<Int64>("PromotionId"),
                         EmpId = r.Field<int>("EmpId"),
                         PromotionDate = r.Field<DateTime>("PromotionDate"),
+                        EffectiveDate = r.Field<DateTime>("EffectiveDate"),
                         PreviousDesignationId = r.Field<int>("PreviousDesignationId"),
                         PreviousGradeId = r.Field<int>("PreviousGradeId"),
                         CurrentDesignationId = r.Field<int>("CurrentDesignationId"),
@@ -604,6 +607,7 @@ namespace HotelManagement.Data.Payroll
                             IncrementMode = r.Field<string>("IncrementMode"),
                             Amount = r.Field<decimal>("Amount"),
                             EffectiveDate = r.Field<DateTime>("EffectiveDate"),
+                            EffectiveDateDisplay = r.Field<string>("EffectiveDateDisplay"),
                             Remarks = r.Field<string>("Remarks"),
                             ApprovedStatus = r.Field<string>("ApprovedStatus"),
                             EmpId = r.Field<int>("EmpId"),

@@ -13,6 +13,7 @@ namespace HotelManagement.Entity.Payroll
         public string IncrementMode { get; set; }
         public decimal Amount { get; set; }
         public DateTime EffectiveDate { get; set; }
+        public string EffectiveDateDisplay { get; set; }
         public string Remarks { get; set; }
         public string ApprovedStatus { get; set; }
         public int EmpId { get; set; }

@@ -177,12 +177,12 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 processDate = guestLedgerInfoBO.InhouseGuestLedgerDate;
 
-                if (dateTime.Date > processDate.Date)
-                {
-                    dateTime = processDate;
-                    this.txtDateIn.Text = hmUtility.GetStringFromDateTime(dateTime);
-                    this.txtDateOut.Text = hmUtility.GetStringFromDateTime(dateTime.AddDays(1));
-                }
+                //if (dateTime.Date > processDate.Date)
+                //{
+                //    dateTime = processDate;
+                //    this.txtDateIn.Text = hmUtility.GetStringFromDateTime(dateTime);
+                //    this.txtDateOut.Text = hmUtility.GetStringFromDateTime(dateTime.AddDays(1));
+                //}
             }
 
             hfMinCheckInDate.Value = hmUtility.GetStringFromDateTime(dateTime.Date);
@@ -449,11 +449,11 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 ImageButton imageActive = (ImageButton)e.Row.FindControl("imageActive");
                 ImageButton imgBillPreview = (ImageButton)e.Row.FindControl("ImgBillPreview");
                 ImageButton imgPreRegistrationCard = (ImageButton)e.Row.FindControl("ImgPreRegistrationCard");
-                ImageButton imgBillPreviewForMultiplePickUpDrop = (ImageButton)e.Row.FindControl("ImgBillPreviewForMultiplePickUpDrop");                
+                ImageButton imgBillPreviewForMultiplePickUpDrop = (ImageButton)e.Row.FindControl("ImgBillPreviewForMultiplePickUpDrop");
                 ImageButton imgRoomCurrentStatus = (ImageButton)e.Row.FindControl("ImgRoomCurrentStatus");
                 Label lblReservationStatusInfo = (Label)e.Row.FindControl("lblReservationStatusInfo");
                 Label lblPickUpDropStatusInfo = (Label)e.Row.FindControl("lblPickUpDropStatusInfo");
-                
+
                 Label lblGroupMasterId = (Label)e.Row.FindControl("lblGroupMasterId");
                 ImageButton imgGroupReservationLetter = (ImageButton)e.Row.FindControl("ImgGroupReservationLetter");
                 imgGroupReservationLetter.Visible = true;
@@ -4108,8 +4108,8 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                         rtnInfo.Pk = currentReservationNumber;
                         rtnInfo.PKey = pkArr;
                         rtnInfo.AlertMessage = CommonHelper.AlertInfo(AlertMessage.Save, AlertType.Success);
-                        
-                        //SendMail(ReservationId);
+
+                        // // // // SendMail(tmpReservationId); // Not Used
                         commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("SMSAutoPosting", "IsRoomReservationSMSAutoPostingEnable");
                         string IsSMSEnable = commonSetupBO.SetupValue;
                         if (IsSMSEnable == "1")
@@ -4238,7 +4238,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                     {
                         // // // HotelRoomReservationRoomDetail Table Related Process
                         roomReservationDA.UpdateHotelRoomReservationRoomDetail(RoomReservation.ReservationId);
-                        
+
                         commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("EmailAutoPosting", "IsRoomReservationEmailAutoPostingEnable");
                         string IsEmailEnable = commonSetupBO.SetupValue;
                         if (IsEmailEnable == "1")
@@ -5380,36 +5380,38 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             OTAResRetrieveRS rs = envBody.OTAResRetrieveRS;
             ReservationsList revList = rs.ReservationsList;
 
-            if (requestType == "ReservationDate")
+            if (rs.ReservationsList != null)
             {
-                //Done
-                returnData = revList.HotelReservation.CreateDateTime.ToString();
+                if (requestType == "ReservationDate")
+                {
+                    //Done
+                    returnData = revList.HotelReservation.CreateDateTime.ToString();
+                }
+                else if (requestType == "ReservationFromDate")
+                {
+                    //Done
+                    returnData = revList.HotelReservation.RoomStays.RoomStay.RatePlans.RatePlan.EffectiveDate.ToString();
+                }
+                else if (requestType == "ReservationToDate")
+                {
+                    //Done
+                    returnData = revList.HotelReservation.RoomStays.RoomStay.RatePlans.RatePlan.ExpireDate.ToString();
+                }
+                else if (requestType == "GuestName")
+                {
+                    returnData = revList.HotelReservation.ResGuests.ResGuest.Profiles.ProfileInfo.Profile.Customer.PersonName.GivenName.ToString() + " " + revList.HotelReservation.ResGuests.ResGuest.Profiles.ProfileInfo.Profile.Customer.PersonName.Surname.ToString();
+                }
+                else if (requestType == "RoomTypeCode")
+                {
+                    //Done
+                    returnData = revList.HotelReservation.RoomStays.RoomStay.RoomTypes.RoomType.RoomTypeCode;
+                }
+                else if (requestType == "RoomTypeRate")
+                {
+                    //Done
+                    returnData = revList.HotelReservation.RoomStays.RoomStay.RoomRates.RoomRate.Rates.Rate.Total.AmountAfterTax.ToString();
+                }
             }
-            else if (requestType == "ReservationFromDate")
-            {
-                //Done
-                returnData = revList.HotelReservation.RoomStays.RoomStay.RatePlans.RatePlan.EffectiveDate.ToString();
-            }
-            else if (requestType == "ReservationToDate")
-            {
-                //Done
-                returnData = revList.HotelReservation.RoomStays.RoomStay.RatePlans.RatePlan.ExpireDate.ToString();
-            }
-            else if (requestType == "GuestName")
-            {
-                returnData = revList.HotelReservation.ResGuests.ResGuest.Profiles.ProfileInfo.Profile.Customer.PersonName.GivenName.ToString() + " " + revList.HotelReservation.ResGuests.ResGuest.Profiles.ProfileInfo.Profile.Customer.PersonName.Surname.ToString();
-            }
-            else if (requestType == "RoomTypeCode")
-            {
-                //Done
-                returnData = revList.HotelReservation.RoomStays.RoomStay.RoomTypes.RoomType.RoomTypeCode;
-            }
-            else if (requestType == "RoomTypeRate")
-            {
-                //Done
-                returnData = revList.HotelReservation.RoomStays.RoomStay.RoomRates.RoomRate.Rates.Rate.Total.AmountAfterTax.ToString();
-            }
-
             return returnData;
         }
     }

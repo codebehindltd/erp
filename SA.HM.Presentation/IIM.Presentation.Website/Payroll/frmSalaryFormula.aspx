@@ -75,10 +75,12 @@
             if ($("#ContentPlaceHolder1_ddlTransactionType").val() == "Individual") {
                 $("#EmplyeeWiseSalaryFormula").show();
                 $("#GroupWiseSalaryFormula").hide();
+                $("#SalarySheetSpecialNotesDiv").show();
             }
             else {
                 $("#EmplyeeWiseSalaryFormula").hide();
                 $("#GroupWiseSalaryFormula").show();
+                $("#SalarySheetSpecialNotesDiv").hide();
             }
 
             var txtAmount = '<%=txtAmount.ClientID%>'
@@ -105,10 +107,12 @@
                 if ($(this).val() == "Individual") {
                     $("#EmplyeeWiseSalaryFormula").show();
                     $("#GroupWiseSalaryFormula").hide();
+                    $("#SalarySheetSpecialNotesDiv").show();
                 }
                 else {
                     $("#EmplyeeWiseSalaryFormula").hide();
                     $("#GroupWiseSalaryFormula").show();
+                    $("#SalarySheetSpecialNotesDiv").hide();
                 }
             });
 
@@ -507,7 +511,8 @@
                     }
                 }
 
-                PageMethods.SaveEmployeeWiseSalaryFormula(salaryFormula, salaryFormulaEdited, salaryFormulaDeleted, OnSaveEmployeeWiseSalaryFormulaSucceeded, OnSaveEmployeeWiseSalaryFormulaFailed);
+                var salarySheetSpecialNotes = $("#ContentPlaceHolder1_txtSalarySheetSpecialNotes").val();
+                PageMethods.SaveEmployeeWiseSalaryFormula(salaryFormula, salaryFormulaEdited, salaryFormulaDeleted, salarySheetSpecialNotes, OnSaveEmployeeWiseSalaryFormulaSucceeded, OnSaveEmployeeWiseSalaryFormulaFailed);
                 return false;
             }
 
@@ -608,11 +613,26 @@
         }
         function OnLodEmployeeWiseSalaryFormulaSucceeded(result) {
             $("#SalaryHeadEmployeeWiseContaainer").html(result);
-            GetEmployeeWiseSalaryFormulaHead();
+            GetEmployeeSalarySheetSpecialNotesInfo();
+            
         }
         function OnLodEmployeeWiseSalaryFormulaFailed(error) {
             toastr.warning("Error On Load. Please Try Again.");
         }
+
+        function GetEmployeeSalarySheetSpecialNotesInfo() {            
+            var employeeId = $("#ContentPlaceHolder1_searchEmployee_hfEmployeeId").val();
+            PageMethods.GetEmployeeSalarySheetSpecialNotes(employeeId, OnLoadEmployeeSalarySheetSpecialNotesSucceeded, OnLoadEmployeeSalarySheetSpecialNotesFailed);
+        }
+
+        function OnLoadEmployeeSalarySheetSpecialNotesSucceeded(result) {
+            
+            $("#ContentPlaceHolder1_txtSalarySheetSpecialNotes").val(result);
+            GetEmployeeWiseSalaryFormulaHead();
+        }
+
+        function OnLoadEmployeeSalarySheetSpecialNotesFailed() {
+        }   
 
         function GetEmployeeWiseSalaryFormulaHead() {
             var employeeId = $("#ContentPlaceHolder1_searchEmployee_hfEmployeeId").val();
@@ -673,7 +693,7 @@
                         $("#amntdb" + id).text(md.Amount);
                     }
                 }
-            }
+            }            
         }
 
         function OnLodEmployeeSalaryFormulaFailed() { }
@@ -698,8 +718,10 @@
             $("#EmployeeWiseSalaryFormulatbl tbody").html("");
             $("#ContentPlaceHolder1_ddlBasicGrossTransactionType").val("Grade");
             $("#ContentPlaceHolder1_ddlTransactionType").val("Grade");
+            $("#ContentPlaceHolder1_txtSalarySheetSpecialNotes").val("");
             $("#EmplyeeWiseSalaryFormula").hide();
             $("#GroupWiseSalaryFormula").show();
+            $("#SalarySheetSpecialNotesDiv").hide();
         }
     </script>
     <asp:HiddenField ID="hfGLCompanyId" runat="server"></asp:HiddenField>
@@ -843,6 +865,14 @@
                             <div class="form-group" style="margin-top: 10px;">
                                 <div id="SalaryHeadEmployeeWiseContaainer">
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="SalarySheetSpecialNotesDiv" style="display:none;">
+                            <div class="col-md-2">
+                                <asp:Label ID="Label3" runat="server" class="control-label" Text="Special Notes"></asp:Label>
+                            </div>
+                            <div class="col-md-10">
+                                <asp:TextBox ID="txtSalarySheetSpecialNotes" TextMode="MultiLine" runat="server" CssClass="form-control" TabIndex="10"></asp:TextBox>
                             </div>
                         </div>
                         <div class="row">

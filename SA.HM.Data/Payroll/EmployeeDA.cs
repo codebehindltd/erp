@@ -2629,8 +2629,8 @@ namespace HotelManagement.Data.Payroll
                         JoiningAgreement = r.Field<string>("JoiningAgreement"),
                         ServiceBond = r.Field<string>("ServiceBond"),
                         DSOAC = r.Field<string>("DSOAC"),
-                        ConfirmationLetter = r.Field<string>("ConfirmationLetter")
-
+                        ConfirmationLetter = r.Field<string>("ConfirmationLetter"),
+                        SalarySheetSpecialNotes = r.Field<string>("SalarySheetSpecialNotes")
                     }).FirstOrDefault();
                 }
             }
@@ -3366,73 +3366,7 @@ namespace HotelManagement.Data.Payroll
             }
 
             return empList;
-        }
-
-        //public List<EmpPayslipReportViewBO> GetEmpPayslipForReport(int empId, DateTime processDateFrom, DateTime processDateTo, int departmentId, int gradeId)
-        //{
-        //    List<EmpPayslipReportViewBO> empPayslip = new List<EmpPayslipReportViewBO>();
-
-        //    using (DbConnection conn = dbSmartAspects.CreateConnection())
-        //    {
-        //        using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("GetEmployeePayslip_SP"))
-        //        {
-        //            if (empId != 0)
-        //                dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empId);
-        //            else
-        //                dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, DBNull.Value);
-
-        //            if (departmentId != 0)
-        //                dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, departmentId);
-        //            else
-        //                dbSmartAspects.AddInParameter(cmd, "@DepartmentId", DbType.Int32, DBNull.Value);
-
-        //            if (gradeId != 0)
-        //                dbSmartAspects.AddInParameter(cmd, "@Grade", DbType.Int32, gradeId);
-        //            else
-        //                dbSmartAspects.AddInParameter(cmd, "@Grade", DbType.Int32, DBNull.Value);
-
-        //            dbSmartAspects.AddInParameter(cmd, "@ProcessDateFrom", DbType.DateTime, processDateFrom);
-        //            dbSmartAspects.AddInParameter(cmd, "@ProcessDateTo", DbType.DateTime, processDateTo);
-
-        //            DataSet ds = new DataSet();
-        //            dbSmartAspects.LoadDataSet(cmd, ds, "EmployeePayslip");
-        //            DataTable Table = ds.Tables["EmployeePayslip"];
-
-        //            empPayslip = Table.AsEnumerable().Select(r => new EmpPayslipReportViewBO
-        //            {
-        //                ProcessDate = r.Field<string>("ProcessDate"),
-        //                EmpId = r.Field<int>("EmpId"),
-        //                EmpCode = r.Field<string>("EmpCode"),
-        //                DisplayName = r.Field<string>("DisplayName"),
-        //                JoinDate = r.Field<string>("JoinDate"),
-        //                EmpTypeId = r.Field<int?>("EmpTypeId"),
-        //                EmpType = r.Field<string>("EmpType"),
-        //                Designation = r.Field<string>("Designation"),
-        //                Department = r.Field<string>("Department"),
-        //                WorkStation = r.Field<string>("WorkStation"),
-        //                TransactionType = r.Field<string>("TransactionType"),
-        //                SalaryType = r.Field<string>("SalaryType"),
-        //                SalaryHeadId = r.Field<int?>("SalaryHeadId"),
-        //                SalaryHeadNote = r.Field<string>("SalaryHeadNote"),
-        //                SalaryCategory = r.Field<string>("SalaryCategory"),
-        //                SalaryHead = r.Field<string>("SalaryHead"),
-        //                SalaryHeadAmount = r.Field<decimal?>("SalaryHeadAmount"),
-        //                IsBonusPaid = r.Field<bool?>("IsBonusPaid"),
-        //                BasicSalary = r.Field<decimal?>("BasicSalary"),
-        //                GrossSalary = r.Field<decimal?>("GrossSalary"),
-        //                DateFrom = r.Field<string>("DateFrom"),
-        //                DateTo = r.Field<string>("DateTo"),
-        //                PaidDays = r.Field<int?>("PaidDays"),
-        //                Project = r.Field<string>("Project"),
-        //                ResignationDate = r.Field<string>("ResignationDate")
-
-        //            }).ToList();
-        //        }
-        //    }
-
-        //    return empPayslip;
-        //}
-
+        }        
         public List<EmployeePayslipBO> GetEmployeePayslip(int glCompanyId, int empId, DateTime processDateFrom, DateTime processDateTo, short processYear, int departmentId, int gradeId, int workStationId, string currencyType)
         {
             List<EmployeePayslipBO> empPayslip = new List<EmployeePayslipBO>();

@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Presentation.Website.Payroll {
-    
-    
-    public partial class frmSalaryFormula {
-        
+namespace HotelManagement.Presentation.Website.Payroll
+{
+
+
+    public partial class frmSalaryFormula
+    {
+
         /// <summary>
         /// hfGLCompanyId control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfGLCompanyId;
-        
+
         /// <summary>
         /// hfGLProjectId control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfGLProjectId;
-        
+
         /// <summary>
         /// hfGLCompanyName control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfGLCompanyName;
-        
+
         /// <summary>
         /// hfGLProjectName control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfGLProjectName;
-        
+
         /// <summary>
         /// CommonDropDownHiddenField control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField CommonDropDownHiddenField;
-        
+
         /// <summary>
         /// selectedDependsOn control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField selectedDependsOn;
-        
+
         /// <summary>
         /// txtIsIndividual control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField txtIsIndividual;
-        
+
         /// <summary>
         /// txtEmployeeId control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField txtEmployeeId;
-        
+
         /// <summary>
         /// txtFormulaId control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField txtFormulaId;
-        
+
         /// <summary>
         /// C control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl C;
-        
+
         /// <summary>
         /// A control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl A;
-        
+
         /// <summary>
         /// B control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl B;
-        
+
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-        
+
         /// <summary>
         /// ddlBasicGrossTransactionType control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlBasicGrossTransactionType;
-        
+
         /// <summary>
         /// companyProjectUserControl control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::HotelManagement.Presentation.Website.HMCommon.UserControl.CompanyProjectUserControl companyProjectUserControl;
-        
+
         /// <summary>
         /// Label2 control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label2;
-        
+
         /// <summary>
         /// ddlDepartmentId control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDepartmentId;
-        
+
         /// <summary>
         /// Button1 control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
-        
+
         /// <summary>
         /// lblTransactionType control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTransactionType;
-        
+
         /// <summary>
         /// ddlTransactionType control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTransactionType;
-        
+
         /// <summary>
         /// lblGrade control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblGrade;
-        
+
         /// <summary>
         /// ddlGradeId control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlGradeId;
-        
+
         /// <summary>
         /// lblActiveStat control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblActiveStat;
-        
+
         /// <summary>
         /// ddlActiveStat control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlActiveStat;
-        
+
         /// <summary>
         /// lblSalaryHeadId control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSalaryHeadId;
-        
+
         /// <summary>
         /// ddlSalaryHeadId control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSalaryHeadId;
-        
+
         /// <summary>
         /// lblDependsOn control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDependsOn;
-        
+
         /// <summary>
         /// ddlDependsOn control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDependsOn;
-        
+
         /// <summary>
         /// lblAmount control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAmount;
-        
+
         /// <summary>
         /// txtAmount control.
         /// </summary>
@@ -281,7 +283,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAmount;
-        
+
         /// <summary>
         /// lblAmountType control.
         /// </summary>
@@ -290,7 +292,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAmountType;
-        
+
         /// <summary>
         /// ddlAmountType control.
         /// </summary>
@@ -299,7 +301,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlAmountType;
-        
+
         /// <summary>
         /// searchEmployee control.
         /// </summary>
@@ -308,7 +310,25 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::HotelManagement.Presentation.Website.HMCommon.UserControl.EmployeeSearchWithBasicInfo searchEmployee;
-        
+
+        /// <summary>
+        /// Label3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
+
+        /// <summary>
+        /// txtSalarySheetSpecialNotes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSalarySheetSpecialNotes;
+
         /// <summary>
         /// btnSave control.
         /// </summary>
@@ -317,7 +337,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
-        
+
         /// <summary>
         /// lblSearchGrade control.
         /// </summary>
@@ -326,7 +346,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSearchGrade;
-        
+
         /// <summary>
         /// ddlSearchGrade control.
         /// </summary>
@@ -335,7 +355,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSearchGrade;
-        
+
         /// <summary>
         /// lblSearchActiveStat control.
         /// </summary>
@@ -344,7 +364,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSearchActiveStat;
-        
+
         /// <summary>
         /// ddlSearchActiveStat control.
         /// </summary>
@@ -353,7 +373,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSearchActiveStat;
-        
+
         /// <summary>
         /// lblSearchSelaryHead control.
         /// </summary>
@@ -362,7 +382,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSearchSelaryHead;
-        
+
         /// <summary>
         /// ddlSearchSelaryHead control.
         /// </summary>
@@ -371,7 +391,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSearchSelaryHead;
-        
+
         /// <summary>
         /// btnSearch control.
         /// </summary>
@@ -380,7 +400,7 @@ namespace HotelManagement.Presentation.Website.Payroll {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearch;
-        
+
         /// <summary>
         /// gvSalaryFormula control.
         /// </summary>

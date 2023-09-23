@@ -12,14 +12,14 @@
 
     <script type="text/javascript">
 
-        
+
         var innBoarDateFormat = "";
         var OrderDetailsFlag = null;
         var vc = [];
         var UserInfoFromDB = null;
 
         //Page Refresh when idle for 10 seconds
-        var time = new Date().getTime(); 
+        var time = new Date().getTime();
         $(document.body).bind("mousemove keypress", function (e) {
             time = new Date().getTime();
         });
@@ -43,7 +43,7 @@
                 $("#hfUserInfoObj").val("");
             }
 
-            
+
             if (Cookies.getJSON('OrderDetails') != undefined) {
 
                 if ($("#ContentPlaceHolder1_hfIsChef").val() == "0") {
@@ -585,7 +585,7 @@
         }
         function OnLoadTableInfoFailed() { }
 
-        
+
 
 
 
@@ -675,9 +675,9 @@
             strTable += "</div>";
             strTable += "</fieldset> </div> ";
 
-            document.getElementById("TableCleanInfo").innerHTML=(strTable);
+            document.getElementById("TableCleanInfo").innerHTML = (strTable);
 
-            
+
         }
 
         function OpenTableShiptPanel(costCenterId, tableId) {
@@ -685,7 +685,7 @@
             var strTable = "";
 
 
-            document.getElementById("TableCleanInfo").innerHTML=(strTable);
+            document.getElementById("TableCleanInfo").innerHTML = (strTable);
 
             $("#TableCleanInfo").hide("slow");
             $("#TableShiftInfo").show("slow");
@@ -779,7 +779,7 @@
 
             return false;
         }
-        
+
         function BillReprintByBillNumber() {
 
             $("#TouchKeypad").dialog("close");
@@ -819,7 +819,7 @@
 
             return false;
         }
-        
+
         function PrintDocumentFunc(printTemplate) {
             if (printTemplate == "1") {
                 $('#btnPrintPreview').trigger('click');
@@ -1147,14 +1147,6 @@
         }
 
         function LoadKitchenInfo(KitchenId, Kitchen) {
-            //var pageNumber = 1;
-            //var IsCurrentOrPreviousPage = 1;
-            //var gridRecordsCount = KotInformationTable.data().length;
-            //$("#ContentPlaceHolder1_hfRestaurantKitchen").val(Kitchen);
-
-            //$("#ContentPlaceHolder1_hfRestaurantKitchenId").val(KitchenId);
-            //PageMethods.LoadKitchenInfo(KitchenId, gridRecordsCount, pageNumber, IsCurrentOrPreviousPage, OnLoadKitchenInfoSucceeded, OnLoadKitchenInfoFailed);
-
             window.location = "/POS/frmKitchenInformationDetails.aspx?kid=" + KitchenId + "&k=" + Kitchen;
             return false;
         }
@@ -1172,7 +1164,6 @@
             $("#ContentPlaceHolder1_lblDCountryName").text("");
             <%--$("#<%=lblDRemarks.ClientID %>").text("");--%>
             $("#<%=lblDPOSRemarks.ClientID %>").text("");
-
 
             $("#txtRoomNumber").text("");
             $("#ContentPlaceHolder1_lblRoomNumber").text("");
@@ -1195,11 +1186,9 @@
         var p = null;
 
     </script>
-
     <asp:HiddenField ID="hfBillId" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfOrderType" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfOrderCostcenterId" runat="server"></asp:HiddenField>
-
     <asp:HiddenField ID="hfCostcenterId" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfRoomId" runat="server"></asp:HiddenField>
     <asp:HiddenField ID="hfChangeRoomId" runat="server"></asp:HiddenField>
@@ -1207,19 +1196,15 @@
     <asp:HiddenField ID="IsRestaurantPaxConfirmationEnable" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="IsRestaurantWaiterConfirmationEnable" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfCostCenter" runat="server" Value=""></asp:HiddenField>
-    
     <asp:HiddenField ID="hfRestaurantKOTId" runat="server" Value=""></asp:HiddenField>
     <asp:HiddenField ID="hfItemName" runat="server" Value=""></asp:HiddenField>
-
     <asp:HiddenField ID="hfCostcenterIdForBillReprint" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfBillPrefixCostcentrwise" runat="server" Value=""></asp:HiddenField>
     <asp:HiddenField ID="hfIsCostCenterWiseBillNumberGenerate" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfIsBearar" runat="server" Value="0"></asp:HiddenField>
     <asp:HiddenField ID="hfBillOrderTakingWaiterId" runat="server" Value=""></asp:HiddenField>
     <asp:HiddenField ID="hfIsChef" runat="server" Value=""></asp:HiddenField>
-
     <asp:HiddenField ID="hfUserInfoObj" runat="server" Value="" ClientIDMode="Static" />
-
     <div id="displayBill" style="display: none;">
         <div class="row no-gutters">
             <div class="col-sm-12">
@@ -1230,14 +1215,12 @@
                         </div>
                     </div>
                 </div>
-
                 <iframe id="printDoc" name="printDoc" frameborder="0" style="overflow: hidden; width: 410px; height: 550px"></iframe>
                 <div id="bottomPrint">
                 </div>
             </div>
         </div>
     </div>
-
     <div id="serviceDecider" style="display: none;">
         <div class="form-horizontal">
             <div class="row no-gutters">
@@ -1246,7 +1229,6 @@
             </div>
         </div>
     </div>
-
     <div class="row no-gutters" id="CostCenterListDiv" runat="server">
         <div class="col-sm-12">
             <div class="panel panel-default">
@@ -1271,7 +1253,6 @@
             </div>
         </div>
     </div>
-
     <div class="row no-gutters" id="TokenListDiv" runat="server">
         <div class="col-sm-12">
             <div class="panel panel-default">
@@ -1295,7 +1276,6 @@
             </div>
         </div>
     </div>
-
     <div id="TableInfoDialogCashier" style="display: none;">
         <div id="TableContainerCahsierWise">
             <div id="myTabs">
@@ -1337,7 +1317,6 @@
             </div>
         </div>
     </div>
-
     <div id="TableInfoDialog" style="display: none;">
         <div class="form-horizontal">
             <div class="row">
@@ -1359,8 +1338,6 @@
             </div>
         </div>
     </div>
-
-    
     <div id="RoomInfoDialog" style="display: none;">
         <div class="form-horizontal">
             <div class="form-group">
@@ -1654,40 +1631,31 @@
                                     <table class="">
                                         <tr>
                                             <td class="col-sm-12">
-                                                <%--<asp:Label ID="lblDRemarks"
-                                                    runat="server" Text=""></asp:Label>
-                                                --%><asp:Label ID="lblDPOSRemarks"
-                                                    runat="server" Text=""></asp:Label>
+                                                <asp:Label ID="lblDPOSRemarks" runat="server" Text=""></asp:Label>
                                             </td>
                                         </tr>
                                     </table>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <%--<div id="tabPreferance">
-
-                    </div>--%>
                 </div>
-
                 <div class="form-horizontal">
                     <div class="form-group">
                         <div class="col-sm-2 roomIsRegistered" style="display: none;">
-                            <input type="button" id="RoomRestaurantOrder" value="Restaurant Order" class="btn btn-primary" onclick="ResumeBill('rom', 0, 0, 0)" />
+                            <input type="button" id="RoomRestaurantOrder" style="width: 100%" value="Take Order" class="btn btn-primary" onclick="ResumeBill('rom', 0, 0, 0)" />
                         </div>
                         <div class="col-sm-3 roomChangeContainer" style="display: none;">
-                            <input type="button" id="btnRoomChangeInfo" value="Change Room & Continue To Bill" class="btn btn-primary" onclick="ChangeRoomInfo()" />
+                            <input type="button" id="btnRoomChangeInfo" style="width: 100%" value="Change Room & Continue To Bill" class="btn btn-primary" onclick="ChangeRoomInfo()" />
                         </div>
                         <div class="col-sm-2" id="kotCleanForRoom" style="display: none;">
-                            <input type="button" value="Clean Order" class="TransactionalButton btn btn-primary" onclick="ClearRoomKot();" />
+                            <input type="button" value="Clean Order" style="width: 100%" class="TransactionalButton btn btn-primary" onclick="ClearRoomKot();" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div id="TouchKeypad" style="display: none;">
         <div class="form-horizontal">
             <div class="row no-gutters">
@@ -1707,7 +1675,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-group pull-right" style="padding-right: 14px;">
                 <div class="col-sm-12">
                     <input type="button" class="ui-keyboard-button ui-keyboard-48 ui-state-default ui-corner-all"
@@ -1716,10 +1683,7 @@
             </div>
         </div>
     </div>
-
-
     <div id="PaxAndWaiterDialog" style="display: none;">
-
         <div class="form-horizontal">
             <div class="panel panel-default">
                 <div class="row" style="height: 292px;">
@@ -1748,7 +1712,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="panel panel-footer" style="margin-top: 10px;">
                     <div class="row" style="margin-top: 5px;">
                         <div class="col-md-3"></div>
@@ -1765,7 +1728,5 @@
             </div>
         </div>
     </div>
-
-
 </asp:Content>
 

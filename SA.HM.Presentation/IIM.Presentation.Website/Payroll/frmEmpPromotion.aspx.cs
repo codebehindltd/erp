@@ -82,7 +82,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             }
         }
         [WebMethod]
-        public static ReturnInfo SaveEmployeePromotion(int promotionId, int employeeId, int designationId, int gradeId, string promotionDate, string remarks)
+        public static ReturnInfo SaveEmployeePromotion(int promotionId, int employeeId, int designationId, int gradeId, string promotionDate, string effectiveDate, string remarks)
         {
             ReturnInfo rtninf = new ReturnInfo();
 
@@ -106,9 +106,14 @@ namespace HotelManagement.Presentation.Website.Payroll
                 promotion.EmpId = employeeId;
                 if (!string.IsNullOrEmpty(promotionDate))
                 {
-                    //promotion.PromotionDate = Convert.ToDateTime(promotionDate);
                     promotion.PromotionDate = hmUtility.GetDateTimeFromString(promotionDate, userInformationBO.ServerDateFormat);
                 }
+
+                if (!string.IsNullOrEmpty(effectiveDate))
+                {
+                    promotion.EffectiveDate = hmUtility.GetDateTimeFromString(effectiveDate, userInformationBO.ServerDateFormat);
+                }
+
                 promotion.PreviousDesignationId = employee.DesignationId;
                 promotion.PreviousGradeId = employee.GradeId;
                 promotion.CurrentDesignationId = designationId;
@@ -332,6 +337,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             ddlDesignationId.SelectedValue = promotion.CurrentDesignationId.ToString();
             ddlGradeId.SelectedValue = promotion.CurrentGradeId.ToString();
             txtPromotionDate.Text = hmUtility.GetStringFromDateTime(promotion.PromotionDate);
+            txtEffectiveDate.Text = hmUtility.GetStringFromDateTime(promotion.EffectiveDate);
 
             ContentPlaceHolder mpContentPlaceHolder;
             UserControl empSearch;

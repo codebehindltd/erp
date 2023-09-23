@@ -505,7 +505,11 @@
                             <HeaderStyle HorizontalAlign="Left" />
                             <ItemStyle HorizontalAlign="Left" />
                         </asp:BoundField>
-                        <asp:BoundField DataField="IncrementDateDisplay" HeaderText="Date" ItemStyle-Width="8%">
+                        <asp:BoundField DataField="IncrementDateDisplay" HeaderText="Inc. Date" ItemStyle-Width="8%">
+                            <HeaderStyle HorizontalAlign="Left" />
+                            <ItemStyle HorizontalAlign="Left" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="EffectiveDateDisplay" HeaderText="Eff. Date" ItemStyle-Width="8%">
                             <HeaderStyle HorizontalAlign="Left" />
                             <ItemStyle HorizontalAlign="Left" />
                         </asp:BoundField>
@@ -513,7 +517,7 @@
                             <HeaderStyle HorizontalAlign="Left" />
                             <ItemStyle HorizontalAlign="Left" />
                         </asp:BoundField>
-                        <asp:BoundField DataField="IncrementMode" HeaderText="Increment Mode" ItemStyle-Width="8%">
+                        <asp:BoundField DataField="IncrementMode" HeaderText="Inc. Mode" ItemStyle-Width="8%">
                             <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
                         </asp:BoundField>

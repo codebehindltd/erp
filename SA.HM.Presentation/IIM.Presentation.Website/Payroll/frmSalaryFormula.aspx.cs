@@ -128,12 +128,13 @@ namespace HotelManagement.Presentation.Website.Payroll
                 salaryFormulaBO.AmountType = ddlAmountType.SelectedValue;
                 salaryFormulaBO.DependsOn = Int32.Parse(ddlDependsOn.SelectedValue);
                 salaryFormulaBO.SalaryHeadId = Int32.Parse(ddlSalaryHeadId.SelectedValue);
+                string salarySheetSpecialNotes = string.Empty;
 
                 if (string.IsNullOrWhiteSpace(txtFormulaId.Value))
                 {
                     int tmpUserInfoId = 0;
                     salaryFormulaBO.CreatedBy = userInformationBO.UserInfoId;
-                    Boolean status = salaryFormulaDA.SaveSalaryFormulaInfo(salaryFormulaBO, out tmpUserInfoId);
+                    Boolean status = salaryFormulaDA.SaveSalaryFormulaInfo(salaryFormulaBO, salarySheetSpecialNotes, out tmpUserInfoId);
 
                     if (status)
                     {
@@ -156,7 +157,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                     salaryFormulaBO.FormulaId = Convert.ToInt32(txtFormulaId.Value);
                     salaryFormulaBO.LastModifiedBy = userInformationBO.UserInfoId;
 
-                    Boolean status = salaryFormulaDA.UpdateSalaryFormulaInfo(salaryFormulaBO);
+                    Boolean status = salaryFormulaDA.UpdateSalaryFormulaInfo(salaryFormulaBO, salarySheetSpecialNotes);
 
                     if (status)
                     {
@@ -777,7 +778,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             return salaryFormula;
         }
         [WebMethod]
-        public static ReturnInfo SaveEmployeeWiseSalaryFormula(List<SalaryFormulaBO> salaryFormula, List<SalaryFormulaBO> salaryFormulaEdited, List<SalaryFormulaBO> salaryFormulaDeleted)
+        public static ReturnInfo SaveEmployeeWiseSalaryFormula(List<SalaryFormulaBO> salaryFormula, List<SalaryFormulaBO> salaryFormulaEdited, List<SalaryFormulaBO> salaryFormulaDeleted, string salarySheetSpecialNotes)
         {
             ReturnInfo rtninf = new ReturnInfo();
             bool status = false;
@@ -793,7 +794,7 @@ namespace HotelManagement.Presentation.Website.Payroll
 
                 if (salaryFormula.Count > 0)
                 {
-                    status = salaryDa.SaveSalaryFormulaInfo(salaryFormula, userInformationBO.UserInfoId, out tmpId);
+                    status = salaryDa.SaveSalaryFormulaInfo(salaryFormula, userInformationBO.UserInfoId, salarySheetSpecialNotes, out tmpId);
                     if (status == true)
                     {
                         rtninf.IsSuccess = true;
@@ -814,7 +815,7 @@ namespace HotelManagement.Presentation.Website.Payroll
 
                 if (salaryFormulaEdited.Count > 0)
                 {
-                    status = salaryDa.UpdateSalaryFormulaInfo(salaryFormulaEdited, userInformationBO.UserInfoId);
+                    status = salaryDa.UpdateSalaryFormulaInfo(salaryFormulaEdited, userInformationBO.UserInfoId, salarySheetSpecialNotes);
                     if (status == true)
                     {
                         rtninf.IsSuccess = true;
@@ -1015,6 +1016,21 @@ namespace HotelManagement.Presentation.Website.Payroll
             }
 
             return rtninf;
+        }
+        [WebMethod]
+        public static string GetEmployeeSalarySheetSpecialNotes(int employeeId)
+        {
+            string salarySheetSpecialNotes = string.Empty;
+
+            EmployeeDA employeeDa = new EmployeeDA();
+            EmployeeBO employeeBo = employeeDa.GetEmployeeInfoById(employeeId);
+            if (employeeBo.EmpId > 0)
+            {
+                salarySheetSpecialNotes = employeeBo.SalarySheetSpecialNotes;
+            }
+
+            return salarySheetSpecialNotes;
+
         }
     }
 }

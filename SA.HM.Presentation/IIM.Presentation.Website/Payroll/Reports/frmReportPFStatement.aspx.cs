@@ -47,16 +47,31 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
         }
         private void ControlShowHide()
         {
+            Boolean IsAdminUser = false;
             UserInformationBO userInformationBO = new UserInformationBO();
             userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
-            if (userInformationBO.IsAdminUser)
+            userInformationBO = System.Web.HttpContext.Current.Session["UserInformationBOSession"] as UserInformationBO;
+            // // // ------User Admin Authorization BO Session Information --------------------------------
+            #region User Admin Authorization
+            if (userInformationBO.UserInfoId == 1)
             {
-                EmployeeInformationDiv.Visible = true;
+                IsAdminUser = true;
             }
             else
             {
-                EmployeeInformationDiv.Visible = false;
+                List<SecurityUserAdminAuthorizationBO> adminAuthorizationList = new List<SecurityUserAdminAuthorizationBO>();
+                adminAuthorizationList = System.Web.HttpContext.Current.Session["UserAdminAuthorizationBOSession"] as List<SecurityUserAdminAuthorizationBO>;
+                if (adminAuthorizationList != null)
+                {
+                    if (adminAuthorizationList.Where(x => x.UserInfoId == userInformationBO.UserInfoId && x.ModuleId == 18).Count() > 0)
+                    {
+                        IsAdminUser = true;
+                    }
+                }
             }
+            #endregion
+
+            EmployeeInformationDiv.Visible = IsAdminUser;
         }
         private void LoadDepartment()
         {
@@ -129,18 +144,6 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 ddlEffectedMonth.Focus();
                 return;
             }
-            else if (ddlDepartment.SelectedValue == "0")
-            {
-                CommonHelper.AlertInfo(innboardMessage, AlertMessage.DropDownValidation + "Department.", AlertType.Warning);
-                ddlDepartment.Focus();
-                return;
-            }
-            else if (ddlEmployee.SelectedValue == "0")
-            {
-                CommonHelper.AlertInfo(innboardMessage, AlertMessage.DropDownValidation + "Employee.", AlertType.Warning);
-                ddlEmployee.Focus();
-                return;
-            }
             else
             {
                 dispalyReport = 1;
@@ -152,6 +155,19 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
 
                 if (userInformationBO.IsAdminUser)
                 {
+                    if (ddlDepartment.SelectedValue == "0")
+                    {
+                        CommonHelper.AlertInfo(innboardMessage, AlertMessage.DropDownValidation + "Department.", AlertType.Warning);
+                        ddlDepartment.Focus();
+                        return;
+                    }
+                    else if (ddlEmployee.SelectedValue == "0")
+                    {
+                        CommonHelper.AlertInfo(innboardMessage, AlertMessage.DropDownValidation + "Employee.", AlertType.Warning);
+                        ddlEmployee.Focus();
+                        return;
+                    }
+
                     if (ddlDepartment.SelectedIndex != 0)
                     {
                         departmentId = Convert.ToInt32(ddlDepartment.SelectedValue);
@@ -165,10 +181,9 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 {
                     empId = Convert.ToInt32(userInformationBO.EmpId);
                 }
-                
+
                 string selectedMonthRange = this.ddlEffectedMonth.SelectedValue.ToString();
                 processDateTo = Convert.ToDateTime(CommonHelper.SalaryDateTo(selectedMonthRange, ddlYear.SelectedValue));
-                //processDateTo = hmUtility.GetDateTimeFromString(CommonHelper.SalaryDateTo(selectedMonthRange, ddlYear.SelectedValue), userInformationBO.ServerDateFormat);
                 if (ddlYear.SelectedValue != "0")
                 {
                     year = Convert.ToInt32(ddlYear.SelectedValue);
@@ -194,7 +209,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 string telephoneNumber = string.Empty;
                 string hotLineNumber = string.Empty;
 
-                CompanyDA companyDA = new CompanyDA();                
+                CompanyDA companyDA = new CompanyDA();
                 List<CompanyBO> files = companyDA.GetCompanyInfo();
                 if (files[0].CompanyId > 0)
                 {
@@ -207,22 +222,6 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
 
                 List<ReportParameter> reportParam = new List<ReportParameter>();
 
-                //if (files[0].CompanyId > 0)
-                //{
-                //    reportParam.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
-                //    reportParam.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
-
-                //    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
-                //    {
-                //        reportParam.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
-                //    }
-                //    else
-                //    {
-                //        reportParam.Add(new ReportParameter("CompanyWeb", files[0].ContactNumber));
-                //    }
-                //}
-
-                
                 if (glCompanyId == 0)
                 {
                     if (empId != 0)

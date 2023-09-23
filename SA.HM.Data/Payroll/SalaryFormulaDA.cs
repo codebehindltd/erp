@@ -25,7 +25,7 @@ namespace HotelManagement.Data.Payroll
             fields = commonDA.GetCustomField(CustomFieldName, dropDownFirstValue);
             return fields;
         }
-        public bool SaveSalaryFormulaInfo(SalaryFormulaBO salaryFormulaBO, out int tmpUserInfoId)
+        public bool SaveSalaryFormulaInfo(SalaryFormulaBO salaryFormulaBO, string salarySheetSpecialNotes, out int tmpUserInfoId)
         {
             Boolean status = false;
 
@@ -37,6 +37,7 @@ namespace HotelManagement.Data.Payroll
                     {
                         dbSmartAspects.AddInParameter(command, "@TransactionType", DbType.String, salaryFormulaBO.TransactionType);
                         dbSmartAspects.AddInParameter(command, "@GradeIdOrEmployeeId", DbType.Int32, salaryFormulaBO.GradeIdOrEmployeeId);
+                        dbSmartAspects.AddInParameter(command, "@SalarySheetSpecialNotes", DbType.String, salarySheetSpecialNotes);
                         dbSmartAspects.AddInParameter(command, "@SalaryHeadId", DbType.Int32, salaryFormulaBO.SalaryHeadId);
                         dbSmartAspects.AddInParameter(command, "@DependsOn", DbType.Int32, salaryFormulaBO.DependsOn);
                         dbSmartAspects.AddInParameter(command, "@Amount", DbType.String, salaryFormulaBO.Amount);
@@ -57,7 +58,6 @@ namespace HotelManagement.Data.Payroll
             }
             return status;
         }
-
         public bool SaveBothContributionSalaryFormulaInfo(SalaryFormulaBO salaryFormulaBO, out int tmpUserInfoId)
         {
             Boolean status = false;
@@ -90,8 +90,7 @@ namespace HotelManagement.Data.Payroll
             }
             return status;
         }
-
-        public bool SaveSalaryFormulaInfo(List<SalaryFormulaBO> salaryFormula, int createdBy, out int tmpFormulaId)
+        public bool SaveSalaryFormulaInfo(List<SalaryFormulaBO> salaryFormula, int createdBy, string salarySheetSpecialNotes, out int tmpFormulaId)
         {
             Boolean status = false;
             tmpFormulaId = 0;
@@ -112,6 +111,7 @@ namespace HotelManagement.Data.Payroll
                             dbSmartAspects.AddInParameter(command, "@DependsOn", DbType.Int32, sal.DependsOn);
                             dbSmartAspects.AddInParameter(command, "@Amount", DbType.String, sal.Amount);
                             dbSmartAspects.AddInParameter(command, "@AmountType", DbType.String, sal.AmountType);
+                            dbSmartAspects.AddInParameter(command, "@SalarySheetSpecialNotes", DbType.String, salarySheetSpecialNotes);
                             dbSmartAspects.AddInParameter(command, "@ActiveStat", DbType.Boolean, sal.ActiveStat);
                             dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, createdBy);
 
@@ -129,7 +129,6 @@ namespace HotelManagement.Data.Payroll
             }
             return status;
         }
-
         public bool SaveBothContributionSalaryFormulaInfo(List<SalaryFormulaBO> salaryFormula, int createdBy, out int tmpFormulaId)
         {
             Boolean status = false;
@@ -168,8 +167,7 @@ namespace HotelManagement.Data.Payroll
             }
             return status;
         }
-
-        public bool UpdateSalaryFormulaInfo(SalaryFormulaBO salaryFormulaBO)
+        public bool UpdateSalaryFormulaInfo(SalaryFormulaBO salaryFormulaBO, string salarySheetSpecialNotes)
         {
             Boolean status = false;
             try
@@ -181,6 +179,7 @@ namespace HotelManagement.Data.Payroll
                         dbSmartAspects.AddInParameter(command, "@FormulaId", DbType.Int32, salaryFormulaBO.FormulaId);
                         dbSmartAspects.AddInParameter(command, "@TransactionType", DbType.String, salaryFormulaBO.TransactionType);
                         dbSmartAspects.AddInParameter(command, "@GradeIdOrEmployeeId", DbType.Int32, salaryFormulaBO.GradeIdOrEmployeeId);
+                        dbSmartAspects.AddInParameter(command, "@SalarySheetSpecialNotes", DbType.String, salarySheetSpecialNotes);
                         dbSmartAspects.AddInParameter(command, "@SalaryHeadId", DbType.Int32, salaryFormulaBO.SalaryHeadId);
                         dbSmartAspects.AddInParameter(command, "@DependsOn", DbType.Int32, salaryFormulaBO.DependsOn);
                         dbSmartAspects.AddInParameter(command, "@Amount", DbType.String, salaryFormulaBO.Amount);
@@ -197,7 +196,6 @@ namespace HotelManagement.Data.Payroll
             }
             return status;
         }
-
         public bool UpdateBothContributionSalaryFormulaInfo(SalaryFormulaBO salaryFormulaBO)
         {
             Boolean status = false;
@@ -226,8 +224,7 @@ namespace HotelManagement.Data.Payroll
             }
             return status;
         }
-
-        public bool UpdateSalaryFormulaInfo(List<SalaryFormulaBO> salaryFormula, int updatedBy)
+        public bool UpdateSalaryFormulaInfo(List<SalaryFormulaBO> salaryFormula, int updatedBy, string salarySheetSpecialNotes)
         {
             Boolean status = false;
 
@@ -248,6 +245,7 @@ namespace HotelManagement.Data.Payroll
                             dbSmartAspects.AddInParameter(command, "@DependsOn", DbType.Int32, sal.DependsOn);
                             dbSmartAspects.AddInParameter(command, "@Amount", DbType.String, sal.Amount);
                             dbSmartAspects.AddInParameter(command, "@AmountType", DbType.String, sal.AmountType);
+                            dbSmartAspects.AddInParameter(command, "@SalarySheetSpecialNotes", DbType.String, salarySheetSpecialNotes);
                             dbSmartAspects.AddInParameter(command, "@ActiveStat", DbType.Boolean, sal.ActiveStat);
                             dbSmartAspects.AddInParameter(command, "@LastModifiedBy", DbType.Int32, updatedBy);
                             status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
@@ -260,8 +258,7 @@ namespace HotelManagement.Data.Payroll
                 throw ex;
             }
             return status;
-        }
-
+        }        
         public bool UpdateBothContributionSalaryFormulaInfo(List<SalaryFormulaBO> salaryFormula, int updatedBy)
         {
             Boolean status = false;
@@ -296,7 +293,6 @@ namespace HotelManagement.Data.Payroll
             }
             return status;
         }
-
         public bool DeleteSalaryFormulaInfo(List<SalaryFormulaBO> salaryFormula)
         {
             Boolean status = false;
@@ -353,7 +349,6 @@ namespace HotelManagement.Data.Payroll
             }
             return status;
         }
-
         public SalaryFormulaBO getSalaryFormulaInfoById(int salaryFormulaId)
         {
             SalaryFormulaBO salaryFormulaBO = new SalaryFormulaBO();
@@ -392,7 +387,6 @@ namespace HotelManagement.Data.Payroll
             }
             return salaryFormulaBO;
         }
-
         public SalaryFormulaBO GetBothContributionSalaryFormulaInfoById(int salaryFormulaId)
         {
             SalaryFormulaBO salaryFormulaBO = new SalaryFormulaBO();
@@ -551,7 +545,6 @@ namespace HotelManagement.Data.Payroll
             }
             return salaryFormula;
         }
-
         public List<SalaryFormulaBO> GetSalaryFormulaByEmpGradeId(int empId)
         {
             List<SalaryFormulaBO> salaryFormula = new List<SalaryFormulaBO>();
@@ -624,7 +617,6 @@ namespace HotelManagement.Data.Payroll
             }
             return salaryFormula;
         }
-
         public List<SalaryFormulaBO> GetSalaryFormulaInfo()
         {
             List<SalaryFormulaBO> salaryFormulaList = new List<SalaryFormulaBO>();
@@ -726,7 +718,6 @@ namespace HotelManagement.Data.Payroll
             }
             return salaryFormulaList;
         }
-
         public List<SalaryFormulaBO> GetBothContributionSalaryFormulaInfoBySearchCritaria(SalaryFormulaBO salaryFormula)
         {
             string searchCriteria = string.Empty;
@@ -873,7 +864,6 @@ namespace HotelManagement.Data.Payroll
             }
             return Where;
         }
-
         public bool UpdateEmployeeOrGradeWiseBasicGrossSalary(List<EmpGradeBO> grade, List<EmployeeBO> employee, string transactionType)
         {
             Boolean status = false;
