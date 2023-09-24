@@ -11,6 +11,7 @@ namespace HotelManagement.Entity.Payroll
         public string SalaryHead { get; set; }        
         public string SalaryType { get; set; }
         public string ContributionType { get; set; }
+        public string VoucherMode { get; set; }
         public long NodeId { get; set; }
         public string TransactionType { get; set; }
         public DateTime? EffectedMonth { get; set; }

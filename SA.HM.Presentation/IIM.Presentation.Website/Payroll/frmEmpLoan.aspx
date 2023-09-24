@@ -25,6 +25,13 @@
 
             $("#myTabs").tabs();
 
+            $("#ContentPlaceHolder1_ddlLoanPaymentFromAccountHeadId").select2({
+                tags: "true",
+                placeholder: "--- Please Select ---",
+                allowClear: true,
+                width: "99.75%"
+            });
+
             if ($("#InnboardMessageHiddenField").val() != "") {
                 CommonHelper.AlertMessage(JSON.parse($("#InnboardMessageHiddenField").val()));
                 $("#InnboardMessageHiddenField").val("");
@@ -325,9 +332,7 @@
         function OnApprovalSucceed(result) {
             if (result.IsSuccess) {
                 CommonHelper.AlertMessage(result.AlertMessage);
-
-                LoadNotReceivedRequisitionOrder();
-                SearchOutOrder($("#GridPagingContainer").find("li.active").index(), 1);
+                GridPaging($("#GridPagingContainer").find("li.active").index(), 1);                
             }
             else {
                 CommonHelper.AlertMessage(result.AlertMessage);
@@ -367,6 +372,7 @@
             $("#ContentPlaceHolder1_txtLoanTakenForPeriod").val(result.LoanTakenForPeriod);
             $("#ContentPlaceHolder1_ddlLoanTakenForMonthOrYear").val(result.LoanTakenForMonthOrYear);
             $("#ContentPlaceHolder1_txtLoanAmount").val(result.LoanAmount);
+            $("#ContentPlaceHolder1_txtRemarks").val(result.Remarks);
 
             $("#ContentPlaceHolder1_txtInterestAmount").val(result.InterestAmount);
             $("#ContentPlaceHolder1_txtPerInstallLoanAmount").val(result.PerInstallLoanAmount);
@@ -376,6 +382,8 @@
             $("#ContentPlaceHolder1_hfInterestAmount").val(result.InterestAmount);
             $("#ContentPlaceHolder1_hfPerInstallLoanAmount").val(result.PerInstallLoanAmount);
             $("#ContentPlaceHolder1_hfPerInstallInterestAmount").val(result.PerInstallInterestAmount);
+
+            $("#ContentPlaceHolder1_ddlLoanPaymentFromAccountHeadId").val(result.LoanPaymentFromAccountHeadId);
 
             $("#ContentPlaceHolder1_txtLoanDate").val(GetStringFromDateTime(result.LoanDate));
 
@@ -482,6 +490,10 @@
             }
             else if ($("#ContentPlaceHolder1_txtLoanDate").val() == "") {
                 toastr.warning("Please give loan date");
+                return false;
+            }
+            else if ($("#ContentPlaceHolder1_ddlLoanPaymentFromAccountHeadId").val() == "0") {
+                toastr.warning("Please select Loan From");
                 return false;
             }
             else if ($("#ContentPlaceHolder1_txtRemarks").val() == "") {
@@ -796,6 +808,15 @@
                             </div>
                             <div class="col-md-4">
                                 <asp:TextBox ID="txtLoanDate" CssClass="form-control" runat="server"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <asp:Label ID="Label4" runat="server" class="control-label required-field" Text="Loan From"></asp:Label>
+                            </div>
+                            <div class="col-md-10">
+                                <asp:DropDownList ID="ddlLoanPaymentFromAccountHeadId" runat="server" CssClass="form-control" TabIndex="27">
+                                </asp:DropDownList>
                             </div>
                         </div>
                         <div class="form-group">

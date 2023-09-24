@@ -1212,16 +1212,16 @@
                     glProjectId = 0;
                 }
 
-                //if (glCompanyId == "0") {
-                //    $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").focus();
-                //    toastr.warning("Please Select Company.");
-                //    return false;
-                //}
-                //if (glProjectId == "0") {
-                //    $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").focus();
-                //    toastr.warning("Please Select Project.");
-                //    return false;
-                //}
+                if (glCompanyId == "0") {
+                    $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLCompany").focus();
+                    toastr.warning("Please Select Company.");
+                    return false;
+                }
+                if (glProjectId == "0") {
+                    $("#ContentPlaceHolder1_companyProjectUserControl_ddlGLProject").focus();
+                    toastr.warning("Please Select Project.");
+                    return false;
+                }
 
             }
 

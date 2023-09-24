@@ -191,6 +191,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                 }
 
                 salaryHeadBO.ContributionType = ddlContributionType.SelectedValue;
+                salaryHeadBO.VoucherMode = ddlVoucherMode.SelectedValue;
                 salaryHeadBO.ActiveStat = ddlActiveStat.SelectedIndex == 0 ? true : false;
 
                 if (string.IsNullOrWhiteSpace(txtSalaryHeadId.Value))
@@ -257,6 +258,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             ddlShowOnlyAllownaceDeductionPage.SelectedIndex = 0;
             ddlSalaryType.SelectedIndex = 0;
             ddlTransactionType.SelectedIndex = 0;
+            ddlVoucherMode.SelectedIndex = 0;
             txtSalaryHead.Text = string.Empty;
             btnSave.Text = "Save";
             txtSalaryHead.Focus();
@@ -330,6 +332,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             ddlSalaryType.SelectedValue = salaryHeadBO.SalaryType;
             ddlTransactionType.SelectedValue = salaryHeadBO.TransactionType;
             ddlContributionType.SelectedValue = salaryHeadBO.ContributionType;
+            ddlVoucherMode.SelectedValue = salaryHeadBO.VoucherMode;
             ddlNodeId.SelectedValue = salaryHeadBO.NodeId.ToString();
         }
         public int DuplicateCheckDynamicaly(string fieldName, string fieldValue, int isUpdate)

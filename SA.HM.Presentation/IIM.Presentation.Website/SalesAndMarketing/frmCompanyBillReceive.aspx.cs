@@ -43,7 +43,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
 
             if (!IsPostBack)
             {
-                //companyProjectUserControl.ddlFirstValueVar = "select";
+                companyProjectUserControl.ddlFirstValueVar = "select";
                 innboardMessage = (HiddenField)Master.FindControl("InnboardMessageHiddenField");
                 Random rd = new Random();
                 int seatingId = rd.Next(100000, 999999);

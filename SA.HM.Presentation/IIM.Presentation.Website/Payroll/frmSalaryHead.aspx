@@ -230,29 +230,19 @@
                                     TabIndex="6">
                                 </asp:DropDownList>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-2">
-                                <asp:Label ID="lblActiveStat" runat="server" class="control-label" Text="Status"></asp:Label>
-                            </div>
-                            <div class="col-md-4">
-                                <asp:DropDownList ID="ddlActiveStat" runat="server" CssClass="form-control"
-                                    TabIndex="5">
-                                    <asp:ListItem Value="0">Active</asp:ListItem>
-                                    <asp:ListItem Value="1">Inactive</asp:ListItem>
-                                </asp:DropDownList>
-                            </div>
-                            <div class="col-md-2">
-                                <asp:Label ID="lblSalaryCategory" runat="server" class="control-label" Text="Show Only Allownace Deduction Page"></asp:Label>
-                            </div>
-                            <div class="col-md-4">
-                                <asp:DropDownList ID="ddlShowOnlyAllownaceDeductionPage" runat="server" CssClass="form-control" TabIndex="2">
-                                    <asp:ListItem Value="0">Not Show</asp:ListItem>
-                                    <asp:ListItem Value="1">Show</asp:ListItem>
-                                </asp:DropDownList>
-                            </div>
-                        </div>
+                        </div>                        
                         <div class="form-group" id="ContributionTypeDiv">
+                            <div class="col-md-2">
+                                <asp:Label ID="Label3" runat="server" class="control-label required-field" Text="Voucher Mode"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:DropDownList ID="ddlVoucherMode" runat="server" CssClass="form-control"
+                                    TabIndex="4">
+                                    <asp:ListItem Value="0">--- Please Select ---</asp:ListItem>
+                                    <asp:ListItem Value="Debit">Debit</asp:ListItem>
+                                    <asp:ListItem Value="Credit">Credit</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
                             <div class="col-md-2">
                                 <asp:Label ID="Label2" runat="server" class="control-label required-field" Text="Contribution Type"></asp:Label>
                             </div>
@@ -263,6 +253,27 @@
                                     <asp:ListItem Value="Company">Company</asp:ListItem>
                                     <asp:ListItem Value="Employee">Employee</asp:ListItem>
                                     <asp:ListItem Value="Both">Company & Employee</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>                            
+                        </div>
+                        <div class="form-group">                            
+                            <div class="col-md-2">
+                                <asp:Label ID="lblSalaryCategory" runat="server" class="control-label" Text="Show Only Allownace Deduction Page"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:DropDownList ID="ddlShowOnlyAllownaceDeductionPage" runat="server" CssClass="form-control" TabIndex="2">
+                                    <asp:ListItem Value="0">Not Show</asp:ListItem>
+                                    <asp:ListItem Value="1">Show</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                            <div class="col-md-2">
+                                <asp:Label ID="lblActiveStat" runat="server" class="control-label" Text="Status"></asp:Label>
+                            </div>
+                            <div class="col-md-4">
+                                <asp:DropDownList ID="ddlActiveStat" runat="server" CssClass="form-control"
+                                    TabIndex="5">
+                                    <asp:ListItem Value="0">Active</asp:ListItem>
+                                    <asp:ListItem Value="1">Inactive</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
                         </div>

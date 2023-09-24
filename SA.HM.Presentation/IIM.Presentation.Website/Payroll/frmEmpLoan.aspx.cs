@@ -14,6 +14,8 @@ using HotelManagement.Data.Payroll;
 using HotelManagement.Presentation.Website.Common;
 using HotelManagement.Entity.UserInformation;
 using HotelManagement.Data.HMCommon;
+using HotelManagement.Data.GeneralLedger;
+using HotelManagement.Entity.GeneralLedger;
 
 namespace HotelManagement.Presentation.Website.Payroll
 {
@@ -38,7 +40,7 @@ namespace HotelManagement.Presentation.Website.Payroll
                 CheckObjectPermission();
                 LoadUserInformation();
                 GetEmpLoanSetupInformation();
-
+                LoadLoanPaymentFromAccountHead();
                 if (Session["EditedLoanId"] != null)
                 {
                     hfLoanId.Value = Session["EditedLoanId"].ToString();
@@ -88,9 +90,12 @@ namespace HotelManagement.Presentation.Website.Payroll
                 //loan.LoanTakenForPeriod = Convert.ToInt32(ddlLoanTakenForPeriod.SelectedValue);
                 loan.LoanTakenForPeriod = Convert.ToInt32(txtLoanTakenForPeriod.Text);
                 loan.LoanTakenForMonthOrYear = ddlLoanTakenForMonthOrYear.SelectedValue;
+                loan.Remarks = txtRemarks.Text;
 
                 loan.PerInstallLoanAmount = Convert.ToDecimal(hfPerInstallLoanAmount.Value);
                 loan.PerInstallInterestAmount = Convert.ToDecimal(hfPerInstallInterestAmount.Value);
+
+                loan.LoanPaymentFromAccountHeadId = Convert.ToInt32(ddlLoanPaymentFromAccountHeadId.SelectedValue);
 
                 if (ddlCheckedBy.SelectedIndex != 0)
                 {
@@ -196,7 +201,25 @@ namespace HotelManagement.Presentation.Website.Payroll
         }
 
         //************************ User Defined Function ********************//
+        private void LoadLoanPaymentFromAccountHead()
+        {
+            HMCommonDA hmCommonDA = new HMCommonDA();
+            NodeMatrixDA entityDA = new NodeMatrixDA();
+            List<NodeMatrixBO> entityBOList = new List<NodeMatrixBO>();
+            entityBOList = entityDA.GetNodeMatrixInfoByAncestorNodeIdList("16").Where(x => x.IsTransactionalHead == true).ToList();
+            //entityBOList = entityDA.GetActiveNodeMatrixInfo().Where(x => x.IsTransactionalHead == true).ToList();
 
+            ListItem itemBank = new ListItem();
+            itemBank.Value = "0";
+            itemBank.Text = hmUtility.GetDropDownFirstValue();
+
+            ddlLoanPaymentFromAccountHeadId.DataSource = entityBOList;
+            ddlLoanPaymentFromAccountHeadId.DataTextField = "HeadWithCode";
+            ddlLoanPaymentFromAccountHeadId.DataValueField = "NodeId";
+            ddlLoanPaymentFromAccountHeadId.DataBind();
+
+            ddlLoanPaymentFromAccountHeadId.Items.Insert(0, itemBank);
+        }
         private void GetEmpLoanSetupInformation()
         {
             EmpLoanDA loan = new EmpLoanDA();
@@ -311,6 +334,7 @@ namespace HotelManagement.Presentation.Website.Payroll
             //ddlLoanTakenForPeriod.SelectedIndex = 0;
             txtLoanTakenForPeriod.Text = string.Empty;
             ddlLoanTakenForMonthOrYear.SelectedIndex = 0;
+            ddlLoanPaymentFromAccountHeadId.SelectedIndex = 0;
             this.btnSave.Text = "Save";
 
             ContentPlaceHolder mpContentPlaceHolder;

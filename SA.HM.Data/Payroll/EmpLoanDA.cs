@@ -40,6 +40,8 @@ namespace HotelManagement.Data.Payroll
                             dbSmartAspects.AddInParameter(cmd, "@LoanTakenForMonthOrYear", DbType.String, empLoan.LoanTakenForMonthOrYear);
                             dbSmartAspects.AddInParameter(cmd, "@PerInstallLoanAmount", DbType.Decimal, empLoan.PerInstallLoanAmount);
                             dbSmartAspects.AddInParameter(cmd, "@PerInstallInterestAmount", DbType.Decimal, empLoan.PerInstallInterestAmount);
+                            dbSmartAspects.AddInParameter(cmd, "@LoanPaymentFromAccountHeadId", DbType.Int32, empLoan.LoanPaymentFromAccountHeadId);
+                            dbSmartAspects.AddInParameter(cmd, "@Remarks", DbType.String, empLoan.Remarks);
                             dbSmartAspects.AddInParameter(cmd, "@CheckedBy", DbType.Int32, empLoan.CheckedBy);
                             dbSmartAspects.AddInParameter(cmd, "@ApprovedBy", DbType.Int32, empLoan.ApprovedBy);
                             dbSmartAspects.AddInParameter(cmd, "@LoanDate", DbType.DateTime, empLoan.LoanDate);
@@ -99,6 +101,8 @@ namespace HotelManagement.Data.Payroll
                             dbSmartAspects.AddInParameter(cmd, "@LoanTakenForMonthOrYear", DbType.String, empLoan.LoanTakenForMonthOrYear);
                             dbSmartAspects.AddInParameter(cmd, "@PerInstallLoanAmount", DbType.Decimal, empLoan.PerInstallLoanAmount);
                             dbSmartAspects.AddInParameter(cmd, "@PerInstallInterestAmount", DbType.Decimal, empLoan.PerInstallInterestAmount);
+                            dbSmartAspects.AddInParameter(cmd, "@LoanPaymentFromAccountHeadId", DbType.Int32, empLoan.LoanPaymentFromAccountHeadId);
+                            dbSmartAspects.AddInParameter(cmd, "@Remarks", DbType.String, empLoan.Remarks);
                             dbSmartAspects.AddInParameter(cmd, "@CheckedBy", DbType.Int32, empLoan.CheckedBy);
                             dbSmartAspects.AddInParameter(cmd, "@ApprovedBy", DbType.Int32, empLoan.ApprovedBy);
                             dbSmartAspects.AddInParameter(cmd, "@LoanDate", DbType.DateTime, empLoan.LoanDate);
@@ -212,6 +216,7 @@ namespace HotelManagement.Data.Payroll
                         LoanTakenForMonthOrYear = r.Field<string>("LoanTakenForMonthOrYear"),
                         PerInstallLoanAmount = r.Field<decimal>("PerInstallLoanAmount"),
                         PerInstallInterestAmount = r.Field<decimal>("PerInstallInterestAmount"),
+                        LoanPaymentFromAccountHeadId = r.Field<Int32>("LoanPaymentFromAccountHeadId"),
                         LoanDate = r.Field<DateTime>("LoanDate"),
                         LoanStatus = r.Field<string>("LoanStatus"),
                         ApprovedStatus = r.Field<string>("ApprovedStatus"),

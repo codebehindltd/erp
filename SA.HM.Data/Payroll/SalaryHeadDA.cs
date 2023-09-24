@@ -99,6 +99,7 @@ namespace HotelManagement.Data.Payroll
                                 salaryHeadBO.NodeId = Convert.ToInt64(reader["NodeId"]);
                                 salaryHeadBO.TransactionType = reader["TransactionType"].ToString();
                                 salaryHeadBO.ContributionType = reader["ContributionType"].ToString();
+                                salaryHeadBO.VoucherMode = reader["VoucherMode"].ToString();
                                 salaryHeadBO.ActiveStat = Convert.ToBoolean(reader["ActiveStat"]);
                                 salaryHeadBO.ActiveStatus = reader["ActiveStatus"].ToString();
                             }
@@ -203,6 +204,7 @@ namespace HotelManagement.Data.Payroll
                         dbSmartAspects.AddInParameter(command, "@NodeId", DbType.Int64, salaryHeadBO.NodeId);
                         dbSmartAspects.AddInParameter(command, "@TransactionType", DbType.String, salaryHeadBO.TransactionType);
                         dbSmartAspects.AddInParameter(command, "@ContributionType", DbType.String, salaryHeadBO.ContributionType);
+                        dbSmartAspects.AddInParameter(command, "@VoucherMode", DbType.String, salaryHeadBO.VoucherMode);
                         dbSmartAspects.AddInParameter(command, "@EffectedMonth", DbType.DateTime, salaryHeadBO.EffectedMonth);
                         dbSmartAspects.AddInParameter(command, "@ActiveStat", DbType.Boolean, salaryHeadBO.ActiveStat);
                         dbSmartAspects.AddInParameter(command, "@CreatedBy", DbType.Int32, salaryHeadBO.CreatedBy);
@@ -236,6 +238,7 @@ namespace HotelManagement.Data.Payroll
                         dbSmartAspects.AddInParameter(command, "@NodeId", DbType.Int64, salaryHeadBO.NodeId);
                         dbSmartAspects.AddInParameter(command, "@TransactionType", DbType.String, salaryHeadBO.TransactionType);
                         dbSmartAspects.AddInParameter(command, "@ContributionType", DbType.String, salaryHeadBO.ContributionType);
+                        dbSmartAspects.AddInParameter(command, "@VoucherMode", DbType.String, salaryHeadBO.VoucherMode);
                         dbSmartAspects.AddInParameter(command, "@EffectedMonth", DbType.DateTime, salaryHeadBO.EffectedMonth);
                         dbSmartAspects.AddInParameter(command, "@ActiveStat", DbType.Boolean, salaryHeadBO.ActiveStat);
                         dbSmartAspects.AddInParameter(command, "@LastModifiedBy", DbType.Int32, salaryHeadBO.LastModifiedBy);

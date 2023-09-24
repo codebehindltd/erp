@@ -40,5 +40,7 @@ namespace HotelManagement.Entity.Payroll
         public bool IsCanChecked { get; set; }
         public bool IsCanApproved { get; set; }
         public int InstallmentNumber { get; set; }
+        public int LoanPaymentFromAccountHeadId { get; set; }
+        public string Remarks { get; set; }
     }
 }
