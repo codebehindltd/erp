@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/data/models/res/property_model.dart';
 import '../../../../core/environment/environment.dart';
 import '../../../../core/values/colors.dart';
+import '../../../../data/models/res/property_model.dart';
 
 class PropertyCard extends StatelessWidget {
   final PropertyModel property;

@@ -1,7 +1,7 @@
 
 import 'package:get/get.dart';
-import 'package:leading_edge/app/core/values/colors.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../../../../core/values/colors.dart';
 import '../../../../data/localDB/sharedPfnDBHelper.dart';
 
 class PropertyDeatailsController extends GetxController {

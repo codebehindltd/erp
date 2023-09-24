@@ -1,9 +1,9 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/data/services/emp_service.dart';
 
 import '../../../../../core/values/colors.dart';
 import '../../../../../data/models/res/leave/leave_application_list_model.dart';
+import '../../../../../data/services/emp_service.dart';
 import '../../../../common/controllers/common_controller.dart';
 
 class LeaveApprovalController extends GetxController {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/data/models/res/voucher_list_model.dart';
 
 import '../../../../../core/utils/size_config.dart';
 import '../../../../../core/values/colors.dart';
+import '../../../../../data/models/res/voucher_list_model.dart';
 import '../../../../../routes/app_pages.dart';
 
 class VoucherCard extends StatelessWidget {

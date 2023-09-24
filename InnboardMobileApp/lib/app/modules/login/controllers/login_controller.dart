@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/core/values/colors.dart';
-import 'package:leading_edge/app/data/localDB/sharedPfnDBHelper.dart';
-import 'package:leading_edge/app/data/models/req/user_login_model.dart';
-import 'package:leading_edge/app/data/services/account_service.dart';
-import 'package:leading_edge/app/routes/app_pages.dart';
 
+import '../../../core/values/colors.dart';
+import '../../../data/localDB/sharedPfnDBHelper.dart';
+import '../../../data/models/req/user_login_model.dart';
+import '../../../data/services/account_service.dart';
 import '../../../data/services/backgound_location_service.dart';
+import '../../../routes/app_pages.dart';
 import '../../common/controllers/common_controller.dart';
 
 class LoginController extends GetxController {

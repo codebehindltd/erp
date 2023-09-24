@@ -1,15 +1,15 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/data/models/res/leave/leave_type_model.dart';
-import 'package:leading_edge/app/data/services/emp_service.dart';
 
 import '../../../../../core/utils/utils_function.dart';
 import '../../../../../core/values/colors.dart';
 import '../../../../../data/localDB/sharedPfnDBHelper.dart';
 import '../../../../../data/models/req/leave_application_model.dart';
 import '../../../../../data/models/res/emp_model.dart';
+import '../../../../../data/models/res/leave/leave_type_model.dart';
 import '../../../../../data/models/res/user_model.dart';
+import '../../../../../data/services/emp_service.dart';
 import '../../../../../routes/app_pages.dart';
 
 class LeaveApplicationController extends GetxController {

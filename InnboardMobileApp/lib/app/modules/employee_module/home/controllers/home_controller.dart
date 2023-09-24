@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/modules/employee_module/dashboard/controllers/dashboard_controller.dart';
-import 'package:leading_edge/app/modules/employee_module/dashboard/views/dashboard_view.dart';
-import 'package:leading_edge/app/modules/common_modules/profile/controllers/profile_controller.dart';
-import 'package:leading_edge/app/modules/common_modules/profile/views/profile_view.dart';
+
+import '../../../common_modules/profile/controllers/profile_controller.dart';
+import '../../../common_modules/profile/views/profile_view.dart';
+import '../../dashboard/controllers/dashboard_controller.dart';
+import '../../dashboard/views/dashboard_view.dart';
 
 
 class HomeController extends GetxController {

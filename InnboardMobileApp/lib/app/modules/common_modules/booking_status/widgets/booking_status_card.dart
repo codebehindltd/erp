@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:leading_edge/app/data/models/res/reservation/reservation_list_model.dart';
 import '../../../../core/values/colors.dart';
+import '../../../../data/models/res/reservation/reservation_list_model.dart';
 
 class BookingStatusCard extends StatelessWidget {
   final ReservationListModel model;

@@ -1,10 +1,10 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/core/values/colors.dart';
-import 'package:leading_edge/app/data/models/res/members/membership_type.dart';
-import 'package:leading_edge/app/global_widgets/back_widget.dart';
-import 'package:leading_edge/app/routes/app_pages.dart';
+import 'package:innboard/app/core/values/colors.dart';
+import 'package:innboard/app/data/models/res/members/membership_type.dart';
+import 'package:innboard/app/global_widgets/back_widget.dart';
+import 'package:innboard/app/routes/app_pages.dart';
 import '../../../../global_widgets/custom_button.dart';
 import '../controllers/member_registration_controller.dart';
 

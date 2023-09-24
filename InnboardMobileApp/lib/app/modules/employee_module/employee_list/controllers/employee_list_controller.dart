@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/data/localDB/sharedPfnDBHelper.dart';
-import 'package:leading_edge/app/data/models/res/emp_model.dart';
-import 'package:leading_edge/app/data/services/emp_service.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
+import '../../../../data/localDB/sharedPfnDBHelper.dart';
+import '../../../../data/models/res/emp_model.dart';
 import '../../../../data/models/res/user_model.dart';
+import '../../../../data/services/emp_service.dart';
 
 class EmployeeListController extends GetxController {
   bool isLoading = true;

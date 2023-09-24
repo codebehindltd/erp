@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:leading_edge/app/core/environment/environment.dart';
-import 'package:leading_edge/app/core/utils/api_end_point.dart';
-import 'package:leading_edge/app/data/models/req/emp_location_tr_save_model.dart';
-import 'package:leading_edge/app/data/models/res/emp_model.dart';
+import 'package:innboard/app/core/environment/environment.dart';
+import 'package:innboard/app/core/utils/api_end_point.dart';
+import 'package:innboard/app/data/models/req/emp_location_tr_save_model.dart';
+import 'package:innboard/app/data/models/res/emp_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../../core/values/static_value.dart';

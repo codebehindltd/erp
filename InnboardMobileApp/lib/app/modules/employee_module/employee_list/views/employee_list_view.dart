@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/global_widgets/back_widget.dart';
-import 'package:leading_edge/app/global_widgets/empty_widget.dart';
-import 'package:leading_edge/app/modules/employee_module/employee_list/widgets/employee_card.dart';
-import 'package:leading_edge/app/global_widgets/search_bar.dart';
-import 'package:leading_edge/app/modules/employee_module/employee_list/widgets/employee_loading_card.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
+import '../../../../global_widgets/back_widget.dart';
 import '../../../../global_widgets/custom_footer_refresher.dart';
+import '../../../../global_widgets/empty_widget.dart';
+import '../../../../global_widgets/search_bar.dart';
 import '../controllers/employee_list_controller.dart';
+import '../widgets/employee_card.dart';
+import '../widgets/employee_loading_card.dart';
 
 class EmployeeListView extends GetView<EmployeeListController> {
   const EmployeeListView({Key? key}) : super(key: key);

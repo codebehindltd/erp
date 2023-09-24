@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:leading_edge/app/core/utils/size_config.dart';
-import 'package:leading_edge/app/core/values/colors.dart';
-import 'package:leading_edge/app/data/localDB/sqfliteDBHelper.dart';
+import '../../../../core/utils/size_config.dart';
+import '../../../../core/values/colors.dart';
+import '../../../../data/localDB/sqfliteDBHelper.dart';
 import '../../../../routes/app_pages.dart';
 import '../controllers/dashboard_controller.dart';
 

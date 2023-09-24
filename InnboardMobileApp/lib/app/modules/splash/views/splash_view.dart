@@ -2,14 +2,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/core/enums/user_type_enum.dart';
-import 'package:leading_edge/app/core/utils/size_config.dart';
-import 'package:leading_edge/app/core/values/strings.dart';
-import 'package:leading_edge/app/data/localDB/sharedPfnDBHelper.dart';
-import 'package:leading_edge/app/data/models/res/user_model.dart';
-import 'package:leading_edge/app/data/services/location_service.dart';
-import 'package:leading_edge/app/modules/common/controllers/common_controller.dart';
-import 'package:leading_edge/app/routes/app_pages.dart';
+import '../../../core/enums/user_type_enum.dart';
+import '../../../core/utils/size_config.dart';
+import '../../../core/values/strings.dart';
+import '../../../data/localDB/sharedPfnDBHelper.dart';
+import '../../../data/models/res/user_model.dart';
+import '../../../data/services/location_service.dart';
+import '../../../routes/app_pages.dart';
+import '../../common/controllers/common_controller.dart';
 import '../controllers/splash_controller.dart';
 
 // ignore: must_be_immutable

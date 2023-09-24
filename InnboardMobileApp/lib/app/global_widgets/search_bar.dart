@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:leading_edge/app/core/values/colors.dart';
 
+import '../core/values/colors.dart';
 class SearchBarWidget extends StatefulWidget {
   final TextEditingController? controllerText;
   final String? hintText;

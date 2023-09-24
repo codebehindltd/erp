@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:leading_edge/app/data/localDB/sharedPfnDBHelper.dart';
-import 'package:leading_edge/app/data/models/res/user_model.dart';
 
+import '../../../../data/localDB/sharedPfnDBHelper.dart';
+import '../../../../data/models/res/user_model.dart';
 import '../../../../data/services/backgound_location_service.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../common/controllers/common_controller.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/core/values/colors.dart';
-import 'package:leading_edge/app/global_widgets/back_widget.dart';
-import 'package:leading_edge/app/modules/become_member_modules/member_registration/controllers/member_registration_controller.dart';
+import 'package:innboard/app/core/values/colors.dart';
+import 'package:innboard/app/global_widgets/back_widget.dart';
+import 'package:innboard/app/modules/become_member_modules/member_registration/controllers/member_registration_controller.dart';
 import '../../../../global_widgets/custom_button.dart';
 
 class PaymentView extends GetView<MemberRegistrationController> {

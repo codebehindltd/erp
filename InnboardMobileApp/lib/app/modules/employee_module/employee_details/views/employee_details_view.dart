@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:leading_edge/app/core/utils/size_config.dart';
-import 'package:leading_edge/app/core/values/colors.dart';
-import 'package:leading_edge/app/global_widgets/back_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/utils/size_config.dart';
+import '../../../../core/values/colors.dart';
+import '../../../../global_widgets/back_widget.dart';
 import '../controllers/employee_details_controller.dart';
 
 class EmployeeDetailsView extends GetView<EmployeeDetailsController> {

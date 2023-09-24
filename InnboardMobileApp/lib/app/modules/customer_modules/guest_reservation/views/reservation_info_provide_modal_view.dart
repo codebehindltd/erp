@@ -1,11 +1,11 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/modules/customer_modules/guest_reservation/controllers/guest_reservation_controller.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../core/values/strings.dart';
 import '../../../../global_widgets/custom_button.dart';
 import '../../../../global_widgets/input_text_field.dart';
+import '../controllers/guest_reservation_controller.dart';
 
 class ReservationInfoProvideModalView
     extends GetView<GuestReservationController> {

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:leading_edge/app/modules/common/middleware/auth_middleware.dart';
+import 'package:innboard/app/modules/common/middleware/auth_middleware.dart';
 
 import '../controllers/common_controller.dart';
 

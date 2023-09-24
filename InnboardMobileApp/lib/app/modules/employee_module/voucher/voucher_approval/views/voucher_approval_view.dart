@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:leading_edge/app/core/values/colors.dart';
-import 'package:leading_edge/app/modules/employee_module/voucher/voucher_approval/views/voucher_filter_view.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
+import '../../../../../core/values/colors.dart';
 import '../../../../../global_widgets/back_widget.dart';
 import '../../../../../global_widgets/custom_footer_refresher.dart';
 import '../../../../../global_widgets/empty_widget.dart';
@@ -12,6 +11,7 @@ import '../../../../../global_widgets/search_bar.dart';
 import '../controllers/voucher_approval_controller.dart';
 import '../widgets/loading_voucher_card.dart';
 import '../widgets/voucher_card.dart';
+import 'voucher_filter_view.dart';
 
 class VoucherApprovalView extends GetView<VoucherApprovalController> {
   const VoucherApprovalView({Key? key}) : super(key: key);

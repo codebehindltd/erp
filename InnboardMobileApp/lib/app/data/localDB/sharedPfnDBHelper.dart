@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:leading_edge/app/data/models/res/user_model.dart';
+import 'package:innboard/app/data/models/res/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/res/property_model.dart';

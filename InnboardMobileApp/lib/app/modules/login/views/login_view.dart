@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/core/values/strings.dart';
-import 'package:leading_edge/app/data/models/req/user_login_model.dart';
-import 'package:leading_edge/app/global_widgets/custom_button.dart';
-import 'package:leading_edge/app/modules/common/controllers/common_controller.dart';
 import '../../../core/environment/environment.dart';
 import '../../../core/values/colors.dart';
+import '../../../core/values/strings.dart';
+import '../../../data/models/req/user_login_model.dart';
+import '../../../global_widgets/custom_button.dart';
+import '../../common/controllers/common_controller.dart';
 import '../../common_modules/user_type_selection/controllers/user_type_selection_controller.dart';
 import '../controllers/login_controller.dart';
 

@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:leading_edge/app/data/models/res/about_us_model.dart';
-import 'package:leading_edge/app/data/services/common_service.dart';
 import '../../../../core/enums/user_type_enum.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../data/localDB/sharedPfnDBHelper.dart';
+import '../../../../data/models/res/about_us_model.dart';
 import '../../../../data/models/res/user_type_model.dart';
+import '../../../../data/services/common_service.dart';
 import '../../../../routes/app_pages.dart';
 
 class UserTypeSelectionController extends GetxController {

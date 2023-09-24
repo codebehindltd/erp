@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/core/enums/user_type_enum.dart';
+import '../../../../core/enums/user_type_enum.dart';
 import '../../../../core/values/colors.dart';
 import '../controllers/promotional_offer_controller.dart';
 

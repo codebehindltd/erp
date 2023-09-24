@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/modules/common_modules/booking_status/views/write_review_view.dart';
+import 'package:innboard/app/modules/common_modules/booking_status/views/write_review_view.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../global_widgets/custom_button.dart';
 import '../../../../global_widgets/modal_bottom_sheet.dart';

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart' hide Location;
 import 'package:geolocator/geolocator.dart';
-import 'package:leading_edge/app/core/values/static_value.dart';
+import 'package:innboard/app/core/values/static_value.dart';
 
 class LocationService {
   static Future<String> getAddressFromLatLong(Position position) async {

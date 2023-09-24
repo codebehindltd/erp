@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:leading_edge/app/global_widgets/custom_button.dart';
-import 'package:leading_edge/app/modules/employee_module/voucher/voucher_details/widgets/voucher_details_loading_view.dart';
 import '../../../../../global_widgets/back_widget.dart';
+import '../../../../../global_widgets/custom_button.dart';
 import '../controllers/voucher_details_controller.dart';
+import '../widgets/voucher_details_loading_view.dart';
 import '../widgets/voucher_table_view.dart';
 
 class VoucherDetailsView extends GetView<VoucherDetailsController> {

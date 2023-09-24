@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/core/values/colors.dart';
-import 'package:leading_edge/app/core/values/strings.dart';
-//import 'package:leading_edge/app/data/services/backgound_location_service.dart';
-import 'package:leading_edge/app/modules/common/bindings/common_binding.dart';
-import 'package:leading_edge/app/routes/app_pages.dart';
 import 'app/core/utils/utils_function.dart';
+import 'app/core/values/colors.dart';
+import 'app/core/values/strings.dart';
+import 'app/modules/common/bindings/common_binding.dart';
+import 'app/routes/app_pages.dart';
 
 Future<void> main() async {
   //rotate off

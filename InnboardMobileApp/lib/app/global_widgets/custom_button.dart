@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:leading_edge/app/core/values/colors.dart';
+
+import '../core/values/colors.dart';
 
 class CustomButton extends StatelessWidget {
   final ValueChanged<bool> submit;

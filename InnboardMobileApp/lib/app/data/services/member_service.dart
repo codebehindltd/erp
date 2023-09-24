@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:leading_edge/app/data/models/req/members/member_registration_mode.dart';
+import 'package:innboard/app/data/models/req/members/member_registration_mode.dart';
 import '../../core/environment/environment.dart';
 import '../../core/utils/api_end_point.dart';
 import '../models/req/members/member_payment_save_model.dart';

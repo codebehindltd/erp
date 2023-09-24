@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:leading_edge/app/core/values/colors.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../core/values/colors.dart';
 
 // ignore: must_be_immutable
 class CustomShimmerLoader extends StatelessWidget {

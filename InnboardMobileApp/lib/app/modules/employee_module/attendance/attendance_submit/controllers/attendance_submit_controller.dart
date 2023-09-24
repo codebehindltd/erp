@@ -5,11 +5,12 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:leading_edge/app/data/localDB/sharedPfnDBHelper.dart';
-import 'package:leading_edge/app/data/localDB/sqfliteDBHelper.dart';
-import 'package:leading_edge/app/data/models/req/attendance_model.dart';
-import 'package:leading_edge/app/data/models/res/user_model.dart';
-import 'package:leading_edge/app/data/services/location_service.dart';
+
+import '../../../../../data/localDB/sharedPfnDBHelper.dart';
+import '../../../../../data/localDB/sqfliteDBHelper.dart';
+import '../../../../../data/models/req/attendance_model.dart';
+import '../../../../../data/models/res/user_model.dart';
+import '../../../../../data/services/location_service.dart';
 
 class AttendanceSubmitController extends GetxController {
   Uint8List? image;

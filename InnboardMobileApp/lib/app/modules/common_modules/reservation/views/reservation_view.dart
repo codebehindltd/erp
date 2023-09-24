@@ -1,9 +1,9 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:leading_edge/app/core/values/colors.dart';
-import 'package:leading_edge/app/global_widgets/custom_button.dart';
+import '../../../../core/values/colors.dart';
 import '../../../../data/models/res/reservation/room_type_info_model.dart';
+import '../../../../global_widgets/custom_button.dart';
 import '../../../../global_widgets/input_text_field.dart';
 import '../controllers/reservation_controller.dart';
 

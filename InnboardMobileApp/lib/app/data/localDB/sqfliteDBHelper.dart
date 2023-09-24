@@ -1,4 +1,4 @@
-import 'package:leading_edge/app/data/models/req/attendance_model.dart';
+import 'package:innboard/app/data/models/req/attendance_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
