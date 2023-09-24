@@ -2649,7 +2649,7 @@
 				<rd:DefaultName>Textbox50</rd:DefaultName>
 				<Top>2.81472in</Top>
 				<Left>0.01958in</Left>
-				<Height>0.1875in</Height>
+				<Height>0.20138in</Height>
 				<Width>1.84653in</Width>
 				<ZIndex>3</ZIndex>
 				<Style>
@@ -2697,8 +2697,8 @@
 				</Paragraphs>
 				<rd:DefaultName>Textbox50</rd:DefaultName>
 				<Top>2.81472in</Top>
-				<Left>3.15643in</Left>
-				<Height>0.1875in</Height>
+				<Left>3.40643in</Left>
+				<Height>0.20138in</Height>
 				<Width>1.84653in</Width>
 				<ZIndex>5</ZIndex>
 				<Style>
@@ -2713,10 +2713,59 @@
 			</Textbox>
 			<Line Name="Line5">
 				<Top>2.79528in</Top>
-				<Left>3.15643in</Left>
+				<Left>3.40643in</Left>
 				<Height>0in</Height>
 				<Width>1.83334in</Width>
 				<ZIndex>6</ZIndex>
+				<Style>
+					<Border>
+						<Color>LightGrey</Color>
+						<Style>Solid</Style>
+						<Width>0.5pt</Width>
+					</Border>
+				</Style>
+			</Line>
+			<Textbox Name="Textbox63">
+				<CanGrow>true</CanGrow>
+				<KeepTogether>true</KeepTogether>
+				<Paragraphs>
+					<Paragraph>
+						<TextRuns>
+							<TextRun>
+								<Value>Managing Director Signature</Value>
+								<Style>
+									<FontSize>9pt</FontSize>
+									<FontWeight>Bold</FontWeight>
+								</Style>
+							</TextRun>
+						</TextRuns>
+						<Style>
+							<TextAlign>Left</TextAlign>
+						</Style>
+					</Paragraph>
+				</Paragraphs>
+				<rd:DefaultName>Textbox50</rd:DefaultName>
+				<Top>2.8268in</Top>
+				<Left>6.87403in</Left>
+				<Height>0.20138in</Height>
+				<Width>1.84653in</Width>
+				<ZIndex>7</ZIndex>
+				<Style>
+					<Border>
+						<Style>None</Style>
+					</Border>
+					<PaddingLeft>2pt</PaddingLeft>
+					<PaddingRight>2pt</PaddingRight>
+					<PaddingTop>2pt</PaddingTop>
+					<PaddingBottom>2pt</PaddingBottom>
+				</Style>
+			</Textbox>
+			<Line Name="Line6">
+				<Top>2.80736in</Top>
+				<Left>6.87403in</Left>
+				<Height>0in</Height>
+				<Width>1.83334in</Width>
+				<ZIndex>8</ZIndex>
 				<Style>
 					<Border>
 						<Color>LightGrey</Color>
@@ -2735,7 +2784,7 @@
 			</BackgroundImage>
 		</Style>
 	</Body>
-	<Width>18.59459in</Width>
+	<Width>15.72885in</Width>
 	<Page>
 		<PageFooter>
 			<Height>0.28125in</Height>
