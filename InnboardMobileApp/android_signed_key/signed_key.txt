@@ -1,0 +1,12 @@
+keytool -genkey -v -keystore signedKey.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias signedKey
+
+password: cblleadingedge123
+name: Leading Edge
+Organization Unit: Code Behind Limited
+Organization Name: Code Behind Limited
+City: Dhaka
+
+
+
+The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS12 which is an industry standard format using 
+"keytool -importkeystore -srckeystore signedKey.jks -destkeystore signedKey.jks -deststoretype pkcs12".
