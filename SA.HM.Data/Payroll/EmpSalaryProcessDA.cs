@@ -697,6 +697,7 @@ namespace HotelManagement.Data.Payroll
                         TotalAbsent = r.Field<int>("TotalAbsent"),
                         TotalPresent = r.Field<int>("TotalPresent"),
                         Gender = r.Field<string>("Gender"),
+                        SpecialNotes = r.Field<string>("SpecialNotes"),
                     }).ToList();
                 }
             }
@@ -1048,6 +1049,7 @@ namespace HotelManagement.Data.Payroll
                         TotalDayOff = r.Field<int>("TotalDayOff"),
                         TotalAbsent = r.Field<int>("TotalAbsent"),
                         TotalPresent = r.Field<int>("TotalPresent"),
+                        SpecialNotes = r.Field<string>("SpecialNotes"),
                     }).ToList();
 
                 }

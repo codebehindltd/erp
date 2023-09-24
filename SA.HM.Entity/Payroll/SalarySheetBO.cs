@@ -63,5 +63,6 @@ namespace HotelManagement.Entity.Payroll
         public int TotalAbsent { get; set; }
         public int TotalPresent { get; set; }
         public string Gender { get; set; }
+        public string SpecialNotes { get; set; }
     }
 }
