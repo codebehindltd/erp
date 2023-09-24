@@ -113,7 +113,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                                 else
                                 {
                                     reportName = "RptEmployeeSalarySheetsForSingleCompanyWAS";
-                                }                                
+                                }
                             }
                             else if (ddlReportFormat.SelectedValue == "DepartmentWise")
                             {
@@ -194,7 +194,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                                 {
                                     reportName = "RptDesignationWiseEmployeeSalarySheetsWAS";
                                 }
-                            }                            
+                            }
                             else if (ddlReportFormat.SelectedValue == "WorkStationWise")
                             {
                                 if (IsPayrollAttendancePartWillShowOnSalarySheet == "0")
@@ -284,7 +284,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             List<ReportParameter> paramReport = new List<ReportParameter>();
             paramReport.Add(new ReportParameter("month", ddlEffectedMonth.SelectedItem.ToString()));
             paramReport.Add(new ReportParameter("year", ddlYear.SelectedItem.ToString()));
-            paramReport.Add(new ReportParameter("CurrencyType", ddlCurrencyType.SelectedValue.ToString()));     
+            paramReport.Add(new ReportParameter("CurrencyType", ddlCurrencyType.SelectedValue.ToString()));
 
             string companyName = string.Empty;
             string companyAddress = string.Empty;
@@ -346,7 +346,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             paramReport.Add(new ReportParameter("FooterPoweredByInfo", footerPoweredByInfo));
             paramReport.Add(new ReportParameter("PrintDateTime", printDate));
 
-            rvTransaction.LocalReport.SetParameters(paramReport);
+
             //-- Company Logo ------------------End----------
 
             HiddenField hfEmployeeId = (HiddenField)this.EmployeeSearchControl.FindControl("hfEmployeeId");
@@ -377,6 +377,17 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 salarySheetList = salaryProcessDA.EmployeeSalarySheetForSouthSudan(glCompanyId, "SalarySheet", employeeId, departmentId, designationId, gradeId, branchId, processDateFrom, processDateTo, Convert.ToInt16(ddlYear.SelectedValue));
             }
 
+            //string isCurrencyRelatedColumnWillHide = "1";
+
+            //if ((salarySheetList.Where(x => x.ConvertionRate > 0).ToList().Count) > 0)
+            //{
+            //    isCurrencyRelatedColumnWillHide = "0";
+            //}
+
+            //paramReport.Add(new ReportParameter("IsCurrencyRelatedColumnWillHide", isCurrencyRelatedColumnWillHide));
+            
+            
+            rvTransaction.LocalReport.SetParameters(paramReport);
             var reportDataset = rvTransaction.LocalReport.GetDataSourceNames();
             rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(reportDataset[0], salarySheetList));
 

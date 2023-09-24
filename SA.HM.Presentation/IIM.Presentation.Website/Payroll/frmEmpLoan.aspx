@@ -284,9 +284,9 @@
                 tr += "<td align='left' style=\"width:11%;\">" + gridObject.LoanType + "</td>";
                 tr += "<td align='left' style=\"width:10%;\">" + takenPeriodDisplay + "</td>";
                 tr += "<td align='left' style=\"width:11%;\">" + gridObject.LoanAmount + "</td>";
-                tr += "<td align='left' style=\"width:11%;\">" + gridObject.InterestRate + "</td>";
-                tr += "<td align='left' style=\"width:11%;\">" + gridObject.InterestAmount + "</td>";
                 tr += "<td align='left' style=\"width:11%;\">" + gridObject.DueAmount + "</td>";
+                tr += "<td align='left' style=\"width:11%;\">" + gridObject.DueInterestAmount + "</td>";
+                tr += "<td align='left' style=\"width:11%;\">" + (gridObject.DueAmount + gridObject.DueInterestAmount) + "</td>";
                 tr += "<td align='center' style=\"width:20%;\">"
                 if (gridObject.IsCanEdit) {
                     tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return PerformFillFormAction(" + gridObject.LoanId + "," + result.GridPageLinks.CurrentPageNumber + ")\" alt='Edit'  title='Edit' border='0' />";
@@ -884,7 +884,7 @@
                             </div>
                             <div class="col-md-4">
                                 <asp:DropDownList ID="ddlSLoanType" runat="server" CssClass="form-control">
-                                    <asp:ListItem Text="---Please Select---" Value=""></asp:ListItem>
+                                    <asp:ListItem Text="--- All ---" Value=""></asp:ListItem>
                                     <asp:ListItem Text="Company Loan" Value="CompanyLoan"></asp:ListItem>
                                     <asp:ListItem Text="PF Loan" Value="PFLoan"> </asp:ListItem>
                                 </asp:DropDownList>
@@ -934,11 +934,11 @@
                                 </td>
                                 <td>Loan Amount
                                 </td>
-                                <td>Interest Rate
+                                <td>Loan Due
                                 </td>
-                                <td>Interest Amount
+                                <td>Interest Due
                                 </td>
-                                <td>Due Amount
+                                <td>Total Due
                                 </td>
                                 <td></td>
                             </tr>
