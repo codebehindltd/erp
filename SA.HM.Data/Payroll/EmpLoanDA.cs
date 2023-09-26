@@ -217,6 +217,7 @@ namespace HotelManagement.Data.Payroll
                         PerInstallLoanAmount = r.Field<decimal>("PerInstallLoanAmount"),
                         PerInstallInterestAmount = r.Field<decimal>("PerInstallInterestAmount"),
                         LoanPaymentFromAccountHeadId = r.Field<Int32>("LoanPaymentFromAccountHeadId"),
+                        Remarks = r.Field<string>("Remarks"),
                         LoanDate = r.Field<DateTime>("LoanDate"),
                         LoanStatus = r.Field<string>("LoanStatus"),
                         ApprovedStatus = r.Field<string>("ApprovedStatus"),

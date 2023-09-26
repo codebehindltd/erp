@@ -149,6 +149,9 @@
 
             $("#ContentPlaceHolder1_txtLoanDate").val('');
 
+            $("#ContentPlaceHolder1_ddlLoanPaymentFromAccountHeadId").val("0").trigger('change');
+            $("#ContentPlaceHolder1_txtRemarks").val("");
+
             $("#ContentPlaceHolder1_ddlCheckedBy").val('0');
             $("#ContentPlaceHolder1_ddlApprovedBy").val('0');
         }
@@ -283,11 +286,12 @@
                 tr += "<td align='left' style=\"width:15%;\">" + gridObject.EmployeeName + "</td>";
                 tr += "<td align='left' style=\"width:11%;\">" + gridObject.LoanType + "</td>";
                 tr += "<td align='left' style=\"width:10%;\">" + takenPeriodDisplay + "</td>";
-                tr += "<td align='left' style=\"width:11%;\">" + gridObject.LoanAmount + "</td>";
-                tr += "<td align='left' style=\"width:11%;\">" + gridObject.DueAmount + "</td>";
-                tr += "<td align='left' style=\"width:11%;\">" + gridObject.DueInterestAmount + "</td>";
-                tr += "<td align='left' style=\"width:11%;\">" + (gridObject.DueAmount + gridObject.DueInterestAmount) + "</td>";
-                tr += "<td align='center' style=\"width:20%;\">"
+                tr += "<td align='left' style=\"width:10%;\">" + gridObject.LoanAmount + "</td>";
+                tr += "<td align='left' style=\"width:10%;\">" + gridObject.DueAmount + "</td>";
+                tr += "<td align='left' style=\"width:10%;\">" + gridObject.DueInterestAmount + "</td>";
+                tr += "<td align='left' style=\"width:10%;\">" + (gridObject.DueAmount + gridObject.DueInterestAmount) + "</td>";
+                tr += "<td align='left' style=\"width:10%;\">" + gridObject.ApprovedStatus + "</td>";
+                tr += "<td align='center' style=\"width:14%;\">"
                 if (gridObject.IsCanEdit) {
                     tr += "&nbsp;&nbsp;<img src='../Images/edit.png' onClick= \"javascript:return PerformFillFormAction(" + gridObject.LoanId + "," + result.GridPageLinks.CurrentPageNumber + ")\" alt='Edit'  title='Edit' border='0' />";
                 }
@@ -383,7 +387,7 @@
             $("#ContentPlaceHolder1_hfPerInstallLoanAmount").val(result.PerInstallLoanAmount);
             $("#ContentPlaceHolder1_hfPerInstallInterestAmount").val(result.PerInstallInterestAmount);
 
-            $("#ContentPlaceHolder1_ddlLoanPaymentFromAccountHeadId").val(result.LoanPaymentFromAccountHeadId);
+            $("#ContentPlaceHolder1_ddlLoanPaymentFromAccountHeadId").val(result.LoanPaymentFromAccountHeadId).trigger('change');
 
             $("#ContentPlaceHolder1_txtLoanDate").val(GetStringFromDateTime(result.LoanDate));
 
@@ -432,6 +436,10 @@
             //var LoanDate = $("#ContentPlaceHolder1_txtLoanDate").val();
             var LoanDate = CommonHelper.DateFormatMMDDYYYYFromDDMMYYYY($("#ContentPlaceHolder1_txtLoanDate").val(), innBoarDateFormat);
 
+
+            var loanPaymentFromAccountHeadId = $("#ContentPlaceHolder1_ddlLoanPaymentFromAccountHeadId").val();
+            var loanRemarks = $("#ContentPlaceHolder1_txtRemarks").val();
+
             var checkedBy = $("#ContentPlaceHolder1_ddlCheckedBy").val();
             var approvedBy = $("#ContentPlaceHolder1_ddlApprovedBy").val();
 
@@ -449,6 +457,8 @@
                 LoanTakenForMonthOrYear: LoanTakenForMonthOrYear,
                 PerInstallLoanAmount: PerInstallLoanAmount,
                 PerInstallInterestAmount: PerInstallInterestAmount,
+                LoanPaymentFromAccountHeadId: loanPaymentFromAccountHeadId,
+                Remarks: loanRemarks,
                 LoanDate: LoanDate,
                 CheckedBy: checkedBy,
                 ApprovedBy: approvedBy
@@ -548,7 +558,7 @@
             $("#<%=hfLoanId.ClientID %>").val("");
             $("#ContentPlaceHolder1_employeeSearch_hfEmployeeId").val("0");
             $("#ContentPlaceHolder1_employeeSearch_hfEmployeeName").val("");
-            $("#ContentPlaceHolder1_hfIsCurrentOrPreviousPage").val("0");
+            $("#ContentPlaceHolder1_hfIsCurrentOrPreviousPage").val("0");            
 
             return false;
         }
@@ -918,11 +928,12 @@
                             <col style="width: 15%;" />
                             <col style="width: 11%;" />
                             <col style="width: 10%;" />
-                            <col style="width: 11%;" />
-                            <col style="width: 11%;" />
-                            <col style="width: 11%;" />
-                            <col style="width: 11%;" />
-                            <col style="width: 20%;" />
+                            <col style="width: 10%;" />
+                            <col style="width: 10%;" />
+                            <col style="width: 10%;" />
+                            <col style="width: 10%;" />
+                            <col style="width: 10%;" />
+                            <col style="width: 14%;" />
                         </colgroup>
                         <thead>
                             <tr style="color: White; background-color: #44545E; font-weight: bold;">
@@ -940,6 +951,7 @@
                                 </td>
                                 <td>Total Due
                                 </td>
+                                <td>Status</td>
                                 <td></td>
                             </tr>
                         </thead>
