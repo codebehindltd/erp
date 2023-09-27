@@ -248,7 +248,7 @@ namespace HotelManagement.Data.HotelManagement
                                 roomReservation.DateOut = Convert.ToDateTime(reader["DateOut"]);
                                 roomReservation.ReservationDetailId = Int32.Parse(reader["ReservationDetailId"].ToString());
                                 roomReservation.RoomTypeId = Int32.Parse(reader["RoomTypeId"].ToString());
-                                
+
                                 roomReservationList.Add(roomReservation);
                             }
                         }
@@ -281,7 +281,7 @@ namespace HotelManagement.Data.HotelManagement
                                 roomReservation.ReservationNumber = reader["ReservationNumber"].ToString();
                                 roomReservation.ReservationDate = Convert.ToDateTime(reader["ReservationDate"]);
                                 roomReservation.DateIn = Convert.ToDateTime(reader["DateIn"]);
-                                roomReservation.DateOut = Convert.ToDateTime(reader["DateOut"]);                                
+                                roomReservation.DateOut = Convert.ToDateTime(reader["DateOut"]);
                                 roomReservation.RoomTypeId = Int32.Parse(reader["RoomTypeId"].ToString());
                                 roomReservation.TotalRoomNumber = Convert.ToInt32(reader["RoomQuantity"]);
                                 roomReservationList.Add(roomReservation);
@@ -2625,7 +2625,7 @@ namespace HotelManagement.Data.HotelManagement
 
                     using (IDataReader reader = dbSmartAspects.ExecuteReader(cmd))
                     {
-                        if(reader != null)
+                        if (reader != null)
                         {
                             while (reader.Read())
                             {
@@ -3080,7 +3080,7 @@ namespace HotelManagement.Data.HotelManagement
                                 roomreservationBO.DateOutDisplay = reader["DateOutDisplay"].ToString();
                                 roomreservationBO.GuestName = reader["GuestName"].ToString();
                                 roomreservationBO.CompanyName = reader["CompanyName"].ToString();
-                                roomreservationBO.Reason = reader["Reason"].ToString();                                
+                                roomreservationBO.Reason = reader["Reason"].ToString();
                                 roomreservationBO.IsTaggedOnGroupReservation = Convert.ToBoolean(reader["IsTaggedOnGroupReservation"]);
                                 roomreservationList.Add(roomreservationBO);
                             }
@@ -3116,7 +3116,7 @@ namespace HotelManagement.Data.HotelManagement
                                 roomreservationBO.ReservationDateDisplay = reader["ReservationDateDisplay"].ToString();
                                 roomreservationBO.GroupName = reader["GroupName"].ToString();
                                 roomreservationBO.CheckInDateDisplay = reader["CheckInDateDisplay"].ToString();
-                                roomreservationBO.CheckOutDateDisplay = reader["CheckOutDateDisplay"].ToString();                                
+                                roomreservationBO.CheckOutDateDisplay = reader["CheckOutDateDisplay"].ToString();
                                 roomreservationBO.ReservationDetails = reader["ReservationDetails"].ToString();
                                 roomreservationBO.GroupDescription = reader["GroupDescription"].ToString();
                                 roomreservationList.Add(roomreservationBO);
@@ -3983,7 +3983,7 @@ namespace HotelManagement.Data.HotelManagement
                     using (DbCommand command = dbSmartAspects.GetStoredProcCommand("CheckReservationCanBeCancel_SP"))
                     {
                         dbSmartAspects.AddInParameter(command, "@ReservationId", DbType.Int32, reservationId);
-                      
+
                         status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? false : true;
                     }
                 }
@@ -3995,7 +3995,7 @@ namespace HotelManagement.Data.HotelManagement
 
             return status;
         }
-        
+
         public List<RoomReservationBO> GetNoShowRoomReservationInfo(DateTime? searchDate, int noshowType)
         {
             List<RoomReservationBO> noShowList = new List<RoomReservationBO>();
@@ -4552,7 +4552,7 @@ namespace HotelManagement.Data.HotelManagement
 
                             status = dbSmartAspects.ExecuteNonQuery(command) > 0 ? true : false;
                             groupMasterId = Convert.ToInt64(command.Parameters["@GroupMasterId"].Value);
-                        }                        
+                        }
 
                         if (status)
                         {
@@ -4571,7 +4571,7 @@ namespace HotelManagement.Data.HotelManagement
                                 }
                             }
                         }
-                        
+
                         if (status)
                             transaction.Commit();
                         else
@@ -4765,6 +4765,93 @@ namespace HotelManagement.Data.HotelManagement
 
                 return roomReservationList;
             }
+        }
+
+        public Boolean SaveRoomReservationInfoForSiteminder(RoomReservationBO roomReservationBO, List<ReservationDetailBO> roomReservationDetailListBO, out int tmpReservationId)
+        {
+            bool retVal = false;
+            int status = 0;
+            tmpReservationId = 0;
+
+            using (DbConnection conn = dbSmartAspects.CreateConnection())
+            {
+                conn.Open();
+
+                using (DbTransaction transction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (DbCommand commandMaster = dbSmartAspects.GetStoredProcCommand("SaveRoomReservationInfoForSiteminder_SP"))
+                        {
+                            dbSmartAspects.AddInParameter(commandMaster, "@SiteminderReservationId", DbType.String, roomReservationBO.SiteminderReservationId);
+                            dbSmartAspects.AddInParameter(commandMaster, "@ReservationDate", DbType.DateTime, roomReservationBO.ReservationDate);
+                            dbSmartAspects.AddInParameter(commandMaster, "@DateIn", DbType.DateTime, roomReservationBO.DateIn);
+                            dbSmartAspects.AddInParameter(commandMaster, "@DateOut", DbType.DateTime, roomReservationBO.DateOut);
+                            dbSmartAspects.AddInParameter(commandMaster, "@GuestName", DbType.String, roomReservationBO.GuestName);
+                            dbSmartAspects.AddInParameter(commandMaster, "@GuestPhone", DbType.String, roomReservationBO.GuestPhone);
+                            dbSmartAspects.AddInParameter(commandMaster, "@GuestEmail", DbType.String, roomReservationBO.GuestEmail);
+                            dbSmartAspects.AddInParameter(commandMaster, "@GuestSourceId", DbType.Int32, roomReservationBO.GuestSourceId);
+                            dbSmartAspects.AddInParameter(commandMaster, "@GuestRemarks", DbType.String, roomReservationBO.GuestRemarks);
+                            dbSmartAspects.AddOutParameter(commandMaster, "@ReservationId", DbType.Int32, sizeof(Int32));
+
+                            status = dbSmartAspects.ExecuteNonQuery(commandMaster, transction);
+                            if (status < 0)
+                            {
+                                return retVal;
+                            }
+
+                            tmpReservationId = Convert.ToInt32(commandMaster.Parameters["@ReservationId"].Value);
+                        }
+
+                        if (status > 0)
+                        {
+                            if (roomReservationDetailListBO != null && status > 0)
+                            {
+                                if (roomReservationDetailListBO.Count > 0)
+                                {
+                                    using (DbCommand commandDetails = dbSmartAspects.GetStoredProcCommand("SaveRoomReservationDetailInfoForSiteminder_SP"))
+                                    {
+                                        foreach (ReservationDetailBO reservationDetailBO in roomReservationDetailListBO)
+                                        {
+                                            commandDetails.Parameters.Clear();
+                                            dbSmartAspects.AddInParameter(commandDetails, "@ReservationId", DbType.Int64, tmpReservationId);
+                                            dbSmartAspects.AddInParameter(commandDetails, "@RoomTypeCode", DbType.String, reservationDetailBO.RoomTypeCode);
+                                            dbSmartAspects.AddInParameter(commandDetails, "@RoomQuantity", DbType.Int32, reservationDetailBO.RoomQuantity);
+                                            dbSmartAspects.AddInParameter(commandDetails, "@PaxQuantity", DbType.Int32, reservationDetailBO.PaxQuantity);
+                                            dbSmartAspects.AddInParameter(commandDetails, "@ChildQuantity", DbType.Int32, reservationDetailBO.ChildQuantity);
+                                            dbSmartAspects.AddInParameter(commandDetails, "@ExtraBedQuantity", DbType.Int32, reservationDetailBO.ExtraBedQuantity);
+                                            dbSmartAspects.AddInParameter(commandDetails, "@GuestNotes", DbType.String, reservationDetailBO.GuestNotes);
+
+                                            status = dbSmartAspects.ExecuteNonQuery(commandDetails, transction);
+                                        }
+                                    }
+                                }
+                            }
+
+
+                            //-------------** End Region -- Paid Service Save, Update, Delete ----------------------------
+                        }
+
+                        if (status > 0)
+                        {
+                            retVal = true;
+                            transction.Commit();
+                        }
+                        else
+                        {
+                            retVal = false;
+                            transction.Rollback();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        retVal = false;
+                        transction.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            return retVal;
         }
     }
 }

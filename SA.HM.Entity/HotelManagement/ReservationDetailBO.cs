@@ -12,6 +12,7 @@ namespace HotelManagement.Entity.HotelManagement
         public string ReservationNumber { get; set; }
         public int RoomTypeId { get; set; }
         public string RoomType { get; set; }
+        public string RoomTypeCode { get; set; }
         public int RoomId { get; set; }
         public string RoomNumber { get; set; }
         public string DirtyRoomNumber { get; set; }
@@ -29,11 +30,11 @@ namespace HotelManagement.Entity.HotelManagement
         public bool IsServiceChargeEnable { get; set; }
         public bool IsVatAmountEnable { get; set; }
         public bool IsAdditionalChargeEnable { get; set; }
-
-        //public decimal Amount { get; set; }
-
         public int RoomQuantity { get; set; }
         public int PaxQuantity { get; set; }
+        public int ChildQuantity { get; set; }
+        public string GuestNotes { get; set; }
+        public int ExtraBedQuantity { get; set; }
         public int RoomTypeWisePaxQuantity { get; set; }
         public string RoomNumberIdList { get; set; }
         public string RoomNumberList { get; set; }
@@ -42,7 +43,6 @@ namespace HotelManagement.Entity.HotelManagement
         public decimal TotalCalculatedAmount { get; set; }
         public string RoomRateInfo { get; set; }
         public int TotalRoom { get; set; }
-
         public decimal DiscountAmount { get; set; }
         public decimal ConversionRate { get; set; }
         public int IsUpdateDetailData { get; set; }
