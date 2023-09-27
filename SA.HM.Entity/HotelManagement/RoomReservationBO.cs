@@ -7,9 +7,10 @@ namespace HotelManagement.Entity.HotelManagement
 {
     public class RoomReservationBO
     {
-        public long Id { get; set; }
+        public long Id { get; set; }        
         public int PaymentId { get; set; }
         public int ReservationId { get; set; }
+        public string SiteMinderReservationId { get; set; }
         public int PickUpDropCount { get; set; }
         public int ReservationTempId { get; set; }
         public int OnlineReservationId { get; set; }

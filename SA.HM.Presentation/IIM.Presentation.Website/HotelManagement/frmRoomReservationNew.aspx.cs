@@ -5350,12 +5350,14 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             Envelope env = ParseXmlResponse(response);
             //Envelope env = ParseXmlResponse(xmlData);
 
-            string reservationDate = GetReservationInformation(env, "ReservationDate");
-            string reservationFromDate = GetReservationInformation(env, "ReservationFromDate");
-            string reservationToDate = GetReservationInformation(env, "ReservationToDate");
-            string guestName = GetReservationInformation(env, "GuestName");
-            string roomTypeCode = GetReservationInformation(env, "RoomTypeCode");
-            string roomTypeRate = GetReservationInformation(env, "RoomTypeRate");
+            //string reservationDate = GetReservationInformation(env, "ReservationDate");
+            //string reservationFromDate = GetReservationInformation(env, "ReservationFromDate");
+            //string reservationToDate = GetReservationInformation(env, "ReservationToDate");
+            //string guestName = GetReservationInformation(env, "GuestName");
+            //string roomTypeCode = GetReservationInformation(env, "RoomTypeCode");
+            //string roomTypeRate = GetReservationInformation(env, "RoomTypeRate");
+
+            RoomReservationPostingForSiteMinder(env);
 
             return response;
         }
@@ -5371,6 +5373,33 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             }
 
             return envelope;
+        }
+
+        public static Boolean RoomReservationPostingForSiteMinder(Envelope env)
+        {
+            Boolean returnDate = true;
+            RoomReservationBO roomReservationBO = new RoomReservationBO();
+
+            Body envBody = env.Body;
+            OTAResRetrieveRS rs = envBody.OTAResRetrieveRS;
+            ReservationsList revList = rs.ReservationsList;
+
+            roomReservationBO.SiteMinderReservationId = revList.HotelReservation.UniqueID[0].ID;
+            roomReservationBO.ReservationDate = revList.HotelReservation.CreateDateTime;
+            roomReservationBO.DateIn = revList.HotelReservation.RoomStays.RoomStay.RatePlans.RatePlan.EffectiveDate;
+            roomReservationBO.DateOut = revList.HotelReservation.RoomStays.RoomStay.RatePlans.RatePlan.ExpireDate;
+            roomReservationBO.GuestName = revList.HotelReservation.ResGuests.ResGuest.Profiles.ProfileInfo.Profile.Customer.PersonName.NamePrefix +
+                                          " " + revList.HotelReservation.ResGuests.ResGuest.Profiles.ProfileInfo.Profile.Customer.PersonName.GivenName +
+                                          " " + revList.HotelReservation.ResGuests.ResGuest.Profiles.ProfileInfo.Profile.Customer.PersonName.Surname;
+            roomReservationBO.GuestPhone = revList.HotelReservation.ResGuests.ResGuest.Profiles.ProfileInfo.Profile.Customer.Telephone.PhoneNumber.ToString();
+            roomReservationBO.GuestEmail = revList.HotelReservation.ResGuests.ResGuest.Profiles.ProfileInfo.Profile.Customer.Email;
+            roomReservationBO.GuestSourceId = 60;
+            roomReservationBO.GuestRemarks = revList.HotelReservation.ResGlobalInfo.Comments.Comment.Text.ToString();
+
+
+            ReservationDetailBO roomReservationDetailBO = new ReservationDetailBO();
+            roomReservationDetailBO.RoomType = revList.HotelReservation.RoomStays.RoomStay.RoomTypes.RoomType.RoomTypeCode;
+            return returnDate;
         }
 
         public static string GetReservationInformation(Envelope env, string requestType)
@@ -5413,6 +5442,6 @@ namespace HotelManagement.Presentation.Website.HotelManagement
                 }
             }
             return returnData;
-        }
+        }        
     }
 }
