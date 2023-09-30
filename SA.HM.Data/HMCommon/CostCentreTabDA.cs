@@ -633,8 +633,12 @@ namespace HotelManagement.Data.HMCommon
                                 costCentreTabBO.CompanyType = reader["CompanyType"].ToString();
                                 costCentreTabBO.CostCenterType = reader["CostCenterType"].ToString();
                                 costCentreTabBO.CostCenter = reader["CostCenter"].ToString();
+                                costCentreTabBO.IsServiceChargeEnable = Convert.ToBoolean(reader["IsServiceChargeEnable"]);
                                 costCentreTabBO.ServiceCharge = Convert.ToDecimal(reader["ServiceCharge"]);
+                                costCentreTabBO.IsVatEnable = Convert.ToBoolean(reader["IsVatEnable"]);
                                 costCentreTabBO.VatAmount = Convert.ToDecimal(reader["VatAmount"]);
+                                costCentreTabBO.IsCitySDChargeEnable = Convert.ToBoolean(reader["IsCitySDChargeEnable"]);
+                                costCentreTabBO.CitySDCharge = Convert.ToDecimal(reader["CitySDCharge"]);
                                 costCentreTabBO.IsRestaurant = Convert.ToBoolean(reader["IsRestaurant"]);
                                 costCentreTabBO.DefaultView = reader["DefaultView"].ToString();
                                 costCentreTabBO.InvoiceTemplate = Convert.ToInt32(reader["InvoiceTemplate"]);

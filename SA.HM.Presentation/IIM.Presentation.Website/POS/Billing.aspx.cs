@@ -458,7 +458,7 @@ namespace HotelManagement.Presentation.Website.POS
 
                 HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
                 HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-
+                Boolean isVatAmountEnable = true;
                 CostCentreTabBO costCentreTabBO = new CostCentreTabBO();
                 CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
                 costCentreTabBO = costCentreTabDA.GetCostCenterDetailInformation("Restaurant", billID);
@@ -468,6 +468,7 @@ namespace HotelManagement.Presentation.Website.POS
                 {
                     if (costCentreTabBO.InvoiceTemplate > 0)
                     {
+                        isVatAmountEnable = costCentreTabBO.IsVatEnable;
                         if (costCentreTabBO.InvoiceTemplate == 5)
                         {
                             if (costCentreTabBO.CompanyType == "RiceMill")
@@ -541,7 +542,10 @@ namespace HotelManagement.Presentation.Website.POS
                             {
                                 if (reportName == "rptRestaurentBillForA4Page")
                                 {
-                                    reportName = "rptRestaurentBillForA402Page";
+                                    if (!isVatAmountEnable)
+                                    {
+                                        reportName = "rptRestaurentBillForA402Page";
+                                    }
                                 }
                                 else
                                 {
