@@ -51,6 +51,7 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
             UserInformationBO userInformationBO = new UserInformationBO();
             userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
             userInformationBO = System.Web.HttpContext.Current.Session["UserInformationBOSession"] as UserInformationBO;
+
             // // // ------User Admin Authorization BO Session Information --------------------------------
             #region User Admin Authorization
             if (userInformationBO.UserInfoId == 1)
@@ -150,10 +151,32 @@ namespace HotelManagement.Presentation.Website.Payroll.Reports
                 int departmentId = 0, empId = 0, year = 0;
                 DateTime processDateTo = DateTime.Now;
 
+                Boolean IsAdminUser = false;
                 UserInformationBO userInformationBO = new UserInformationBO();
                 userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
+                userInformationBO = System.Web.HttpContext.Current.Session["UserInformationBOSession"] as UserInformationBO;
 
-                if (userInformationBO.IsAdminUser)
+                // // // ------User Admin Authorization BO Session Information --------------------------------
+                #region User Admin Authorization
+                if (userInformationBO.UserInfoId == 1)
+                {
+                    IsAdminUser = true;
+                }
+                else
+                {
+                    List<SecurityUserAdminAuthorizationBO> adminAuthorizationList = new List<SecurityUserAdminAuthorizationBO>();
+                    adminAuthorizationList = System.Web.HttpContext.Current.Session["UserAdminAuthorizationBOSession"] as List<SecurityUserAdminAuthorizationBO>;
+                    if (adminAuthorizationList != null)
+                    {
+                        if (adminAuthorizationList.Where(x => x.UserInfoId == userInformationBO.UserInfoId && x.ModuleId == 18).Count() > 0)
+                        {
+                            IsAdminUser = true;
+                        }
+                    }
+                }
+                #endregion
+
+                if (IsAdminUser)
                 {
                     if (ddlDepartment.SelectedValue == "0")
                     {

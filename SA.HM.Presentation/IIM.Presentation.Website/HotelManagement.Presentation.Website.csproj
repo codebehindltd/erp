@@ -403,6 +403,7 @@
     <Content Include="SalesAndMarketing\Reports\ContributionAnalysisReport.aspx" />
     <Content Include="SalesAndMarketing\Reports\frmCompanyPaymentCollection.aspx" />
     <Content Include="SalesAndMarketing\Reports\frmCompanyPaymentReceipt.aspx" />
+    <Content Include="SalesAndMarketing\Reports\frmReportSalesOrderInfo.aspx" />
     <Content Include="SalesAndMarketing\Reports\frmReportCompanyAging.aspx" />
     <Content Include="SalesAndMarketing\Reports\frmReportCompanyList.aspx" />
     <Content Include="SalesAndMarketing\Reports\frmReportSalesTargetAndAchievement.aspx" />
@@ -3527,6 +3528,13 @@
     </Compile>
     <Compile Include="SalesAndMarketing\Reports\frmCompanyPaymentReceipt.aspx.designer.cs">
       <DependentUpon>frmCompanyPaymentReceipt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SalesAndMarketing\Reports\frmReportSalesOrderInfo.aspx.cs">
+      <DependentUpon>frmReportSalesOrderInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SalesAndMarketing\Reports\frmReportSalesOrderInfo.aspx.designer.cs">
+      <DependentUpon>frmReportSalesOrderInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="SalesAndMarketing\Reports\frmReportCompanyAging.aspx.cs">
       <DependentUpon>frmReportCompanyAging.aspx</DependentUpon>
