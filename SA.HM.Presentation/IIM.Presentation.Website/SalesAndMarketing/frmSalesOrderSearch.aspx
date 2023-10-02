@@ -531,7 +531,7 @@ function PopulateProjects() {
                     tr += "&nbsp;&nbsp;<img id='billing' src='../Images/billresettlement.png' onClick= \"javascript:return LoadSalesOrderForBilling(" + gridObject.BillId + "," + gridObject.CostCenterId + ") \" alt='Image' Title='billing' border='0'/>";
                 }
 
-                //tr += "&nbsp;&nbsp;<img id='preview' src='../Images/ReportDocument.png' onClick= \"javascript:return PerformSalesOrderPreviewAction(" + gridObject.BillId + ", '" + gridObject.CostCenterType + "')\" alt='Sales Order' Title='Sales Order' border='0'/>";
+                tr += "&nbsp;&nbsp;<img id='preview' src='../Images/ReportDocument.png' onClick= \"javascript:return PerformSalesOrderPreviewAction(" + gridObject.BillId + ", '" + gridObject.CostCenterType + "')\" alt='Sales Order' Title='Sales Order' border='0'/>";
                 
 
                 <%--if (gridObject.IsDayClosed == 0) {

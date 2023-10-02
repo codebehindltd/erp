@@ -43,15 +43,15 @@
         });
 
         function PrintDocumentFunc(printTemplate) {
-            if (printTemplate == "1") {
+            //if (printTemplate == "1") {
                 $('#btnPrintReportTemplate1').trigger('click');
-            }
-            else if (printTemplate == "2") {
-                $('#btnPrintReportTemplate2').trigger('click');
-            }
-            else if (printTemplate == "3") {
-                $("#btnPrintReportTemplate3").trigger('click');
-            }
+            //}
+            //else if (printTemplate == "2") {
+            //    $('#btnPrintReportTemplate2').trigger('click');
+            //}
+            //else if (printTemplate == "3") {
+            //    $("#btnPrintReportTemplate3").trigger('click');
+            //}
             return true;
         }   
     </script>

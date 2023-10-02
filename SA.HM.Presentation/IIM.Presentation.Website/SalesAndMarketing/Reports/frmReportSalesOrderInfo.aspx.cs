@@ -29,7 +29,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
         {
             if (!IsPostBack)
             {
-                this.BillinReportProcessing("rptRestaurentBillForA4Page");
+                this.BillinReportProcessing("rptSalesOrderInvoiceForA4Page");
                 //string queryStringId = Request.QueryString["soId"];
                 //string queryStringChallan = Request.QueryString["Challan"];
                 ////if (!string.IsNullOrEmpty(queryStringId))
@@ -244,7 +244,7 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
                 //    }
                 //}
 
-                var reportPath = Server.MapPath(@"~/POS/Reports/Rdlc/" + reportName + ".rdlc");
+                var reportPath = Server.MapPath(@"~/SalesAndMarketing/Reports/Rdlc/" + reportName + ".rdlc");
                 if (!File.Exists(reportPath))
                     return;
 
