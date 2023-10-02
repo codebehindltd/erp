@@ -100,291 +100,294 @@ namespace HotelManagement.Presentation.Website.SalesAndMarketing.Reports
             string queryStringUS = Request.QueryString["US"];
             List<ReportParameter> reportParam = new List<ReportParameter>();
             string queryStringId = Request.QueryString["soId"];
-            int billID = Int32.Parse(queryStringId);
-
-            UserInformationBO userInformationBO = new UserInformationBO();
-            userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
-
-            if (!string.IsNullOrEmpty(queryStringId))
+            if (queryStringId != null)
             {
-                rvTransaction.ProcessingMode = ProcessingMode.Local;
-                rvTransaction.LocalReport.DataSources.Clear();
+                int billID = Int32.Parse(queryStringId);
 
-                CompanyDA companyDA = new CompanyDA();
-                List<CompanyBO> files = companyDA.GetCompanyInfo();
+                UserInformationBO userInformationBO = new UserInformationBO();
+                userInformationBO = hmUtility.GetCurrentApplicationUserInfo();
 
-                string companyName = string.Empty;
-                string companyAddress = string.Empty;
-                string binNumber = string.Empty;
-                string tinNumber = string.Empty;
-                string projectName = string.Empty;
-                if (files[0].CompanyId > 0)
+                if (!string.IsNullOrEmpty(queryStringId))
                 {
-                    //reportParam.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
-                    companyName = files[0].CompanyName;
-                    companyAddress = files[0].CompanyAddress;
-                    binNumber = files[0].VatRegistrationNo;
-                    tinNumber = files[0].TinNumber;
+                    rvTransaction.ProcessingMode = ProcessingMode.Local;
+                    rvTransaction.LocalReport.DataSources.Clear();
 
-                    //reportParam.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
-                    //reportParam.Add(new ReportParameter("VatRegistrationNo", files[0].VatRegistrationNo));
-                    reportParam.Add(new ReportParameter("CompanyType", files[0].CompanyType));
+                    CompanyDA companyDA = new CompanyDA();
+                    List<CompanyBO> files = companyDA.GetCompanyInfo();
 
-                    if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
+                    string companyName = string.Empty;
+                    string companyAddress = string.Empty;
+                    string binNumber = string.Empty;
+                    string tinNumber = string.Empty;
+                    string projectName = string.Empty;
+                    if (files[0].CompanyId > 0)
                     {
-                        reportParam.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
+                        //reportParam.Add(new ReportParameter("CompanyProfile", files[0].CompanyName));
+                        companyName = files[0].CompanyName;
+                        companyAddress = files[0].CompanyAddress;
+                        binNumber = files[0].VatRegistrationNo;
+                        tinNumber = files[0].TinNumber;
+
+                        //reportParam.Add(new ReportParameter("CompanyAddress", files[0].CompanyAddress));
+                        //reportParam.Add(new ReportParameter("VatRegistrationNo", files[0].VatRegistrationNo));
+                        reportParam.Add(new ReportParameter("CompanyType", files[0].CompanyType));
+
+                        if (!string.IsNullOrWhiteSpace(files[0].WebAddress))
+                        {
+                            reportParam.Add(new ReportParameter("CompanyWeb", files[0].WebAddress));
+                        }
+
+                        reportParam.Add(new ReportParameter("ContactNumber", files[0].ContactNumber));
                     }
 
-                    reportParam.Add(new ReportParameter("ContactNumber", files[0].ContactNumber));
-                }
+                    //CostCentreTabBO costCentreTabBO = new CostCentreTabBO();
+                    //CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
 
-                //CostCentreTabBO costCentreTabBO = new CostCentreTabBO();
-                //CostCentreTabDA costCentreTabDA = new CostCentreTabDA();
+                    //HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
+                    //HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
+                    //Boolean isVatAmountEnable = true;
+                    //costCentreTabBO = costCentreTabDA.GetCostCenterDetailInformation("Restaurant", billID);
 
-                //HMCommonSetupBO commonSetupBO = new HMCommonSetupBO();
-                //HMCommonSetupDA commonSetupDA = new HMCommonSetupDA();
-                //Boolean isVatAmountEnable = true;
-                //costCentreTabBO = costCentreTabDA.GetCostCenterDetailInformation("Restaurant", billID);
+                    //if (costCentreTabBO != null)
+                    //{
+                    //    if (costCentreTabBO.InvoiceTemplate > 0)
+                    //    {
+                    //        isVatAmountEnable = costCentreTabBO.IsVatEnable;
+                    //        if (costCentreTabBO.InvoiceTemplate == 5)
+                    //        {
+                    //            if (reportName == "rptRiceMillBillForA4Page")
+                    //            {
+                    //                reportName = "rptRiceMillBillForA4Page";
+                    //            }
+                    //            else
+                    //            {
+                    //                reportName = "rptRestaurentBillForA4Page";
+                    //            }
 
-                //if (costCentreTabBO != null)
-                //{
-                //    if (costCentreTabBO.InvoiceTemplate > 0)
-                //    {
-                //        isVatAmountEnable = costCentreTabBO.IsVatEnable;
-                //        if (costCentreTabBO.InvoiceTemplate == 5)
-                //        {
-                //            if (reportName == "rptRiceMillBillForA4Page")
-                //            {
-                //                reportName = "rptRiceMillBillForA4Page";
-                //            }
-                //            else
-                //            {
-                //                reportName = "rptRestaurentBillForA4Page";
-                //            }
+                    //            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsBillingInvoiceTemplateWithoutHeader", "IsBillingInvoiceTemplateWithoutHeader");
 
-                //            commonSetupBO = commonSetupDA.GetCommonConfigurationInfo("IsBillingInvoiceTemplateWithoutHeader", "IsBillingInvoiceTemplateWithoutHeader");
+                    //            if (commonSetupBO != null)
+                    //            {
+                    //                if (commonSetupBO.SetupValue != "0")
+                    //                {
+                    //                    if (reportName == "rptRiceMillBillForA4Page")
+                    //                    {
+                    //                        reportName = "rptRiceMillBillForA4PageWithoutHeader";
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        reportName = "rptRestaurentBillForA4PageWithoutHeader";
+                    //                    }
+                    //                }
+                    //            }
+                    //        }
 
-                //            if (commonSetupBO != null)
-                //            {
-                //                if (commonSetupBO.SetupValue != "0")
-                //                {
-                //                    if (reportName == "rptRiceMillBillForA4Page")
-                //                    {
-                //                        reportName = "rptRiceMillBillForA4PageWithoutHeader";
-                //                    }
-                //                    else
-                //                    {
-                //                        reportName = "rptRestaurentBillForA4PageWithoutHeader";
-                //                    }
-                //                }
-                //            }
-                //        }
+                    //        if (costCentreTabBO.IsCostCenterNameShowOnInvoice)
+                    //        {
+                    //            companyName = costCentreTabBO.CostCenter;
+                    //            if (!string.IsNullOrWhiteSpace(costCentreTabBO.CompanyAddress))
+                    //            {
+                    //                companyAddress = costCentreTabBO.CompanyAddress;
+                    //            }
+                    //        }
+                    //    }
+                    //}
 
-                //        if (costCentreTabBO.IsCostCenterNameShowOnInvoice)
-                //        {
-                //            companyName = costCentreTabBO.CostCenter;
-                //            if (!string.IsNullOrWhiteSpace(costCentreTabBO.CompanyAddress))
-                //            {
-                //                companyAddress = costCentreTabBO.CompanyAddress;
-                //            }
-                //        }
-                //    }
-                //}
+                    //RestaurantBillBO billBO = new RestaurantBillBO();
+                    //RestaurentBillDA billDA = new RestaurentBillDA();
+                    //billBO = billDA.GetBillInfoByBillId(billID);
 
-                //RestaurantBillBO billBO = new RestaurantBillBO();
-                //RestaurentBillDA billDA = new RestaurentBillDA();
-                //billBO = billDA.GetBillInfoByBillId(billID);
+                    string billRemarks = string.Empty;
+                    string billDeclaration = string.Empty;
+                    string imagePreparedBySignature = string.Empty;
 
-                string billRemarks = string.Empty;
-                string billDeclaration = string.Empty;
-                string imagePreparedBySignature = string.Empty;
+                    //if (billBO != null)
+                    //{
+                    //    if (billBO.BillId > 0)
+                    //    {
+                    //        billRemarks = billBO.Remarks;
+                    //        binNumber = billBO.BinNumber;
+                    //        tinNumber = billBO.TinNumber;
+                    //        projectName = billBO.ProjectName;
+                    //        billDeclaration = billBO.BillDeclaration;
 
-                //if (billBO != null)
-                //{
-                //    if (billBO.BillId > 0)
-                //    {
-                //        billRemarks = billBO.Remarks;
-                //        binNumber = billBO.BinNumber;
-                //        tinNumber = billBO.TinNumber;
-                //        projectName = billBO.ProjectName;
-                //        billDeclaration = billBO.BillDeclaration;
+                    //        if (!string.IsNullOrEmpty(queryStringUS))
+                    //        {
+                    //            imagePreparedBySignature = billBO.UserSignature;
+                    //        }
+                    //        if (billBO.IsInvoiceVatAmountEnable == false)
+                    //        {
+                    //            if (reportName == "rptRestaurentBillForA4Page")
+                    //            {
+                    //                if (reportName == "rptRiceMillBillForA4Page")
+                    //                {
+                    //                    reportName = "rptRiceMillBillForA4Page";
+                    //                }
+                    //                else
+                    //                {
+                    //                    if (!isVatAmountEnable)
+                    //                    {
+                    //                        reportName = "rptRestaurentBillForA402Page";
+                    //                    }
+                    //                }
+                    //            }
+                    //            else
+                    //            {
+                    //                if (reportName == "rptRiceMillBillForA4Page")
+                    //                {
+                    //                    reportName = "rptRiceMillBillForA4PageWithoutHeader";
+                    //                }
+                    //                else
+                    //                {
+                    //                    reportName = "rptRestaurentBillForA402PageWithoutHeader";
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
 
-                //        if (!string.IsNullOrEmpty(queryStringUS))
-                //        {
-                //            imagePreparedBySignature = billBO.UserSignature;
-                //        }
-                //        if (billBO.IsInvoiceVatAmountEnable == false)
-                //        {
-                //            if (reportName == "rptRestaurentBillForA4Page")
-                //            {
-                //                if (reportName == "rptRiceMillBillForA4Page")
-                //                {
-                //                    reportName = "rptRiceMillBillForA4Page";
-                //                }
-                //                else
-                //                {
-                //                    if (!isVatAmountEnable)
-                //                    {
-                //                        reportName = "rptRestaurentBillForA402Page";
-                //                    }
-                //                }
-                //            }
-                //            else
-                //            {
-                //                if (reportName == "rptRiceMillBillForA4Page")
-                //                {
-                //                    reportName = "rptRiceMillBillForA4PageWithoutHeader";
-                //                }
-                //                else
-                //                {
-                //                    reportName = "rptRestaurentBillForA402PageWithoutHeader";
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
+                    var reportPath = Server.MapPath(@"~/SalesAndMarketing/Reports/Rdlc/" + reportName + ".rdlc");
+                    if (!File.Exists(reportPath))
+                        return;
 
-                var reportPath = Server.MapPath(@"~/SalesAndMarketing/Reports/Rdlc/" + reportName + ".rdlc");
-                if (!File.Exists(reportPath))
-                    return;
+                    rvTransaction.LocalReport.ReportPath = reportPath;
 
-                rvTransaction.LocalReport.ReportPath = reportPath;
+                    reportParam.Add(new ReportParameter("CompanyProfile", companyName));
+                    reportParam.Add(new ReportParameter("CompanyAddress", companyAddress));
+                    reportParam.Add(new ReportParameter("VatRegistrationNo", binNumber));
+                    reportParam.Add(new ReportParameter("TinNumber", tinNumber));
+                    reportParam.Add(new ReportParameter("ProjectName", projectName));
 
-                reportParam.Add(new ReportParameter("CompanyProfile", companyName));
-                reportParam.Add(new ReportParameter("CompanyAddress", companyAddress));
-                reportParam.Add(new ReportParameter("VatRegistrationNo", binNumber));
-                reportParam.Add(new ReportParameter("TinNumber", tinNumber));
-                reportParam.Add(new ReportParameter("ProjectName", projectName));
+                    reportParam.Add(new ReportParameter("BillDeclaration", billDeclaration));
 
-                reportParam.Add(new ReportParameter("BillDeclaration", billDeclaration));
-
-                rvTransaction.LocalReport.EnableExternalImages = true;
-                HMCommonDA hmCommonDA = new HMCommonDA();
-                //string imageName = hmCommonDA.GetOutletImageNameByCostCenterId(billBO.CostCenterId);
-                //if (!string.IsNullOrWhiteSpace(imageName))
-                //{
-                //    reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + imageName)));
-                //}
-                //else
-                //{
+                    rvTransaction.LocalReport.EnableExternalImages = true;
+                    HMCommonDA hmCommonDA = new HMCommonDA();
+                    //string imageName = hmCommonDA.GetOutletImageNameByCostCenterId(billBO.CostCenterId);
+                    //if (!string.IsNullOrWhiteSpace(imageName))
+                    //{
+                    //    reportParam.Add(new ReportParameter("Path", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/" + imageName)));
+                    //}
+                    //else
+                    //{
                     reportParam.Add(new ReportParameter("Path", "Hide"));
-                //}
+                    //}
 
-                //if (!string.IsNullOrWhiteSpace(imagePreparedBySignature))
-                //{
-                //    reportParam.Add(new ReportParameter("BillingDefaultPreparedBySignature", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/UserSignature/" + imagePreparedBySignature)));
-                //}
-                //else
-                //{
+                    //if (!string.IsNullOrWhiteSpace(imagePreparedBySignature))
+                    //{
+                    //    reportParam.Add(new ReportParameter("BillingDefaultPreparedBySignature", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/UserSignature/" + imagePreparedBySignature)));
+                    //}
+                    //else
+                    //{
                     reportParam.Add(new ReportParameter("BillingDefaultPreparedBySignature", "Hide"));
-                //}
+                    //}
 
-                HMCommonSetupBO setUpBOApprovedBySignature = new HMCommonSetupBO();
-                string imageApprovedBySignature = "0";
-                //if (!string.IsNullOrEmpty(queryStringUS))
-                //{
-                //    setUpBOApprovedBySignature = commonSetupDA.GetCommonConfigurationInfo("BillingDefaultApprovedBySignature", "BillingDefaultApprovedBySignature");
-                //    if (!string.IsNullOrWhiteSpace(setUpBOApprovedBySignature.SetupValue))
-                //    {
-                //        imageApprovedBySignature = setUpBOApprovedBySignature.SetupValue;
-                //    }
-                //}
+                    HMCommonSetupBO setUpBOApprovedBySignature = new HMCommonSetupBO();
+                    string imageApprovedBySignature = "0";
+                    //if (!string.IsNullOrEmpty(queryStringUS))
+                    //{
+                    //    setUpBOApprovedBySignature = commonSetupDA.GetCommonConfigurationInfo("BillingDefaultApprovedBySignature", "BillingDefaultApprovedBySignature");
+                    //    if (!string.IsNullOrWhiteSpace(setUpBOApprovedBySignature.SetupValue))
+                    //    {
+                    //        imageApprovedBySignature = setUpBOApprovedBySignature.SetupValue;
+                    //    }
+                    //}
 
-                //if (imageApprovedBySignature != "0")
-                //{
-                //    reportParam.Add(new ReportParameter("BillingDefaultApprovedBySignature", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/UserSignature/" + imageApprovedBySignature)));
-                //}
-                //else
-                //{
+                    //if (imageApprovedBySignature != "0")
+                    //{
+                    //    reportParam.Add(new ReportParameter("BillingDefaultApprovedBySignature", Request.Url.AbsoluteUri.Replace(Request.Url.AbsolutePath, "" + @"/Images/UserSignature/" + imageApprovedBySignature)));
+                    //}
+                    //else
+                    //{
                     reportParam.Add(new ReportParameter("BillingDefaultApprovedBySignature", "Hide"));
-                //}
+                    //}
 
-                reportParam.Add(new ReportParameter("ThankYouMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIThankYouMessege")));
-                reportParam.Add(new ReportParameter("CorporateAddress", hmCommonDA.GetCustomFieldValueByFieldName("paramGICorporateAddress")));
-                reportParam.Add(new ReportParameter("AggrimentMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIAggrimentMessege")));
-                reportParam.Add(new ReportParameter("RestaurantMushakInfo", hmCommonDA.GetCustomFieldValueByFieldName("RestaurantMushakInfo")));
+                    reportParam.Add(new ReportParameter("ThankYouMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIThankYouMessege")));
+                    reportParam.Add(new ReportParameter("CorporateAddress", hmCommonDA.GetCustomFieldValueByFieldName("paramGICorporateAddress")));
+                    reportParam.Add(new ReportParameter("AggrimentMessege", hmCommonDA.GetCustomFieldValueByFieldName("paramGIAggrimentMessege")));
+                    reportParam.Add(new ReportParameter("RestaurantMushakInfo", hmCommonDA.GetCustomFieldValueByFieldName("RestaurantMushakInfo")));
 
-                //HMCommonSetupBO isCompanyNameShowOnRestaurantInvoice = new HMCommonSetupBO();
-                //isCompanyNameShowOnRestaurantInvoice = commonSetupDA.GetCommonConfigurationInfo("IsCompanyNameShowOnRestaurantInvoice", "IsCompanyNameShowOnRestaurantInvoice");
-                //if (Convert.ToInt32(isCompanyNameShowOnRestaurantInvoice.SetupValue) == 1)
-                //{
-                //    reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "1"));
-                //}
-                //else
-                //{
+                    //HMCommonSetupBO isCompanyNameShowOnRestaurantInvoice = new HMCommonSetupBO();
+                    //isCompanyNameShowOnRestaurantInvoice = commonSetupDA.GetCommonConfigurationInfo("IsCompanyNameShowOnRestaurantInvoice", "IsCompanyNameShowOnRestaurantInvoice");
+                    //if (Convert.ToInt32(isCompanyNameShowOnRestaurantInvoice.SetupValue) == 1)
+                    //{
+                    //    reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "1"));
+                    //}
+                    //else
+                    //{
                     reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "0"));
-                //}
+                    //}
 
 
-                //isCompanyNameShowOnRestaurantInvoice = commonSetupDA.GetCommonConfigurationInfo("IsCompanyNameShowOnRestaurantInvoice", "IsCompanyNameShowOnRestaurantInvoice");
-                //if (Convert.ToInt32(isCompanyNameShowOnRestaurantInvoice.SetupValue) == 1)
-                //{
-                //    reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "1"));
-                //}
-                //else
-                //{
+                    //isCompanyNameShowOnRestaurantInvoice = commonSetupDA.GetCommonConfigurationInfo("IsCompanyNameShowOnRestaurantInvoice", "IsCompanyNameShowOnRestaurantInvoice");
+                    //if (Convert.ToInt32(isCompanyNameShowOnRestaurantInvoice.SetupValue) == 1)
+                    //{
+                    //    reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "1"));
+                    //}
+                    //else
+                    //{
                     reportParam.Add(new ReportParameter("IsCompanyNameShowOnRestaurantInvoice", "0"));
-                //}
+                    //}
 
-                //isCompanyNameShowOnRestaurantInvoice = commonSetupDA.GetCommonConfigurationInfo("IsBillingInvoiceDueSectionEnable", "IsBillingInvoiceDueSectionEnable");
-                //if (Convert.ToInt32(isCompanyNameShowOnRestaurantInvoice.SetupValue) == 1)
-                //{
-                //    reportParam.Add(new ReportParameter("IsBillingInvoiceDueSectionEnable", "1"));
-                //}
-                //else
-                //{
+                    //isCompanyNameShowOnRestaurantInvoice = commonSetupDA.GetCommonConfigurationInfo("IsBillingInvoiceDueSectionEnable", "IsBillingInvoiceDueSectionEnable");
+                    //if (Convert.ToInt32(isCompanyNameShowOnRestaurantInvoice.SetupValue) == 1)
+                    //{
+                    //    reportParam.Add(new ReportParameter("IsBillingInvoiceDueSectionEnable", "1"));
+                    //}
+                    //else
+                    //{
                     reportParam.Add(new ReportParameter("IsBillingInvoiceDueSectionEnable", "0"));
-                //}
+                    //}
 
-                DateTime currentDate = DateTime.Now;
-                HMCommonDA printDateDA = new HMCommonDA();
-                string printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);
+                    DateTime currentDate = DateTime.Now;
+                    HMCommonDA printDateDA = new HMCommonDA();
+                    string printDate = hmUtility.GetDateTimeStringFromDateTime(currentDate);
 
-                reportParam.Add(new ReportParameter("PrintDateTime", printDate));
+                    reportParam.Add(new ReportParameter("PrintDateTime", printDate));
 
 
-                RetailPosBillReturnBO restaurantBill = new RetailPosBillReturnBO();
-                RestaurentPosDA rda = new RestaurentPosDA();
-                restaurantBill = rda.GetSalesOrderInfoBySOIdForReport(billID);
+                    RetailPosBillReturnBO restaurantBill = new RetailPosBillReturnBO();
+                    RestaurentPosDA rda = new RestaurentPosDA();
+                    restaurantBill = rda.GetSalesOrderInfoBySOIdForReport(billID);
 
-                string discountTitle = string.Empty;
-                string billDescription = string.Empty;
-                if (billID > 0)
-                {
-                    if (restaurantBill.PosBillWithSalesReturn != null)
+                    string discountTitle = string.Empty;
+                    string billDescription = string.Empty;
+                    if (billID > 0)
                     {
-                        if (restaurantBill.PosBillWithSalesReturn.Count > 0)
+                        if (restaurantBill.PosBillWithSalesReturn != null)
                         {
-                            billDescription = restaurantBill.PosBillWithSalesReturn[0].BillDescription;
-                            billRemarks = restaurantBill.PosBillWithSalesReturn[0].BillDescription;
+                            if (restaurantBill.PosBillWithSalesReturn.Count > 0)
+                            {
+                                billDescription = restaurantBill.PosBillWithSalesReturn[0].BillDescription;
+                                billRemarks = restaurantBill.PosBillWithSalesReturn[0].BillDescription;
 
-                            if (restaurantBill.PosBillWithSalesReturn[0].DiscountType == "Percentage")
-                            {
-                                discountTitle = "Discount (" + restaurantBill.PosBillWithSalesReturn[0].DiscountAmount + "%)";
-                            }
-                            else
-                            {
-                                discountTitle = "Discount";
+                                if (restaurantBill.PosBillWithSalesReturn[0].DiscountType == "Percentage")
+                                {
+                                    discountTitle = "Discount (" + restaurantBill.PosBillWithSalesReturn[0].DiscountAmount + "%)";
+                                }
+                                else
+                                {
+                                    discountTitle = "Discount";
+                                }
                             }
                         }
                     }
+
+                    //Decimal billCompanyDueTotal = 0.00;
+                    //billCompanyDueTotal = 1000.00;
+                    //reportParam.Add(new ReportParameter("BillCompanyDueTotal", billCompanyDueTotal));
+
+
+                    reportParam.Add(new ReportParameter("DiscountTitle", discountTitle));
+                    reportParam.Add(new ReportParameter("BillRemarks", billRemarks));
+
+                    rvTransaction.LocalReport.SetParameters(reportParam);
+                    var dataSet = rvTransaction.LocalReport.GetDataSourceNames();
+                    rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(dataSet[0], restaurantBill.PosBillWithSalesReturn));
+                    rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(dataSet[1], restaurantBill.PosSalesReturnPayment));
+
+                    rvTransaction.LocalReport.DisplayName = "Sales Order";
+                    rvTransaction.LocalReport.Refresh();
                 }
-
-                //Decimal billCompanyDueTotal = 0.00;
-                //billCompanyDueTotal = 1000.00;
-                //reportParam.Add(new ReportParameter("BillCompanyDueTotal", billCompanyDueTotal));
-
-
-                reportParam.Add(new ReportParameter("DiscountTitle", discountTitle));
-                reportParam.Add(new ReportParameter("BillRemarks", billRemarks));
-
-                rvTransaction.LocalReport.SetParameters(reportParam);
-                var dataSet = rvTransaction.LocalReport.GetDataSourceNames();
-                rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(dataSet[0], restaurantBill.PosBillWithSalesReturn));
-                rvTransaction.LocalReport.DataSources.Add(new ReportDataSource(dataSet[1], restaurantBill.PosSalesReturnPayment));
-
-                rvTransaction.LocalReport.DisplayName = "Sales Order";
-                rvTransaction.LocalReport.Refresh();
             }
         }
         //private void ReportProcessing(string reportName)
