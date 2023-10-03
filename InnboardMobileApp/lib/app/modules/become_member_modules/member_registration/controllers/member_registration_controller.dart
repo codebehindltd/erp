@@ -10,6 +10,7 @@ import 'package:innboard/app/data/models/res/members/membership_type.dart';
 import 'package:innboard/app/data/services/member_service.dart';
 import '../../../../core/enums/payment_type_enum.dart';
 import '../../../../data/models/req/members/member_payment_save_model.dart';
+import '../../../../data/models/res/payment_st_list_model.dart';
 import '../../../../data/models/res/property_model.dart';
 import '../../../../data/services/common_service.dart';
 import '../../../../global_widgets/payment_gateway.dart';
@@ -25,20 +26,15 @@ class MemberRegistrationController extends GetxController {
   static var isLoading = true.obs;
 
   var membershipSetupData = <MemberShipType>[].obs;
-
-  void setSelectedOption(MemberShipType? option) {
-    selectedType.value = option!;
-    //checkLng();
-  }
+  var paymentStStepList = <PaymentStListModel>[].obs;
 
   RxInt selectedPaymentType = 0.obs;
   String? memberId;
   SSLCTransactionInfoModel? sslPaymentResult;
 
   PropertyModel? propertyData;
-  void selectValue(int value) {
-    selectedPaymentType.value = value;
-  }
+  double limitAmount = 100000;
+
 
   @override
   void onInit() {
@@ -47,19 +43,46 @@ class MemberRegistrationController extends GetxController {
     super.onInit();
   }
 
+  void setSelectedOption(MemberShipType? option) {
+    selectedType.value = option!;
+    perparePamentList();
+    //checkLng();
+  }
+
+  void selectValue(int value) {
+    selectedPaymentType.value = value;
+    perparePamentList();
+  }
+
+  perparePamentList() {
+    double amount = 0;
+    if (selectedPaymentType.value == PaymentTypeEnum.fullPayment.value) {
+      amount = selectedType.value.subscriptionFee!;
+    } else if (selectedPaymentType.value == PaymentTypeEnum.instalment.value) {
+      amount = selectedType.value.minimumInstallmentSubscriptionFee!;
+    }
+
+    int step = (amount / limitAmount).ceil();
+    paymentStStepList.clear();
+    for (var i = 0; i < step; i++) {
+      paymentStStepList
+          .add(PaymentStListModel(amount: amount / step, isPaid: false));
+    }
+  }
 
   getPropertyList() {
-    CommonService.getPropertyList(UserTypeEnum.member.value).then((value) async {
-      propertyData= value.where((element) => element.endPointIp==Env.rootUrl).first;
-    }).onError((error, stackTrace) {
-     
-    });
+    CommonService.getPropertyList(UserTypeEnum.member.value)
+        .then((value) async {
+      propertyData =
+          value.where((element) => element.endPointIp == Env.rootUrl).first;
+    }).onError((error, stackTrace) {});
   }
 
   getMembershipTypes() async {
     await MemberService.getMembershipSetupData().then((value) {
       membershipSetupData.value = value;
       selectedType.value = membershipSetupData.first;
+      perparePamentList();
       //checkLng();
       isLoading(false);
     }).onError((error, stackTrace) {
@@ -99,16 +122,21 @@ class MemberRegistrationController extends GetxController {
           PaymentTypeEnum.instalment.value) {
         amount = selectedType.value.minimumInstallmentSubscriptionFee!;
       }
-     
+
+      if (limitAmount < amount) {
+        Get.toNamed(
+            Routes.memberRegistration + Routes.paymentMoreThenFiveLacView);
+        return;
+      }
+
       SSLCTransactionInfoModel? sslPaymentResult =
-          await PaymentGateway.sslCommerzGeneralCall(amount, propertyData: propertyData);
+          await PaymentGateway.sslCommerzGeneralCall(amount,
+              propertyData: propertyData);
       if (sslPaymentResult!.status!.toLowerCase() == "valid") {
         savePaymentData(sslPaymentResult);
-
       } else {
         Get.offAllNamed(Routes.memberRegistration + Routes.successScreen);
       }
-      //Get.toNamed(Routes.memberRegistration + Routes.successScreen);
     }).onError((error, stackTrace) {
       EasyLoading.dismiss();
       Get.rawSnackbar(
@@ -118,8 +146,18 @@ class MemberRegistrationController extends GetxController {
     });
   }
 
+  void payWithStalment(amount, index) async {
+    SSLCTransactionInfoModel? sslPaymentResult =
+        await PaymentGateway.sslCommerzGeneralCall(amount,
+            propertyData: propertyData);
+    if (sslPaymentResult!.status!.toLowerCase() == "valid") {
+      savePaymentData(sslPaymentResult, isRoute:false);
+      paymentStStepList[index].isPaid=true;
+     
+    }
+  }
 
-  savePaymentData(SSLCTransactionInfoModel model) {
+  savePaymentData(SSLCTransactionInfoModel model, {bool isRoute=true}) {
     MemberPaymentSaveModel data = MemberPaymentSaveModel(
         memberId: int.parse(memberId!),
         transactionType: "SSLCOM",
@@ -130,10 +168,17 @@ class MemberRegistrationController extends GetxController {
     EasyLoading.show();
     MemberService.memberPayment(data).then((value) {
       EasyLoading.dismiss();
-      Get.offAllNamed(Routes.memberRegistration + Routes.successScreen);
+      
+      if (isRoute) {
+        Get.offAllNamed(Routes.memberRegistration + Routes.successScreen);
+      }
+
+
     }).onError((error, stackTrace) {
       EasyLoading.dismiss();
-      Get.offAllNamed(Routes.memberRegistration + Routes.successScreen);
+      if (isRoute) {
+        Get.offAllNamed(Routes.memberRegistration + Routes.successScreen);
+      }
       Get.rawSnackbar(
         message: error.toString(),
         backgroundColor: errorColor,

@@ -49,6 +49,7 @@ abstract class Routes {
   static const filePicker = _Paths.filePicker;
    static const fileListView = _Paths.fileListView;
    static const profileEditView = _Paths.profileEditView;
+   static const paymentMoreThenFiveLacView = _Paths.paymentMoreThenFiveLacView;
 }
 
 abstract class _Paths {
@@ -67,6 +68,8 @@ abstract class _Paths {
   // static const voucherFilter = '/voucher-approval/filter';
   static const voucherDetails = '/voucher-details';
   static const attendanceApplication = '/attendance-application';
+  
+
   //customer
   static const customerDashboard = '/customer-dashboard';
   static const userTypeSelection = '/user-type-selection';
@@ -102,6 +105,7 @@ abstract class _Paths {
 
 
   static const profileEditView = '/profileEditView';
+  static const paymentMoreThenFiveLacView = '/paymentMoreThenFiveLacView';
  
   
 }
