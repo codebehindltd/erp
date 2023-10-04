@@ -119,11 +119,10 @@ class BookingStatusView extends GetView<BookingStatusController> {
                                     itemBuilder: (context, index) {
                                       return InkWell(
                                         onTap: () {
-controller.selecteBookingData=controller.dataList[index];
-                                          Get.toNamed(
-                                            Routes.bookingStatus +
-                                                Routes.bookingDeatailsView
-                                          );
+                                          controller.selecteBookingData =
+                                              controller.dataList[index];
+                                          Get.toNamed(Routes.bookingStatus +
+                                              Routes.bookingDeatailsView);
                                         },
                                         child: BookingStatusCard(
                                             model: controller.dataList[index],

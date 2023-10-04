@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-
 import '../data/models/res/emp_model.dart';
 import '../data/models/res/reservation/reservation_list_model.dart';
 import '../modules/become_member_modules/member_registration/bindings/member_registration_binding.dart';
 import '../modules/become_member_modules/member_registration/views/member_registration_choice_view.dart';
 import '../modules/become_member_modules/member_registration/views/member_registration_view.dart';
+import '../modules/become_member_modules/member_registration/views/payment_more_then_five_lac_view.dart';
 import '../modules/become_member_modules/member_registration/views/payment_view.dart';
 import '../modules/become_member_modules/member_registration/views/success_screen_view.dart';
 import '../modules/common/middleware/auth_middleware.dart';
@@ -69,6 +69,7 @@ import '../modules/member_modules/member_login/views/member_login_view.dart';
 import '../modules/member_modules/member_reservation/bindings/member_reservation_binding.dart';
 import '../modules/member_modules/member_reservation/views/member_reservation_success_view.dart';
 import '../modules/member_modules/member_reservation/views/member_reservation_view.dart';
+import '../modules/member_modules/member_reservation/views/payment_grater_then_five_lac_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
@@ -215,6 +216,13 @@ class AppPages {
             page: () => const PaymentView(),
             transition: Transition.cupertino,
           ),
+
+           GetPage(
+            name: _Paths.paymentMoreThenFiveLacView,
+            page: () => const PaymentMoreThenFiveLacView(),
+            transition: Transition.cupertino,
+          ),
+
           GetPage(
             name: _Paths.successScreen,
             page: () => const SuccessScreenView(),
@@ -255,6 +263,13 @@ class AppPages {
           GuestOrMemberMiddleware()
         ],
         children: [
+
+           GetPage(
+            name: _Paths.paymentGraterThenFiveLacView,
+            page: () => const PaymentGraterThenFiveLacView(),
+            transition: Transition.cupertino,
+          ),
+
           GetPage(
             name: _Paths.memberReservationSuccessView,
             page: () => const MemberReservationSuccessView(),

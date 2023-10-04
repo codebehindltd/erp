@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import '../../../../../core/values/colors.dart';
 import '../../../../../global_widgets/back_widget.dart';
 import '../../../../../global_widgets/custom_button.dart';

@@ -222,7 +222,7 @@ class MemberReservationView extends GetView<MemberReservationController> {
                                                         },
                                                         child: Card(
                                                           color: const Color
-                                                                  .fromARGB(255,
+                                                              .fromARGB(255,
                                                               253, 247, 247),
                                                           shape:
                                                               RoundedRectangleBorder(

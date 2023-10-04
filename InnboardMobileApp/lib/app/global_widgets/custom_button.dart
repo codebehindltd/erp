@@ -11,6 +11,7 @@ class CustomButton extends StatelessWidget {
   final Color? bgColor;
   final double? fontSize;
   final double? horizontalPadding;
+  final Color? textColor;
   const CustomButton(
       {Key? key,
       required this.submit,
@@ -19,7 +20,8 @@ class CustomButton extends StatelessWidget {
       this.borderRadius,
       this.fontSize,
       this.bgColor,
-      this.horizontalPadding})
+      this.horizontalPadding,
+      this.textColor})
       : super(key: key);
 
   @override
@@ -56,7 +58,7 @@ class CustomButton extends StatelessWidget {
               name,
               style: TextStyle(
                 fontSize: fontSize ?? 18,
-                color: themeColor,
+                color:textColor?? themeColor,
                 fontWeight: FontWeight.bold,
               ),
             ),

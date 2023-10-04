@@ -5,6 +5,7 @@ import 'package:innboard/app/global_widgets/back_widget.dart';
 import 'package:innboard/app/modules/become_member_modules/member_registration/controllers/member_registration_controller.dart';
 import '../../../../global_widgets/custom_button.dart';
 
+
 class PaymentView extends GetView<MemberRegistrationController> {
   const PaymentView({Key? key}) : super(key: key);
   @override
@@ -89,7 +90,15 @@ class PaymentView extends GetView<MemberRegistrationController> {
                       children: [
                         CustomButton(
                             submit: (v) {
-                              controller.signUp();
+                              // if (controller
+                              //         .selectedType.value.subscriptionFee! >
+                              //     controller.limitAmount) {
+                              //   Get.toNamed(Routes.memberRegistration +
+                              //       Routes.paymentMoreThenFiveLacView);
+                              // } else {
+                              //   controller.signUp();
+                              // }
+                               controller.signUp();
                             },
                             name: "Online Payment",
                             fullWidth: false,

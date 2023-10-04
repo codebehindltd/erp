@@ -10,6 +10,7 @@ import '../../../../data/localDB/sharedPfnDBHelper.dart';
 import '../../../../data/models/req/reservation/Room_reservation_paymentInfo_save_model.dart';
 import '../../../../data/models/req/reservation/hotel_room_reservation_details.dart';
 import '../../../../data/models/req/reservation/room_reservation_info_Model.dart';
+import '../../../../data/models/res/payment_st_list_model.dart';
 import '../../../../data/models/res/property_model.dart';
 import '../../../../data/models/res/reservation/room_type_info_model.dart';
 import '../../../../data/services/reservation_service.dart';
@@ -66,12 +67,24 @@ class MemberReservationController extends GetxController {
   PropertyModel? property;
   String? propertyUrl;
 
+  var paymentStStepList = <PaymentStListModel>[].obs;
+  double limitAmount = 11000;
+
   @override
   void onInit() {
     isShowBackbtn = Get.arguments ?? false;
     getRoomTypeInfo();
     getProperty();
     super.onInit();
+  }
+
+  perparePamentList() {
+    int step = (totalAmount.value / limitAmount).ceil();
+    paymentStStepList.clear();
+    for (var i = 0; i < step; i++) {
+      paymentStStepList.add(
+          PaymentStListModel(amount: totalAmount.value / step, isPaid: false));
+    }
   }
 
   void removeItem(int index) {
@@ -175,6 +188,8 @@ class MemberReservationController extends GetxController {
                 .map((item) => item.totalPrice)
                 .reduce((v, e) => v! + e!) ??
             0.0;
+
+    perparePamentList();
   }
 
   void selectRoomType(RoomTypeInfoModel? option, {context, screenHeight}) {
@@ -394,11 +409,18 @@ class MemberReservationController extends GetxController {
       // payment
       double amount = 0;
       amount = totalAmount.value;
-      if (amount == 0) {
-        Get.offAllNamed(
-            Routes.memberReservation + Routes.memberReservationSuccessView);
+      // if (amount == 0) {
+      //   Get.offAllNamed(
+      //       Routes.memberReservation + Routes.memberReservationSuccessView);
+      //   return;
+      // }
+
+      if (limitAmount < amount) {
+        Get.toNamed(
+            Routes.memberReservation + Routes.paymentGraterThenFiveLacView);
         return;
       }
+
       SSLCTransactionInfoModel? sslPaymentResult =
           await PaymentGateway.sslCommerzGeneralCall(amount);
       if (sslPaymentResult!.status!.toLowerCase() == "valid") {
@@ -416,7 +438,22 @@ class MemberReservationController extends GetxController {
     });
   }
 
-  saveRoomReservationPaymentData(SSLCTransactionInfoModel model) {
+  void payWithStalment(amount, index) async {
+    SSLCTransactionInfoModel? sslPaymentResult =
+        await PaymentGateway.sslCommerzGeneralCall(amount);
+    if (sslPaymentResult!.status!.toLowerCase() == "valid") {
+      saveRoomReservationPaymentData(sslPaymentResult, isRoute: false);
+      paymentStStepList[index].isPaid = true;
+      if(index+1==paymentStStepList.length){
+        Get.offAllNamed(
+            Routes.memberReservation + Routes.memberReservationSuccessView);
+      }
+      update();
+    }
+  }
+
+  saveRoomReservationPaymentData(SSLCTransactionInfoModel model,
+      {bool isRoute = true}) {
     RoomReservationPaymentInfoSaveModel data =
         RoomReservationPaymentInfoSaveModel(
       reservationId: int.parse(reservationId!),
@@ -429,12 +466,16 @@ class MemberReservationController extends GetxController {
     EasyLoading.show();
     ReservationService.customerPayment(data).then((value) {
       EasyLoading.dismiss();
-      Get.offAllNamed(
-          Routes.memberReservation + Routes.memberReservationSuccessView);
+      if (isRoute) {
+        Get.offAllNamed(
+            Routes.memberReservation + Routes.memberReservationSuccessView);
+      }
     }).onError((error, stackTrace) {
       EasyLoading.dismiss();
-      Get.offAllNamed(
-          Routes.memberReservation + Routes.memberReservationSuccessView);
+      if (isRoute) {
+        Get.offAllNamed(
+            Routes.memberReservation + Routes.memberReservationSuccessView);
+      }
       Get.rawSnackbar(
         message: error.toString(),
         backgroundColor: errorColor,
