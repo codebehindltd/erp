@@ -392,6 +392,8 @@ class GuestReservationController extends GetxController {
       reservationId = value.reservationId.toString();
       EasyLoading.dismiss();
 
+
+
       // payment
       double amount = 0;
       amount = totalAmount.value;

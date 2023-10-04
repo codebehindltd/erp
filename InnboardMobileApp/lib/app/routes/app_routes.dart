@@ -50,6 +50,7 @@ abstract class Routes {
    static const fileListView = _Paths.fileListView;
    static const profileEditView = _Paths.profileEditView;
    static const paymentMoreThenFiveLacView = _Paths.paymentMoreThenFiveLacView;
+   static const paymentGraterThenFiveLacView = _Paths.paymentGraterThenFiveLacView;
 }
 
 abstract class _Paths {
@@ -106,6 +107,8 @@ abstract class _Paths {
 
   static const profileEditView = '/profileEditView';
   static const paymentMoreThenFiveLacView = '/paymentMoreThenFiveLacView';
+
+  static const paymentGraterThenFiveLacView = '/paymentGraterThenFiveLacView';
  
   
 }

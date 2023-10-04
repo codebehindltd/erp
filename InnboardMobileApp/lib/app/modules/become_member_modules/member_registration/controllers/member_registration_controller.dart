@@ -26,15 +26,15 @@ class MemberRegistrationController extends GetxController {
   static var isLoading = true.obs;
 
   var membershipSetupData = <MemberShipType>[].obs;
-  var paymentStStepList = <PaymentStListModel>[].obs;
+ 
 
   RxInt selectedPaymentType = 0.obs;
   String? memberId;
   SSLCTransactionInfoModel? sslPaymentResult;
 
   PropertyModel? propertyData;
+   var paymentStStepList = <PaymentStListModel>[].obs;
   double limitAmount = 100000;
-
 
   @override
   void onInit() {
@@ -151,13 +151,16 @@ class MemberRegistrationController extends GetxController {
         await PaymentGateway.sslCommerzGeneralCall(amount,
             propertyData: propertyData);
     if (sslPaymentResult!.status!.toLowerCase() == "valid") {
-      savePaymentData(sslPaymentResult, isRoute:false);
-      paymentStStepList[index].isPaid=true;
-     
+      savePaymentData(sslPaymentResult, isRoute: false);
+      paymentStStepList[index].isPaid = true;
+      if(index+1==paymentStStepList.length){
+        Get.offAllNamed(Routes.memberRegistration + Routes.successScreen);
+      }
+      update();
     }
   }
 
-  savePaymentData(SSLCTransactionInfoModel model, {bool isRoute=true}) {
+  savePaymentData(SSLCTransactionInfoModel model, {bool isRoute = true}) {
     MemberPaymentSaveModel data = MemberPaymentSaveModel(
         memberId: int.parse(memberId!),
         transactionType: "SSLCOM",
@@ -168,12 +171,10 @@ class MemberRegistrationController extends GetxController {
     EasyLoading.show();
     MemberService.memberPayment(data).then((value) {
       EasyLoading.dismiss();
-      
+
       if (isRoute) {
         Get.offAllNamed(Routes.memberRegistration + Routes.successScreen);
       }
-
-
     }).onError((error, stackTrace) {
       EasyLoading.dismiss();
       if (isRoute) {

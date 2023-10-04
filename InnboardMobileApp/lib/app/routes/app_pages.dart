@@ -69,6 +69,7 @@ import '../modules/member_modules/member_login/views/member_login_view.dart';
 import '../modules/member_modules/member_reservation/bindings/member_reservation_binding.dart';
 import '../modules/member_modules/member_reservation/views/member_reservation_success_view.dart';
 import '../modules/member_modules/member_reservation/views/member_reservation_view.dart';
+import '../modules/member_modules/member_reservation/views/payment_grater_then_five_lac_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
@@ -262,6 +263,13 @@ class AppPages {
           GuestOrMemberMiddleware()
         ],
         children: [
+
+           GetPage(
+            name: _Paths.paymentGraterThenFiveLacView,
+            page: () => const PaymentGraterThenFiveLacView(),
+            transition: Transition.cupertino,
+          ),
+
           GetPage(
             name: _Paths.memberReservationSuccessView,
             page: () => const MemberReservationSuccessView(),

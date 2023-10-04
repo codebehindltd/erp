@@ -20,7 +20,8 @@ class PaymentMoreThenFiveLacView extends GetView<MemberRegistrationController> {
         // centerTitle: true,
         leading: const BackButtonWidget(),
       ),
-      body: SingleChildScrollView(
+      body:GetBuilder<MemberRegistrationController>(builder: (_) {
+        return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
           child: Column(
@@ -42,8 +43,9 @@ class PaymentMoreThenFiveLacView extends GetView<MemberRegistrationController> {
             ],
           ),
         ),
-      ),
-    );
+      );
+    
+  }));
   }
 
   TextStyle commonTextStyle() {
