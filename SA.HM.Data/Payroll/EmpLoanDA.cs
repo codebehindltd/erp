@@ -29,7 +29,6 @@ namespace HotelManagement.Data.Payroll
                         using (DbCommand cmd = dbSmartAspects.GetStoredProcCommand("SaveEmpLoan_SP"))
                         {
                             dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empLoan.EmpId);
-                            dbSmartAspects.AddInParameter(cmd, "@LoanNumber", DbType.String, empLoan.LoanNumber);
                             dbSmartAspects.AddInParameter(cmd, "@LoanType", DbType.String, empLoan.LoanType);
                             dbSmartAspects.AddInParameter(cmd, "@LoanAmount", DbType.Decimal, empLoan.LoanAmount);
                             dbSmartAspects.AddInParameter(cmd, "@InterestRate", DbType.Decimal, empLoan.InterestRate);
@@ -90,7 +89,6 @@ namespace HotelManagement.Data.Payroll
                         {
                             dbSmartAspects.AddInParameter(cmd, "@LoanId", DbType.Int32, empLoan.LoanId);
                             dbSmartAspects.AddInParameter(cmd, "@EmpId", DbType.Int32, empLoan.EmpId);
-                            dbSmartAspects.AddInParameter(cmd, "@LoanNumber", DbType.String, empLoan.LoanNumber);
                             dbSmartAspects.AddInParameter(cmd, "@LoanType", DbType.String, empLoan.LoanType);
                             dbSmartAspects.AddInParameter(cmd, "@LoanAmount", DbType.Decimal, empLoan.LoanAmount);
                             dbSmartAspects.AddInParameter(cmd, "@InterestRate", DbType.Decimal, empLoan.InterestRate);
