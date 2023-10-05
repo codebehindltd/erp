@@ -11,6 +11,7 @@ import '../../../../data/models/req/reservation/Room_reservation_paymentInfo_sav
 import '../../../../data/models/req/reservation/hotel_room_reservation_details.dart';
 import '../../../../data/models/req/reservation/room_reservation_info_Model.dart';
 import '../../../../data/models/res/guest_member_user_model.dart';
+import '../../../../data/models/res/payment_st_list_model.dart';
 import '../../../../data/models/res/property_model.dart';
 import '../../../../data/models/res/reservation/room_type_info_model.dart';
 import '../../../../data/services/common_service.dart';
@@ -70,6 +71,9 @@ class GuestReservationController extends GetxController {
 
   PropertyModel? property;
   String? propertyUrl;
+
+  var paymentStStepList = <PaymentStListModel>[].obs;
+  double limitAmount = 110000;
 
   @override
   void onInit() {
@@ -177,6 +181,8 @@ class GuestReservationController extends GetxController {
                 .map((item) => item.totalPrice)
                 .reduce((v, e) => v! + e!) ??
             0.0;
+
+    perparePamentList();
   }
 
   void selectRoomType(RoomTypeInfoModel? option, {context, screenHeight}) {
@@ -368,6 +374,15 @@ class GuestReservationController extends GetxController {
     });
   }
 
+  perparePamentList() {
+    int step = (totalAmount.value / limitAmount).ceil();
+    paymentStStepList.clear();
+    for (var i = 0; i < step; i++) {
+      paymentStStepList.add(
+          PaymentStListModel(amount: totalAmount.value / step, isPaid: false));
+    }
+  }
+
   Future<void> saveRoomReservationInfo(v) async {
     if (!formKeyForCustomerInfo.currentState!.validate()) {
       return;
@@ -392,11 +407,15 @@ class GuestReservationController extends GetxController {
       reservationId = value.reservationId.toString();
       EasyLoading.dismiss();
 
-
-
       // payment
       double amount = 0;
       amount = totalAmount.value;
+
+      if (limitAmount < amount) {
+        Get.toNamed(
+            Routes.guestReservation + Routes.guestPaymentGraterThenFiveLacView);
+        return;
+      }
 
       SSLCTransactionInfoModel? sslPaymentResult =
           await PaymentGateway.sslCommerzGeneralCall(amount);
@@ -415,7 +434,22 @@ class GuestReservationController extends GetxController {
     });
   }
 
-  saveRoomReservationPaymentData(SSLCTransactionInfoModel model) {
+  void payWithStalment(amount, index) async {
+    SSLCTransactionInfoModel? sslPaymentResult =
+        await PaymentGateway.sslCommerzGeneralCall(amount);
+    if (sslPaymentResult!.status!.toLowerCase() == "valid") {
+      saveRoomReservationPaymentData(sslPaymentResult, isRoute: false);
+      paymentStStepList[index].isPaid = true;
+      if (index + 1 == paymentStStepList.length) {
+        Get.offAllNamed(
+            Routes.guestReservation + Routes.reservationSuccessScreen);
+      }
+      update();
+    }
+  }
+
+  saveRoomReservationPaymentData(SSLCTransactionInfoModel model,
+      {bool isRoute = true}) {
     RoomReservationPaymentInfoSaveModel data =
         RoomReservationPaymentInfoSaveModel(
       reservationId: int.parse(reservationId!),
@@ -428,12 +462,19 @@ class GuestReservationController extends GetxController {
     EasyLoading.show();
     ReservationService.customerPayment(data).then((value) {
       EasyLoading.dismiss();
-      Get.offAllNamed(
-          Routes.guestReservation + Routes.reservationSuccessScreen);
+
+      if (isRoute) {
+        Get.offAllNamed(
+            Routes.guestReservation + Routes.reservationSuccessScreen);
+      }
     }).onError((error, stackTrace) {
       EasyLoading.dismiss();
-      Get.offAllNamed(
-          Routes.guestReservation + Routes.reservationSuccessScreen);
+
+      if (isRoute) {
+        Get.offAllNamed(
+            Routes.guestReservation + Routes.reservationSuccessScreen);
+      }
+
       Get.rawSnackbar(
         message: error.toString(),
         backgroundColor: errorColor,
