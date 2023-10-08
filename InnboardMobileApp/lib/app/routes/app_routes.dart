@@ -51,6 +51,7 @@ abstract class Routes {
    static const profileEditView = _Paths.profileEditView;
    static const paymentMoreThenFiveLacView = _Paths.paymentMoreThenFiveLacView;
    static const paymentGraterThenFiveLacView = _Paths.paymentGraterThenFiveLacView;
+   static const guestPaymentGraterThenFiveLacView = _Paths.guestPaymentGraterThenFiveLacView;
 }
 
 abstract class _Paths {
@@ -110,5 +111,5 @@ abstract class _Paths {
 
   static const paymentGraterThenFiveLacView = '/paymentGraterThenFiveLacView';
  
-  
+static const  guestPaymentGraterThenFiveLacView = '/guestPaymentGraterThenFiveLacView';
 }

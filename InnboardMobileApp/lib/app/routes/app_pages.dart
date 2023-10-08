@@ -32,6 +32,7 @@ import '../modules/customer_modules/customer_dashboard/bindings/customer_dashboa
 import '../modules/customer_modules/customer_dashboard/views/customer_dashboard_view.dart';
 import '../modules/customer_modules/guest_reservation/bindings/guest_reservation_binding.dart';
 import '../modules/customer_modules/guest_reservation/views/guest_reservation_view.dart';
+import '../modules/customer_modules/guest_reservation/views/payment_grater_then_five_lac_view.dart';
 import '../modules/customer_modules/guest_reservation/views/reservation_info_provide_modal_view.dart';
 import '../modules/customer_modules/guest_reservation/views/reservation_success_screen_view.dart';
 import '../modules/customer_modules/guest_reservation/views/set_customer_info_view.dart';
@@ -216,13 +217,11 @@ class AppPages {
             page: () => const PaymentView(),
             transition: Transition.cupertino,
           ),
-
-           GetPage(
+          GetPage(
             name: _Paths.paymentMoreThenFiveLacView,
             page: () => const PaymentMoreThenFiveLacView(),
             transition: Transition.cupertino,
           ),
-
           GetPage(
             name: _Paths.successScreen,
             page: () => const SuccessScreenView(),
@@ -263,13 +262,11 @@ class AppPages {
           GuestOrMemberMiddleware()
         ],
         children: [
-
-           GetPage(
+          GetPage(
             name: _Paths.paymentGraterThenFiveLacView,
             page: () => const PaymentGraterThenFiveLacView(),
             transition: Transition.cupertino,
           ),
-
           GetPage(
             name: _Paths.memberReservationSuccessView,
             page: () => const MemberReservationSuccessView(),
@@ -292,6 +289,12 @@ class AppPages {
               name: _Paths.setCustomerInfo,
               page: () => const SetCustomerInfoView(),
               transition: Transition.cupertino),
+              
+          GetPage(
+              name: _Paths.guestPaymentGraterThenFiveLacView,
+              page: () => const GuestPaymentGraterThenFiveLacView(),
+              transition: Transition.cupertino),
+
           GetPage(
               name: _Paths.reservationSuccessScreen,
               page: () => const ReservationSuccessScreenView(),
