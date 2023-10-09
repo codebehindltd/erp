@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import '../../../../../core/values/colors.dart';
 import '../../../../../global_widgets/back_widget.dart';
 import '../../../../../global_widgets/custom_button.dart';
+import '../../../../../routes/app_pages.dart';
 import '../controllers/leave_approval_controller.dart';
 
 class LeaveApprovalView extends GetView<LeaveApprovalController> {
   const LeaveApprovalView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    controller.onInit();
     return Scaffold(
       appBar: AppBar(
         leading: const BackButtonWidget(),

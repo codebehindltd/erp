@@ -7,6 +7,7 @@ class LeaveApprovalBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<LeaveApprovalController>(
       () => LeaveApprovalController(),
+      // fenix: true
     );
   }
 }
