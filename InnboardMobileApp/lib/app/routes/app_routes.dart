@@ -47,11 +47,14 @@ abstract class Routes {
   static const memberLogin = _Paths.memberLogin;
   static const bookingDeatailsView = _Paths.bookingDeatailsView;
   static const filePicker = _Paths.filePicker;
-   static const fileListView = _Paths.fileListView;
-   static const profileEditView = _Paths.profileEditView;
-   static const paymentMoreThenFiveLacView = _Paths.paymentMoreThenFiveLacView;
-   static const paymentGraterThenFiveLacView = _Paths.paymentGraterThenFiveLacView;
-   static const guestPaymentGraterThenFiveLacView = _Paths.guestPaymentGraterThenFiveLacView;
+  static const fileListView = _Paths.fileListView;
+  static const profileEditView = _Paths.profileEditView;
+  static const paymentMoreThenFiveLacView = _Paths.paymentMoreThenFiveLacView;
+  static const paymentGraterThenFiveLacView =
+      _Paths.paymentGraterThenFiveLacView;
+  static const guestPaymentGraterThenFiveLacView =
+      _Paths.guestPaymentGraterThenFiveLacView;
+  static const paymentDetailsView = _Paths.paymentDetailsView;
 }
 
 abstract class _Paths {
@@ -70,7 +73,6 @@ abstract class _Paths {
   // static const voucherFilter = '/voucher-approval/filter';
   static const voucherDetails = '/voucher-details';
   static const attendanceApplication = '/attendance-application';
-  
 
   //customer
   static const customerDashboard = '/customer-dashboard';
@@ -103,13 +105,15 @@ abstract class _Paths {
   static const memberLogin = '/memberLogin';
   static const bookingDeatailsView = '/bookingDeatailsView';
   static const filePicker = '/filePicker';
- static const fileListView = '/FileListView';
-
+  static const fileListView = '/FileListView';
 
   static const profileEditView = '/profileEditView';
   static const paymentMoreThenFiveLacView = '/paymentMoreThenFiveLacView';
 
   static const paymentGraterThenFiveLacView = '/paymentGraterThenFiveLacView';
- 
-static const  guestPaymentGraterThenFiveLacView = '/guestPaymentGraterThenFiveLacView';
+
+  static const guestPaymentGraterThenFiveLacView =
+      '/guestPaymentGraterThenFiveLacView';
+
+  static const paymentDetailsView = '/paymentDetailsView';
 }

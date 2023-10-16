@@ -4658,6 +4658,12 @@
 
         function ClearFormFromServer() {
             $("#ContentPlaceHolder1_btnCancel").trigger("click");
+            if ($('#<%=hfIsReservationRoomListButtonWillHide.ClientID%>').val() == "1") {
+                $('#btnChange').hide();
+            }
+            else {
+                $('#btnChange').show();
+            }
         }
 
         function activaTab() {
@@ -7255,7 +7261,7 @@
                     TabIndex="80" OnClientClick="javascript: return ValidateGuestNumber();" />
                 <asp:Button ID="btnCancel" runat="server" Text="Clear" CssClass="btn btn-primary btn-sm"
                     TabIndex="81" OnClick="btnCancel_Click" />
-                <input type="button" tabindex="18" id="retrieveReservation" value="Retrieve Reservation" style="display: none;" class="btn btn-primary btn-sm"
+                <input type="button" tabindex="18" id="retrieveReservation" value="Retrieve Reservation" style="display:none;" class="btn btn-primary btn-sm"
                     onclick="javascript: return RetrieveReservationXML()" />
             </div>
         </div>

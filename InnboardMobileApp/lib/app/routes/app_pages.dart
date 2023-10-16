@@ -14,6 +14,7 @@ import '../modules/common_modules/booking_status/bindings/booking_status_binding
 import '../modules/common_modules/booking_status/views/booking_deatails_view.dart';
 import '../modules/common_modules/booking_status/views/booking_status_view.dart';
 import '../modules/common_modules/profile/bindings/profile_binding.dart';
+import '../modules/common_modules/profile/views/payment_details_view.dart';
 import '../modules/common_modules/profile/views/profile_view.dart';
 import '../modules/common_modules/profileGuestMember/bindings/profile_guest_member_binding.dart';
 import '../modules/common_modules/profileGuestMember/views/profile_edit_view.dart';
@@ -105,7 +106,17 @@ class AppPages {
         page: () => const ProfileView(),
         binding: ProfileBinding(),
         transition: Transition.cupertino,
-        middlewares: [AuthMiddleware()]),
+        middlewares: [
+          AuthMiddleware()
+        ],
+        /////////
+        children: [
+          GetPage(
+            name: _Paths.paymentDetailsView,
+            page: () => const PaymentDetailsView(),
+            transition: Transition.cupertino,
+          ),
+        ]),
     GetPage(
         name: _Paths.login,
         page: () => LoginView(),
@@ -289,12 +300,10 @@ class AppPages {
               name: _Paths.setCustomerInfo,
               page: () => const SetCustomerInfoView(),
               transition: Transition.cupertino),
-              
           GetPage(
               name: _Paths.guestPaymentGraterThenFiveLacView,
               page: () => const GuestPaymentGraterThenFiveLacView(),
               transition: Transition.cupertino),
-
           GetPage(
               name: _Paths.reservationSuccessScreen,
               page: () => const ReservationSuccessScreenView(),

@@ -1721,6 +1721,7 @@ namespace HotelManagement.Presentation.Website.HotelManagement
             {
                 this.ddlMarketSegment.SelectedValue = hfDefaultFrontOfficeMarketSegmentHeadId.Value;
             }
+            LoadIsReservationRoomListButtonWillHide();
         }
         private void CancelCopy()
         {

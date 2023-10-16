@@ -531,6 +531,9 @@ function PopulateProjects() {
                     tr += "&nbsp;&nbsp;<img id='billing' src='../Images/billresettlement.png' onClick= \"javascript:return LoadSalesOrderForBilling(" + gridObject.BillId + "," + gridObject.CostCenterId + ") \" alt='Image' Title='billing' border='0'/>";
                 }
 
+                tr += "&nbsp;&nbsp;<img id='preview' src='../Images/ReportDocument.png' onClick= \"javascript:return PerformSalesOrderPreviewAction(" + gridObject.BillId + ", '" + gridObject.CostCenterType + "')\" alt='Sales Order' Title='Sales Order' border='0'/>";
+                
+
                 <%--if (gridObject.IsDayClosed == 0) {
                     var editBill = "<img  src='../Images/edit.png' onClick= \"javascript:return PerformEditBill('" + gridObject.BillId + "')\" alt='Edit Bill' Title='Edit Bill'  border='0'/>";
                     editBill = "";
@@ -824,6 +827,21 @@ function PopulateProjects() {
 
         function OnFail(error) {
             toastr.error(error.get_message());
+        }
+
+
+        function PerformSalesOrderPreviewAction(soId, costCenterType) {
+            var url = "";
+            var popup_window = "Print Preview";
+
+            //if (costCenterType == "RetailPos") {
+            //    url = "/POS/Reports/frmReportBillForRetailPos.aspx?soId=" + soId;
+            //}
+            //else {
+            url = "/SalesAndMarketing/Reports/frmReportSalesOrderInfo.aspx?soId=" + soId;
+            //}
+
+            window.open(url, popup_window, "width=750,height=680,left=300,top=50,resizable=yes");
         }
 
         function PerformBillPreviewAction(billId, costCenterType, withSignature) {

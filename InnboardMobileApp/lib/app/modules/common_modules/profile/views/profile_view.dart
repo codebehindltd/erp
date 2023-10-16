@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/values/colors.dart';
 import '../../../../core/values/strings.dart';
+import '../../../../global_widgets/custom_button.dart';
+import '../../../../routes/app_pages.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -115,7 +117,17 @@ class ProfileView extends GetView<ProfileController> {
                                   height: 20,
                                 ),
                                 const Divider(),
-                                buildLogOutBtn(context)
+                                buildLogOutBtn(context),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                CustomButton(
+                                    submit: (v) {
+                                      Get.toNamed(Routes.profile +
+                                          Routes.paymentDetailsView);
+                                    },
+                                    name: "Payment Deatils",
+                                    fullWidth: true),
                               ],
                             ),
                           )
