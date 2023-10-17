@@ -15,6 +15,7 @@ import '../modules/common_modules/booking_status/views/booking_deatails_view.dar
 import '../modules/common_modules/booking_status/views/booking_status_view.dart';
 import '../modules/common_modules/profile/bindings/profile_binding.dart';
 import '../modules/common_modules/profile/views/payment_details_view.dart';
+import '../modules/common_modules/profile/views/payment_history_view.dart';
 import '../modules/common_modules/profile/views/profile_view.dart';
 import '../modules/common_modules/profileGuestMember/bindings/profile_guest_member_binding.dart';
 import '../modules/common_modules/profileGuestMember/views/profile_edit_view.dart';
@@ -109,13 +110,19 @@ class AppPages {
         middlewares: [
           AuthMiddleware()
         ],
-        /////////
+        ///////////////////////
         children: [
           GetPage(
-            name: _Paths.paymentDetailsView,
-            page: () => const PaymentDetailsView(),
-            transition: Transition.cupertino,
-          ),
+              name: _Paths.paymentDetailsView,
+              page: () => const PaymentDetailsView(),
+              transition: Transition.cupertino,
+              children: [
+                GetPage(
+                  name: _Paths.paymentHistoryView,
+                  page: () => const PaymentHistoryView(),
+                  transition: Transition.cupertino,
+                ),
+              ]),
         ]),
     GetPage(
         name: _Paths.login,

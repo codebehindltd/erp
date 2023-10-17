@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../../../../data/localDB/sharedPfnDBHelper.dart';
 import '../../../../data/models/res/user_model.dart';
 import '../../../../data/services/backgound_location_service.dart';
@@ -12,15 +11,21 @@ class ProfileController extends GetxController {
   var testV = 0.obs;
   var commonController = Get.find<CommonController>();
 
-  updateV() {
-    testV.value = testV.value + 1;
-    update();
+  RxInt selectedPaymentType = 0.obs;
+
+  void selectValue(int value) {
+    selectedPaymentType.value = value;
   }
 
   @override
   void onReady() {
     getUserInfo();
     super.onReady();
+  }
+
+  updateV() {
+    testV.value = testV.value + 1;
+    update();
   }
 
   logOut() async {
