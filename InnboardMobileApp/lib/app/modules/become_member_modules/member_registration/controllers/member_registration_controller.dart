@@ -26,20 +26,20 @@ class MemberRegistrationController extends GetxController {
   static var isLoading = true.obs;
 
   var membershipSetupData = <MemberShipType>[].obs;
- 
 
   RxInt selectedPaymentType = 0.obs;
   String? memberId;
   SSLCTransactionInfoModel? sslPaymentResult;
 
   PropertyModel? propertyData;
-   var paymentStStepList = <PaymentStListModel>[].obs;
+  var paymentStStepList = <PaymentStListModel>[].obs;
   double limitAmount = 100000;
 
   @override
   void onInit() {
     getMembershipTypes();
     getPropertyList();
+    //paymentStStepList[0].isButtonVisible = true;
     super.onInit();
   }
 
@@ -153,7 +153,8 @@ class MemberRegistrationController extends GetxController {
     if (sslPaymentResult!.status!.toLowerCase() == "valid") {
       savePaymentData(sslPaymentResult, isRoute: false);
       paymentStStepList[index].isPaid = true;
-      if(index+1==paymentStStepList.length){
+
+      if (index + 1 == paymentStStepList.length) {
         Get.offAllNamed(Routes.memberRegistration + Routes.successScreen);
       }
       update();

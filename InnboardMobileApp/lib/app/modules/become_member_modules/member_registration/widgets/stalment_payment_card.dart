@@ -65,12 +65,14 @@ class StalmentPaymentCard extends StatelessWidget {
                               : (v) {
                                   paySubmit(paymentStStep!.amount!);
                                 },
-                         // bgColor:paymentStStep!.isPaid == true? Colors.red,
-                         textColor: paymentStStep!.isPaid == true? Colors.grey:themeColor,
+                          // bgColor:paymentStStep!.isPaid == true? Colors.red,
+                          textColor: paymentStStep!.isPaid == true
+                              ? Colors.grey
+                              : themeColor,
                           name: "Pay",
                           fullWidth: false,
                           horizontalPadding: 42,
-                          fontSize: 18),
+                          fontSize: 18)
                     ],
                   ),
                 ],

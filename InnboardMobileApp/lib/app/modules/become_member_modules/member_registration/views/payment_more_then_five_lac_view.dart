@@ -11,43 +11,48 @@ class PaymentMoreThenFiveLacView extends GetView<MemberRegistrationController> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-       onWillPop: () async => await onBackButtonPress(context),
+      onWillPop: () async => await onBackButtonPress(context),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Payment',
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w500, fontSize: 22),
-          ),
-          // centerTitle: true,
-          leading: const BackButtonWidget(),
-        ),
-        body:GetBuilder<MemberRegistrationController>(builder: (_) {
-          return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Column(
-              children: [
-                Text(
-                  '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s ''',
-                  style: commonTextStyle(),
-                ),
-                
-                ListView.builder(
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: controller.paymentStStepList.length,
-                    itemBuilder: (context, index) {
-                      return StalmentPaymentCard(stalmentTitle: StalmentTitleEnum.values[index],paymentStStep:controller.paymentStStepList[index],paySubmit:(amount){
-                        controller.payWithStalment(amount, index);
-                      },);
-                    })
-              ],
+          appBar: AppBar(
+            title: const Text(
+              'Payment',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 22),
             ),
+            // centerTitle: true,
+            leading: const BackButtonWidget(),
           ),
-        );
-      
-      })),
+          body: GetBuilder<MemberRegistrationController>(builder: (_) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Column(
+                  children: [
+                    Text(
+                      '''Transaction limit depends on acquiring bank. The standard limit for a single transaction through our gateway is 5 Lac BDT. (Minimum amount 100000 BDT) ''',
+                      style: commonTextStyle(),
+                    ),
+                    const SizedBox(height: 16),
+                    ListView.builder(
+                        physics: const ScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: controller.paymentStStepList.length,
+                        itemBuilder: (context, index) {
+                          return StalmentPaymentCard(
+                            stalmentTitle: StalmentTitleEnum.values[index],
+                            paymentStStep: controller.paymentStStepList[index],
+                            paySubmit: (amount) {
+                              controller.payWithStalment(amount, index);
+                            },
+                          );
+                        })
+                  ],
+                ),
+              ),
+            );
+          })),
     );
   }
 
@@ -56,7 +61,6 @@ class PaymentMoreThenFiveLacView extends GetView<MemberRegistrationController> {
         color: themeColor, fontWeight: FontWeight.w400, fontSize: 18);
   }
 }
-
 
 Future<bool> onBackButtonPress(BuildContext context) async {
   return await showDialog(
@@ -74,17 +78,20 @@ Future<bool> onBackButtonPress(BuildContext context) async {
             ),
             content: Text(
               "Please compleate this process",
-              style: TextStyle(color: themeColor, fontWeight: FontWeight.w600, fontSize: 18),
+              style: TextStyle(
+                  color: themeColor, fontWeight: FontWeight.w600, fontSize: 18),
             ),
             actions: [
-             
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(false);
                   },
                   child: Text(
                     "Yes",
-                    style: TextStyle(color: themeColor, fontWeight: FontWeight.w600, fontSize: 16),
+                    style: TextStyle(
+                        color: themeColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16),
                   ))
             ],
           ));
