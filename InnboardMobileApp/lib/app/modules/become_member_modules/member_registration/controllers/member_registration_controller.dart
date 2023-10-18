@@ -65,8 +65,10 @@ class MemberRegistrationController extends GetxController {
     int step = (amount / limitAmount).ceil();
     paymentStStepList.clear();
     for (var i = 0; i < step; i++) {
-      paymentStStepList
-          .add(PaymentStListModel(amount: amount / step, isPaid: false));
+      paymentStStepList.add(PaymentStListModel(
+          amount: amount / step,
+          isPaid: false,
+          isButtonVisible: i == 0 ? true : false));
     }
   }
 
@@ -153,9 +155,12 @@ class MemberRegistrationController extends GetxController {
     if (sslPaymentResult!.status!.toLowerCase() == "valid") {
       savePaymentData(sslPaymentResult, isRoute: false);
       paymentStStepList[index].isPaid = true;
+      paymentStStepList[index].isButtonVisible = false;
 
       if (index + 1 == paymentStStepList.length) {
         Get.offAllNamed(Routes.memberRegistration + Routes.successScreen);
+      } else {
+        paymentStStepList[index + 1].isButtonVisible = true;
       }
       update();
     }
