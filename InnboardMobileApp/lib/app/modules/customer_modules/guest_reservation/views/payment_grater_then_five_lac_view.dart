@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/enums/stalment_title_enum.dart';
 import '../../../../core/values/colors.dart';
-import '../../../../global_widgets/back_widget.dart';
 import '../controllers/guest_reservation_controller.dart';
 import '../widgets/stalment_payment_card.dart';
 
@@ -23,7 +22,7 @@ class GuestPaymentGraterThenFiveLacView
                   fontSize: 22),
             ),
             // centerTitle: true,
-            leading: const BackButtonWidget(),
+            //leading: const BackButtonWidget(),
             automaticallyImplyLeading: false,
           ),
           body: GetBuilder<GuestReservationController>(builder: (_) {
