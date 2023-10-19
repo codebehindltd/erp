@@ -73,7 +73,7 @@ class GuestReservationController extends GetxController {
   String? propertyUrl;
 
   var paymentStStepList = <PaymentStListModel>[].obs;
-  double limitAmount = 110000;
+  double limitAmount = 100000;
 
   @override
   void onInit() {
@@ -378,8 +378,10 @@ class GuestReservationController extends GetxController {
     int step = (totalAmount.value / limitAmount).ceil();
     paymentStStepList.clear();
     for (var i = 0; i < step; i++) {
-      paymentStStepList.add(
-          PaymentStListModel(amount: totalAmount.value / step, isPaid: false));
+      paymentStStepList.add(PaymentStListModel(
+          amount: totalAmount.value / step,
+          isPaid: false,
+          isButtonVisible: i == 0 ? true : false));
     }
   }
 
@@ -440,9 +442,12 @@ class GuestReservationController extends GetxController {
     if (sslPaymentResult!.status!.toLowerCase() == "valid") {
       saveRoomReservationPaymentData(sslPaymentResult, isRoute: false);
       paymentStStepList[index].isPaid = true;
+      paymentStStepList[index].isButtonVisible = false;
       if (index + 1 == paymentStStepList.length) {
         Get.offAllNamed(
             Routes.guestReservation + Routes.reservationSuccessScreen);
+      } else {
+        paymentStStepList[index + 1].isButtonVisible = true;
       }
       update();
     }

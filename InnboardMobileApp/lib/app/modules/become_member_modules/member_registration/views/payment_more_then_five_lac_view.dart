@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/enums/stalment_title_enum.dart';
 import '../../../../core/values/colors.dart';
-import '../../../../global_widgets/back_widget.dart';
 import '../controllers/member_registration_controller.dart';
 import '../widgets/stalment_payment_card.dart';
 
@@ -22,7 +21,7 @@ class PaymentMoreThenFiveLacView extends GetView<MemberRegistrationController> {
                   fontSize: 22),
             ),
             // centerTitle: true,
-            leading: const BackButtonWidget(),
+            // leading: const BackButtonWidget(),
           ),
           body: GetBuilder<MemberRegistrationController>(builder: (_) {
             return SingleChildScrollView(

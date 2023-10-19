@@ -39,7 +39,7 @@ class MemberRegistrationController extends GetxController {
   void onInit() {
     getMembershipTypes();
     getPropertyList();
-    //paymentStStepList[0].isButtonVisible = true;
+
     super.onInit();
   }
 
@@ -126,7 +126,7 @@ class MemberRegistrationController extends GetxController {
       }
 
       if (limitAmount < amount) {
-        Get.toNamed(
+        Get.offNamed(
             Routes.memberRegistration + Routes.paymentMoreThenFiveLacView);
         return;
       }
