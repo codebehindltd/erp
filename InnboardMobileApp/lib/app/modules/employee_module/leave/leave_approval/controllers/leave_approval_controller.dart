@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +14,7 @@ class LeaveApprovalController extends GetxController {
   bool isLoading = true;
   int? userId;
   int? leaveId;
+  String valueData = '';
   @override
   void onInit() {
     userId = commonController.propertyUserInfoId;
@@ -22,11 +25,13 @@ class LeaveApprovalController extends GetxController {
 
   @override
   void onReady() {
+    print("onready");
     super.onReady();
   }
 
   @override
   void onClose() {
+    print("onClose");
     super.onClose();
   }
 

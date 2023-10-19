@@ -251,67 +251,66 @@ class DashboardView extends GetView<DashboardController> {
                       ),
                     ],
                   ),
-                  // Row(
-                  //   crossAxisAlignment: CrossAxisAlignment.center,
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  // attendance
-                  // Container(
-                  //   margin: const EdgeInsets.all(6),
-                  //   decoration: BoxDecoration(
-                  //       color: bodyColor,
-                  //       borderRadius: BorderRadius.circular(14),
-                  //       boxShadow: [
-                  //         const BoxShadow(
-                  //           color: whiteColor,
-                  //           spreadRadius: 2,
-                  //           blurRadius: 6,
-                  //           offset: Offset(-5, -5),
-                  //         ),
-                  //         BoxShadow(
-                  //           color: bottonShadowColor.withOpacity(.5),
-                  //           spreadRadius: 1,
-                  //           blurRadius: 8,
-                  //           offset: const Offset(4, 4),
-                  //         )
-                  //       ]),
-                  //   child: InkWell(
-                  //     onTap: () async {
-                  //       Get.toNamed(Routes.voucherApproval);
-                  //     },
-                  //     child: SizedBox(
-                  //       height: boxHeight,
-                  //       width: SizeConfig.screenWidth! * .29,
-                  //       // height: 120,
-                  //       // width: 100,
-                  //       child: Column(
-                  //         crossAxisAlignment: CrossAxisAlignment.center,
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: [
-                  //           Image.asset(
-                  //             "assets/images/voucher.png",
-                  //             height: 80,
-                  //             // width: SizeConfig.safeBlockHorizontal! * 15,
-                  //           ),
-                  //           const SizedBox(
-                  //             height: 5,
-                  //           ),
-                  //           const Text(
-                  //             "Voucher Authorization",
-                  //             textAlign: TextAlign.center,
-                  //             overflow: TextOverflow.ellipsis,
-                  //             maxLines: 2,
-                  //             style: TextStyle(
-                  //                 color: Colors.black,
-                  //                 fontWeight: FontWeight.w600),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  //   ],
-                  // )
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                            color: bodyColor,
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: [
+                              const BoxShadow(
+                                color: whiteColor,
+                                spreadRadius: 2,
+                                blurRadius: 6,
+                                offset: Offset(-5, -5),
+                              ),
+                              BoxShadow(
+                                color: bottonShadowColor.withOpacity(.5),
+                                spreadRadius: 1,
+                                blurRadius: 8,
+                                offset: const Offset(4, 4),
+                              )
+                            ]),
+                        child: InkWell(
+                          onTap: () async {
+                            Get.toNamed(Routes.voucherApproval);
+                          },
+                          child: SizedBox(
+                            height: boxHeight,
+                            width: SizeConfig.screenWidth! * .29,
+                            // height: 120,
+                            // width: 100,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/images/voucher.png",
+                                  height: 80,
+                                  // width: SizeConfig.safeBlockHorizontal! * 15,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const Text(
+                                  "Voucher Authorization",
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             )),
