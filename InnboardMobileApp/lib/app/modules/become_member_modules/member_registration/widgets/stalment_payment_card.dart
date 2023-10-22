@@ -56,22 +56,27 @@ class StalmentPaymentCard extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomButton(
-                          submit: paymentStStep!.isPaid == true
-                              ? ((value) {})
-                              : (v) {
-                                  paySubmit(paymentStStep!.amount!);
-                                },
-                         // bgColor:paymentStStep!.isPaid == true? Colors.red,
-                         textColor: paymentStStep!.isPaid == true? Colors.grey:themeColor,
-                          name: "Pay",
-                          fullWidth: false,
-                          horizontalPadding: 42,
-                          fontSize: 18),
-                    ],
+                  Visibility(
+                    visible: paymentStStep!.isButtonVisible==true,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomButton(
+                            submit: paymentStStep!.isPaid == true
+                                ? ((value) {})
+                                : (v) {
+                                    paySubmit(paymentStStep!.amount!);
+                                  },
+                            // bgColor:paymentStStep!.isPaid == true? Colors.red,
+                            textColor: paymentStStep!.isPaid == true
+                                ? Colors.grey
+                                : themeColor,
+                            name: "Pay",
+                            fullWidth: false,
+                            horizontalPadding: 42,
+                            fontSize: 18)
+                      ],
+                    ),
                   ),
                 ],
               ),

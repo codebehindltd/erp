@@ -11,16 +11,18 @@ class GuestPaymentGraterThenFiveLacView
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-       onWillPop: () async => await onBackButtonPress(context),
+      onWillPop: () async => await onBackButtonPress(context),
       child: Scaffold(
           appBar: AppBar(
             title: const Text(
               'Payment',
               style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.w500, fontSize: 22),
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 22),
             ),
             // centerTitle: true,
-            // leading: const BackButtonWidget(),
+            //leading: const BackButtonWidget(),
             automaticallyImplyLeading: false,
           ),
           body: GetBuilder<GuestReservationController>(builder: (_) {
@@ -30,7 +32,7 @@ class GuestPaymentGraterThenFiveLacView
                 child: Column(
                   children: [
                     Text(
-                      '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s ''',
+                      '''Transaction limit depends on acquiring bank. The standard limit for a single transaction through our gateway is 5 Lac BDT. (Minimum amount 100000 BDT) ''',
                       style: commonTextStyle(),
                     ),
                     ListView.builder(
@@ -60,8 +62,6 @@ class GuestPaymentGraterThenFiveLacView
   }
 }
 
-
-
 Future<bool> onBackButtonPress(BuildContext context) async {
   return await showDialog(
       context: context,
@@ -78,17 +78,20 @@ Future<bool> onBackButtonPress(BuildContext context) async {
             ),
             content: Text(
               "Please compleate this process",
-              style: TextStyle(color: themeColor, fontWeight: FontWeight.w600, fontSize: 18),
+              style: TextStyle(
+                  color: themeColor, fontWeight: FontWeight.w600, fontSize: 18),
             ),
             actions: [
-             
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(false);
                   },
                   child: Text(
                     "Yes",
-                    style: TextStyle(color: themeColor, fontWeight: FontWeight.w600, fontSize: 16),
+                    style: TextStyle(
+                        color: themeColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16),
                   ))
             ],
           ));

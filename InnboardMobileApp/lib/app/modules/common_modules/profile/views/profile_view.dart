@@ -122,12 +122,13 @@ class ProfileView extends GetView<ProfileController> {
                                   height: 20,
                                 ),
                                 CustomButton(
-                                    submit: (v) {
-                                      Get.toNamed(Routes.profile +
-                                          Routes.paymentDetailsView);
-                                    },
-                                    name: "Payment Deatils",
-                                    fullWidth: true),
+                                  submit: (v) {
+                                    Get.toNamed(Routes.profile +
+                                        Routes.paymentDetailsView);
+                                  },
+                                  name: "Payment Deatils",
+                                  fullWidth: false,
+                                ),
                               ],
                             ),
                           )
